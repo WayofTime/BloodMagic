@@ -6,20 +6,13 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class ImperfectRitualStone extends Block
@@ -76,8 +69,7 @@ public class ImperfectRitualStone extends Block
                 world.getWorldInfo().setThunderTime(0);
                 world.getWorldInfo().setThundering(true);
                 return true;
-            }
-            else if (blockID == Block.coalBlock.blockID)
+            } else if (blockID == Block.coalBlock.blockID)
             {
                 if (!player.capabilities.isCreativeMode && world.isRemote)
                 {
@@ -107,8 +99,7 @@ public class ImperfectRitualStone extends Block
                 }
 
                 return true;
-            }
-            else if (blockID == Block.blockLapis.blockID)
+            } else if (blockID == Block.blockLapis.blockID)
             {
                 if (!player.capabilities.isCreativeMode && world.isRemote)
                 {
@@ -124,8 +115,7 @@ public class ImperfectRitualStone extends Block
 //                        PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(player.getEntityName(), -5000, 0));
 //                    }
                 }
-            }
-            else if (blockID == Block.bedrock.blockID)
+            } else if (blockID == Block.bedrock.blockID)
             {
                 if (!player.capabilities.isCreativeMode && world.isRemote)
                 {

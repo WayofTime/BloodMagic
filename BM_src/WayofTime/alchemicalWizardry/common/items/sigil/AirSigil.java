@@ -1,17 +1,17 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class AirSigil extends EnergyItems implements ArmourUpgrade
 {
@@ -66,7 +66,7 @@ public class AirSigil extends EnergyItems implements ArmourUpgrade
         par3EntityPlayer.motionX = vec.xCoord * wantedVelocity;
         par3EntityPlayer.motionY = vec.yCoord * wantedVelocity;
         par3EntityPlayer.motionZ = vec.zCoord * wantedVelocity;
-        par2World.playSoundEffect((double)((float)par3EntityPlayer.posX + 0.5F), (double)((float)par3EntityPlayer.posY + 0.5F), (double)((float)par3EntityPlayer.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
+        par2World.playSoundEffect((double) ((float) par3EntityPlayer.posX + 0.5F), (double) ((float) par3EntityPlayer.posY + 0.5F), (double) ((float) par3EntityPlayer.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
         par3EntityPlayer.fallDistance = 0;
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
@@ -74,8 +74,7 @@ public class AirSigil extends EnergyItems implements ArmourUpgrade
             if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
             {
             }
-        }
-        else
+        } else
         {
             return par1ItemStack;
         }

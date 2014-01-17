@@ -1,13 +1,9 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -17,8 +13,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
 
 public class RitualEffectCrushing extends RitualEffect
 {
@@ -27,7 +23,7 @@ public class RitualEffectCrushing extends RitualEffect
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -51,9 +47,8 @@ public class RitualEffectCrushing extends RitualEffect
 
         if (tile instanceof IInventory)
         {
-            tileEntity = (IInventory)tile;
-        }
-        else
+            tileEntity = (IInventory) tile;
+        } else
         {
             return;
         }
@@ -73,8 +68,7 @@ public class RitualEffectCrushing extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             //boolean flag = false;
             for (int j = -3; j < 0; j++)
@@ -89,7 +83,7 @@ public class RitualEffectCrushing extends RitualEffect
 
                         if (block != null)
                         {
-                            if ((block.equals(AlchemicalWizardry.ritualStone) || block.equals(AlchemicalWizardry.blockMasterStone)))
+                            if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)))
                             {
                                 continue;
                             }
@@ -114,8 +108,7 @@ public class RitualEffectCrushing extends RitualEffect
                                             {
                                                 tileEntity.setInventorySlotContents(n, copyStack);
                                                 copyStack.stackSize = 0;
-                                            }
-                                            else
+                                            } else
                                             {
                                                 if (itemStack.getItem().equals(copyStack.getItem()))
                                                 {
@@ -128,8 +121,7 @@ public class RitualEffectCrushing extends RitualEffect
                                                         copyStack.stackSize = 0;
                                                         itemStack.stackSize = itemSize + copySize;
                                                         tileEntity.setInventorySlotContents(n, itemStack);
-                                                    }
-                                                    else
+                                                    } else
                                                     {
                                                         copyStack.stackSize = itemSize + copySize - maxSize;
                                                         itemStack.stackSize = maxSize;

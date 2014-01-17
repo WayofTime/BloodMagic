@@ -1,9 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,11 +13,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.common.network.PacketDispatcher;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class SpellWateryGrave extends HomSpell
 {
@@ -28,6 +28,7 @@ public class SpellWateryGrave extends HomSpell
         this.setEnergies(250, 350, 500, 750);
         //this.setCreativeTab(CreativeTabs.tabMisc);
     }
+
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -93,14 +94,14 @@ public class SpellWateryGrave extends HomSpell
         }
 
         int d0 = 3;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)par3EntityPlayer.posX, (double)par3EntityPlayer.posY, (double)par3EntityPlayer.posZ, (double)(par3EntityPlayer.posX + 1), (double)(par3EntityPlayer.posY + 2), (double)(par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+            EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
             if (entityLiving instanceof EntityPlayer)
             {
@@ -156,9 +157,9 @@ public class SpellWateryGrave extends HomSpell
             {
                 for (int j = -range; j <= range; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY, (int)par3EntityPlayer.posZ + j))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ + j))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY, (int)par3EntityPlayer.posZ + j, Block.waterStill.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ + j, Block.waterStill.blockID);
                     }
                 }
             }

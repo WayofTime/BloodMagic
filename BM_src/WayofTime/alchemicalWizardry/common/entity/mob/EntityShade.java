@@ -2,22 +2,14 @@ package WayofTime.alchemicalWizardry.common.entity.mob;
 
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
 import net.minecraft.block.BlockColored;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -83,8 +75,7 @@ public class EntityShade extends EntityDemon
         if (this.isTamed())
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxTamedHealth);
-        }
-        else
+        } else
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxUntamedHealth);
         }
@@ -110,8 +101,7 @@ public class EntityShade extends EntityDemon
         if (par1EntityLivingBase == null)
         {
             this.setAngry(false);
-        }
-        else if (!this.isTamed())
+        } else if (!this.isTamed())
         {
             this.setAngry(true);
         }
@@ -129,8 +119,8 @@ public class EntityShade extends EntityDemon
     {
         super.entityInit();
         this.dataWatcher.addObject(18, new Float(this.getHealth()));
-        this.dataWatcher.addObject(19, new Byte((byte)0));
-        this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
+        this.dataWatcher.addObject(19, new Byte((byte) 0));
+        this.dataWatcher.addObject(20, new Byte((byte) BlockColored.getBlockFromDye(1)));
     }
 
     /**
@@ -148,7 +138,7 @@ public class EntityShade extends EntityDemon
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Angry", this.isAngry());
-        par1NBTTagCompound.setByte("CollarColor", (byte)this.getCollarColor());
+        par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
     }
 
     /**
@@ -247,8 +237,7 @@ public class EntityShade extends EntityDemon
         if (this.isEntityInvulnerable())
         {
             return false;
-        }
-        else
+        } else
         {
             Entity entity = par1DamageSource.getEntity();
             this.aiSit.setSitting(false);
@@ -265,7 +254,7 @@ public class EntityShade extends EntityDemon
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         int i = this.isTamed() ? 6 : 7;
-        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
+        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
 
     public void setTamed(boolean par1)
@@ -275,8 +264,7 @@ public class EntityShade extends EntityDemon
         if (par1)
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxTamedHealth);
-        }
-        else
+        } else
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxUntamedHealth);
         }
@@ -295,7 +283,7 @@ public class EntityShade extends EntityDemon
             {
                 if (Item.itemsList[itemstack.itemID] instanceof ItemFood)
                 {
-                    ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
+                    ItemFood itemfood = (ItemFood) Item.itemsList[itemstack.itemID];
 
                     if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < this.maxTamedHealth)
                     {
@@ -304,11 +292,11 @@ public class EntityShade extends EntityDemon
                             --itemstack.stackSize;
                         }
 
-                        this.heal((float)itemfood.getHealAmount());
+                        this.heal((float) itemfood.getHealAmount());
 
                         if (itemstack.stackSize <= 0)
                         {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
                         }
 
                         return true;
@@ -316,21 +304,20 @@ public class EntityShade extends EntityDemon
                 }
             }
 
-            if (par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(this.getOwnerName())  && !this.isBreedingItem(itemstack))
+            if (par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(this.getOwnerName()) && !this.isBreedingItem(itemstack))
             {
                 if (!this.worldObj.isRemote)
                 {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
-                    this.setPathToEntity((PathEntity)null);
-                    this.setTarget((Entity)null);
-                    this.setAttackTarget((EntityLivingBase)null);
+                    this.setPathToEntity((PathEntity) null);
+                    this.setTarget((Entity) null);
+                    this.setAttackTarget((EntityLivingBase) null);
                 }
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
             }
-        }
-        else if (itemstack != null && itemstack.itemID == AlchemicalWizardry.weakBloodOrb.itemID && !this.isAngry() && !this.isAggro())
+        } else if (itemstack != null && itemstack.itemID == ModItems.weakBloodOrb.itemID && !this.isAngry() && !this.isAggro())
         {
             if (!par1EntityPlayer.capabilities.isCreativeMode)
             {
@@ -339,7 +326,7 @@ public class EntityShade extends EntityDemon
 
             if (itemstack.stackSize <= 0)
             {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
             }
 
             if (!this.worldObj.isRemote)
@@ -347,18 +334,17 @@ public class EntityShade extends EntityDemon
                 if (this.rand.nextInt(1) == 0)
                 {
                     this.setTamed(true);
-                    this.setPathToEntity((PathEntity)null);
-                    this.setAttackTarget((EntityLivingBase)null);
+                    this.setPathToEntity((PathEntity) null);
+                    this.setAttackTarget((EntityLivingBase) null);
                     this.aiSit.setSitting(true);
                     this.setHealth(this.maxTamedHealth);
                     this.setOwner(par1EntityPlayer.getCommandSenderName());
                     this.playTameEffect(true);
-                    this.worldObj.setEntityState(this, (byte)7);
-                }
-                else
+                    this.worldObj.setEntityState(this, (byte) 7);
+                } else
                 {
                     this.playTameEffect(false);
-                    this.worldObj.setEntityState(this, (byte)6);
+                    this.worldObj.setEntityState(this, (byte) 6);
                 }
             }
 
@@ -395,11 +381,10 @@ public class EntityShade extends EntityDemon
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
-        }
-        else
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
+        } else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
         }
     }
 
@@ -416,7 +401,7 @@ public class EntityShade extends EntityDemon
      */
     public void setCollarColor(int par1)
     {
-        this.dataWatcher.updateObject(20, Byte.valueOf((byte)(par1 & 15)));
+        this.dataWatcher.updateObject(20, Byte.valueOf((byte) (par1 & 15)));
     }
 
     /**
@@ -431,11 +416,10 @@ public class EntityShade extends EntityDemon
     {
         if (par1)
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte)1));
-        }
-        else
+            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 1));
+        } else
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte)0));
+            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 0));
         }
     }
 
@@ -467,7 +451,7 @@ public class EntityShade extends EntityDemon
         {
             if (par1EntityLivingBase instanceof EntityBoulderFist)
             {
-                EntityBoulderFist entitywolf = (EntityBoulderFist)par1EntityLivingBase;
+                EntityBoulderFist entitywolf = (EntityBoulderFist) par1EntityLivingBase;
 
                 if (entitywolf.isTamed() && entitywolf.func_130012_q() == par2EntityLivingBase)
                 {
@@ -475,9 +459,8 @@ public class EntityShade extends EntityDemon
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer)par2EntityLivingBase).canAttackPlayer((EntityPlayer)par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse)par1EntityLivingBase).isTame();
-        }
-        else
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+        } else
         {
             return false;
         }

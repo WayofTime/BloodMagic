@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
-import net.minecraftforge.common.ForgeDirection;
 
 public class TEConduit extends TEOrientable
 {

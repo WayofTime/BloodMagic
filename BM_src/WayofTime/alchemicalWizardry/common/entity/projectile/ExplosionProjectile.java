@@ -2,10 +2,7 @@ package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
@@ -53,10 +50,9 @@ public class ExplosionProjectile extends EnergyBlastProjectile
                 return;
             }
 
-            worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(2), causesEnvDamage);
+            worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) (2), causesEnvDamage);
             //this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
 //        	for(int i=-1;i<=1;i++)
 //        	{
@@ -71,7 +67,7 @@ public class ExplosionProjectile extends EnergyBlastProjectile
 //        			}
 //        		}
 //        	}
-            worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(2), causesEnvDamage);
+            worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) (2), causesEnvDamage);
         }
 
         this.setDead();
@@ -84,8 +80,7 @@ public class ExplosionProjectile extends EnergyBlastProjectile
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -93,11 +88,10 @@ public class ExplosionProjectile extends EnergyBlastProjectile
                 //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
                 //((EntityLivingBase)mop).setFire(50);
                 //((EntityLivingBase)mop).setRevengeTarget(shootingEntity);
-                if (((EntityLivingBase)mop).isImmuneToFire())
+                if (((EntityLivingBase) mop).isImmuneToFire())
                 {
-                    doDamage((int)(projectileDamage), mop);
-                }
-                else
+                    doDamage((int) (projectileDamage), mop);
+                } else
                 {
                     doDamage(projectileDamage, mop);
                 }
@@ -106,7 +100,7 @@ public class ExplosionProjectile extends EnergyBlastProjectile
             //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
-        if (worldObj.isAirBlock((int)this.posX, (int)this.posY, (int)this.posZ))
+        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
         {
             //worldObj.setBlock((int)this.posX, (int)this.posY, (int)this.posZ,Block.fire.blockID);
         }

@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelMeteor extends ModelBase
 {
-//fields
+    //fields
     ModelRenderer Shape1;
     ModelRenderer Shape2;
     ModelRenderer Shape3;

@@ -4,13 +4,14 @@ import net.minecraftforge.common.ForgeDirection;
 
 /**
  * @author Azanor
- * This interface is used by tiles that use or transport vis.
- * Only tiles that implement this interface will be able to connect to vis conduits or other thaumic devices
+ *         This interface is used by tiles that use or transport vis.
+ *         Only tiles that implement this interface will be able to connect to vis conduits or other thaumic devices
  */
 public interface IEssentiaTransport
 {
     /**
      * Is this tile able to connect to other vis users/sources on the specified side?
+     *
      * @param face
      * @return
      */
@@ -18,6 +19,7 @@ public interface IEssentiaTransport
 
     /**
      * Is this side used to input essentia?
+     *
      * @param face
      * @return
      */
@@ -25,6 +27,7 @@ public interface IEssentiaTransport
 
     /**
      * Is this side used to output essentia?
+     *
      * @param face
      * @return
      */
@@ -44,26 +47,29 @@ public interface IEssentiaTransport
 
     /**
      * Sets the amount of suction this block will apply
+     *
      * @param suction
      */
     public void setSuction(AspectList suction);
 
     /**
      * Sets the amount of suction this block will apply
+     *
      * @param suction
      */
     public void setSuction(Aspect aspect, int amount);
 
     /**
      * Returns the amount of suction this block is applying.
-     * @param loc
-     * 		the location from where the suction is being checked
+     *
+     * @param loc the location from where the suction is being checked
      * @return
      */
     public AspectList getSuction(ForgeDirection face);
 
     /**
      * remove the specified amount of vis from this transport tile
+     *
      * @param suction
      * @return how much was actually taken
      */
@@ -73,6 +79,7 @@ public interface IEssentiaTransport
 
     /**
      * Essentia will not be drawn from this container unless the suction exceeds this amount.
+     *
      * @return the amount
      */
     public int getMinimumSuction();
@@ -80,6 +87,7 @@ public interface IEssentiaTransport
     /**
      * Return true if you want the conduit to extend a little further into the block.
      * Used by jars and alembics that have smaller than normal hitboxes
+     *
      * @return
      */
     boolean renderExtendedTube();

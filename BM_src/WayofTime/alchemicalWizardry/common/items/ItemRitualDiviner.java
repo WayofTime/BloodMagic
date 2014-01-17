@@ -1,7 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.common.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.common.rituals.Rituals;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.common.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemRitualDiviner extends EnergyItems
 {
@@ -46,8 +48,7 @@ public class ItemRitualDiviner extends EnergyItems
         if (this.getMaxRuneDisplacement(par1ItemStack) == 1)
         {
             par3List.add("Can place Dusk runes");
-        }
-        else
+        } else
         {
             par3List.add("Can not place Dusk runes");
         }
@@ -114,8 +115,7 @@ public class ItemRitualDiviner extends EnergyItems
             int ritualID = this.getCurrentRitual(par1ItemStack);
             return "Ritual: " + Rituals.getNameOfRitual(ritualID);
             //par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-        }
-        else
+        } else
         {
             return super.getItemStackDisplayName(par1ItemStack);
         }
@@ -130,7 +130,7 @@ public class ItemRitualDiviner extends EnergyItems
 
         if (tileEntity instanceof TEMasterStone)
         {
-            TEMasterStone masterStone = (TEMasterStone)tileEntity;
+            TEMasterStone masterStone = (TEMasterStone) tileEntity;
             List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack) + 1);
             int playerInvRitualStoneLocation = -1;
 
@@ -141,7 +141,7 @@ public class ItemRitualDiviner extends EnergyItems
                     continue;
                 }
 
-                if (new ItemStack(AlchemicalWizardry.ritualStone).isItemEqual(playerInventory[i]))
+                if (new ItemStack(ModBlocks.ritualStone).isItemEqual(playerInventory[i]))
                 {
                     playerInvRitualStoneLocation = i;
                     break;
@@ -165,7 +165,7 @@ public class ItemRitualDiviner extends EnergyItems
                             par2EntityPlayer.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
                         }
 
-                        par3World.setBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ(), AlchemicalWizardry.ritualStone.blockID, rc.getStoneType(), 3);
+                        par3World.setBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ(), ModBlocks.ritualStone.blockID, rc.getStoneType(), 3);
 
                         if (par3World.isRemote)
                         {
@@ -176,12 +176,11 @@ public class ItemRitualDiviner extends EnergyItems
 
                         return true;
                     }
-                }
-                else
+                } else
                 {
                     int blockID = par3World.getBlockId(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ());
 
-                    if (blockID == AlchemicalWizardry.ritualStone.blockID)
+                    if (blockID == ModBlocks.ritualStone.blockID)
                     {
                         int metadata = par3World.getBlockMetadata(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ());
 
@@ -197,8 +196,7 @@ public class ItemRitualDiviner extends EnergyItems
                             EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
                             return true;
                         }
-                    }
-                    else
+                    } else
                     {
                         par3World.playAuxSFX(0000, par4, par5 + 1, par6, 0);
                         return true;
@@ -231,8 +229,7 @@ public class ItemRitualDiviner extends EnergyItems
             if (currentRitualID + 1 >= maxRitualID)
             {
                 this.setCurrentRitual(par1ItemStack, 0);
-            }
-            else
+            } else
             {
                 this.setCurrentRitual(par1ItemStack, currentRitualID + 1);
             }
@@ -293,9 +290,9 @@ public class ItemRitualDiviner extends EnergyItems
     @SideOnly(Side.CLIENT)
     public void getSubItems(int id, CreativeTabs creativeTab, List list)
     {
-        list.add(new ItemStack(AlchemicalWizardry.itemRitualDiviner));
-        ItemStack duskRitualDivinerStack = new ItemStack(AlchemicalWizardry.itemRitualDiviner);
-        ((ItemRitualDiviner)duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
+        list.add(new ItemStack(ModItems.itemRitualDiviner));
+        ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
+        ((ItemRitualDiviner) duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
         list.add(duskRitualDivinerStack);
     }
 }

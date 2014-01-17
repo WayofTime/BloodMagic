@@ -1,15 +1,13 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelConduit;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderConduit extends TileEntitySpecialRenderer
 {
@@ -34,7 +32,7 @@ public class RenderConduit extends TileEntitySpecialRenderer
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
             //GL11.glRotatef(90F, 0.0F, 0.0F, 1.0F);
             //A reference to your Model file. Again, very important.
-            this.modelConduit.render((Entity)null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileConduit.getInputDirection(), tileConduit.getOutputDirection());
+            this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileConduit.getInputDirection(), tileConduit.getOutputDirection());
             //Tell it to stop rendering for both the PushMatrix's
             GL11.glPopMatrix();
             GL11.glPopMatrix();

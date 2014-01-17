@@ -10,6 +10,7 @@ public interface IArcaneRecipe
 {
     /**
      * Used to check if a recipe matches current crafting inventory
+     *
      * @param player
      */
     boolean matches(IInventory var1, World world, EntityPlayer player);
@@ -25,6 +26,8 @@ public interface IArcaneRecipe
     int getRecipeSize();
 
     ItemStack getRecipeOutput();
+
     AspectList getAspects();
+
     String getResearch();
 }

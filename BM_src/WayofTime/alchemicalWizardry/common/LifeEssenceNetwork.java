@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class LifeEssenceNetwork extends net.minecraft.world.WorldSavedData
 {
     public int currentEssence;
+
     public LifeEssenceNetwork(String par1Str)
     {
         super(par1Str);

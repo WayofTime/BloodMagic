@@ -1,5 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.BlankSpell;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.material.Material;
@@ -10,11 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.BlankSpell;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockHomHeart extends BlockContainer
 {
@@ -52,10 +52,10 @@ public class BlockHomHeart extends BlockContainer
             case 1:
                 return topIcon;
 
-                //case 2: return sideIcon1;
-                //case 3: return sideIcon1;
-                //case 4: return sideIcon2;
-                //case 5: return sideIcon2;
+            //case 2: return sideIcon1;
+            //case 3: return sideIcon1;
+            //case 4: return sideIcon2;
+            //case 5: return sideIcon2;
             default:
                 return sideIcon;
         }
@@ -64,7 +64,7 @@ public class BlockHomHeart extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TEHomHeart tileEntity = (TEHomHeart)world.getBlockTileEntity(x, y, z);
+        TEHomHeart tileEntity = (TEHomHeart) world.getBlockTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {

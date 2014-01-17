@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.passive.EntityTameable;
 
 public class EntityAITargetAggro extends EntityAINearestAttackableTarget
 {

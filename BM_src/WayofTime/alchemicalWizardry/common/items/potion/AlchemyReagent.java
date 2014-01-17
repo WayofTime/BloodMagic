@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,6 +10,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
 
 public class AlchemyReagent extends Item
 {
@@ -28,61 +28,61 @@ public class AlchemyReagent extends Item
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
-        if (this.itemID == AlchemicalWizardry.incendium.itemID)
+        if (this.itemID == ModItems.incendium.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Incendium");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.magicales.itemID)
+        if (this.itemID == ModItems.magicales.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Magicales");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.sanctus.itemID)
+        if (this.itemID == ModItems.sanctus.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Sanctus");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.aether.itemID)
+        if (this.itemID == ModItems.aether.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Aether");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.simpleCatalyst.itemID)
+        if (this.itemID == ModItems.simpleCatalyst.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SimpleCatalyst");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.crepitous.itemID)
+        if (this.itemID == ModItems.crepitous.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Crepitous");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.crystallos.itemID)
+        if (this.itemID == ModItems.crystallos.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Crystallos");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.terrae.itemID)
+        if (this.itemID == ModItems.terrae.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Terrae");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.aquasalus.itemID)
+        if (this.itemID == ModItems.aquasalus.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Aquasalus");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.tennebrae.itemID)
+        if (this.itemID == ModItems.tennebrae.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Tennebrae");
             return;
@@ -102,7 +102,7 @@ public class AlchemyReagent extends Item
             {
                 par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
-                for (ItemStack item: recipe)
+                for (ItemStack item : recipe)
                 {
                     if (item != null)
                     {
@@ -110,8 +110,7 @@ public class AlchemyReagent extends Item
                     }
                 }
             }
-        }
-        else
+        } else
         {
             par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
         }

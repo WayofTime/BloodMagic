@@ -1,12 +1,12 @@
 package thaumcraft.api.crafting;
 
-import java.util.ArrayList;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+
+import java.util.ArrayList;
 
 public class CrucibleRecipe
 {
@@ -34,10 +34,10 @@ public class CrucibleRecipe
                 !ThaumcraftApiHelper.itemMatches((ItemStack) catalyst, cat, false))
         {
             return false;
-        }
-        else if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>)catalyst).size() > 0)
+        } else if (catalyst instanceof ArrayList && ((ArrayList<ItemStack>) catalyst).size() > 0)
         {
-            if (!ThaumcraftApiHelper.containsMatch(true, ((ArrayList<ItemStack>)catalyst).toArray(new ItemStack[] {}), cat)) return false;
+            if (!ThaumcraftApiHelper.containsMatch(true, ((ArrayList<ItemStack>) catalyst).toArray(new ItemStack[]{}), cat))
+                return false;
         }
 
         if (itags == null)
@@ -45,7 +45,7 @@ public class CrucibleRecipe
             return false;
         }
 
-        for (Aspect tag: aspects.getAspects())
+        for (Aspect tag : aspects.getAspects())
         {
             if (itags.getAmount(tag) < aspects.getAmount(tag))
             {
@@ -61,7 +61,7 @@ public class CrucibleRecipe
         AspectList temptags = new AspectList();
         temptags.aspects.putAll(itags.aspects);
 
-        for (Aspect tag: aspects.getAspects())
+        for (Aspect tag : aspects.getAspects())
         {
             temptags.remove(tag, aspects.getAmount(tag));
 //			if (!temptags.remove(tag, aspects.getAmount(tag))) return null;

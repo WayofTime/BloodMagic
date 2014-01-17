@@ -1,15 +1,9 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -46,8 +40,7 @@ public class EntityMeteor extends EnergyBlastProjectile
         if (mop.typeOfHit == EnumMovingObjectType.ENTITY && mop.entityHit != null)
         {
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             MeteorRegistry.createMeteorImpact(worldObj, mop.blockX, mop.blockY, mop.blockZ, this.meteorID);
         }
@@ -62,10 +55,9 @@ public class EntityMeteor extends EnergyBlastProjectile
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
-            MeteorRegistry.createMeteorImpact(worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, meteorID);
+            MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID);
         }
 
         this.setDead();

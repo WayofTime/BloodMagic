@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-import java.util.Random;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import cpw.mods.fml.relauncher.Side;
@@ -10,7 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,9 +16,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockWritingTable extends BlockContainer
 {
@@ -66,10 +63,10 @@ public class BlockWritingTable extends BlockContainer
             case 1:
                 return topIcon;
 
-                //case 2: return sideIcon1;
-                //case 3: return sideIcon1;
-                //case 4: return sideIcon2;
-                //case 5: return sideIcon2;
+            //case 2: return sideIcon1;
+            //case 3: return sideIcon1;
+            //case 4: return sideIcon2;
+            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -119,8 +116,8 @@ public class BlockWritingTable extends BlockContainer
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
                 EntityItem entityItem = new EntityItem(world,
-                                                       x + rx, y + ry, z + rz,
-                                                       new ItemStack(item.itemID, item.stackSize, item.getItemDamage()));
+                        x + rx, y + ry, z + rz,
+                        new ItemStack(item.itemID, item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {

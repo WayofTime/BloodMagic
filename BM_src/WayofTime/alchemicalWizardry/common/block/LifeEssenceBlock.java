@@ -1,14 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class LifeEssenceBlock extends BlockFluidClassic
 {
@@ -37,7 +37,7 @@ public class LifeEssenceBlock extends BlockFluidClassic
     @Override
     public boolean canDisplace(IBlockAccess world, int x, int y, int z)
     {
-        if (world.getBlockMaterial(x,  y,  z).isLiquid())
+        if (world.getBlockMaterial(x, y, z).isLiquid())
         {
             return false;
         }
@@ -48,7 +48,7 @@ public class LifeEssenceBlock extends BlockFluidClassic
     @Override
     public boolean displaceIfPossible(World world, int x, int y, int z)
     {
-        if (world.getBlockMaterial(x,  y,  z).isLiquid())
+        if (world.getBlockMaterial(x, y, z).isLiquid())
         {
             return false;
         }

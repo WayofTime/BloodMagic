@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import com.google.common.collect.Multimap;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -21,18 +25,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class DaggerOfSacrifice extends EnergyItems
 {
     private float weaponDamage;
+
     public DaggerOfSacrifice(int id)
     {
         super(id);
@@ -80,7 +79,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
                 for (int i = 0; i < 8; i++)
                 {
-                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short)1));
+                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short) 1));
                 }
 
                 par2EntityLivingBase.setHealth(-1);
@@ -99,7 +98,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
                 for (int i = 0; i < 8; i++)
                 {
-                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short)1));
+                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short) 1));
                 }
 
                 par2EntityLivingBase.setHealth(-1);
@@ -118,7 +117,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
                 for (int i = 0; i < 8; i++)
                 {
-                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short)1));
+                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short) 1));
                 }
 
                 par2EntityLivingBase.setHealth(-1);
@@ -137,7 +136,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
                 for (int i = 0; i < 8; i++)
                 {
-                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short)1));
+                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short) 1));
                 }
 
                 par2EntityLivingBase.setHealth(-1);
@@ -154,7 +153,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
             for (int i = 0; i < 8; i++)
             {
-                PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short)1));
+                PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(posX, posY, posZ, (short) 1));
             }
 
             par2EntityLivingBase.setHealth(-1);
@@ -183,8 +182,7 @@ public class DaggerOfSacrifice extends EnergyItems
         if (par2Block.blockID == Block.web.blockID)
         {
             return 15.0F;
-        }
-        else
+        } else
         {
             Material material = par2Block.blockMaterial;
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;
@@ -208,9 +206,9 @@ public class DaggerOfSacrifice extends EnergyItems
 
     public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount)
     {
-        int posX = (int)Math.round(sacrifice.posX - 0.5f);
-        int posY = (int)sacrifice.posY;
-        int posZ = (int)Math.round(sacrifice.posZ - 0.5f);
+        int posX = (int) Math.round(sacrifice.posX - 0.5f);
+        int posY = (int) sacrifice.posY;
+        int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
         TEAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
@@ -237,25 +235,25 @@ public class DaggerOfSacrifice extends EnergyItems
 
                     if ((tileEntity instanceof TEAltar))
                     {
-                        return (TEAltar)tileEntity;
+                        return (TEAltar) tileEntity;
                     }
                 }
 
                 if ((tileEntity instanceof TEAltar))
                 {
-                    return (TEAltar)tileEntity;
+                    return (TEAltar) tileEntity;
                 }
             }
 
             if ((tileEntity instanceof TEAltar))
             {
-                return (TEAltar)tileEntity;
+                return (TEAltar) tileEntity;
             }
         }
 
         if ((tileEntity instanceof TEAltar))
         {
-            return (TEAltar)tileEntity;
+            return (TEAltar) tileEntity;
         }
 
         return null;

@@ -4,10 +4,10 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
+import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -62,7 +62,7 @@ public class GuiHandler implements IGuiHandler
 
                 if (tileEntity instanceof TETeleposer)
                 {
-                    return new GuiTeleposer(player.inventory, (TETeleposer)tileEntity);
+                    return new GuiTeleposer(player.inventory, (TETeleposer) tileEntity);
                 }
 
                 break;

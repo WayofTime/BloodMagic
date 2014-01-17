@@ -5,11 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
- *
  * @author azanor
- *
- * Add this to a tile entity that you wish wands to interact with in some way.
- *
+ *         <p/>
+ *         Add this to a tile entity that you wish wands to interact with in some way.
  */
 
 public interface IWandable

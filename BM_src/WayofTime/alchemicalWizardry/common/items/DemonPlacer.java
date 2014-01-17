@@ -1,30 +1,22 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityEggInfo;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.Facing;
-import net.minecraft.util.Icon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 import WayofTime.alchemicalWizardry.common.summoning.SummoningRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.*;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class DemonPlacer extends Item
 {
@@ -56,7 +48,7 @@ public class DemonPlacer extends Item
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
     {
-        EntityEggInfo entityegginfo = (EntityEggInfo)EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
+        EntityEggInfo entityegginfo = (EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
         return entityegginfo != null ? (par2 == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
     }
 
@@ -69,8 +61,7 @@ public class DemonPlacer extends Item
         if (par3World.isRemote)
         {
             return true;
-        }
-        else
+        } else
         {
             int i1 = par3World.getBlockId(par4, par5, par6);
             par4 += Facing.offsetsXForSide[par7];
@@ -83,13 +74,13 @@ public class DemonPlacer extends Item
                 d0 = 0.5D;
             }
 
-            Entity entity = spawnCreature(par3World, par1ItemStack.getItemDamage(), (double)par4 + 0.5D, (double)par5 + d0, (double)par6 + 0.5D, par1ItemStack);
+            Entity entity = spawnCreature(par3World, par1ItemStack.getItemDamage(), (double) par4 + 0.5D, (double) par5 + d0, (double) par6 + 0.5D, par1ItemStack);
 
             if (entity != null)
             {
                 if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
                 {
-                    ((EntityLiving)entity).setCustomNameTag(par1ItemStack.getDisplayName());
+                    ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
                 }
 
                 if (!par2EntityPlayer.capabilities.isCreativeMode)
@@ -110,16 +101,14 @@ public class DemonPlacer extends Item
         if (par2World.isRemote)
         {
             return par1ItemStack;
-        }
-        else
+        } else
         {
             MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
 
             if (movingobjectposition == null)
             {
                 return par1ItemStack;
-            }
-            else
+            } else
             {
                 if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
                 {
@@ -139,13 +128,13 @@ public class DemonPlacer extends Item
 
                     if (par2World.getBlockMaterial(i, j, k) == Material.water)
                     {
-                        Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), (double)i, (double)j, (double)k, par1ItemStack);
+                        Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), (double) i, (double) j, (double) k, par1ItemStack);
 
                         if (entity != null)
                         {
                             if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
                             {
-                                ((EntityLiving)entity).setCustomNameTag(par1ItemStack.getDisplayName());
+                                ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
                             }
 
                             if (!par3EntityPlayer.capabilities.isCreativeMode)
@@ -181,7 +170,7 @@ public class DemonPlacer extends Item
 
                 if (entity != null && entity instanceof EntityLivingBase)
                 {
-                    EntityLiving entityliving = (EntityLiving)entity;
+                    EntityLiving entityliving = (EntityLiving) entity;
                     entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
@@ -189,11 +178,11 @@ public class DemonPlacer extends Item
                     //entityliving.onSpawnWithEgg((EntityLivingData)null);
                     if (entityliving instanceof EntityDemon)
                     {
-                        ((EntityDemon)entityliving).setOwner(DemonPlacer.getOwnerName(itemStack));
+                        ((EntityDemon) entityliving).setOwner(DemonPlacer.getOwnerName(itemStack));
 
                         if (!DemonPlacer.getOwnerName(itemStack).equals(""))
                         {
-                            ((EntityDemon)entityliving).setTamed(true);
+                            ((EntityDemon) entityliving).setTamed(true);
                         }
                     }
 

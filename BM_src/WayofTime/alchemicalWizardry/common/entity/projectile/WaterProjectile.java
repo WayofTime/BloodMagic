@@ -2,16 +2,14 @@ package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class WaterProjectile extends EnergyBlastProjectile
 {
@@ -52,8 +50,7 @@ public class WaterProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
         }
 
@@ -67,8 +64,7 @@ public class WaterProjectile extends EnergyBlastProjectile
         {
             //shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -83,15 +79,14 @@ public class WaterProjectile extends EnergyBlastProjectile
 //        		{
 //        			doDamage(projectileDamage, mop);
 //        		}
-                if (((EntityLivingBase)mop).isImmuneToFire())
+                if (((EntityLivingBase) mop).isImmuneToFire())
                 {
                     doDamage(projectileDamage * 2, mop);
-                    ((EntityLivingBase)mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 1));
-                }
-                else
+                    ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 1));
+                } else
                 {
                     doDamage(projectileDamage, mop);
-                    ((EntityLivingBase)mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 0));
+                    ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 0));
                 }
 
                 //((EntityLivingBase)mop).setVelocity(this.motionX*2, ((EntityLivingBase)mop).motionY+1.5, this.motionZ*2);

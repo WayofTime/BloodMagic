@@ -1,12 +1,12 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeteorParadigm
 {

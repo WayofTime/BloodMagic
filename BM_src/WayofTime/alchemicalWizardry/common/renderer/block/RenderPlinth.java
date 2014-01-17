@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelPlinth;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -10,12 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
-
 import org.lwjgl.opengl.GL11;
-
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelPlinth;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderPlinth extends TileEntitySpecialRenderer
 {
@@ -34,6 +32,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
         };
         customRenderItem.setRenderManager(RenderManager.instance);
     }
+
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
     {
@@ -52,7 +51,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
             //A reference to your Model file. Again, very important.
-            this.modelPlinth.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+            this.modelPlinth.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
             //Tell it to stop rendering for both the PushMatrix's
             GL11.glPopMatrix();
             GL11.glPopMatrix();
@@ -70,8 +69,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
                 if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
                 {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
-                }
-                else
+                } else
                 {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.1875f);
                 }
@@ -121,8 +119,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
                     default:
                         return 0.90F * scaleFactor / 2;
                 }
-            }
-            else
+            } else
             {
                 switch (customRenderItem.getMiniItemCount(itemStack))
                 {
@@ -201,8 +198,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
                         return;
                     }
                 }
-            }
-            else
+            } else
             {
                 switch (forgeDirection)
                 {

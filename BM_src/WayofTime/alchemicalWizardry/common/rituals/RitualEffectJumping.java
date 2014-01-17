@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.common.network.Player;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -13,8 +12,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class RitualEffectJumping extends RitualEffect
 {
@@ -23,7 +23,7 @@ public class RitualEffectJumping extends RitualEffect
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -47,11 +47,10 @@ public class RitualEffectJumping extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             int d0 = 0;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y + 1, (double)z, (double)(x + 1), (double)(y + 2), (double)(z + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
             List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityLivingBase entityplayer;
@@ -59,17 +58,16 @@ public class RitualEffectJumping extends RitualEffect
 
             while (iterator.hasNext())
             {
-                entityplayer = (EntityLivingBase)iterator.next();
+                entityplayer = (EntityLivingBase) iterator.next();
 
                 if (entityplayer instanceof EntityPlayer)
                 {
-                    PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(entityplayer.motionX, 1.5, entityplayer.motionZ), (Player)entityplayer);
+                    PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(entityplayer.motionX, 1.5, entityplayer.motionZ), (Player) entityplayer);
                     entityplayer.motionY = 1.5;
                     entityplayer.fallDistance = 0;
                     flag = true;
-                }
-                else
-                    //if (!(entityplayer.getEntityName().equals(owner)))
+                } else
+                //if (!(entityplayer.getEntityName().equals(owner)))
                 {
 //                    double xDif = entityplayer.posX - xCoord;
 //                    double yDif = entityplayer.posY - (yCoord + 1);

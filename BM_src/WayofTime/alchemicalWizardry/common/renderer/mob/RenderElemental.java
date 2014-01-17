@@ -1,16 +1,11 @@
 package WayofTime.alchemicalWizardry.common.renderer.mob;
 
+import WayofTime.alchemicalWizardry.common.EntityAirElemental;
+import WayofTime.alchemicalWizardry.common.entity.mob.*;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.alchemicalWizardry.common.EntityAirElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityEarthElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityFireElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityHolyElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 
 public class RenderElemental extends RenderLiving
 {
@@ -63,6 +58,6 @@ public class RenderElemental extends RenderLiving
 
     public ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.func_110832_a((EntityElemental)par1Entity);
+        return this.func_110832_a((EntityElemental) par1Entity);
     }
 }

@@ -1,9 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +9,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class SpellFireBurst extends HomSpell
 {
     public Random itemRand = new Random();
+
     public SpellFireBurst()
     {
         super();
@@ -98,14 +99,14 @@ public class SpellFireBurst extends HomSpell
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         int d0 = 2;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)par3EntityPlayer.posX, (double)par3EntityPlayer.posY, (double)par3EntityPlayer.posZ, (double)(par3EntityPlayer.posX + 1), (double)(par3EntityPlayer.posY + 2), (double)(par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+            EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
             if (entityLiving instanceof EntityPlayer)
             {
@@ -157,11 +158,11 @@ public class SpellFireBurst extends HomSpell
             {
                 for (int k = -1; k <= 1; k++)
                 {
-                    if (worldObj.isAirBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k))
+                    if (worldObj.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k))
                     {
                         if (worldObj.rand.nextFloat() < 0.8F)
                         {
-                            worldObj.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k, Block.fire.blockID);
+                            worldObj.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Block.fire.blockID);
                         }
                     }
                 }

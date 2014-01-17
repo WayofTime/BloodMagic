@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,10 +16,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.common.network.PacketDispatcher;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class SpellTeleport extends HomSpell
 {
@@ -31,6 +31,7 @@ public class SpellTeleport extends HomSpell
         this.setEnergies(500, 300, 500, 1000);
         //this.setCreativeTab(CreativeTabs.tabMisc);
     }
+
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -117,14 +118,14 @@ public class SpellTeleport extends HomSpell
         if (!par2World.isRemote)
         {
             int d0 = 3;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)par3EntityPlayer.posX, (double)par3EntityPlayer.posY, (double)par3EntityPlayer.posZ, (double)(par3EntityPlayer.posX + 1), (double)(par3EntityPlayer.posY + 2), (double)(par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
             //axisalignedbb.maxY = (double)this.worldObj.getHeight();
             List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             Iterator iterator = list.iterator();
 
             while (iterator.hasNext())
             {
-                EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+                EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
                 if (entityLiving instanceof EntityPlayer)
                 {
@@ -158,14 +159,14 @@ public class SpellTeleport extends HomSpell
         double z = entityLiving.posZ;
         Random rand = new Random();
         double d0 = x + (rand.nextDouble() - 0.5D) * distance;
-        double d1 = y + (double)(rand.nextInt((int)distance) - (distance) / 2);
+        double d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
         double d2 = z + (rand.nextDouble() - 0.5D) * distance;
         int i = 0;
 
         while (!SpellTeleport.teleportTo(entityLiving, d0, d1, d2, x, y, z) && i < 100)
         {
             d0 = x + (rand.nextDouble() - 0.5D) * distance;
-            d1 = y + (double)(rand.nextInt((int)distance) - (distance) / 2);
+            d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
             d2 = z + (rand.nextDouble() - 0.5D) * distance;
             i++;
         }
@@ -209,8 +210,7 @@ public class SpellTeleport extends HomSpell
                 if (l != 0 && Block.blocksList[l].blockMaterial.blocksMovement())
                 {
                     flag1 = true;
-                }
-                else
+                } else
                 {
                     --entityLiving.posY;
                     --j;
@@ -232,21 +232,20 @@ public class SpellTeleport extends HomSpell
         {
             SpellTeleport.moveEntityViaTeleport(entityLiving, d3, d4, d5);
             return false;
-        }
-        else
+        } else
         {
             short short1 = 128;
 
             for (l = 0; l < short1; ++l)
             {
-                double d6 = (double)l / ((double)short1 - 1.0D);
+                double d6 = (double) l / ((double) short1 - 1.0D);
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (entityLiving.posX - d3) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double)entityLiving.width * 2.0D;
-                double d8 = d4 + (entityLiving.posY - d4) * d6 + entityLiving.worldObj.rand.nextDouble() * (double)entityLiving.height;
-                double d9 = d5 + (entityLiving.posZ - d5) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double)entityLiving.width * 2.0D;
-                entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+                double d7 = d3 + (entityLiving.posX - d3) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double d8 = d4 + (entityLiving.posY - d4) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
+                double d9 = d5 + (entityLiving.posZ - d5) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
 
 //            this.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
@@ -261,7 +260,7 @@ public class SpellTeleport extends HomSpell
         {
             if (entityLiving != null && entityLiving instanceof EntityPlayerMP)
             {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)entityLiving;
+                EntityPlayerMP entityplayermp = (EntityPlayerMP) entityLiving;
 
                 if (!entityplayermp.playerNetServerHandler.connectionClosed && entityplayermp.worldObj == entityLiving.worldObj)
                 {
@@ -271,7 +270,7 @@ public class SpellTeleport extends HomSpell
                     {
                         if (entityLiving.isRiding())
                         {
-                            entityLiving.mountEntity((Entity)null);
+                            entityLiving.mountEntity((Entity) null);
                         }
 
                         entityLiving.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
@@ -280,8 +279,7 @@ public class SpellTeleport extends HomSpell
                     }
                 }
             }
-        }
-        else if (entityLiving != null)
+        } else if (entityLiving != null)
         {
             entityLiving.setPosition(x, y, z);
         }

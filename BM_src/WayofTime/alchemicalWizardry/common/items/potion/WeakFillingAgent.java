@@ -1,21 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-
-import org.lwjgl.input.Keyboard;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IFillingAgent;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
+import java.util.Random;
 
 public class WeakFillingAgent extends Item implements IFillingAgent
 {
@@ -39,9 +37,8 @@ public class WeakFillingAgent extends Item implements IFillingAgent
         {
             if (rand.nextFloat() > 0.5f)
             {
-                return(4 - potionEffects);
-            }
-            else
+                return (4 - potionEffects);
+            } else
             {
                 return 3 - potionEffects;
             }
@@ -70,7 +67,7 @@ public class WeakFillingAgent extends Item implements IFillingAgent
             {
                 par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
-                for (ItemStack item: recipe)
+                for (ItemStack item : recipe)
                 {
                     if (item != null)
                     {
@@ -78,8 +75,7 @@ public class WeakFillingAgent extends Item implements IFillingAgent
                     }
                 }
             }
-        }
-        else
+        } else
         {
             par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
         }

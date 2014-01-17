@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.thaumcraft;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -13,12 +12,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.wands.IWandFocus.WandFocusAnimation;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FocusBloodBlast extends FocusBase
 {
@@ -26,7 +25,7 @@ public class FocusBloodBlast extends FocusBase
 
     private final int maxCooldown = 7;
 
-    public static Map<String, Integer> playerCooldown = new HashMap();
+    public static Map<String,Integer> playerCooldown = new HashMap();
 
     public FocusBloodBlast(int par1)
     {
@@ -120,33 +119,28 @@ public class FocusBloodBlast extends FocusBase
                         if (!world.isRemote)
                         {
                             //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
-                            world.spawnEntityInWorld(new EnergyBlastProjectile(world, par3EntityPlayer, (int)(5)));
+                            world.spawnEntityInWorld(new EnergyBlastProjectile(world, par3EntityPlayer, (int) (5)));
                             //this.setDelay(par1ItemStack, maxDelay);
                         }
                     }
                 }
-            }
-            catch (NoSuchMethodException e1)
+            } catch (NoSuchMethodException e1)
             {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
-            catch (SecurityException e1)
+            } catch (SecurityException e1)
             {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
-            catch (IllegalAccessException e)
+            } catch (IllegalAccessException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
-            catch (IllegalArgumentException e)
+            } catch (IllegalArgumentException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
-            catch (InvocationTargetException e)
+            } catch (InvocationTargetException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

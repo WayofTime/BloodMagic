@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -11,11 +14,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
 {
@@ -44,8 +44,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -76,8 +75,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -90,8 +88,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
         if (par1 == 1)
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -135,14 +132,13 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
         if (tag.getBoolean("isActive"))
         {
             par1ItemStack.setItemDamage(1);
-            tag.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % tickDelay);
+            tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
             }
-        }
-        else
+        } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
         }
@@ -158,7 +154,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {
@@ -169,13 +165,13 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer)par3Entity, getEnergyUsed());
+                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
             }
 
             int range = 5;
             int verticalRange = 5;
             float posX = Math.round(par3Entity.posX);
-            float posY = (float)(par3Entity.posY - par3Entity.getEyeHeight());
+            float posY = (float) (par3Entity.posY - par3Entity.getEyeHeight());
             float posZ = Math.round(par3Entity.posZ);
             List<EntityItem> entities = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
 
@@ -197,7 +193,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
         int range = 5;
         int verticalRange = 5;
         float posX = Math.round(player.posX);
-        float posY = (float)(player.posY - player.getEyeHeight());
+        float posY = (float) (player.posY - player.getEyeHeight());
         float posZ = Math.round(player.posZ);
         List<EntityItem> entities = player.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
 

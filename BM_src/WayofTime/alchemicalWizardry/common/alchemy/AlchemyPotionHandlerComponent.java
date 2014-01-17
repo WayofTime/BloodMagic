@@ -26,8 +26,7 @@ public class AlchemyPotionHandlerComponent
                 {
                     return comparedStack.itemID == itemStack.itemID && comparedStack.getItemDamage() == itemStack.getItemDamage();
                 }
-            }
-            else if (!(itemStack.getItem() instanceof ItemBlock))
+            } else if (!(itemStack.getItem() instanceof ItemBlock))
             {
                 return comparedStack.itemID == itemStack.itemID && comparedStack.getItemDamage() == itemStack.getItemDamage();
             }

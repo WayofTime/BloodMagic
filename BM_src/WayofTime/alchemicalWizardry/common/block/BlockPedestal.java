@@ -1,13 +1,12 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -18,8 +17,8 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockPedestal extends BlockContainer
 {
@@ -31,6 +30,7 @@ public class BlockPedestal extends BlockContainer
     private static Icon sideIcon2;
     @SideOnly(Side.CLIENT)
     private static Icon bottomIcon;
+
     public BlockPedestal(int id)
     {
         super(id, Material.rock);
@@ -63,10 +63,10 @@ public class BlockPedestal extends BlockContainer
             case 1:
                 return topIcon;
 
-                //case 2: return sideIcon1;
-                //case 3: return sideIcon1;
-                //case 4: return sideIcon2;
-                //case 5: return sideIcon2;
+            //case 2: return sideIcon1;
+            //case 3: return sideIcon1;
+            //case 4: return sideIcon2;
+            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -75,7 +75,7 @@ public class BlockPedestal extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TEPedestal tileEntity = (TEPedestal)world.getBlockTileEntity(x, y, z);
+        TEPedestal tileEntity = (TEPedestal) world.getBlockTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -90,8 +90,7 @@ public class BlockPedestal extends BlockContainer
             newItem.stackSize = 1;
             --playerItem.stackSize;
             tileEntity.setInventorySlotContents(0, newItem);
-        }
-        else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
+        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
             /**stub method
              * Add the item that is in the slot to the player's inventory, and

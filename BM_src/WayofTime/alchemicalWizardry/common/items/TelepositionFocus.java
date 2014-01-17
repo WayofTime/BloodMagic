@@ -1,16 +1,16 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class TelepositionFocus extends EnergyItems
 {
@@ -89,8 +89,7 @@ public class TelepositionFocus extends EnergyItems
         if (!(itemStack.stackTagCompound == null))
         {
             return itemStack.stackTagCompound.getInteger("xCoord");
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -101,8 +100,7 @@ public class TelepositionFocus extends EnergyItems
         if (!(itemStack.stackTagCompound == null))
         {
             return itemStack.stackTagCompound.getInteger("yCoord");
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -113,8 +111,7 @@ public class TelepositionFocus extends EnergyItems
         if (!(itemStack.stackTagCompound == null))
         {
             return itemStack.stackTagCompound.getInteger("zCoord");
-        }
-        else
+        } else
         {
             return 0;
         }

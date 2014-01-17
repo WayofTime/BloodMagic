@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.alchemy;
 
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 
 public class AlchemyRecipeRegistry
 {
@@ -27,13 +27,13 @@ public class AlchemyRecipeRegistry
             return null;
         }
 
-        int bloodOrbLevel = ((EnergyBattery)bloodOrb.getItem()).getOrbLevel();
+        int bloodOrbLevel = ((EnergyBattery) bloodOrb.getItem()).getOrbLevel();
 
         for (AlchemyRecipe ar : recipes)
         {
             if (ar.doesRecipeMatch(recipe, bloodOrbLevel))
             {
-                return(ar.getResult());
+                return (ar.getResult());
             }
         }
 
@@ -52,13 +52,13 @@ public class AlchemyRecipeRegistry
             return 0;
         }
 
-        int bloodOrbLevel = ((EnergyBattery)bloodOrb.getItem()).getOrbLevel();
+        int bloodOrbLevel = ((EnergyBattery) bloodOrb.getItem()).getOrbLevel();
 
         for (AlchemyRecipe ar : recipes)
         {
             if (ar.doesRecipeMatch(recipe, bloodOrbLevel))
             {
-                return(ar.getAmountNeeded());
+                return (ar.getAmountNeeded());
             }
         }
 
@@ -67,7 +67,7 @@ public class AlchemyRecipeRegistry
 
     public static ItemStack[] getRecipeForItemStack(ItemStack itemStack)
     {
-        for (AlchemyRecipe ar: recipes)
+        for (AlchemyRecipe ar : recipes)
         {
             ItemStack result = ar.getResult();
 

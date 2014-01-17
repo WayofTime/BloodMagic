@@ -1,9 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
+import WayofTime.alchemicalWizardry.common.*;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemBlock;
@@ -13,16 +15,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindingAgent;
-import WayofTime.alchemicalWizardry.common.ICatalyst;
-import WayofTime.alchemicalWizardry.common.IFillingAgent;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
-import cpw.mods.fml.common.network.PacketDispatcher;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class TEWritingTable extends TileEntity implements IInventory
 {
@@ -69,8 +65,7 @@ public class TEWritingTable extends TileEntity implements IInventory
             if (stack.stackSize <= amt)
             {
                 setInventorySlotContents(slot, null);
-            }
-            else
+            } else
             {
                 stack = stack.splitStack(amt);
 
@@ -110,10 +105,14 @@ public class TEWritingTable extends TileEntity implements IInventory
     }
 
     @Override
-    public void openChest() {}
+    public void openChest()
+    {
+    }
 
     @Override
-    public void closeChest() {}
+    public void closeChest()
+    {
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound tagCompound)
@@ -197,8 +196,7 @@ public class TEWritingTable extends TileEntity implements IInventory
             dos.writeDouble(y);
             dos.writeDouble(z);
             dos.writeShort(particleType);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -221,8 +219,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                 {
                     ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
+                } else
                 {
                     inv[i] = null;
                 }
@@ -232,7 +229,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
     public int[] buildIntDataList()
     {
-        int [] sortList = new int[7 * 3];
+        int[] sortList = new int[7 * 3];
         int pos = 0;
 
         for (ItemStack is : inv)
@@ -242,8 +239,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                 sortList[pos++] = is.itemID;
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
+            } else
             {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;
@@ -268,7 +264,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
     public boolean isRecipeValid()
     {
-        return(getResultingItemStack() != null);
+        return (getResultingItemStack() != null);
     }
 
     public int getAmountNeeded(ItemStack bloodOrb)
@@ -288,8 +284,7 @@ public class TEWritingTable extends TileEntity implements IInventory
         if (getPotionFlaskPosition() != -1)
         {
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -299,7 +294,7 @@ public class TEWritingTable extends TileEntity implements IInventory
     {
         for (int i = 1; i <= 5; i++)
         {
-            if (inv[i] != null && !(inv[i].getItem() instanceof ItemBlock) && inv[i].itemID == AlchemicalWizardry.alchemyFlask.itemID)
+            if (inv[i] != null && !(inv[i].getItem() instanceof ItemBlock) && inv[i].itemID == ModItems.alchemyFlask.itemID)
             {
                 return i;
             }
@@ -313,8 +308,7 @@ public class TEWritingTable extends TileEntity implements IInventory
         if (getRegisteredPotionIngredientPosition() != -1)
         {
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -422,7 +416,7 @@ public class TEWritingTable extends TileEntity implements IInventory
     {
         for (int i = 0; i < 5; i++)
         {
-            if (inv[i + 1] != null && inv[i + 1].itemID == AlchemicalWizardry.blankSlate.itemID)
+            if (inv[i + 1] != null && inv[i + 1].itemID == ModItems.blankSlate.itemID)
             {
                 return i + 1;
             }
@@ -459,7 +453,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                     if (worldTime % 4 == 0)
                     {
-                        PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                        PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                     }
 
                     if (progress >= progressNeeded)
@@ -481,8 +475,8 @@ public class TEWritingTable extends TileEntity implements IInventory
                         }
 
                         int potionID = AlchemicalPotionCreationHandler.getPotionIDForStack(ingredientStack);
-                        int catalystLevel = ((ICatalyst)catalystStack.getItem()).getCatalystLevel();
-                        boolean isConcentration = ((ICatalyst)catalystStack.getItem()).isConcentration();
+                        int catalystLevel = ((ICatalyst) catalystStack.getItem()).getCatalystLevel();
+                        boolean isConcentration = ((ICatalyst) catalystStack.getItem()).isConcentration();
 
                         if (potionID == -1 || catalystLevel < 0)
                         {
@@ -498,11 +492,10 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                         if (isConcentration)
                         {
-                            ((AlchemyFlask)flaskStack.getItem()).setConcentrationOfPotion(flaskStack, potionID, catalystLevel);
-                        }
-                        else
+                            ((AlchemyFlask) flaskStack.getItem()).setConcentrationOfPotion(flaskStack, potionID, catalystLevel);
+                        } else
                         {
-                            ((AlchemyFlask)flaskStack.getItem()).setDurationFactorOfPotion(flaskStack, potionID, catalystLevel);
+                            ((AlchemyFlask) flaskStack.getItem()).setDurationFactorOfPotion(flaskStack, potionID, catalystLevel);
                         }
 
                         //((AlchemyFlask)flaskStack.getItem()).setConcentrationOfPotion(flaskStack, Potion.regeneration.id, 2);
@@ -518,8 +511,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                         }
                     }
                 }
-            }
-            else if (containsBindingAgent())
+            } else if (containsBindingAgent())
             {
                 if (getStackInSlot(6) == null)
                 {
@@ -527,7 +519,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                     if (worldTime % 4 == 0)
                     {
-                        PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                        PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                     }
 
                     if (progress >= progressNeeded)
@@ -548,10 +540,10 @@ public class TEWritingTable extends TileEntity implements IInventory
                             return;
                         }
 
-                        int potionEffectNumber = ((AlchemyFlask)flaskStack.getItem()).getNumberOfPotionEffects(flaskStack);
+                        int potionEffectNumber = ((AlchemyFlask) flaskStack.getItem()).getNumberOfPotionEffects(flaskStack);
                         int potionID = AlchemicalPotionCreationHandler.getPotionIDForStack(ingredientStack);
                         int tickDuration = AlchemicalPotionCreationHandler.getPotionTickDurationForStack(ingredientStack);
-                        float successChance = ((IBindingAgent)agentStack.getItem()).getSuccessRateForPotionNumber(potionEffectNumber);
+                        float successChance = ((IBindingAgent) agentStack.getItem()).getSuccessRateForPotionNumber(potionEffectNumber);
                         //boolean isConcentration = ((ICatalyst)catalystStack.getItem()).isConcentration();
 
                         if (potionID == -1)
@@ -566,15 +558,14 @@ public class TEWritingTable extends TileEntity implements IInventory
                             return;
                         }
 
-                        ((AlchemyFlask)flaskStack.getItem()).addPotionEffect(flaskStack, potionID, tickDuration);
+                        ((AlchemyFlask) flaskStack.getItem()).addPotionEffect(flaskStack, potionID, tickDuration);
 
                         //((AlchemyFlask)flaskStack.getItem()).addPotionEffect(flaskStack, Potion.regeneration.id, 1000);
 
                         if (successChance > worldObj.rand.nextFloat())
                         {
                             this.setInventorySlotContents(6, flaskStack);
-                        }
-                        else
+                        } else
                         {
                             worldObj.createExplosion(null, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 2, false);
                         }
@@ -591,8 +582,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     }
                 }
             }
-        }
-        else if (this.containsBlankSlate() && this.containsPotionFlask())
+        } else if (this.containsBlankSlate() && this.containsPotionFlask())
         {
             if (getStackInSlot(6) == null)
             {
@@ -600,7 +590,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                 if (worldTime % 4 == 0)
                 {
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                 }
 
                 if (progress >= progressNeeded)
@@ -622,7 +612,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     }
 
                     //boolean isConcentration = ((ICatalyst)catalystStack.getItem()).isConcentration();
-                    ((AlchemyFlask)flaskStack.getItem()).setIsPotionThrowable(true, flaskStack);
+                    ((AlchemyFlask) flaskStack.getItem()).setIsPotionThrowable(true, flaskStack);
                     //((AlchemyFlask)flaskStack.getItem()).addPotionEffect(flaskStack, Potion.regeneration.id, 1000);
                     //if(successChance>worldObj.rand.nextFloat())
                     this.setInventorySlotContents(6, flaskStack);
@@ -637,8 +627,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     }
                 }
             }
-        }
-        else if (this.containsFillingAgent() && this.containsPotionFlask())
+        } else if (this.containsFillingAgent() && this.containsPotionFlask())
         {
             //TODO
             if (getStackInSlot(6) == null)
@@ -647,7 +636,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                 if (worldTime % 4 == 0)
                 {
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                 }
 
                 if (progress >= progressNeeded)
@@ -669,8 +658,8 @@ public class TEWritingTable extends TileEntity implements IInventory
                     }
 
                     //boolean isConcentration = ((ICatalyst)catalystStack.getItem()).isConcentration();
-                    int potionEffects = ((AlchemyFlask)flaskStack.getItem()).getNumberOfPotionEffects(flaskStack);
-                    int potionFillAmount = ((IFillingAgent)fillingAgent.getItem()).getFilledAmountForPotionNumber(potionEffects);
+                    int potionEffects = ((AlchemyFlask) flaskStack.getItem()).getNumberOfPotionEffects(flaskStack);
+                    int potionFillAmount = ((IFillingAgent) fillingAgent.getItem()).getFilledAmountForPotionNumber(potionEffects);
                     flaskStack.setItemDamage(Math.max(0, flaskStack.getItemDamage() - potionFillAmount));
                     //((AlchemyFlask)flaskStack.getItem()).addPotionEffect(flaskStack, Potion.regeneration.id, 1000);
                     //if(successChance>worldObj.rand.nextFloat())
@@ -686,8 +675,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     }
                 }
             }
-        }
-        else
+        } else
         {
             if (!isRecipeValid())
             {
@@ -710,7 +698,7 @@ public class TEWritingTable extends TileEntity implements IInventory
             {
                 if (worldTime % 4 == 0)
                 {
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                 }
 
                 if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed))
@@ -735,12 +723,11 @@ public class TEWritingTable extends TileEntity implements IInventory
                         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                     }
                 }
-            }
-            else if (getStackInSlot(6).getItem().itemID == getResultingItemStack().itemID && getResultingItemStack().stackSize <= (getStackInSlot(6).getMaxStackSize() - getStackInSlot(6).stackSize))
+            } else if (getStackInSlot(6).getItem().itemID == getResultingItemStack().itemID && getResultingItemStack().stackSize <= (getStackInSlot(6).getMaxStackSize() - getStackInSlot(6).stackSize))
             {
                 if (worldTime % 4 == 0)
                 {
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                 }
 
                 if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed))

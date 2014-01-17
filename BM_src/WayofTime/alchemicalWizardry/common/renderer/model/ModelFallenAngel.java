@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.renderer.model;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 
 public class ModelFallenAngel extends ModelBase
 {
@@ -103,13 +101,13 @@ public class ModelFallenAngel extends ModelBase
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        this.head.rotateAngleX = f4 / (180F / (float)Math.PI);
-        this.head.rotateAngleY = f3 / (180F / (float)Math.PI);
+        this.head.rotateAngleX = f4 / (180F / (float) Math.PI);
+        this.head.rotateAngleY = f3 / (180F / (float) Math.PI);
         this.leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
-        this.rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
-        this.rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
+        this.rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * f1;
+        this.rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * f1;
         this.leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
         this.rightWing.rotateAngleY = MathHelper.cos(0.1662F);
-        this.leftWing.rotateAngleY = MathHelper.cos(0.1662F + (float)Math.PI);
+        this.leftWing.rotateAngleY = MathHelper.cos(0.1662F + (float) Math.PI);
     }
 }

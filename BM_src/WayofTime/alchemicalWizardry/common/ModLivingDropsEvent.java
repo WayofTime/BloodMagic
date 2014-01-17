@@ -26,7 +26,7 @@ public class ModLivingDropsEvent
                     if (effect.getAmplifier() >= 2)
                         if (rand < 0.50d)
                         {
-                            event.entityLiving.dropItem(AlchemicalWizardry.weakBloodShard.itemID, 1);
+                            event.entityLiving.dropItem(ModItems.weakBloodShard.itemID, 1);
                         }
                 }
             }

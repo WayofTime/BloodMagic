@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import net.minecraft.block.Block;
@@ -25,7 +25,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -64,8 +64,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             boolean[][] boolList = new boolean[range * 2 + 1][range * 2 + 1];
 
@@ -95,7 +94,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                                 int id = world.getBlockId(x - range + i - 1, y + 1, z - range + j);
                                 Block block = Block.blocksList[id];
 
-                                if (!AlchemicalWizardry.largeBloodStoneBrick.equals(block) && !AlchemicalWizardry.bloodStoneBrick.equals(block))
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
                                 {
                                     boolList[i - 1][j] = true;
                                     isReady = false;
@@ -107,7 +106,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                                 int id = world.getBlockId(x - range + i, y + 1, z - range + j - 1);
                                 Block block = Block.blocksList[id];
 
-                                if (!AlchemicalWizardry.largeBloodStoneBrick.equals(block) && !AlchemicalWizardry.bloodStoneBrick.equals(block))
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
                                 {
                                     boolList[i][j - 1] = true;
                                     isReady = false;
@@ -119,7 +118,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                                 int id = world.getBlockId(x - range + i + 1, y + 1, z - range + j);
                                 Block block = Block.blocksList[id];
 
-                                if (!AlchemicalWizardry.largeBloodStoneBrick.equals(block) && !AlchemicalWizardry.bloodStoneBrick.equals(block))
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
                                 {
                                     boolList[i + 1][j] = true;
                                     isReady = false;
@@ -131,7 +130,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                                 int id = world.getBlockId(x - range + i, y + 1, z - range + j + 1);
                                 Block block = Block.blocksList[id];
 
-                                if (!AlchemicalWizardry.largeBloodStoneBrick.equals(block) && !AlchemicalWizardry.bloodStoneBrick.equals(block))
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
                                 {
                                     boolList[i][j + 1] = true;
                                     isReady = false;
@@ -163,7 +162,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                         continue;
                     }
 
-                    TEPlinth tilePlinth = (TEPlinth)tileEntity;
+                    TEPlinth tilePlinth = (TEPlinth) tileEntity;
                     ItemStack itemStack = tilePlinth.getStackInSlot(0);
 
                     if (itemStack != null)
@@ -178,64 +177,52 @@ public class RitualEffectBiomeChanger extends RitualEffect
                                 {
                                     humidity -= 0.1f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.blockLapis.blockID))
+                                } else if (item.itemID == (Block.blockLapis.blockID))
                                 {
                                     humidity += 0.4f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.sand.blockID))
+                                } else if (item.itemID == (Block.sand.blockID))
                                 {
                                     humidity -= 0.1f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.sandStone.blockID))
+                                } else if (item.itemID == (Block.sandStone.blockID))
                                 {
                                     humidity -= 0.2f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.netherrack.blockID))
+                                } else if (item.itemID == (Block.netherrack.blockID))
                                 {
                                     humidity -= 0.4f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.coalBlock.blockID))
+                                } else if (item.itemID == (Block.coalBlock.blockID))
                                 {
                                     temperature += 0.2f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.ice.blockID))
+                                } else if (item.itemID == (Block.ice.blockID))
                                 {
                                     temperature -= 0.4f;
                                     isItemConsumed = true;
-                                }
-                                else if (item.itemID == (Block.blockSnow.blockID))
+                                } else if (item.itemID == (Block.blockSnow.blockID))
                                 {
                                     temperature -= 0.2f;
                                     isItemConsumed = true;
                                 }
-                            }
-                            else if (item.equals(Item.dyePowder) && itemStack.getItemDamage() == 4)
+                            } else if (item.equals(Item.dyePowder) && itemStack.getItemDamage() == 4)
                             {
                                 humidity += 0.1f;
                                 isItemConsumed = true;
-                            }
-                            else if (item.equals(Item.bucketLava))
+                            } else if (item.equals(Item.bucketLava))
                             {
                                 temperature += 0.4f;
                                 isItemConsumed = true;
-                            }
-                            else if (item.equals(Item.bucketWater))
+                            } else if (item.equals(Item.bucketWater))
                             {
                                 humidity += 0.2f;
                                 isItemConsumed = true;
-                            }
-                            else if (item.equals(Item.coal))
+                            } else if (item.equals(Item.coal))
                             {
                                 temperature += 0.1f;
                                 isItemConsumed = true;
-                            }
-                            else if (item.equals(Item.snowball))
+                            } else if (item.equals(Item.snowball))
                             {
                                 temperature -= 0.1f;
                                 isItemConsumed = true;
@@ -304,7 +291,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                             moduZ = moduZ + 16;
                         }
 
-                        byteArray[moduZ * 16 + moduX] = (byte)biomeID;
+                        byteArray[moduZ * 16 + moduX] = (byte) biomeID;
                         chunk.setBiomeArray(byteArray);
                         //world.setBlock(x-range+i, y+1, z-range+j, Block.blockClay.blockID);
                     }

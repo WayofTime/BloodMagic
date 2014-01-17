@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,17 +12,13 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class ActivationCrystal extends EnergyItems
 {
-    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[] { "Weak", "Awakened"};
+    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"Weak", "Awakened"};
 
     @SideOnly(Side.CLIENT)
     private Icon[] icons;
@@ -69,7 +67,7 @@ public class ActivationCrystal extends EnergyItems
                     {
                         par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
-                        for (ItemStack item: recipe)
+                        for (ItemStack item : recipe)
                         {
                             if (item != null)
                             {
@@ -77,8 +75,7 @@ public class ActivationCrystal extends EnergyItems
                             }
                         }
                     }
-                }
-                else
+                } else
                 {
                     par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
                 }

@@ -1,18 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemBloodLightSigil extends EnergyItems
 {
@@ -59,32 +60,32 @@ public class ItemBloodLightSigil extends EnergyItems
 
         if (par7 == 0 && par3World.isAirBlock(par4, par5 - 1, par6))
         {
-            par3World.setBlock(par4, par5 - 1, par6, AlchemicalWizardry.blockBloodLight.blockID);
+            par3World.setBlock(par4, par5 - 1, par6, ModBlocks.blockBloodLight.blockID);
         }
 
         if (par7 == 1 && par3World.isAirBlock(par4, par5 + 1, par6))
         {
-            par3World.setBlock(par4, par5 + 1, par6, AlchemicalWizardry.blockBloodLight.blockID);
+            par3World.setBlock(par4, par5 + 1, par6, ModBlocks.blockBloodLight.blockID);
         }
 
         if (par7 == 2 && par3World.isAirBlock(par4, par5, par6 - 1))
         {
-            par3World.setBlock(par4, par5, par6 - 1 , AlchemicalWizardry.blockBloodLight.blockID);
+            par3World.setBlock(par4, par5, par6 - 1, ModBlocks.blockBloodLight.blockID);
         }
 
         if (par7 == 3 && par3World.isAirBlock(par4, par5, par6 + 1))
         {
-            par3World.setBlock(par4, par5, par6 + 1 , AlchemicalWizardry.blockBloodLight.blockID);
+            par3World.setBlock(par4, par5, par6 + 1, ModBlocks.blockBloodLight.blockID);
         }
 
         if (par7 == 4 && par3World.isAirBlock(par4 - 1, par5, par6))
         {
-            par3World.setBlock(par4 - 1, par5, par6, AlchemicalWizardry.blockBloodLight.blockID);
+            par3World.setBlock(par4 - 1, par5, par6, ModBlocks.blockBloodLight.blockID);
         }
 
         if (par7 == 5 && par3World.isAirBlock(par4 + 1, par5, par6))
         {
-            par3World.setBlock(par4 + 1, par5, par6, AlchemicalWizardry.blockBloodLight.blockID);
+            par3World.setBlock(par4 + 1, par5, par6, ModBlocks.blockBloodLight.blockID);
         }
 
         return true;
@@ -123,7 +124,7 @@ public class ItemBloodLightSigil extends EnergyItems
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {
@@ -134,7 +135,7 @@ public class ItemBloodLightSigil extends EnergyItems
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer)par3Entity, getEnergyUsed());
+                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
             }
         }
 

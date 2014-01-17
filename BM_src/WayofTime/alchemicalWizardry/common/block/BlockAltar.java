@@ -1,7 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -14,14 +21,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockAltar extends BlockContainer
 {
@@ -33,6 +34,7 @@ public class BlockAltar extends BlockContainer
     private static Icon sideIcon2;
     @SideOnly(Side.CLIENT)
     private static Icon bottomIcon;
+
     public BlockAltar(int id)
     {
         super(id, Material.rock);
@@ -65,10 +67,10 @@ public class BlockAltar extends BlockContainer
             case 1:
                 return topIcon;
 
-                //case 2: return sideIcon1;
-                //case 3: return sideIcon1;
-                //case 4: return sideIcon2;
-                //case 5: return sideIcon2;
+            //case 2: return sideIcon1;
+            //case 3: return sideIcon1;
+            //case 4: return sideIcon2;
+            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -77,7 +79,7 @@ public class BlockAltar extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TEAltar tileEntity = (TEAltar)world.getBlockTileEntity(x, y, z);
+        TEAltar tileEntity = (TEAltar) world.getBlockTileEntity(x, y, z);
 
 //        world.scheduleBlockUpdate(x, y, z, this.blockID, 0);
 
@@ -90,7 +92,7 @@ public class BlockAltar extends BlockContainer
 
         if (playerItem != null)
         {
-            if (playerItem.getItem().itemID == AlchemicalWizardry.divinationSigil.itemID)
+            if (playerItem.getItem().itemID == ModItems.divinationSigil.itemID)
             {
                 if (player.worldObj.isRemote)
                 {
@@ -98,12 +100,11 @@ public class BlockAltar extends BlockContainer
                 }
 
                 return true;
-            }
-            else if (playerItem.getItem().itemID == AlchemicalWizardry.sigilOfHolding.itemID)
+            } else if (playerItem.getItem().itemID == ModItems.sigilOfHolding.itemID)
             {
-                ItemStack item = ((SigilOfHolding)playerItem.getItem()).getCurrentItem(playerItem);
+                ItemStack item = ((SigilOfHolding) playerItem.getItem()).getCurrentItem(playerItem);
 
-                if (item != null && item.getItem().itemID == AlchemicalWizardry.divinationSigil.itemID)
+                if (item != null && item.getItem().itemID == ModItems.divinationSigil.itemID)
                 {
                     if (player.worldObj.isRemote)
                     {
@@ -126,8 +127,7 @@ public class BlockAltar extends BlockContainer
             --playerItem.stackSize;
             tileEntity.setInventorySlotContents(0, newItem);
             tileEntity.startCycle();
-        }
-        else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
+        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
             /**stub method
              * Add the item that is in the slot to the player's inventory, and
@@ -173,8 +173,8 @@ public class BlockAltar extends BlockContainer
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
                 EntityItem entityItem = new EntityItem(world,
-                                                       x + rx, y + ry, z + rz,
-                                                       new ItemStack(item.itemID, item.stackSize, item.getItemDamage()));
+                        x + rx, y + ry, z + rz,
+                        new ItemStack(item.itemID, item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {
@@ -224,7 +224,7 @@ public class BlockAltar extends BlockContainer
     @Override
     public void randomDisplayTick(World world, int x, int y, int z, Random rand)
     {
-        TEAltar tileEntity = (TEAltar)world.getBlockTileEntity(x, y, z);
+        TEAltar tileEntity = (TEAltar) world.getBlockTileEntity(x, y, z);
 
         if (!tileEntity.isActive())
         {
@@ -260,15 +260,15 @@ public class BlockAltar extends BlockContainer
 //    		{
 //    			return 0;
 //    		}
-            ItemStack stack = ((TEAltar)tile).getStackInSlot(0);
+            ItemStack stack = ((TEAltar) tile).getStackInSlot(0);
 
             if (stack != null && stack.getItem() instanceof EnergyBattery)
             {
-                EnergyBattery bloodOrb = (EnergyBattery)stack.getItem();
+                EnergyBattery bloodOrb = (EnergyBattery) stack.getItem();
                 int maxEssence = bloodOrb.getMaxEssence();
                 int currentEssence = bloodOrb.getCurrentEssence(stack);
                 int level = currentEssence * 15 / maxEssence;
-                return((int)(Math.min(15, level))) % 16;
+                return ((int) (Math.min(15, level))) % 16;
             }
         }
 

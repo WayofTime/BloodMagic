@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,16 +17,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class LavaSigil extends ItemBucket implements ArmourUpgrade
 {
-    /** field for checking if the bucket has been filled. */
+    /**
+     * field for checking if the bucket has been filled.
+     */
     private int isFull = Block.lavaMoving.blockID;
     private int energyUsed;
 
@@ -76,17 +78,16 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
         }
 
         float f = 1.0F;
-        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double)f;
-        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double)f + 1.62D - (double)par3EntityPlayer.yOffset;
-        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double)f;
+        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double) f;
+        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double) f + 1.62D - (double) par3EntityPlayer.yOffset;
+        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double) f;
         boolean flag = this.isFull == 0;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, flag);
 
         if (movingobjectposition == null)
         {
             return par1ItemStack;
-        }
-        else
+        } else
         {
             if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
             {
@@ -102,8 +103,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
                 if (this.isFull == 0)
                 {
                     //Empty
-                }
-                else
+                } else
                 {
                     if (movingobjectposition.sideHit == 0)
                     {
@@ -147,8 +147,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
                             if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                             {
                             }
-                        }
-                        else
+                        } else
                         {
                             return par1ItemStack;
                         }
@@ -168,16 +167,13 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
         if (this.isFull <= 0)
         {
             return false;
-        }
-        else if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlockMaterial(par8, par9, par10).isSolid())
+        } else if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlockMaterial(par8, par9, par10).isSolid())
         {
             return false;
-        }
-        else if ((par1World.getBlockId(par8, par9, par10) == Block.lavaMoving.blockID || par1World.getBlockId(par8, par9, par10) == Block.lavaStill.blockID) && par1World.getBlockMetadata(par8, par9, par10) == 0)
+        } else if ((par1World.getBlockId(par8, par9, par10) == Block.lavaMoving.blockID || par1World.getBlockId(par8, par9, par10) == Block.lavaStill.blockID) && par1World.getBlockMetadata(par8, par9, par10) == 0)
         {
             return false;
-        }
-        else
+        } else
         {
             par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
             return true;
@@ -196,7 +192,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
     //Heals the player using the item. If the player is at full health, or if the durability cannot be used any more,
     //the item is not used.
 
-//    protected void damagePlayer(World world, EntityPlayer player, int damage)
+    //    protected void damagePlayer(World world, EntityPlayer player, int damage)
 //    {
 //        if (world != null)
 //        {
@@ -258,8 +254,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
             }
 
             return true;
-        }
-        else
+        } else
         {
             return true;
         }

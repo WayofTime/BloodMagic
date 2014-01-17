@@ -2,21 +2,17 @@ package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 public class TeleportProjectile extends EnergyBlastProjectile
 {
@@ -73,14 +69,13 @@ public class TeleportProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             if (isEntityTeleport)
             {
                 if (shootingEntity != null && shootingEntity instanceof EntityPlayerMP)
                 {
-                    EntityPlayerMP entityplayermp = (EntityPlayerMP)shootingEntity;
+                    EntityPlayerMP entityplayermp = (EntityPlayerMP) shootingEntity;
 
                     if (!entityplayermp.playerNetServerHandler.connectionClosed && entityplayermp.worldObj == this.worldObj)
                     {
@@ -90,7 +85,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                         {
                             if (shootingEntity.isRiding())
                             {
-                                shootingEntity.mountEntity((Entity)null);
+                                shootingEntity.mountEntity((Entity) null);
                             }
 
                             shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
@@ -112,8 +107,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
         {
             //shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -132,7 +126,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                 {
                     if (shootingEntity != null && shootingEntity instanceof EntityPlayerMP)
                     {
-                        EntityPlayerMP entityplayermp = (EntityPlayerMP)shootingEntity;
+                        EntityPlayerMP entityplayermp = (EntityPlayerMP) shootingEntity;
 
                         if (!entityplayermp.playerNetServerHandler.connectionClosed && entityplayermp.worldObj == this.worldObj)
                         {
@@ -142,7 +136,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                             {
                                 if (shootingEntity.isRiding())
                                 {
-                                    shootingEntity.mountEntity((Entity)null);
+                                    shootingEntity.mountEntity((Entity) null);
                                 }
 
                                 shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
@@ -151,8 +145,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                             }
                         }
                     }
-                }
-                else
+                } else
                 {
 //        			int x = (int)this.posX + mop.worldObj.rand.nextInt(100) - mop.worldObj.rand.nextInt(100);
 //        			int y = (int)this.posY + mop.worldObj.rand.nextInt(10) - mop.worldObj.rand.nextInt(10);
@@ -175,7 +168,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
 //	        				i++;
 //	        			}
 //        			}
-                    SpellTeleport.teleportRandomly((EntityLivingBase)mop, 64);
+                    SpellTeleport.teleportRandomly((EntityLivingBase) mop, 64);
                 }
 
                 //doDamage(projectileDamage, mop);

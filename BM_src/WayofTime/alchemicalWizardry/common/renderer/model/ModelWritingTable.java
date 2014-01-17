@@ -48,7 +48,7 @@ public class ModelWritingTable extends ModelBase
         appendage2.setRotationPoint(0F, 10F, 0F);
         appendage2.setTextureSize(64, 32);
         appendage2.mirror = true;
-        setRotation(appendage2, 0F, ((float)Math.PI * 2F / 5F), 0F);
+        setRotation(appendage2, 0F, ((float) Math.PI * 2F / 5F), 0F);
         appendage3 = new ModelRenderer(this, 48, 0);
         appendage3.addBox(1F, 0F, 0F, 7, 11, 0);
         appendage3.setRotationPoint(0F, 10F, 0F);
@@ -66,7 +66,7 @@ public class ModelWritingTable extends ModelBase
         appendage5.setRotationPoint(0F, 10F, 0F);
         appendage5.setTextureSize(64, 32);
         appendage5.mirror = true;
-        setRotation(appendage5, 0F, -((float)Math.PI * 2F / 5F), 0F);
+        setRotation(appendage5, 0F, -((float) Math.PI * 2F / 5F), 0F);
         outputPad = new ModelRenderer(this, 0, 20);
         outputPad.addBox(0F, 0F, 0F, 4, 1, 4);
         outputPad.setRotationPoint(-2F, 9F, -2F);

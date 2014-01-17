@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -11,10 +13,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.FakePlayer;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SacrificialDagger extends Item
 {
@@ -54,8 +54,8 @@ public class SacrificialDagger extends Item
         double posX = par3EntityPlayer.posX;
         double posY = par3EntityPlayer.posY;
         double posZ = par3EntityPlayer.posZ;
-        par2World.playSoundEffect((double)((float)posX + 0.5F), (double)((float)posY + 0.5F), (double)((float)posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
-        float f = (float)1.0F;
+        par2World.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
+        float f = (float) 1.0F;
         float f1 = f * 0.6F + 0.4F;
         float f2 = f * f * 0.7F - 0.5F;
         float f3 = f * f * 0.6F - 0.7F;
@@ -83,9 +83,9 @@ public class SacrificialDagger extends Item
 
     public void findAndFillAltar(World world, EntityPlayer player, int amount)
     {
-        int posX = (int)Math.round(player.posX - 0.5f);
-        int posY = (int)player.posY;
-        int posZ = (int)Math.round(player.posZ - 0.5f);
+        int posX = (int) Math.round(player.posX - 0.5f);
+        int posY = (int) player.posY;
+        int posZ = (int) Math.round(player.posZ - 0.5f);
         TEAltar altarEntity = getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
@@ -111,25 +111,25 @@ public class SacrificialDagger extends Item
 
                     if ((tileEntity instanceof TEAltar))
                     {
-                        return (TEAltar)tileEntity;
+                        return (TEAltar) tileEntity;
                     }
                 }
 
                 if ((tileEntity instanceof TEAltar))
                 {
-                    return (TEAltar)tileEntity;
+                    return (TEAltar) tileEntity;
                 }
             }
 
             if ((tileEntity instanceof TEAltar))
             {
-                return (TEAltar)tileEntity;
+                return (TEAltar) tileEntity;
             }
         }
 
         if ((tileEntity instanceof TEAltar))
         {
-            return (TEAltar)tileEntity;
+            return (TEAltar) tileEntity;
         }
 
         return null;

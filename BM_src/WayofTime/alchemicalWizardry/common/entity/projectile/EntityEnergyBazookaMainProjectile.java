@@ -1,14 +1,9 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -36,7 +31,7 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
 
     public EntityEnergyBazookaMainProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir)
     {
-        super(par1World,  par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
     @Override
@@ -56,10 +51,9 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
-            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float)(5.0f), false);
+            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float) (5.0f), false);
             this.spawnSecondaryProjectiles();
         }
 
@@ -73,8 +67,7 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -82,7 +75,7 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
                 spawnSecondaryProjectiles();
             }
 
-            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float)(5.0f), false);
+            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float) (5.0f), false);
         }
 
         spawnHitParticles("magicCrit", 8);

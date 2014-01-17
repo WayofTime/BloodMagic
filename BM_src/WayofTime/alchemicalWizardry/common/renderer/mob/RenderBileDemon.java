@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.renderer.mob;
 
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
 
 public class RenderBileDemon extends RenderLiving
 {
@@ -22,6 +22,6 @@ public class RenderBileDemon extends RenderLiving
 
     public ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.func_110832_a((EntityBileDemon)par1Entity);
+        return this.func_110832_a((EntityBileDemon) par1Entity);
     }
 }

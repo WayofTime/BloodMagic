@@ -88,8 +88,7 @@ public class ContainerWritingTable extends Container
             if (stackInSlot.stackSize == 0)
             {
                 slotObject.putStack(null);
-            }
-            else
+            } else
             {
                 slotObject.onSlotChanged();
             }

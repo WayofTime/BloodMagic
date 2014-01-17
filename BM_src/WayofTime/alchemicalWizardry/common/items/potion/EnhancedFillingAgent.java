@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.Random;
-
-import net.minecraft.client.renderer.texture.IconRegister;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
+
+import java.util.Random;
 
 public class EnhancedFillingAgent extends WeakFillingAgent
 {

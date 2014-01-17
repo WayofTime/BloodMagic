@@ -19,9 +19,9 @@ public class EntityShadeElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityLivingBase)
         {
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(Potion.blindness.id, 100, 1));
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(Potion.nightVision.id, 100, 0));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.blindness.id, 100, 1));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.nightVision.id, 100, 0));
         }
     }
 }

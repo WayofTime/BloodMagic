@@ -53,10 +53,10 @@ public class AlchemyPotionHelper
     {
         if (potionID == Potion.heal.id || potionID == Potion.harm.id)
         {
-            return(new PotionEffect(potionID, 1, concentration));
+            return (new PotionEffect(potionID, 1, concentration));
         }
 
-        return(new PotionEffect(potionID, (int)(tickDuration * Math.pow(0.5f, concentration) * Math.pow(8.0f / 3.0f, durationFactor)), concentration));
+        return (new PotionEffect(potionID, (int) (tickDuration * Math.pow(0.5f, concentration) * Math.pow(8.0f / 3.0f, durationFactor)), concentration));
     }
 
     public static AlchemyPotionHelper readEffectFromNBT(NBTTagCompound tagCompound)

@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import WayofTime.alchemicalWizardry.common.PacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class WindGustProjectile extends EnergyBlastProjectile
 {
@@ -49,8 +48,7 @@ public class WindGustProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
 //        	for(int i=-1;i<=1;i++)
 //        	{
@@ -77,8 +75,7 @@ public class WindGustProjectile extends EnergyBlastProjectile
         {
             //shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -93,9 +90,9 @@ public class WindGustProjectile extends EnergyBlastProjectile
 //        		{
 //        			doDamage(projectileDamage, mop);
 //        		}
-                ((EntityLivingBase)mop).motionX = this.motionX * 2;
-                ((EntityLivingBase)mop).motionY = 1.5;
-                ((EntityLivingBase)mop).motionZ = this.motionZ * 2;
+                ((EntityLivingBase) mop).motionX = this.motionX * 2;
+                ((EntityLivingBase) mop).motionY = 1.5;
+                ((EntityLivingBase) mop).motionZ = this.motionZ * 2;
                 //((EntityLivingBase)mop).setVelocity(this.motionX*2, ((EntityLivingBase)mop).motionY+1.5, this.motionZ*2);
             }
 

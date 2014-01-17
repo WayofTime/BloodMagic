@@ -1,8 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,10 +13,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SigilOfHolding extends EnergyItems
 {
@@ -241,8 +242,7 @@ public class SigilOfHolding extends EnergyItems
             if (inv[i] != null)
             {
                 filledSlots++;
-            }
-            else
+            } else
             {
                 break;
             }
@@ -258,8 +258,7 @@ public class SigilOfHolding extends EnergyItems
         if (getSelectedSlot(itemStack) + 1 < filledSlots)
         {
             itemTag.setInteger("selectedSlot", itemTag.getInteger("selectedSlot") + 1);
-        }
-        else
+        } else
         {
             itemTag.setInteger("selectedSlot", 0);
         }
@@ -303,7 +302,7 @@ public class SigilOfHolding extends EnergyItems
             return false;
         }
 
-        for (Integer i: allowedSigils)
+        for (Integer i : allowedSigils)
         {
             if (i.intValue() == itemID)
             {
@@ -335,16 +334,16 @@ public class SigilOfHolding extends EnergyItems
 
     public static void initiateSigilOfHolding()
     {
-        allowedSigils.add(new Integer(AlchemicalWizardry.waterSigil.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.lavaSigil.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.voidSigil.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.airSigil.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.sigilOfTheFastMiner.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.divinationSigil.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.sigilOfElementalAffinity.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.growthSigil.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.sigilOfHaste.itemID));
-        allowedSigils.add(new Integer(AlchemicalWizardry.sigilOfWind.itemID));
+        allowedSigils.add(new Integer(ModItems.waterSigil.itemID));
+        allowedSigils.add(new Integer(ModItems.lavaSigil.itemID));
+        allowedSigils.add(new Integer(ModItems.voidSigil.itemID));
+        allowedSigils.add(new Integer(ModItems.airSigil.itemID));
+        allowedSigils.add(new Integer(ModItems.sigilOfTheFastMiner.itemID));
+        allowedSigils.add(new Integer(ModItems.divinationSigil.itemID));
+        allowedSigils.add(new Integer(ModItems.sigilOfElementalAffinity.itemID));
+        allowedSigils.add(new Integer(ModItems.growthSigil.itemID));
+        allowedSigils.add(new Integer(ModItems.sigilOfHaste.itemID));
+        allowedSigils.add(new Integer(ModItems.sigilOfWind.itemID));
     }
 
     public ItemStack getCurrentItem(ItemStack sigilItemStack)

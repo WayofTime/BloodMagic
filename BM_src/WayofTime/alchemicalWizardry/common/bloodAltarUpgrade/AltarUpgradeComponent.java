@@ -4,7 +4,7 @@ public class AltarUpgradeComponent
 {
     private int speedUpgrades;
     private int efficiencyUpgrades;
-    private int sacrificeUpgrades ;
+    private int sacrificeUpgrades;
     private int selfSacrificeUpgrades;
     private int displacementUpgrades;
     private int altarCapacitiveUpgrades;

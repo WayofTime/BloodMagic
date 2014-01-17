@@ -1,13 +1,13 @@
 package thaumcraft.api.crafting;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.AspectList;
+
+import java.util.ArrayList;
 
 public class InfusionRecipe
 {
@@ -31,6 +31,7 @@ public class InfusionRecipe
 
     /**
      * Used to check if a recipe matches current crafting inventory
+     *
      * @param player
      */
     public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player)
@@ -54,12 +55,12 @@ public class InfusionRecipe
 
         ArrayList<ItemStack> ii = new ArrayList<ItemStack>();
 
-        for (ItemStack is: input)
+        for (ItemStack is : input)
         {
             ii.add(is.copy());
         }
 
-        for (ItemStack comp: components)
+        for (ItemStack comp : components)
         {
             boolean b = false;
 
@@ -116,13 +117,12 @@ public class InfusionRecipe
 
             if (od != -1)
             {
-                ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[] {});
+                ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
 
-                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[] {stack1}, ores))
+                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
                     return true;
             }
-        }
-        else
+        } else
         {
             t1 = ItemStack.areItemStackTagsEqual(stack0, stack1);
         }

@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+
+import java.util.List;
 
 public class AWBaseItems extends Item
 {
@@ -19,19 +20,16 @@ public class AWBaseItems extends Item
 
     public void registerIcons(IconRegister iconRegister)
     {
-        if (this.itemID == AlchemicalWizardry.blankSlate.itemID)
+        if (this.itemID == ModItems.blankSlate.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BlankSlate");
-        }
-        else if (this.itemID == AlchemicalWizardry.reinforcedSlate.itemID)
+        } else if (this.itemID == ModItems.reinforcedSlate.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ReinforcedSlate");
-        }
-        else if (this.itemID == AlchemicalWizardry.imbuedSlate.itemID)
+        } else if (this.itemID == ModItems.imbuedSlate.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:InfusedSlate");
-        }
-        else if (this.itemID == AlchemicalWizardry.demonicSlate.itemID)
+        } else if (this.itemID == ModItems.demonicSlate.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonSlate");
         }

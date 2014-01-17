@@ -1,17 +1,15 @@
 package thaumcraft.api.wands;
 
-import java.util.LinkedHashMap;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.LinkedHashMap;
+
 /**
- *
  * @author Azanor
- *
- * This class is used to keep the material information for the various rods.
- * It is also used to generate the wand recipes ingame.
- *
+ *         <p/>
+ *         This class is used to keep the material information for the various rods.
+ *         It is also used to generate the wand recipes ingame.
  */
 public class WandRod
 {
@@ -48,7 +46,7 @@ public class WandRod
      */
     boolean glow;
 
-    public static LinkedHashMap<String, WandRod> rods = new LinkedHashMap<String, WandRod>();
+    public static LinkedHashMap<String,WandRod> rods = new LinkedHashMap<String,WandRod>();
 
     public WandRod(String tag, int capacity, ItemStack item, int craftCost, ResourceLocation texture)
     {

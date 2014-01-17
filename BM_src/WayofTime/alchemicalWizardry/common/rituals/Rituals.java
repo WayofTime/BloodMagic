@@ -1,13 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.block.RitualStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rituals
 {
@@ -57,8 +57,7 @@ public class Rituals
         if (ritual <= ritualList.size())
         {
             return ritualList.get(ritual - 1).crystalLevel <= crystalLevel;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -112,12 +111,13 @@ public class Rituals
 //
 //        return true;
     }
+
     /**
-    1 - NORTH
-    2 - EAST
-    3 - SOUTH
-    4 - WEST
-    */
+     * 1 - NORTH
+     * 2 - EAST
+     * 3 - SOUTH
+     * 4 - WEST
+     */
     public static boolean checkDirectionOfRitualValid(World world, int x, int y, int z, int ritualID, int direction)
     {
         List<RitualComponent> ritual = Rituals.getRitualList(ritualID);
@@ -895,8 +895,7 @@ public class Rituals
         if (ritualID <= ritualList.size())
         {
             return ritualList.get(ritualID - 1).actCost;
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -985,8 +984,7 @@ public class Rituals
         if (ritualID <= ritualList.size())
         {
             return ritualList.get(ritualID - 1).obtainComponents();
-        }
-        else
+        } else
         {
             return null;
         }
@@ -1060,8 +1058,7 @@ public class Rituals
         if (ritualList.get(id) != null)
         {
             return ritualList.get(id).getRitualName();
-        }
-        else
+        } else
         {
             return "";
         }

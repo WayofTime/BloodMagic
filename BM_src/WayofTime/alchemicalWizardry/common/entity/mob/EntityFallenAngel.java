@@ -1,64 +1,17 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import java.util.Calendar;
-import java.util.UUID;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
 import cpw.mods.fml.common.network.Player;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EntityLivingData;
-import net.minecraft.entity.EntityOwnable;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIBeg;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIFleeSun;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAIRestrictSun;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITargetNonTamed;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeInstance;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -67,13 +20,8 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProviderHell;
 
 public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, Player
 {
@@ -125,8 +73,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
         if (this.isTamed())
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxTamedHealth);
-        }
-        else
+        } else
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxUntamedHealth);
         }
@@ -152,8 +99,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
         if (par1EntityLivingBase == null)
         {
             this.setAngry(false);
-        }
-        else if (!this.isTamed())
+        } else if (!this.isTamed())
         {
             this.setAngry(true);
         }
@@ -171,8 +117,8 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     {
         super.entityInit();
         this.dataWatcher.addObject(18, new Float(this.getHealth()));
-        this.dataWatcher.addObject(19, new Byte((byte)0));
-        this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
+        this.dataWatcher.addObject(19, new Byte((byte) 0));
+        this.dataWatcher.addObject(20, new Byte((byte) BlockColored.getBlockFromDye(1)));
     }
 
     /**
@@ -190,7 +136,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Angry", this.isAngry());
-        par1NBTTagCompound.setByte("CollarColor", (byte)this.getCollarColor());
+        par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
     }
 
     /**
@@ -289,8 +235,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
         if (this.isEntityInvulnerable())
         {
             return false;
-        }
-        else
+        } else
         {
             Entity entity = par1DamageSource.getEntity();
             this.aiSit.setSitting(false);
@@ -307,7 +252,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         int i = this.isTamed() ? 4 : 2;
-        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
+        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
 
     public void setTamed(boolean par1)
@@ -317,8 +262,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
         if (par1)
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxTamedHealth);
-        }
-        else
+        } else
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxUntamedHealth);
         }
@@ -337,7 +281,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
             {
                 if (Item.itemsList[itemstack.itemID] instanceof ItemFood)
                 {
-                    ItemFood itemfood = (ItemFood)Item.itemsList[itemstack.itemID];
+                    ItemFood itemfood = (ItemFood) Item.itemsList[itemstack.itemID];
 
                     if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < this.maxTamedHealth)
                     {
@@ -346,11 +290,11 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
                             --itemstack.stackSize;
                         }
 
-                        this.heal((float)itemfood.getHealAmount());
+                        this.heal((float) itemfood.getHealAmount());
 
                         if (itemstack.stackSize <= 0)
                         {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
                         }
 
                         return true;
@@ -364,15 +308,14 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
                 {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
-                    this.setPathToEntity((PathEntity)null);
-                    this.setTarget((Entity)null);
-                    this.setAttackTarget((EntityLivingBase)null);
+                    this.setPathToEntity((PathEntity) null);
+                    this.setTarget((Entity) null);
+                    this.setAttackTarget((EntityLivingBase) null);
                 }
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
             }
-        }
-        else if (itemstack != null && itemstack.itemID == AlchemicalWizardry.weakBloodOrb.itemID && !this.isAngry() && !this.isAggro())
+        } else if (itemstack != null && itemstack.itemID == ModItems.weakBloodOrb.itemID && !this.isAngry() && !this.isAggro())
         {
             if (!par1EntityPlayer.capabilities.isCreativeMode)
             {
@@ -381,7 +324,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
 
             if (itemstack.stackSize <= 0)
             {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
             }
 
             if (!this.worldObj.isRemote)
@@ -389,18 +332,17 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
                 if (this.rand.nextInt(1) == 0)
                 {
                     this.setTamed(true);
-                    this.setPathToEntity((PathEntity)null);
-                    this.setAttackTarget((EntityLivingBase)null);
+                    this.setPathToEntity((PathEntity) null);
+                    this.setAttackTarget((EntityLivingBase) null);
                     this.aiSit.setSitting(true);
                     this.setHealth(this.maxTamedHealth);
                     this.setOwner(par1EntityPlayer.getCommandSenderName());
                     this.playTameEffect(true);
-                    this.worldObj.setEntityState(this, (byte)7);
-                }
-                else
+                    this.worldObj.setEntityState(this, (byte) 7);
+                } else
                 {
                     this.playTameEffect(false);
-                    this.worldObj.setEntityState(this, (byte)6);
+                    this.worldObj.setEntityState(this, (byte) 6);
                 }
             }
 
@@ -437,11 +379,10 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
-        }
-        else
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
+        } else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
         }
     }
 
@@ -458,7 +399,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
      */
     public void setCollarColor(int par1)
     {
-        this.dataWatcher.updateObject(20, Byte.valueOf((byte)(par1 & 15)));
+        this.dataWatcher.updateObject(20, Byte.valueOf((byte) (par1 & 15)));
     }
 
     /**
@@ -473,11 +414,10 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     {
         if (par1)
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte)1));
-        }
-        else
+            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 1));
+        } else
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte)0));
+            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 0));
         }
     }
 
@@ -509,7 +449,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
         {
             if (par1EntityLivingBase instanceof EntityFallenAngel)
             {
-                EntityFallenAngel entitywolf = (EntityFallenAngel)par1EntityLivingBase;
+                EntityFallenAngel entitywolf = (EntityFallenAngel) par1EntityLivingBase;
 
                 if (entitywolf.isTamed() && entitywolf.func_130012_q() == par2EntityLivingBase)
                 {
@@ -517,9 +457,8 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer)par2EntityLivingBase).canAttackPlayer((EntityPlayer)par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse)par1EntityLivingBase).isTame();
-        }
-        else
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
+        } else
         {
             return false;
         }

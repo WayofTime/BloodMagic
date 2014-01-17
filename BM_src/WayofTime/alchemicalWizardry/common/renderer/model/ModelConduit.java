@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class ModelConduit extends ModelBase
 {
-//fields
+    //fields
     ModelRenderer curvedInput;
     ModelRenderer curvedOutput;
     ModelRenderer straightBar1;
@@ -168,30 +168,30 @@ public class ModelConduit extends ModelBase
 
             case EAST:
                 xInputRot = 0.0f;
-                yInputRot = (float)(0.5f * Math.PI);
+                yInputRot = (float) (0.5f * Math.PI);
                 zInputRot = 0.0f;
                 break;
 
             case SOUTH:
                 xInputRot = 0.0f;
-                yInputRot = (float)(1.0f * Math.PI);
+                yInputRot = (float) (1.0f * Math.PI);
                 zInputRot = 0.0f;
                 break;
 
             case WEST:
                 xInputRot = 0.0f;
-                yInputRot = (float)(-0.5f * Math.PI);
+                yInputRot = (float) (-0.5f * Math.PI);
                 zInputRot = 0.0f;
                 break;
 
             case UP:
-                xInputRot = (float)(-0.5f * Math.PI);
+                xInputRot = (float) (-0.5f * Math.PI);
                 yInputRot = 0.0f;
                 zInputRot = 0.0f;
                 break;
 
             case DOWN:
-                xInputRot = (float)(0.5f * Math.PI);
+                xInputRot = (float) (0.5f * Math.PI);
                 yInputRot = 0.0f;
                 zInputRot = 0.0f;
                 break;
@@ -204,19 +204,19 @@ public class ModelConduit extends ModelBase
         {
             case NORTH:
                 xOutputRot = 0.0f;
-                yOutputRot = (float)(0.5f * Math.PI);
+                yOutputRot = (float) (0.5f * Math.PI);
                 zOutputRot = 0.0f;
                 break;
 
             case EAST:
                 xOutputRot = 0.0f;
-                yOutputRot = (float)(1.0f * Math.PI);
+                yOutputRot = (float) (1.0f * Math.PI);
                 zOutputRot = 0.0f;
                 break;
 
             case SOUTH:
                 xOutputRot = 0.0f;
-                yOutputRot = (float)(-0.5f * Math.PI);
+                yOutputRot = (float) (-0.5f * Math.PI);
                 zOutputRot = 0.0f;
                 break;
 
@@ -229,13 +229,13 @@ public class ModelConduit extends ModelBase
             case UP:
                 xOutputRot = 0.0f;
                 yOutputRot = 0.0f;
-                zOutputRot = (float)(-0.5f * Math.PI);
+                zOutputRot = (float) (-0.5f * Math.PI);
                 break;
 
             case DOWN:
                 xOutputRot = 0.0f;
                 yOutputRot = 0.0f;
-                zOutputRot = (float)(0.5f * Math.PI);
+                zOutputRot = (float) (0.5f * Math.PI);
                 break;
 
             default:

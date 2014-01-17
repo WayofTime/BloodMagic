@@ -1,8 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.IBindable;
+import com.google.common.collect.Multimap;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.Enchantment;
@@ -19,22 +21,22 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
 
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoundShovel extends ItemSpade implements IBindable
 {
-    /** Array of blocks the tool has extra effect against. */
-    public static final Block[] blocksEffectiveAgainst = new Block[] {Block.grass, Block.dirt, Block.sand, Block.gravel, Block.snow, Block.blockSnow, Block.blockClay, Block.tilledField, Block.slowSand, Block.mycelium};
+    /**
+     * Array of blocks the tool has extra effect against.
+     */
+    public static final Block[] blocksEffectiveAgainst = new Block[]{Block.grass, Block.dirt, Block.sand, Block.gravel, Block.snow, Block.blockSnow, Block.blockClay, Block.tilledField, Block.slowSand, Block.mycelium};
 
     public float efficiencyOnProperMaterial = 12.0F;
 
-    /** Damage versus entities. */
+    /**
+     * Damage versus entities.
+     */
     public float damageVsEntity;
 
     private static Icon activeIcon;
@@ -73,8 +75,7 @@ public class BoundShovel extends ItemSpade implements IBindable
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -108,8 +109,7 @@ public class BoundShovel extends ItemSpade implements IBindable
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -123,7 +123,7 @@ public class BoundShovel extends ItemSpade implements IBindable
         if (par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
-            par1ItemStack.stackTagCompound.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % 200);
+            par1ItemStack.stackTagCompound.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             return par1ItemStack;
         }
 
@@ -137,9 +137,9 @@ public class BoundShovel extends ItemSpade implements IBindable
             return par1ItemStack;
         }
 
-        int posX = (int)par3EntityPlayer.posX;
-        int posY = (int)par3EntityPlayer.posY;
-        int posZ = (int)par3EntityPlayer.posZ;
+        int posX = (int) par3EntityPlayer.posX;
+        int posY = (int) par3EntityPlayer.posY;
+        int posZ = (int) par3EntityPlayer.posZ;
         boolean silkTouch = false;
         int so = Enchantment.silkTouch.effectId;
         int fortune = Enchantment.fortune.effectId;
@@ -150,9 +150,9 @@ public class BoundShovel extends ItemSpade implements IBindable
         {
             for (int i = 0; i < enchants.tagCount(); i++)
             {
-                if (enchants.tagAt(i)instanceof NBTTagCompound)
+                if (enchants.tagAt(i) instanceof NBTTagCompound)
                 {
-                    NBTTagCompound nbt = (NBTTagCompound)enchants.tagAt(i);
+                    NBTTagCompound nbt = (NBTTagCompound) enchants.tagAt(i);
                     int id = nbt.getShort("id");
 
                     if (id == so)
@@ -192,8 +192,7 @@ public class BoundShovel extends ItemSpade implements IBindable
                                 {
                                     par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, droppedItem));
                                 }
-                            }
-                            else
+                            } else
                             {
                                 ArrayList<ItemStack> itemDropList = block.getBlockDropped(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
 
@@ -228,7 +227,7 @@ public class BoundShovel extends ItemSpade implements IBindable
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {
@@ -307,7 +306,7 @@ public class BoundShovel extends ItemSpade implements IBindable
 
     public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
     {
-        if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
+        if ((double) Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
         {
             //par1ItemStack.damageItem(1, par7EntityLivingBase);
         }
@@ -340,16 +339,17 @@ public class BoundShovel extends ItemSpade implements IBindable
 //    {
 //        return false;
 //    }
-
     @Override
     public Multimap getItemAttributeModifiers()
     {
         Multimap multimap = super.getItemAttributeModifiers();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", (double)this.damageVsEntity, 0));
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", (double) this.damageVsEntity, 0));
         return multimap;
     }
 
-    /** FORGE: Overridden to allow custom tool effectiveness */
+    /**
+     * FORGE: Overridden to allow custom tool effectiveness
+     */
     @Override
     public float getStrVsBlock(ItemStack stack, Block block, int meta)
     {

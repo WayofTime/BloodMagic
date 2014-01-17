@@ -1,22 +1,18 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
-import java.util.Iterator;
-import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectile implements IProjectile
 {
@@ -26,7 +22,9 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     private int inTile = 0;
     private int inData = 0;
     private boolean inGround = false;
-    /** The owner of this arrow. */
+    /**
+     * The owner of this arrow.
+     */
     public EntityLivingBase shootingEntity;
     private int ticksInAir = 0;
     private int ricochetCounter = 0;
@@ -56,14 +54,14 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         float par3 = 0.8F;
         this.setSize(0.1F, 0.1F);
         this.setLocationAndAngles(par2EntityPlayer.posX, par2EntityPlayer.posY + par2EntityPlayer.getEyeHeight(), par2EntityPlayer.posZ, par2EntityPlayer.rotationYaw, par2EntityPlayer.rotationPitch);
-        posX -= MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
+        posX -= MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         posY -= 0.2D;
-        posZ -= MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
+        posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
         yOffset = 0.0F;
-        motionX = -MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
-        motionZ = MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
-        motionY = -MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI);
+        motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+        motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+        motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
         this.setThrowableHeading(motionX, motionY, motionZ, par3 * 1.5F, 1.0F);
         this.damage = damage;
     }
@@ -71,7 +69,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     @Override
     protected void entityInit()
     {
-        dataWatcher.addObject(16, Byte.valueOf((byte)0));
+        dataWatcher.addObject(16, Byte.valueOf((byte) 0));
     }
 
     /**
@@ -95,8 +93,8 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         motionY = var3;
         motionZ = var5;
         float var10 = MathHelper.sqrt_double(var1 * var1 + var5 * var5);
-        prevRotationYaw = rotationYaw = (float)(Math.atan2(var1, var5) * 180.0D / Math.PI);
-        prevRotationPitch = rotationPitch = (float)(Math.atan2(var3, var10) * 180.0D / Math.PI);
+        prevRotationYaw = rotationYaw = (float) (Math.atan2(var1, var5) * 180.0D / Math.PI);
+        prevRotationPitch = rotationPitch = (float) (Math.atan2(var3, var10) * 180.0D / Math.PI);
     }
 
     @Override
@@ -125,8 +123,8 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F)
         {
             float var7 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-            prevRotationYaw = rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
-            prevRotationPitch = rotationPitch = (float)(Math.atan2(par3, var7) * 180.0D / Math.PI);
+            prevRotationYaw = rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
+            prevRotationPitch = rotationPitch = (float) (Math.atan2(par3, var7) * 180.0D / Math.PI);
             prevRotationPitch = rotationPitch;
             prevRotationYaw = rotationYaw;
             this.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
@@ -153,7 +151,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             while (i.hasNext())
             {
-                EntityPlayer e = (EntityPlayer)i.next();
+                EntityPlayer e = (EntityPlayer) i.next();
                 double distance = e.getDistanceToEntity(this);
 
                 if (distance < closestDistance)
@@ -171,8 +169,8 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F)
         {
             float var1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
-            prevRotationYaw = rotationYaw = (float)(Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
-            prevRotationPitch = rotationPitch = (float)(Math.atan2(motionY, var1) * 180.0D / Math.PI);
+            prevRotationYaw = rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
+            prevRotationPitch = rotationPitch = (float) (Math.atan2(motionY, var1) * 180.0D / Math.PI);
         }
 
         int var16 = worldObj.getBlockId(xTile, yTile, zTile);
@@ -198,8 +196,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
                 // this.groundImpact();
                 // this.setDead();
             }
-        }
-        else
+        } else
         {
             ++ticksInAir;
 
@@ -232,7 +229,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             while (var9.hasNext())
             {
-                Entity var10 = (Entity)var9.next();
+                Entity var10 = (Entity) var9.next();
 
                 if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
                 {
@@ -290,12 +287,12 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
-        par1NBTTagCompound.setShort("xTile", (short)xTile);
-        par1NBTTagCompound.setShort("yTile", (short)yTile);
-        par1NBTTagCompound.setShort("zTile", (short)zTile);
-        par1NBTTagCompound.setByte("inTile", (byte)inTile);
-        par1NBTTagCompound.setByte("inData", (byte)inData);
-        par1NBTTagCompound.setByte("inGround", (byte)(inGround ? 1 : 0));
+        par1NBTTagCompound.setShort("xTile", (short) xTile);
+        par1NBTTagCompound.setShort("yTile", (short) yTile);
+        par1NBTTagCompound.setShort("zTile", (short) zTile);
+        par1NBTTagCompound.setByte("inTile", (byte) inTile);
+        par1NBTTagCompound.setByte("inData", (byte) inData);
+        par1NBTTagCompound.setByte("inGround", (byte) (inGround ? 1 : 0));
     }
 
     /**
@@ -355,11 +352,10 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
         if (par1)
         {
-            dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 | 1)));
-        }
-        else
+            dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 | 1)));
+        } else
         {
-            dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 & -2)));
+            dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 & -2)));
         }
     }
 
@@ -383,8 +379,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             this.groundImpact(mop.sideHit);
             worldObj.createExplosion(shootingEntity, posX, posY, posZ, 2, false);
@@ -397,8 +392,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             doDamage(this.damage + d6(), mop);
             worldObj.createExplosion(shootingEntity, posX, posY, posZ, 2, false);

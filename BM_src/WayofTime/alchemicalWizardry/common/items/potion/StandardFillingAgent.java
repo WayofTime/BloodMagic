@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 
 public class StandardFillingAgent extends WeakFillingAgent
 {
@@ -24,7 +24,7 @@ public class StandardFillingAgent extends WeakFillingAgent
 
         if (potionEffects >= 1 && potionEffects <= 3)
         {
-            return (int)(4 * (Math.pow(0.5f, potionEffects - 1) + 0.01f));
+            return (int) (4 * (Math.pow(0.5f, potionEffects - 1) + 0.01f));
         }
 
         return 0;

@@ -1,17 +1,17 @@
 package thaumcraft.api.wands;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.aspects.Aspect;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 /**
  * This class is used to keep the material information for the various caps.
  * It is also used to generate the wand recipes ingame.
- * @author Azanor
  *
+ * @author Azanor
  */
 public class WandCap
 {
@@ -47,7 +47,7 @@ public class WandCap
      */
     ItemStack item;
 
-    public static LinkedHashMap<String, WandCap> caps = new LinkedHashMap<String, WandCap>();
+    public static LinkedHashMap<String,WandCap> caps = new LinkedHashMap<String,WandCap>();
 
     public WandCap(String tag, float discount, ItemStack item, int craftCost)
     {

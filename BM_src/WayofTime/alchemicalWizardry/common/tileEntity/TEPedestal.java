@@ -96,8 +96,7 @@ public class TEPedestal extends TileEntity implements IInventory
             if (stack.stackSize <= amt)
             {
                 setInventorySlotContents(slot, null);
-            }
-            else
+            } else
             {
                 stack = stack.splitStack(amt);
 
@@ -209,8 +208,7 @@ public class TEPedestal extends TileEntity implements IInventory
                 {
                     ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
+                } else
                 {
                     inv[i] = null;
                 }
@@ -220,7 +218,7 @@ public class TEPedestal extends TileEntity implements IInventory
 
     public int[] buildIntDataList()
     {
-        int [] sortList = new int[1 * 3];
+        int[] sortList = new int[1 * 3];
         int pos = 0;
 
         for (ItemStack is : inv)
@@ -230,8 +228,7 @@ public class TEPedestal extends TileEntity implements IInventory
                 sortList[pos++] = is.itemID;
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
+            } else
             {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;
@@ -260,7 +257,7 @@ public class TEPedestal extends TileEntity implements IInventory
 
         for (int i = 0; i < 16; i++)
         {
-            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short)2));
+            PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short) 2));
         }
     }
 }

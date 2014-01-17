@@ -88,8 +88,7 @@ public class ContainerTeleposer extends Container
             if (stackInSlot.stackSize == 0)
             {
                 slotObject.putStack(null);
-            }
-            else
+            } else
             {
                 slotObject.onSlotChanged();
             }

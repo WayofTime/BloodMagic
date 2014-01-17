@@ -4,11 +4,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
 /**
- *
  * @author Azanor
- *
- * Equipped head slot items that extend this class will make nodes visible in world.
- *
+ *         <p/>
+ *         Equipped head slot items that extend this class will make nodes visible in world.
  */
 
 public interface IRevealer

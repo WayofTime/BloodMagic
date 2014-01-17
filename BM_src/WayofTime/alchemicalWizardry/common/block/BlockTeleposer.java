@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
@@ -18,8 +18,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockTeleposer extends BlockContainer
 {
@@ -31,6 +31,7 @@ public class BlockTeleposer extends BlockContainer
     private static Icon sideIcon2;
     @SideOnly(Side.CLIENT)
     private static Icon bottomIcon;
+
     public BlockTeleposer(int id)
     {
         super(id, Material.rock);
@@ -63,10 +64,10 @@ public class BlockTeleposer extends BlockContainer
             case 1:
                 return topIcon;
 
-                //case 2: return sideIcon1;
-                //case 3: return sideIcon1;
-                //case 4: return sideIcon2;
-                //case 5: return sideIcon2;
+            //case 2: return sideIcon1;
+            //case 3: return sideIcon1;
+            //case 4: return sideIcon2;
+            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -75,7 +76,7 @@ public class BlockTeleposer extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TETeleposer tileEntity = (TETeleposer)world.getBlockTileEntity(x, y, z);
+        TETeleposer tileEntity = (TETeleposer) world.getBlockTileEntity(x, y, z);
         ItemStack playerItem = player.getCurrentEquippedItem();
 
         if (playerItem != null)

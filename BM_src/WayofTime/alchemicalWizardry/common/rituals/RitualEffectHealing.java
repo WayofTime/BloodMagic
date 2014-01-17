@@ -1,21 +1,17 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class RitualEffectHealing extends RitualEffect
 {
@@ -27,7 +23,7 @@ public class RitualEffectHealing extends RitualEffect
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -53,7 +49,7 @@ public class RitualEffectHealing extends RitualEffect
         //tileAltar = (TEAltar)world.getBlockTileEntity(x,y-1,z);
         int d0 = 10;
         int vertRange = 10;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y, (double)z, (double)(x + 1), (double)(y + 1), (double)(z + 1)).expand(d0, vertRange, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
         List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator1 = list.iterator();
         EntityLivingBase entity;
@@ -62,13 +58,12 @@ public class RitualEffectHealing extends RitualEffect
 
         while (iterator1.hasNext())
         {
-            entity = (EntityLivingBase)iterator1.next();
+            entity = (EntityLivingBase) iterator1.next();
 
             if (entity instanceof EntityPlayer)
             {
                 entityCount += 10;
-            }
-            else
+            } else
             {
                 entityCount++;
             }
@@ -84,15 +79,14 @@ public class RitualEffectHealing extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             Iterator iterator2 = list.iterator();
             entityCount = 0;
 
             while (iterator2.hasNext())
             {
-                entity = (EntityLivingBase)iterator2.next();
+                entity = (EntityLivingBase) iterator2.next();
 
                 if (entity.getHealth() + 0.1f < entity.getMaxHealth())
                 {
@@ -105,8 +99,7 @@ public class RitualEffectHealing extends RitualEffect
                     if (entity instanceof EntityPlayer)
                     {
                         entityCount += 10;
-                    }
-                    else
+                    } else
                     {
                         entityCount++;
                     }

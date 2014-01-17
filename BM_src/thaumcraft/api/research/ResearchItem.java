@@ -1,12 +1,12 @@
 package thaumcraft.api.research;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ResearchItem
 {
@@ -322,13 +322,13 @@ public class ResearchItem
         int highest = 0;
 
         if (tags != null)
-            for (Aspect tag: tags.getAspects())
+            for (Aspect tag : tags.getAspects())
             {
                 if (tags.getAmount(tag) > highest)
                 {
                     aspect = tag;
                     highest = tags.getAmount(tag);
-                };
+                } ;
             }
 
         return aspect;
