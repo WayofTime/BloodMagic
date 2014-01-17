@@ -4,7 +4,7 @@ import net.minecraft.potion.Potion;
 
 public class PotionBoost extends Potion
 {
-    protected PotionBoost(int par1, boolean par2, int par3)
+    public PotionBoost(int par1, boolean par2, int par3)
     {
         super(par1, par2, par3);
     }

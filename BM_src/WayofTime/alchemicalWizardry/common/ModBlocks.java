@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
-import WayofTime.alchemicalWizardry.TestingBlock;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -45,7 +45,7 @@ public class ModBlocks
     public static void init()
     {
 
-        testingBlock = new TestingBlock(AlchemicalWizardry.testingBlockBlockID, Material.ground).setHardness(2.0F).setStepSound(Block.soundStoneFootstep).setCreativeTab(CreativeTabs.tabBlock).setLightValue(1.0F);
+        //testingBlock = new TestingBlock(AlchemicalWizardry.testingBlockBlockID, Material.ground).setHardness(2.0F).setStepSound(Block.soundStoneFootstep).setCreativeTab(CreativeTabs.tabBlock).setLightValue(1.0F);
 //lifeEssenceStill = new LifeEssenceStill(lifeEssenceStillBlockID);
 //lifeEssenceFlowing = new LifeEssenceFlowing(lifeEssenceFlowingBlockID);
         blockAltar = new BlockAltar(AlchemicalWizardry.blockAltarBlockID);

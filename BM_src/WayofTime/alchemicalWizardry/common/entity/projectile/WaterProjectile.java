@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;

@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ModBlocks;
 import WayofTime.alchemicalWizardry.common.block.BloodRune;
 import net.minecraft.block.Block;

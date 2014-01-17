@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLLog;
 import net.minecraftforge.common.Configuration;
-import totemic_commons.pokefenn.lib.Reference;
 
 import java.io.File;
 import java.util.logging.Level;
@@ -174,7 +174,7 @@ public class BloodMagicConfiguration
         } catch (Exception e)
         {
 
-            FMLLog.log(Level.SEVERE, e, Reference.MOD_NAME + " has had a problem loading its configuration, go ask on the forums :p");
+            FMLLog.log(Level.SEVERE, e, "Blood Magic" + " has had a problem loading its configuration, go ask on the forums :p");
 
         } finally
         {

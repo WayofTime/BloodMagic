@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.alchemy;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ModItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

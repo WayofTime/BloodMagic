@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.summoning;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.*;
 import net.minecraft.entity.EntityLivingBase;

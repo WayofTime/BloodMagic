@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.items.*;
 import WayofTime.alchemicalWizardry.common.items.potion.*;
 import WayofTime.alchemicalWizardry.common.items.sigil.*;

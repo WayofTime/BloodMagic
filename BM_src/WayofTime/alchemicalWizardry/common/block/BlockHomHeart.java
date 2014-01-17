@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.items.BlankSpell;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
 import cpw.mods.fml.relauncher.Side;
