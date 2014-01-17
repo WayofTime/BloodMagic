@@ -6,51 +6,53 @@ import net.minecraft.item.ItemStack;
 public class ItemBloodRuneBlock extends ItemBlock
 
 {
-    public ItemBloodRuneBlock(int par1)
+	public ItemBloodRuneBlock(int par1)
 
-    {
-        super(par1);
-        setHasSubtypes(true);
-        this.setUnlocalizedName("itemBloodRuneBlock");
-    }
+	{
+		super(par1);
+		setHasSubtypes(true);
+		setUnlocalizedName("itemBloodRuneBlock");
+	}
 
-    public String getUnlocalizedName(ItemStack itemstack)
+	@Override
+	public String getUnlocalizedName(ItemStack itemstack)
 
-    {
-        String name = "";
+	{
+		String name = "";
 
-        switch (itemstack.getItemDamage())
-        {
-            case 0:
-            {
-                name = "blank";
-                break;
-            }
+		switch (itemstack.getItemDamage())
+		{
+		case 0:
+		{
+			name = "blank";
+			break;
+		}
 
-            case 1:
-            {
-                name = "fill";
-                break;
-            }
+		case 1:
+		{
+			name = "fill";
+			break;
+		}
 
-            case 2:
-                name = "empty";
-                break;
+		case 2:
+			name = "empty";
+			break;
 
-            case 3:
-                name = "test";
-                break;
+		case 3:
+			name = "test";
+			break;
 
-            default:
-                name = "broken";
-        }
+		default:
+			name = "broken";
+		}
 
-        return getUnlocalizedName() + "." + name;
-    }
+		return getUnlocalizedName() + "." + name;
+	}
 
-    public int getMetadata(int par1)
+	@Override
+	public int getMetadata(int par1)
 
-    {
-        return par1;
-    }
+	{
+		return par1;
+	}
 }

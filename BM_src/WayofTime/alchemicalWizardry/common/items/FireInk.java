@@ -8,17 +8,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class FireInk extends Item
 {
-    public FireInk(int id)
-    {
-        super(id);
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
+	public FireInk(int id)
+	{
+		super(id);
+		maxStackSize = 1;
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalInkFire");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalInkFire");
+	}
 }

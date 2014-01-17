@@ -20,114 +20,114 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ActivationCrystal extends EnergyItems
 {
-    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[] { "Weak", "Awakened"};
+	private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[] { "Weak", "Awakened"};
 
-    @SideOnly(Side.CLIENT)
-    private Icon[] icons;
+	@SideOnly(Side.CLIENT)
+	private Icon[] icons;
 
-    public ActivationCrystal(int id)
-    {
-        super(id);
-        this.maxStackSize = 1;
-        setEnergyUsed(100);
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.hasSubtypes = true;
-    }
+	public ActivationCrystal(int id)
+	{
+		super(id);
+		maxStackSize = 1;
+		setEnergyUsed(100);
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+		hasSubtypes = true;
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        icons = new Icon[ACTIVATION_CRYSTAL_NAMES.length];
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		icons = new Icon[ACTIVATION_CRYSTAL_NAMES.length];
 
-        for (int i = 0; i < ACTIVATION_CRYSTAL_NAMES.length; ++i)
-        {
-            icons[i] = iconRegister.registerIcon("AlchemicalWizardry:" + "activationCrystal" + ACTIVATION_CRYSTAL_NAMES[i]);
-        }
-    }
+		for (int i = 0; i < ACTIVATION_CRYSTAL_NAMES.length; ++i)
+		{
+			icons[i] = iconRegister.registerIcon("AlchemicalWizardry:" + "activationCrystal" + ACTIVATION_CRYSTAL_NAMES[i]);
+		}
+	}
 
-    @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
-        switch (par1ItemStack.getItemDamage())
-        {
-            case 0:
-            {
-                par3List.add("Activates low-level rituals");
-                break;
-            }
+	@Override
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+	{
+		switch (par1ItemStack.getItemDamage())
+		{
+		case 0:
+		{
+			par3List.add("Activates low-level rituals");
+			break;
+		}
 
-            case 1:
-            {
-                par3List.add("Activates more powerful rituals");
+		case 1:
+		{
+			par3List.add("Activates more powerful rituals");
 
-                if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
-                {
-                    ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
+			if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+			{
+				ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
 
-                    if (recipe != null)
-                    {
-                        par3List.add(EnumChatFormatting.BLUE + "Recipe:");
+				if (recipe != null)
+				{
+					par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
-                        for (ItemStack item: recipe)
-                        {
-                            if (item != null)
-                            {
-                                par3List.add("" + item.getDisplayName());
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
-                }
+					for (ItemStack item: recipe)
+					{
+						if (item != null)
+						{
+							par3List.add("" + item.getDisplayName());
+						}
+					}
+				}
+			}
+			else
+			{
+				par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+			}
 
-                break;
-            }
-        }
+			break;
+		}
+		}
 
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-        }
-    }
+		if (!(par1ItemStack.stackTagCompound == null))
+		{
+			par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+		}
+	}
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-        return par1ItemStack;
-    }
+	@Override
+	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	{
+		EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+		return par1ItemStack;
+	}
 
-    public int getCrystalLevel(ItemStack itemStack)
-    {
-        return itemStack.getItemDamage() + 1;
-    }
+	public int getCrystalLevel(ItemStack itemStack)
+	{
+		return itemStack.getItemDamage() + 1;
+	}
 
-    @Override
-    public String getUnlocalizedName(ItemStack itemStack)
-    {
-        //This is what will do all the localisation things on the alchemy components so you dont have to set it :D
-        int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ACTIVATION_CRYSTAL_NAMES.length - 1);
-        return ("" + "item.activationCrystal" + ACTIVATION_CRYSTAL_NAMES[meta]);
-    }
+	@Override
+	public String getUnlocalizedName(ItemStack itemStack)
+	{
+		//This is what will do all the localisation things on the alchemy components so you dont have to set it :D
+		int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ACTIVATION_CRYSTAL_NAMES.length - 1);
+		return "" + "item.activationCrystal" + ACTIVATION_CRYSTAL_NAMES[meta];
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Icon getIconFromDamage(int meta)
-    {
-        int j = MathHelper.clamp_int(meta, 0, ACTIVATION_CRYSTAL_NAMES.length - 1);
-        return icons[j];
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIconFromDamage(int meta)
+	{
+		int j = MathHelper.clamp_int(meta, 0, ACTIVATION_CRYSTAL_NAMES.length - 1);
+		return icons[j];
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(int id, CreativeTabs creativeTab, List list)
-    {
-        for (int meta = 0; meta < ACTIVATION_CRYSTAL_NAMES.length; ++meta)
-        {
-            list.add(new ItemStack(id, 1, meta));
-        }
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int id, CreativeTabs creativeTab, List list)
+	{
+		for (int meta = 0; meta < ACTIVATION_CRYSTAL_NAMES.length; ++meta)
+		{
+			list.add(new ItemStack(id, 1, meta));
+		}
+	}
 }

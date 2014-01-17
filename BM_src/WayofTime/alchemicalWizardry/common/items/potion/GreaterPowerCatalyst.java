@@ -6,15 +6,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GreaterPowerCatalyst extends PowerCatalyst
 {
-    public GreaterPowerCatalyst(int id)
-    {
-        super(id, 3);
-    }
+	public GreaterPowerCatalyst(int id)
+	{
+		super(id, 3);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:GreaterPowerCatalyst");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:GreaterPowerCatalyst");
+	}
 }

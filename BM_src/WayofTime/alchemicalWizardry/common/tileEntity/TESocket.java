@@ -1,271 +1,251 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.Random;
-
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidEvent;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidTank;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
 
 public class TESocket extends TileEntity implements IInventory
 {
-    private ItemStack[] inv;
-    private int resultID;
-    private int resultDamage;
+	private ItemStack[] inv;
+	private int resultID;
+	private int resultDamage;
 
-    private boolean isActive;
+	private boolean isActive;
 
-    public TESocket()
-    {
-        this.inv = new ItemStack[1];
-        resultID = 0;
-        resultDamage = 0;
-        isActive = false;
-    }
+	public TESocket()
+	{
+		inv = new ItemStack[1];
+		resultID = 0;
+		resultDamage = 0;
+		isActive = false;
+	}
 
-    @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        super.readFromNBT(par1NBTTagCompound);
-        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory");
+	@Override
+	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+	{
+		super.readFromNBT(par1NBTTagCompound);
+		NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory");
 
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
-            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
-            int slot = tag.getByte("Slot");
+		for (int i = 0; i < tagList.tagCount(); i++)
+		{
+			NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+			int slot = tag.getByte("Slot");
 
-            if (slot >= 0 && slot < inv.length)
-            {
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-            }
-        }
+			if (slot >= 0 && slot < inv.length)
+			{
+				inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+			}
+		}
 
-        resultID = par1NBTTagCompound.getInteger("resultID");
-        resultDamage = par1NBTTagCompound.getInteger("resultDamage");
-        isActive = par1NBTTagCompound.getBoolean("isActive");
-    }
+		resultID = par1NBTTagCompound.getInteger("resultID");
+		resultDamage = par1NBTTagCompound.getInteger("resultDamage");
+		isActive = par1NBTTagCompound.getBoolean("isActive");
+	}
 
-    @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        super.writeToNBT(par1NBTTagCompound);
-        NBTTagList itemList = new NBTTagList();
+	@Override
+	public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+	{
+		super.writeToNBT(par1NBTTagCompound);
+		NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < inv.length; i++)
-        {
-            ItemStack stack = inv[i];
+		for (int i = 0; i < inv.length; i++)
+		{
+			if (inv[i] != null)
+			{
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setByte("Slot", (byte) i);
+				inv[i].writeToNBT(tag);
+				itemList.appendTag(tag);
+			}
+		}
 
-            if (inv[i] != null)
-            {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                inv[i].writeToNBT(tag);
-                itemList.appendTag(tag);
-            }
-        }
+		par1NBTTagCompound.setInteger("resultID", resultID);
+		par1NBTTagCompound.setInteger("resultDamage", resultDamage);
+		par1NBTTagCompound.setTag("Inventory", itemList);
+		par1NBTTagCompound.setBoolean("isActive", isActive);
+	}
 
-        par1NBTTagCompound.setInteger("resultID", resultID);
-        par1NBTTagCompound.setInteger("resultDamage", resultDamage);
-        par1NBTTagCompound.setTag("Inventory", itemList);
-        par1NBTTagCompound.setBoolean("isActive", isActive);
-    }
+	@Override
+	public int getSizeInventory()
+	{
+		return 1;
+	}
 
-    @Override
-    public int getSizeInventory()
-    {
-        return 1;
-    }
+	@Override
+	public ItemStack getStackInSlot(int slot)
+	{
+		return inv[slot];
+	}
 
-    @Override
-    public ItemStack getStackInSlot(int slot)
-    {
-        return inv[slot];
-    }
+	@Override
+	public ItemStack decrStackSize(int slot, int amt)
+	{
+		ItemStack stack = getStackInSlot(slot);
 
-    @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
-        ItemStack stack = getStackInSlot(slot);
+		if (stack != null)
+		{
+			if (stack.stackSize <= amt)
+			{
+				setInventorySlotContents(slot, null);
+			}
+			else
+			{
+				stack = stack.splitStack(amt);
 
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
-                setInventorySlotContents(slot, null);
-            }
-            else
-            {
-                stack = stack.splitStack(amt);
+				if (stack.stackSize == 0)
+				{
+					setInventorySlotContents(slot, null);
+				}
+			}
+		}
 
-                if (stack.stackSize == 0)
-                {
-                    setInventorySlotContents(slot, null);
-                }
-            }
-        }
+		return stack;
+	}
 
-        return stack;
-    }
+	@Override
+	public ItemStack getStackInSlotOnClosing(int slot)
+	{
+		ItemStack stack = getStackInSlot(slot);
 
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
-        ItemStack stack = getStackInSlot(slot);
+		if (stack != null)
+		{
+			setInventorySlotContents(slot, null);
+		}
 
-        if (stack != null)
-        {
-            setInventorySlotContents(slot, null);
-        }
+		return stack;
+	}
 
-        return stack;
-    }
+	@Override
+	public void setInventorySlotContents(int slot, ItemStack itemStack)
+	{
+		inv[slot] = itemStack;
 
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack itemStack)
-    {
-        inv[slot] = itemStack;
+		if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
+		{
+			itemStack.stackSize = getInventoryStackLimit();
+		}
+	}
 
-        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
-        {
-            itemStack.stackSize = getInventoryStackLimit();
-        }
-    }
+	@Override
+	public String getInvName()
+	{
+		return "TESocket";
+	}
 
-    @Override
-    public String getInvName()
-    {
-        return "TESocket";
-    }
+	@Override
+	public boolean isInvNameLocalized()
+	{
+		return false;
+	}
 
-    @Override
-    public boolean isInvNameLocalized()
-    {
-        return false;
-    }
+	@Override
+	public int getInventoryStackLimit()
+	{
+		return 1;
+	}
 
-    @Override
-    public int getInventoryStackLimit()
-    {
-        return 1;
-    }
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer entityPlayer)
+	{
+		return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+	}
 
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer)
-    {
-        return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
-    }
+	@Override
+	public void openChest()
+	{
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void openChest()
-    {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void closeChest()
+	{
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void closeChest()
-    {
-        // TODO Auto-generated method stub
-    }
+	//Logic for the actual block is under here
+	@Override
+	public void updateEntity()
+	{
+		super.updateEntity();
+	}
 
-    //Logic for the actual block is under here
-    @Override
-    public void updateEntity()
-    {
-        super.updateEntity();
-    }
+	public void setActive()
+	{
+		isActive = false;
+	}
 
-    public void setActive()
-    {
-        isActive = false;
-    }
+	public boolean isActive()
+	{
+		return isActive;
+	}
 
-    public boolean isActive()
-    {
-        return isActive;
-    }
+	@Override
+	public Packet getDescriptionPacket()
+	{
+		return PacketHandler.getPacket(this);
+	}
 
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        return PacketHandler.getPacket(this);
-    }
+	public void handlePacketData(int[] intData)
+	{
+		if (intData == null)
+		{
+			return;
+		}
 
-    public void handlePacketData(int[] intData)
-    {
-        if (intData == null)
-        {
-            return;
-        }
+		if (intData.length == 3)
+		{
+			for (int i = 0; i < 1; i++)
+			{
+				if (intData[i * 3 + 2] != 0)
+				{
+					ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
+					inv[i] = is;
+				}
+				else
+				{
+					inv[i] = null;
+				}
+			}
+		}
+	}
 
-        if (intData.length == 3)
-        {
-            for (int i = 0; i < 1; i++)
-            {
-                if (intData[i * 3 + 2] != 0)
-                {
-                    ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
-                    inv[i] = is;
-                }
-                else
-                {
-                    inv[i] = null;
-                }
-            }
-        }
-    }
+	public int[] buildIntDataList()
+	{
+		int [] sortList = new int[1 * 3];
+		int pos = 0;
 
-    public int[] buildIntDataList()
-    {
-        int [] sortList = new int[1 * 3];
-        int pos = 0;
+		for (ItemStack is : inv)
+		{
+			if (is != null)
+			{
+				sortList[pos++] = is.itemID;
+				sortList[pos++] = is.getItemDamage();
+				sortList[pos++] = is.stackSize;
+			}
+			else
+			{
+				sortList[pos++] = 0;
+				sortList[pos++] = 0;
+				sortList[pos++] = 0;
+			}
+		}
 
-        for (ItemStack is : inv)
-        {
-            if (is != null)
-            {
-                sortList[pos++] = is.itemID;
-                sortList[pos++] = is.getItemDamage();
-                sortList[pos++] = is.stackSize;
-            }
-            else
-            {
-                sortList[pos++] = 0;
-                sortList[pos++] = 0;
-                sortList[pos++] = 0;
-            }
-        }
+		return sortList;
+	}
 
-        return sortList;
-    }
+	@Override
+	public boolean isItemValidForSlot(int slot, ItemStack itemstack)
+	{
+		if (slot == 0)
+		{
+			return true;
+		}
 
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemstack)
-    {
-        if (slot == 0)
-        {
-            return true;
-        }
-
-        return false;
-    }
+		return false;
+	}
 }

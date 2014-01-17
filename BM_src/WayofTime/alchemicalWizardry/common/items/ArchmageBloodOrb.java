@@ -6,16 +6,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ArchmageBloodOrb extends EnergyBattery
 {
-    public ArchmageBloodOrb(int id, int damage)
-    {
-        super(id, damage);
-        orbLevel = 5;
-    }
+	public ArchmageBloodOrb(int id, int damage)
+	{
+		super(id, damage);
+		orbLevel = 5;
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ArchmageBloodOrb");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ArchmageBloodOrb");
+	}
 }

@@ -16,57 +16,57 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMasterStone extends BlockContainer
 {
-    public BlockMasterStone(int id)
-    {
-        super(id, Material.iron);
-        setHardness(2.0F);
-        setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        setUnlocalizedName("blockMasterStone");
-        // TODO Auto-generated constructor stub
-    }
+	public BlockMasterStone(int id)
+	{
+		super(id, Material.iron);
+		setHardness(2.0F);
+		setResistance(5.0F);
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+		setUnlocalizedName("blockMasterStone");
+		// TODO Auto-generated constructor stub
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:MasterStone");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		blockIcon = iconRegister.registerIcon("AlchemicalWizardry:MasterStone");
+	}
 
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
-    {
-        TEMasterStone tileEntity = (TEMasterStone)world.getBlockTileEntity(x, y, z);
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
+	{
+		TEMasterStone tileEntity = (TEMasterStone)world.getBlockTileEntity(x, y, z);
 
-        if (tileEntity == null || player.isSneaking())
-        {
-            return false;
-        }
+		if (tileEntity == null || player.isSneaking())
+		{
+			return false;
+		}
 
-        ItemStack playerItem = player.getCurrentEquippedItem();
+		ItemStack playerItem = player.getCurrentEquippedItem();
 
-        if (playerItem == null)
-        {
-            return false;
-        }
+		if (playerItem == null)
+		{
+			return false;
+		}
 
-        Item item = playerItem.getItem();
+		Item item = playerItem.getItem();
 
-        if (!(item instanceof ActivationCrystal))
-        {
-            return false;
-        }
+		if (!(item instanceof ActivationCrystal))
+		{
+			return false;
+		}
 
-        ActivationCrystal acItem = (ActivationCrystal)item;
-        tileEntity.setOwner(acItem.getOwnerName(playerItem));
-        tileEntity.activateRitual(world, acItem.getCrystalLevel(playerItem));
-        world.markBlockForUpdate(x, y, z);
-        return true;
-    }
+		ActivationCrystal acItem = (ActivationCrystal)item;
+		tileEntity.setOwner(acItem.getOwnerName(playerItem));
+		tileEntity.activateRitual(world, acItem.getCrystalLevel(playerItem));
+		world.markBlockForUpdate(x, y, z);
+		return true;
+	}
 
-    @Override
-    public TileEntity createNewTileEntity(World world)
-    {
-        return new TEMasterStone();
-    }
+	@Override
+	public TileEntity createNewTileEntity(World world)
+	{
+		return new TEMasterStone();
+	}
 }

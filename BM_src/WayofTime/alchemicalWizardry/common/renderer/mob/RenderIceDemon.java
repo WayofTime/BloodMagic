@@ -8,20 +8,21 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityIceDemon;
 
 public class RenderIceDemon extends RenderLiving
 {
-    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/IceDemon.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
+	private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/IceDemon.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
 
-    public RenderIceDemon(ModelBase par1ModelBase, float par2)
-    {
-        super(par1ModelBase, par2);
-    }
+	public RenderIceDemon(ModelBase par1ModelBase, float par2)
+	{
+		super(par1ModelBase, par2);
+	}
 
-    public ResourceLocation func_110832_a(EntityIceDemon par1EntityIceDemon)
-    {
-        return field_110833_a;
-    }
+	public ResourceLocation func_110832_a(EntityIceDemon par1EntityIceDemon)
+	{
+		return field_110833_a;
+	}
 
-    public ResourceLocation getEntityTexture(Entity par1Entity)
-    {
-        return this.func_110832_a((EntityIceDemon)par1Entity);
-    }
+	@Override
+	public ResourceLocation getEntityTexture(Entity par1Entity)
+	{
+		return func_110832_a((EntityIceDemon)par1Entity);
+	}
 }
