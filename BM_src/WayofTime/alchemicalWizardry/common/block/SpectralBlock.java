@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpectralBlock extends Block {
+public class SpectralBlock extends Block
+{
     public SpectralBlock(int par1)
     {
         super(par1, Material.rock);

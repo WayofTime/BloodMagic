@@ -21,7 +21,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy extends CommonProxy
+{
     public static int renderPass;
     public static int altarRenderType;
 

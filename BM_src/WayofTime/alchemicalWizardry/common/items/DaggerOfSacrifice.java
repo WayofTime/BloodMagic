@@ -28,7 +28,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DaggerOfSacrifice extends EnergyItems {
+public class DaggerOfSacrifice extends EnergyItems
+{
     private float weaponDamage;
 
     public DaggerOfSacrifice(int id)

@@ -4,7 +4,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class AlchemyRecipe {
+public class AlchemyRecipe
+{
     private ItemStack output;
     private ItemStack[] recipe;
     private int bloodOrbLevel;

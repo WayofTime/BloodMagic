@@ -8,7 +8,8 @@ import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
 
-public class ModelBloodAltar extends ModelBase {
+public class ModelBloodAltar extends ModelBase
+{
     private IModelCustom modelBloodAltar;
     private IModelCustom modelBloodLevel; //TODO
 

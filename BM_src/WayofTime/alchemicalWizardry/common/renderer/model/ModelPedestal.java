@@ -4,7 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelPedestal extends ModelBase {
+public class ModelPedestal extends ModelBase
+{
     //fields
     ModelRenderer base;
     ModelRenderer top;

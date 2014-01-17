@@ -18,7 +18,8 @@ import net.minecraftforge.common.FakePlayer;
 
 import java.util.List;
 
-public class EnergyBattery extends Item implements ArmourUpgrade, IBindable {
+public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
+{
     private int maxEssence;
     protected int orbLevel;
 

@@ -6,7 +6,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-public class MeteorParadigmComponent {
+public class MeteorParadigmComponent
+{
     public String oreDictName;
     public int chance;
 

@@ -7,7 +7,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 
-public class LifeEssenceStill extends BlockStationary {
+public class LifeEssenceStill extends BlockStationary
+{
     protected LifeEssenceStill(int par1)
     {
         super(par1, Material.water);

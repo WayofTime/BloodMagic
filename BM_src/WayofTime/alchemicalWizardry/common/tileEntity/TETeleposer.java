@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-public class TETeleposer extends TileEntity implements IInventory {
+public class TETeleposer extends TileEntity implements IInventory
+{
     private ItemStack[] inv;
     private int resultID;
     private int resultDamage;

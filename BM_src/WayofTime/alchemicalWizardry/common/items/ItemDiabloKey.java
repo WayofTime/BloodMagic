@@ -20,7 +20,8 @@ import net.minecraftforge.common.FakePlayer;
 
 import java.util.List;
 
-public class ItemDiabloKey extends EnergyItems {
+public class ItemDiabloKey extends EnergyItems
+{
     public ItemDiabloKey(int id)
     {
         super(id);

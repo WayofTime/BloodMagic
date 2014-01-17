@@ -9,7 +9,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class AWBaseItems extends Item {
+public class AWBaseItems extends Item
+{
     public AWBaseItems(int id)
     {
         super(id);

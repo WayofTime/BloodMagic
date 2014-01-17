@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderFireProjectile {
+public class RenderFireProjectile
+{
 //    public void doRenderProjectile(FireProjectile entityShot, double par2, double par4, double par6, float par8, float par9)
 //    {
 //        GL11.glPushMatrix();

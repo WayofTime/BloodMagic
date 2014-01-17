@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
-public class AltarComponent {
+public class AltarComponent
+{
     private int x;
     private int y;
     private int z;

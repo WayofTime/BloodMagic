@@ -23,7 +23,8 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityIceDemon extends EntityDemon implements IRangedAttackMob {
+public class EntityIceDemon extends EntityDemon implements IRangedAttackMob
+{
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 30, 50, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 

@@ -17,7 +17,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade {
+public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
+{
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private int tickDelay = 300;

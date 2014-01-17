@@ -8,7 +8,8 @@ import thaumcraft.api.ThaumcraftApiHelper;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-public class AspectList implements Serializable {
+public class AspectList implements Serializable
+{
     public LinkedHashMap<Aspect,Integer> aspects = new LinkedHashMap<Aspect,Integer>(); //aspects associated with this object
 
     /**

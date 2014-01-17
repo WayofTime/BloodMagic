@@ -28,7 +28,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EntityElemental extends EntityDemon {
+public class EntityElemental extends EntityDemon
+{
     //private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 

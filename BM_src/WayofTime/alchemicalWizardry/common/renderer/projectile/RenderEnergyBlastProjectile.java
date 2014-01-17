@@ -11,7 +11,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 @SideOnly(Side.CLIENT)
-public class RenderEnergyBlastProjectile extends Render {
+public class RenderEnergyBlastProjectile extends Render
+{
     public void doRenderEnergyBlastProjectile(EnergyBlastProjectile entityShot, double par2, double par4, double par6, float par8, float par9)
     {
         GL11.glPushMatrix();

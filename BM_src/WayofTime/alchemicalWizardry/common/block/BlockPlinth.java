@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockPlinth extends BlockContainer {
+public class BlockPlinth extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

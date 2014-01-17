@@ -9,7 +9,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityHolyElemental extends EntityElemental implements IMob {
+public class EntityHolyElemental extends EntityElemental implements IMob
+{
     public EntityHolyElemental(World world)
     {
         super(world, AlchemicalWizardry.entityHolyElementalID);

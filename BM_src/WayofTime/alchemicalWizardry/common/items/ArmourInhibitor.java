@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ArmourInhibitor extends EnergyItems {
+public class ArmourInhibitor extends EnergyItems
+{
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private int tickDelay = 200;

@@ -13,7 +13,8 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
-public class BlockConduit extends BlockContainer {
+public class BlockConduit extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

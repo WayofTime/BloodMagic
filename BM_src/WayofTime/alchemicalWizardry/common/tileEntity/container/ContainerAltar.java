@@ -7,7 +7,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerAltar extends Container {
+public class ContainerAltar extends Container
+{
     protected TEAltar tileEntity;
 
     public ContainerAltar(InventoryPlayer inventoryPlayer, TEAltar te)

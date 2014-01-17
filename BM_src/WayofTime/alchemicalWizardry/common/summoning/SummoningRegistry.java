@@ -7,7 +7,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SummoningRegistry {
+public class SummoningRegistry
+{
     public static List<SummoningRegistryComponent> summoningList = new ArrayList();
 
     public static void registerSummon(SummoningHelper s, ItemStack[] ring1, ItemStack[] ring2, ItemStack[] ring3, int amountUsed, int bloodOrbLevel)

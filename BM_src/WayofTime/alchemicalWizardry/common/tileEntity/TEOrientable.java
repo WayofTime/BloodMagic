@@ -5,7 +5,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 
-public class TEOrientable extends TileEntity implements IOrientable {
+public class TEOrientable extends TileEntity implements IOrientable
+{
     protected ForgeDirection inputFace;
     protected ForgeDirection outputFace;
 

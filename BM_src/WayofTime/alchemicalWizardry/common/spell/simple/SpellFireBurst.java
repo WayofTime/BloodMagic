@@ -14,7 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class SpellFireBurst extends HomSpell {
+public class SpellFireBurst extends HomSpell
+{
     public Random itemRand = new Random();
 
     public SpellFireBurst()

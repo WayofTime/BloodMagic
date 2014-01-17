@@ -9,7 +9,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class FireProjectile extends EnergyBlastProjectile {
+public class FireProjectile extends EnergyBlastProjectile
+{
     public FireProjectile(World par1World)
     {
         super(par1World);

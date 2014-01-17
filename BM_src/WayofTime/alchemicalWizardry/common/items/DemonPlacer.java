@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DemonPlacer extends Item {
+public class DemonPlacer extends Item
+{
     @SideOnly(Side.CLIENT)
     private Icon theIcon;
 

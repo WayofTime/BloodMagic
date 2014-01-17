@@ -24,7 +24,8 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityLowerGuardian extends EntityDemon {
+public class EntityLowerGuardian extends EntityDemon
+{
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private static float maxTamedHealth = 50.0F;

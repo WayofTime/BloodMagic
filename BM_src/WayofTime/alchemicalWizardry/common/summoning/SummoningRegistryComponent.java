@@ -6,7 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class SummoningRegistryComponent {
+public class SummoningRegistryComponent
+{
     public ItemStack[] ring1 = new ItemStack[6];
     public ItemStack[] ring2 = new ItemStack[6];
     public ItemStack[] ring3 = new ItemStack[6];

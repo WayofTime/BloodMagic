@@ -11,7 +11,8 @@ import java.util.LinkedHashMap;
  *         This class is used to keep the material information for the various rods.
  *         It is also used to generate the wand recipes ingame.
  */
-public class WandRod {
+public class WandRod
+{
     private String tag;
 
     /**

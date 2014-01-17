@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EnergyBlast extends EnergyItems {
+public class EnergyBlast extends EnergyItems
+{
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private static int damage;

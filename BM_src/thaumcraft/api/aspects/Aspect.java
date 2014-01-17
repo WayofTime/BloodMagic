@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
-public class Aspect {
+public class Aspect
+{
     String tag;
     Aspect[] components;
     int color;

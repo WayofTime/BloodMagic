@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectile implements IProjectile {
+public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectile implements IProjectile
+{
     private int xTile = -1;
     private int yTile = -1;
     private int zTile = -1;

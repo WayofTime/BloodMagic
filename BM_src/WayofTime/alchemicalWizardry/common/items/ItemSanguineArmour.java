@@ -19,7 +19,8 @@ import thaumcraft.api.nodes.IRevealer;
 
 import java.util.List;
 
-public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUpgrade, IGoggles, IVisDiscounter {
+public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUpgrade, IGoggles, IVisDiscounter
+{
     private static Icon helmetIcon;
 
     public ItemSanguineArmour(int par1)

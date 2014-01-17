@@ -21,7 +21,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TEPlinth extends TileEntity implements IInventory {
+public class TEPlinth extends TileEntity implements IInventory
+{
     private ItemStack[] inv;
 
     private boolean isActive;

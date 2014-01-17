@@ -9,7 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class RenderConduit extends TileEntitySpecialRenderer {
+public class RenderConduit extends TileEntitySpecialRenderer
+{
     private ModelConduit modelConduit = new ModelConduit();
 
     @Override

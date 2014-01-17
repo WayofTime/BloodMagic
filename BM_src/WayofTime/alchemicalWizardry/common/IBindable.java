@@ -1,4 +1,5 @@
 package WayofTime.alchemicalWizardry.common;
 
-public interface IBindable {
+public interface IBindable
+{
 }

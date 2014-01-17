@@ -25,7 +25,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *         <p/>
  *         IMPORTANT: If you are adding your own aspects to items it is a good idea to do it AFTER Thaumcraft adds its aspects, otherwise odd things may happen.
  */
-public class ThaumcraftApi {
+public class ThaumcraftApi
+{
     //Materials
     public static EnumToolMaterial toolMatThaumium = EnumHelper.addToolMaterial("THAUMIUM", 3, 400, 7F, 2, 22);
     public static EnumToolMaterial toolMatElemental = EnumHelper.addToolMaterial("THAUMIUM_ELEMENTAL", 3, 1500, 10F, 3, 18);
@@ -50,7 +51,8 @@ public class ThaumcraftApi {
     public static ArrayList<IScanEventHandler> scanEventhandlers = new ArrayList<IScanEventHandler>();
     public static ArrayList<EntityTags> scanEntities = new ArrayList<EntityTags>();
 
-    public static class EntityTags {
+    public static class EntityTags
+    {
         public EntityTags(String entityName, NBTBase[] nbts, AspectList aspects)
         {
             this.entityName = entityName;

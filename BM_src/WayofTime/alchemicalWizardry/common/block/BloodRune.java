@@ -13,7 +13,8 @@ import net.minecraft.util.Icon;
 
 import java.util.List;
 
-public class BloodRune extends Block {
+public class BloodRune extends Block
+{
     //private Icon bloodRuneIcon;
     private Icon altarCapacityRuneIcon;
     private Icon dislocationRuneIcon;

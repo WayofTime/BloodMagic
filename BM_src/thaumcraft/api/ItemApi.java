@@ -12,7 +12,8 @@ import net.minecraft.item.ItemStack;
  *         I only give some examples and it will probably still
  *         require a bit of work for you to get hold of everything you need.
  */
-public class ItemApi {
+public class ItemApi
+{
     public static ItemStack getItem(String itemString, int meta)
     {
         ItemStack item = null;

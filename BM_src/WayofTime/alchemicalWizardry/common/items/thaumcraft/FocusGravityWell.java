@@ -23,7 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FocusGravityWell extends FocusBase {
+public class FocusGravityWell extends FocusBase
+{
     private static final AspectList visUsage = new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 5);
 
     private final int maxCooldown = 1;

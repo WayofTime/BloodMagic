@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
-public class PlinthComponent {
+public class PlinthComponent
+{
     public int xOffset;
     public int yOffset;
     public int zOffset;

@@ -6,7 +6,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 
-public class AirInk extends Item {
+public class AirInk extends Item
+{
     public AirInk(int id)
     {
         super(id);

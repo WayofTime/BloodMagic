@@ -25,7 +25,8 @@ import thaumcraft.api.nodes.IRevealer;
 
 import java.util.List;
 
-public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IBindable {
+public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IBindable
+{
     private static int invSize = 9;
     private static Icon helmetIcon;
     private static Icon plateIcon;

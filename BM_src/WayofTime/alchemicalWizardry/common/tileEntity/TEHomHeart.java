@@ -9,7 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.world.World;
 
-public class TEHomHeart extends TileEntity {
+public class TEHomHeart extends TileEntity
+{
     public boolean canCastSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         return true;

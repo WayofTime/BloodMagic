@@ -16,7 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class RitualEffectCrushing extends RitualEffect {
+public class RitualEffectCrushing extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

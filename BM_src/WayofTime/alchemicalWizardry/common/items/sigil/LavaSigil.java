@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class LavaSigil extends ItemBucket implements ArmourUpgrade {
+public class LavaSigil extends ItemBucket implements ArmourUpgrade
+{
     /**
      * field for checking if the bucket has been filled.
      */

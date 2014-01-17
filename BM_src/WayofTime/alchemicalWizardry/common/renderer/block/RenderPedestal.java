@@ -15,13 +15,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class RenderPedestal extends TileEntitySpecialRenderer {
+public class RenderPedestal extends TileEntitySpecialRenderer
+{
     private ModelPedestal modelPedestal = new ModelPedestal();
     private final RenderItem customRenderItem;
 
     public RenderPedestal()
     {
-        customRenderItem = new RenderItem() {
+        customRenderItem = new RenderItem()
+        {
             @Override
             public boolean shouldBob()
             {

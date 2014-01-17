@@ -12,7 +12,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
-public class RitualEffectGrowth extends RitualEffect {
+public class RitualEffectGrowth extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

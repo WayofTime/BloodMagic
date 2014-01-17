@@ -11,7 +11,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.ForgeDirection;
 
-public class ModelConduit extends ModelBase {
+public class ModelConduit extends ModelBase
+{
     //fields
     ModelRenderer curvedInput;
     ModelRenderer curvedOutput;

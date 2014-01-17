@@ -19,7 +19,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
-public class ItemFocusBasic extends Item implements IWandFocus {
+public class ItemFocusBasic extends Item implements IWandFocus
+{
     public ItemFocusBasic(int i)
     {
         super(i);

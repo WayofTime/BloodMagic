@@ -19,7 +19,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class WaterSigil extends ItemBucket implements ArmourUpgrade {
+public class WaterSigil extends ItemBucket implements ArmourUpgrade
+{
     /**
      * field for checking if the bucket has been filled.
      */

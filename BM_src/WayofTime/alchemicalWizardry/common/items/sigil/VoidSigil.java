@@ -20,7 +20,8 @@ import net.minecraftforge.event.entity.player.FillBucketEvent;
 
 import java.util.List;
 
-public class VoidSigil extends ItemBucket implements ArmourUpgrade {
+public class VoidSigil extends ItemBucket implements ArmourUpgrade
+{
     private int isFull;
     private int energyUsed;
 

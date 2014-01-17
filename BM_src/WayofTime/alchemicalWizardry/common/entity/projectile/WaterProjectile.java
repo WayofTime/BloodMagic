@@ -11,7 +11,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class WaterProjectile extends EnergyBlastProjectile {
+public class WaterProjectile extends EnergyBlastProjectile
+{
     public WaterProjectile(World par1World)
     {
         super(par1World);

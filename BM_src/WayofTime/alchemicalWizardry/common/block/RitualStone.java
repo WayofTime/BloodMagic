@@ -13,7 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-public class RitualStone extends Block {
+public class RitualStone extends Block
+{
     @SideOnly(Side.CLIENT)
     private static Icon blankIcon;
     @SideOnly(Side.CLIENT)

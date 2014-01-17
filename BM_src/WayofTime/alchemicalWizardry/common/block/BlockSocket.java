@@ -19,7 +19,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockSocket extends BlockContainer {
+public class BlockSocket extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

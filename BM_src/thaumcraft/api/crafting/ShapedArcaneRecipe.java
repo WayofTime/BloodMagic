@@ -13,7 +13,8 @@ import thaumcraft.api.aspects.AspectList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShapedArcaneRecipe implements IArcaneRecipe {
+public class ShapedArcaneRecipe implements IArcaneRecipe
+{
     //Added in for future ease of change, but hard coded for now.
     private static final int MAX_CRAFT_GRID_WIDTH = 3;
     private static final int MAX_CRAFT_GRID_HEIGHT = 3;

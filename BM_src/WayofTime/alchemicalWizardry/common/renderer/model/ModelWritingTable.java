@@ -4,7 +4,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelWritingTable extends ModelBase {
+public class ModelWritingTable extends ModelBase
+{
     //fields
     ModelRenderer base;
     ModelRenderer support;

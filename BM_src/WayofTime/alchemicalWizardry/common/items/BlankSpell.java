@@ -14,7 +14,8 @@ import net.minecraftforge.common.DimensionManager;
 
 import java.util.List;
 
-public class BlankSpell extends EnergyItems {
+public class BlankSpell extends EnergyItems
+{
     public BlankSpell(int par1)
     {
         super(par1);

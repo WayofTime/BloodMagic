@@ -17,7 +17,8 @@ import java.util.List;
  *
  * @author azanor
  */
-public class WandTriggerRegistry {
+public class WandTriggerRegistry
+{
     /**
      * Registers an action to perform when a casting wand right clicks on a specific block.
      * A manager class needs to be created that implements IWandTriggerManager.

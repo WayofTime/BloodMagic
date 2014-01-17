@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 
-public class RitualEffectBiomeChanger extends RitualEffect {
+public class RitualEffectBiomeChanger extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

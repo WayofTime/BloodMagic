@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class LavaCrystal extends EnergyItems {
+public class LavaCrystal extends EnergyItems
+{
     public LavaCrystal(int id)
     {
         super(id);

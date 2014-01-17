@@ -9,7 +9,8 @@ import net.minecraft.server.MinecraftServer;
 
 import java.util.EnumSet;
 
-public class AlchemicalWizardryTickHandler implements ITickHandler {
+public class AlchemicalWizardryTickHandler implements ITickHandler
+{
     public void tickStart(EnumSet<TickType> type, Object... tickData)
     {
     }

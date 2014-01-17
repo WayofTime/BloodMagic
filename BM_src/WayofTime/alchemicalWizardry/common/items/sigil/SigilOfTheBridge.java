@@ -17,7 +17,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade {
+public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
+{
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private int tickDelay = 200;

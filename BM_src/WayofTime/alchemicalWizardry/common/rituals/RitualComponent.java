@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-public class RitualComponent {
+public class RitualComponent
+{
     private int x;
     private int y;
     private int z;

@@ -10,7 +10,8 @@ import net.minecraft.item.ItemStack;
  *         goggles of revealing can apart from view nodes which is handled by IRevealer.
  */
 
-public interface IGoggles {
+public interface IGoggles
+{
     /*
      * If this method returns true things like block essentia contents will be shown.
      */

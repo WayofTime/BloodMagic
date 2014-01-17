@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-public class InfusionEnchantmentRecipe {
+public class InfusionEnchantmentRecipe
+{
     public AspectList aspects;
     public String research;
     public ItemStack[] components;

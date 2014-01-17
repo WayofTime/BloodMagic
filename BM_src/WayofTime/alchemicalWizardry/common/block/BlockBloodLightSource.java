@@ -13,7 +13,8 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-public class BlockBloodLightSource extends Block {
+public class BlockBloodLightSource extends Block
+{
     public BlockBloodLightSource(int par1)
     {
         super(par1, Material.cloth);

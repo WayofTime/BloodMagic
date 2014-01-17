@@ -7,7 +7,8 @@ import net.minecraft.client.renderer.texture.IconRegister;
 
 import java.util.Random;
 
-public class EnhancedFillingAgent extends WeakFillingAgent {
+public class EnhancedFillingAgent extends WeakFillingAgent
+{
     public EnhancedFillingAgent(int par1)
     {
         super(par1);

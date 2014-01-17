@@ -11,7 +11,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class LightningBoltProjectile extends EnergyBlastProjectile {
+public class LightningBoltProjectile extends EnergyBlastProjectile
+{
     private boolean causeLightning;
 
     public LightningBoltProjectile(World par1World)

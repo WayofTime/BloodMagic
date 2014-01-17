@@ -5,7 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public abstract class HomSpell implements ISimpleSpell {
+public abstract class HomSpell implements ISimpleSpell
+{
     private int offensiveRangedEnergy;
     private int offensiveMeleeEnergy;
     private int defensiveEnergy;

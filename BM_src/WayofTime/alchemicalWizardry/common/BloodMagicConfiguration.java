@@ -14,7 +14,8 @@ import java.util.logging.Level;
  * Date: 17/01/14
  * Time: 19:50
  */
-public class BloodMagicConfiguration {
+public class BloodMagicConfiguration
+{
 
 
     public static Configuration config;

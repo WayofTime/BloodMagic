@@ -5,7 +5,8 @@ import net.minecraft.util.ResourceLocation;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResearchCategoryList {
+public class ResearchCategoryList
+{
     /**
      * Is the smallest column used on the GUI.
      */

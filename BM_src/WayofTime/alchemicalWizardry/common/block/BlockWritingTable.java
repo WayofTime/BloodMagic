@@ -21,7 +21,8 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-public class BlockWritingTable extends BlockContainer {
+public class BlockWritingTable extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

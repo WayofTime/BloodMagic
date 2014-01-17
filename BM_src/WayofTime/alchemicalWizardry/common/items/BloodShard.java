@@ -11,7 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class BloodShard extends Item implements ArmourUpgrade {
+public class BloodShard extends Item implements ArmourUpgrade
+{
     public BloodShard(int par1)
     {
         super(par1);

@@ -6,7 +6,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.world.World;
 
-public class ModelElemental extends ModelBase {
+public class ModelElemental extends ModelBase
+{
     //fields
     ModelRenderer body;
     ModelRenderer Shape2;

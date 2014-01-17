@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class RitualEffectSummonMeteor extends RitualEffect {
+public class RitualEffectSummonMeteor extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

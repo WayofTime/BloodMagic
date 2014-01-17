@@ -21,7 +21,8 @@ import net.minecraftforge.fluids.FluidStack;
 import java.io.*;
 import java.util.Random;
 
-public class PacketHandler implements IPacketHandler {
+public class PacketHandler implements IPacketHandler
+{
     @Override
     public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)
     {

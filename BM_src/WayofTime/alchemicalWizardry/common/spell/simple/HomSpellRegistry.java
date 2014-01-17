@@ -6,7 +6,8 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomSpellRegistry {
+public class HomSpellRegistry
+{
     public static List<HomSpellComponent> spellList = new ArrayList();
 
     public static void registerBasicSpell(ItemStack item, HomSpell spell)

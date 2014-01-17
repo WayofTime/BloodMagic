@@ -11,7 +11,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpellEarthBender extends HomSpell {
+public class SpellEarthBender extends HomSpell
+{
     Random itemRand = new Random();
 
     public SpellEarthBender()

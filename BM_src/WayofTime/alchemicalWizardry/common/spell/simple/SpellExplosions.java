@@ -8,7 +8,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpellExplosions extends HomSpell {
+public class SpellExplosions extends HomSpell
+{
     Random itemRand = new Random();
 
     public SpellExplosions()

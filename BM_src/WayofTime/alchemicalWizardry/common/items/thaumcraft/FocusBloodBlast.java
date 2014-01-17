@@ -19,7 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FocusBloodBlast extends FocusBase {
+public class FocusBloodBlast extends FocusBase
+{
     private static final AspectList visUsage = new AspectList().add(Aspect.AIR, 15).add(Aspect.ENTROPY, 45);
 
     private final int maxCooldown = 7;

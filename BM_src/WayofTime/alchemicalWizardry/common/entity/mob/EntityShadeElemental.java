@@ -8,7 +8,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class EntityShadeElemental extends EntityElemental implements IMob {
+public class EntityShadeElemental extends EntityElemental implements IMob
+{
     public EntityShadeElemental(World world)
     {
         super(world, AlchemicalWizardry.entityShadeElementalID);

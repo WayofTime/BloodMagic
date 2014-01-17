@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class MundanePowerCatalyst extends PowerCatalyst {
+public class MundanePowerCatalyst extends PowerCatalyst
+{
     public MundanePowerCatalyst(int id)
     {
         super(id, 1);

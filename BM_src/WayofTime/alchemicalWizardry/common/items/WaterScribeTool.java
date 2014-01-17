@@ -5,7 +5,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class WaterScribeTool extends ScribeTool {
+public class WaterScribeTool extends ScribeTool
+{
     public WaterScribeTool(int id)
     {
         super(id, 1);

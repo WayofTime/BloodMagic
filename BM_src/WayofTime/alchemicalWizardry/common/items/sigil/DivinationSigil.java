@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DivinationSigil extends Item implements ArmourUpgrade {
+public class DivinationSigil extends Item implements ArmourUpgrade
+{
     public DivinationSigil(int par1)
     {
         super(par1);

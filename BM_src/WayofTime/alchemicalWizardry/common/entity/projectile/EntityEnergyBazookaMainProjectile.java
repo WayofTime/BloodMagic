@@ -7,7 +7,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile {
+public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
+{
     public EntityEnergyBazookaMainProjectile(World par1World)
     {
         super(par1World);

@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockPedestal extends BlockContainer {
+public class BlockPedestal extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

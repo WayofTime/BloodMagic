@@ -4,7 +4,8 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityFallenAngel;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
-public class SummoningFallenAngel extends SummoningHelper {
+public class SummoningFallenAngel extends SummoningHelper
+{
     public SummoningFallenAngel(int id)
     {
         super(id);

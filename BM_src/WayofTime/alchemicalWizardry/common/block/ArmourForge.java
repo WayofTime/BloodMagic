@@ -25,7 +25,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArmourForge extends Block {
+public class ArmourForge extends Block
+{
     public static List<ArmourComponent> helmetList = new ArrayList();
     public static List<ArmourComponent> plateList = new ArrayList();
     public static List<ArmourComponent> leggingsList = new ArrayList();

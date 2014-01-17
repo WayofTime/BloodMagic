@@ -8,7 +8,8 @@ import thaumcraft.api.aspects.AspectList;
 
 import java.util.ArrayList;
 
-public class CrucibleRecipe {
+public class CrucibleRecipe
+{
     public ItemStack recipeOutput;
     public Object catalyst;
     public AspectList aspects;

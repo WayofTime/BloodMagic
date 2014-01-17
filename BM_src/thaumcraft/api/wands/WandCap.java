@@ -13,7 +13,8 @@ import java.util.List;
  *
  * @author Azanor
  */
-public class WandCap {
+public class WandCap
+{
     private String tag;
 
     /**

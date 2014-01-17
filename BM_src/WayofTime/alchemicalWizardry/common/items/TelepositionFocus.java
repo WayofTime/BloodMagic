@@ -12,7 +12,8 @@ import net.minecraftforge.common.DimensionManager;
 
 import java.util.List;
 
-public class TelepositionFocus extends EnergyItems {
+public class TelepositionFocus extends EnergyItems
+{
     private int focusLevel;
 
     public TelepositionFocus(int par1, int focusLevel)

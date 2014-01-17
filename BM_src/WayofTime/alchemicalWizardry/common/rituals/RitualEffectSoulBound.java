@@ -21,7 +21,8 @@ import thaumcraft.api.ItemApi;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualEffectSoulBound extends RitualEffect {
+public class RitualEffectSoulBound extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

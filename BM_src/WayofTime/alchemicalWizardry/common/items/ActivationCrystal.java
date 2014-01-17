@@ -16,7 +16,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class ActivationCrystal extends EnergyItems {
+public class ActivationCrystal extends EnergyItems
+{
     private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"Weak", "Awakened"};
 
     @SideOnly(Side.CLIENT)

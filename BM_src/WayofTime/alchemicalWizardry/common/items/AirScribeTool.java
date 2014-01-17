@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class AirScribeTool extends ScribeTool {
+public class AirScribeTool extends ScribeTool
+{
     public AirScribeTool(int id)
     {
         super(id, 4);

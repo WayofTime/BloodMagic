@@ -17,7 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 
 //Shamelessly ripped off from x3n0ph0b3
-public class EnergyBlastProjectile extends Entity implements IProjectile {
+public class EnergyBlastProjectile extends Entity implements IProjectile
+{
     protected int xTile = -1;
     protected int yTile = -1;
     protected int zTile = -1;

@@ -6,7 +6,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 
-public class FireInk extends Item {
+public class FireInk extends Item
+{
     public FireInk(int id)
     {
         super(id);

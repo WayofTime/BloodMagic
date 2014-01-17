@@ -14,7 +14,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class AlchemyReagent extends Item {
+public class AlchemyReagent extends Item
+{
     public AlchemyReagent(int id)
     {
         super(id);

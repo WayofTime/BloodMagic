@@ -23,7 +23,8 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityBileDemon extends EntityDemon {
+public class EntityBileDemon extends EntityDemon
+{
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private static float maxTamedHealth = 100.0F;

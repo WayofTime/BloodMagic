@@ -8,7 +8,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeteorParadigm {
+public class MeteorParadigm
+{
     public List<MeteorParadigmComponent> componentList = new ArrayList();
     public ItemStack focusStack;
     public int radius;

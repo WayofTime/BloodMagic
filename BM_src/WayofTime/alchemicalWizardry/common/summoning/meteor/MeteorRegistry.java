@@ -7,7 +7,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MeteorRegistry {
+public class MeteorRegistry
+{
     public static List<MeteorParadigm> paradigmList = new ArrayList();
 
     public static void registerMeteorParadigm(MeteorParadigm paradigm)

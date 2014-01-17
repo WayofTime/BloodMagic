@@ -25,7 +25,8 @@ import net.minecraftforge.common.ForgeHooks;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoundShovel extends ItemSpade implements IBindable {
+public class BoundShovel extends ItemSpade implements IBindable
+{
     /**
      * Array of blocks the tool has extra effect against.
      */

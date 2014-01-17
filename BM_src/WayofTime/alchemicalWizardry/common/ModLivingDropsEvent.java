@@ -6,7 +6,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
-public class ModLivingDropsEvent {
+public class ModLivingDropsEvent
+{
     public static double rand;
 
     @ForgeSubscribe

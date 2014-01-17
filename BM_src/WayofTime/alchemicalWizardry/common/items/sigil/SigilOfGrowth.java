@@ -21,7 +21,8 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import java.util.List;
 
-public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade {
+public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
+{
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private int tickDelay = 100;

@@ -8,7 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-public class RenderMeteor extends Render {
+public class RenderMeteor extends Render
+{
     public ModelBase model = new ModelMeteor();
     private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/Meteor.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
     private float scale = 1.0f;

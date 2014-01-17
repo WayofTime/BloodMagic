@@ -11,7 +11,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 
-public class EntityBloodLightProjectile extends EnergyBlastProjectile {
+public class EntityBloodLightProjectile extends EnergyBlastProjectile
+{
     public EntityBloodLightProjectile(World par1World)
     {
         super(par1World);

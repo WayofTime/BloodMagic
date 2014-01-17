@@ -11,7 +11,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-public class RitualEffectLava extends RitualEffect {
+public class RitualEffectLava extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

@@ -16,7 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfWind extends EnergyItems implements ArmourUpgrade {
+public class SigilOfWind extends EnergyItems implements ArmourUpgrade
+{
     @SideOnly(Side.CLIENT)
     private static Icon activeIcon;
     @SideOnly(Side.CLIENT)

@@ -7,7 +7,8 @@ import net.minecraftforge.common.ForgeDirection;
  *         This interface is used by tiles that use or transport vis.
  *         Only tiles that implement this interface will be able to connect to vis conduits or other thaumic devices
  */
-public interface IEssentiaTransport {
+public interface IEssentiaTransport
+{
     /**
      * Is this tile able to connect to other vis users/sources on the specified side?
      *

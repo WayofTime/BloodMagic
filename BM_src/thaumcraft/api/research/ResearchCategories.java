@@ -6,7 +6,8 @@ import net.minecraft.util.StatCollector;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
-public class ResearchCategories {
+public class ResearchCategories
+{
     //Research
     public static LinkedHashMap<String,ResearchCategoryList> researchCategories = new LinkedHashMap<String,ResearchCategoryList>();
 

@@ -6,7 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.AspectList;
 
-public interface IArcaneRecipe {
+public interface IArcaneRecipe
+{
     /**
      * Used to check if a recipe matches current crafting inventory
      *

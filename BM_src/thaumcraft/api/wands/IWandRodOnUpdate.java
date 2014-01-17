@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
  *         Implemented by a class that you wish to be called whenever a wand with this rod performs its
  *         update tick.
  */
-public interface IWandRodOnUpdate {
+public interface IWandRodOnUpdate
+{
     void onUpdate(ItemStack itemstack, EntityPlayer player);
 }

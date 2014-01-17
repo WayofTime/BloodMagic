@@ -18,7 +18,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 import java.util.*;
 
-public class AlchemicalWizardryEventHooks {
+public class AlchemicalWizardryEventHooks
+{
     public static Map<String,Boolean> playerFlightBuff = new HashMap();
     public static Map<String,Boolean> playerBoostStepHeight = new HashMap();
     public static List<String> playersWith1Step = new ArrayList();

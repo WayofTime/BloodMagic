@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemRitualDiviner extends EnergyItems {
+public class ItemRitualDiviner extends EnergyItems
+{
     private int maxMetaData;
 
     public ItemRitualDiviner(int id)

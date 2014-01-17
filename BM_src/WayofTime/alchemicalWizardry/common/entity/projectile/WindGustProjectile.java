@@ -9,7 +9,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class WindGustProjectile extends EnergyBlastProjectile {
+public class WindGustProjectile extends EnergyBlastProjectile
+{
     public WindGustProjectile(World par1World)
     {
         super(par1World);

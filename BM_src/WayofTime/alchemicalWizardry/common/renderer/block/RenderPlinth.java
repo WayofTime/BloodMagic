@@ -15,13 +15,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class RenderPlinth extends TileEntitySpecialRenderer {
+public class RenderPlinth extends TileEntitySpecialRenderer
+{
     private ModelPlinth modelPlinth = new ModelPlinth();
     private final RenderItem customRenderItem;
 
     public RenderPlinth()
     {
-        customRenderItem = new RenderItem() {
+        customRenderItem = new RenderItem()
+        {
             @Override
             public boolean shouldBob()
             {

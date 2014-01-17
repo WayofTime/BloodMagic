@@ -9,7 +9,8 @@ import thaumcraft.api.aspects.AspectList;
 
 import java.util.ArrayList;
 
-public class InfusionRecipe {
+public class InfusionRecipe
+{
     public AspectList aspects;
     public String research;
     public ItemStack[] components;

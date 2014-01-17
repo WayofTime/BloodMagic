@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class RitualEffectFlight extends RitualEffect {
+public class RitualEffectFlight extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

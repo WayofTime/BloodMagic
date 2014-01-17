@@ -9,7 +9,8 @@ import net.minecraft.item.ItemStack;
  *         Useful for similar item containers that store their aspect information in nbt form so TC
  *         automatically picks up the aspects they contain
  */
-public interface IEssentiaContainerItem {
+public interface IEssentiaContainerItem
+{
     public AspectList getAspects(ItemStack itemstack);
 
     public void setAspects(ItemStack itemstack, AspectList aspects);

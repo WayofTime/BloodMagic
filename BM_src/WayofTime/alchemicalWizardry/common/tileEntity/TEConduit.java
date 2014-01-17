@@ -4,7 +4,8 @@ import WayofTime.alchemicalWizardry.common.PacketHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 
-public class TEConduit extends TEOrientable {
+public class TEConduit extends TEOrientable
+{
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {

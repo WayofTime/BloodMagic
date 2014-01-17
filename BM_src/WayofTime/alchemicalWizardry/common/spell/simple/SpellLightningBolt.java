@@ -11,7 +11,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpellLightningBolt extends HomSpell {
+public class SpellLightningBolt extends HomSpell
+{
     Random itemRand = new Random();
 
     public SpellLightningBolt()

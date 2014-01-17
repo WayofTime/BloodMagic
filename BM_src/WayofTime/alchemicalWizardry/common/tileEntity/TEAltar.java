@@ -25,7 +25,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler {
+public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler
+{
     private ItemStack[] inv;
     private int resultID;
     private int resultDamage;

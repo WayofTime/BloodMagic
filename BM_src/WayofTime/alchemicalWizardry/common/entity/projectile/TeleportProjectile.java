@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 
-public class TeleportProjectile extends EnergyBlastProjectile {
+public class TeleportProjectile extends EnergyBlastProjectile
+{
     private boolean isEntityTeleport; //True if the entity firing teleports on hit
 
     public TeleportProjectile(World par1World)

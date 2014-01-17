@@ -13,7 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
-public class BloodboundSword extends EnergyItems {
+public class BloodboundSword extends EnergyItems
+{
     private float weaponDamage;
     //private int maxMode = 3;
     private NBTTagCompound data;

@@ -7,7 +7,8 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class EntityFireElemental extends EntityElemental implements IMob {
+public class EntityFireElemental extends EntityElemental implements IMob
+{
     public EntityFireElemental(World world)
     {
         super(world, AlchemicalWizardry.entityFireElementalID);

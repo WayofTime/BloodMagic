@@ -9,7 +9,8 @@ import net.minecraft.item.ItemStack;
  *         Equipped head slot items that extend this class will make nodes visible in world.
  */
 
-public interface IRevealer {
+public interface IRevealer
+{
     /*
      * If this method returns true the nodes will be visible.
      */

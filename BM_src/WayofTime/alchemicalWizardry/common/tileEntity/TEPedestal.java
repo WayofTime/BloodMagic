@@ -11,7 +11,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
 
-public class TEPedestal extends TileEntity implements IInventory {
+public class TEPedestal extends TileEntity implements IInventory
+{
     private ItemStack[] inv;
     private int resultID;
     private int resultDamage;

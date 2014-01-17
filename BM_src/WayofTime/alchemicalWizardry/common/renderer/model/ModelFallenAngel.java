@@ -5,7 +5,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelFallenAngel extends ModelBase {
+public class ModelFallenAngel extends ModelBase
+{
     //fields
     ModelRenderer leftWing;
     ModelRenderer rightWing;

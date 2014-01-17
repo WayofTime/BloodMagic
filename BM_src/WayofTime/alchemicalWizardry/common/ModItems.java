@@ -11,7 +11,8 @@ import net.minecraft.item.Item;
  * Date: 17/01/14
  * Time: 19:48
  */
-public class ModItems {
+public class ModItems
+{
 
 
     public static Item orbOfTesting;

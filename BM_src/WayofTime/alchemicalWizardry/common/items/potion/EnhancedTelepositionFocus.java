@@ -10,7 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.List;
 
-public class EnhancedTelepositionFocus extends TelepositionFocus {
+public class EnhancedTelepositionFocus extends TelepositionFocus
+{
     public EnhancedTelepositionFocus(int par1)
     {
         super(par1, 2);

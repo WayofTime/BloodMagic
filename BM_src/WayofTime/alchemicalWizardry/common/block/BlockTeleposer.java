@@ -21,7 +21,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockTeleposer extends BlockContainer {
+public class BlockTeleposer extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

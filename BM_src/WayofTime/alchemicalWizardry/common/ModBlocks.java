@@ -12,7 +12,8 @@ import net.minecraft.creativetab.CreativeTabs;
  * Date: 17/01/14
  * Time: 19:48
  */
-public class ModBlocks {
+public class ModBlocks
+{
 
     public static Block testingBlock;
     public static Block bloodStoneBrick;

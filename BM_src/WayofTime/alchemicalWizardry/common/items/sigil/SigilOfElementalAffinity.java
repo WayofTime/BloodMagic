@@ -16,7 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfElementalAffinity extends EnergyItems {
+public class SigilOfElementalAffinity extends EnergyItems
+{
     @SideOnly(Side.CLIENT)
     private static Icon activeIcon;
     @SideOnly(Side.CLIENT)

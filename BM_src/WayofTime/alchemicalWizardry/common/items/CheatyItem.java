@@ -20,7 +20,8 @@ import net.minecraftforge.common.FakePlayer;
 
 import java.util.List;
 
-public class CheatyItem extends Item implements IBindable {
+public class CheatyItem extends Item implements IBindable
+{
     // private int maxEssence;
     //protected int orbLevel;
 

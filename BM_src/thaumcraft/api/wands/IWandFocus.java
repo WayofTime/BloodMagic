@@ -7,8 +7,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.AspectList;
 
-public interface IWandFocus {
-    public enum WandFocusAnimation {
+public interface IWandFocus
+{
+    public enum WandFocusAnimation
+    {
         WAVE, CHARGE;
     }
 

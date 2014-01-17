@@ -5,7 +5,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class StandardFillingAgent extends WeakFillingAgent {
+public class StandardFillingAgent extends WeakFillingAgent
+{
     public StandardFillingAgent(int par1)
     {
         super(par1);

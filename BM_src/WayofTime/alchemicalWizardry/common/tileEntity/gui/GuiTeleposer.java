@@ -9,7 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
-public class GuiTeleposer extends GuiContainer {
+public class GuiTeleposer extends GuiContainer
+{
     public GuiTeleposer(InventoryPlayer inventoryPlayer, TETeleposer tileEntity)
     {
         //the container is instanciated and passed to the superclass for handling

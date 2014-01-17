@@ -9,7 +9,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rituals {
+public class Rituals
+{
     private List<RitualComponent> components;
     private int crystalLevel;
     private int actCost;

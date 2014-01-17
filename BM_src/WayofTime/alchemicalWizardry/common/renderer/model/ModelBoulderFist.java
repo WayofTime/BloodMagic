@@ -5,7 +5,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelBoulderFist extends ModelBase {
+public class ModelBoulderFist extends ModelBase
+{
     //fields
     ModelRenderer leftFist;
     ModelRenderer leftArm;

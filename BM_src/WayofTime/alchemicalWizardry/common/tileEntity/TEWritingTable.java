@@ -20,7 +20,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class TEWritingTable extends TileEntity implements IInventory {
+public class TEWritingTable extends TileEntity implements IInventory
+{
     private ItemStack[] inv;
     private int progress;
     private int progressNeeded = 100;

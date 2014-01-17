@@ -12,13 +12,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class TEAltarRenderer extends TileEntitySpecialRenderer {
+public class TEAltarRenderer extends TileEntitySpecialRenderer
+{
     private ModelBloodAltar modelBloodAltar = new ModelBloodAltar();
     private final RenderItem customRenderItem;
 
     public TEAltarRenderer()
     {
-        customRenderItem = new RenderItem() {
+        customRenderItem = new RenderItem()
+        {
             @Override
             public boolean shouldBob()
             {

@@ -7,7 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class EmptySocket extends Block {
+public class EmptySocket extends Block
+{
     public EmptySocket(int par1)
     {
         super(par1, Material.iron);

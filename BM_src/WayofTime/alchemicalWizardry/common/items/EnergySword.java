@@ -19,7 +19,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EnergySword extends ItemSword {
+public class EnergySword extends ItemSword
+{
     //private float weaponDamaged;
     //private int maxMode = 3;
     private NBTTagCompound data;

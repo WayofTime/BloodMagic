@@ -8,7 +8,8 @@ import net.minecraft.potion.Potion;
 
 import java.util.ArrayList;
 
-public class AlchemicalPotionCreationHandler {
+public class AlchemicalPotionCreationHandler
+{
     public static ArrayList<AlchemyPotionHandlerComponent> registeredPotionEffects = new ArrayList();
 
     public static void initializePotions()

@@ -15,7 +15,8 @@ import org.lwjgl.input.Keyboard;
 import java.util.List;
 import java.util.Random;
 
-public class WeakFillingAgent extends Item implements IFillingAgent {
+public class WeakFillingAgent extends Item implements IFillingAgent
+{
     public WeakFillingAgent(int par1)
     {
         super(par1);

@@ -9,7 +9,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 
-public class AlchemicalWizardryFuelHandler implements IFuelHandler {
+public class AlchemicalWizardryFuelHandler implements IFuelHandler
+{
     @Override
     public int getBurnTime(ItemStack fuel)
     {

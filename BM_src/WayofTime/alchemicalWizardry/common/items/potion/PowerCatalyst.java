@@ -11,7 +11,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class PowerCatalyst extends Item implements ICatalyst {
+public class PowerCatalyst extends Item implements ICatalyst
+{
     private int catalystStrength;
 
     public PowerCatalyst(int id, int catalystStrength)

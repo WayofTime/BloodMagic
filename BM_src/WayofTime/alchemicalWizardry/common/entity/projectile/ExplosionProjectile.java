@@ -8,7 +8,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ExplosionProjectile extends EnergyBlastProjectile {
+public class ExplosionProjectile extends EnergyBlastProjectile
+{
     protected boolean causesEnvDamage;
 
     public ExplosionProjectile(World par1World)

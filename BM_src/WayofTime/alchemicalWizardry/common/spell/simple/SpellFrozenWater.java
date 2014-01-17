@@ -9,7 +9,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpellFrozenWater extends HomSpell {
+public class SpellFrozenWater extends HomSpell
+{
     public Random itemRand = new Random();
 
     public SpellFrozenWater()

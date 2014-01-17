@@ -8,7 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class TEWritingTableItemRenderer implements IItemRenderer {
+public class TEWritingTableItemRenderer implements IItemRenderer
+{
     private ModelWritingTable modelBloodAltar;
 
     public TEWritingTableItemRenderer()

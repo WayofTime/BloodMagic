@@ -10,7 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class EntityAirElemental extends EntityElemental implements IMob {
+public class EntityAirElemental extends EntityElemental implements IMob
+{
     public EntityAirElemental(World world)
     {
         super(world, AlchemicalWizardry.entityAirElementalID);

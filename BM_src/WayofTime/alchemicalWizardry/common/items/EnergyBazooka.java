@@ -15,7 +15,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EnergyBazooka extends EnergyItems {
+public class EnergyBazooka extends EnergyItems
+{
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private static int damage;

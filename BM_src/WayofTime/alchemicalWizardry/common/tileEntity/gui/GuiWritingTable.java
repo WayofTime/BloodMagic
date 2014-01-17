@@ -9,7 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
-public class GuiWritingTable extends GuiContainer {
+public class GuiWritingTable extends GuiContainer
+{
     public GuiWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable tileEntity)
     {
         //the container is instanciated and passed to the superclass for handling

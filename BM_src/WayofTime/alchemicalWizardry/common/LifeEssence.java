@@ -2,7 +2,8 @@ package WayofTime.alchemicalWizardry.common;
 
 import net.minecraftforge.fluids.Fluid;
 
-public class LifeEssence extends Fluid {
+public class LifeEssence extends Fluid
+{
     public LifeEssence(String fluidName)
     {
         super(fluidName);

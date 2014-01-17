@@ -6,7 +6,8 @@ package thaumcraft.api.aspects;
  *         Used by blocks like the crucible and alembic to hold their aspects.
  *         Tiles extending this interface will have their aspects show up when viewed by goggles of revealing
  */
-public interface IAspectContainer {
+public interface IAspectContainer
+{
     public AspectList getAspects();
 
     public void setAspects(AspectList aspects);

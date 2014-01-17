@@ -16,7 +16,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-public class BlockHomHeart extends BlockContainer {
+public class BlockHomHeart extends BlockContainer
+{
     public Icon bottomIcon;
     public Icon topIcon;
     public Icon sideIcon;

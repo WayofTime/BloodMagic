@@ -7,7 +7,8 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.world.World;
 
-public class CommonProxy {
+public class CommonProxy
+{
     public static String ITEMS_PNG = "/WayofTime/alchemicalWizardry/items.png";
     public static String BLOCK_PNG = "/WayofTime/alchemicalWizardry/block.png";
 

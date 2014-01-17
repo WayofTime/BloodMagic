@@ -12,7 +12,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class IceProjectile extends EnergyBlastProjectile {
+public class IceProjectile extends EnergyBlastProjectile
+{
     public IceProjectile(World par1World)
     {
         super(par1World);

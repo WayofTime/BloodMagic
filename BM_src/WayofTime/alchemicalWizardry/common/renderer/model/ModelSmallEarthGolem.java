@@ -5,7 +5,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelSmallEarthGolem extends ModelBase {
+public class ModelSmallEarthGolem extends ModelBase
+{
     //fields
     ModelRenderer leftLeg;
     ModelRenderer rightLeg;

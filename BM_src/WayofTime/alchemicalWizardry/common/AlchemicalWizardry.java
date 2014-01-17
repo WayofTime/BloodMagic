@@ -57,7 +57,8 @@ import java.lang.reflect.Modifier;
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v0.7.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
-public class AlchemicalWizardry {
+public class AlchemicalWizardry
+{
     public static boolean doMeteorsDestroyBlocks = true;
     public static String[] diamondMeteorArray;
     public static int diamondMeteorRadius;
@@ -84,7 +85,8 @@ public class AlchemicalWizardry {
 
     public static boolean isThaumcraftLoaded;
 
-    public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic") {
+    public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
+    {
         public ItemStack getIconItemStack()
         {
             return new ItemStack(ModItems.weakBloodOrb, 1, 0);

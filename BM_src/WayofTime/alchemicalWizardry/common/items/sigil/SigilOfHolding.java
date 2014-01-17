@@ -17,7 +17,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SigilOfHolding extends EnergyItems {
+public class SigilOfHolding extends EnergyItems
+{
     private int invSize = 4;
 
     public static List<Integer> allowedSigils = new ArrayList();

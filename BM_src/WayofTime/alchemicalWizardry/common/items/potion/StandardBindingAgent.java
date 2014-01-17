@@ -14,7 +14,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class StandardBindingAgent extends Item implements IBindingAgent {
+public class StandardBindingAgent extends Item implements IBindingAgent
+{
     public StandardBindingAgent(int id)
     {
         super(id);

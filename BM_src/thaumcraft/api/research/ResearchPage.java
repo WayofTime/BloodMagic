@@ -12,8 +12,10 @@ import thaumcraft.api.crafting.InfusionRecipe;
 
 import java.util.List;
 
-public class ResearchPage {
-    public static enum PageType {
+public class ResearchPage
+{
+    public static enum PageType
+    {
         TEXT,
         TEXT_CONCEALED,
         IMAGE,

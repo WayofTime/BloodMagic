@@ -13,7 +13,8 @@ import thaumcraft.api.aspects.AspectList;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ShapelessArcaneRecipe implements IArcaneRecipe {
+public class ShapelessArcaneRecipe implements IArcaneRecipe
+{
     private ItemStack output = null;
     private ArrayList input = new ArrayList();
 

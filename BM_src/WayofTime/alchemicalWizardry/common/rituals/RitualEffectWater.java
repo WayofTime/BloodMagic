@@ -11,7 +11,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-public class RitualEffectWater extends RitualEffect {
+public class RitualEffectWater extends RitualEffect
+{
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();

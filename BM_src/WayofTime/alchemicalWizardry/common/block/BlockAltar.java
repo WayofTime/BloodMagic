@@ -24,7 +24,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockAltar extends BlockContainer {
+public class BlockAltar extends BlockContainer
+{
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)

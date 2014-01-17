@@ -12,7 +12,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class MudProjectile extends EnergyBlastProjectile {
+public class MudProjectile extends EnergyBlastProjectile
+{
     private boolean doesBlindness; //True for when it applies blindness, false for slowness
 
     public MudProjectile(World par1World)

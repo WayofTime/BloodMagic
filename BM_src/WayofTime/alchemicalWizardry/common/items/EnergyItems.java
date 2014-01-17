@@ -14,7 +14,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EnergyItems extends Item implements IBindable {
+public class EnergyItems extends Item implements IBindable
+{
     private int energyUsed;
 
     public EnergyItems(int id)

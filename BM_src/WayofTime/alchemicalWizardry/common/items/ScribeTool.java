@@ -7,7 +7,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ScribeTool extends EnergyItems {
+public class ScribeTool extends EnergyItems
+{
     private int meta;
 
     public ScribeTool(int id, int inkType)

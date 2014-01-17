@@ -16,7 +16,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualEffectLeap extends RitualEffect {
+public class RitualEffectLeap extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

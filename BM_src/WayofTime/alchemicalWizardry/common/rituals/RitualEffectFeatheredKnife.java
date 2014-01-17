@@ -14,7 +14,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualEffectFeatheredKnife extends RitualEffect {
+public class RitualEffectFeatheredKnife extends RitualEffect
+{
     public final int timeDelay = 20;
     public final int amount = 100;
 

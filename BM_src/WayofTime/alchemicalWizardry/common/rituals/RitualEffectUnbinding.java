@@ -23,7 +23,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualEffectUnbinding extends RitualEffect {
+public class RitualEffectUnbinding extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

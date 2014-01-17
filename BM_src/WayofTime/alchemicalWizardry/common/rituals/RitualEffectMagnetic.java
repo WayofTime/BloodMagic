@@ -12,7 +12,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class RitualEffectMagnetic extends RitualEffect {
+public class RitualEffectMagnetic extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

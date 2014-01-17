@@ -7,7 +7,8 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityMeteor extends EnergyBlastProjectile {
+public class EntityMeteor extends EnergyBlastProjectile
+{
     private int meteorID;
 
     public EntityMeteor(World par1World)

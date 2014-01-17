@@ -15,7 +15,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemBloodLightSigil extends EnergyItems {
+public class ItemBloodLightSigil extends EnergyItems
+{
     private int tickDelay = 100;
 
     public ItemBloodLightSigil(int id)

@@ -8,7 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-public class RenderEnergyBazookaMainProjectile extends Render {
+public class RenderEnergyBazookaMainProjectile extends Render
+{
     public ModelBase model = new ModelEnergyBazookaMainProjectile();
     private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/EnergyBazookaMainProjectile.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
     private float scale = 1.0f;

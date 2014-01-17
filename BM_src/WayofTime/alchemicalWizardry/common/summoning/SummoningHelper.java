@@ -7,7 +7,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.world.World;
 
-public class SummoningHelper {
+public class SummoningHelper
+{
     private int id;
 
     public SummoningHelper(int id)

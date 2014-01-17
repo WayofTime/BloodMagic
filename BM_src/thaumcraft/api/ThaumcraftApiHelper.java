@@ -14,7 +14,8 @@ import thaumcraft.api.aspects.IEssentiaTransport;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class ThaumcraftApiHelper {
+public class ThaumcraftApiHelper
+{
     public static AspectList cullTags(AspectList temp)
     {
         AspectList temp2 = new AspectList();

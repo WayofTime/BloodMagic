@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class AlchemyFlask extends Item {
+public class AlchemyFlask extends Item
+{
     private int maxPotionAmount = 20;
 
     public AlchemyFlask(int id)

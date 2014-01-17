@@ -9,7 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
-public class RenderFallenAngel extends RenderLiving {
+public class RenderFallenAngel extends RenderLiving
+{
     private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/WingedAngel.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
 
     public RenderFallenAngel(ModelBase par1ModelBase, float par2)

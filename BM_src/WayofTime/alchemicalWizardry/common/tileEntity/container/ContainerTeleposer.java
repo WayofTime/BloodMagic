@@ -7,7 +7,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerTeleposer extends Container {
+public class ContainerTeleposer extends Container
+{
     protected TETeleposer tileEntity;
 
     public ContainerTeleposer(InventoryPlayer inventoryPlayer, TETeleposer te)

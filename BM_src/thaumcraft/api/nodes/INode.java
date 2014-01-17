@@ -2,7 +2,8 @@ package thaumcraft.api.nodes;
 
 import thaumcraft.api.aspects.IAspectContainer;
 
-public interface INode extends IAspectContainer {
+public interface INode extends IAspectContainer
+{
     /**
      * Unique identifier to distinguish nodes. Normal node id's are based on world id and coordinates
      *

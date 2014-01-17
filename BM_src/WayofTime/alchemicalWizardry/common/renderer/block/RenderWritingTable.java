@@ -15,7 +15,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class RenderWritingTable extends TileEntitySpecialRenderer {
+public class RenderWritingTable extends TileEntitySpecialRenderer
+{
     private ModelWritingTable modelWritingTable = new ModelWritingTable();
     private final RenderItem customRenderItem;
 //	private final RenderItem customRenderItem1;
@@ -26,7 +27,8 @@ public class RenderWritingTable extends TileEntitySpecialRenderer {
 
     public RenderWritingTable()
     {
-        customRenderItem = new RenderItem() {
+        customRenderItem = new RenderItem()
+        {
             @Override
             public boolean shouldBob()
             {

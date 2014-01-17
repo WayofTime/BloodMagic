@@ -8,7 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class OrbOfTesting extends EnergyItems {
+public class OrbOfTesting extends EnergyItems
+{
     public OrbOfTesting(int id)
     {
         super(id);

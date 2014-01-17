@@ -9,7 +9,8 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpgradedAltars {
+public class UpgradedAltars
+{
     public static List<AltarComponent> secondTierAltar = new ArrayList();
     public static List<AltarComponent> thirdTierAltar = new ArrayList();
     public static List<AltarComponent> fourthTierAltar = new ArrayList();

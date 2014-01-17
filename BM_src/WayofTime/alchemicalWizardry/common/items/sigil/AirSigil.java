@@ -13,7 +13,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class AirSigil extends EnergyItems implements ArmourUpgrade {
+public class AirSigil extends EnergyItems implements ArmourUpgrade
+{
     private int energyUsed;
 
     public AirSigil(int id)

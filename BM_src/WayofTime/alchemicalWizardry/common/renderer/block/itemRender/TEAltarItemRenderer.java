@@ -7,7 +7,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class TEAltarItemRenderer implements IItemRenderer {
+public class TEAltarItemRenderer implements IItemRenderer
+{
     private ModelBloodAltar modelBloodAltar;
 
     public TEAltarItemRenderer()

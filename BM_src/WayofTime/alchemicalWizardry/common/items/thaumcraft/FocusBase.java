@@ -18,7 +18,8 @@ import thaumcraft.api.wands.IWandFocus;
 
 import java.util.List;
 
-public abstract class FocusBase extends EnergyItems implements IWandFocus {
+public abstract class FocusBase extends EnergyItems implements IWandFocus
+{
     protected Icon ornament, depth;
 
     public FocusBase(int par1)

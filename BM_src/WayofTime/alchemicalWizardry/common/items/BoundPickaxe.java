@@ -23,7 +23,8 @@ import net.minecraftforge.common.ForgeHooks;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoundPickaxe extends ItemPickaxe implements IBindable {
+public class BoundPickaxe extends ItemPickaxe implements IBindable
+{
     /**
      * Array of blocks the tool has extra effect against.
      */

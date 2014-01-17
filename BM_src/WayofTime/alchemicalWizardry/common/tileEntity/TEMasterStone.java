@@ -8,7 +8,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class TEMasterStone extends TileEntity {
+public class TEMasterStone extends TileEntity
+{
     private int currentRitual;
     private boolean isActive;
     private String owner;

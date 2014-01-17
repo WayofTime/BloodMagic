@@ -4,7 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class GreaterLengtheningCatalyst extends LengtheningCatalyst {
+public class GreaterLengtheningCatalyst extends LengtheningCatalyst
+{
     public GreaterLengtheningCatalyst(int id)
     {
         super(id, 3);

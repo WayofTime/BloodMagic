@@ -13,7 +13,8 @@ import net.minecraft.world.World;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualEffectAnimalGrowth extends RitualEffect {
+public class RitualEffectAnimalGrowth extends RitualEffect
+{
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {

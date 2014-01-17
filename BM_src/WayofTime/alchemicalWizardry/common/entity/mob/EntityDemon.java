@@ -11,7 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
 
-public class EntityDemon extends EntityTameable implements IDemon {
+public class EntityDemon extends EntityTameable implements IDemon
+{
     private boolean isAggro;
     private int demonID;
 

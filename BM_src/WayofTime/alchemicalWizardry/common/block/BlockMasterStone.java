@@ -14,7 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockMasterStone extends BlockContainer {
+public class BlockMasterStone extends BlockContainer
+{
     public BlockMasterStone(int id)
     {
         super(id, Material.iron);

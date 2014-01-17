@@ -5,7 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemBucket;
 
-public class LifeBucket extends ItemBucket {
+public class LifeBucket extends ItemBucket
+{
     public LifeBucket(int par1, int par2)
     {
         super(par1, par2);

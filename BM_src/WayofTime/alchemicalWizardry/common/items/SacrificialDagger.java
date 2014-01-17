@@ -16,7 +16,8 @@ import net.minecraftforge.common.FakePlayer;
 
 import java.util.List;
 
-public class SacrificialDagger extends Item {
+public class SacrificialDagger extends Item
+{
     public SacrificialDagger(int id)
     {
         super(id);
