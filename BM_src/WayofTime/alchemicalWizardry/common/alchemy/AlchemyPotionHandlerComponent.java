@@ -5,49 +5,49 @@ import net.minecraft.item.ItemStack;
 
 public class AlchemyPotionHandlerComponent
 {
-    private ItemStack itemStack;
-    private int potionID;
-    private int tickDuration;
+	private ItemStack itemStack;
+	private int potionID;
+	private int tickDuration;
 
-    public AlchemyPotionHandlerComponent(ItemStack itemStack, int potionID, int tickDuration)
-    {
-        this.itemStack = itemStack;
-        this.potionID = potionID;
-        this.tickDuration = tickDuration;
-    }
+	public AlchemyPotionHandlerComponent(ItemStack itemStack, int potionID, int tickDuration)
+	{
+		this.itemStack = itemStack;
+		this.potionID = potionID;
+		this.tickDuration = tickDuration;
+	}
 
-    public boolean compareItemStack(ItemStack comparedStack)
-    {
-        if (comparedStack != null && itemStack != null)
-        {
-            if (comparedStack.getItem() instanceof ItemBlock)
-            {
-                if (itemStack.getItem() instanceof ItemBlock)
-                {
-                    return comparedStack.itemID == itemStack.itemID && comparedStack.getItemDamage() == itemStack.getItemDamage();
-                }
-            }
-            else if (!(itemStack.getItem() instanceof ItemBlock))
-            {
-                return comparedStack.itemID == itemStack.itemID && comparedStack.getItemDamage() == itemStack.getItemDamage();
-            }
-        }
+	public boolean compareItemStack(ItemStack comparedStack)
+	{
+		if (comparedStack != null && itemStack != null)
+		{
+			if (comparedStack.getItem() instanceof ItemBlock)
+			{
+				if (itemStack.getItem() instanceof ItemBlock)
+				{
+					return comparedStack.itemID == itemStack.itemID && comparedStack.getItemDamage() == itemStack.getItemDamage();
+				}
+			}
+			else if (!(itemStack.getItem() instanceof ItemBlock))
+			{
+				return comparedStack.itemID == itemStack.itemID && comparedStack.getItemDamage() == itemStack.getItemDamage();
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public ItemStack getItemStack()
-    {
-        return itemStack;
-    }
+	public ItemStack getItemStack()
+	{
+		return itemStack;
+	}
 
-    public int getPotionID()
-    {
-        return this.potionID;
-    }
+	public int getPotionID()
+	{
+		return potionID;
+	}
 
-    public int getTickDuration()
-    {
-        return this.tickDuration;
-    }
+	public int getTickDuration()
+	{
+		return tickDuration;
+	}
 }

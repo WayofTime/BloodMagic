@@ -10,23 +10,23 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class LifeEssenceFlowing extends BlockFlowing
 {
-    protected LifeEssenceFlowing(int par1)
-    {
-        super(par1, Material.water);
-        this.blockHardness = 100.0F;
-        this.setLightOpacity(3);
-        //this.setLightValue(10);
-        setCreativeTab(CreativeTabs.tabMisc);
-    }
+	protected LifeEssenceFlowing(int par1)
+	{
+		super(par1, Material.water);
+		blockHardness = 100.0F;
+		setLightOpacity(3);
+		//this.setLightValue(10);
+		setCreativeTab(CreativeTabs.tabMisc);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.theIcon = new Icon[]
-        {
-            iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill"),
-            iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceFlowing")
-        };
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		theIcon = new Icon[]
+				{
+				iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill"),
+				iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceFlowing")
+				};
+	}
 }

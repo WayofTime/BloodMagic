@@ -8,96 +8,92 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BloodboundSword extends EnergyItems
 {
-    private float weaponDamage;
-    //private int maxMode = 3;
-    private NBTTagCompound data;
+	public BloodboundSword(int id)
+	{
+		super(id);
+		maxStackSize = 1;
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+		setEnergyUsed(100);
+		setFull3D();
+	}
 
-    public BloodboundSword(int id)
-    {
-        super(id);
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        setEnergyUsed(100);
-        setFull3D();
-        weaponDamage = 10.0F;
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:EnergySword");
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:EnergySword");
-    }
+	@Override
+	public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
+	{
+		if (par3EntityLivingBase instanceof EntityPlayer)
+		{
+			EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer)par3EntityLivingBase);
 
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
-    {
-        if (par3EntityLivingBase instanceof EntityPlayer)
-        {
-            EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer)par3EntityLivingBase);
+			if (!syphonBatteries(par1ItemStack, (EntityPlayer)par3EntityLivingBase, getEnergyUsed()))
+			{
+				//this.damagePlayer(null, (EntityPlayer)par3EntityLivingBase, (this.getEnergyUsed() + 99) / 100);
+			}
+		}
 
-            if (!this.syphonBatteries(par1ItemStack, (EntityPlayer)par3EntityLivingBase, this.getEnergyUsed()))
-            {
-                //this.damagePlayer(null, (EntityPlayer)par3EntityLivingBase, (this.getEnergyUsed() + 99) / 100);
-            }
-        }
+		return true;
+	}
 
-        return true;
-    }
-
-    /*
+	/*
     public int getDamageVsEntity(Entity par1Entity)
     {
         return this.weaponDamage;
     }
-    */
+	 */
 
-    public float func_82803_g()
-    {
-        return 4.0F;
-    }
+	public float func_82803_g()
+	{
+		return 4.0F;
+	}
 
-    @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-    {
-        par3List.add("Caution: may cause");
-        par3List.add("a bad day...");
+	@Override
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+	{
+		par3List.add("Caution: may cause");
+		par3List.add("a bad day...");
 
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-        }
-    }
+		if (!(par1ItemStack.stackTagCompound == null))
+		{
+			par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+		}
+	}
 
-    @Override
-    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
-    {
-        if (par2Block.blockID == Block.web.blockID)
-        {
-            return 15.0F;
-        }
-        else
-        {
-            Material material = par2Block.blockMaterial;
-            return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;
-        }
-    }
+	@Override
+	public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
+	{
+		if (par2Block.blockID == Block.web.blockID)
+		{
+			return 15.0F;
+		}
+		else
+		{
+			Material material = par2Block.blockMaterial;
+			return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;
+		}
+	}
 
-    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-    {
-        return false;
-    }
+	@Override
+	public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
+	{
+		return false;
+	}
 
-//    public Multimap func_111205_h()
-//    {
-//        Multimap multimap = super.func_111205_h();
-//        multimap.put(SharedMonsterAttributes.field_111264_e.func_111108_a(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.weaponDamage, 0));
-//        return multimap;
-//    }
+	//    public Multimap func_111205_h()
+	//    {
+	//        Multimap multimap = super.func_111205_h();
+	//        multimap.put(SharedMonsterAttributes.field_111264_e.func_111108_a(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.weaponDamage, 0));
+	//        return multimap;
+	//    }
 }

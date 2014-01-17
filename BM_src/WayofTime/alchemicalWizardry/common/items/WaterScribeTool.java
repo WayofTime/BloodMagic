@@ -7,16 +7,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class WaterScribeTool extends ScribeTool
 {
-    public WaterScribeTool(int id)
-    {
-        super(id, 1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
+	public WaterScribeTool(int id)
+	{
+		super(id, 1);
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WaterScribeTool");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WaterScribeTool");
+	}
 }

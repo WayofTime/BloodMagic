@@ -6,15 +6,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class AverageLengtheningCatalyst extends LengtheningCatalyst
 {
-    public AverageLengtheningCatalyst(int id)
-    {
-        super(id, 2);
-    }
+	public AverageLengtheningCatalyst(int id)
+	{
+		super(id, 2);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AverageLengtheningCatalyst");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AverageLengtheningCatalyst");
+	}
 }

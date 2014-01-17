@@ -8,17 +8,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EarthInk extends Item
 {
-    public EarthInk(int id)
-    {
-        super(id);
-        this.maxStackSize = 1;
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
+	public EarthInk(int id)
+	{
+		super(id);
+		maxStackSize = 1;
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalInkEarth");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalInkEarth");
+	}
 }

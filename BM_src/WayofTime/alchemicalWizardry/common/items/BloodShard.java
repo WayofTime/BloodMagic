@@ -12,62 +12,62 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BloodShard extends Item implements ArmourUpgrade
 {
-    public BloodShard(int par1)
-    {
-        super(par1);
-        this.maxStackSize = 64;
-        //setEnergyUsed(100);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
+	public BloodShard(int par1)
+	{
+		super(par1);
+		maxStackSize = 64;
+		//setEnergyUsed(100);
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        if (this.itemID == AlchemicalWizardry.weakBloodShard.itemID)
-        {
-            this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WeakBloodShard");
-            return;
-        }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		if (itemID == AlchemicalWizardry.weakBloodShard.itemID)
+		{
+			itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WeakBloodShard");
+			return;
+		}
 
-        if (this.itemID == AlchemicalWizardry.demonBloodShard.itemID)
-        {
-            this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonBloodShard");
-            return;
-        }
-    }
+		if (itemID == AlchemicalWizardry.demonBloodShard.itemID)
+		{
+			itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonBloodShard");
+			return;
+		}
+	}
 
-    public int getBloodShardLevel()
-    {
-        if (this.itemID == AlchemicalWizardry.weakBloodShard.itemID)
-        {
-            return 1;
-        }
-        else if (this.itemID == AlchemicalWizardry.demonBloodShard.itemID)
-        {
-            return 2;
-        }
+	public int getBloodShardLevel()
+	{
+		if (itemID == AlchemicalWizardry.weakBloodShard.itemID)
+		{
+			return 1;
+		}
+		else if (itemID == AlchemicalWizardry.demonBloodShard.itemID)
+		{
+			return 2;
+		}
 
-        return 0;
-    }
+		return 0;
+	}
 
-    @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
-    {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
+	{
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public boolean isUpgrade()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public boolean isUpgrade()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Override
-    public int getEnergyForTenSeconds()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+	@Override
+	public int getEnergyForTenSeconds()
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

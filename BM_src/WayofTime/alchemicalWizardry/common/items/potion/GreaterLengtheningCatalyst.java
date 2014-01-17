@@ -6,15 +6,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GreaterLengtheningCatalyst extends LengtheningCatalyst
 {
-    public GreaterLengtheningCatalyst(int id)
-    {
-        super(id, 3);
-    }
+	public GreaterLengtheningCatalyst(int id)
+	{
+		super(id, 3);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:GreaterLengtheningCatalyst");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:GreaterLengtheningCatalyst");
+	}
 }

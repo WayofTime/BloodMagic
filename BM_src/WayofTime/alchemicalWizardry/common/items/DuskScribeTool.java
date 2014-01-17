@@ -6,15 +6,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class DuskScribeTool extends ScribeTool
 {
-    public DuskScribeTool(int id)
-    {
-        super(id, 5);
-    }
+	public DuskScribeTool(int id)
+	{
+		super(id, 5);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DuskScribeTool");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DuskScribeTool");
+	}
 }

@@ -8,17 +8,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class AirInk extends Item
 {
-    public AirInk(int id)
-    {
-        super(id);
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
+	public AirInk(int id)
+	{
+		super(id);
+		maxStackSize = 1;
+		setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalInkWater");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalInkWater");
+	}
 }

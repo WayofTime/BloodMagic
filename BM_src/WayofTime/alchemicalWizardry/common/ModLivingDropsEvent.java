@@ -8,28 +8,28 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 public class ModLivingDropsEvent
 {
-    public static double rand;
+	public static double rand;
 
-    @ForgeSubscribe
-    public void onEntityDrop(LivingDropsEvent event)
-    {
-        if (event.source.getDamageType().equals("player"))
-        {
-            rand = Math.random();
+	@ForgeSubscribe
+	public void onEntityDrop(LivingDropsEvent event)
+	{
+		if (event.source.getDamageType().equals("player"))
+		{
+			rand = Math.random();
 
-            if (!(event.entityLiving instanceof EntityAnimal))
-            {
-                PotionEffect effect = event.entityLiving.getActivePotionEffect(Potion.weakness);
+			if (!(event.entityLiving instanceof EntityAnimal))
+			{
+				PotionEffect effect = event.entityLiving.getActivePotionEffect(Potion.weakness);
 
-                if (effect != null)
-                {
-                    if (effect.getAmplifier() >= 2)
-                        if (rand < 0.50d)
-                        {
-                            event.entityLiving.dropItem(AlchemicalWizardry.weakBloodShard.itemID, 1);
-                        }
-                }
-            }
-        }
-    }
+				if (effect != null)
+				{
+					if (effect.getAmplifier() >= 2)
+						if (rand < 0.50d)
+						{
+							event.entityLiving.dropItem(AlchemicalWizardry.weakBloodShard.itemID, 1);
+						}
+				}
+			}
+		}
+	}
 }

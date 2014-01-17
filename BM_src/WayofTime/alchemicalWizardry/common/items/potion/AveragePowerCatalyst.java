@@ -6,15 +6,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class AveragePowerCatalyst extends PowerCatalyst
 {
-    public AveragePowerCatalyst(int id)
-    {
-        super(id, 2);
-    }
+	public AveragePowerCatalyst(int id)
+	{
+		super(id, 2);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AveragePowerCatalyst");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AveragePowerCatalyst");
+	}
 }
