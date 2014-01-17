@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
-import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
 import cpw.mods.fml.common.network.Player;
 import net.minecraft.block.BlockColored;

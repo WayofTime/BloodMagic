@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;

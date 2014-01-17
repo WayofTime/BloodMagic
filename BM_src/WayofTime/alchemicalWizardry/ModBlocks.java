@@ -1,6 +1,6 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.LifeEssence;
 import WayofTime.alchemicalWizardry.common.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

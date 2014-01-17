@@ -27,8 +27,6 @@ import WayofTime.alchemicalWizardry.common.BloodMagicConfiguration;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
-import WayofTime.alchemicalWizardry.common.ModBlocks;
-import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.PotionBoost;

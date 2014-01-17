@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.common.network.PacketDispatcher;

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;

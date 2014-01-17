@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;

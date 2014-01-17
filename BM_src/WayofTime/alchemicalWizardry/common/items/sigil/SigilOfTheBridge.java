@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.ModBlocks;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

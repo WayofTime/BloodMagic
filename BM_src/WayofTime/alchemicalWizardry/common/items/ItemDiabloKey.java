@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;

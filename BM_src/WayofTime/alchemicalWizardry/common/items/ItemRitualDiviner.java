@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ModBlocks;
-import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.common.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;

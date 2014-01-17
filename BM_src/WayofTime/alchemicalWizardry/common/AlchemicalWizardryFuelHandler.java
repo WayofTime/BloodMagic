@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
 import cpw.mods.fml.common.IFuelHandler;
 import net.minecraft.entity.player.EntityPlayer;

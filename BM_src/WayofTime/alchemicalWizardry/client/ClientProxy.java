@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.client;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
-import WayofTime.alchemicalWizardry.common.ModBlocks;
 import WayofTime.alchemicalWizardry.common.entity.mob.*;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;

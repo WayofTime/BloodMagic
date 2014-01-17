@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.ModBlocks;
+import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

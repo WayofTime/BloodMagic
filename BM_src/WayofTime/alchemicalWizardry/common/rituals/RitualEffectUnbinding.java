@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.ModBlocks;
-import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;

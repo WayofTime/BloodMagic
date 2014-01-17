@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.ModBlocks;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.ModItems;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
