@@ -4,8 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelEnergyBazookaMainProjectile extends ModelBase
-{
+public class ModelEnergyBazookaMainProjectile extends ModelBase {
     //fields
     ModelRenderer thirdWarHead;
     ModelRenderer firstWarHead;

@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockFlowing;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.Icon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class LifeEssenceFlowing extends BlockFlowing
-{
+public class LifeEssenceFlowing extends BlockFlowing {
     protected LifeEssenceFlowing(int par1)
     {
         super(par1, Material.water);
@@ -24,9 +23,9 @@ public class LifeEssenceFlowing extends BlockFlowing
     public void registerIcons(IconRegister iconRegister)
     {
         this.theIcon = new Icon[]
-        {
-            iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill"),
-            iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceFlowing")
-        };
+                {
+                        iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill"),
+                        iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceFlowing")
+                };
     }
 }

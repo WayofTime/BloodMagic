@@ -1,15 +1,15 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 
-public class ScribeTool extends EnergyItems
-{
+import java.util.List;
+
+public class ScribeTool extends EnergyItems {
     private int meta;
+
     public ScribeTool(int id, int inkType)
     {
         super(id);

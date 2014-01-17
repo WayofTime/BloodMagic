@@ -5,11 +5,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockStationary;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.Icon;
 
-public class LifeEssenceStill extends BlockStationary
-{
+public class LifeEssenceStill extends BlockStationary {
     protected LifeEssenceStill(int par1)
     {
         super(par1, Material.water);
@@ -25,9 +23,9 @@ public class LifeEssenceStill extends BlockStationary
     public void registerIcons(IconRegister iconRegister)
     {
         this.theIcon = new Icon[]
-        {
-            iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill"),
-            iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceFlowing")
-        };
+                {
+                        iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill"),
+                        iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceFlowing")
+                };
     }
 }

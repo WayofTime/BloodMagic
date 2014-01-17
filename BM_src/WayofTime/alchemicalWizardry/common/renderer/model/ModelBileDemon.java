@@ -1,14 +1,12 @@
 package WayofTime.alchemicalWizardry.common.renderer.model;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
+import org.lwjgl.opengl.GL11;
 
-public class ModelBileDemon extends ModelBase
-{
+public class ModelBileDemon extends ModelBase {
     //fields
     ModelRenderer belly;
     ModelRenderer chest;
@@ -158,11 +156,11 @@ public class ModelBileDemon extends ModelBase
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        this.head.rotateAngleX = f4 / (180F / (float)Math.PI);
-        this.head.rotateAngleY = f3 / (180F / (float)Math.PI);
-        this.rightArm.rotateAngleX = MathHelper.cos(f * 0.3662F + (float)Math.PI) * 1.0F * f1;
+        this.head.rotateAngleX = f4 / (180F / (float) Math.PI);
+        this.head.rotateAngleY = f3 / (180F / (float) Math.PI);
+        this.rightArm.rotateAngleX = MathHelper.cos(f * 0.3662F + (float) Math.PI) * 1.0F * f1;
         this.leftArm.rotateAngleX = MathHelper.cos(f * 0.3662F) * 1.0F * f1;
-        this.rightArmSpacer.rotateAngleX = MathHelper.cos(f * 0.3662F + (float)Math.PI) * 1.0F * f1;
+        this.rightArmSpacer.rotateAngleX = MathHelper.cos(f * 0.3662F + (float) Math.PI) * 1.0F * f1;
         this.leftArmSpacer.rotateAngleX = MathHelper.cos(f * 0.3662F) * 1.0F * f1;
         this.leftBall.rotateAngleX = this.head.rotateAngleX;
         this.leftBall.rotateAngleY = this.head.rotateAngleY;

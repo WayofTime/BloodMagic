@@ -1,5 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,15 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class EnergyItems extends Item implements IBindable
-{
+public class EnergyItems extends Item implements IBindable {
     private int energyUsed;
 
     public EnergyItems(int id)
@@ -43,8 +42,8 @@ public class EnergyItems extends Item implements IBindable
             double posX = player.posX;
             double posY = player.posY;
             double posZ = player.posZ;
-            world.playSoundEffect((double)((float)posX + 0.5F), (double)((float)posY + 0.5F), (double)((float)posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            float f = (float)1.0F;
+            world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            float f = (float) 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
@@ -88,8 +87,8 @@ public class EnergyItems extends Item implements IBindable
 
                 if (particles)
                 {
-                    PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short)4));
-                    world.playSoundEffect((double)((float)player.posX + 0.5F), (double)((float)player.posY + 0.5F), (double)((float)player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+                    PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short) 4));
+                    world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
                 }
             }
 
@@ -100,8 +99,7 @@ public class EnergyItems extends Item implements IBindable
 
             PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(itemTag.getString("ownerName"), -damageToBeDone, 0));
             return true;
-        }
-        else
+        } else
         {
             return true;
         }
@@ -112,8 +110,7 @@ public class EnergyItems extends Item implements IBindable
         if (!player.worldObj.isRemote)
         {
             return syphonAndDamageWhileInContainer(ist, player, damageToBeDone);
-        }
-        else
+        } else
         {
             World world = player.worldObj;
 
@@ -124,8 +121,8 @@ public class EnergyItems extends Item implements IBindable
                 double posZ = player.posZ;
                 //if(particles)
                 {
-                    PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short)4));
-                    world.playSoundEffect((double)((float)player.posX + 0.5F), (double)((float)player.posY + 0.5F), (double)((float)player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+                    PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short) 4));
+                    world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
                 }
             }
         }
@@ -146,7 +143,7 @@ public class EnergyItems extends Item implements IBindable
             }
 
             World world = MinecraftServer.getServer().worldServers[0];
-            LifeEssenceNetwork data = (LifeEssenceNetwork)world.loadItemData(LifeEssenceNetwork.class, ownerName);
+            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
 
             if (data == null)
             {
@@ -187,7 +184,7 @@ public class EnergyItems extends Item implements IBindable
             }
 
             World world = MinecraftServer.getServer().worldServers[0];
-            LifeEssenceNetwork data = (LifeEssenceNetwork)world.loadItemData(LifeEssenceNetwork.class, ownerName);
+            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
 
             if (data == null)
             {
@@ -221,11 +218,10 @@ public class EnergyItems extends Item implements IBindable
 
                 if (user.getHealth() <= 0.1f)
                 {
-                	user.onDeath(DamageSource.generic);
+                    user.onDeath(DamageSource.generic);
                 }
             }
-        }
-        else if (energySyphoned >= 100)
+        } else if (energySyphoned >= 100)
         {
             if (!user.capabilities.isCreativeMode)
             {

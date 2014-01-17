@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,13 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlankSpell extends EnergyItems
-{
+import java.util.List;
+
+public class BlankSpell extends EnergyItems {
     public BlankSpell(int par1)
     {
         super(par1);
@@ -71,28 +70,24 @@ public class BlankSpell extends EnergyItems
 
                 if (tileEntity instanceof TEHomHeart)
                 {
-                    TEHomHeart homHeart = (TEHomHeart)tileEntity;
+                    TEHomHeart homHeart = (TEHomHeart) tileEntity;
 
                     if (homHeart.canCastSpell(par1ItemStack, par2World, par3EntityPlayer))
                     {
                         EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, homHeart.castSpell(par1ItemStack, par2World, par3EntityPlayer));
-                    }
-                    else
+                    } else
                     {
                         return par1ItemStack;
                     }
-                }
-                else
+                } else
                 {
                     return par1ItemStack;
                 }
-            }
-            else
+            } else
             {
                 return par1ItemStack;
             }
-        }
-        else
+        } else
         {
             return par1ItemStack;
         }

@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class MeteorParadigm
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class MeteorParadigm {
     public List<MeteorParadigmComponent> componentList = new ArrayList();
     public ItemStack focusStack;
     public int radius;

@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
-public interface IDemon
-{
+public interface IDemon {
     public abstract void setSummonedConditions();
 
     public boolean isAggro();

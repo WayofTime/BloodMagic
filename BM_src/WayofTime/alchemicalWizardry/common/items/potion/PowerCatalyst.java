@@ -1,20 +1,17 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ICatalyst;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ICatalyst;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
+import java.util.List;
 
-public class PowerCatalyst extends Item implements ICatalyst
-{
+public class PowerCatalyst extends Item implements ICatalyst {
     private int catalystStrength;
 
     public PowerCatalyst(int id, int catalystStrength)
@@ -49,7 +46,7 @@ public class PowerCatalyst extends Item implements ICatalyst
             {
                 par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
-                for (ItemStack item: recipe)
+                for (ItemStack item : recipe)
                 {
                     if (item != null)
                     {
@@ -57,8 +54,7 @@ public class PowerCatalyst extends Item implements ICatalyst
                     }
                 }
             }
-        }
-        else
+        } else
         {
             par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
         }

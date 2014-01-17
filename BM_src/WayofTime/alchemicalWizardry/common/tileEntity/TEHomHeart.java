@@ -9,8 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.world.World;
 
-public class TEHomHeart extends TileEntity
-{
+public class TEHomHeart extends TileEntity {
     public boolean canCastSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         return true;
@@ -53,7 +52,7 @@ public class TEHomHeart extends TileEntity
 
         if (tileEntity instanceof TEAltar)
         {
-            ItemStack itemStack = ((TEAltar)tileEntity).getStackInSlot(0);
+            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
 
             if (itemStack != null)
             {
@@ -70,7 +69,7 @@ public class TEHomHeart extends TileEntity
 
         if (tileEntity instanceof TEAltar)
         {
-            ItemStack itemStack = ((TEAltar)tileEntity).getStackInSlot(0);
+            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
 
             if (itemStack != null)
             {
@@ -87,7 +86,7 @@ public class TEHomHeart extends TileEntity
 
         if (tileEntity instanceof TEAltar)
         {
-            ItemStack itemStack = ((TEAltar)tileEntity).getStackInSlot(0);
+            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
 
             if (itemStack != null)
             {
@@ -104,7 +103,7 @@ public class TEHomHeart extends TileEntity
 
         if (tileEntity instanceof TEAltar)
         {
-            ItemStack itemStack = ((TEAltar)tileEntity).getStackInSlot(0);
+            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
 
             if (itemStack != null)
             {
@@ -128,16 +127,13 @@ public class TEHomHeart extends TileEntity
         if (blockID == Block.glowStone.blockID)
         {
             return 0;
-        }
-        else if (blockID == Block.blockRedstone.blockID)
+        } else if (blockID == Block.blockRedstone.blockID)
         {
             return 1;
-        }
-        else if (blockID == Block.anvil.blockID)
+        } else if (blockID == Block.anvil.blockID)
         {
             return 2;
-        }
-        else if (blockID == Block.glass.blockID)
+        } else if (blockID == Block.glass.blockID)
         {
             return 3;
         }
@@ -146,7 +142,7 @@ public class TEHomHeart extends TileEntity
 
         if (tileEntity instanceof TileEntitySkull)
         {
-            int skullType = ((TileEntitySkull)tileEntity).getSkullType();
+            int skullType = ((TileEntitySkull) tileEntity).getSkullType();
 
             switch (skullType)
             {

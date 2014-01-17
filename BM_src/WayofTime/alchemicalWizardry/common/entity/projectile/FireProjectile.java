@@ -3,17 +3,13 @@ package WayofTime.alchemicalWizardry.common.entity.projectile;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class FireProjectile extends EnergyBlastProjectile
-{
+public class FireProjectile extends EnergyBlastProjectile {
     public FireProjectile(World par1World)
     {
         super(par1World);
@@ -36,7 +32,7 @@ public class FireProjectile extends EnergyBlastProjectile
 
     public FireProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir)
     {
-        super(par1World,  par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
     @Override
@@ -56,8 +52,7 @@ public class FireProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             for (int i = -1; i <= 1; i++)
             {
@@ -65,9 +60,9 @@ public class FireProjectile extends EnergyBlastProjectile
                 {
                     for (int k = -1; k <= 1; k++)
                     {
-                        if (worldObj.isAirBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k))
+                        if (worldObj.isAirBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k))
                         {
-                            worldObj.setBlock((int)this.posX + i, (int)this.posY + j, (int)this.posZ + k, Block.fire.blockID);
+                            worldObj.setBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k, Block.fire.blockID);
                         }
                     }
                 }
@@ -86,33 +81,31 @@ public class FireProjectile extends EnergyBlastProjectile
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
                 //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
-                ((EntityLivingBase)mop).setFire(50);
-                ((EntityLivingBase)mop).setRevengeTarget(shootingEntity);
+                ((EntityLivingBase) mop).setFire(50);
+                ((EntityLivingBase) mop).setRevengeTarget(shootingEntity);
 
-                if (((EntityLivingBase)mop).isPotionActive(Potion.fireResistance) || ((EntityLivingBase)mop).isImmuneToFire())
+                if (((EntityLivingBase) mop).isPotionActive(Potion.fireResistance) || ((EntityLivingBase) mop).isImmuneToFire())
                 {
-                    ((EntityLivingBase)mop).attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
-                }
-                else
+                    ((EntityLivingBase) mop).attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
+                } else
                 {
                     doDamage(projectileDamage, mop);
-                    ((EntityLivingBase)mop).hurtResistantTime = 0;
+                    ((EntityLivingBase) mop).hurtResistantTime = 0;
                 }
             }
 
             //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
-        if (worldObj.isAirBlock((int)this.posX, (int)this.posY, (int)this.posZ))
+        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
         {
-            worldObj.setBlock((int)this.posX, (int)this.posY, (int)this.posZ, Block.fire.blockID);
+            worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, Block.fire.blockID);
         }
 
         spawnHitParticles("magicCrit", 8);

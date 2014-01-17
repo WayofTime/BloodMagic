@@ -1,17 +1,17 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BloodShard extends Item implements ArmourUpgrade
-{
+public class BloodShard extends Item implements ArmourUpgrade {
     public BloodShard(int par1)
     {
         super(par1);
@@ -24,13 +24,13 @@ public class BloodShard extends Item implements ArmourUpgrade
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
-        if (this.itemID == AlchemicalWizardry.weakBloodShard.itemID)
+        if (this.itemID == ModItems.weakBloodShard.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WeakBloodShard");
             return;
         }
 
-        if (this.itemID == AlchemicalWizardry.demonBloodShard.itemID)
+        if (this.itemID == ModItems.demonBloodShard.itemID)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonBloodShard");
             return;
@@ -39,11 +39,10 @@ public class BloodShard extends Item implements ArmourUpgrade
 
     public int getBloodShardLevel()
     {
-        if (this.itemID == AlchemicalWizardry.weakBloodShard.itemID)
+        if (this.itemID == ModItems.weakBloodShard.itemID)
         {
             return 1;
-        }
-        else if (this.itemID == AlchemicalWizardry.demonBloodShard.itemID)
+        } else if (this.itemID == ModItems.demonBloodShard.itemID)
         {
             return 2;
         }

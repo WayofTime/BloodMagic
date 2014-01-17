@@ -1,27 +1,13 @@
 package WayofTime.alchemicalWizardry.common;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaSecondaryProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
-import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.entity.projectile.*;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.world.World;
 
-public class CommonProxy
-{
+public class CommonProxy {
     public static String ITEMS_PNG = "/WayofTime/alchemicalWizardry/items.png";
     public static String BLOCK_PNG = "/WayofTime/alchemicalWizardry/block.png";
 
@@ -30,9 +16,11 @@ public class CommonProxy
     {
         // Nothing here as the server doesn't render graphics!
     }
+
     public void registerEntities()
     {
     }
+
     public World getClientWorld()
     {
         return null;
@@ -78,6 +66,7 @@ public class CommonProxy
     public void registerTickHandlers()
     {
     }
+
     public void InitRendering()
     {
         // TODO Auto-generated method stub

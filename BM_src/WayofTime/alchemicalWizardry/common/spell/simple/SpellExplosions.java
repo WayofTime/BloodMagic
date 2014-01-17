@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
-public class SpellExplosions extends HomSpell
-{
+import java.util.Random;
+
+public class SpellExplosions extends HomSpell {
     Random itemRand = new Random();
 
     public SpellExplosions()
@@ -63,7 +62,7 @@ public class SpellExplosions extends HomSpell
         int distance = 4;
         double yaw = par3EntityPlayer.rotationYaw / 180 * Math.PI;
         double pitch = par3EntityPlayer.rotationPitch / 180 * Math.PI;
-        par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance), par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance, par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance, (float)(3), true);
+        par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance), par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance, par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance, (float) (3), true);
         return par1ItemStack;
     }
 
@@ -85,7 +84,7 @@ public class SpellExplosions extends HomSpell
         int distance = 4;
 //		double yaw = par3EntityPlayer.rotationYaw/180*Math.PI;
 //		double pitch = par3EntityPlayer.rotationPitch/180*Math.PI;
-        par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight(), par3EntityPlayer.posZ, (float)(distance), false);
+        par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight(), par3EntityPlayer.posZ, (float) (distance), false);
         return par1ItemStack;
     }
 
@@ -108,7 +107,7 @@ public class SpellExplosions extends HomSpell
 
         for (int i = 0; i < 360; i += 36)
         {
-            par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX + Math.cos(i) * radius, par3EntityPlayer.posY, par3EntityPlayer.posZ + Math.sin(i) * radius, (float)(2), true);
+            par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX + Math.cos(i) * radius, par3EntityPlayer.posY, par3EntityPlayer.posZ + Math.sin(i) * radius, (float) (2), true);
         }
 
         return null;

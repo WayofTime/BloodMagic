@@ -1,23 +1,22 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.common.network.Player;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
-public class SpellWindGust extends HomSpell
-{
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+public class SpellWindGust extends HomSpell {
     Random itemRand = new Random();
 
     public SpellWindGust()
@@ -26,6 +25,7 @@ public class SpellWindGust extends HomSpell
         this.setEnergies(300, 400, 300, 500);
         //this.setCreativeTab(CreativeTabs.tabMisc);
     }
+
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -81,7 +81,7 @@ public class SpellWindGust extends HomSpell
 
         while (iterator.hasNext())
         {
-            EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+            EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
             if (entityLiving instanceof EntityPlayer)
             {
@@ -136,8 +136,8 @@ public class SpellWindGust extends HomSpell
         par3EntityPlayer.motionX = vec.xCoord * wantedVelocity;
         par3EntityPlayer.motionY = vec.yCoord * wantedVelocity;
         par3EntityPlayer.motionZ = vec.zCoord * wantedVelocity;
-        PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(xVel, yVel, zVel), (Player)par3EntityPlayer);
-        par2World.playSoundEffect((double)((float)par3EntityPlayer.posX + 0.5F), (double)((float)par3EntityPlayer.posY + 0.5F), (double)((float)par3EntityPlayer.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
+        PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(xVel, yVel, zVel), (Player) par3EntityPlayer);
+        par2World.playSoundEffect((double) ((float) par3EntityPlayer.posX + 0.5F), (double) ((float) par3EntityPlayer.posY + 0.5F), (double) ((float) par3EntityPlayer.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
         par3EntityPlayer.fallDistance = 0;
         //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
         double xCoord = par3EntityPlayer.posX;
@@ -168,7 +168,7 @@ public class SpellWindGust extends HomSpell
         }
 
         int d0 = 3;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)par3EntityPlayer.posX, (double)par3EntityPlayer.posY, (double)par3EntityPlayer.posZ, (double)(par3EntityPlayer.posX + 1), (double)(par3EntityPlayer.posY + 2), (double)(par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
@@ -179,7 +179,7 @@ public class SpellWindGust extends HomSpell
 
         while (iterator.hasNext())
         {
-            EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+            EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
             if (entityLiving instanceof EntityPlayer)
             {

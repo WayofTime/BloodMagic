@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import java.util.Iterator;
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,28 +10,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Iterator;
+import java.util.List;
 
 //Shamelessly ripped off from x3n0ph0b3
-public class EnergyBlastProjectile extends Entity implements IProjectile
-{
+public class EnergyBlastProjectile extends Entity implements IProjectile {
     protected int xTile = -1;
     protected int yTile = -1;
     protected int zTile = -1;
     protected int inTile = 0;
     protected int inData = 0;
     protected boolean inGround = false;
-    /** The owner of this arrow. */
+    /**
+     * The owner of this arrow.
+     */
     public EntityLivingBase shootingEntity;
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;
@@ -61,14 +55,14 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         float par3 = 0.8F;
         this.setSize(0.5F, 0.5F);
         this.setLocationAndAngles(par2EntityPlayer.posX, par2EntityPlayer.posY + par2EntityPlayer.getEyeHeight(), par2EntityPlayer.posZ, par2EntityPlayer.rotationYaw, par2EntityPlayer.rotationPitch);
-        posX -= MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
+        posX -= MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         posY -= 0.2D;
-        posZ -= MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
+        posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
         yOffset = 0.0F;
-        motionX = -MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
-        motionZ = MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
-        motionY = -MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI);
+        motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+        motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+        motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
         this.setThrowableHeading(motionX, motionY, motionZ, par3 * 1.5F, 1.0F);
         this.projectileDamage = damage;
         this.maxTicksInAir = 600;
@@ -81,14 +75,14 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         float par3 = 0.8F;
         this.setSize(0.5F, 0.5F);
         this.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
-        posX -= MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
+        posX -= MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         posY -= 0.2D;
-        posZ -= MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
+        posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
         yOffset = 0.0F;
-        motionX = -MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
-        motionZ = MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
-        motionY = -MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI);
+        motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+        motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
+        motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
         this.setThrowableHeading(motionX, motionY, motionZ, par3 * 1.5F, 1.0F);
         this.projectileDamage = damage;
         this.maxTicksInAir = maxTicksInAir;
@@ -99,21 +93,21 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         super(par1World);
         this.renderDistanceWeight = 10.0D;
         this.shootingEntity = par2EntityLivingBase;
-        this.posY = par2EntityLivingBase.posY + (double)par2EntityLivingBase.getEyeHeight() - 0.10000000149011612D;
+        this.posY = par2EntityLivingBase.posY + (double) par2EntityLivingBase.getEyeHeight() - 0.10000000149011612D;
         double d0 = par3EntityLivingBase.posX - par2EntityLivingBase.posX;
-        double d1 = par3EntityLivingBase.boundingBox.minY + (double)(par3EntityLivingBase.height / 1.5F) - this.posY;
+        double d1 = par3EntityLivingBase.boundingBox.minY + (double) (par3EntityLivingBase.height / 1.5F) - this.posY;
         double d2 = par3EntityLivingBase.posZ - par2EntityLivingBase.posZ;
-        double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+        double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 
         if (d3 >= 1.0E-7D)
         {
-            float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
-            float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
+            float f2 = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+            float f3 = (float) (-(Math.atan2(d1, d3) * 180.0D / Math.PI));
             double d4 = d0 / d3;
             double d5 = d2 / d3;
             this.setLocationAndAngles(par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
             this.yOffset = 0.0F;
-            float f4 = (float)d3 * 0.2F;
+            float f4 = (float) d3 * 0.2F;
             this.setThrowableHeading(d0, d1, d2, par4, par5);
         }
 
@@ -124,7 +118,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
     @Override
     protected void entityInit()
     {
-        dataWatcher.addObject(16, Byte.valueOf((byte)0));
+        dataWatcher.addObject(16, Byte.valueOf((byte) 0));
     }
 
     /**
@@ -148,8 +142,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         motionY = var3;
         motionZ = var5;
         float var10 = MathHelper.sqrt_double(var1 * var1 + var5 * var5);
-        prevRotationYaw = rotationYaw = (float)(Math.atan2(var1, var5) * 180.0D / Math.PI);
-        prevRotationPitch = rotationPitch = (float)(Math.atan2(var3, var10) * 180.0D / Math.PI);
+        prevRotationYaw = rotationYaw = (float) (Math.atan2(var1, var5) * 180.0D / Math.PI);
+        prevRotationPitch = rotationPitch = (float) (Math.atan2(var3, var10) * 180.0D / Math.PI);
     }
 
     @Override
@@ -178,8 +172,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F)
         {
             float var7 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-            prevRotationYaw = rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
-            prevRotationPitch = rotationPitch = (float)(Math.atan2(par3, var7) * 180.0D / Math.PI);
+            prevRotationYaw = rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
+            prevRotationPitch = rotationPitch = (float) (Math.atan2(par3, var7) * 180.0D / Math.PI);
             prevRotationPitch = rotationPitch;
             prevRotationYaw = rotationYaw;
             this.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
@@ -208,7 +202,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
 
             while (i.hasNext())
             {
-                EntityPlayer e = (EntityPlayer)i.next();
+                EntityPlayer e = (EntityPlayer) i.next();
                 double distance = e.getDistanceToEntity(this);
 
                 if (distance < closestDistance)
@@ -226,8 +220,8 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F)
         {
             float var1 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
-            prevRotationYaw = rotationYaw = (float)(Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
-            prevRotationPitch = rotationPitch = (float)(Math.atan2(motionY, var1) * 180.0D / Math.PI);
+            prevRotationYaw = rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
+            prevRotationPitch = rotationPitch = (float) (Math.atan2(motionY, var1) * 180.0D / Math.PI);
         }
 
         int var16 = worldObj.getBlockId(xTile, yTile, zTile);
@@ -253,8 +247,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
                 // this.groundImpact();
                 // this.setDead();
             }
-        }
-        else
+        } else
         {
             ++ticksInAir;
 
@@ -286,7 +279,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
 
             while (var9.hasNext())
             {
-                Entity var10 = (Entity)var9.next();
+                Entity var10 = (Entity) var9.next();
 
                 if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
                 {
@@ -343,12 +336,12 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
     @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
-        par1NBTTagCompound.setShort("xTile", (short)xTile);
-        par1NBTTagCompound.setShort("yTile", (short)yTile);
-        par1NBTTagCompound.setShort("zTile", (short)zTile);
-        par1NBTTagCompound.setByte("inTile", (byte)inTile);
-        par1NBTTagCompound.setByte("inData", (byte)inData);
-        par1NBTTagCompound.setByte("inGround", (byte)(inGround ? 1 : 0));
+        par1NBTTagCompound.setShort("xTile", (short) xTile);
+        par1NBTTagCompound.setShort("yTile", (short) yTile);
+        par1NBTTagCompound.setShort("zTile", (short) zTile);
+        par1NBTTagCompound.setByte("inTile", (byte) inTile);
+        par1NBTTagCompound.setByte("inData", (byte) inData);
+        par1NBTTagCompound.setByte("inGround", (byte) (inGround ? 1 : 0));
         par1NBTTagCompound.setInteger("ticksInAir", ticksInAir);
         par1NBTTagCompound.setInteger("maxTicksInAir", maxTicksInAir);
         par1NBTTagCompound.setInteger("projectileDamage", this.projectileDamage);
@@ -414,11 +407,10 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
 
         if (par1)
         {
-            dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 | 1)));
-        }
-        else
+            dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 | 1)));
+        } else
         {
-            dataWatcher.updateObject(16, Byte.valueOf((byte)(var2 & -2)));
+            dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 & -2)));
         }
     }
 
@@ -442,10 +434,9 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
-            worldObj.createExplosion(shootingEntity, this.posX, this.posY, this.posZ, (float)(0.1), true);
+            worldObj.createExplosion(shootingEntity, this.posX, this.posY, this.posZ, (float) (0.1), true);
             this.setDead();
         }
     }
@@ -456,17 +447,16 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
-                ((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60, 2));
+                ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60, 2));
             }
 
             doDamage(projectileDamage, mop);
-            worldObj.createExplosion(shootingEntity, this.posX, this.posY, this.posZ, (float)(0.1), true);
+            worldObj.createExplosion(shootingEntity, this.posX, this.posY, this.posZ, (float) (0.1), true);
         }
 
         spawnHitParticles("magicCrit", 8);

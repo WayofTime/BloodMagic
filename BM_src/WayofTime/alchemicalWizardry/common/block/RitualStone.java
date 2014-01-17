@@ -1,5 +1,9 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.ScribeTool;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -8,13 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.ScribeTool;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class RitualStone extends Block
-{
+public class RitualStone extends Block {
     @SideOnly(Side.CLIENT)
     private static Icon blankIcon;
     @SideOnly(Side.CLIENT)
@@ -77,7 +76,7 @@ public class RitualStone extends Block
             return false;
         }
 
-        ScribeTool scribeTool = (ScribeTool)item;
+        ScribeTool scribeTool = (ScribeTool) item;
 
         if (!player.capabilities.isCreativeMode)
         {

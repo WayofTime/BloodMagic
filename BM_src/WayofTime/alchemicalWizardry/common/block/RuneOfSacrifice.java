@@ -4,10 +4,8 @@ import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 
-public class RuneOfSacrifice extends BloodRune
-{
+public class RuneOfSacrifice extends BloodRune {
     public RuneOfSacrifice(int id)
     {
         super(id);

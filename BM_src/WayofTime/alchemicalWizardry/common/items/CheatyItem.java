@@ -1,7 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,17 +17,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.FakePlayer;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class CheatyItem extends Item implements IBindable
-{
+import java.util.List;
+
+public class CheatyItem extends Item implements IBindable {
     // private int maxEssence;
     //protected int orbLevel;
 
@@ -65,6 +64,7 @@ public class CheatyItem extends Item implements IBindable
 
         //par3List.add("LP: " + par2EntityPlayer.getEntityData().getInteger("currentEssence"));
     }
+
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
@@ -80,8 +80,8 @@ public class CheatyItem extends Item implements IBindable
             double posX = par3EntityPlayer.posX;
             double posY = par3EntityPlayer.posY;
             double posZ = par3EntityPlayer.posZ;
-            world.playSoundEffect((double)((float)posX + 0.5F), (double)((float)posY + 0.5F), (double)((float)posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short)4));
+            world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short) 4));
         }
 
         if (!par3EntityPlayer.worldObj.isRemote)
@@ -99,8 +99,7 @@ public class CheatyItem extends Item implements IBindable
         if (par3EntityPlayer.isSneaking())
         {
             PacketDispatcher.sendPacketToServer(PacketHandler.getCreativeCheatPacket(itemTag.getString("ownerName"), false));
-        }
-        else
+        } else
         {
             PacketDispatcher.sendPacketToServer(PacketHandler.getCreativeCheatPacket(itemTag.getString("ownerName"), true));
         }
@@ -139,8 +138,8 @@ public class CheatyItem extends Item implements IBindable
             double posX = player.posX;
             double posY = player.posY;
             double posZ = player.posZ;
-            world.playSoundEffect((double)((float)posX + 0.5F), (double)((float)posY + 0.5F), (double)((float)posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            float f = (float)1.0F;
+            world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            float f = (float) 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
@@ -234,7 +233,7 @@ public class CheatyItem extends Item implements IBindable
 
         String owner = itemTag.getString("ownerName");
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {

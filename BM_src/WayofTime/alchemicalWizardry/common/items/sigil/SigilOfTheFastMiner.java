@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,18 +14,15 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
-{
+import java.util.List;
+
+public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade {
     @SideOnly(Side.CLIENT)
     private static Icon activeIcon;
     @SideOnly(Side.CLIENT)
     private static Icon passiveIcon;
+
     public SigilOfTheFastMiner(int id)
     {
         super(id);
@@ -42,8 +42,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -74,8 +73,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -88,8 +86,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
         if (par1 == 1)
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -116,7 +113,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
         if (tag.getBoolean("isActive"))
         {
             par1ItemStack.setItemDamage(1);
-            tag.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % 200);
+            tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 2, 1, true));
 
             //Test with added health boost
@@ -127,8 +124,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
                 {
                 }
             }
-        }
-        else
+        } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
         }
@@ -144,7 +140,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {

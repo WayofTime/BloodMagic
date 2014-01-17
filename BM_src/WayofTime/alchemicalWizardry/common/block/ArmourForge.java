@@ -1,14 +1,15 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourComponent;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -20,12 +21,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ArmourForge extends Block
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArmourForge extends Block {
     public static List<ArmourComponent> helmetList = new ArrayList();
     public static List<ArmourComponent> plateList = new ArrayList();
     public static List<ArmourComponent> leggingsList = new ArrayList();
@@ -77,22 +77,22 @@ public class ArmourForge extends Block
         {
             case 0:
                 list = plateList;
-                armourPiece = new ItemStack(AlchemicalWizardry.boundPlate.itemID, 1, 0);
+                armourPiece = new ItemStack(ModItems.boundPlate.itemID, 1, 0);
                 break;
 
             case 1:
                 list = leggingsList;
-                armourPiece = new ItemStack(AlchemicalWizardry.boundLeggings.itemID, 1, 0);
+                armourPiece = new ItemStack(ModItems.boundLeggings.itemID, 1, 0);
                 break;
 
             case 2:
                 list = helmetList;
-                armourPiece = new ItemStack(AlchemicalWizardry.boundHelmet.itemID, 1, 0);
+                armourPiece = new ItemStack(ModItems.boundHelmet.itemID, 1, 0);
                 break;
 
             case 3:
                 list = bootsList;
-                armourPiece = new ItemStack(AlchemicalWizardry.boundBoots.itemID, 1, 0);
+                armourPiece = new ItemStack(ModItems.boundBoots.itemID, 1, 0);
                 break;
         }
 
@@ -149,16 +149,16 @@ public class ArmourForge extends Block
 
             if (tileEntity instanceof TESocket)
             {
-                ItemStack itemStack = ((TESocket)tileEntity).getStackInSlot(0);
+                ItemStack itemStack = ((TESocket) tileEntity).getStackInSlot(0);
                 int xCoord = tileEntity.xCoord;
                 int yCoord = tileEntity.yCoord;
                 int zCoord = tileEntity.zCoord;
-                ((TESocket)tileEntity).setInventorySlotContents(0, null);
+                ((TESocket) tileEntity).setInventorySlotContents(0, null);
                 world.setBlockToAir(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 
                 for (int i = 0; i < 8; i++)
                 {
-                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, world.provider.dimensionId, TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                    PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, world.provider.dimensionId, TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
                 }
 
                 if (itemStack != null)
@@ -167,7 +167,7 @@ public class ArmourForge extends Block
 
                     if (item instanceof ArmourUpgrade)
                     {
-                        ((BoundArmour)armourPiece.getItem()).hasAddedToInventory(armourPiece, itemStack.copy());
+                        ((BoundArmour) armourPiece.getItem()).hasAddedToInventory(armourPiece, itemStack.copy());
                         ((TESocket) tileEntity).setInventorySlotContents(0, null);
                     }
                 }
@@ -177,7 +177,7 @@ public class ArmourForge extends Block
         if (armourPiece != null)
         {
             int xOff = (world.rand.nextInt(11) - 5);
-            int zOff = (int)(Math.sqrt(25 - xOff * xOff) * (world.rand.nextInt(2) - 0.5) * 2);
+            int zOff = (int) (Math.sqrt(25 - xOff * xOff) * (world.rand.nextInt(2) - 0.5) * 2);
             world.addWeatherEffect(new EntityLightningBolt(world, x + xOff, y + 5, z + zOff));
             world.spawnEntityInWorld(new EntityItem(world, x, y + 1, z, armourPiece));
         }

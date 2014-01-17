@@ -5,8 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelBoulderFist extends ModelBase
-{
+public class ModelBoulderFist extends ModelBase {
     //fields
     ModelRenderer leftFist;
     ModelRenderer leftArm;
@@ -48,13 +47,13 @@ public class ModelBoulderFist extends ModelBase
         leftLeg1.setRotationPoint(5F, 11F, 7F);
         leftLeg1.setTextureSize(64, 64);
         leftLeg1.mirror = true;
-        setRotation(leftLeg1, -((float)Math.PI / 4F), 0F, 0F);
+        setRotation(leftLeg1, -((float) Math.PI / 4F), 0F, 0F);
         leftLeg2 = new ModelRenderer(this, 1, 25);
         leftLeg2.addBox(0F, 5F, -1F, 4, 2, 12);
         leftLeg2.setRotationPoint(5F, 11F, 7F);
         leftLeg2.setTextureSize(64, 64);
         leftLeg2.mirror = true;
-        setRotation(leftLeg2, -((float)Math.PI / 4F), 0F, 0F);
+        setRotation(leftLeg2, -((float) Math.PI / 4F), 0F, 0F);
         leftFoot = new ModelRenderer(this, 22, 25);
         leftFoot.addBox(0F, 11F, -1F, 4, 2, 5);
         leftFoot.setRotationPoint(5F, 11F, 7F);
@@ -83,7 +82,7 @@ public class ModelBoulderFist extends ModelBase
         rightLeg1.setRotationPoint(-5F, 11F, 7F);
         rightLeg1.setTextureSize(64, 64);
         rightLeg1.mirror = true;
-        setRotation(rightLeg1, -((float)Math.PI / 4F), 0F, 0F);
+        setRotation(rightLeg1, -((float) Math.PI / 4F), 0F, 0F);
         rightLeg1.mirror = false;
         rightLeg2 = new ModelRenderer(this, 1, 25);
         rightLeg2.mirror = true;
@@ -91,7 +90,7 @@ public class ModelBoulderFist extends ModelBase
         rightLeg2.setRotationPoint(-5F, 11F, 7F);
         rightLeg2.setTextureSize(64, 64);
         rightLeg2.mirror = true;
-        setRotation(rightLeg2, -((float)Math.PI / 4F), 0F, 0F);
+        setRotation(rightLeg2, -((float) Math.PI / 4F), 0F, 0F);
         rightLeg2.mirror = false;
         rightFoot = new ModelRenderer(this, 22, 25);
         rightFoot.mirror = true;
@@ -137,15 +136,15 @@ public class ModelBoulderFist extends ModelBase
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        this.head.rotateAngleX = f4 / (180F / (float)Math.PI);
-        this.head.rotateAngleY = f3 / (180F / (float)Math.PI);
+        this.head.rotateAngleX = f4 / (180F / (float) Math.PI);
+        this.head.rotateAngleY = f3 / (180F / (float) Math.PI);
         this.leftFoot.rotateAngleX = MathHelper.cos(f * 0.6662F) * 0.8F * f1;
-        this.rightFoot.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 0.8F * f1;
-        this.leftLeg1.rotateAngleX = leftFoot.rotateAngleX - ((float)Math.PI / 4F);
-        this.rightLeg1.rotateAngleX = rightFoot.rotateAngleX - ((float)Math.PI / 4F);
-        this.leftLeg2.rotateAngleX = leftFoot.rotateAngleX - ((float)Math.PI / 4F);
-        this.rightLeg2.rotateAngleX = rightFoot.rotateAngleX - ((float)Math.PI / 4F);
-        this.rightArm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 0.9f * f1;
+        this.rightFoot.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 0.8F * f1;
+        this.leftLeg1.rotateAngleX = leftFoot.rotateAngleX - ((float) Math.PI / 4F);
+        this.rightLeg1.rotateAngleX = rightFoot.rotateAngleX - ((float) Math.PI / 4F);
+        this.leftLeg2.rotateAngleX = leftFoot.rotateAngleX - ((float) Math.PI / 4F);
+        this.rightLeg2.rotateAngleX = rightFoot.rotateAngleX - ((float) Math.PI / 4F);
+        this.rightArm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 0.9f * f1;
         this.leftArm.rotateAngleX = MathHelper.cos(f * 0.6662F) * 0.9f * f1;
         this.leftFist.rotateAngleX = leftArm.rotateAngleX;
         this.rightFist.rotateAngleX = rightArm.rotateAngleX;

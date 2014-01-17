@@ -1,13 +1,11 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import thaumcraft.api.ItemApi;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,17 +16,18 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.registry.GameRegistry;
+import thaumcraft.api.ItemApi;
 
-public class RitualEffectSoulBound extends RitualEffect
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class RitualEffectSoulBound extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -52,20 +51,19 @@ public class RitualEffectSoulBound extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             if (ritualStone.getVar1() == 0)
             {
                 int d0 = 0;
-                AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y + 1, (double)z, (double)(x + 1), (double)(y + 2), (double)(z + 1)).expand(d0, d0, d0);
+                AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
                 List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
                 Iterator iterator = list.iterator();
                 EntityItem item;
 
                 while (iterator.hasNext())
                 {
-                    item = (EntityItem)iterator.next();
+                    item = (EntityItem) iterator.next();
 //                double xDif = item.posX - (xCoord+0.5);
 //                double yDif = item.posY - (yCoord+1);
 //                double zDif = item.posZ - (zCoord+0.5);
@@ -83,49 +81,44 @@ public class RitualEffectSoulBound extends RitualEffect
                         itemGoggles = ItemApi.getItem("itemGoggles", 0);
                     }
 
-                    if (itemStack.itemID == AlchemicalWizardry.apprenticeBloodOrb.itemID)
+                    if (itemStack.itemID == ModItems.apprenticeBloodOrb.itemID)
                     {
-                        ritualStone.setVar1(AlchemicalWizardry.energyBlaster.itemID);
+                        ritualStone.setVar1(ModItems.energyBlaster.itemID);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         item.setDead();
                         return;
-                    }
-                    else if (itemStack.itemID == Item.swordDiamond.itemID)
+                    } else if (itemStack.itemID == Item.swordDiamond.itemID)
                     {
-                        ritualStone.setVar1(AlchemicalWizardry.energySword.itemID);
+                        ritualStone.setVar1(ModItems.energySword.itemID);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         item.setDead();
                         return;
-                    }
-                    else if (itemStack.itemID == Item.pickaxeDiamond.itemID)
+                    } else if (itemStack.itemID == Item.pickaxeDiamond.itemID)
                     {
-                        ritualStone.setVar1(AlchemicalWizardry.boundPickaxe.itemID);
+                        ritualStone.setVar1(ModItems.boundPickaxe.itemID);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         item.setDead();
                         return;
-                    }
-                    else if (itemStack.itemID == Item.axeDiamond.itemID)
+                    } else if (itemStack.itemID == Item.axeDiamond.itemID)
                     {
-                        ritualStone.setVar1(AlchemicalWizardry.boundAxe.itemID);
+                        ritualStone.setVar1(ModItems.boundAxe.itemID);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         item.setDead();
                         return;
-                    }
-                    else if (itemStack.itemID == Item.shovelDiamond.itemID)
+                    } else if (itemStack.itemID == Item.shovelDiamond.itemID)
                     {
-                        ritualStone.setVar1(AlchemicalWizardry.boundShovel.itemID);
+                        ritualStone.setVar1(ModItems.boundShovel.itemID);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         item.setDead();
                         return;
-                    }
-                    else if (itemGoggles != null && itemGoggles.isItemEqual(itemStack))
+                    } else if (itemGoggles != null && itemGoggles.isItemEqual(itemStack))
                     {
-                        ritualStone.setVar1(AlchemicalWizardry.sanguineHelmet.itemID);
+                        ritualStone.setVar1(ModItems.sanguineHelmet.itemID);
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         item.setDead();
@@ -134,14 +127,13 @@ public class RitualEffectSoulBound extends RitualEffect
 
                     if (world.rand.nextInt(10) == 0)
                     {
-                        PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(item.posX, item.posY, item.posZ, (short)1));
+                        PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(item.posX, item.posY, item.posZ, (short) 1));
                     }
                 }
 
                 data.currentEssence = currentEssence - this.getCostPerRefresh();
                 data.markDirty();
-            }
-            else
+            } else
             {
                 ritualStone.setCooldown(ritualStone.getCooldown() - 1);
 

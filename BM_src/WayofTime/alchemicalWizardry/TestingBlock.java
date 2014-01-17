@@ -6,8 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class TestingBlock extends Block
-{
+public class TestingBlock extends Block {
     public TestingBlock(int id, Material material)
     {
         super(id, material);

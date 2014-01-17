@@ -1,17 +1,17 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
 
-public class EntityDemon extends EntityTameable implements IDemon
-{
+public class EntityDemon extends EntityTameable implements IDemon {
     private boolean isAggro;
     private int demonID;
 
@@ -48,7 +48,7 @@ public class EntityDemon extends EntityTameable implements IDemon
 
     protected void dropFewItems(boolean par1, int par2)
     {
-        ItemStack drop = new ItemStack(AlchemicalWizardry.demonPlacer, 1, this.getDemonID());
+        ItemStack drop = new ItemStack(ModItems.demonPlacer, 1, this.getDemonID());
         DemonPlacer.setOwnerName(drop, this.getOwnerName());
 
         if (this.hasCustomNameTag())
@@ -78,8 +78,7 @@ public class EntityDemon extends EntityTameable implements IDemon
             if (isSitting)
             {
                 chatmessagecomponent.addText("I will stay here for now, Master.");
-            }
-            else
+            } else
             {
                 chatmessagecomponent.addText("I shall follow and protect you!");
             }
@@ -91,5 +90,11 @@ public class EntityDemon extends EntityTameable implements IDemon
     public int getDemonID()
     {
         return this.demonID;
+    }
+
+    @Override
+    public Entity getOwner()
+    {
+        return func_130012_q();
     }
 }

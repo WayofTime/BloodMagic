@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -10,16 +11,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class RitualEffectGrowth extends RitualEffect
-{
+public class RitualEffectGrowth extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -43,8 +42,7 @@ public class RitualEffectGrowth extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             if (world.getWorldTime() % 20 != 0)
             {
@@ -63,7 +61,7 @@ public class RitualEffectGrowth extends RitualEffect
                     if (block instanceof IPlantable)
                     {
                         {
-                            PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(x + i, y + 2, z + j, (short)3));
+                            PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(x + i, y + 2, z + j, (short) 3));
                             block.updateTick(world, x + i, y + 2, z + j, world.rand);
                             flag = true;
                         }

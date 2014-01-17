@@ -1,23 +1,21 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
-import cpw.mods.fml.client.FMLClientHandler;
-
-public class TEWritingTableItemRenderer implements IItemRenderer
-{
+public class TEWritingTableItemRenderer implements IItemRenderer {
     private ModelWritingTable modelBloodAltar;
 
     public TEWritingTableItemRenderer()
     {
         modelBloodAltar = new ModelWritingTable();
     }
+
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
@@ -68,14 +66,14 @@ public class TEWritingTableItemRenderer implements IItemRenderer
         GL11.glPushMatrix();
         // Disable Lighting Calculations
         GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glTranslatef(x,  y,  z);
+        GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(180f, 0f, 1f, 0f);
         //FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/OBJTutorial/textures/models/TutBox.png");
         ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/WritingTable.png");
         //FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/alchemicalwizardry/textures/models/altar.png");
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
-        modelBloodAltar.render((Entity)null, 0, 0, 0, 0, 0, 0);
+        modelBloodAltar.render((Entity) null, 0, 0, 0, 0, 0, 0);
         // Re-enable Lighting Calculations
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();

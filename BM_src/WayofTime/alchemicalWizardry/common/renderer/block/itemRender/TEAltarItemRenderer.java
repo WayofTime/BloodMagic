@@ -1,22 +1,20 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
-import cpw.mods.fml.client.FMLClientHandler;
-
-public class TEAltarItemRenderer implements IItemRenderer
-{
+public class TEAltarItemRenderer implements IItemRenderer {
     private ModelBloodAltar modelBloodAltar;
 
     public TEAltarItemRenderer()
     {
         modelBloodAltar = new ModelBloodAltar();
     }
+
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
@@ -67,7 +65,7 @@ public class TEAltarItemRenderer implements IItemRenderer
         GL11.glPushMatrix();
         // Disable Lighting Calculations
         GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glTranslatef(x,  y,  z);
+        GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(180f, 0f, 1f, 0f);
         //FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/OBJTutorial/textures/models/TutBox.png");

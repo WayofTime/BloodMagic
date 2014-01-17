@@ -1,19 +1,19 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BloodRune extends Block
-{
+import java.util.List;
+
+public class BloodRune extends Block {
     //private Icon bloodRuneIcon;
     private Icon altarCapacityRuneIcon;
     private Icon dislocationRuneIcon;
@@ -65,14 +65,13 @@ public class BloodRune extends Block
      */
     public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        if (this.blockID == AlchemicalWizardry.bloodRune.blockID)
+        if (this.blockID == ModBlocks.bloodRune.blockID)
         {
             par3List.add(new ItemStack(par1, 1, 0));
             par3List.add(new ItemStack(par1, 1, 1));
             par3List.add(new ItemStack(par1, 1, 2));
             par3List.add(new ItemStack(par1, 1, 3));
-        }
-        else
+        } else
         {
             super.getSubBlocks(par1, par2CreativeTabs, par3List);
         }

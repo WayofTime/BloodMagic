@@ -1,22 +1,21 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class SpellHolyBlast extends HomSpell
-{
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+public class SpellHolyBlast extends HomSpell {
     Random itemRand = new Random();
 
     public SpellHolyBlast()
@@ -25,6 +24,7 @@ public class SpellHolyBlast extends HomSpell
         this.setEnergies(100, 300, 500, 400);
         //this.setCreativeTab(CreativeTabs.tabMisc);
     }
+
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -80,7 +80,7 @@ public class SpellHolyBlast extends HomSpell
 
         while (iterator.hasNext())
         {
-            EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+            EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
             if (entityLiving instanceof EntityPlayer)
             {
@@ -102,7 +102,7 @@ public class SpellHolyBlast extends HomSpell
             //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
         }
 
-        par2World.createExplosion(par3EntityPlayer, xCoord, yCoord, zCoord, (float)(1), false);
+        par2World.createExplosion(par3EntityPlayer, xCoord, yCoord, zCoord, (float) (1), false);
 
         for (int i = 0; i < 5; i++)
         {
@@ -154,14 +154,14 @@ public class SpellHolyBlast extends HomSpell
         }
 
         int d0 = 3;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)par3EntityPlayer.posX, (double)par3EntityPlayer.posY, (double)par3EntityPlayer.posZ, (double)(par3EntityPlayer.posX + 1), (double)(par3EntityPlayer.posY + 2), (double)(par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            EntityLivingBase entityLiving = (EntityLivingBase)iterator.next();
+            EntityLivingBase entityLiving = (EntityLivingBase) iterator.next();
 
             if (entityLiving instanceof EntityPlayer)
             {
@@ -183,7 +183,7 @@ public class SpellHolyBlast extends HomSpell
             //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
         }
 
-        par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
+        par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float) (2), false);
         double xCoord = par3EntityPlayer.posX;
         double yCoord = par3EntityPlayer.posY;
         double zCoord = par3EntityPlayer.posZ;

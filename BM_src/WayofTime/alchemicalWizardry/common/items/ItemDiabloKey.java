@@ -1,7 +1,12 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,15 +17,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.FakePlayer;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemDiabloKey extends EnergyItems
-{
+import java.util.List;
+
+public class ItemDiabloKey extends EnergyItems {
     public ItemDiabloKey(int id)
     {
         super(id);
@@ -52,6 +52,7 @@ public class ItemDiabloKey extends EnergyItems
 
         //par3List.add("LP: " + par2EntityPlayer.getEntityData().getInteger("currentEssence"));
     }
+
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
@@ -67,8 +68,8 @@ public class ItemDiabloKey extends EnergyItems
             double posX = par3EntityPlayer.posX;
             double posY = par3EntityPlayer.posY;
             double posZ = par3EntityPlayer.posZ;
-            world.playSoundEffect((double)((float)posX + 0.5F), (double)((float)posY + 0.5F), (double)((float)posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short)4));
+            world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short) 4));
         }
 
         if (!par3EntityPlayer.worldObj.isRemote && !(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
@@ -118,8 +119,8 @@ public class ItemDiabloKey extends EnergyItems
     @SideOnly(Side.CLIENT)
     public void getSubItems(int id, CreativeTabs creativeTab, List list)
     {
-        list.add(new ItemStack(AlchemicalWizardry.itemKeyOfDiablo));
-        ItemStack boundKey = new ItemStack(AlchemicalWizardry.itemKeyOfDiablo);
+        list.add(new ItemStack(ModItems.itemKeyOfDiablo));
+        ItemStack boundKey = new ItemStack(ModItems.itemKeyOfDiablo);
         EnergyItems.checkAndSetItemOwner(boundKey, "Server-wide Soul Network");
         list.add(boundKey);
     }

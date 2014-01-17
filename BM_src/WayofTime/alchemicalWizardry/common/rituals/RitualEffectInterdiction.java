@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,14 +10,16 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class RitualEffectInterdiction extends RitualEffect
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class RitualEffectInterdiction extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -44,12 +43,11 @@ public class RitualEffectInterdiction extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             int d0 = 5;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y, (double)z, (double)(x + 1), (double)(y + 1), (double)(z + 1)).expand(d0, d0, d0);
-            axisalignedbb.maxY = Math.min((double)world.getHeight(), (double)(y + 1 + d0));
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, d0, d0);
+            axisalignedbb.maxY = Math.min((double) world.getHeight(), (double) (y + 1 + d0));
             List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityLivingBase entityplayer;
@@ -57,7 +55,7 @@ public class RitualEffectInterdiction extends RitualEffect
 
             while (iterator.hasNext())
             {
-                entityplayer = (EntityLivingBase)iterator.next();
+                entityplayer = (EntityLivingBase) iterator.next();
 
                 if (!(entityplayer.getEntityName().equals(owner)))
                 {

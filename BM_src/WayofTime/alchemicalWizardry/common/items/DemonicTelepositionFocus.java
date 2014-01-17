@@ -1,16 +1,15 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class DemonicTelepositionFocus extends TelepositionFocus
-{
+import java.util.List;
+
+public class DemonicTelepositionFocus extends TelepositionFocus {
     public DemonicTelepositionFocus(int par1)
     {
         super(par1, 4);

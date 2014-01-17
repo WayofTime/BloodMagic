@@ -1,8 +1,5 @@
 package thaumcraft.api.crafting;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,8 +10,10 @@ import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.AspectList;
 
-public class ShapelessArcaneRecipe implements IArcaneRecipe
-{
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class ShapelessArcaneRecipe implements IArcaneRecipe {
     private ItemStack output = null;
     private ArrayList input = new ArrayList();
 
@@ -25,7 +24,8 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
     {
         this(research, new ItemStack(result), aspects, recipe);
     }
-    public ShapelessArcaneRecipe(String research, Item  result, AspectList aspects, Object... recipe)
+
+    public ShapelessArcaneRecipe(String research, Item result, AspectList aspects, Object... recipe)
     {
         this(research, new ItemStack(result), aspects, recipe);
     }
@@ -40,25 +40,21 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
         {
             if (in instanceof ItemStack)
             {
-                input.add(((ItemStack)in).copy());
-            }
-            else if (in instanceof Item)
+                input.add(((ItemStack) in).copy());
+            } else if (in instanceof Item)
             {
-                input.add(new ItemStack((Item)in));
-            }
-            else if (in instanceof Block)
+                input.add(new ItemStack((Item) in));
+            } else if (in instanceof Block)
             {
-                input.add(new ItemStack((Block)in));
-            }
-            else if (in instanceof String)
+                input.add(new ItemStack((Block) in));
+            } else if (in instanceof String)
             {
-                input.add(OreDictionary.getOres((String)in));
-            }
-            else
+                input.add(OreDictionary.getOres((String) in));
+            } else
             {
                 String ret = "Invalid shapeless ore recipe: ";
 
-                for (Object tmp :  recipe)
+                for (Object tmp : recipe)
                 {
                     ret += tmp + ", ";
                 }
@@ -113,11 +109,10 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
 
                     if (next instanceof ItemStack)
                     {
-                        match = checkItemEquals((ItemStack)next, slot);
-                    }
-                    else if (next instanceof ArrayList)
+                        match = checkItemEquals((ItemStack) next, slot);
+                    } else if (next instanceof ArrayList)
                     {
-                        for (ItemStack item : (ArrayList<ItemStack>)next)
+                        for (ItemStack item : (ArrayList<ItemStack>) next)
                         {
                             match = match || checkItemEquals(item, slot);
                         }
@@ -151,6 +146,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe
     /**
      * Returns the input for this recipe, any mod accessing this value should never
      * manipulate the values in this array as it will effect the recipe itself.
+     *
      * @return The recipes input vales.
      */
     public ArrayList getInput()

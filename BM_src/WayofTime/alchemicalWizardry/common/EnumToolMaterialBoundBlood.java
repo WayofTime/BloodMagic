@@ -1,5 +1,4 @@
 package WayofTime.alchemicalWizardry.common;
 
-public class EnumToolMaterialBoundBlood
-{
+public class EnumToolMaterialBoundBlood {
 }

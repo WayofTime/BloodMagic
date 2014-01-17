@@ -1,29 +1,25 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
-public class RitualEffectAnimalGrowth extends RitualEffect
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class RitualEffectAnimalGrowth extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -43,7 +39,7 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         }
 
         int d0 = 2;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y + 1, (double)z, (double)(x + 1), (double)(y + 3), (double)(z + 1)).expand(d0, 0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 3), (double) (z + 1)).expand(d0, 0, d0);
         List list = world.getEntitiesWithinAABB(EntityAgeable.class, axisalignedbb);
         Iterator iterator1 = list.iterator();
         EntityAgeable entity;
@@ -52,7 +48,7 @@ public class RitualEffectAnimalGrowth extends RitualEffect
 
         while (iterator1.hasNext())
         {
-            entity = (EntityAgeable)iterator1.next();
+            entity = (EntityAgeable) iterator1.next();
             entityCount++;
         }
 
@@ -66,15 +62,14 @@ public class RitualEffectAnimalGrowth extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             Iterator iterator2 = list.iterator();
             entityCount = 0;
 
             while (iterator2.hasNext())
             {
-                entity = (EntityAgeable)iterator2.next();
+                entity = (EntityAgeable) iterator2.next();
 
                 if (entity.getGrowingAge() < 0)
                 {

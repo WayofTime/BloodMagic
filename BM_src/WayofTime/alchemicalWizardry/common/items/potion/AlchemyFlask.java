@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyPotionHelper;
+import com.google.common.collect.HashMultimap;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -22,16 +21,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyPotionHelper;
 
-import com.google.common.collect.HashMultimap;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-public class AlchemyFlask extends Item
-{
+public class AlchemyFlask extends Item {
     private int maxPotionAmount = 20;
 
     public AlchemyFlask(int id)
@@ -59,13 +56,12 @@ public class AlchemyFlask extends Item
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
-                NBTTagCompound nbttagcompound = (NBTTagCompound)nbttaglist.tagAt(i);
+                NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.tagAt(i);
                 arraylist.add(AlchemyPotionHelper.readEffectFromNBT(nbttagcompound));
             }
 
             return arraylist;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -85,8 +81,7 @@ public class AlchemyFlask extends Item
             }
 
             return newList;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -205,7 +200,7 @@ public class AlchemyFlask extends Item
 
         if (list != null)
         {
-            for (AlchemyPotionHelper aph: list)
+            for (AlchemyPotionHelper aph : list)
             {
                 if (aph.getPotionID() == potionID)
                 {
@@ -224,7 +219,7 @@ public class AlchemyFlask extends Item
 
         if (list != null)
         {
-            for (AlchemyPotionHelper aph: list)
+            for (AlchemyPotionHelper aph : list)
             {
                 if (aph.getPotionID() == potionID)
                 {
@@ -247,8 +242,7 @@ public class AlchemyFlask extends Item
         if (getEffects(par1ItemStack) != null)
         {
             return getEffects(par1ItemStack).size();
-        }
-        else
+        } else
         {
             return 0;
         }
@@ -261,7 +255,7 @@ public class AlchemyFlask extends Item
 
         if (list != null)
         {
-            for (AlchemyPotionHelper aph: list)
+            for (AlchemyPotionHelper aph : list)
             {
                 if (aph.getPotionID() == potionID)
                 {
@@ -277,8 +271,7 @@ public class AlchemyFlask extends Item
                 this.setEffects(par1ItemStack, list);
                 return true;
             }
-        }
-        else
+        } else
         {
             list = new ArrayList();
             list.add(new AlchemyPotionHelper(potionID, tickDuration, 0, 0));
@@ -306,7 +299,7 @@ public class AlchemyFlask extends Item
 
             while (iterator.hasNext())
             {
-                PotionEffect potioneffect = (PotionEffect)iterator.next();
+                PotionEffect potioneffect = (PotionEffect) iterator.next();
                 String s = StatCollector.translateToLocal(potioneffect.getEffectName()).trim();
                 Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
                 Map map = potion.func_111186_k();
@@ -317,10 +310,10 @@ public class AlchemyFlask extends Item
 
                     while (iterator1.hasNext())
                     {
-                        Entry entry = (Entry)iterator1.next();
-                        AttributeModifier attributemodifier = (AttributeModifier)entry.getValue();
+                        Entry entry = (Entry) iterator1.next();
+                        AttributeModifier attributemodifier = (AttributeModifier) entry.getValue();
                         AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), potion.func_111183_a(potioneffect.getAmplifier(), attributemodifier), attributemodifier.getOperation());
-                        hashmultimap.put(((Attribute)entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
+                        hashmultimap.put(((Attribute) entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
                     }
                 }
 
@@ -337,14 +330,12 @@ public class AlchemyFlask extends Item
                 if (potion.isBadEffect())
                 {
                     par3List.add(EnumChatFormatting.RED + s);
-                }
-                else
+                } else
                 {
                     par3List.add(EnumChatFormatting.GRAY + s);
                 }
             }
-        }
-        else
+        } else
         {
             String s1 = StatCollector.translateToLocal("potion.empty").trim();
             par3List.add(EnumChatFormatting.GRAY + s1);
@@ -358,28 +349,26 @@ public class AlchemyFlask extends Item
 
             while (iterator.hasNext())
             {
-                Entry entry1 = (Entry)iterator.next();
-                AttributeModifier attributemodifier2 = (AttributeModifier)entry1.getValue();
+                Entry entry1 = (Entry) iterator.next();
+                AttributeModifier attributemodifier2 = (AttributeModifier) entry1.getValue();
                 double d0 = attributemodifier2.getAmount();
                 double d1;
 
                 if (attributemodifier2.getOperation() != 1 && attributemodifier2.getOperation() != 2)
                 {
                     d1 = attributemodifier2.getAmount();
-                }
-                else
+                } else
                 {
                     d1 = attributemodifier2.getAmount() * 100.0D;
                 }
 
                 if (d0 > 0.0D)
                 {
-                    par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("attribute.modifier.plus." + attributemodifier2.getOperation(), new Object[] {ItemStack.field_111284_a.format(d1), StatCollector.translateToLocal("attribute.name." + (String)entry1.getKey())}));
-                }
-                else if (d0 < 0.0D)
+                    par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocalFormatted("attribute.modifier.plus." + attributemodifier2.getOperation(), new Object[]{ItemStack.field_111284_a.format(d1), StatCollector.translateToLocal("attribute.name." + (String) entry1.getKey())}));
+                } else if (d0 < 0.0D)
                 {
                     d1 *= -1.0D;
-                    par3List.add(EnumChatFormatting.RED + StatCollector.translateToLocalFormatted("attribute.modifier.take." + attributemodifier2.getOperation(), new Object[] {ItemStack.field_111284_a.format(d1), StatCollector.translateToLocal("attribute.name." + (String)entry1.getKey())}));
+                    par3List.add(EnumChatFormatting.RED + StatCollector.translateToLocalFormatted("attribute.modifier.take." + attributemodifier2.getOperation(), new Object[]{ItemStack.field_111284_a.format(d1), StatCollector.translateToLocal("attribute.name." + (String) entry1.getKey())}));
                 }
             }
         }
@@ -390,8 +379,7 @@ public class AlchemyFlask extends Item
         if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().getBoolean("throwable"))
         {
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -425,8 +413,8 @@ public class AlchemyFlask extends Item
         for (PotionEffect pe : potionList)
         {
             NBTTagCompound d = new NBTTagCompound();
-            d.setByte("Id", (byte)pe.getPotionID());
-            d.setByte("Amplifier", (byte)pe.getAmplifier());
+            d.setByte("Id", (byte) pe.getPotionID());
+            d.setByte("Amplifier", (byte) pe.getAmplifier());
             //byte b1 = par0NBTTagCompound.getByte("Amplifier");
             d.setInteger("Duration", pe.getDuration());
             //int i = par0NBTTagCompound.getInteger("Duration");

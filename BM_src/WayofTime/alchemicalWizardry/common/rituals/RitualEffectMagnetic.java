@@ -12,14 +12,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class RitualEffectMagnetic extends RitualEffect
-{
+public class RitualEffectMagnetic extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -48,8 +47,7 @@ public class RitualEffectMagnetic extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             int xRep = 0;
             int yRep = 0;

@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -9,12 +10,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BloodboundSword extends EnergyItems
-{
+import java.util.List;
+
+public class BloodboundSword extends EnergyItems {
     private float weaponDamage;
     //private int maxMode = 3;
     private NBTTagCompound data;
@@ -40,9 +39,9 @@ public class BloodboundSword extends EnergyItems
     {
         if (par3EntityLivingBase instanceof EntityPlayer)
         {
-            EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer)par3EntityLivingBase);
+            EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase);
 
-            if (!this.syphonBatteries(par1ItemStack, (EntityPlayer)par3EntityLivingBase, this.getEnergyUsed()))
+            if (!this.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
             {
                 //this.damagePlayer(null, (EntityPlayer)par3EntityLivingBase, (this.getEnergyUsed() + 99) / 100);
             }
@@ -81,8 +80,7 @@ public class BloodboundSword extends EnergyItems
         if (par2Block.blockID == Block.web.blockID)
         {
             return 15.0F;
-        }
-        else
+        } else
         {
             Material material = par2Block.blockMaterial;
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;

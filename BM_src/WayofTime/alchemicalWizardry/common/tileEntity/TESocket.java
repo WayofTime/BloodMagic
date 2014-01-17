@@ -1,34 +1,15 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.Random;
-
 import WayofTime.alchemicalWizardry.common.PacketHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidEvent;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidTank;
 
-public class TESocket extends TileEntity implements IInventory
-{
+public class TESocket extends TileEntity implements IInventory {
     private ItemStack[] inv;
     private int resultID;
     private int resultDamage;
@@ -112,8 +93,7 @@ public class TESocket extends TileEntity implements IInventory
             if (stack.stackSize <= amt)
             {
                 setInventorySlotContents(slot, null);
-            }
-            else
+            } else
             {
                 stack = stack.splitStack(amt);
 
@@ -225,8 +205,7 @@ public class TESocket extends TileEntity implements IInventory
                 {
                     ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
+                } else
                 {
                     inv[i] = null;
                 }
@@ -236,7 +215,7 @@ public class TESocket extends TileEntity implements IInventory
 
     public int[] buildIntDataList()
     {
-        int [] sortList = new int[1 * 3];
+        int[] sortList = new int[1 * 3];
         int pos = 0;
 
         for (ItemStack is : inv)
@@ -246,8 +225,7 @@ public class TESocket extends TileEntity implements IInventory
                 sortList[pos++] = is.itemID;
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
+            } else
             {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;

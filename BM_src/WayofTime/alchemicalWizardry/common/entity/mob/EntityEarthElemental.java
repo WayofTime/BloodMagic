@@ -9,8 +9,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityEarthElemental extends EntityElemental implements IMob
-{
+public class EntityEarthElemental extends EntityElemental implements IMob {
     public EntityEarthElemental(World world)
     {
         super(world, AlchemicalWizardry.entityEarthElementalID);
@@ -20,9 +19,9 @@ public class EntityEarthElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityLivingBase)
         {
-            ((EntityLivingBase)target).attackEntityFrom(DamageSource.causeMobDamage(this), 10);
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 4));
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
+            ((EntityLivingBase) target).attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 4));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
         }
     }
 }

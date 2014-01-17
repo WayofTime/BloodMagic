@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
-public class ArmourComponent
-{
+public class ArmourComponent {
     private int xOff;
     private int zOff;
 

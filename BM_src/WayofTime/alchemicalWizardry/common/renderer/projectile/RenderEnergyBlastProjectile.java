@@ -1,32 +1,21 @@
 package WayofTime.alchemicalWizardry.common.renderer.projectile;
 
+import WayofTime.alchemicalWizardry.common.entity.projectile.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 @SideOnly(Side.CLIENT)
-public class RenderEnergyBlastProjectile extends Render
-{
+public class RenderEnergyBlastProjectile extends Render {
     public void doRenderEnergyBlastProjectile(EnergyBlastProjectile entityShot, double par2, double par4, double par6, float par8, float par9)
     {
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)par2, (float)par4, (float)par6);
+        GL11.glTranslatef((float) par2, (float) par4, (float) par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.1F, 0.1F, 0.1F);
         this.bindTexture(this.getEntityTexture(entityShot));
@@ -49,7 +38,7 @@ public class RenderEnergyBlastProjectile extends Render
     {
         if (par1Entity instanceof EnergyBlastProjectile)
         {
-            this.doRenderEnergyBlastProjectile((EnergyBlastProjectile)par1Entity, par2, par4, par6, par8, par9);
+            this.doRenderEnergyBlastProjectile((EnergyBlastProjectile) par1Entity, par2, par4, par6, par8, par9);
         }
     }
 

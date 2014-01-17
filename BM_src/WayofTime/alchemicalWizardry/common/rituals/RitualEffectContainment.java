@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -13,16 +11,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class RitualEffectContainment extends RitualEffect
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class RitualEffectContainment extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -46,11 +45,10 @@ public class RitualEffectContainment extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             int d0 = 5;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y, (double)z, (double)(x + 1), (double)(y + 1), (double)(z + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, d0, d0);
             List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityLivingBase livingEntity;
@@ -58,7 +56,7 @@ public class RitualEffectContainment extends RitualEffect
 
             while (iterator.hasNext())
             {
-                livingEntity = (EntityLivingBase)iterator.next();
+                livingEntity = (EntityLivingBase) iterator.next();
 
                 if (livingEntity instanceof EntityPlayer)
                 {
@@ -78,7 +76,7 @@ public class RitualEffectContainment extends RitualEffect
 
                     if (world.rand.nextInt(10) == 0)
                     {
-                        PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(livingEntity.posX, livingEntity.posY, livingEntity.posZ, (short)1));
+                        PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(livingEntity.posX, livingEntity.posY, livingEntity.posZ, (short) 1));
                     }
 
                     livingEntity.fallDistance = 0;

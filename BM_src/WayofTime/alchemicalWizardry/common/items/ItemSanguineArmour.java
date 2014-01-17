@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,13 +16,10 @@ import net.minecraft.world.World;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IVisDiscounter;
 import thaumcraft.api.nodes.IRevealer;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUpgrade, IGoggles, IVisDiscounter
-{
+import java.util.List;
+
+public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUpgrade, IGoggles, IVisDiscounter {
     private static Icon helmetIcon;
 
     public ItemSanguineArmour(int par1)
@@ -41,7 +41,7 @@ public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUp
     {
         //if(AlchemicalWizardry.isThaumcraftLoaded)
         {
-            if (itemID == AlchemicalWizardry.sanguineHelmet.itemID)
+            if (itemID == ModItems.sanguineHelmet.itemID)
             {
                 return "alchemicalwizardry:models/armor/sanguineArmour_layer_1.png";
             }

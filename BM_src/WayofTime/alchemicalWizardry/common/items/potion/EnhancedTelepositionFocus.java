@@ -1,17 +1,16 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class EnhancedTelepositionFocus extends TelepositionFocus
-{
+import java.util.List;
+
+public class EnhancedTelepositionFocus extends TelepositionFocus {
     public EnhancedTelepositionFocus(int par1)
     {
         super(par1, 2);

@@ -4,8 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class EarthScribeTool extends ScribeTool
-{
+public class EarthScribeTool extends ScribeTool {
     public EarthScribeTool(int id)
     {
         super(id, 3);

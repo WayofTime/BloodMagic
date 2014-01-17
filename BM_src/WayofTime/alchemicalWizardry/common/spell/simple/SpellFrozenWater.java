@@ -1,17 +1,17 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
-public class SpellFrozenWater extends HomSpell
-{
+import java.util.Random;
+
+public class SpellFrozenWater extends HomSpell {
     public Random itemRand = new Random();
+
     public SpellFrozenWater()
     {
         super();
@@ -86,24 +86,23 @@ public class SpellFrozenWater extends HomSpell
             {
                 for (int j = -range; j <= range; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY - 1, (int)par3EntityPlayer.posZ + j))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY - 1, (int) par3EntityPlayer.posZ + j))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY - 1, (int)par3EntityPlayer.posZ + j, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY - 1, (int) par3EntityPlayer.posZ + j, Block.ice.blockID);
                     }
                 }
             }
 
             return par1ItemStack;
-        }
-        else if (pitch < -40F)
+        } else if (pitch < -40F)
         {
             for (int i = -range; i <= range; i++)
             {
                 for (int j = -range; j <= range; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + 3, (int)par3EntityPlayer.posZ + j))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + 3, (int) par3EntityPlayer.posZ + j))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + 3, (int)par3EntityPlayer.posZ + j, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + 3, (int) par3EntityPlayer.posZ + j, Block.ice.blockID);
                     }
                 }
             }
@@ -117,48 +116,45 @@ public class SpellFrozenWater extends HomSpell
             {
                 for (int j = 0; j < range * 2 + 1; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + 2))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + 2))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + 2, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + 2, Block.ice.blockID);
                     }
                 }
             }
-        }
-        else if (yaw >= 45 && yaw < 135)
+        } else if (yaw >= 45 && yaw < 135)
         {
             for (int i = -range; i <= range; i++)
             {
                 for (int j = 0; j < range * 2 + 1; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX - 2, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + i))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX - 2, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + i))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX - 2, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + i, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX - 2, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + i, Block.ice.blockID);
                     }
                 }
             }
-        }
-        else if (yaw >= 135 && yaw < 225)
+        } else if (yaw >= 135 && yaw < 225)
         {
             for (int i = -range; i <= range; i++)
             {
                 for (int j = 0; j < range * 2 + 1; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ - 2))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ - 2))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ - 2, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ - 2, Block.ice.blockID);
                     }
                 }
             }
-        }
-        else
+        } else
         {
             for (int i = -range; i <= range; i++)
             {
                 for (int j = 0; j < range * 2 + 1; j++)
                 {
-                    if (par2World.isAirBlock((int)par3EntityPlayer.posX + 2, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + i))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + 2, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + i))
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + 2, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + i, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + 2, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + i, Block.ice.blockID);
                     }
                 }
             }
@@ -178,9 +174,9 @@ public class SpellFrozenWater extends HomSpell
         }
 
         int radius = 3;
-        int posX = (int)par3EntityPlayer.posX;
-        int posY = (int)par3EntityPlayer.posY;
-        int posZ = (int)par3EntityPlayer.posZ;
+        int posX = (int) par3EntityPlayer.posX;
+        int posY = (int) par3EntityPlayer.posY;
+        int posZ = (int) par3EntityPlayer.posZ;
 
         for (int i = -radius; i <= radius; i++)
         {
@@ -188,12 +184,12 @@ public class SpellFrozenWater extends HomSpell
             {
                 for (int k = -radius; k <= radius; k++)
                 {
-                    int blockID = par2World.getBlockId((int)par3EntityPlayer.posX + i - 1, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k);
+                    int blockID = par2World.getBlockId((int) par3EntityPlayer.posX + i - 1, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k);
 
                     //Block block = Block.blocksList[blockID];
                     if (blockID == Block.waterMoving.blockID || blockID == Block.waterStill.blockID)
                     {
-                        par2World.setBlock((int)par3EntityPlayer.posX + i - 1, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k, Block.ice.blockID);
+                        par2World.setBlock((int) par3EntityPlayer.posX + i - 1, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Block.ice.blockID);
                     }
                 }
             }

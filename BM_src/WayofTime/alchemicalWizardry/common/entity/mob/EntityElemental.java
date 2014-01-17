@@ -1,27 +1,16 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -29,22 +18,17 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityLargeFireball;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class EntityElemental extends EntityDemon
-{
+import java.util.List;
+
+public class EntityElemental extends EntityDemon {
     //private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
@@ -73,33 +57,40 @@ public class EntityElemental extends EntityDemon
     public double waypointZ;
     private Entity targetedEntity;
 
-    /** Cooldown time between target loss and new target aquirement. */
+    /**
+     * Cooldown time between target loss and new target aquirement.
+     */
     private int aggroCooldown;
     public int prevAttackCounter;
     public int attackCounter;
 
-    /** The explosion radius of spawned fireballs. */
+    /**
+     * The explosion radius of spawned fireballs.
+     */
     //private int explosionStrength = 1;
 //
 //	private int heightOffsetUpdateTime;
 //	private float heightOffset = 0.5F;
 //	private int field_70846_g;
-
     protected void dropFewItems(boolean par1, int par2)
     {
         if (worldObj.rand.nextFloat() < (1 - Math.pow(0.6f, par2 + 1)))
         {
-            this.entityDropItem(new ItemStack(AlchemicalWizardry.demonBloodShard, 1, 0), 0.0f);
+            this.entityDropItem(new ItemStack(ModItems.demonBloodShard, 1, 0), 0.0f);
         }
     }
 
-    protected void fall(float par1) {}
+    protected void fall(float par1)
+    {
+    }
 
     /**
      * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
      * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
      */
-    protected void updateFallState(double par1, boolean par3) {}
+    protected void updateFallState(double par1, boolean par3)
+    {
+    }
 
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
@@ -113,16 +104,14 @@ public class EntityElemental extends EntityDemon
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.800000011920929D;
             this.motionZ *= 0.800000011920929D;
-        }
-        else if (this.handleLavaMovement())
+        } else if (this.handleLavaMovement())
         {
             this.moveFlying(par1, par2, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.5D;
             this.motionY *= 0.5D;
             this.motionZ *= 0.5D;
-        }
-        else
+        } else
         {
             float f2 = 0.91F;
 
@@ -153,9 +142,9 @@ public class EntityElemental extends EntityDemon
             }
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= (double)f2;
-            this.motionY *= (double)f2;
-            this.motionZ *= (double)f2;
+            this.motionX *= (double) f2;
+            this.motionY *= (double) f2;
+            this.motionZ *= (double) f2;
         }
 
         double d0 = this.posX - this.prevPosX;
@@ -203,27 +192,26 @@ public class EntityElemental extends EntityDemon
 
         if (d3 < 1.0D || d3 > 3600.0D)
         {
-            this.waypointX = this.posX + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.waypointY = this.posY + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.waypointZ = this.posZ + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
         }
 
         if (this.courseChangeCooldown-- <= 0)
         {
             this.courseChangeCooldown += this.rand.nextInt(5) + 2;
-            d3 = (double)MathHelper.sqrt_double(d3);
+            d3 = (double) MathHelper.sqrt_double(d3);
 
             if (this.isCourseTraversable(this.waypointX, this.waypointY, this.waypointZ, d3))
             {
                 this.motionX += d0 / d3 * 0.1D;
                 this.motionY += d1 / d3 * 0.1D;
                 this.motionZ += d2 / d3 * 0.1D;
-            }
-            else
+            } else
             {
-                this.waypointX = this.posX + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-                this.waypointY = this.posY + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-                this.waypointZ = this.posZ + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
             }
         }
 
@@ -247,9 +235,9 @@ public class EntityElemental extends EntityDemon
         if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < d4 * d4)
         {
             double d5 = this.targetedEntity.posX - this.posX;
-            double d6 = this.targetedEntity.boundingBox.minY + (double)(this.targetedEntity.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
+            double d6 = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F) - (this.posY + (double) (this.height / 2.0F));
             double d7 = this.targetedEntity.posZ - this.posZ;
-            this.renderYawOffset = this.rotationYaw = -((float)Math.atan2(d5, d7)) * 180.0F / (float)Math.PI;
+            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(d5, d7)) * 180.0F / (float) Math.PI;
 
             if (this.courseChangeCooldown <= 0)
             {
@@ -261,12 +249,11 @@ public class EntityElemental extends EntityDemon
                     this.motionX += d5 / d3 * 0.1D;
                     this.motionY += d6 / d3 * 0.1D;
                     this.motionZ += d7 / d3 * 0.1D;
-                }
-                else
+                } else
                 {
-                    this.waypointX = this.posX + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-                    this.waypointY = this.posY + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-                    this.waypointZ = this.posZ + (double)((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                    this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                    this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                    this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
                     this.motionX += d5 / d3 * 0.1D;
                     this.motionY += d6 / d3 * 0.1D;
                     this.motionZ += d7 / d3 * 0.1D;
@@ -285,20 +272,18 @@ public class EntityElemental extends EntityDemon
 
                     if (this.attackCounter >= 10)
                     {
-                        this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1008, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+                        this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
                         this.inflictEffectOnEntity(this.targetedEntity);
                         this.attackCounter = -40;
                     }
                 }
-            }
-            else if (this.attackCounter > 0)
+            } else if (this.attackCounter > 0)
             {
                 --this.attackCounter;
             }
-        }
-        else
+        } else
         {
-            this.renderYawOffset = this.rotationYaw = -((float)Math.atan2(this.motionX, this.motionZ)) * 180.0F / (float)Math.PI;
+            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(this.motionX, this.motionZ)) * 180.0F / (float) Math.PI;
 
             if (this.attackCounter > 0)
             {
@@ -309,7 +294,7 @@ public class EntityElemental extends EntityDemon
         if (!this.worldObj.isRemote)
         {
             byte b0 = this.dataWatcher.getWatchableObjectByte(25);
-            byte b1 = (byte)(this.attackCounter > 10 ? 1 : 0);
+            byte b1 = (byte) (this.attackCounter > 10 ? 1 : 0);
 
             if (b0 != b1)
             {
@@ -328,7 +313,7 @@ public class EntityElemental extends EntityDemon
         double d6 = (this.waypointZ - this.posZ) / par7;
         AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
-        for (int i = 1; (double)i < par7; ++i)
+        for (int i = 1; (double) i < par7; ++i)
         {
             axisalignedbb.offset(d4, d5, d6);
 
@@ -356,7 +341,7 @@ public class EntityElemental extends EntityDemon
     {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setBoolean("Angry", this.isAngry());
-        par1NBTTagCompound.setByte("CollarColor", (byte)this.getCollarColor());
+        par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
     }
 
     /**
@@ -386,8 +371,7 @@ public class EntityElemental extends EntityDemon
         if (this.isTamed())
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxTamedHealth);
-        }
-        else
+        } else
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxUntamedHealth);
         }
@@ -413,8 +397,7 @@ public class EntityElemental extends EntityDemon
         if (par1EntityLivingBase == null)
         {
             this.setAngry(false);
-        }
-        else if (!this.isTamed())
+        } else if (!this.isTamed())
         {
             this.setAngry(true);
         }
@@ -432,9 +415,9 @@ public class EntityElemental extends EntityDemon
     {
         super.entityInit();
         this.dataWatcher.addObject(18, new Float(this.getHealth()));
-        this.dataWatcher.addObject(19, new Byte((byte)0));
-        this.dataWatcher.addObject(20, new Byte((byte)BlockColored.getBlockFromDye(1)));
-        this.dataWatcher.addObject(25, Byte.valueOf((byte)0));
+        this.dataWatcher.addObject(19, new Byte((byte) 0));
+        this.dataWatcher.addObject(20, new Byte((byte) BlockColored.getBlockFromDye(1)));
+        this.dataWatcher.addObject(25, Byte.valueOf((byte) 0));
     }
 
     /**
@@ -525,8 +508,7 @@ public class EntityElemental extends EntityDemon
         if (this.isEntityInvulnerable())
         {
             return false;
-        }
-        else
+        } else
         {
             Entity entity = par1DamageSource.getEntity();
             this.aiSit.setSitting(false);
@@ -543,7 +525,7 @@ public class EntityElemental extends EntityDemon
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         int i = this.isTamed() ? 6 : 7;
-        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
+        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
 
     public void setTamed(boolean par1)
@@ -553,8 +535,7 @@ public class EntityElemental extends EntityDemon
         if (par1)
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxTamedHealth);
-        }
-        else
+        } else
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxUntamedHealth);
         }
@@ -591,11 +572,10 @@ public class EntityElemental extends EntityDemon
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
-        }
-        else
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
+        } else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
         }
     }
 
@@ -612,7 +592,7 @@ public class EntityElemental extends EntityDemon
      */
     public void setCollarColor(int par1)
     {
-        this.dataWatcher.updateObject(20, Byte.valueOf((byte)(par1 & 15)));
+        this.dataWatcher.updateObject(20, Byte.valueOf((byte) (par1 & 15)));
     }
 
     /**
@@ -627,11 +607,10 @@ public class EntityElemental extends EntityDemon
     {
         if (par1)
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte)1));
-        }
-        else
+            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 1));
+        } else
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte)0));
+            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 0));
         }
     }
 
@@ -664,7 +643,7 @@ public class EntityElemental extends EntityDemon
         {
             if (par1EntityLivingBase instanceof EntityBoulderFist)
             {
-                EntityBoulderFist entitywolf = (EntityBoulderFist)par1EntityLivingBase;
+                EntityBoulderFist entitywolf = (EntityBoulderFist) par1EntityLivingBase;
 
                 if (entitywolf.isTamed() && entitywolf.func_130012_q() == par2EntityLivingBase)
                 {
@@ -672,10 +651,9 @@ public class EntityElemental extends EntityDemon
                 }
             }
 
-            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer)par2EntityLivingBase).canAttackPlayer((EntityPlayer)par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse)par1EntityLivingBase).isTame();
+            return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
             //return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer)par2EntityLivingBase).func_96122_a((EntityPlayer)par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse)par1EntityLivingBase).func_110248_bS();
-        }
-        else
+        } else
         {
             return false;
         }
@@ -704,30 +682,30 @@ public class EntityElemental extends EntityDemon
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 0));
         }
     }
-    
+
     public static Entity getClosestVulnerableMonsterToEntity(Entity par1Entity, double par2)
     {
-    	double d4 = -1.0D;
-    	double par1 = par1Entity.posX;
-    	double par3 = par1Entity.posY;
-    	double par5 = par1Entity.posZ;
-    	
+        double d4 = -1.0D;
+        double par1 = par1Entity.posX;
+        double par3 = par1Entity.posY;
+        double par5 = par1Entity.posZ;
+
         EntityLivingBase entityLiving = null;
         World world = par1Entity.worldObj;
 
         double range = Math.sqrt(par2);
         double verticalRange = Math.sqrt(par2);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(par1 - 0.5f, par3 - 0.5f, par5 - 0.5f, par1 + 0.5f, par3 + 0.5f, par5 + 0.5f).expand(range, verticalRange, range));
-        if(entities == null)
+        if (entities == null)
         {
-        	return null;
+            return null;
         }
-        
+
         for (int i = 0; i < entities.size(); ++i)
         {
             EntityLivingBase entityLiving1 = entities.get(i);
 
-            if (!(entityLiving1 instanceof EntityPlayer && ((EntityPlayer)entityLiving1).capabilities.disableDamage) && entityLiving1.isEntityAlive())
+            if (!(entityLiving1 instanceof EntityPlayer && ((EntityPlayer) entityLiving1).capabilities.disableDamage) && entityLiving1.isEntityAlive())
             {
                 double d5 = entityLiving1.getDistanceSq(par1, par3, par5);
                 double d6 = par2;
@@ -739,30 +717,30 @@ public class EntityElemental extends EntityDemon
 
                 if (entityLiving1.isInvisible())
                 {
-                    float f = entityLiving1 instanceof EntityPlayer ? ((EntityPlayer)entityLiving1).getArmorVisibility() : 1.0f;
+                    float f = entityLiving1 instanceof EntityPlayer ? ((EntityPlayer) entityLiving1).getArmorVisibility() : 1.0f;
 
                     if (f < 0.1F)
                     {
                         f = 0.1F;
                     }
 
-                    d6 *= (double)(0.7F * f);
+                    d6 *= (double) (0.7F * f);
                 }
 
                 if ((par2 < 0.0D || d5 < d6 * d6) && (d4 == -1.0D || d5 < d4))
                 {
-                	if(par1Entity != entityLiving1)
-                	{
-                		d4 = d5;
+                    if (par1Entity != entityLiving1)
+                    {
+                        d4 = d5;
                         entityLiving = entityLiving1;
-                	}    
+                    }
                 }
             }
         }
 
         return entityLiving;
     }
-    
+
     @Override
     public int getTotalArmorValue() //TODO
     {

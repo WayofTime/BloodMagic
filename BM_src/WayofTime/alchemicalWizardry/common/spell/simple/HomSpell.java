@@ -5,8 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public abstract class HomSpell implements ISimpleSpell
-{
+public abstract class HomSpell implements ISimpleSpell {
     private int offensiveRangedEnergy;
     private int offensiveMeleeEnergy;
     private int defensiveEnergy;
@@ -20,7 +19,9 @@ public abstract class HomSpell implements ISimpleSpell
     }
 
     @Override
-    public abstract ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);;
+    public abstract ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
+
+    ;
 
     @Override
     public abstract ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
@@ -76,7 +77,7 @@ public abstract class HomSpell implements ISimpleSpell
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return(itemStack.stackTagCompound.getInteger("paradigm"));
+        return (itemStack.stackTagCompound.getInteger("paradigm"));
     }
 
     //@Override
@@ -89,8 +90,7 @@ public abstract class HomSpell implements ISimpleSpell
             if (paradigm < 3)
             {
                 this.setSpellParadigm(par1ItemStack, paradigm + 1);
-            }
-            else
+            } else
             {
                 this.setSpellParadigm(par1ItemStack, 0);
             }

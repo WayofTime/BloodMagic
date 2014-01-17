@@ -7,8 +7,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerWritingTable extends Container
-{
+public class ContainerWritingTable extends Container {
     protected TEWritingTable tileEntity;
 
     public ContainerWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable te)
@@ -88,8 +87,7 @@ public class ContainerWritingTable extends Container
             if (stackInSlot.stackSize == 0)
             {
                 slotObject.putStack(null);
-            }
-            else
+            } else
             {
                 slotObject.onSlotChanged();
             }

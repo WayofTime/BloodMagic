@@ -1,7 +1,5 @@
 package thaumcraft.api.research;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -12,10 +10,10 @@ import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 
-public class ResearchPage
-{
-    public static enum PageType
-    {
+import java.util.List;
+
+public class ResearchPage {
+    public static enum PageType {
         TEXT,
         TEXT_CONCEALED,
         IMAGE,
@@ -48,7 +46,7 @@ public class ResearchPage
 
     /**
      * @param research this page will only be displayed if the player has discovered this research
-     * @param text this can (but does not have to) be a reference to a localization variable, not the actual text.
+     * @param text     this can (but does not have to) be a reference to a localization variable, not the actual text.
      */
     public ResearchPage(String research, String text)
     {
@@ -134,8 +132,7 @@ public class ResearchPage
         if (recipe.recipeOutput instanceof ItemStack)
         {
             this.recipeOutput = (ItemStack) recipe.recipeOutput;
-        }
-        else
+        } else
         {
             this.recipeOutput = recipe.recipeInput;
         }
@@ -177,6 +174,7 @@ public class ResearchPage
 
     /**
      * returns a localized text of the text field (if one exists). Returns the text field itself otherwise.
+     *
      * @return
      */
     public String getTranslatedText()

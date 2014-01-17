@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public interface IScanEventHandler
-{
+public interface IScanEventHandler {
     ScanResult scanPhenomena(ItemStack stack, World world, EntityPlayer player);
 }

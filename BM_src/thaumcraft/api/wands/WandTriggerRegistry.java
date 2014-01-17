@@ -1,12 +1,12 @@
 package thaumcraft.api.wands;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class serves a similar function to IWandable in that it allows wands to interact
@@ -16,25 +16,24 @@ import net.minecraft.world.World;
  * crucible from a cauldron
  *
  * @author azanor
- *
  */
-public class WandTriggerRegistry
-{
+public class WandTriggerRegistry {
     /**
      * Registers an action to perform when a casting wand right clicks on a specific block.
      * A manager class needs to be created that implements IWandTriggerManager.
+     *
      * @param manager
-     * @param event a logical number that you can use to differentiate different events or actions
+     * @param event   a logical number that you can use to differentiate different events or actions
      * @param blockid
-     * @param meta send -1 as a wildcard value for all possible meta values
+     * @param meta    send -1 as a wildcard value for all possible meta values
      */
     public static void registerWandBlockTrigger(IWandTriggerManager manager, int event, int blockid, int meta)
     {
         triggers.put(Arrays.asList(blockid, meta),
-                     Arrays.asList(manager, event));
+                Arrays.asList(manager, event));
     }
 
-    private static HashMap<List<Integer>, List> triggers = new  HashMap<List<Integer>, List>();
+    private static HashMap<List<Integer>,List> triggers = new HashMap<List<Integer>,List>();
 
     public static boolean hasTrigger(int blockid, int meta)
     {
@@ -50,6 +49,7 @@ public class WandTriggerRegistry
     /**
      * This is called by the onItemUseFirst function in wands.
      * Parameters and return value functions like you would expect for that function.
+     *
      * @param world
      * @param wand
      * @param player

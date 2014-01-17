@@ -1,18 +1,17 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.common.network.PacketDispatcher;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
-public class SpellEarthBender extends HomSpell
-{
+import java.util.Random;
+
+public class SpellEarthBender extends HomSpell {
     Random itemRand = new Random();
 
     public SpellEarthBender()
@@ -21,6 +20,7 @@ public class SpellEarthBender extends HomSpell
         this.setEnergies(100, 150, 350, 200);
         //this.setCreativeTab(CreativeTabs.tabMisc);
     }
+
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -88,9 +88,9 @@ public class SpellEarthBender extends HomSpell
         double xCoord = par3EntityPlayer.posX;
         double yCoord = par3EntityPlayer.posY;
         double zCoord = par3EntityPlayer.posZ;
-        int posX = (int)xCoord;
-        int posY = (int)yCoord;
-        int posZ = (int)zCoord;
+        int posX = (int) xCoord;
+        int posY = (int) yCoord;
+        int posZ = (int) zCoord;
         int blockID = Block.stone.blockID;
 
         if (par2World.isAirBlock(posX, posY + 3, posZ))
@@ -164,17 +164,16 @@ public class SpellEarthBender extends HomSpell
                 {
                     for (int k = -range; k <= range; k++)
                     {
-                        if (par2World.getBlockId((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k) == Block.waterStill.blockID || par2World.getBlockId((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k) == Block.waterMoving.blockID)
+                        if (par2World.getBlockId((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k) == Block.waterStill.blockID || par2World.getBlockId((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k) == Block.waterMoving.blockID)
                         {
                             int x = par2World.rand.nextInt(2);
 
                             if (x == 0)
                             {
-                                par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k, Block.sand.blockID);
-                            }
-                            else
+                                par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Block.sand.blockID);
+                            } else
                             {
-                                par2World.setBlock((int)par3EntityPlayer.posX + i, (int)par3EntityPlayer.posY + j, (int)par3EntityPlayer.posZ + k, Block.dirt.blockID);
+                                par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Block.dirt.blockID);
                             }
                         }
                     }

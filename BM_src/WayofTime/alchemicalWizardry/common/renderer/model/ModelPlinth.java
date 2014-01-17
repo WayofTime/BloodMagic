@@ -4,8 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelPlinth extends ModelBase
-{
+public class ModelPlinth extends ModelBase {
     //fields
     ModelRenderer base;
     ModelRenderer table;

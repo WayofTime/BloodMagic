@@ -1,15 +1,14 @@
 package thaumcraft.api.research;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
-public class ResearchCategories
-{
+import java.util.Collection;
+import java.util.LinkedHashMap;
+
+public class ResearchCategories {
     //Research
-    public static LinkedHashMap <String, ResearchCategoryList> researchCategories = new LinkedHashMap <String, ResearchCategoryList>();
+    public static LinkedHashMap<String,ResearchCategoryList> researchCategories = new LinkedHashMap<String,ResearchCategoryList>();
 
     /**
      * @param key
@@ -38,15 +37,15 @@ public class ResearchCategories
     {
         Collection rc = researchCategories.values();
 
-        for (Object cat: rc)
+        for (Object cat : rc)
         {
-            Collection rl = ((ResearchCategoryList)cat).research.values();
+            Collection rl = ((ResearchCategoryList) cat).research.values();
 
-            for (Object ri: rl)
+            for (Object ri : rl)
             {
-                if ((((ResearchItem)ri).key).equals(key))
+                if ((((ResearchItem) ri).key).equals(key))
                 {
-                    return (ResearchItem)ri;
+                    return (ResearchItem) ri;
                 }
             }
         }
@@ -55,8 +54,8 @@ public class ResearchCategories
     }
 
     /**
-     * @param key the key used for this category
-     * @param icon the icon to be used for the research category tab
+     * @param key        the key used for this category
+     * @param icon       the icon to be used for the research category tab
      * @param background the resource location of the background image to use for this category
      * @return the name of the research linked to this key
      */

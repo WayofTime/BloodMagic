@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,12 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ArmourInhibitor extends EnergyItems
-{
+import java.util.List;
+
+public class ArmourInhibitor extends EnergyItems {
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private int tickDelay = 200;
@@ -40,8 +39,7 @@ public class ArmourInhibitor extends EnergyItems
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -72,8 +70,7 @@ public class ArmourInhibitor extends EnergyItems
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -86,8 +83,7 @@ public class ArmourInhibitor extends EnergyItems
         if (par1 == 1)
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -131,14 +127,13 @@ public class ArmourInhibitor extends EnergyItems
         if (tag.getBoolean("isActive"))
         {
             par1ItemStack.setItemDamage(1);
-            tag.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % tickDelay);
+            tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 //EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
             }
-        }
-        else
+        } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
         }
@@ -154,7 +149,7 @@ public class ArmourInhibitor extends EnergyItems
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {

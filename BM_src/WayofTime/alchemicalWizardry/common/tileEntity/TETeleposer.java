@@ -1,8 +1,9 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.util.Iterator;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,13 +14,11 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 
-public class TETeleposer extends TileEntity implements IInventory
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class TETeleposer extends TileEntity implements IInventory {
     private ItemStack[] inv;
     private int resultID;
     private int resultDamage;
@@ -107,8 +106,7 @@ public class TETeleposer extends TileEntity implements IInventory
             if (stack.stackSize <= amt)
             {
                 setInventorySlotContents(slot, null);
-            }
-            else
+            } else
             {
                 stack = stack.splitStack(amt);
 
@@ -199,15 +197,15 @@ public class TETeleposer extends TileEntity implements IInventory
         {
             ItemStack focus = this.getStackInSlot(0);
 
-            if (focus != null && focus.getItem()instanceof TelepositionFocus)
+            if (focus != null && focus.getItem() instanceof TelepositionFocus)
             {
-                TelepositionFocus focusItem = (TelepositionFocus)(focus.getItem());
+                TelepositionFocus focusItem = (TelepositionFocus) (focus.getItem());
                 int xf = focusItem.xCoord(focus);
                 int yf = focusItem.yCoord(focus);
                 int zf = focusItem.zCoord(focus);
                 World worldF = focusItem.getWorld(focus);
-                int damage = (int)(0.5f * Math.sqrt((xCoord - xf) * (xCoord - xf) + (yCoord - yf + 1) * (yCoord - yf + 1) + (zCoord - zf) * (zCoord - zf)));
-                int focusLevel = ((TelepositionFocus)focusItem).getFocusLevel();
+                int damage = (int) (0.5f * Math.sqrt((xCoord - xf) * (xCoord - xf) + (yCoord - yf + 1) * (yCoord - yf + 1) + (zCoord - zf) * (zCoord - zf)));
+                int focusLevel = ((TelepositionFocus) focusItem).getFocusLevel();
                 int transportCount = 0;
                 int entityCount = 0;
 
@@ -215,15 +213,15 @@ public class TETeleposer extends TileEntity implements IInventory
                 {
                     //Prime the teleportation
                     int d0 = focusLevel - 1;
-                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getAABBPool().getAABB((double)this.xCoord, (double)this.yCoord + d0 + 1, (double)this.zCoord, (double)(this.xCoord + 1), (double)(this.yCoord + 2 + d0), (double)(this.zCoord + 1)).expand(d0, d0, d0);
-                    axisalignedbb1.maxY = Math.min((double)this.worldObj.getHeight(), this.yCoord + 2 + d0 + d0);
+                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getAABBPool().getAABB((double) this.xCoord, (double) this.yCoord + d0 + 1, (double) this.zCoord, (double) (this.xCoord + 1), (double) (this.yCoord + 2 + d0), (double) (this.zCoord + 1)).expand(d0, d0, d0);
+                    axisalignedbb1.maxY = Math.min((double) this.worldObj.getHeight(), this.yCoord + 2 + d0 + d0);
                     List list1 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb1);
                     Iterator iterator1 = list1.iterator();
                     EntityLivingBase entityplayer1;
 
                     while (iterator1.hasNext())
                     {
-                        entityplayer1 = (EntityLivingBase)iterator1.next();
+                        entityplayer1 = (EntityLivingBase) iterator1.next();
                         entityCount++;
                     }
 
@@ -236,14 +234,14 @@ public class TETeleposer extends TileEntity implements IInventory
 
                     while (iterator2.hasNext())
                     {
-                        entityplayer2 = (EntityLivingBase)iterator2.next();
+                        entityplayer2 = (EntityLivingBase) iterator2.next();
                         entityCount++;
                     }
 
                     if (EnergyItems.canSyphonInContainer(focus, damage * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) + damage * entityCount))
                     {
                         for (int k = 0; k <= (focusLevel * 2 - 2); k++)
-                            //for(int k=(focusLevel*2-1);k>=0;k--)
+                        //for(int k=(focusLevel*2-1);k>=0;k--)
                         {
                             for (int i = -(focusLevel - 1); i <= (focusLevel - 1); i++)
                             {
@@ -274,14 +272,14 @@ public class TETeleposer extends TileEntity implements IInventory
 
                             while (iterator1.hasNext())
                             {
-                                entityplayer1 = (EntityLivingBase)iterator1.next();
+                                entityplayer1 = (EntityLivingBase) iterator1.next();
                                 entityplayer1.worldObj = worldF;
                                 entityplayer1.setPositionAndUpdate(entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf);
                             }
 
                             while (iterator2.hasNext())
                             {
-                                entityplayer2 = (EntityLivingBase)iterator2.next();
+                                entityplayer2 = (EntityLivingBase) iterator2.next();
                                 entityplayer2.worldObj = worldF;
                                 entityplayer2.setPositionAndUpdate(entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf);
                             }
@@ -325,8 +323,7 @@ public class TETeleposer extends TileEntity implements IInventory
                 {
                     ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
+                } else
                 {
                     inv[i] = null;
                 }
@@ -336,7 +333,7 @@ public class TETeleposer extends TileEntity implements IInventory
 
     public int[] buildIntDataList()
     {
-        int [] sortList = new int[1 * 3];
+        int[] sortList = new int[1 * 3];
         int pos = 0;
 
         for (ItemStack is : inv)
@@ -346,8 +343,7 @@ public class TETeleposer extends TileEntity implements IInventory
                 sortList[pos++] = is.itemID;
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
+            } else
             {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;

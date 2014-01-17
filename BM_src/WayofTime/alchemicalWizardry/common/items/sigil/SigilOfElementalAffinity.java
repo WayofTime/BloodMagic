@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,17 +13,15 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilOfElementalAffinity extends EnergyItems
-{
+import java.util.List;
+
+public class SigilOfElementalAffinity extends EnergyItems {
     @SideOnly(Side.CLIENT)
     private static Icon activeIcon;
     @SideOnly(Side.CLIENT)
     private static Icon passiveIcon;
+
     public SigilOfElementalAffinity(int id)
     {
         super(id);
@@ -42,8 +42,7 @@ public class SigilOfElementalAffinity extends EnergyItems
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -74,8 +73,7 @@ public class SigilOfElementalAffinity extends EnergyItems
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -88,8 +86,7 @@ public class SigilOfElementalAffinity extends EnergyItems
         if (par1 == 1)
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -116,7 +113,7 @@ public class SigilOfElementalAffinity extends EnergyItems
         if (tag.getBoolean("isActive"))
         {
             par1ItemStack.setItemDamage(1);
-            tag.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % 200);
+            tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 0, true));
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 0, true));
 
@@ -128,8 +125,7 @@ public class SigilOfElementalAffinity extends EnergyItems
                 {
                 }
             }
-        }
-        else
+        } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
         }
@@ -145,7 +141,7 @@ public class SigilOfElementalAffinity extends EnergyItems
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {

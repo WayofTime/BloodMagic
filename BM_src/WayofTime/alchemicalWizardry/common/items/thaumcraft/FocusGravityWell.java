@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.thaumcraft;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -18,18 +16,19 @@ import net.minecraft.world.World;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class FocusGravityWell extends FocusBase
-{
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class FocusGravityWell extends FocusBase {
     private static final AspectList visUsage = new AspectList().add(Aspect.AIR, 5).add(Aspect.ORDER, 5);
 
     private final int maxCooldown = 1;
 
-    public static Map<String, Integer> playerCooldown = new HashMap();
+    public static Map<String,Integer> playerCooldown = new HashMap();
 
     public FocusGravityWell(int par1)
     {
@@ -115,7 +114,7 @@ public class FocusGravityWell extends FocusBase
                         {
                             List<Entity> entities = par3EntityPlayer.worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX + vector.xCoord * distance - 0.5f, par3EntityPlayer.posY + vector.yCoord * distance - 0.5f, par3EntityPlayer.posZ + vector.zCoord * distance - 0.5f, par3EntityPlayer.posX + vector.xCoord * distance + 0.5f, par3EntityPlayer.posY + vector.yCoord * distance + 0.5f, par3EntityPlayer.posZ + vector.zCoord * distance + 0.5f).expand(1, 1, 1));
 
-                            for (Entity entity: entities)
+                            for (Entity entity : entities)
                             {
                                 if (entity.getEntityName() == par3EntityPlayer.username)
                                 {
@@ -136,28 +135,23 @@ public class FocusGravityWell extends FocusBase
                         }
                     }
                 }
-            }
-            catch (NoSuchMethodException e1)
+            } catch (NoSuchMethodException e1)
             {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
-            catch (SecurityException e1)
+            } catch (SecurityException e1)
             {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
-            catch (IllegalAccessException e)
+            } catch (IllegalAccessException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
-            catch (IllegalArgumentException e)
+            } catch (IllegalArgumentException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
-            catch (InvocationTargetException e)
+            } catch (InvocationTargetException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -203,7 +197,7 @@ public class FocusGravityWell extends FocusBase
                     {
                         List<Entity> entities = par3EntityPlayer.worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX + vector.xCoord * distance - 0.5f, par3EntityPlayer.posY + vector.yCoord * distance - 0.5f, par3EntityPlayer.posZ + vector.zCoord * distance - 0.5f, par3EntityPlayer.posX + vector.xCoord * distance + 0.5f, par3EntityPlayer.posY + vector.yCoord * distance + 0.5f, par3EntityPlayer.posZ + vector.zCoord * distance + 0.5f).expand(1, 1, 1));
 
-                        for (Entity entity: entities)
+                        for (Entity entity : entities)
                         {
                             if (entity.getEntityName() == par3EntityPlayer.username)
                             {
@@ -218,28 +212,23 @@ public class FocusGravityWell extends FocusBase
                         }
                     }
                 }
-            }
-            catch (NoSuchMethodException e1)
+            } catch (NoSuchMethodException e1)
             {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
-            catch (SecurityException e1)
+            } catch (SecurityException e1)
             {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
-            }
-            catch (IllegalAccessException e)
+            } catch (IllegalAccessException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
-            catch (IllegalArgumentException e)
+            } catch (IllegalArgumentException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
-            catch (InvocationTargetException e)
+            } catch (InvocationTargetException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

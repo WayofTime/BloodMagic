@@ -8,8 +8,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class EntityShadeElemental extends EntityElemental implements IMob
-{
+public class EntityShadeElemental extends EntityElemental implements IMob {
     public EntityShadeElemental(World world)
     {
         super(world, AlchemicalWizardry.entityShadeElementalID);
@@ -19,9 +18,9 @@ public class EntityShadeElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityLivingBase)
         {
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(Potion.blindness.id, 100, 1));
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(Potion.nightVision.id, 100, 0));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.blindness.id, 100, 1));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.nightVision.id, 100, 0));
         }
     }
 }

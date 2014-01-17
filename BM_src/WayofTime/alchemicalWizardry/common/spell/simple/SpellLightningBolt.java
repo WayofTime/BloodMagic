@@ -1,18 +1,17 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.common.network.PacketDispatcher;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
-public class SpellLightningBolt extends HomSpell
-{
+import java.util.Random;
+
+public class SpellLightningBolt extends HomSpell {
     Random itemRand = new Random();
 
     public SpellLightningBolt()
@@ -21,6 +20,7 @@ public class SpellLightningBolt extends HomSpell
         this.setEnergies(75, 200, 700, 700);
         //this.setCreativeTab(CreativeTabs.tabMisc);
     }
+
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {

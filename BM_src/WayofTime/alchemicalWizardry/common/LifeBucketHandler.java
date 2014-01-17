@@ -7,8 +7,7 @@ import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 
-public class LifeBucketHandler
-{
+public class LifeBucketHandler {
     @ForgeSubscribe
     public void onBucketFill(FillBucketEvent event)
     {
@@ -27,12 +26,11 @@ public class LifeBucketHandler
     {
         int blockID = world.getBlockId(pos.blockX, pos.blockY, pos.blockZ);
 
-        if ((blockID == AlchemicalWizardry.blockLifeEssence.blockID) && world.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ) == 0)
+        if ((blockID == ModBlocks.blockLifeEssence.blockID) && world.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ) == 0)
         {
             world.setBlock(pos.blockX, pos.blockY, pos.blockZ, 0);
             return new ItemStack(AlchemicalWizardry.bucketLife);
-        }
-        else
+        } else
         {
             return null;
         }

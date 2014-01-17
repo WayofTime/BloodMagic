@@ -1,14 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockDirectional;
-import net.minecraft.block.BlockMushroom;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.block.BlockStem;
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.*;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,14 +18,10 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
-{
+import java.util.List;
+
+public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade {
     private static Icon activeIcon;
     private static Icon passiveIcon;
     private int tickDelay = 100;
@@ -54,8 +47,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -86,8 +78,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -100,8 +91,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         if (par1 == 1)
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -149,14 +139,13 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         if (tag.getBoolean("isActive"))
         {
             par1ItemStack.setItemDamage(1);
-            tag.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % tickDelay);
+            tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
             }
-        }
-        else
+        } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
         }
@@ -172,7 +161,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {
@@ -183,14 +172,14 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer)par3Entity, getEnergyUsed());
+                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
             }
 
             int range = 5;
             int verticalRange = 2;
-            int posX = (int)Math.round(par3Entity.posX - 0.5f);
-            int posY = (int)par3Entity.posY;
-            int posZ = (int)Math.round(par3Entity.posZ - 0.5f);
+            int posX = (int) Math.round(par3Entity.posX - 0.5f);
+            int posY = (int) par3Entity.posY;
+            int posZ = (int) Math.round(par3Entity.posZ - 0.5f);
 
             for (int ix = posX - range; ix <= posX + range; ix++)
             {
@@ -235,15 +224,14 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         {
             if (!par1World.isRemote)
             {
-                if ((double)par1World.rand.nextFloat() < 0.45D)
+                if ((double) par1World.rand.nextFloat() < 0.45D)
                 {
-                    ((BlockSapling)Block.sapling).markOrGrowMarked(par1World, par2, par3, par4, par1World.rand);
+                    ((BlockSapling) Block.sapling).markOrGrowMarked(par1World, par2, par3, par4, par1World.rand);
                 }
             }
 
             return true;
-        }
-        else if (l != Block.mushroomBrown.blockID && l != Block.mushroomRed.blockID)
+        } else if (l != Block.mushroomBrown.blockID && l != Block.mushroomRed.blockID)
         {
             if (l != Block.melonStem.blockID && l != Block.pumpkinStem.blockID)
             {
@@ -252,18 +240,16 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                     if (par1World.getBlockMetadata(par2, par3, par4) == 7)
                     {
                         return false;
-                    }
-                    else
+                    } else
                     {
                         if (!par1World.isRemote)
                         {
-                            ((BlockCrops)Block.blocksList[l]).fertilize(par1World, par2, par3, par4);
+                            ((BlockCrops) Block.blocksList[l]).fertilize(par1World, par2, par3, par4);
                         }
 
                         return true;
                     }
-                }
-                else
+                } else
                 {
                     int i1;
                     int j1;
@@ -278,8 +264,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                         if (k1 >= 2)
                         {
                             return false;
-                        }
-                        else
+                        } else
                         {
                             if (!par1World.isRemote)
                             {
@@ -289,12 +274,10 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
 
                             return true;
                         }
-                    }
-                    else if (l != Block.grass.blockID)
+                    } else if (l != Block.grass.blockID)
                     {
                         return false;
-                    }
-                    else
+                    } else
                     {
                         if (!par1World.isRemote)
                         {
@@ -326,8 +309,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                                         {
                                             par1World.setBlock(j1, k1, l1, Block.tallGrass.blockID, 1, 3);
                                         }
-                                    }
-                                    else
+                                    } else
                                     {
                                         ForgeHooks.plantGrass(par1World, j1, k1, l1);
                                     }
@@ -338,28 +320,25 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                         return true;
                     }
                 }
-            }
-            else if (par1World.getBlockMetadata(par2, par3, par4) == 7)
+            } else if (par1World.getBlockMetadata(par2, par3, par4) == 7)
             {
                 return false;
-            }
-            else
+            } else
             {
                 if (!par1World.isRemote)
                 {
-                    ((BlockStem)Block.blocksList[l]).fertilizeStem(par1World, par2, par3, par4);
+                    ((BlockStem) Block.blocksList[l]).fertilizeStem(par1World, par2, par3, par4);
                 }
 
                 return true;
             }
-        }
-        else
+        } else
         {
             if (!par1World.isRemote)
             {
-                if ((double)par1World.rand.nextFloat() < 0.4D)
+                if ((double) par1World.rand.nextFloat() < 0.4D)
                 {
-                    ((BlockMushroom)Block.blocksList[l]).fertilizeMushroom(par1World, par2, par3, par4, par1World.rand);
+                    ((BlockMushroom) Block.blocksList[l]).fertilizeMushroom(par1World, par2, par3, par4, par1World.rand);
                 }
             }
 
@@ -372,9 +351,9 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     {
         int range = 5;
         int verticalRange = 2;
-        int posX = (int)Math.round(player.posX - 0.5f);
-        int posY = (int)player.posY;
-        int posZ = (int)Math.round(player.posZ - 0.5f);
+        int posX = (int) Math.round(player.posX - 0.5f);
+        int posY = (int) player.posY;
+        int posZ = (int) Math.round(player.posZ - 0.5f);
 
         for (int ix = posX - range; ix <= posX + range; ix++)
         {

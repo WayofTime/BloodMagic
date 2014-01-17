@@ -1,19 +1,10 @@
 package WayofTime.alchemicalWizardry.common.renderer.projectile;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 
 @SideOnly(Side.CLIENT)
-public class RenderFireProjectile
-{
+public class RenderFireProjectile {
 //    public void doRenderProjectile(FireProjectile entityShot, double par2, double par4, double par6, float par8, float par9)
 //    {
 //        GL11.glPushMatrix();

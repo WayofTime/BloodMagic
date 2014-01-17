@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,14 +22,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.nodes.IRevealer;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IBindable
-{
+import java.util.List;
+
+public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IBindable {
     private static int invSize = 9;
     private static Icon helmetIcon;
     private static Icon plateIcon;
@@ -54,22 +54,22 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
 
     public Icon getIconFromDamage(int par1)
     {
-        if (this.itemID == AlchemicalWizardry.boundHelmet.itemID)
+        if (this.itemID == ModItems.boundHelmet.itemID)
         {
             return this.helmetIcon;
         }
 
-        if (this.itemID == AlchemicalWizardry.boundPlate.itemID)
+        if (this.itemID == ModItems.boundPlate.itemID)
         {
             return this.plateIcon;
         }
 
-        if (this.itemID == AlchemicalWizardry.boundLeggings.itemID)
+        if (this.itemID == ModItems.boundLeggings.itemID)
         {
             return this.leggingsIcon;
         }
 
-        if (this.itemID == AlchemicalWizardry.boundBoots.itemID)
+        if (this.itemID == ModItems.boundBoots.itemID)
         {
             return this.bootsIcon;
         }
@@ -82,6 +82,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
     {
         return false;
     }
+
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
     {
@@ -95,8 +96,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
             if (isImmuneToVoid(armor))
             {
                 return new ArmorProperties(-1, 3, 100000);
-            }
-            else
+            } else
             {
                 return new ArmorProperties(-1, 0, 0);
             }
@@ -112,7 +112,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (helmet.itemID == AlchemicalWizardry.boundHelmet.itemID || plate.itemID == AlchemicalWizardry.boundPlate.itemID || leggings.itemID == AlchemicalWizardry.boundLeggings.itemID || boots.itemID == AlchemicalWizardry.boundBoots.itemID)
+        if (helmet.itemID == ModItems.boundHelmet.itemID || plate.itemID == ModItems.boundPlate.itemID || leggings.itemID == ModItems.boundLeggings.itemID || boots.itemID == ModItems.boundBoots.itemID)
         {
             if (source.isUnblockable())
             {
@@ -128,22 +128,22 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
     {
-        if (armor.itemID == AlchemicalWizardry.boundHelmet.itemID)
+        if (armor.itemID == ModItems.boundHelmet.itemID)
         {
             return 3;
         }
 
-        if (armor.itemID == AlchemicalWizardry.boundPlate.itemID)
+        if (armor.itemID == ModItems.boundPlate.itemID)
         {
             return 8;
         }
 
-        if (armor.itemID == AlchemicalWizardry.boundLeggings.itemID)
+        if (armor.itemID == ModItems.boundLeggings.itemID)
         {
             return 6;
         }
 
-        if (armor.itemID == AlchemicalWizardry.boundBoots.itemID)
+        if (armor.itemID == ModItems.boundBoots.itemID)
         {
             return 3;
         }
@@ -156,9 +156,9 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
     {
         if (entity instanceof EntityPlayer)
         {
-            EnergyItems.checkAndSetItemOwner(stack, (EntityPlayer)entity);
+            EnergyItems.checkAndSetItemOwner(stack, (EntityPlayer) entity);
 
-            if (((EntityPlayer)entity).capabilities.isCreativeMode)
+            if (((EntityPlayer) entity).capabilities.isCreativeMode)
             {
                 return;
             }
@@ -204,30 +204,29 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
         //TODO Make the armour invisible when the player has Invisibility on.
         if (entity instanceof EntityLivingBase)
         {
-            if (((EntityLivingBase)entity).isPotionActive(Potion.invisibility.id))
+            if (((EntityLivingBase) entity).isPotionActive(Potion.invisibility.id))
             {
-                if (itemID == AlchemicalWizardry.boundHelmet.itemID || itemID == AlchemicalWizardry.boundPlate.itemID || itemID == AlchemicalWizardry.boundBoots.itemID)
+                if (itemID == ModItems.boundHelmet.itemID || itemID == ModItems.boundPlate.itemID || itemID == ModItems.boundBoots.itemID)
                 {
                     return "alchemicalwizardry:models/armor/boundArmour_invisible_layer_1.png";
                 }
 
-                if (itemID == AlchemicalWizardry.boundLeggings.itemID)
+                if (itemID == ModItems.boundLeggings.itemID)
                 {
                     return "alchemicalwizardry:models/armor/boundArmour_invisible_layer_2.png";
                 }
             }
         }
 
-        if (itemID == AlchemicalWizardry.boundHelmet.itemID || itemID == AlchemicalWizardry.boundPlate.itemID || itemID == AlchemicalWizardry.boundBoots.itemID)
+        if (itemID == ModItems.boundHelmet.itemID || itemID == ModItems.boundPlate.itemID || itemID == ModItems.boundBoots.itemID)
         {
             return "alchemicalwizardry:models/armor/boundArmour_layer_1.png";
         }
 
-        if (itemID == AlchemicalWizardry.boundLeggings.itemID)
+        if (itemID == ModItems.boundLeggings.itemID)
         {
             return "alchemicalwizardry:models/armor/boundArmour_layer_2.png";
-        }
-        else
+        } else
         {
             return null;
         }
@@ -314,9 +313,9 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
 
             if (inv[i].getItem() instanceof ArmourUpgrade && blood > 0)
             {
-                if (((ArmourUpgrade)inv[i].getItem()).isUpgrade())
+                if (((ArmourUpgrade) inv[i].getItem()).isUpgrade())
                 {
-                    ((ArmourUpgrade)inv[i].getItem()).onArmourUpdate(par2World, par3Entity, inv[i]);
+                    ((ArmourUpgrade) inv[i].getItem()).onArmourUpdate(par2World, par3Entity, inv[i]);
                     blood--;
                 }
 
@@ -324,7 +323,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 {
                     if (getUpgradeCostMultiplier(par1ItemStack) > 0.02f)
                     {
-                        EnergyItems.syphonBatteries(par1ItemStack, par3Entity, (int)(((ArmourUpgrade)inv[i].getItem()).getEnergyForTenSeconds() * getUpgradeCostMultiplier(par1ItemStack)));
+                        EnergyItems.syphonBatteries(par1ItemStack, par3Entity, (int) (((ArmourUpgrade) inv[i].getItem()).getEnergyForTenSeconds() * getUpgradeCostMultiplier(par1ItemStack)));
                     }
                 }
             }
@@ -348,12 +347,12 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
 
             if (itemStack != null)
             {
-                if (itemStack.itemID == AlchemicalWizardry.weakBloodShard.itemID)
+                if (itemStack.itemID == ModItems.weakBloodShard.itemID)
                 {
                     max = Math.max(max, 1);
                 }
 
-                if (itemStack.itemID == AlchemicalWizardry.demonBloodShard.itemID)
+                if (itemStack.itemID == ModItems.demonBloodShard.itemID)
                 {
                     max = Math.max(max, 2);
                 }
@@ -481,7 +480,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 continue;
             }
 
-            if (item.itemID == AlchemicalWizardry.voidSigil.itemID)
+            if (item.itemID == ModItems.voidSigil.itemID)
             {
                 return true;
             }
@@ -556,27 +555,27 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 continue;
             }
 
-            if (item.itemID == AlchemicalWizardry.weakBloodOrb.itemID)
+            if (item.itemID == ModItems.weakBloodOrb.itemID)
             {
                 return 0.75f;
             }
 
-            if (item.itemID == AlchemicalWizardry.apprenticeBloodOrb.itemID)
+            if (item.itemID == ModItems.apprenticeBloodOrb.itemID)
             {
                 return 0.50f;
             }
 
-            if (item.itemID == AlchemicalWizardry.magicianBloodOrb.itemID)
+            if (item.itemID == ModItems.magicianBloodOrb.itemID)
             {
                 return 0.25f;
             }
 
-            if (item.itemID == AlchemicalWizardry.masterBloodOrb.itemID)
+            if (item.itemID == ModItems.masterBloodOrb.itemID)
             {
                 return 0.0f;
             }
 
-            if (item.itemID == AlchemicalWizardry.archmageBloodOrb.itemID)
+            if (item.itemID == ModItems.archmageBloodOrb.itemID)
             {
                 return 0.0f;
             }

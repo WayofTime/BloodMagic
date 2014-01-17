@@ -6,8 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class SummoningRegistryComponent
-{
+public class SummoningRegistryComponent {
     public ItemStack[] ring1 = new ItemStack[6];
     public ItemStack[] ring2 = new ItemStack[6];
     public ItemStack[] ring3 = new ItemStack[6];
@@ -33,8 +32,7 @@ public class SummoningRegistryComponent
                 if (i + 1 > this.ring1.length)
                 {
                     newRecipe[i] = null;
-                }
-                else
+                } else
                 {
                     newRecipe[i] = this.ring1[i];
                 }
@@ -52,8 +50,7 @@ public class SummoningRegistryComponent
                 if (i + 1 > this.ring2.length)
                 {
                     newRecipe[i] = null;
-                }
-                else
+                } else
                 {
                     newRecipe[i] = this.ring2[i];
                 }
@@ -71,8 +68,7 @@ public class SummoningRegistryComponent
                 if (i + 1 > this.ring3.length)
                 {
                     newRecipe[i] = null;
-                }
-                else
+                } else
                 {
                     newRecipe[i] = this.ring3[i];
                 }
@@ -118,8 +114,7 @@ public class SummoningRegistryComponent
                 if (i + 1 > recipe.length)
                 {
                     newRecipe[i] = null;
-                }
-                else
+                } else
                 {
                     newRecipe[i] = recipe[i];
                 }
@@ -168,8 +163,7 @@ public class SummoningRegistryComponent
                     {
                         quickTest = true;
                     }
-                }
-                else if (!(checkedItemStack.getItem() instanceof ItemBlock))
+                } else if (!(checkedItemStack.getItem() instanceof ItemBlock))
                 {
                     quickTest = true;
                 }

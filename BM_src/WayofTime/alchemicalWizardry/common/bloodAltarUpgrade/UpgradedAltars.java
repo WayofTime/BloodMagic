@@ -1,15 +1,15 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
+import WayofTime.alchemicalWizardry.common.block.BloodRune;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.block.BloodRune;
-
-public class UpgradedAltars
-{
+public class UpgradedAltars {
     public static List<AltarComponent> secondTierAltar = new ArrayList();
     public static List<AltarComponent> thirdTierAltar = new ArrayList();
     public static List<AltarComponent> fourthTierAltar = new ArrayList();
@@ -47,8 +47,7 @@ public class UpgradedAltars
                         {
                             return false;
                         }
-                    }
-                    else
+                    } else
                     {
                         int blockId = world.getBlockId(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
@@ -73,8 +72,7 @@ public class UpgradedAltars
                         {
                             return false;
                         }
-                    }
-                    else
+                    } else
                     {
                         int blockId = world.getBlockId(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
@@ -99,8 +97,7 @@ public class UpgradedAltars
                         {
                             return false;
                         }
-                    }
-                    else
+                    } else
                     {
                         int blockId = world.getBlockId(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
@@ -125,8 +122,7 @@ public class UpgradedAltars
                         {
                             return false;
                         }
-                    }
-                    else
+                    } else
                     {
                         int blockId = world.getBlockId(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
@@ -150,7 +146,7 @@ public class UpgradedAltars
         AltarUpgradeComponent upgrades = new AltarUpgradeComponent();
         List<AltarComponent> list = UpgradedAltars.getAltarUpgradeListForTier(altarTier);
 
-        for (AltarComponent ac: list)
+        for (AltarComponent ac : list)
         {
             if (ac.isUpgradeSlot())
             {
@@ -162,7 +158,7 @@ public class UpgradedAltars
                 {
                     if (!world.isRemote)
                     {
-                        switch (((BloodRune)testBlock).getRuneEffect(world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
+                        switch (((BloodRune) testBlock).getRuneEffect(world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
                             case 1:
                                 upgrades.addSpeedUpgrade();
@@ -257,10 +253,10 @@ public class UpgradedAltars
             fourthTierAltar.add(new AltarComponent(-5, i, 5, Block.stoneBrick.blockID, 0, false, false));
         }
 
-        fourthTierAltar.add(new AltarComponent(5, 2, 5, AlchemicalWizardry.largeBloodStoneBrick.blockID, 0, false, false));
-        fourthTierAltar.add(new AltarComponent(5, 2, -5, AlchemicalWizardry.largeBloodStoneBrick.blockID, 0, false, false));
-        fourthTierAltar.add(new AltarComponent(-5, 2, -5, AlchemicalWizardry.largeBloodStoneBrick.blockID, 0, false, false));
-        fourthTierAltar.add(new AltarComponent(-5, 2, 5, AlchemicalWizardry.largeBloodStoneBrick.blockID, 0, false, false));
+        fourthTierAltar.add(new AltarComponent(5, 2, 5, ModBlocks.largeBloodStoneBrick.blockID, 0, false, false));
+        fourthTierAltar.add(new AltarComponent(5, 2, -5, ModBlocks.largeBloodStoneBrick.blockID, 0, false, false));
+        fourthTierAltar.add(new AltarComponent(-5, 2, -5, ModBlocks.largeBloodStoneBrick.blockID, 0, false, false));
+        fourthTierAltar.add(new AltarComponent(-5, 2, 5, ModBlocks.largeBloodStoneBrick.blockID, 0, false, false));
         fifthTierAltar.addAll(fourthTierAltar);
         fifthTierAltar.add(new AltarComponent(-8, -3, 8, Block.beacon.blockID, 0, false, false));
         fifthTierAltar.add(new AltarComponent(-8, -3, -8, Block.beacon.blockID, 0, false, false));

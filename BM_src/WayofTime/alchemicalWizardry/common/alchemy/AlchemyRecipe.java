@@ -4,8 +4,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class AlchemyRecipe
-{
+public class AlchemyRecipe {
     private ItemStack output;
     private ItemStack[] recipe;
     private int bloodOrbLevel;
@@ -42,16 +41,14 @@ public class AlchemyRecipe
                 if (i + 1 > this.recipe.length)
                 {
                     newRecipe[i] = null;
-                }
-                else
+                } else
                 {
                     newRecipe[i] = this.recipe[i];
                 }
             }
 
             recipe = newRecipe;
-        }
-        else
+        } else
         {
             recipe = this.recipe;
         }
@@ -96,8 +93,7 @@ public class AlchemyRecipe
                     {
                         quickTest = true;
                     }
-                }
-                else if (!(checkedItemStack.getItem() instanceof ItemBlock))
+                } else if (!(checkedItemStack.getItem() instanceof ItemBlock))
                 {
                     quickTest = true;
                 }

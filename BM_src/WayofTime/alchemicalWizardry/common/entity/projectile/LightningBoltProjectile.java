@@ -1,20 +1,17 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import WayofTime.alchemicalWizardry.common.PacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class LightningBoltProjectile extends EnergyBlastProjectile
-{
+public class LightningBoltProjectile extends EnergyBlastProjectile {
     private boolean causeLightning;
 
     public LightningBoltProjectile(World par1World)
@@ -56,8 +53,7 @@ public class LightningBoltProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             if (causeLightning)
             {
@@ -75,8 +71,7 @@ public class LightningBoltProjectile extends EnergyBlastProjectile
         {
             //shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -93,9 +88,8 @@ public class LightningBoltProjectile extends EnergyBlastProjectile
 //        		}
                 if (causeLightning)
                 {
-                    this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, ((EntityLivingBase)mop).posX, ((EntityLivingBase)mop).posY, ((EntityLivingBase)mop).posZ));
-                }
-                else
+                    this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, ((EntityLivingBase) mop).posX, ((EntityLivingBase) mop).posY, ((EntityLivingBase) mop).posZ));
+                } else
                 {
                     doDamage(projectileDamage, mop);
                 }

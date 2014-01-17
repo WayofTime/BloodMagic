@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -13,8 +10,10 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBloodLightSource extends Block
-{
+import java.util.List;
+import java.util.Random;
+
+public class BlockBloodLightSource extends Block {
     public BlockBloodLightSource(int par1)
     {
         super(par1, Material.cloth);
@@ -52,7 +51,7 @@ public class BlockBloodLightSource extends Block
     {
         if (rand.nextInt(3) != 0)
         {
-            float f = (float)1.0F;
+            float f = (float) 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;

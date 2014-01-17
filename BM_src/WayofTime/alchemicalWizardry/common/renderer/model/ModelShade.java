@@ -4,8 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelShade extends ModelBase
-{
+public class ModelShade extends ModelBase {
     //fields
     ModelRenderer body;
     ModelRenderer tail1;
@@ -80,7 +79,7 @@ public class ModelShade extends ModelBase
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        this.head.rotateAngleX = f4 / (180F / (float)Math.PI);
-        this.head.rotateAngleY = f3 / (180F / (float)Math.PI);
+        this.head.rotateAngleX = f4 / (180F / (float) Math.PI);
+        this.head.rotateAngleY = f3 / (180F / (float) Math.PI);
     }
 }

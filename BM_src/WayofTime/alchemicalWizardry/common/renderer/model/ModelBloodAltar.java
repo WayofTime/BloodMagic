@@ -1,17 +1,14 @@
 package WayofTime.alchemicalWizardry.common.renderer.model;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.client.FMLClientHandler;
-
-public class ModelBloodAltar extends ModelBase
-{
+public class ModelBloodAltar extends ModelBase {
     private IModelCustom modelBloodAltar;
     private IModelCustom modelBloodLevel; //TODO
 
@@ -37,7 +34,7 @@ public class ModelBloodAltar extends ModelBase
         // Push a blank matrix onto the stack
         GL11.glPushMatrix();
         // Move the object into the correct position on the block (because the OBJ's origin is the center of the object)
-        GL11.glTranslatef((float)x + 0.5f, (float)y , (float)z + 0.5f);
+        GL11.glTranslatef((float) x + 0.5f, (float) y, (float) z + 0.5f);
         // Scale our object to about half-size in all directions (the OBJ file is a little large)
         GL11.glScalef(scale, scale, scale);
         // Bind the texture, so that OpenGL properly textures our block.
@@ -57,7 +54,7 @@ public class ModelBloodAltar extends ModelBase
         GL11.glPushMatrix();
         float level = altar.getFluidAmount();
         // Move the object into the correct position on the block (because the OBJ's origin is the center of the object)
-        GL11.glTranslatef((float)x + 0.5f, (float)y + 0.6499f + 0.12f * (level / altar.getCapacity()), (float)z + 0.5f);
+        GL11.glTranslatef((float) x + 0.5f, (float) y + 0.6499f + 0.12f * (level / altar.getCapacity()), (float) z + 0.5f);
         // Scale our object to about half-size in all directions (the OBJ file is a little large)
         GL11.glScalef(scale, scale, scale);
         // Bind the texture, so that OpenGL properly textures our block.

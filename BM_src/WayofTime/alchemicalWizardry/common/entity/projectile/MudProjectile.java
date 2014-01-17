@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
 import WayofTime.alchemicalWizardry.common.PacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -11,10 +11,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class MudProjectile extends EnergyBlastProjectile
-{
+public class MudProjectile extends EnergyBlastProjectile {
     private boolean doesBlindness; //True for when it applies blindness, false for slowness
 
     public MudProjectile(World par1World)
@@ -41,7 +39,7 @@ public class MudProjectile extends EnergyBlastProjectile
 
     public MudProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir, boolean flag)
     {
-        super(par1World,  par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
         doesBlindness = flag;
     }
 
@@ -62,8 +60,7 @@ public class MudProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
         }
 
@@ -77,8 +74,7 @@ public class MudProjectile extends EnergyBlastProjectile
         {
             //shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -95,11 +91,10 @@ public class MudProjectile extends EnergyBlastProjectile
 //        		}
                 if (doesBlindness)
                 {
-                    ((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.blindness.id, 100, 0));
-                }
-                else
+                    ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.blindness.id, 100, 0));
+                } else
                 {
-                    ((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 2));
+                    ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 2));
                 }
 
                 doDamage(projectileDamage, mop);

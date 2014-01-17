@@ -1,28 +1,12 @@
 package WayofTime.alchemicalWizardry.common;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.Random;
-
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
-import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-
+import WayofTime.alchemicalWizardry.common.tileEntity.*;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
+import cpw.mods.fml.common.network.IPacketHandler;
+import cpw.mods.fml.common.network.Player;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -32,14 +16,12 @@ import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
-public class PacketHandler implements IPacketHandler
-{
+import java.io.*;
+import java.util.Random;
+
+public class PacketHandler implements IPacketHandler {
     @Override
     public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)
     {
@@ -80,15 +62,13 @@ public class PacketHandler implements IPacketHandler
                 FluidStack flInput = new FluidStack(fluidIDInput, fluidAmountInput);
                 tileEntityAltar.handlePacketData(items, flMain, flOutput, flInput, capacity);
             }
-        }
-        else if (packet.channel.equals("FallReset"))
+        } else if (packet.channel.equals("FallReset"))
         {
             if (player instanceof EntityPlayer)
             {
-                ((EntityPlayer)player).fallDistance = 0;
+                ((EntityPlayer) player).fallDistance = 0;
             }
-        }
-        else if (packet.channel.equals("particle"))
+        } else if (packet.channel.equals("particle"))
         {
             ByteArrayInputStream bin = new ByteArrayInputStream(packet.data);
             DataInputStream din = new DataInputStream(bin);
@@ -100,7 +80,7 @@ public class PacketHandler implements IPacketHandler
                 double y = din.readDouble();
                 double z = din.readDouble();
                 short particleType = din.readShort();
-                World world = ((EntityPlayer)player).worldObj;
+                World world = ((EntityPlayer) player).worldObj;
 
                 if (particleType == 1)
                 {
@@ -119,7 +99,7 @@ public class PacketHandler implements IPacketHandler
 
                 if (particleType == 4)
                 {
-                    float f = (float)1.0F;
+                    float f = (float) 1.0F;
                     float f1 = f * 0.6F + 0.4F;
                     float f2 = f * f * 0.7F - 0.5F;
                     float f3 = f * f * 0.6F - 0.7F;
@@ -129,13 +109,11 @@ public class PacketHandler implements IPacketHandler
                         world.spawnParticle("reddust", x + Math.random() - Math.random(), y + Math.random() - Math.random(), z + Math.random() - Math.random(), f1, f2, f3);
                     }
                 }
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
-        }
-        else if (packet.channel.equals("CustomParticle"))
+        } else if (packet.channel.equals("CustomParticle"))
         {
             ByteArrayInputStream bin = new ByteArrayInputStream(packet.data);
             DataInputStream din = new DataInputStream(bin);
@@ -143,7 +121,7 @@ public class PacketHandler implements IPacketHandler
 
             try
             {
-                World world = ((EntityPlayer)player).worldObj;
+                World world = ((EntityPlayer) player).worldObj;
                 int size = din.readInt();
                 String str = "";
 
@@ -159,20 +137,18 @@ public class PacketHandler implements IPacketHandler
                 double yVel = din.readDouble();
                 double zVel = din.readDouble();
                 world.spawnParticle(str, x, y, z, xVel, yVel, zVel);
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
-        }
-        else if (packet.channel.equals("SetLifeEssence")) //Sets the data for the character
+        } else if (packet.channel.equals("SetLifeEssence")) //Sets the data for the character
         {
             ByteArrayInputStream bin = new ByteArrayInputStream(packet.data);
             DataInputStream din = new DataInputStream(bin);
 
             try
             {
-                EntityPlayer user = (EntityPlayer)player;
+                EntityPlayer user = (EntityPlayer) player;
                 int length = din.readInt();
                 String ownerName = "";
 
@@ -184,7 +160,7 @@ public class PacketHandler implements IPacketHandler
                 int addedEssence = din.readInt();
                 int maxEssence = din.readInt();
                 World world = MinecraftServer.getServer().worldServers[0];
-                LifeEssenceNetwork data = (LifeEssenceNetwork)world.loadItemData(LifeEssenceNetwork.class, ownerName);
+                LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
 
                 if (data == null)
                 {
@@ -215,8 +191,7 @@ public class PacketHandler implements IPacketHandler
                             }
                         }
                     }
-                }
-                else
+                } else
                 {
                     int removedEssence = -addedEssence;
 
@@ -224,8 +199,7 @@ public class PacketHandler implements IPacketHandler
                     {
                         data.currentEssence -= removedEssence;
                         data.markDirty();
-                    }
-                    else
+                    } else
                     {
                         if (removedEssence >= 100)
                         {
@@ -241,8 +215,7 @@ public class PacketHandler implements IPacketHandler
                                     return;
                                 }
                             }
-                        }
-                        else
+                        } else
                         {
                             if (user.worldObj.rand.nextInt(100) <= removedEssence)
                             {
@@ -262,20 +235,18 @@ public class PacketHandler implements IPacketHandler
                 //PacketDispatcher.sendPacketToPlayer(PacketHandler.getPacket(ownerName), (Player)user);
 //                data.currentEssence = addedEssence;
 //                data.markDirty();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
-        }
-        else if (packet.channel.equals("InfiniteLPPath"))
+        } else if (packet.channel.equals("InfiniteLPPath"))
         {
             ByteArrayInputStream bin = new ByteArrayInputStream(packet.data);
             DataInputStream din = new DataInputStream(bin);
 
             try
             {
-                EntityPlayer user = (EntityPlayer)player;
+                EntityPlayer user = (EntityPlayer) player;
                 int length = din.readInt();
                 String ownerName = "";
 
@@ -286,7 +257,7 @@ public class PacketHandler implements IPacketHandler
 
                 boolean fill = din.readBoolean();
                 World world = MinecraftServer.getServer().worldServers[0];
-                LifeEssenceNetwork data = (LifeEssenceNetwork)world.loadItemData(LifeEssenceNetwork.class, ownerName);
+                LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
 
                 if (data == null)
                 {
@@ -298,8 +269,7 @@ public class PacketHandler implements IPacketHandler
                 {
                     data.currentEssence += 1000000;
                     data.markDirty();
-                }
-                else
+                } else
                 {
                     data.currentEssence = 0;
                     data.markDirty();
@@ -308,13 +278,11 @@ public class PacketHandler implements IPacketHandler
                 //PacketDispatcher.sendPacketToPlayer(PacketHandler.getPacket(ownerName), (Player)user);
 //                data.currentEssence = addedEssence;
 //                data.markDirty();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
-        }
-        else if (packet.channel.equals("GetLifeEssence"))
+        } else if (packet.channel.equals("GetLifeEssence"))
         {
             ByteArrayInputStream bin = new ByteArrayInputStream(packet.data);
             DataInputStream din = new DataInputStream(bin);
@@ -330,7 +298,7 @@ public class PacketHandler implements IPacketHandler
                 }
 
                 World world = MinecraftServer.getServer().worldServers[0];
-                LifeEssenceNetwork data = (LifeEssenceNetwork)world.loadItemData(LifeEssenceNetwork.class, ownerName);
+                LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
 
                 if (data == null)
                 {
@@ -340,19 +308,17 @@ public class PacketHandler implements IPacketHandler
 
                 if (player instanceof EntityPlayer)
                 {
-                    EntityPlayer owner = (EntityPlayer)player;
+                    EntityPlayer owner = (EntityPlayer) player;
                     ChatMessageComponent chatmessagecomponent = new ChatMessageComponent();
                     //chatmessagecomponent.func_111072_b("Current Essence: " + data.currentEssence + "LP");
                     chatmessagecomponent.addText("Current Essence: " + data.currentEssence + "LP");
                     owner.sendChatToPlayer(chatmessagecomponent);
                 }
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
-        }
-        else if (packet.channel.equals("GetAltarEssence"))
+        } else if (packet.channel.equals("GetAltarEssence"))
         {
             ByteArrayInputStream bin = new ByteArrayInputStream(packet.data);
             DataInputStream din = new DataInputStream(bin);
@@ -365,9 +331,9 @@ public class PacketHandler implements IPacketHandler
 
                 if (player instanceof EntityPlayer)
                 {
-                    EntityPlayer owner = (EntityPlayer)player;
+                    EntityPlayer owner = (EntityPlayer) player;
                     World world = owner.worldObj;
-                    TEAltar tileEntity = (TEAltar)world.getBlockTileEntity(x, y, z);
+                    TEAltar tileEntity = (TEAltar) world.getBlockTileEntity(x, y, z);
 
                     if (tileEntity != null)
                     {
@@ -378,13 +344,11 @@ public class PacketHandler implements IPacketHandler
                         owner.sendChatToPlayer(chatmessagecomponent);
                     }
                 }
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
-        }
-        else if (packet.channel.equals("TESocket"))
+        } else if (packet.channel.equals("TESocket"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             int x = dat.readInt();
@@ -411,8 +375,7 @@ public class PacketHandler implements IPacketHandler
                 TESocket tileEntityAltar = (TESocket) tileEntity;
                 tileEntityAltar.handlePacketData(items);
             }
-        }
-        else if (packet.channel.equals("TEWritingTable"))
+        } else if (packet.channel.equals("TEWritingTable"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             int x = dat.readInt();
@@ -439,8 +402,7 @@ public class PacketHandler implements IPacketHandler
                 TEWritingTable tileEntityAltar = (TEWritingTable) tileEntity;
                 tileEntityAltar.handlePacketData(items);
             }
-        }
-        else if (packet.channel.equals("TEOrientor"))
+        } else if (packet.channel.equals("TEOrientor"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             int x = dat.readInt();
@@ -455,8 +417,7 @@ public class PacketHandler implements IPacketHandler
                 tileEntityOrientable.setInputDirection(ForgeDirection.getOrientation(dat.readInt()));
                 tileEntityOrientable.setOutputDirection(ForgeDirection.getOrientation(dat.readInt()));
             }
-        }
-        else if (packet.channel.equals("TEPedestal"))
+        } else if (packet.channel.equals("TEPedestal"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             int x = dat.readInt();
@@ -483,8 +444,7 @@ public class PacketHandler implements IPacketHandler
                 TEPedestal tileEntityAltar = (TEPedestal) tileEntity;
                 tileEntityAltar.handlePacketData(items);
             }
-        }
-        else if (packet.channel.equals("TEPlinth"))
+        } else if (packet.channel.equals("TEPlinth"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             int x = dat.readInt();
@@ -511,8 +471,7 @@ public class PacketHandler implements IPacketHandler
                 TEPlinth tileEntityAltar = (TEPlinth) tileEntity;
                 tileEntityAltar.handlePacketData(items);
             }
-        }
-        else if (packet.channel.equals("TETeleposer"))
+        } else if (packet.channel.equals("TETeleposer"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             int x = dat.readInt();
@@ -539,22 +498,20 @@ public class PacketHandler implements IPacketHandler
                 TETeleposer tileEntityAltar = (TETeleposer) tileEntity;
                 tileEntityAltar.handlePacketData(items);
             }
-        }
-        else if (packet.channel.equals("SetPlayerVel"))
+        } else if (packet.channel.equals("SetPlayerVel"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             double xVel = dat.readDouble();
             double yVel = dat.readDouble();
             double zVel = dat.readDouble();
-            ((EntityPlayer)player).setVelocity(xVel, yVel, zVel);
-        }
-        else if (packet.channel.equals("SetPlayerPos"))
+            ((EntityPlayer) player).setVelocity(xVel, yVel, zVel);
+        } else if (packet.channel.equals("SetPlayerPos"))
         {
             ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
             double xVel = dat.readDouble();
             double yVel = dat.readDouble();
             double zVel = dat.readDouble();
-            ((EntityPlayer)player).setPosition(xVel, yVel, zVel);
+            ((EntityPlayer) player).setPosition(xVel, yVel, zVel);
         }
     }
 
@@ -586,8 +543,7 @@ public class PacketHandler implements IPacketHandler
             {
                 dos.writeInt(AlchemicalWizardry.lifeEssenceFluid.getBlockID());
                 dos.writeInt(0);
-            }
-            else
+            } else
             {
                 dos.writeInt(flMain.fluidID);
                 dos.writeInt(flMain.amount);
@@ -599,8 +555,7 @@ public class PacketHandler implements IPacketHandler
             {
                 dos.writeInt(AlchemicalWizardry.lifeEssenceFluid.getBlockID());
                 dos.writeInt(0);
-            }
-            else
+            } else
             {
                 dos.writeInt(flOut.fluidID);
                 dos.writeInt(flOut.amount);
@@ -612,16 +567,14 @@ public class PacketHandler implements IPacketHandler
             {
                 dos.writeInt(AlchemicalWizardry.lifeEssenceFluid.getBlockID());
                 dos.writeInt(0);
-            }
-            else
+            } else
             {
                 dos.writeInt(flIn.fluidID);
                 dos.writeInt(flIn.amount);
             }
 
             dos.writeInt(tileEntity.capacity);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -655,8 +608,7 @@ public class PacketHandler implements IPacketHandler
                     dos.writeInt(items[i]);
                 }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -681,8 +633,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeChars(ownerName);
             dos.writeInt(addedEssence);
             dos.writeInt(maxEssence); //Used for Blood Orbs, but does nothing for other items
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -704,8 +655,7 @@ public class PacketHandler implements IPacketHandler
         {
             dos.writeInt(ownerName.length());
             dos.writeChars(ownerName);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -728,8 +678,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeInt(x);
             dos.writeInt(y);
             dos.writeInt(z);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -764,8 +713,7 @@ public class PacketHandler implements IPacketHandler
                     dos.writeInt(items[i]);
                 }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -800,8 +748,7 @@ public class PacketHandler implements IPacketHandler
                     dos.writeInt(items[i]);
                 }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -836,8 +783,7 @@ public class PacketHandler implements IPacketHandler
                     dos.writeInt(items[i]);
                 }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -872,8 +818,7 @@ public class PacketHandler implements IPacketHandler
                     dos.writeInt(items[i]);
                 }
             }
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -901,8 +846,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeDouble(xVel);
             dos.writeDouble(yVel);
             dos.writeDouble(zVel);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -925,8 +869,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeDouble(xVel);
             dos.writeDouble(yVel);
             dos.writeDouble(zVel);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -949,8 +892,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeDouble(xVel);
             dos.writeDouble(yVel);
             dos.writeDouble(zVel);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -973,8 +915,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeInt(ownerName.length());
             dos.writeChars(ownerName);
             dos.writeBoolean(isFill);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -999,8 +940,7 @@ public class PacketHandler implements IPacketHandler
             dos.writeInt(tileEntity.zCoord);
             dos.writeInt(tileEntity.getIntForForgeDirection(tileEntity.getInputDirection()));
             dos.writeInt(tileEntity.getIntForForgeDirection(tileEntity.getOutputDirection()));
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }

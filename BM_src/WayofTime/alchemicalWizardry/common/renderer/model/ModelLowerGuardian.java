@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.renderer.model;
 
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
 
-public class ModelLowerGuardian extends ModelBase
-{
+public class ModelLowerGuardian extends ModelBase {
     //fields
     ModelRenderer Body;
     ModelRenderer Torso;
@@ -164,13 +163,13 @@ public class ModelLowerGuardian extends ModelBase
 
     public void setLivingAnimations(EntityLivingBase par1EntityLivingBase, float par2, float par3, float par4)
     {
-        EntityLowerGuardian entityLowerGuardian = (EntityLowerGuardian)par1EntityLivingBase;
+        EntityLowerGuardian entityLowerGuardian = (EntityLowerGuardian) par1EntityLivingBase;
         int i = entityLowerGuardian.getAttackTimer();
 
         if (i > 0)
         {
-            this.rightLeg.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float)i - par4, 10.0F);
-            this.rightFoot.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float)i - par4, 10.0F);
+            this.rightLeg.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float) i - par4, 10.0F);
+            this.rightFoot.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float) i - par4, 10.0F);
             //this.ironGolemLeftArm.rotateAngleX = -2.0F + 1.5F * this.func_78172_a((float)i - par4, 10.0F);
         }
     }
@@ -183,13 +182,13 @@ public class ModelLowerGuardian extends ModelBase
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
     {
         super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        this.Head.rotateAngleX = f4 / (180F / (float)Math.PI);
-        this.Head.rotateAngleY = f3 / (180F / (float)Math.PI);
+        this.Head.rotateAngleX = f4 / (180F / (float) Math.PI);
+        this.Head.rotateAngleY = f3 / (180F / (float) Math.PI);
         this.leftLeg.rotateAngleX = MathHelper.cos(f * 0.3662F) * 1.0F * f1;
-        this.rightLeg.rotateAngleX = MathHelper.cos(f * 0.3662F + (float)Math.PI) * 1.0F * f1;
+        this.rightLeg.rotateAngleX = MathHelper.cos(f * 0.3662F + (float) Math.PI) * 1.0F * f1;
         this.leftFoot.rotateAngleX = MathHelper.cos(f * 0.3662F) * 1.0F * f1;
-        this.rightFoot.rotateAngleX = MathHelper.cos(f * 0.3662F + (float)Math.PI) * 1.0F * f1;
-        this.rightArm.rotateAngleX = MathHelper.cos(f * 0.3662F + (float)Math.PI) * 1.0F * f1;
+        this.rightFoot.rotateAngleX = MathHelper.cos(f * 0.3662F + (float) Math.PI) * 1.0F * f1;
+        this.rightArm.rotateAngleX = MathHelper.cos(f * 0.3662F + (float) Math.PI) * 1.0F * f1;
         this.leftArm.rotateAngleX = MathHelper.cos(f * 0.3662F) * 1.0F * f1;
         this.hornAppendage1.rotateAngleX = this.Head.rotateAngleX;
         this.hornAppendage1.rotateAngleY = this.Head.rotateAngleY;

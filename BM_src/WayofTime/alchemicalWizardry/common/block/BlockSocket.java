@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -16,11 +16,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSocket extends BlockContainer
-{
+import java.util.Random;
+
+public class BlockSocket extends BlockContainer {
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
     @SideOnly(Side.CLIENT)
@@ -29,6 +28,7 @@ public class BlockSocket extends BlockContainer
     private static Icon sideIcon2;
     @SideOnly(Side.CLIENT)
     private static Icon bottomIcon;
+
     public BlockSocket(int id)
     {
         super(id, Material.rock);
@@ -61,10 +61,10 @@ public class BlockSocket extends BlockContainer
             case 1:
                 return topIcon;
 
-                //case 2: return sideIcon1;
-                //case 3: return sideIcon1;
-                //case 4: return sideIcon2;
-                //case 5: return sideIcon2;
+            //case 2: return sideIcon1;
+            //case 3: return sideIcon1;
+            //case 4: return sideIcon2;
+            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -73,7 +73,7 @@ public class BlockSocket extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TESocket tileEntity = (TESocket)world.getBlockTileEntity(x, y, z);
+        TESocket tileEntity = (TESocket) world.getBlockTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -91,8 +91,7 @@ public class BlockSocket extends BlockContainer
                 --playerItem.stackSize;
                 tileEntity.setInventorySlotContents(0, newItem);
             }
-        }
-        else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
+        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
             /**stub method
              * Add the item that is in the slot to the player's inventory, and

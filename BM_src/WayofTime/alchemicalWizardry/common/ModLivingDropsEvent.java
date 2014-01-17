@@ -6,8 +6,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
-public class ModLivingDropsEvent
-{
+public class ModLivingDropsEvent {
     public static double rand;
 
     @ForgeSubscribe
@@ -26,7 +25,7 @@ public class ModLivingDropsEvent
                     if (effect.getAmplifier() >= 2)
                         if (rand < 0.50d)
                         {
-                            event.entityLiving.dropItem(AlchemicalWizardry.weakBloodShard.itemID, 1);
+                            event.entityLiving.dropItem(ModItems.weakBloodShard.itemID, 1);
                         }
                 }
             }

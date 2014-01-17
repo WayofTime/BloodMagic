@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelPedestal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -10,22 +13,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
-
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelPedestal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
-import cpw.mods.fml.client.FMLClientHandler;
-
-public class RenderPedestal extends TileEntitySpecialRenderer
-{
+public class RenderPedestal extends TileEntitySpecialRenderer {
     private ModelPedestal modelPedestal = new ModelPedestal();
     private final RenderItem customRenderItem;
 
     public RenderPedestal()
     {
-        customRenderItem = new RenderItem()
-        {
+        customRenderItem = new RenderItem() {
             @Override
             public boolean shouldBob()
             {
@@ -34,6 +30,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
         };
         customRenderItem.setRenderManager(RenderManager.instance);
     }
+
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
     {
@@ -52,7 +49,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
             //A reference to your Model file. Again, very important.
-            this.modelPedestal.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+            this.modelPedestal.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
             //Tell it to stop rendering for both the PushMatrix's
             GL11.glPopMatrix();
             GL11.glPopMatrix();
@@ -61,7 +58,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             if (tileAltar.getStackInSlot(0) != null)
             {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
-                float rotationAngle = (float)(720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+                float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.worldObj);
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
@@ -71,8 +68,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
                 if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
                 {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
-                }
-                else
+                } else
                 {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.6F, (float) d2 + 0.5F);
                 }
@@ -117,8 +113,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
                     default:
                         return 0.90F;
                 }
-            }
-            else
+            } else
             {
                 switch (customRenderItem.getMiniItemCount(itemStack))
                 {
@@ -197,8 +192,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
                         return;
                     }
                 }
-            }
-            else
+            } else
             {
                 switch (forgeDirection)
                 {

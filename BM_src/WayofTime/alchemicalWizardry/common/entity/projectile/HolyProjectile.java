@@ -4,14 +4,12 @@ import WayofTime.alchemicalWizardry.common.PacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class HolyProjectile extends EnergyBlastProjectile
-{
+public class HolyProjectile extends EnergyBlastProjectile {
     public HolyProjectile(World par1World)
     {
         super(par1World);
@@ -34,7 +32,7 @@ public class HolyProjectile extends EnergyBlastProjectile
 
     public HolyProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir)
     {
-        super(par1World,  par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
     @Override
@@ -54,8 +52,7 @@ public class HolyProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }
-        else if (mop.typeOfHit == EnumMovingObjectType.TILE)
+        } else if (mop.typeOfHit == EnumMovingObjectType.TILE)
         {
 //        	for(int i=-1;i<=1;i++)
 //        	{
@@ -82,8 +79,7 @@ public class HolyProjectile extends EnergyBlastProjectile
         {
             shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
             this.setDead();
-        }
-        else
+        } else
         {
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
@@ -91,11 +87,10 @@ public class HolyProjectile extends EnergyBlastProjectile
                 //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
                 //((EntityLivingBase)mop).setFire(50);
                 //((EntityLivingBase)mop).setRevengeTarget(shootingEntity);
-                if (((EntityLivingBase)mop).isEntityUndead())
+                if (((EntityLivingBase) mop).isEntityUndead())
                 {
-                    doDamage((int)(projectileDamage * 2), mop);
-                }
-                else
+                    doDamage((int) (projectileDamage * 2), mop);
+                } else
                 {
                     doDamage(projectileDamage, mop);
                 }
@@ -104,7 +99,7 @@ public class HolyProjectile extends EnergyBlastProjectile
             //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
-        if (worldObj.isAirBlock((int)this.posX, (int)this.posY, (int)this.posZ))
+        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
         {
             //worldObj.setBlock((int)this.posX, (int)this.posY, (int)this.posZ,Block.fire.blockID);
         }

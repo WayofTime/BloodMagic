@@ -7,8 +7,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerAltar extends Container
-{
+public class ContainerAltar extends Container {
     protected TEAltar tileEntity;
 
     public ContainerAltar(InventoryPlayer inventoryPlayer, TEAltar te)
@@ -25,6 +24,7 @@ public class ContainerAltar extends Container
 
         bindPlayerInventory(inventoryPlayer);
     }
+
     @Override
     public boolean canInteractWith(EntityPlayer entityplayer)
     {
@@ -38,7 +38,7 @@ public class ContainerAltar extends Container
             for (int j = 0; j < 9; j++)
             {
                 addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-                                            8 + j * 18, 84 + i * 18));
+                        8 + j * 18, 84 + i * 18));
             }
         }
 
@@ -47,6 +47,7 @@ public class ContainerAltar extends Container
             addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
         }
     }
+
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
@@ -76,8 +77,7 @@ public class ContainerAltar extends Container
             if (stackInSlot.stackSize == 0)
             {
                 slotObject.putStack(null);
-            }
-            else
+            } else
             {
                 slotObject.onSlotChanged();
             }

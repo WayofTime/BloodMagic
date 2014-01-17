@@ -1,9 +1,5 @@
 package thaumcraft.api.crafting;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,8 +9,11 @@ import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.AspectList;
 
-public class InfusionEnchantmentRecipe
-{
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+
+public class InfusionEnchantmentRecipe {
     public AspectList aspects;
     public String research;
     public ItemStack[] components;
@@ -35,6 +34,7 @@ public class InfusionEnchantmentRecipe
 
     /**
      * Used to check if a recipe matches current crafting inventory
+     *
      * @param player
      */
     public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player)
@@ -54,7 +54,7 @@ public class InfusionEnchantmentRecipe
 
         while (iterator.hasNext())
         {
-            int j1 = ((Integer)iterator.next()).intValue();
+            int j1 = ((Integer) iterator.next()).intValue();
             Enchantment ench = Enchantment.enchantmentsList[j1];
 
             if (j1 == enchantment.effectId &&
@@ -65,7 +65,7 @@ public class InfusionEnchantmentRecipe
 
             if (enchantment.effectId != ench.effectId &&
                     (!enchantment.canApplyTogether(ench) ||
-                     !ench.canApplyTogether(enchantment)))
+                            !ench.canApplyTogether(enchantment)))
             {
                 return false;
             }
@@ -74,12 +74,12 @@ public class InfusionEnchantmentRecipe
         ItemStack i2 = null;
         ArrayList<ItemStack> ii = new ArrayList<ItemStack>();
 
-        for (ItemStack is: input)
+        for (ItemStack is : input)
         {
             ii.add(is.copy());
         }
 
-        for (ItemStack comp: components)
+        for (ItemStack comp : components)
         {
             boolean b = false;
 
@@ -136,13 +136,12 @@ public class InfusionEnchantmentRecipe
 
             if (od != -1)
             {
-                ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[] {});
+                ItemStack[] ores = OreDictionary.getOres(od).toArray(new ItemStack[]{});
 
-                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[] {stack1}, ores))
+                if (ThaumcraftApiHelper.containsMatch(false, new ItemStack[]{stack1}, ores))
                     return true;
             }
-        }
-        else
+        } else
         {
             t1 = ItemStack.areItemStackTagsEqual(stack0, stack1);
         }
@@ -173,7 +172,7 @@ public class InfusionEnchantmentRecipe
 
         while (iterator.hasNext())
         {
-            int j1 = ((Integer)iterator.next()).intValue();
+            int j1 = ((Integer) iterator.next()).intValue();
             i += EnchantmentHelper.getEnchantmentLevel(j1, recipeInput);
         }
 
@@ -193,7 +192,7 @@ public class InfusionEnchantmentRecipe
 
         while (iterator.hasNext())
         {
-            int j1 = ((Integer)iterator.next()).intValue();
+            int j1 = ((Integer) iterator.next()).intValue();
 
             if (j1 != enchantment.effectId)
             {

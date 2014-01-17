@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -15,12 +16,10 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class EnergySword extends ItemSword
-{
+import java.util.List;
+
+public class EnergySword extends ItemSword {
     //private float weaponDamaged;
     //private int maxMode = 3;
     private NBTTagCompound data;
@@ -73,8 +72,7 @@ public class EnergySword extends ItemSword
         if (tag.getBoolean("isActive"))
         {
             return this.activeIcon;
-        }
-        else
+        } else
         {
             return this.passiveIcon;
         }
@@ -91,9 +89,9 @@ public class EnergySword extends ItemSword
     {
         if (par3EntityLivingBase instanceof EntityPlayer)
         {
-            EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer)par3EntityLivingBase);
+            EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase);
 
-            if (!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer)par3EntityLivingBase, this.getEnergyUsed()))
+            if (!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
             {
                 //this.damagePlayer(null, (EntityPlayer)par3EntityLivingBase, (this.getEnergyUsed() + 99) / 100);
             }
@@ -111,7 +109,7 @@ public class EnergySword extends ItemSword
         if (par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
-            par1ItemStack.stackTagCompound.setInteger("worldTimeDelay", (int)(par2World.getWorldTime() - 1) % 100);
+            par1ItemStack.stackTagCompound.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
             return par1ItemStack;
         }
 
@@ -137,7 +135,7 @@ public class EnergySword extends ItemSword
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer)par3Entity;
+        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {
@@ -206,8 +204,7 @@ public class EnergySword extends ItemSword
             if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
             {
                 par3List.add("Activated");
-            }
-            else
+            } else
             {
                 par3List.add("Deactivated");
             }
@@ -225,8 +222,7 @@ public class EnergySword extends ItemSword
         if (par2Block.blockID == Block.web.blockID)
         {
             return 15.0F;
-        }
-        else
+        } else
         {
             Material material = par2Block.blockMaterial;
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.pumpkin ? 1.0F : 1.5F;

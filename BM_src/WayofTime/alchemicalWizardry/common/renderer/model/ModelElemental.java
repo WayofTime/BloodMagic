@@ -6,8 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.world.World;
 
-public class ModelElemental extends ModelBase
-{
+public class ModelElemental extends ModelBase {
     //fields
     ModelRenderer body;
     ModelRenderer Shape2;
@@ -29,19 +28,19 @@ public class ModelElemental extends ModelBase
         Shape2.setRotationPoint(0F, 14F, 0F);
         Shape2.setTextureSize(64, 32);
         Shape2.mirror = true;
-        setRotation(Shape2, ((float)Math.PI / 4F), ((float)Math.PI / 4F), 0F);
+        setRotation(Shape2, ((float) Math.PI / 4F), ((float) Math.PI / 4F), 0F);
         Shape1 = new ModelRenderer(this, 0, 0);
         Shape1.addBox(-4F, -4F, -4F, 8, 8, 8);
         Shape1.setRotationPoint(0F, 14F, 0F);
         Shape1.setTextureSize(64, 32);
         Shape1.mirror = true;
-        setRotation(Shape1, 0F, ((float)Math.PI / 4F), ((float)Math.PI / 4F));
+        setRotation(Shape1, 0F, ((float) Math.PI / 4F), ((float) Math.PI / 4F));
         Shape3 = new ModelRenderer(this, 0, 0);
         Shape3.addBox(-4F, -4F, -4F, 8, 8, 8);
         Shape3.setRotationPoint(0F, 14F, 0F);
         Shape3.setTextureSize(64, 32);
         Shape3.mirror = true;
-        setRotation(Shape3, ((float)Math.PI / 4F), 0F, ((float)Math.PI / 4F));
+        setRotation(Shape3, ((float) Math.PI / 4F), 0F, ((float) Math.PI / 4F));
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)

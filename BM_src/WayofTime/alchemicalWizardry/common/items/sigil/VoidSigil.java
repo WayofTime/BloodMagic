@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,17 +17,13 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class VoidSigil extends ItemBucket implements ArmourUpgrade
-{
+import java.util.List;
+
+public class VoidSigil extends ItemBucket implements ArmourUpgrade {
     private int isFull;
     private int energyUsed;
+
     public VoidSigil(int id)
     {
         super(id, 0);
@@ -71,7 +71,7 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
         return this.energyUsed;
     }
 
-//    protected void damagePlayer(World world, EntityPlayer player, int damage)
+    //    protected void damagePlayer(World world, EntityPlayer player, int damage)
 //    {
 //        if (world != null)
 //        {
@@ -133,8 +133,7 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
             }
 
             return true;
-        }
-        else
+        } else
         {
             return true;
         }
@@ -151,17 +150,16 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
         }
 
         float f = 1.0F;
-        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double)f;
-        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double)f + 1.62D - (double)par3EntityPlayer.yOffset;
-        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double)f;
+        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double) f;
+        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double) f + 1.62D - (double) par3EntityPlayer.yOffset;
+        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double) f;
         boolean flag = this.isFull == 0;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, flag);
 
         if (movingobjectposition == null)
         {
             return par1ItemStack;
-        }
-        else
+        } else
         {
             FillBucketEvent event = new FillBucketEvent(par3EntityPlayer, par1ItemStack, par2World, movingobjectposition);
 
@@ -197,8 +195,7 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
                             if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                             {
                             }
-                        }
-                        else
+                        } else
                         {
                             return par1ItemStack;
                         }

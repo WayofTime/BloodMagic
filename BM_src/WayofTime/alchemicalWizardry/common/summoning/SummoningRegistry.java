@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.summoning;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class SummoningRegistry
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class SummoningRegistry {
     public static List<SummoningRegistryComponent> summoningList = new ArrayList();
 
     public static void registerSummon(SummoningHelper s, ItemStack[] ring1, ItemStack[] ring2, ItemStack[] ring3, int amountUsed, int bloodOrbLevel)

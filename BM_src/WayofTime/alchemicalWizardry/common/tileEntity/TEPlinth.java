@@ -1,8 +1,12 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.PlinthComponent;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.summoning.SummoningRegistry;
+import WayofTime.alchemicalWizardry.common.summoning.SummoningRegistryComponent;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,16 +17,11 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.PlinthComponent;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.summoning.SummoningRegistry;
-import WayofTime.alchemicalWizardry.common.summoning.SummoningRegistryComponent;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TEPlinth extends TileEntity implements IInventory
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class TEPlinth extends TileEntity implements IInventory {
     private ItemStack[] inv;
 
     private boolean isActive;
@@ -204,8 +203,7 @@ public class TEPlinth extends TileEntity implements IInventory
             if (stack.stackSize <= amt)
             {
                 setInventorySlotContents(slot, null);
-            }
-            else
+            } else
             {
                 stack = stack.splitStack(amt);
 
@@ -294,7 +292,7 @@ public class TEPlinth extends TileEntity implements IInventory
         {
             if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof EnergyBattery)
             {
-                int bloodOrbLevel = ((EnergyBattery)getStackInSlot(0).getItem()).getOrbLevel();
+                int bloodOrbLevel = ((EnergyBattery) getStackInSlot(0).getItem()).getOrbLevel();
 
                 if (SummoningRegistry.isRecipeValid(bloodOrbLevel, composeItemsForRingAndParadigm(1, true), composeItemsForRingAndParadigm(2, true), composeItemsForRingAndParadigm(3, true)))
                 {
@@ -305,8 +303,7 @@ public class TEPlinth extends TileEntity implements IInventory
                     ring1Inv = src.getRingRecipeForRing(1);
                     ring2Inv = src.getRingRecipeForRing(2);
                     ring3Inv = src.getRingRecipeForRing(3);
-                }
-                else if (SummoningRegistry.isRecipeValid(bloodOrbLevel, composeItemsForRingAndParadigm(1, false), composeItemsForRingAndParadigm(2, false), composeItemsForRingAndParadigm(3, false)))
+                } else if (SummoningRegistry.isRecipeValid(bloodOrbLevel, composeItemsForRingAndParadigm(1, false), composeItemsForRingAndParadigm(2, false), composeItemsForRingAndParadigm(3, false)))
                 {
                     SummoningRegistryComponent src = SummoningRegistry.getRegistryComponent(bloodOrbLevel, composeItemsForRingAndParadigm(1, false), composeItemsForRingAndParadigm(2, false), composeItemsForRingAndParadigm(3, false));
                     isActive = true;
@@ -315,15 +312,13 @@ public class TEPlinth extends TileEntity implements IInventory
                     ring1Inv = src.getRingRecipeForRing(1);
                     ring2Inv = src.getRingRecipeForRing(2);
                     ring3Inv = src.getRingRecipeForRing(3);
-                }
-                else
+                } else
                 {
                     isActive = false;
                     progress = 0;
                 }
             }
-        }
-        else
+        } else
         {
             if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof EnergyBattery)
             {
@@ -354,23 +349,21 @@ public class TEPlinth extends TileEntity implements IInventory
                     if (itemStack == null)
                     {
                         progress += progressInterval;
-                    }
-                    else
+                    } else
                     {
                         if (this.deleteItemStackInRing(ring, itemStack))
                         {
                             progress++;
                         }
                     }
-                }
-                else
+                } else
                 {
                     progress++;
                 }
 
                 if (progress >= progressInterval * 18)
                 {
-                    int bloodOrbLevel = ((EnergyBattery)getStackInSlot(0).getItem()).getOrbLevel();
+                    int bloodOrbLevel = ((EnergyBattery) getStackInSlot(0).getItem()).getOrbLevel();
                     EntityLivingBase entity = SummoningRegistry.getEntity(worldObj, bloodOrbLevel, ring1Inv, ring2Inv, ring3Inv);
                     //EntityLivingBase entity = new EntityFallenAngel(worldObj);
 
@@ -382,7 +375,7 @@ public class TEPlinth extends TileEntity implements IInventory
 
                         if (entity instanceof IDemon)
                         {
-                            ((IDemon)entity).setSummonedConditions();
+                            ((IDemon) entity).setSummonedConditions();
                         }
 
                         worldObj.createExplosion(entity, entity.posX, entity.posY, entity.posZ, 3, false);
@@ -414,14 +407,13 @@ public class TEPlinth extends TileEntity implements IInventory
 
                     if (tileEntity instanceof TEPedestal)
                     {
-                        ((TEPedestal)tileEntity).setInventorySlotContents(0, null);
-                        PacketDispatcher.sendPacketToAllInDimension(((TEPedestal)tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
+                        ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
+                        PacketDispatcher.sendPacketToAllInDimension(((TEPedestal) tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
                         i++;
                     }
                 }
             }
-        }
-        else
+        } else
         {
             int i = 0;
 
@@ -433,8 +425,8 @@ public class TEPlinth extends TileEntity implements IInventory
 
                     if (tileEntity instanceof TEPedestal)
                     {
-                        ((TEPedestal)tileEntity).setInventorySlotContents(0, null);
-                        PacketDispatcher.sendPacketToAllInDimension(((TEPedestal)tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
+                        ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
+                        PacketDispatcher.sendPacketToAllInDimension(((TEPedestal) tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
                         i++;
                     }
                 }
@@ -461,7 +453,7 @@ public class TEPlinth extends TileEntity implements IInventory
 
                     if (tileEntity instanceof TEPedestal)
                     {
-                        ItemStack possibleItem = ((TEPedestal)tileEntity).getStackInSlot(0);
+                        ItemStack possibleItem = ((TEPedestal) tileEntity).getStackInSlot(0);
 
                         if (possibleItem == null)
                         {
@@ -477,8 +469,7 @@ public class TEPlinth extends TileEntity implements IInventory
                             {
                                 test = true;
                             }
-                        }
-                        else if (!(itemStack.getItem() instanceof ItemBlock))
+                        } else if (!(itemStack.getItem() instanceof ItemBlock))
                         {
                             test = true;
                         }
@@ -487,9 +478,9 @@ public class TEPlinth extends TileEntity implements IInventory
                         {
                             if (itemStack.itemID == possibleItem.itemID && (itemStack.getItemDamage() == possibleItem.getItemDamage() || itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
                             {
-                                ((TEPedestal)tileEntity).decrStackSize(0, 1);
-                                ((TEPedestal)tileEntity).onItemDeletion();
-                                PacketDispatcher.sendPacketToAllInDimension(((TEPedestal)tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
+                                ((TEPedestal) tileEntity).decrStackSize(0, 1);
+                                ((TEPedestal) tileEntity).onItemDeletion();
+                                PacketDispatcher.sendPacketToAllInDimension(((TEPedestal) tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
                                 return true;
                             }
                         }
@@ -498,8 +489,7 @@ public class TEPlinth extends TileEntity implements IInventory
                     }
                 }
             }
-        }
-        else
+        } else
         {
             int i = 0;
 
@@ -511,7 +501,7 @@ public class TEPlinth extends TileEntity implements IInventory
 
                     if (tileEntity instanceof TEPedestal)
                     {
-                        ItemStack possibleItem = ((TEPedestal)tileEntity).getStackInSlot(0);
+                        ItemStack possibleItem = ((TEPedestal) tileEntity).getStackInSlot(0);
 
                         if (possibleItem == null)
                         {
@@ -527,8 +517,7 @@ public class TEPlinth extends TileEntity implements IInventory
                             {
                                 test = true;
                             }
-                        }
-                        else if (!(itemStack.getItem() instanceof ItemBlock))
+                        } else if (!(itemStack.getItem() instanceof ItemBlock))
                         {
                             test = true;
                         }
@@ -537,10 +526,10 @@ public class TEPlinth extends TileEntity implements IInventory
                         {
                             if (itemStack.itemID == possibleItem.itemID && (itemStack.getItemDamage() == possibleItem.getItemDamage() || itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
                             {
-                                ((TEPedestal)tileEntity).decrStackSize(0, 1);
-                                ((TEPedestal)tileEntity).onItemDeletion();
+                                ((TEPedestal) tileEntity).decrStackSize(0, 1);
+                                ((TEPedestal) tileEntity).onItemDeletion();
                                 //worldObj.markBlockForUpdate(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
-                                PacketDispatcher.sendPacketToAllInDimension(((TEPedestal)tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
+                                PacketDispatcher.sendPacketToAllInDimension(((TEPedestal) tileEntity).getDescriptionPacket(), worldObj.provider.dimensionId);
                                 return true;
                             }
                         }
@@ -570,13 +559,12 @@ public class TEPlinth extends TileEntity implements IInventory
 
                     if (tileEntity instanceof TEPedestal)
                     {
-                        composed[i] = ((TEPedestal)tileEntity).getStackInSlot(0);
+                        composed[i] = ((TEPedestal) tileEntity).getStackInSlot(0);
                         i++;
                     }
                 }
             }
-        }
-        else
+        } else
         {
             int i = 0;
 
@@ -588,7 +576,7 @@ public class TEPlinth extends TileEntity implements IInventory
 
                     if (tileEntity instanceof TEPedestal)
                     {
-                        composed[i] = ((TEPedestal)tileEntity).getStackInSlot(0);
+                        composed[i] = ((TEPedestal) tileEntity).getStackInSlot(0);
                         i++;
                     }
                 }
@@ -629,8 +617,7 @@ public class TEPlinth extends TileEntity implements IInventory
                 {
                     ItemStack is = new ItemStack(intData[i * 3], intData[i * 3 + 2], intData[i * 3 + 1]);
                     inv[i] = is;
-                }
-                else
+                } else
                 {
                     inv[i] = null;
                 }
@@ -640,7 +627,7 @@ public class TEPlinth extends TileEntity implements IInventory
 
     public int[] buildIntDataList()
     {
-        int [] sortList = new int[1 * 3];
+        int[] sortList = new int[1 * 3];
         int pos = 0;
 
         for (ItemStack is : inv)
@@ -650,8 +637,7 @@ public class TEPlinth extends TileEntity implements IInventory
                 sortList[pos++] = is.itemID;
                 sortList[pos++] = is.getItemDamage();
                 sortList[pos++] = is.stackSize;
-            }
-            else
+            } else
             {
                 sortList[pos++] = 0;
                 sortList[pos++] = 0;

@@ -1,8 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.Iterator;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.ModBlocks;
+import WayofTime.alchemicalWizardry.common.ModItems;
+import WayofTime.alchemicalWizardry.common.items.BoundArmour;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
@@ -14,22 +19,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.items.BoundArmour;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class RitualEffectUnbinding extends RitualEffect
-{
+import java.util.Iterator;
+import java.util.List;
+
+public class RitualEffectUnbinding extends RitualEffect {
     @Override
     public void performEffect(TEMasterStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -53,18 +53,17 @@ public class RitualEffectUnbinding extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        }
-        else
+        } else
         {
             int d0 = 0;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)x, (double)y + 1, (double)z, (double)(x + 1), (double)(y + 2), (double)(z + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
             List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityItem item;
 
             while (iterator.hasNext())
             {
-                item = (EntityItem)iterator.next();
+                item = (EntityItem) iterator.next();
 //                double xDif = item.posX - (xCoord+0.5);
 //                double yDif = item.posY - (yCoord+1);
 //                double zDif = item.posZ - (zCoord+0.5);
@@ -75,23 +74,19 @@ public class RitualEffectUnbinding extends RitualEffect
                     continue;
                 }
 
-                if (itemStack.itemID == AlchemicalWizardry.boundHelmet.itemID)
+                if (itemStack.itemID == ModItems.boundHelmet.itemID)
                 {
                     ritualStone.setVar1(5);
-                }
-                else if (itemStack.itemID == AlchemicalWizardry.boundPlate.itemID)
+                } else if (itemStack.itemID == ModItems.boundPlate.itemID)
                 {
                     ritualStone.setVar1(8);
-                }
-                else if (itemStack.itemID == AlchemicalWizardry.boundLeggings.itemID)
+                } else if (itemStack.itemID == ModItems.boundLeggings.itemID)
                 {
                     ritualStone.setVar1(7);
-                }
-                else if (itemStack.itemID == AlchemicalWizardry.boundBoots.itemID)
+                } else if (itemStack.itemID == ModItems.boundBoots.itemID)
                 {
                     ritualStone.setVar1(4);
-                }
-                else if (itemStack.itemID == AlchemicalWizardry.sigilOfHolding.itemID)
+                } else if (itemStack.itemID == ModItems.sigilOfHolding.itemID)
                 {
                     ritualStone.setVar1(-1);
                 }
@@ -104,7 +99,7 @@ public class RitualEffectUnbinding extends RitualEffect
                     world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
                     world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
                     NBTTagCompound itemTag = itemStack.stackTagCompound;
-                    ItemStack[] inv = ((BoundArmour)itemStack.getItem()).getInternalInventory(itemStack);
+                    ItemStack[] inv = ((BoundArmour) itemStack.getItem()).getInternalInventory(itemStack);
 
                     if (inv != null)
                     {
@@ -118,12 +113,11 @@ public class RitualEffectUnbinding extends RitualEffect
                         }
                     }
 
-                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(Block.blocksList[AlchemicalWizardry.bloodSocket.blockID], ritualStone.getVar1()));
+                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(Block.blocksList[ModBlocks.bloodSocket.blockID], ritualStone.getVar1()));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
                     break;
-                }
-                else if (ritualStone.getVar1() == -1)
+                } else if (ritualStone.getVar1() == -1)
                 {
                     item.setDead();
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
@@ -131,7 +125,7 @@ public class RitualEffectUnbinding extends RitualEffect
                     world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
                     world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
                     NBTTagCompound itemTag = itemStack.stackTagCompound;
-                    ItemStack[] inv = ((SigilOfHolding)itemStack.getItem()).getInternalInventory(itemStack);
+                    ItemStack[] inv = ((SigilOfHolding) itemStack.getItem()).getInternalInventory(itemStack);
 
                     if (inv != null)
                     {
@@ -145,7 +139,7 @@ public class RitualEffectUnbinding extends RitualEffect
                         }
                     }
 
-                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(AlchemicalWizardry.sigilOfHolding.itemID, 1, 0));
+                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModItems.sigilOfHolding.itemID, 1, 0));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
                     break;
@@ -153,7 +147,7 @@ public class RitualEffectUnbinding extends RitualEffect
 
                 if (world.rand.nextInt(10) == 0)
                 {
-                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(item.posX, item.posY, item.posZ, (short)1));
+                    PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(item.posX, item.posY, item.posZ, (short) 1));
                 }
             }
 

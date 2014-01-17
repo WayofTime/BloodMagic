@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 
-public class MasterBloodOrb extends EnergyBattery
-{
+public class MasterBloodOrb extends EnergyBattery {
     public MasterBloodOrb(int id, int damage)
     {
         super(id, damage);

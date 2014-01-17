@@ -1,12 +1,8 @@
 package thaumcraft.api.crafting;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -14,28 +10,32 @@ import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.AspectList;
 
-public class ShapedArcaneRecipe implements IArcaneRecipe
-{
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class ShapedArcaneRecipe implements IArcaneRecipe {
     //Added in for future ease of change, but hard coded for now.
     private static final int MAX_CRAFT_GRID_WIDTH = 3;
     private static final int MAX_CRAFT_GRID_HEIGHT = 3;
 
     public ItemStack output = null;
-    public  Object[] input = null;
+    public Object[] input = null;
     public AspectList aspects = null;
     public String research;
     public int width = 0;
     public int height = 0;
     private boolean mirrored = true;
 
-    public ShapedArcaneRecipe(String research, Block     result, AspectList aspects, Object... recipe)
+    public ShapedArcaneRecipe(String research, Block result, AspectList aspects, Object... recipe)
     {
         this(research, new ItemStack(result), aspects, recipe);
     }
-    public ShapedArcaneRecipe(String research, Item      result, AspectList aspects, Object... recipe)
+
+    public ShapedArcaneRecipe(String research, Item result, AspectList aspects, Object... recipe)
     {
         this(research, new ItemStack(result), aspects, recipe);
     }
+
     public ShapedArcaneRecipe(String research, ItemStack result, AspectList aspects, Object... recipe)
     {
         output = result.copy();
@@ -46,13 +46,12 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
 
         if (recipe[idx] instanceof Boolean)
         {
-            mirrored = (Boolean)recipe[idx];
+            mirrored = (Boolean) recipe[idx];
 
             if (recipe[idx + 1] instanceof Object[])
             {
-                recipe = (Object[])recipe[idx + 1];
-            }
-            else
+                recipe = (Object[]) recipe[idx + 1];
+            } else
             {
                 idx = 1;
             }
@@ -60,7 +59,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
 
         if (recipe[idx] instanceof String[])
         {
-            String[] parts = ((String[])recipe[idx++]);
+            String[] parts = ((String[]) recipe[idx++]);
 
             for (String s : parts)
             {
@@ -69,12 +68,11 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
             }
 
             height = parts.length;
-        }
-        else
+        } else
         {
             while (recipe[idx] instanceof String)
             {
-                String s = (String)recipe[idx++];
+                String s = (String) recipe[idx++];
                 shape += s;
                 width = s.length();
                 height++;
@@ -85,7 +83,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
         {
             String ret = "Invalid shaped ore recipe: ";
 
-            for (Object tmp :  recipe)
+            for (Object tmp : recipe)
             {
                 ret += tmp + ", ";
             }
@@ -94,34 +92,30 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
             throw new RuntimeException(ret);
         }
 
-        HashMap<Character, Object> itemMap = new HashMap<Character, Object>();
+        HashMap<Character,Object> itemMap = new HashMap<Character,Object>();
 
         for (; idx < recipe.length; idx += 2)
         {
-            Character chr = (Character)recipe[idx];
+            Character chr = (Character) recipe[idx];
             Object in = recipe[idx + 1];
 
             if (in instanceof ItemStack)
             {
-                itemMap.put(chr, ((ItemStack)in).copy());
-            }
-            else if (in instanceof Item)
+                itemMap.put(chr, ((ItemStack) in).copy());
+            } else if (in instanceof Item)
             {
-                itemMap.put(chr, new ItemStack((Item)in));
-            }
-            else if (in instanceof Block)
+                itemMap.put(chr, new ItemStack((Item) in));
+            } else if (in instanceof Block)
             {
-                itemMap.put(chr, new ItemStack((Block)in, 1, OreDictionary.WILDCARD_VALUE));
-            }
-            else if (in instanceof String)
+                itemMap.put(chr, new ItemStack((Block) in, 1, OreDictionary.WILDCARD_VALUE));
+            } else if (in instanceof String)
             {
-                itemMap.put(chr, OreDictionary.getOres((String)in));
-            }
-            else
+                itemMap.put(chr, OreDictionary.getOres((String) in));
+            } else
             {
                 String ret = "Invalid shaped ore recipe: ";
 
-                for (Object tmp :  recipe)
+                for (Object tmp : recipe)
                 {
                     ret += tmp + ", ";
                 }
@@ -200,8 +194,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
                     if (mirror)
                     {
                         target = input[width - subX - 1 + subY * width];
-                    }
-                    else
+                    } else
                     {
                         target = input[subX + subY * width];
                     }
@@ -211,16 +204,15 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
 
                 if (target instanceof ItemStack)
                 {
-                    if (!checkItemEquals((ItemStack)target, slot))
+                    if (!checkItemEquals((ItemStack) target, slot))
                     {
                         return false;
                     }
-                }
-                else if (target instanceof ArrayList)
+                } else if (target instanceof ArrayList)
                 {
                     boolean matched = false;
 
-                    for (ItemStack item : (ArrayList<ItemStack>)target)
+                    for (ItemStack item : (ArrayList<ItemStack>) target)
                     {
                         matched = matched || checkItemEquals(item, slot);
                     }
@@ -229,8 +221,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
                     {
                         return false;
                     }
-                }
-                else if (target == null && slot != null)
+                } else if (target == null && slot != null)
                 {
                     return false;
                 }
@@ -261,6 +252,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe
     /**
      * Returns the input for this recipe, any mod accessing this value should never
      * manipulate the values in this array as it will effect the recipe itself.
+     *
      * @return The recipes input vales.
      */
     public Object[] getInput()

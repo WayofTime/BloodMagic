@@ -7,10 +7,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import thaumcraft.api.aspects.AspectList;
 
-public interface IWandFocus
-{
-    public enum WandFocusAnimation
-    {
+public interface IWandFocus {
+    public enum WandFocusAnimation {
         WAVE, CHARGE;
     }
 
@@ -46,6 +44,7 @@ public interface IWandFocus
     /**
      * Helper method to determine in what order foci should be iterated through when
      * the user presses the 'change focus' keybinding.
+     *
      * @return a string of characters that foci will be sorted against.
      * For example AA00 will be placed before FG12
      * <br>As a guide build the sort string from two alphanumeric characters followed by

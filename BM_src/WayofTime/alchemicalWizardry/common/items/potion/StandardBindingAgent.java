@@ -1,23 +1,20 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-
-import org.lwjgl.input.Keyboard;
-
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IBindingAgent;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import org.lwjgl.input.Keyboard;
 
-public class StandardBindingAgent extends Item implements IBindingAgent
-{
+import java.util.List;
+
+public class StandardBindingAgent extends Item implements IBindingAgent {
     public StandardBindingAgent(int id)
     {
         super(id);
@@ -50,7 +47,7 @@ public class StandardBindingAgent extends Item implements IBindingAgent
             {
                 par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
-                for (ItemStack item: recipe)
+                for (ItemStack item : recipe)
                 {
                     if (item != null)
                     {
@@ -58,8 +55,7 @@ public class StandardBindingAgent extends Item implements IBindingAgent
                     }
                 }
             }
-        }
-        else
+        } else
         {
             par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
         }

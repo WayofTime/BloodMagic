@@ -1,13 +1,12 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.item.Item;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
 
-public class EarthInk extends Item
-{
+public class EarthInk extends Item {
     public EarthInk(int id)
     {
         super(id);

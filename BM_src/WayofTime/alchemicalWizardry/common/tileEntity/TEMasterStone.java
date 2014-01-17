@@ -1,34 +1,14 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.rituals.Rituals;
 import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
-public class TEMasterStone extends TileEntity
-{
+public class TEMasterStone extends TileEntity {
     private int currentRitual;
     private boolean isActive;
     private String owner;
@@ -92,7 +72,7 @@ public class TEMasterStone extends TileEntity
         }
 
         World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork)worldSave.loadItemData(LifeEssenceNetwork.class, owner);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
         if (data == null)
         {
@@ -115,7 +95,7 @@ public class TEMasterStone extends TileEntity
 
             for (int i = 0; i < 12; i++)
             {
-                PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+                PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
             }
         }
 
@@ -140,7 +120,7 @@ public class TEMasterStone extends TileEntity
             return;
         }
 
-        int worldTime = (int)(worldObj.getWorldTime() % 24000);
+        int worldTime = (int) (worldObj.getWorldTime() % 24000);
 
         if (worldObj.isRemote)
         {
@@ -150,7 +130,7 @@ public class TEMasterStone extends TileEntity
         if (worldTime % 100 == 0)
         {
             boolean testRunes = Rituals.checkDirectionOfRitualValid(worldObj, xCoord, yCoord, zCoord, currentRitual, direction);
-            PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short)1));
+            PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short) 1));
 
             if (!testRunes)
             {

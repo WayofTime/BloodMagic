@@ -1,9 +1,7 @@
 package thaumcraft.api.wands;
 
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Map;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -16,11 +14,12 @@ import net.minecraft.world.World;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemFocusBasic extends Item  implements IWandFocus
-{
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map;
+
+public class ItemFocusBasic extends Item implements IWandFocus {
     public ItemFocusBasic(int i)
     {
         super(i);
@@ -59,7 +58,7 @@ public class ItemFocusBasic extends Item  implements IWandFocus
         {
             list.add(StatCollector.translateToLocal(isVisCostPerTick() ? "item.Focus.cost2" : "item.Focus.cost1"));
 
-            for (Aspect aspect: al.getAspectsSorted())
+            for (Aspect aspect : al.getAspectsSorted())
             {
                 DecimalFormat myFormatter = new DecimalFormat("#####.##");
                 String amount = myFormatter.format(al.getAmount(aspect) / 100f);
@@ -122,10 +121,10 @@ public class ItemFocusBasic extends Item  implements IWandFocus
     @Override
     public String getSortingHelper(ItemStack itemstack)
     {
-        Map<Integer, Integer> ench = EnchantmentHelper.getEnchantments(itemstack);
+        Map<Integer,Integer> ench = EnchantmentHelper.getEnchantments(itemstack);
         String out = "";
 
-        for (Integer lvl: ench.values())
+        for (Integer lvl : ench.values())
         {
             out = out + lvl + "";
         }
