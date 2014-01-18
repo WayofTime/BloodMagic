@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.items;
+package WayofTime.alchemicalWizardry.common.items.thaumcraft;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;

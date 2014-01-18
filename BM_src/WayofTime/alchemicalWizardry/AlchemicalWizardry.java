@@ -55,9 +55,9 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
-import WayofTime.alchemicalWizardry.common.items.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellEarthBender;
@@ -306,7 +306,7 @@ public class AlchemicalWizardry
     public void preInit(FMLPreInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new LifeBucketHandler());
-        BloodMagicConfiguration.init(new File(event.getModConfigurationDirectory(), "bloodMagic.cfg"));
+        BloodMagicConfiguration.init(new File(event.getModConfigurationDirectory(), "AWWayofTime.cfg"));
 
         //Custom config stuff goes here
 
