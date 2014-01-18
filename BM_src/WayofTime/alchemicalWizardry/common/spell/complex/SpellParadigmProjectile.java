@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 
 public class SpellParadigmProjectile extends SpellParadigm
 {
@@ -14,6 +16,9 @@ public class SpellParadigmProjectile extends SpellParadigm
 	public float damage = 1;
 	public int cost = 0;
 	public List<IProjectileImpactEffect> impactList = new ArrayList();
+	public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
+	public boolean penetration = false;
+	
 	
 	@Override
 	public void enhanceParadigm(SpellEnhancement enh) 
@@ -25,7 +30,62 @@ public class SpellParadigmProjectile extends SpellParadigm
 	@Override
 	public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack) 
 	{
-		// TODO Auto-generated method stub
+		EntitySpellProjectile proj = new EntitySpellProjectile(world, entityPlayer);
 		
 	}
+	
+	public static SpellParadigmProjectile getParadigmForStringArray(List<String> stringList)
+	{
+		SpellParadigmProjectile parad = new SpellParadigmProjectile();
+		
+		try 
+		{
+			for(String str : stringList)
+			{
+				Class clazz = Class.forName(str);
+				if(clazz!=null)
+				{
+					Object obj = clazz.newInstance();
+					
+					if(obj instanceof SpellEffect)
+					{
+						parad.addBufferedEffect((SpellEffect)obj);
+						continue;
+					}
+					if(obj instanceof SpellModifier)
+					{
+						parad.modifyBufferedEffect((SpellModifier)obj);
+						continue;
+					}
+					if(obj instanceof SpellEnhancement)
+					{
+						parad.applyEnhancement((SpellEnhancement)obj);
+						continue;
+					}
+				}
+			}
+			
+		} catch (InstantiationException e) {
+
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		
+		return parad;
+	}
+	
+	public void prepareProjectile(EntitySpellProjectile proj)
+	{
+		proj.setDamage(damage);
+		proj.setImpactList(impactList);
+		proj.setUpdateEffectList(updateEffectList); 
+		proj.setPenetration(penetration);
+		proj.setEffectList(effectList);
+	}
+	
 }

@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -13,7 +14,9 @@ import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
@@ -40,9 +43,11 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	
 	//Custom variables
 	private int maxRicochet = 0;
+	private float damage = 1;
 	public List<IProjectileImpactEffect> impactList = new ArrayList();
 	private boolean penetration = false;
 	public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
+	public List<String> effectList = new LinkedList();
 
 	public EntitySpellProjectile(World par1World) 
 	{
@@ -254,26 +259,52 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	 * (abstract) Protected helper method to write subclass entity data to NBT.
 	 */
 	@Override
-	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
+	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) 
+	{
 		par1NBTTagCompound.setShort("xTile", (short)xTile);
 		par1NBTTagCompound.setShort("yTile", (short)yTile);
 		par1NBTTagCompound.setShort("zTile", (short)zTile);
 		par1NBTTagCompound.setByte("inTile", (byte)inTile);
 		par1NBTTagCompound.setByte("inData", (byte)inData);
 		par1NBTTagCompound.setByte("inGround", (byte)(inGround ? 1 : 0));
+		
+		NBTTagList tagList = par1NBTTagCompound.getTagList("Effects");
+		this.effectList = new LinkedList();
+        for (int i = 0; i < tagList.tagCount(); i++)
+        {
+            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+
+            this.effectList.add(tag.getString("Class"));
+        }
 	}
 
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
+	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) 
+	{
 		xTile = par1NBTTagCompound.getShort("xTile");
 		yTile = par1NBTTagCompound.getShort("yTile");
 		zTile = par1NBTTagCompound.getShort("zTile");
 		inTile = par1NBTTagCompound.getByte("inTile") & 255;
 		inData = par1NBTTagCompound.getByte("inData") & 255;
 		inGround = par1NBTTagCompound.getByte("inGround") == 1;
+		
+		NBTTagList effectList = new NBTTagList();
+
+        for (String str : this.effectList)
+        {
+            if (str != null)
+            {
+                NBTTagCompound tag = new NBTTagCompound();
+
+                tag.setString("Class", str);
+                effectList.appendTag(tag);
+            }
+        }
+
+        par1NBTTagCompound.setTag("Effects", effectList);
 	}
 
 	/**
@@ -464,6 +495,11 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		this.impactList = list;
 	}
 	
+	public void setUpdateEffectList(List<IProjectileUpdateEffect> list)
+	{
+		this.updateEffectList = list;
+	}
+	
 	private void performEntityImpactEffects(Entity mop)
 	{
 		if(impactList!=null)
@@ -500,5 +536,20 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	public void setPenetration(boolean penetration)
 	{
 		this.penetration = penetration;
+	}
+	
+	public float getDamage()
+	{
+		return this.damage;
+	}
+	
+	public void setDamage(float damage)
+	{
+		this.damage = damage;
+	}
+	
+	public void setEffectList(List<String> stringList)
+	{
+		this.effectList = stringList;
 	}
 }

@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +12,15 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 public abstract class SpellParadigm 
 {
 	protected List<SpellEffect> bufferedEffectList = new ArrayList();
+	protected List<String> effectList = new LinkedList();
 	
 	public void addBufferedEffect(SpellEffect effect)
 	{
 		if(effect!=null)
 		{
 			this.bufferedEffectList.add(effect);
+			
+			effectList.add(effect.getClass().getName());
 		}
 	}
 	
@@ -26,23 +30,31 @@ public abstract class SpellParadigm
 		if(effect!=null)
 		{
 			effect.modifyEffect(modifier);
+			
+			effectList.add(modifier.getClass().getName());
 		}
 	}
 	
 	public void applyEnhancement(SpellEnhancement enh)
 	{
-		if(bufferedEffectList.isEmpty())
+		if(enh!=null)
 		{
-			this.enhanceParadigm(enh);
-		}
-		else
-		{
-			SpellEffect effect = this.getBufferedEffect();
-			if(effect!=null)
+			if(bufferedEffectList.isEmpty())
 			{
-				effect.enhanceEffect(enh);
+				this.enhanceParadigm(enh);
 			}
+			else
+			{
+				SpellEffect effect = this.getBufferedEffect();
+				if(effect!=null)
+				{
+					effect.enhanceEffect(enh);
+				}
+			}
+			
+			effectList.add(enh.getClass().getName());
 		}
+		
 	}
 	
 	public abstract void enhanceParadigm(SpellEnhancement enh);
