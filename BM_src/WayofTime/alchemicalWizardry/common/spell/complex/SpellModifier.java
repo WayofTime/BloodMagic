@@ -9,7 +9,7 @@ public class SpellModifier
 	
 	private int modifier;
 	
-	public SpellModifier(int modifier)
+	protected SpellModifier(int modifier)
 	{
 		this.modifier = modifier;
 	}

@@ -19,4 +19,11 @@ public class SpellParadigmSelf extends SpellParadigm
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public int getDefaultCost() 
+	{
+
+		return 0;
+	}
 }

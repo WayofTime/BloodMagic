@@ -22,4 +22,11 @@ public class SpellParadigmMelee extends SpellParadigm
 		
 	}
 
+	@Override
+	public int getDefaultCost() 
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

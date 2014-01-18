@@ -85,4 +85,37 @@ public abstract class SpellParadigm
 			return bufferedEffectList.get(bufferedEffectList.size()-1);
 		}
 	}
+	
+	public int getTotalCost()
+	{
+		int cost = 0;
+		if(this.bufferedEffectList!=null && !this.bufferedEffectList.isEmpty())
+		{
+			if(this instanceof SpellParadigmProjectile)
+			{
+				for(SpellEffect effect : bufferedEffectList)
+				{
+					cost+=effect.getCostForProjectile();
+				}
+			}else if(this instanceof SpellParadigmSelf)
+			{
+				for(SpellEffect effect : bufferedEffectList)
+				{
+					cost+=effect.getCostForSelf();
+				}
+			}else if(this instanceof SpellParadigmMelee)
+			{
+				for(SpellEffect effect : bufferedEffectList)
+				{
+					cost+=effect.getCostForMelee();
+				}
+			}
+			
+			
+		}
+
+		return cost;
+	}
+	
+	public abstract int getDefaultCost();
 }

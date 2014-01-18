@@ -90,5 +90,12 @@ public class SpellParadigmProjectile extends SpellParadigm
 		proj.setEffectList(effectList);
 		proj.setRicochetMax(ricochetMax); 
 	}
+
+	@Override
+	public int getDefaultCost() 
+	{
+		// TODO Auto-generated method stub
+		return 50;
+	}
 	
 }

@@ -173,4 +173,9 @@ public class AlchemyRecipe
     {
         return this.recipe;
     }
+    
+    public int getOrbLevel()
+    {
+    	return this.bloodOrbLevel;
+    }
 }

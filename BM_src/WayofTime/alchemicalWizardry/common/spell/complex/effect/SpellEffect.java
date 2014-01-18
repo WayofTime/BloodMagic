@@ -9,9 +9,16 @@ import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhanc
 
 public abstract class SpellEffect 
 {
-	public int modifierState = SpellModifier.DEFAULT;
-	public int powerEnhancement = 0;
-	public int costEnhancement = 0;
+	protected int modifierState;
+	protected int powerEnhancement;
+	protected int costEnhancement;
+	
+	public SpellEffect()
+	{
+		this.modifierState = SpellModifier.DEFAULT;
+		this.powerEnhancement = 0;
+		this.costEnhancement = 0;
+	}
 	
 	public void enhanceEffect(SpellEnhancement enh)
 	{
@@ -99,10 +106,10 @@ public abstract class SpellEffect
 		return 0;
 	}
 	
-	public abstract int getCostForDefaultProjectile();
-	public abstract int getCostForOffenseProjectile();
-	public abstract int getCostForDefenseProjectile();
-	public abstract int getCostForEnvironmentProjectile();
+	protected abstract int getCostForDefaultProjectile();
+	protected abstract int getCostForOffenseProjectile();
+	protected abstract int getCostForDefenseProjectile();
+	protected abstract int getCostForEnvironmentProjectile();
 	
 	public int getCostForSelf()
 	{
@@ -116,10 +123,10 @@ public abstract class SpellEffect
 		return 0;
 	}
 	
-	public abstract int getCostForDefaultSelf();
-	public abstract int getCostForOffenseSelf();
-	public abstract int getCostForDefenseSelf();
-	public abstract int getCostForEnvironmentSelf();
+	protected abstract int getCostForDefaultSelf();
+	protected abstract int getCostForOffenseSelf();
+	protected abstract int getCostForDefenseSelf();
+	protected abstract int getCostForEnvironmentSelf();
 	
 	public int getCostForMelee()
 	{
@@ -133,8 +140,8 @@ public abstract class SpellEffect
 		return 0;
 	}
 	
-	public abstract int getCostForDefaultMelee();
-	public abstract int getCostForOffenseMelee();
-	public abstract int getCostForDefenseMelee();
-	public abstract int getCostForEnvironmentMelee();
+	protected abstract int getCostForDefaultMelee();
+	protected abstract int getCostForOffenseMelee();
+	protected abstract int getCostForDefenseMelee();
+	protected abstract int getCostForEnvironmentMelee();
 }
