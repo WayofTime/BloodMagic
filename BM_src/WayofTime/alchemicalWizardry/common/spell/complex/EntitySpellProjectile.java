@@ -268,14 +268,21 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		par1NBTTagCompound.setByte("inData", (byte)inData);
 		par1NBTTagCompound.setByte("inGround", (byte)(inGround ? 1 : 0));
 		
-		NBTTagList tagList = par1NBTTagCompound.getTagList("Effects");
-		this.effectList = new LinkedList();
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
-            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+		NBTTagList effectList = new NBTTagList();
 
-            this.effectList.add(tag.getString("Class"));
+        for (String str : this.effectList)
+        {
+            if (str != null)
+            {
+                NBTTagCompound tag = new NBTTagCompound();
+
+                tag.setString("Class", str);
+                effectList.appendTag(tag);
+            }
         }
+
+        par1NBTTagCompound.setTag("Effects", effectList);
+        
 	}
 
 	/**
@@ -291,20 +298,17 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		inData = par1NBTTagCompound.getByte("inData") & 255;
 		inGround = par1NBTTagCompound.getByte("inGround") == 1;
 		
-		NBTTagList effectList = new NBTTagList();
-
-        for (String str : this.effectList)
+		NBTTagList tagList = par1NBTTagCompound.getTagList("Effects");
+		this.effectList = new LinkedList();
+        for (int i = 0; i < tagList.tagCount(); i++)
         {
-            if (str != null)
-            {
-                NBTTagCompound tag = new NBTTagCompound();
+            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
 
-                tag.setString("Class", str);
-                effectList.appendTag(tag);
-            }
+            this.effectList.add(tag.getString("Class"));
         }
-
-        par1NBTTagCompound.setTag("Effects", effectList);
+        
+        SpellParadigmProjectile parad = SpellParadigmProjectile.getParadigmForStringArray(effectList);
+        parad.prepareProjectile(this);
 	}
 
 	/**
@@ -382,22 +386,15 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		{
 			shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
 			this.setDead();
-		} else if (this.isUndead(mop)) {
-			doDamage(16 + d12(), mop);
-		} else {
-			doDamage(8 + d6(), mop);
+		} 
+		else 
+		{
+			doDamage(this.damage, mop);
 		}
 		spawnHitParticles("exorcism", 8);
 		this.setDead();
 	}
 
-	private int d12() {
-		return rand.nextInt(12) + 1;
-	}
-
-	private int d6() {
-		return rand.nextInt(6) + 1;
-	}
 
 	private void spawnHitParticles(String string, int i) {
 		for (int particles = 0; particles < i; particles++) {
@@ -405,15 +402,13 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		}
 	}
 
-	private void doDamage(int i, Entity mop) {
-		mop.attackEntityFrom(this.getDamageSource(), i);
+	private void doDamage(float f, Entity mop) 
+	{
+		mop.attackEntityFrom(this.getDamageSource(), f);
 	}
 
-	private boolean isUndead(Entity mop) {
-		return mop instanceof EntitySkeleton || mop instanceof EntityGhast || mop instanceof EntityWither || mop instanceof EntityZombie || mop instanceof EntityPigZombie;
-	}
-
-	private DamageSource getDamageSource() {
+	private DamageSource getDamageSource() 
+	{
 		return DamageSource.causePlayerDamage(shootingEntity);
 	}
 

@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 
 public abstract class SpellParadigm 
 {

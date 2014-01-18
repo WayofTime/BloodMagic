@@ -5,18 +5,21 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class SpellParadigmSelf extends SpellParadigm
+public class SpellParadigmMelee extends SpellParadigm 
 {
-	@Override
-	public void enhanceParadigm(SpellEnhancement enh) 
-	{
-		
-	}
 
 	@Override
-	public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack) 
+	public void enhanceParadigm(SpellEnhancement enh) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -1,0 +1,19 @@
+package WayofTime.alchemicalWizardry.common.spell.complex.enhancement;
+
+public class SpellEnhancement 
+{
+	public static final int POWER = 0;
+	public static final int EFFICIENCY = 1;
+	
+	private int state = this.POWER;
+	
+	protected SpellEnhancement(int state)
+	{
+		this.state = state;
+	}
+	
+	public int getState()
+	{
+		return this.state;
+	}
+}
