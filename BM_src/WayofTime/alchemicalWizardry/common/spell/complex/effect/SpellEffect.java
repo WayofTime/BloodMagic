@@ -12,6 +12,7 @@ public abstract class SpellEffect
 	protected int modifierState;
 	protected int powerEnhancement;
 	protected int costEnhancement;
+	protected int potencyEnhancement;
 	
 	public SpellEffect()
 	{
@@ -28,6 +29,7 @@ public abstract class SpellEffect
 			{
 			case SpellEnhancement.POWER: this.powerEnhancement++; break;
 			case SpellEnhancement.EFFICIENCY: this.costEnhancement++; break;
+			case SpellEnhancement.POTENCY: this.potencyEnhancement++; break;
 			}
 		}
 	}
@@ -43,6 +45,14 @@ public abstract class SpellEffect
 		if(parad instanceof SpellParadigmProjectile)
 		{
 			this.modifyProjectileParadigm((SpellParadigmProjectile)parad);
+		}
+		if(parad instanceof SpellParadigmSelf)
+		{
+			this.modifySelfParadigm((SpellParadigmSelf)parad);
+		}
+		if(parad instanceof SpellParadigmMelee)
+		{
+			this.modifyMeleeParadigm((SpellParadigmMelee)parad);
 		}
 	}
 	

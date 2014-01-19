@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefault;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffectFire;
@@ -55,6 +56,7 @@ public class ItemComplexSpellCrystal extends EnergyItems
 
         SpellParadigm parad = new SpellParadigmSelf();
         parad.addBufferedEffect(new SpellEffectFire());
+        parad.modifyBufferedEffect(new SpellModifierDefault());
         parad.castSpell(par2World, par3EntityPlayer, par1ItemStack);
 
         return par1ItemStack;

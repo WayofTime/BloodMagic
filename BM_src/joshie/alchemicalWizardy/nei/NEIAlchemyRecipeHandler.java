@@ -46,7 +46,7 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 			this.output = new PositionedStack(recipe.getResult(), 76, 25);
 			this.lp = recipe.getAmountNeeded() * 100;
 			this.orbs = new ArrayList<BloodOrbs>();
-			for(int i = recipe.getOrbLevel(); i < bloodOrbs.size(); i++) {
+			for(int i = recipe.getOrbLevel(); i <= bloodOrbs.size(); i++) {
 				ItemStack orb = new ItemStack(bloodOrbs.get(i - 1));
 				orbs.add(new BloodOrbs(orb));
 			}
@@ -89,7 +89,7 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 			}
 			
 			ArrayList<ItemStack> orbs = new ArrayList<ItemStack>();
-			for(int i = recipe.getOrbLevel(); i < bloodOrbs.size(); i++) {
+			for(int i = recipe.getOrbLevel(); i <= bloodOrbs.size(); i++) {
 				ItemStack orb = new ItemStack(bloodOrbs.get(i - 1));
 				if(NEIServerUtils.areStacksSameTypeCrafting(orb, ingredient)) {
 					arecipes.add(new CachedAlchemyRecipe(recipe));

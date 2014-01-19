@@ -28,6 +28,8 @@ public class SpellParadigmSelf extends SpellParadigm
 	@Override
 	public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack) 
 	{
+		this.applyAllSpellEffects();
+		
 		for(ISelfSpellEffect eff : selfSpellEffectList)
 		{
 			eff.onSelfUse(world, entityPlayer);
