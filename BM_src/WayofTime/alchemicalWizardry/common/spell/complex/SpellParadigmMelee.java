@@ -1,13 +1,24 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 
 public class SpellParadigmMelee extends SpellParadigm 
 {
-
+	private List<IMeleeSpellEntityEffect> entityEffectList;
+	private List<IMeleeSpellWorldEffect> worldEffectList;
+	
+	public SpellParadigmMelee()
+	{
+		this.entityEffectList = new ArrayList();
+		this.worldEffectList = new ArrayList();
+	}
+	
 	@Override
 	public void enhanceParadigm(SpellEnhancement enh) 
 	{
@@ -22,11 +33,25 @@ public class SpellParadigmMelee extends SpellParadigm
 		
 	}
 
+	public void addEntityEffect(IMeleeSpellEntityEffect eff)
+	{
+		if(eff!=null)
+		{
+			this.entityEffectList.add(eff);
+		}
+	}
+	
+	public void addWorldEffect(IMeleeSpellWorldEffect eff)
+	{
+		if(eff!=null)
+		{
+			this.worldEffectList.add(eff);
+		}
+	}
+	
 	@Override
 	public int getDefaultCost() 
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

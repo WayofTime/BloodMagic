@@ -111,10 +111,10 @@ public abstract class SpellParadigm
 				}
 			}
 			
-			
+			return (int)(cost*Math.sqrt(this.bufferedEffectList.size()));
 		}
 
-		return cost;
+		return getDefaultCost();
 	}
 	
 	public abstract int getDefaultCost();

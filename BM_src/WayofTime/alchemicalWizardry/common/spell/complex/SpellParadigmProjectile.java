@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 
@@ -24,7 +25,6 @@ public class SpellParadigmProjectile extends SpellParadigm
 	@Override
 	public void enhanceParadigm(SpellEnhancement enh) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -34,6 +34,9 @@ public class SpellParadigmProjectile extends SpellParadigm
 		EntitySpellProjectile proj = new EntitySpellProjectile(world, entityPlayer);
 		this.prepareProjectile(proj);
 		world.spawnEntityInWorld(proj);
+		int cost = this.getTotalCost();
+		
+		EnergyItems.syphonBatteries(itemStack, entityPlayer, cost);
 	}
 	
 	public static SpellParadigmProjectile getParadigmForStringArray(List<String> stringList)
@@ -90,11 +93,26 @@ public class SpellParadigmProjectile extends SpellParadigm
 		proj.setEffectList(effectList);
 		proj.setRicochetMax(ricochetMax); 
 	}
+	
+	public void addImpactEffect(IProjectileImpactEffect eff)
+	{
+		if(eff!=null)
+		{
+			this.impactList.add(eff);
+		}
+	}
+	
+	public void addUpdateEffect(IProjectileUpdateEffect eff)
+	{
+		if(eff!=null)
+		{
+			this.updateEffectList.add(eff);
+		}
+	}
 
 	@Override
 	public int getDefaultCost() 
 	{
-		// TODO Auto-generated method stub
 		return 50;
 	}
 	
