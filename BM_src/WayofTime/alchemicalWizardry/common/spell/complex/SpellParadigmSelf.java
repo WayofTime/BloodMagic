@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ISelfSpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

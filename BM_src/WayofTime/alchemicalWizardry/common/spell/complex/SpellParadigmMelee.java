@@ -6,6 +6,9 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IMeleeSpellEntityEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IMeleeSpellWorldEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 
 public class SpellParadigmMelee extends SpellParadigm 
@@ -22,15 +25,25 @@ public class SpellParadigmMelee extends SpellParadigm
 	@Override
 	public void enhanceParadigm(SpellEnhancement enh) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)
 	{
-		// TODO Auto-generated method stub
+		for(IMeleeSpellEntityEffect effect : entityEffectList)
+		{
+			effect.onEntityImpact(world, entityPlayer);
+		}
 		
+		for(IMeleeSpellWorldEffect effect : worldEffectList)
+		{
+			effect.onWorldEffect(world, entityPlayer);
+		}
+		
+		int cost = this.getTotalCost();
+		
+		EnergyItems.syphonBatteries(itemStack, entityPlayer, cost);
 	}
 
 	public void addEntityEffect(IMeleeSpellEntityEffect eff)

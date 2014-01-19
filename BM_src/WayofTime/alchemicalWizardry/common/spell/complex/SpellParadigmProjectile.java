@@ -10,6 +10,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 
 public class SpellParadigmProjectile extends SpellParadigm
