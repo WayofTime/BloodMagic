@@ -4,6 +4,6 @@ public class SpellModifierEnvironmental extends SpellModifier
 {
 	public SpellModifierEnvironmental()
 	{
-		super(SpellModifier.DEFENSIVE);
+		super(SpellModifier.ENVIRONMENTAL);
 	}
 }

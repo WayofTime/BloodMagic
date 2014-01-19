@@ -118,4 +118,40 @@ public abstract class SpellParadigm
 	}
 	
 	public abstract int getDefaultCost();
+	
+	public int getBufferedEffectPower()
+	{
+		SpellEffect eff = this.getBufferedEffect();
+		
+		if(eff!=null)
+		{
+			return eff.getPowerEnhancements();
+		}
+		
+		return 0;
+	}
+	
+	public int getBufferedEffectCost()
+	{
+		SpellEffect eff = this.getBufferedEffect();
+		
+		if(eff!=null)
+		{
+			return eff.getCostEnhancements();
+		}
+		
+		return 0;
+	}
+	
+	public int getBufferedEffectPotency()
+	{
+		SpellEffect eff = this.getBufferedEffect();
+		
+		if(eff!=null)
+		{
+			return eff.getPotencyEnhancements();
+		}
+		
+		return 0;
+	}
 }

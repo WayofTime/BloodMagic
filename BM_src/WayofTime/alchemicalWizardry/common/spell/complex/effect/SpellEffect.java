@@ -154,4 +154,19 @@ public abstract class SpellEffect
 	protected abstract int getCostForOffenseMelee();
 	protected abstract int getCostForDefenseMelee();
 	protected abstract int getCostForEnvironmentMelee();
+	
+	public int getPowerEnhancements()
+	{
+		return this.powerEnhancement;
+	}
+	
+	public int getCostEnhancements()
+	{
+		return this.costEnhancement;
+	}
+	
+	public int getPotencyEnhancements()
+	{
+		return this.potencyEnhancement;
+	}
 }

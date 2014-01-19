@@ -7,10 +7,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefault;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierOffensive;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffectFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementPotency;
+import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementPower;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -54,9 +56,16 @@ public class ItemComplexSpellCrystal extends EnergyItems
             return par1ItemStack;
         }
 
+        if(par2World.isRemote)
+        {
+        	return par1ItemStack;
+        }
+        
         SpellParadigm parad = new SpellParadigmSelf();
         parad.addBufferedEffect(new SpellEffectFire());
-        parad.modifyBufferedEffect(new SpellModifierDefault());
+        parad.modifyBufferedEffect(new SpellModifierOffensive());
+        parad.applyEnhancement(new SpellEnhancementPower()); 
+        parad.applyEnhancement(new SpellEnhancementPotency());
         parad.castSpell(par2World, par3EntityPlayer, par1ItemStack);
 
         return par1ItemStack;
