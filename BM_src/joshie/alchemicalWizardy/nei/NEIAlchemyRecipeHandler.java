@@ -25,13 +25,11 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 	    }
 		
 		ArrayList<BloodOrbs> orbs;
-		AlchemyRecipe recipe;
 		PositionedStack output;
 		List<PositionedStack> inputs;
 		int lp;
 		
 		public CachedAlchemyRecipe(AlchemyRecipe recipe) {
-			this.recipe = recipe;
 			List<PositionedStack> inputs = new ArrayList<PositionedStack>();
 			ItemStack[] stacks = recipe.getRecipe();
 			if(stacks.length > 0)
@@ -123,11 +121,6 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public String getRecipeName() {
 		return "Alchemic Chemistry Set";
-	}
-	
-	@Override
-	public String getOverlayIdentifier() {
-		return "bmalchemy";
 	}
 
 	@Override
