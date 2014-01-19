@@ -49,6 +49,6 @@ public class SpellParadigmSelf extends SpellParadigm
 	@Override
 	public int getDefaultCost() 
 	{
-		return 0;
+		return 100;
 	}
 }

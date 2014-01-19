@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.SelfDefaultFire;
 
 public class SpellEffectFire extends SpellEffect
 {
@@ -10,7 +11,7 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	public void defaultModificationProjectile(SpellParadigmProjectile parad) 
 	{
-	
+		
 	}
 
 	@Override
@@ -37,8 +38,7 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	public void defaultModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-		
+		parad.addSelfSpellEffect(new SelfDefaultFire());
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class SpellEffectFire extends SpellEffect
 	protected int getCostForDefaultSelf() 
 	{
 		// TODO Auto-generated method stub
-		return 0;
+		return 1000;
 	}
 
 	@Override

@@ -254,6 +254,7 @@ public class AlchemicalWizardry
     public static int itemKeyOfDiabloItemID;
     public static int energyBazookaItemID;
     public static int itemBloodLightSigilItemID;
+    public static int itemComplexSpellCrystalItemID;
 
     public static int testingBlockBlockID;
     public static int lifeEssenceFlowingBlockID;

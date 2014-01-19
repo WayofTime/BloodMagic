@@ -103,6 +103,7 @@ public class ModItems
     public static Item itemKeyOfDiablo;
     public static Item energyBazooka;
     public static Item itemBloodLightSigil;
+    public static Item itemComplexSpellCrystal;
 
     public static void init()
     {
@@ -182,7 +183,6 @@ public class ModItems
         itemKeyOfDiablo = new ItemDiabloKey(AlchemicalWizardry.itemKeyOfDiabloItemID).setUnlocalizedName("itemDiabloKey");
         energyBazooka = new EnergyBazooka(AlchemicalWizardry.energyBazookaItemID).setUnlocalizedName("energyBazooka");
         itemBloodLightSigil = new ItemBloodLightSigil(AlchemicalWizardry.itemBloodLightSigilItemID).setUnlocalizedName("bloodLightSigil");
-
-
+        itemComplexSpellCrystal = new ItemComplexSpellCrystal(AlchemicalWizardry.itemComplexSpellCrystalItemID).setUnlocalizedName("itemComplexSpellCrystal");
     }
 }
