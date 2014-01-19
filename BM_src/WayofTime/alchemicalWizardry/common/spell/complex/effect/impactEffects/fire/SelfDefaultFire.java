@@ -17,6 +17,6 @@ public class SelfDefaultFire extends SelfSpellEffect
 	@Override
 	public void onSelfUse(World world, EntityPlayer player) 
 	{
-		player.addPotionEffect(new PotionEffect(Potion.fireResistance.id,1000,0));
+		player.setFire((int)(10*Math.pow(1.5, powerUpgrades+1.5*potencyUpgrades)));
 	}
 }

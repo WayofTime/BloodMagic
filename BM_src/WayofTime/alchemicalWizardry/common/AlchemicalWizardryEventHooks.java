@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.entity.Entity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -51,6 +53,19 @@ public class AlchemicalWizardryEventHooks
                 ((EntityLivingBase) entityAttacking).attackEntityFrom(DamageSource.generic, damageRecieve);
             }
         }
+        
+        if(entityAttacked.isPotionActive(AlchemicalWizardry.customPotionFlameCloak))
+        {
+            int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFlameCloak).getAmplifier();
+
+        	Entity entityAttacking = event.source.getSourceOfDamage();
+        	
+        	if(entityAttacking != null && entityAttacking instanceof EntityLivingBase && !entityAttacking.isImmuneToFire() && !((EntityLivingBase)entityAttacking).isPotionActive(Potion.fireResistance))
+        	{
+        		entityAttacking.attackEntityFrom(DamageSource.inFire, 2*i+2);
+        		entityAttacking.setFire(3);
+        	}
+        }
     }
 
 //	@ForgeSubscribe
@@ -63,6 +78,9 @@ public class AlchemicalWizardryEventHooks
     public void onEntityUpdate(LivingUpdateEvent event)
     {
         EntityLivingBase entityLiving = event.entityLiving;
+        double x = entityLiving.posX;
+        double y = entityLiving.posY;
+        double z = entityLiving.posZ;
 
         if (entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote)
         {
@@ -210,5 +228,26 @@ public class AlchemicalWizardryEventHooks
                 }
             }
         }
+        
+        if(entityLiving.isPotionActive(AlchemicalWizardry.customPotionFlameCloak))
+        {
+        	entityLiving.worldObj.spawnParticle("flame", x+SpellHelper.gaussian(1),y-1.3+SpellHelper.gaussian(0.3),z+SpellHelper.gaussian(1), 0, 0.06d, 0);
+        	
+            int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFlameCloak).getAmplifier();
+        	double range = i*0.5;
+        	
+        	List<Entity> entities = SpellHelper.getEntitiesInRange(entityLiving.worldObj, x, y, z, range, range);
+        	if(entities!=null)
+        	{
+        		for(Entity entity : entities)
+        		{
+        			if(!entity.equals(entityLiving)&&!entity.isImmuneToFire()&&!(entity instanceof EntityLivingBase && ((EntityLivingBase)entity).isPotionActive(Potion.fireResistance)))
+        			{
+        				entity.setFire(3);
+        			}
+        		}
+        	}
+        }
+        	
     }
 }

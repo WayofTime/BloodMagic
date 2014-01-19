@@ -23,7 +23,6 @@ import thaumcraft.api.ItemApi;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryTickHandler;
-import WayofTime.alchemicalWizardry.common.BloodMagicConfiguration;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
@@ -31,6 +30,7 @@ import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.PotionBoost;
 import WayofTime.alchemicalWizardry.common.PotionDrowning;
+import WayofTime.alchemicalWizardry.common.PotionFlameCloak;
 import WayofTime.alchemicalWizardry.common.PotionFlight;
 import WayofTime.alchemicalWizardry.common.PotionInhibit;
 import WayofTime.alchemicalWizardry.common.PotionProjectileProtect;
@@ -119,6 +119,7 @@ public class AlchemicalWizardry
     public static Potion customPotionInhibit;
     public static Potion customPotionFlight;
     public static Potion customPotionReciprocation;
+    public static Potion customPotionFlameCloak;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -126,6 +127,7 @@ public class AlchemicalWizardry
     public static int customPotionInhibitID;
     public static int customPotionFlightID;
     public static int customPotionReciprocationID;
+    public static int customPotionFlameCloakID;
 
     public static boolean isThaumcraftLoaded;
 
@@ -537,6 +539,7 @@ public class AlchemicalWizardry
         customPotionInhibit = (new PotionInhibit(customPotionInhibitID, false, 0)).setIconIndex(0, 0).setPotionName("Inhibit");
         customPotionFlight = (new PotionFlight(customPotionFlightID, false, 0)).setIconIndex(0, 0).setPotionName("Flight");
         customPotionReciprocation = (new PotionReciprocation(customPotionReciprocationID, false, 0xFFFFFF)).setIconIndex(0, 0).setPotionName("Reciprocation");
+        customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID,false,0).setIconIndex(0,0).setPotionName("Flame Cloak"));
         //All items registered go here
         //LanguageRegistry.addName(orbOfTesting, "Orb of Testing");
         LanguageRegistry.addName(ModItems.weakBloodOrb, "Weak Blood Orb");

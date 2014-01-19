@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.SelfSpellEffect;
 
 public class SelfOffensiveFire extends SelfSpellEffect 
@@ -14,7 +16,6 @@ public class SelfOffensiveFire extends SelfSpellEffect
 	@Override
 	public void onSelfUse(World world, EntityPlayer player) 
 	{
-		
+		player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlameCloak.id,(this.powerUpgrades+1)*this.powerUpgrades,this.potencyUpgrades));
 	}
-
 }

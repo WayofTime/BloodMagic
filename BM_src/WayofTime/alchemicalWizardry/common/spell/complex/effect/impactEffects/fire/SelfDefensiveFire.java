@@ -16,6 +16,9 @@ public class SelfDefensiveFire extends SelfSpellEffect {
 	{
 		// TODO Auto-generated method stub
 		
+        world.playAuxSFXAtEntity(player, 1008,  (int)player.posX,  (int)player.posY,  (int)player.posZ, 0);
+
+		
 	}
 
 }

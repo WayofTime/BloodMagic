@@ -1,6 +1,5 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLLog;
 import net.minecraftforge.common.Configuration;
@@ -45,7 +44,8 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionInhibitID = config.get("Potion ID", "Inhibit", 103).getInt();
             AlchemicalWizardry.customPotionFlightID = config.get("Potion ID", "Flight", 104).getInt();
             AlchemicalWizardry.customPotionReciprocationID = config.get("Potion ID", "Reciprocation", 105).getInt();
-
+            AlchemicalWizardry.customPotionFlameCloakID = config.get("Potion ID","FlameCloak",106).getInt();
+            
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
             AlchemicalWizardry.diamondMeteorArray = config.get("meteor", "diamondMeteor", new String[]{"oreDiamond", "100", "oreEmerald", "75", "oreCinnabar", "200", "oreAmber", "200"}).getStringList();
