@@ -420,6 +420,7 @@ public class PacketHandler implements IPacketHandler
                 TEOrientable tileEntityOrientable = (TEOrientable) tileEntity;
                 tileEntityOrientable.setInputDirection(ForgeDirection.getOrientation(dat.readInt()));
                 tileEntityOrientable.setOutputDirection(ForgeDirection.getOrientation(dat.readInt()));
+                world.markBlockForRenderUpdate(x, y, z);
             }
         } else if (packet.channel.equals("TEPedestal"))
         {
