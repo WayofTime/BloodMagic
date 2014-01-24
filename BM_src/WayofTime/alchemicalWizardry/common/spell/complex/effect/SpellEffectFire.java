@@ -126,7 +126,7 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	protected int getCostForOffenseSelf() 
 	{
-		return 100*(int)((this.powerEnhancement+1)*Math.pow(2, potencyEnhancement));
+		return 500*(int)((this.powerEnhancement+1)*Math.pow(2, potencyEnhancement));
 	}
 
 	@Override

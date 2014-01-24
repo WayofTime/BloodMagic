@@ -76,6 +76,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
@@ -284,6 +285,7 @@ public class AlchemicalWizardry
     public static int spectralBlockBlockID;
     public static int blockConduitBlockID;
     public static int blockBloodLightBlockID;
+    public static int blockSpellEffectBlockID;
 
     public static void registerRenderInformation()
     {
@@ -364,7 +366,7 @@ public class AlchemicalWizardry
 
         //blocks
 
-        //blockConduit = new BlockConduit(blockConduitBlockID);
+        
         proxy.registerRenderers();
         proxy.registerEntities();
         //ItemStacks used for crafting go here
@@ -652,6 +654,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TEPlinth.class, "containerPlinth");
         GameRegistry.registerTileEntity(TETeleposer.class, "containerTeleposer");
         GameRegistry.registerTileEntity(TEConduit.class, "containerConduit");
+        GameRegistry.registerTileEntity(TEOrientable.class, "containerOrientable");
         //
         GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
         LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 0), "Blood Rune");
@@ -689,6 +692,8 @@ public class AlchemicalWizardry
         LanguageRegistry.addName(ModBlocks.blockTeleposer, "Teleposer");
         LanguageRegistry.addName(ModBlocks.spectralBlock, "Spectral Block");
         LanguageRegistry.addName(ModBlocks.blockBloodLight, "Blood Light");
+        LanguageRegistry.addName(ModBlocks.blockConduit, "Spell Conduit");
+        //TODO
         GameRegistry.registerBlock(ModBlocks.armourForge, "armourForge");
         GameRegistry.registerBlock(ModBlocks.emptySocket, "emptySocket");
         GameRegistry.registerBlock(ModBlocks.bloodStoneBrick, "bloodStoneBrick");
@@ -700,7 +705,8 @@ public class AlchemicalWizardry
         GameRegistry.registerBlock(ModBlocks.blockTeleposer, "blockTeleposer");
         GameRegistry.registerBlock(ModBlocks.spectralBlock, "spectralBlock");
         GameRegistry.registerBlock(ModBlocks.blockBloodLight, "bloodLight");
-        //GameRegistry.registerBlock(blockConduit,"blockConduit");
+        GameRegistry.registerBlock(ModBlocks.blockConduit,"blockConduit");
+        GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         MinecraftForge.setBlockHarvestLevel(ModBlocks.bloodRune, "pickaxe", 2);
         MinecraftForge.setBlockHarvestLevel(ModBlocks.speedRune, "pickaxe", 2);
         MinecraftForge.setBlockHarvestLevel(ModBlocks.efficiencyRune, "pickaxe", 2);

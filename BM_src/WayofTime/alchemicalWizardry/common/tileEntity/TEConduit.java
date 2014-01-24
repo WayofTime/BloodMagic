@@ -23,9 +23,9 @@ public class TEConduit extends TEOrientable
     public void updateEntity()
     {
         //this.capacity=(int) (10000*this.capacityMultiplier);
-        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
-        {
-        }
+//        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
+//        {
+//        }
     }
 
     @Override

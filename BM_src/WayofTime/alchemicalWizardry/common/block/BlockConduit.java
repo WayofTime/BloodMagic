@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -12,6 +8,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockConduit extends BlockContainer
 {
@@ -76,25 +77,25 @@ public class BlockConduit extends BlockContainer
         ForgeDirection sideClicked = ForgeDirection.getOrientation(side);
         TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        if (tile instanceof TEConduit)
+        if (tile instanceof TEOrientable)
         {
             //TODO NEEDS WORK
-            if (((TEConduit) tile).getInputDirection().equals(sideClicked))
+            if (((TEOrientable) tile).getInputDirection().equals(sideClicked))
             {
-                ((TEConduit) tile).setInputDirection(((TEConduit) tile).getOutputDirection());
-                ((TEConduit) tile).setOutputDirection(sideClicked);
-            } else if (((TEConduit) tile).getOutputDirection().equals(sideClicked))
+                ((TEOrientable) tile).setInputDirection(((TEConduit) tile).getOutputDirection());
+                ((TEOrientable) tile).setOutputDirection(sideClicked);
+            } else if (((TEOrientable) tile).getOutputDirection().equals(sideClicked))
             {
-                ((TEConduit) tile).setOutputDirection(((TEConduit) tile).getInputDirection());
-                ((TEConduit) tile).setInputDirection(sideClicked);
+                ((TEOrientable) tile).setOutputDirection(((TEConduit) tile).getInputDirection());
+                ((TEOrientable) tile).setInputDirection(sideClicked);
             } else
             {
                 if (!player.isSneaking())
                 {
-                    ((TEConduit) tile).setOutputDirection(sideClicked);
+                    ((TEOrientable) tile).setOutputDirection(sideClicked);
                 } else
                 {
-                    ((TEConduit) tile).setOutputDirection(sideClicked.getOpposite());
+                    ((TEOrientable) tile).setOutputDirection(sideClicked.getOpposite());
                 }
             }
         }
