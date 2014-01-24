@@ -55,6 +55,10 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
@@ -80,6 +84,10 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
@@ -286,18 +294,21 @@ public class AlchemicalWizardry
     public static int blockConduitBlockID;
     public static int blockBloodLightBlockID;
     public static int blockSpellEffectBlockID;
+    public static int blockSpellParadigmBlockID;
+    public static int blockSpellModifierBlockID;
+    public static int blockSpellEnhancementBlockID;
 
     public static void registerRenderInformation()
     {
     }
 
-    ;
+    
 
     public static void registerRenderThings()
     {
     }
 
-    ;
+    
 
     // The instance of your mod that Forge uses.
     @Instance("AWWayofTime")
@@ -655,12 +666,49 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TETeleposer.class, "containerTeleposer");
         GameRegistry.registerTileEntity(TEConduit.class, "containerConduit");
         GameRegistry.registerTileEntity(TEOrientable.class, "containerOrientable");
+        GameRegistry.registerTileEntity(TESpellParadigmBlock.class, "containerSpellParadigmBlock");
+        GameRegistry.registerTileEntity(TESpellEffectBlock.class, "containerSpellEffectBlock");
+        GameRegistry.registerTileEntity(TESpellModifierBlock.class, "containerSpellModifierBlock");
+        GameRegistry.registerTileEntity(TESpellEnhancementBlock.class, "containerSpellEnhancementBlock");
         //
         GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
         LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 0), "Blood Rune");
         LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 1), "Rune of Augmented Capacity");
         LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 2), "Rune of Dislocation");
         LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 3), "Rune of the Orb");
+        //TODO
+        
+        GameRegistry.registerBlock(ModBlocks.blockSpellParadigm, ItemSpellParadigmBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellParadigm, 1, 0), "Particle Generator");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellParadigm, 1, 1), "Self Augmentator");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellParadigm, 1, 2), "Melee Aggregator");
+        
+        GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 0), "Unstable Spell Empowerer");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 1), "Standard Spell Empowerer");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 2), "Reinforced Spell Empowerer");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 3), "Imbued Spell Empowerer");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 4), "Demonic Spell Empowerer");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 5), "Unstable Spell Dampener");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 6), "Standard Spell Dampener");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 7), "Reinforced Spell Dampener");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 8), "Imbued Spell Dampener");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 9), "Demonic Spell Dampener");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 10), "Unstable Spell Augmenter");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 11), "Standard Spell Augmenter");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 12), "Reinforced Spell Augmenter");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 13), "Imbued Spell Augmenter");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 14), "Demonic Spell Augmenter");
+       
+        GameRegistry.registerBlock(ModBlocks.blockSpellModifier, ItemSpellModifierBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 0), "Default Spell Modifier");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 1), "Offensive Spell Modifier");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 2), "Defensive Spell Modifier");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 3), "Environmental Spell Modifier");
+        
+        GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 0), "Crucible of Fire");
+        
         GameRegistry.registerBlock(ModBlocks.speedRune, "speedRune");
         LanguageRegistry.addName(ModBlocks.speedRune, "Speed Rune");
         GameRegistry.registerBlock(ModBlocks.efficiencyRune, "efficiencyRune");

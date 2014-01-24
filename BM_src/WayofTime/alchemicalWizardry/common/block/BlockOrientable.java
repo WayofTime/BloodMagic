@@ -15,16 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockOrientable extends BlockContainer
-{
-    @SideOnly(Side.CLIENT)
-    private static Icon topIcon;
-    @SideOnly(Side.CLIENT)
-    private static Icon sideIcon1;
-    @SideOnly(Side.CLIENT)
-    private static Icon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private static Icon bottomIcon;
-    
+{    
     @SideOnly(Side.CLIENT)
     private static Icon[] fireIcons;
 
@@ -41,17 +32,12 @@ public class BlockOrientable extends BlockContainer
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
-    {
-        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        this.sideIcon1 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        
+    {      
         this.fireIcons = this.registerIconsWithString(iconRegister, "fireEffectBlock");
     }
 
     @SideOnly(Side.CLIENT)
-    public Icon[] registerIconsWithString(IconRegister iconRegister, String blockString)
+    public static Icon[] registerIconsWithString(IconRegister iconRegister, String blockString)
     {
     	Icon[] icons = new Icon[7];
     	
@@ -70,20 +56,11 @@ public class BlockOrientable extends BlockContainer
     @SideOnly(Side.CLIENT)
     public Icon getIcon(int side, int meta)
     {
+    	Icon[] icons = this.getIconsForMeta(meta);
         switch (side)
         {
-            case 0:
-                return bottomIcon;
-
-            case 1:
-                return topIcon;
-
-            //case 2: return sideIcon1;
-            //case 3: return sideIcon1;
-            //case 4: return sideIcon2;
-            //case 5: return sideIcon2;
-            default:
-                return sideIcon2;
+            case 4: return icons[1];
+            default: return icons[6];
         }
     }
 

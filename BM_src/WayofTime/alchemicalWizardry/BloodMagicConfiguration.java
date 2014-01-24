@@ -84,6 +84,9 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.blockBloodLightBlockID = config.getBlock("BloodLight", 1424).getInt();
             AlchemicalWizardry.blockConduitBlockID = config.getBlock("BlockConduit", 1425).getInt();
             AlchemicalWizardry.blockSpellEffectBlockID = config.getBlock("BlockSpellEffect", 1426).getInt();
+            AlchemicalWizardry.blockSpellParadigmBlockID = config.getBlock("BlockSpellParadigm", 1427).getInt();
+            AlchemicalWizardry.blockSpellModifierBlockID = config.getBlock("BlockSpellModifier", 1428).getInt();
+            AlchemicalWizardry.blockSpellEnhancementBlockID = config.getBlock("BlockSpellEnhancement", 1429).getInt();
             //Items
             AlchemicalWizardry.weakBloodOrbItemID = config.getItem("WeakBloodOrb", 17000).getInt();
             AlchemicalWizardry.energyBlasterItemID = config.getItem("EnergyBlaster", 17001).getInt();

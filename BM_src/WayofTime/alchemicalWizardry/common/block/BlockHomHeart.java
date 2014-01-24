@@ -71,7 +71,6 @@ public class BlockHomHeart extends BlockContainer
             return false;
         }
 
-        BlockGrass d;
         ItemStack playerItem = player.getCurrentEquippedItem();
 
         if (playerItem != null)

@@ -42,6 +42,9 @@ public class ModBlocks
     public static Block blockConduit;
     public static Block blockBloodLight;
     public static Block blockSpellEffect;
+    public static Block blockSpellParadigm;
+    public static Block blockSpellModifier;
+    public static Block blockSpellEnhancement;
 
     public static void init()
     {
@@ -73,5 +76,8 @@ public class ModBlocks
         blockConduit = new BlockConduit(AlchemicalWizardry.blockConduitBlockID);
         blockBloodLight = new BlockBloodLightSource(AlchemicalWizardry.blockBloodLightBlockID);
         blockSpellEffect = new BlockSpellEffect(AlchemicalWizardry.blockSpellEffectBlockID);
+        blockSpellParadigm = new BlockSpellParadigm(AlchemicalWizardry.blockSpellParadigmBlockID);
+        blockSpellModifier = new BlockSpellModifier(AlchemicalWizardry.blockSpellModifierBlockID);
+        blockSpellEnhancement = new BlockSpellEnhancement(AlchemicalWizardry.blockSpellEnhancementBlockID);
     }
 }

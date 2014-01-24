@@ -90,7 +90,7 @@ public class ModItems
     public static Item armourInhibitor;
     public static Item creativeFiller;
     public static Item demonPlacer;
-    public static Item itemBloodRuneBlock;
+
     public static Item weakFillingAgent;
     public static Item standardFillingAgent;
     public static Item enhancedFillingAgent;

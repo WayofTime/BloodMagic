@@ -3,14 +3,14 @@ package WayofTime.alchemicalWizardry.common.items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBloodRuneBlock extends ItemBlock
+public class ItemSpellModifierBlock extends ItemBlock
 
 {
-    public ItemBloodRuneBlock(int par1)
+    public ItemSpellModifierBlock(int par1)
     {
         super(par1);
         setHasSubtypes(true);
-        this.setUnlocalizedName("itemBloodRuneBlock");
+        this.setUnlocalizedName("itemSpellModifierBlock");
     }
 
     public String getUnlocalizedName(ItemStack itemstack)
@@ -22,22 +22,18 @@ public class ItemBloodRuneBlock extends ItemBlock
         {
             case 0:
             {
-                name = "blank";
+                name = "power";
                 break;
             }
 
             case 1:
             {
-                name = "fill";
+                name = "efficiency";
                 break;
             }
 
             case 2:
-                name = "empty";
-                break;
-
-            case 3:
-                name = "test";
+                name = "potency";
                 break;
 
             default:
