@@ -37,6 +37,7 @@ import WayofTime.alchemicalWizardry.common.PotionProjectileProtect;
 import WayofTime.alchemicalWizardry.common.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.block.LifeEssenceBlock;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
@@ -785,6 +786,7 @@ public class AlchemicalWizardry
         ArmourForge.initializeRecipes();
         TEPlinth.initialize();
         AlchemicalPotionCreationHandler.initializePotions();
+        AltarRecipeRegistry.initRecipes();
         MinecraftForge.setToolClass(ModItems.boundPickaxe, "pickaxe", 5);
         MinecraftForge.setToolClass(ModItems.boundAxe, "axe", 5);
         MinecraftForge.setToolClass(ModItems.boundShovel, "shovel", 5);
