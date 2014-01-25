@@ -105,6 +105,7 @@ public class BlockOrientable extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
     {
+    	//Right-click orients the output face. Shift-right-click orients the input face.
         if (world.isRemote)
         {
             return false;
@@ -115,25 +116,44 @@ public class BlockOrientable extends BlockContainer
 
         if (tile instanceof TEOrientable)
         {
-            //TODO NEEDS WORK
-            if (((TEOrientable) tile).getInputDirection().equals(sideClicked))
-            {
-                ((TEOrientable) tile).setInputDirection(((TEOrientable) tile).getOutputDirection());
-                ((TEOrientable) tile).setOutputDirection(sideClicked);
-            } else if (((TEOrientable) tile).getOutputDirection().equals(sideClicked))
-            {
-                ((TEOrientable) tile).setOutputDirection(((TEOrientable) tile).getInputDirection());
-                ((TEOrientable) tile).setInputDirection(sideClicked);
-            } else
-            {
-                if (!player.isSneaking())
-                {
-                    ((TEOrientable) tile).setOutputDirection(sideClicked);
-                } else
-                {
-                    ((TEOrientable) tile).setOutputDirection(sideClicked.getOpposite());
-                }
-            }
+        	TEOrientable newTile = (TEOrientable)tile;
+        	if(player.isSneaking())
+        	{
+    			int nextSide = TEOrientable.getIntForForgeDirection(newTile.getInputDirection())+1;
+    			
+    			if(nextSide>5)
+    			{
+    				nextSide = 0;
+    			}
+    			if(ForgeDirection.getOrientation(nextSide)==newTile.getOutputDirection())
+    			{
+    				nextSide++;
+    				if(nextSide>5)
+    				{
+    					nextSide = 0;
+    				}
+    			}
+    			
+    			newTile.setInputDirection(ForgeDirection.getOrientation(nextSide));
+        	}else
+        	{
+    			int nextSide = TEOrientable.getIntForForgeDirection(newTile.getOutputDirection())+1;
+    			
+    			if(nextSide>5)
+    			{
+    				nextSide = 0;
+    			}
+    			if(ForgeDirection.getOrientation(nextSide)==newTile.getInputDirection())
+    			{
+    				nextSide++;
+    				if(nextSide>5)
+    				{
+    					nextSide = 0;
+    				}
+    			}
+    			
+    			newTile.setOutputDirection(ForgeDirection.getOrientation(nextSide));
+        	}
         }
 
         world.markBlockForUpdate(x, y, z);
@@ -220,5 +240,11 @@ public class BlockOrientable extends BlockContainer
     	}
     	
     	return 0;
+    }
+    
+    @Override
+    public int damageDropped(int metadata)
+    {
+        return metadata;
     }
 }

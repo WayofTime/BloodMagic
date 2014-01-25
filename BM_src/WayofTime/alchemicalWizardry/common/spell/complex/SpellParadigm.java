@@ -13,7 +13,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhanc
 public abstract class SpellParadigm 
 {
 	protected List<SpellEffect> bufferedEffectList = new ArrayList();
-	protected List<String> effectList = new LinkedList();
+	public List<String> effectList = new LinkedList();
 	
 	public void addBufferedEffect(SpellEffect effect)
 	{

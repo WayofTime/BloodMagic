@@ -14,6 +14,7 @@ import WayofTime.alchemicalWizardry.common.renderer.model.*;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBazookaMainProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
+import WayofTime.alchemicalWizardry.common.spell.complex.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.tileEntity.*;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -32,6 +33,7 @@ public class ClientProxy extends CommonProxy
         //altarRenderType = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerEntityRenderingHandler(EnergyBlastProjectile.class, new RenderEnergyBlastProjectile());
         RenderingRegistry.registerEntityRenderingHandler(EntityEnergyBazookaMainProjectile.class, new RenderEnergyBazookaMainProjectile());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new RenderEnergyBlastProjectile());
         RenderingRegistry.registerEntityRenderingHandler(EntityMeteor.class, new RenderMeteor());
         //EntityRegistry.registerGlobalEntityID(EntityFallenAngel.class, "AlchemicalWizardry.FallenAngel", EntityRegistry.findGlobalUniqueEntityId(),0x40FF00, 0x0B610B);
         RenderingRegistry.registerEntityRenderingHandler(EntityFallenAngel.class, new RenderFallenAngel(new ModelFallenAngel(), 0.5F));

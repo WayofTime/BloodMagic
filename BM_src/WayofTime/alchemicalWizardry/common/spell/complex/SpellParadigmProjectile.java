@@ -86,6 +86,18 @@ public class SpellParadigmProjectile extends SpellParadigm
 		return parad;
 	}
 	
+	public static SpellParadigmProjectile getParadigmForEffectArray(List<SpellEffect> effectList)
+	{
+		SpellParadigmProjectile parad = new SpellParadigmProjectile();
+		
+		for(SpellEffect eff : effectList)
+		{
+			parad.addBufferedEffect(eff);
+		}
+		
+		return parad;
+	}
+	
 	public void prepareProjectile(EntitySpellProjectile proj)
 	{
 		proj.setDamage(damage);
@@ -94,6 +106,7 @@ public class SpellParadigmProjectile extends SpellParadigm
 		proj.setPenetration(penetration);
 		proj.setEffectList(effectList);
 		proj.setRicochetMax(ricochetMax); 
+		proj.setSpellEffectList(bufferedEffectList);
 	}
 	
 	public void addImpactEffect(IProjectileImpactEffect eff)

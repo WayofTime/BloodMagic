@@ -14,7 +14,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockConduit extends BlockContainer
+public class BlockConduit extends BlockOrientable
 {
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
@@ -27,7 +27,7 @@ public class BlockConduit extends BlockContainer
 
     public BlockConduit(int id)
     {
-        super(id, Material.rock);
+        super(id);
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -64,44 +64,6 @@ public class BlockConduit extends BlockContainer
             default:
                 return sideIcon2;
         }
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
-    {
-        if (world.isRemote)
-        {
-            return false;
-        }
-
-        ForgeDirection sideClicked = ForgeDirection.getOrientation(side);
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
-
-        if (tile instanceof TEOrientable)
-        {
-            //TODO NEEDS WORK
-            if (((TEOrientable) tile).getInputDirection().equals(sideClicked))
-            {
-                ((TEOrientable) tile).setInputDirection(((TEConduit) tile).getOutputDirection());
-                ((TEOrientable) tile).setOutputDirection(sideClicked);
-            } else if (((TEOrientable) tile).getOutputDirection().equals(sideClicked))
-            {
-                ((TEOrientable) tile).setOutputDirection(((TEConduit) tile).getInputDirection());
-                ((TEOrientable) tile).setInputDirection(sideClicked);
-            } else
-            {
-                if (!player.isSneaking())
-                {
-                    ((TEOrientable) tile).setOutputDirection(sideClicked);
-                } else
-                {
-                    ((TEOrientable) tile).setOutputDirection(sideClicked.getOpposite());
-                }
-            }
-        }
-
-        world.markBlockForUpdate(x, y, z);
-        return true;
     }
 
     @Override

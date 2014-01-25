@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 
+import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifier;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
@@ -168,5 +169,50 @@ public abstract class SpellEffect
 	public int getPotencyEnhancements()
 	{
 		return this.potencyEnhancement;
+	}
+	
+	public NBTTagCompound getTag()
+	{
+        NBTTagCompound tag = new NBTTagCompound();
+
+        tag.setString("Class", this.getClass().getName());
+        tag.setInteger("power", powerEnhancement);
+        tag.setInteger("cost", costEnhancement);
+        tag.setInteger("potency", potencyEnhancement);
+        
+        return tag;
+	}
+	
+	public static SpellEffect getEffectFromTag(NBTTagCompound tag)
+	{
+		try {
+			Class clazz = Class.forName(tag.getString("Class"));
+			if(clazz !=null)
+			{
+				try {
+					Object obj = clazz.newInstance();
+					if(obj instanceof SpellEffect)
+					{
+						SpellEffect eff = (SpellEffect) obj;
+						
+						eff.powerEnhancement = tag.getInteger("power");
+						eff.costEnhancement = tag.getInteger("cost");
+						eff.potencyEnhancement = tag.getInteger("potency");
+						
+						return eff;
+					}
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

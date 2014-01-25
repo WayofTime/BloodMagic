@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ISelfSpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,5 +53,50 @@ public class SpellParadigmSelf extends SpellParadigm
 	public int getDefaultCost() 
 	{
 		return 100;
+	}
+	
+	public static SpellParadigmSelf getParadigmForStringArray(List<String> stringList)
+	{
+		SpellParadigmSelf parad = new SpellParadigmSelf();
+		
+		try 
+		{
+			for(String str : stringList)
+			{
+				Class clazz = Class.forName(str);
+				if(clazz!=null)
+				{
+					Object obj = clazz.newInstance();
+					
+					if(obj instanceof SpellEffect)
+					{
+						parad.addBufferedEffect((SpellEffect)obj);
+						continue;
+					}
+					if(obj instanceof SpellModifier)
+					{
+						parad.modifyBufferedEffect((SpellModifier)obj);
+						continue;
+					}
+					if(obj instanceof SpellEnhancement)
+					{
+						parad.applyEnhancement((SpellEnhancement)obj);
+						continue;
+					}
+				}
+			}
+			
+		} catch (InstantiationException e) {
+
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		
+		return parad;
 	}
 }
