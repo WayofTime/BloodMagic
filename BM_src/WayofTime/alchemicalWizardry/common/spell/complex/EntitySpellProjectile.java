@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
@@ -44,7 +45,6 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	public List<IProjectileImpactEffect> impactList = new ArrayList();
 	private boolean penetration = false;
 	public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
-	public List<String> effectList = new LinkedList();
 	public List<SpellEffect> spellEffectList = new LinkedList();
 
 	public EntitySpellProjectile(World par1World) 
@@ -561,11 +561,6 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	public void setDamage(float damage)
 	{
 		this.damage = damage;
-	}
-	
-	public void setEffectList(List<String> stringList)
-	{
-		this.effectList = stringList;
 	}
 	
 	public void setSpellEffectList(List<SpellEffect> list)

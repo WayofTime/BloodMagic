@@ -1,5 +1,6 @@
-package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects;
+package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ProjectileImpactEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
@@ -24,10 +25,20 @@ public class ProjectileDefaultFire extends ProjectileImpactEffect
 		int x = mop.blockX;
 		int y = mop.blockY;
 		int z = mop.blockZ;
-		
-		if(world.isAirBlock(x, y+1, z))
+		int range = 0;
+		for(int i=-range; i<=range;i++)
 		{
-			world.setBlock(x, y+1, z, Block.fire.blockID);
+			for(int j=-range; j<=range;j++)
+			{
+				for(int k=-range; k<=range; k++)
+				{
+					if(world.isAirBlock(x+i, y+j, z+k))
+					{
+						world.setBlock(x+i, y+j, z+k, Block.fire.blockID);
+					}
+				}
+			}
 		}
+		
 	}
 }

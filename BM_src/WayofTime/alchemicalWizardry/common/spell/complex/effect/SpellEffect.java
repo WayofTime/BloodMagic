@@ -20,6 +20,7 @@ public abstract class SpellEffect
 		this.modifierState = SpellModifier.DEFAULT;
 		this.powerEnhancement = 0;
 		this.costEnhancement = 0;
+		this.potencyEnhancement = 0;
 	}
 	
 	public void enhanceEffect(SpellEnhancement enh)
@@ -176,6 +177,7 @@ public abstract class SpellEffect
         NBTTagCompound tag = new NBTTagCompound();
 
         tag.setString("Class", this.getClass().getName());
+        tag.setInteger("modifier", modifierState);
         tag.setInteger("power", powerEnhancement);
         tag.setInteger("cost", costEnhancement);
         tag.setInteger("potency", potencyEnhancement);
@@ -195,6 +197,7 @@ public abstract class SpellEffect
 					{
 						SpellEffect eff = (SpellEffect) obj;
 						
+						eff.modifierState = tag.getInteger("modifier");
 						eff.powerEnhancement = tag.getInteger("power");
 						eff.costEnhancement = tag.getInteger("cost");
 						eff.potencyEnhancement = tag.getInteger("potency");

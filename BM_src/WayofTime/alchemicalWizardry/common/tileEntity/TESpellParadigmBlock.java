@@ -65,6 +65,7 @@ public class TESpellParadigmBlock extends TESpellBlock
 //			spellParadSelf.castSpell(world, entity, spellCasterStack);
 //		}else
 		{
+			parad.applyAllSpellEffects();
 			parad.castSpell(world, entity, spellCasterStack);
 		}
 		

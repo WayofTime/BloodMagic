@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,17 +11,29 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileImpactEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileUpdateEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileDefaultFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 
 public class SpellParadigmProjectile extends SpellParadigm
 {
-	public DamageSource damageSource = DamageSource.generic;
-	public float damage = 1;
-	public int cost = 0;
-	public List<IProjectileImpactEffect> impactList = new ArrayList();
-	public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
-	public boolean penetration = false;
-	public int ricochetMax = 0;
+	public DamageSource damageSource;
+	public float damage;
+	public int cost;
+	public List<IProjectileImpactEffect> impactList;
+	public List<IProjectileUpdateEffect> updateEffectList;
+	public boolean penetration;
+	public int ricochetMax;
+	
+	public SpellParadigmProjectile()
+	{
+		this.damageSource = DamageSource.generic;
+		this.damage = 1;
+		this.cost = 0;
+		this.impactList = new ArrayList();
+		this.updateEffectList = new ArrayList();
+		this.penetration = false;
+		this.ricochetMax = 0;
+	}
 	
 	@Override
 	public void enhanceParadigm(SpellEnhancement enh) 
@@ -39,51 +50,6 @@ public class SpellParadigmProjectile extends SpellParadigm
 		int cost = this.getTotalCost();
 		
 		EnergyItems.syphonBatteries(itemStack, entityPlayer, cost);
-	}
-	
-	public static SpellParadigmProjectile getParadigmForStringArray(List<String> stringList)
-	{
-		SpellParadigmProjectile parad = new SpellParadigmProjectile();
-		
-		try 
-		{
-			for(String str : stringList)
-			{
-				Class clazz = Class.forName(str);
-				if(clazz!=null)
-				{
-					Object obj = clazz.newInstance();
-					
-					if(obj instanceof SpellEffect)
-					{
-						parad.addBufferedEffect((SpellEffect)obj);
-						continue;
-					}
-					if(obj instanceof SpellModifier)
-					{
-						parad.modifyBufferedEffect((SpellModifier)obj);
-						continue;
-					}
-					if(obj instanceof SpellEnhancement)
-					{
-						parad.applyEnhancement((SpellEnhancement)obj);
-						continue;
-					}
-				}
-			}
-			
-		} catch (InstantiationException e) {
-
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-		}
-		
-		return parad;
 	}
 	
 	public static SpellParadigmProjectile getParadigmForEffectArray(List<SpellEffect> effectList)
@@ -104,7 +70,6 @@ public class SpellParadigmProjectile extends SpellParadigm
 		proj.setImpactList(impactList);
 		proj.setUpdateEffectList(updateEffectList); 
 		proj.setPenetration(penetration);
-		proj.setEffectList(effectList);
 		proj.setRicochetMax(ricochetMax); 
 		proj.setSpellEffectList(bufferedEffectList);
 	}
