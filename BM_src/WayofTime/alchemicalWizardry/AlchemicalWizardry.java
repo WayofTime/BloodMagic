@@ -646,6 +646,7 @@ public class AlchemicalWizardry
         ModBlocks.blockLifeEssence.setUnlocalizedName("lifeEssenceBlock");
         bucketLife = (new LifeBucket(bucketLifeItemID, ModBlocks.blockLifeEssence.blockID)).setUnlocalizedName("bucketLife").setContainerItem(Item.bucketEmpty).setCreativeTab(CreativeTabs.tabMisc);
         FluidContainerRegistry.registerFluidContainer(lifeEssenceFluid, new ItemStack(bucketLife), FluidContainerRegistry.EMPTY_BUCKET);
+        FluidRegistry.registerFluid(lifeEssenceFluid);
         //lifeEssenceFluid.setUnlocalizedName("lifeEssence");
         //LiquidContainerRegistry.registerLiquid(new LiquidContainerData(LiquidDictionary.getLiquid("Life Essence", LiquidContainerRegistry.BUCKET_VOLUME), new ItemStack(AlchemicalWizardry.bucketLife), new ItemStack(Item.bucketEmpty)));
         //GameRegistry.registerBlock(testingBlock, "testingBlock");
