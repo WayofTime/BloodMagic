@@ -104,6 +104,7 @@ public class ModItems
     public static Item energyBazooka;
     public static Item itemBloodLightSigil;
     public static Item itemComplexSpellCrystal;
+    public static Item itemBloodFrame;
 
     public static void init()
     {

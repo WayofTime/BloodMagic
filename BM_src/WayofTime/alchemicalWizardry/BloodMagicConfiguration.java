@@ -174,7 +174,8 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.focusGravityWellItemID = config.getItem("FocusGravityWell", 17077).getInt();
             AlchemicalWizardry.sigilOfMagnetismItemID = config.getItem("SigilOfMagnetism", 17080).getInt();
             AlchemicalWizardry.itemComplexSpellCrystalItemID = config.getItem("ComplexSpellCrystal",17081).getInt();
-        
+            AlchemicalWizardry.itemBloodFrameItemID = config.getItem("BloodFrame", 17082).getInt();
+            
         } catch (Exception e)
         {
 

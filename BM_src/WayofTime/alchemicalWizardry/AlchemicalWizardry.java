@@ -61,6 +61,7 @@ import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
+import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.rituals.Rituals;
@@ -140,6 +141,7 @@ public class AlchemicalWizardry
     public static int customPotionFlameCloakID;
 
     public static boolean isThaumcraftLoaded;
+    public static boolean isForestryLoaded;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -267,6 +269,7 @@ public class AlchemicalWizardry
     public static int energyBazookaItemID;
     public static int itemBloodLightSigilItemID;
     public static int itemComplexSpellCrystalItemID;
+    public static int itemBloodFrameItemID;
 
     public static int testingBlockBlockID;
     public static int lifeEssenceFlowingBlockID;
@@ -930,6 +933,23 @@ public class AlchemicalWizardry
         } else
         {
             this.isThaumcraftLoaded = false;
+        }
+        
+        if(Loader.isModLoaded("Forestry"))
+        {
+        	this.isForestryLoaded = true;
+        	
+        	ModItems.itemBloodFrame = new ItemBloodFrame(this.itemBloodFrameItemID).setUnlocalizedName("bloodFrame");
+        	
+        	ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
+        	
+        	if(provenFrame !=null)
+        	{
+        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
+        	}
+        }else
+        {
+        	this.isForestryLoaded = false;
         }
     }
 }
