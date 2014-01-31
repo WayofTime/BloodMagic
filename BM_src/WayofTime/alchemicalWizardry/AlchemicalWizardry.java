@@ -713,6 +713,7 @@ public class AlchemicalWizardry
         
         GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
         LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 0), "Crucible of Fire");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 1), "Ice Maker");
         
         GameRegistry.registerBlock(ModBlocks.speedRune, "speedRune");
         LanguageRegistry.addName(ModBlocks.speedRune, "Speed Rune");
@@ -759,7 +760,7 @@ public class AlchemicalWizardry
         GameRegistry.registerBlock(ModBlocks.spectralBlock, "spectralBlock");
         GameRegistry.registerBlock(ModBlocks.blockBloodLight, "bloodLight");
         GameRegistry.registerBlock(ModBlocks.blockConduit,"blockConduit");
-        GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
+        //GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         MinecraftForge.setBlockHarvestLevel(ModBlocks.bloodRune, "pickaxe", 2);
         MinecraftForge.setBlockHarvestLevel(ModBlocks.speedRune, "pickaxe", 2);
         MinecraftForge.setBlockHarvestLevel(ModBlocks.efficiencyRune, "pickaxe", 2);

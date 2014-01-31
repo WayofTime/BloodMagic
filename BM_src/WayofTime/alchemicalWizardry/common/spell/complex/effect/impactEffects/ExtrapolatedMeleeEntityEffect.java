@@ -13,11 +13,19 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
 {
 	protected float range;
 	protected float radius;
+	protected int powerUpgrades;
+	protected int potencyUpgrades;
+	protected int costUpgrades;
+	protected int maxHit;
 	
-	public ExtrapolatedMeleeEntityEffect(int range, int radius)
+	public ExtrapolatedMeleeEntityEffect(int power, int potency, int cost)
 	{
-		this.range = range;
-		this.radius = radius;
+		this.powerUpgrades = power;
+		this.potencyUpgrades = potency;
+		this.costUpgrades = cost;
+		this.range = 2;
+		this.radius = 2;
+		this.maxHit = 1;
 	}
 	
 	@Override
@@ -25,21 +33,29 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
 	{
 		Vec3 lookVec = entityPlayer.getLook(range);
 		double x = entityPlayer.posX + lookVec.xCoord;
-		double y = entityPlayer.posY + entityPlayer.getEyeHeight() + lookVec.yCoord;
+		double y = entityPlayer.posY + lookVec.yCoord;
 		double z = entityPlayer.posZ + lookVec.zCoord;
 		
         List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x-0.5f, y-0.5f, z-0.5f, x + 0.5f, y + 0.5f, z + 0.5f).expand(radius, radius, radius));
+        int hit = 0;
         
         if(entities!=null)
         {
         	for(Entity entity : entities)
             {
-            	this.entityEffect(world, entity);
+        		if(hit<maxHit)
+        		{
+        			if(this.entityEffect(world, entity))
+        			{
+        				hit++;
+        			}
+        		}
+            	
             }	
         }
 	}
 	
-	protected abstract void entityEffect(World world, Entity entity);
+	protected abstract boolean entityEffect(World world, Entity entity);
 	
 	public void setRange(float range)
 	{
@@ -49,5 +65,10 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
 	public void setRadius(float radius)
 	{
 		this.radius = radius;
+	}
+	
+	public void setMaxNumberHit(int maxHit)
+	{
+		this.maxHit = maxHit;
 	}
 }

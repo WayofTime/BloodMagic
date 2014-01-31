@@ -9,6 +9,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class SpellHelper 
@@ -42,5 +43,14 @@ public class SpellHelper
 	public static double gaussian(double d) 
 	{
 		return d * ((rand.nextFloat() - 0.5D));
+	}
+	
+	public static Vec3 getEntityBlockVector(Entity entity)
+	{
+		int posX = (int) Math.round(entity.posX - 0.5f);
+        int posY = (int) entity.posY;
+        int posZ = (int) Math.round(entity.posZ - 0.5f);
+        
+		return entity.getLookVec().createVectorHelper(posX, posY, posZ);
 	}
 }

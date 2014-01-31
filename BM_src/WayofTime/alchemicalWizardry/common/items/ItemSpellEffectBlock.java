@@ -28,16 +28,16 @@ public class ItemSpellEffectBlock extends ItemBlock
 
             case 1:
             {
-                name = "fill";
+                name = "ice";
                 break;
             }
 
             case 2:
-                name = "empty";
+                name = "wind";
                 break;
 
             case 3:
-                name = "test";
+                name = "water";
                 break;
 
             default:
