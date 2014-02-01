@@ -23,8 +23,8 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
 		this.powerUpgrades = power;
 		this.potencyUpgrades = potency;
 		this.costUpgrades = cost;
-		this.range = 2;
-		this.radius = 2;
+		this.range = 0;
+		this.radius = 0;
 		this.maxHit = 1;
 	}
 	
@@ -33,7 +33,7 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
 	{
 		Vec3 lookVec = entityPlayer.getLook(range);
 		double x = entityPlayer.posX + lookVec.xCoord;
-		double y = entityPlayer.posY + lookVec.yCoord;
+		double y = entityPlayer.posY + entityPlayer.getEyeHeight() + lookVec.yCoord;
 		double z = entityPlayer.posZ + lookVec.zCoord;
 		
         List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x-0.5f, y-0.5f, z-0.5f, x + 0.5f, y + 0.5f, z + 0.5f).expand(radius, radius, radius));
@@ -43,7 +43,7 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
         {
         	for(Entity entity : entities)
             {
-        		if(hit<maxHit)
+        		if(hit<maxHit&&!entity.equals(entityPlayer))
         		{
         			if(this.entityEffect(world, entity))
         			{

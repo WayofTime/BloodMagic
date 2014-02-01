@@ -15,9 +15,9 @@ public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect
 	public MeleeOffensiveIce(int power, int potency, int cost) 
 	{
 		super(power, potency, cost);
-		this.setMaxNumberHit(2);
-		this.setRadius(1);
-		this.setRange(2);
+		this.setMaxNumberHit(1+potency);
+		this.setRadius(2);
+		this.setRange(3);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect
 		int posY = (int)(blockVector.yCoord);
 		int posZ = (int)(blockVector.zCoord);
 		
-		double yVel = 1*(0.4*this.powerUpgrades+0.75);
+		double yVel = 1*(0.3*this.powerUpgrades+0.90);
 		
 		entity.motionY = yVel;
 		

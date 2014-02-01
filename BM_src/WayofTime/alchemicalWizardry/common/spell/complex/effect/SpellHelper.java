@@ -11,10 +11,12 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 
 public class SpellHelper 
 {
 	public static Random rand = new Random();
+	public static final double root2 = Math.sqrt(2);
 	
 	public static void smeltBlockInWorld(World world, int posX, int posY, int posZ)
 	{
@@ -52,5 +54,45 @@ public class SpellHelper
         int posZ = (int) Math.round(entity.posZ - 0.5f);
         
 		return entity.getLookVec().createVectorHelper(posX, posY, posZ);
+	}
+	
+	public static ForgeDirection getDirectionForLookVector(Vec3 lookVec)
+	{
+		double distance = lookVec.lengthVector();
+		
+		if(lookVec.yCoord>distance*0.9)
+		{
+			return ForgeDirection.UP;
+		}
+		if(lookVec.yCoord<distance*-0.9)
+		{
+			return ForgeDirection.DOWN;
+		}
+		
+		return getCompassDirectionForLookVector(lookVec);
+	}
+	
+	public static ForgeDirection getCompassDirectionForLookVector(Vec3 lookVec)
+	{
+		double radius = Math.sqrt(Math.pow(lookVec.xCoord,2)+Math.pow(lookVec.zCoord,2));
+		
+		if(lookVec.zCoord>radius*1/root2)
+		{
+			return ForgeDirection.SOUTH;
+		}
+		if(lookVec.zCoord<-radius*1/root2)
+		{
+			return ForgeDirection.NORTH;
+		}
+		if(lookVec.xCoord>radius*1/root2)
+		{
+			return ForgeDirection.EAST;
+		}
+		if(lookVec.xCoord<-radius*1/root2)
+		{
+			return ForgeDirection.WEST;
+		}
+		
+		return ForgeDirection.EAST;
 	}
 }
