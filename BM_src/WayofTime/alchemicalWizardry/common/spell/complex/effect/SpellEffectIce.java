@@ -5,6 +5,9 @@ import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeDefensiveIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileDefensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileEnvironmentalIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileOffensiveIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefaultIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfEnvironmentalIce;
 
@@ -20,29 +23,27 @@ public class SpellEffectIce extends SpellEffect
 	@Override
 	public void offensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.damage+=2;
+		parad.addImpactEffect(new ProjectileOffensiveIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
+		parad.addImpactEffect(new ProjectileDefensiveIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 
 	}
 
 	@Override
 	public void environmentalModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addUpdateEffect(new ProjectileEnvironmentalIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defaultModificationSelf(SpellParadigmSelf parad)
 	{
 		parad.addSelfSpellEffect(new SelfDefaultIce(this.powerEnhancement,this.potencyEnhancement, this.costEnhancement));
-
 	}
 
 	@Override

@@ -90,4 +90,13 @@ public class TEOrientable extends TileEntity implements IOrientable
     {
         return PacketHandler.getBlockOrientationPacket(this);
     }
+    
+    public boolean isSideRendered(ForgeDirection side)
+    {
+    	if(side.equals(this.getInputDirection()) || side.equals(this.getOutputDirection()))
+    	{
+    		return true;
+    	}
+    	return false;
+    }
 }

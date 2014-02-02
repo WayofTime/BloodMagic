@@ -95,4 +95,14 @@ public class SpellHelper
 		
 		return ForgeDirection.EAST;
 	}
+	
+	public static void freezeWaterBlock(World world, int posX, int posY, int posZ)
+	{
+		int id = world.getBlockId(posX, posY, posZ);
+		
+		if(id == Block.waterStill.blockID || id == Block.waterMoving.blockID)
+		{
+			world.setBlock(posX, posY, posZ, Block.ice.blockID);
+		}
+	}
 }
