@@ -5,21 +5,24 @@ import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeDefaultIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeDefensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeEnvironmentalIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.MeleeOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileDefaultIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileDefensiveIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileEnvironmentalIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileOffensiveIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefaultIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefensiveIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfEnvironmentalIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfOffensiveIce;
 
 public class SpellEffectIce extends SpellEffect 
 {
 	@Override
 	public void defaultModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.damage+=this.potencyEnhancement;
+		parad.addImpactEffect(new ProjectileDefaultIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
@@ -51,15 +54,13 @@ public class SpellEffectIce extends SpellEffect
 	@Override
 	public void offensiveModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfOffensiveIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationSelf(SpellParadigmSelf parad)
 	{
 		parad.addSelfSpellEffect(new SelfDefensiveIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
-
 	}
 
 	@Override
@@ -89,15 +90,13 @@ public class SpellEffectIce extends SpellEffect
 	@Override
 	public void environmentalModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addEntityEffect(new MeleeEnvironmentalIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)((30)*(this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
@@ -127,8 +126,7 @@ public class SpellEffectIce extends SpellEffect
 	@Override
 	protected int getCostForOffenseSelf() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(100*(2*this.powerEnhancement+1)*(2*this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
@@ -146,26 +144,24 @@ public class SpellEffectIce extends SpellEffect
 	@Override
 	protected int getCostForDefaultMelee() 
 	{
-		return (int)(125*(potencyEnhancement+1)*(1.5*powerEnhancement+1)*Math.pow(0.85, costEnhancement));
+		return (int)(250*(potencyEnhancement+1)*(1.5*powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseMelee() 
 	{
-		return (int)(25*(1.5*potencyEnhancement+1)*Math.pow(1.5, powerEnhancement)*Math.pow(0.85, costEnhancement));
+		return (int)(40*(1.5*potencyEnhancement+1)*Math.pow(1.5, powerEnhancement)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseMelee() 
 	{
-		return (int)(10*(0.5*potencyEnhancement+1)*(0.7*powerEnhancement+1)*(0.5*powerEnhancement+1)*Math.pow(0.85, costEnhancement));
+		return (int)(50*(0.5*potencyEnhancement+1)*(0.7*powerEnhancement+1)*(0.5*powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(20*(0.5*potencyEnhancement+1)*(0*powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
-
 }
