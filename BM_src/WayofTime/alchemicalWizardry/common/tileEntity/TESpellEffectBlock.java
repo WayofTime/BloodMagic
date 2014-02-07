@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import net.minecraft.util.ResourceLocation;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffectFire;
@@ -23,4 +24,15 @@ public class TESpellEffectBlock extends TESpellBlock
 		}
 		return new SpellEffectFire();
 	}
+	
+	@Override
+	public String getResourceLocationForMeta(int meta)
+    {
+		switch(meta)
+		{
+		case 0: return "alchemicalwizardry:textures/models/SpellEffectFire.png";
+		case 1: return "alchemicalwizardry:textures/models/SpellEffectIce.png";
+		}
+    	return "";
+    }
 }

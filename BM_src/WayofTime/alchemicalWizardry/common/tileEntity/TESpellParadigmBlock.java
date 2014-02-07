@@ -70,4 +70,6 @@ public class TESpellParadigmBlock extends TESpellBlock
 		}
 		
 	}
+	
+	
 }
