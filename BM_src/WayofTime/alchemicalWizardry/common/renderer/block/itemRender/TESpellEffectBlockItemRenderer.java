@@ -41,7 +41,7 @@ public class TESpellEffectBlockItemRenderer implements IItemRenderer
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         //GL11.glRotatef(90F, 0.0F, 0.0F, 1.0F);
         //A reference to your Model file. Again, very important.
-        this.modelSpellBlock.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, ForgeDirection.UP, ForgeDirection.DOWN);
+        this.modelSpellBlock.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, ForgeDirection.DOWN, ForgeDirection.UP);
         //Tell it to stop rendering for both the PushMatrix's
         GL11.glPopMatrix();
         GL11.glPopMatrix();

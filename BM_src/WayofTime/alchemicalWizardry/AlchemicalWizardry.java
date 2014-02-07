@@ -32,6 +32,7 @@ import WayofTime.alchemicalWizardry.common.PotionBoost;
 import WayofTime.alchemicalWizardry.common.PotionDrowning;
 import WayofTime.alchemicalWizardry.common.PotionFlameCloak;
 import WayofTime.alchemicalWizardry.common.PotionFlight;
+import WayofTime.alchemicalWizardry.common.PotionIceCloak;
 import WayofTime.alchemicalWizardry.common.PotionInhibit;
 import WayofTime.alchemicalWizardry.common.PotionProjectileProtect;
 import WayofTime.alchemicalWizardry.common.PotionReciprocation;
@@ -131,6 +132,7 @@ public class AlchemicalWizardry
     public static Potion customPotionFlight;
     public static Potion customPotionReciprocation;
     public static Potion customPotionFlameCloak;
+    public static Potion customPotionIceCloak;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -139,6 +141,7 @@ public class AlchemicalWizardry
     public static int customPotionFlightID;
     public static int customPotionReciprocationID;
     public static int customPotionFlameCloakID;
+    public static int customPotionIceCloakID;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
@@ -557,6 +560,7 @@ public class AlchemicalWizardry
         customPotionFlight = (new PotionFlight(customPotionFlightID, false, 0)).setIconIndex(0, 0).setPotionName("Flight");
         customPotionReciprocation = (new PotionReciprocation(customPotionReciprocationID, false, 0xFFFFFF)).setIconIndex(0, 0).setPotionName("Reciprocation");
         customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID,false,0).setIconIndex(0,0).setPotionName("Flame Cloak"));
+        customPotionIceCloak = (new PotionIceCloak(customPotionIceCloakID,false,0).setIconIndex(0,0).setPotionName("Ice Cloak"));
         //All items registered go here
         //LanguageRegistry.addName(orbOfTesting, "Orb of Testing");
         LanguageRegistry.addName(ModItems.weakBloodOrb, "Weak Blood Orb");

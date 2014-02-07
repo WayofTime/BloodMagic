@@ -1,10 +1,11 @@
 package WayofTime.alchemicalWizardry.common;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.relauncher.ReflectionHelper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -14,12 +15,16 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-
-import java.util.*;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -81,6 +86,11 @@ public class AlchemicalWizardryEventHooks
         double x = entityLiving.posX;
         double y = entityLiving.posY;
         double z = entityLiving.posZ;
+        
+        Vec3 blockVector = SpellHelper.getEntityBlockVector(entityLiving);
+        int xPos = (int)(blockVector.xCoord);
+        int yPos = (int)(blockVector.yCoord);
+        int zPos = (int)(blockVector.zCoord);
 
         if (entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote)
         {
@@ -248,6 +258,29 @@ public class AlchemicalWizardryEventHooks
         		}
         	}
         }
+        
+        if(entityLiving.isPotionActive(AlchemicalWizardry.customPotionIceCloak))
+        {
+        	if(entityLiving.worldObj.getWorldTime()%2==0)
+        		entityLiving.worldObj.spawnParticle("reddust", x+SpellHelper.gaussian(1),y-1.3+SpellHelper.gaussian(0.3),z+SpellHelper.gaussian(1), 0x74,0xbb,0xfb);
         	
+            int r = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionIceCloak).getAmplifier();
+        	int horizRange = r+1;
+        	int vertRange = 1;
+        	
+        	if(!entityLiving.worldObj.isRemote)
+        	{
+	        	for(int i=-horizRange; i<=horizRange;i++)
+	        	{
+	        		for(int k=-horizRange; k<=horizRange;k++)
+	        		{
+	        			for(int j=-vertRange-1; j<=vertRange-1; j++)
+	        			{
+	        				SpellHelper.freezeWaterBlock(entityLiving.worldObj, xPos+i, yPos+j, zPos+k);
+	        			}
+	        		}
+	        	}
+        	}
+        }   	
     }
 }

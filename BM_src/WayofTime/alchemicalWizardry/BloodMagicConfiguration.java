@@ -45,6 +45,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionFlightID = config.get("Potion ID", "Flight", 104).getInt();
             AlchemicalWizardry.customPotionReciprocationID = config.get("Potion ID", "Reciprocation", 105).getInt();
             AlchemicalWizardry.customPotionFlameCloakID = config.get("Potion ID","FlameCloak",106).getInt();
+            AlchemicalWizardry.customPotionIceCloakID = config.get("Potion ID","IceCloak",107).getInt();
             
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
