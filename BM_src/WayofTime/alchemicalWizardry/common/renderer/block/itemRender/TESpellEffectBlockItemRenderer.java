@@ -101,6 +101,8 @@ public class TESpellEffectBlockItemRenderer implements IItemRenderer
 		{
 		case 0: return "alchemicalwizardry:textures/models/SpellEffectFire.png";
 		case 1: return "alchemicalwizardry:textures/models/SpellEffectIce.png";
+		case 2: return "alchemicalwizardry:textures/models/SpellEffectWind.png";
+		case 3: return "alchemicalwizardry:textures/models/SpellEffectEarth.png";
 		}
     	return "";
     }

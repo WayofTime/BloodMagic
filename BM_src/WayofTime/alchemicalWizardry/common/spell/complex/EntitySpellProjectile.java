@@ -46,6 +46,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	private boolean penetration = false;
 	public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
 	public List<SpellEffect> spellEffectList = new LinkedList();
+	private int blocksBroken = 0;
 
 	public EntitySpellProjectile(World par1World) 
 	{
@@ -286,6 +287,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 //        }
 
         par1NBTTagCompound.setTag("Effects", effectList);  
+        par1NBTTagCompound.setInteger("blocksBroken", blocksBroken);
 	}
 
 	/**
@@ -300,6 +302,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		inTile = par1NBTTagCompound.getByte("inTile") & 255;
 		inData = par1NBTTagCompound.getByte("inData") & 255;
 		inGround = par1NBTTagCompound.getByte("inGround") == 1;
+		blocksBroken = par1NBTTagCompound.getInteger("blocksBroken");
 		
 		NBTTagList tagList = par1NBTTagCompound.getTagList("Effects");
 		
@@ -566,5 +569,15 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	public void setSpellEffectList(List<SpellEffect> list)
 	{
 		this.spellEffectList = list;
+	}
+	
+	public int getBlocksBroken()
+	{
+		return this.blocksBroken;
+	}
+	
+	public void setBlocksBroken(int blocksBroken)
+	{
+		this.blocksBroken = blocksBroken;
 	}
 }

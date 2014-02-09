@@ -718,6 +718,8 @@ public class AlchemicalWizardry
         GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
         LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 0), "Crucible of Fire");
         LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 1), "Ice Maker");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 2), "Wind Generator");
+        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 3), "Earth Former");
         
         GameRegistry.registerBlock(ModBlocks.speedRune, "speedRune");
         LanguageRegistry.addName(ModBlocks.speedRune, "Speed Rune");
