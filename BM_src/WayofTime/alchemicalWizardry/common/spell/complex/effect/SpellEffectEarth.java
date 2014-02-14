@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileEnvironmentalEarth;
 
 public class SpellEffectEarth extends SpellEffect 
 {
@@ -30,7 +31,7 @@ public class SpellEffectEarth extends SpellEffect
 	@Override
 	public void environmentalModificationProjectile(SpellParadigmProjectile parad)
 	{
-		// TODO Auto-generated method stub
+		parad.addUpdateEffect(new ProjectileEnvironmentalEarth(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 
 	}
 

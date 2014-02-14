@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileEnvironmentalWind;
 
 public class SpellEffectWind extends SpellEffect 
 {
@@ -30,7 +31,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	public void environmentalModificationProjectile(SpellParadigmProjectile parad)
 	{
-		// TODO Auto-generated method stub
+		parad.addUpdateEffect(new ProjectileEnvironmentalWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 
 	}
 
