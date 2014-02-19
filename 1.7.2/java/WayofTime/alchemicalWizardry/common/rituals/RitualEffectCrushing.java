@@ -80,7 +80,7 @@ public class RitualEffectCrushing extends RitualEffect
                         Block block = world.getBlock(x + i, y + j, z + k);
                         int meta = world.getBlockMetadata(x + i, y + j, z + k);
 
-                        if (block != null)
+                        if (block != null && !world.isAirBlock(x + i, y + j, z + k))
                         {
                             if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)))
                             {

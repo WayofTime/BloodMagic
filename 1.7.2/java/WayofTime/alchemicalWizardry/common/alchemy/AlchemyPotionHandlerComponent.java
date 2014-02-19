@@ -24,11 +24,11 @@ public class AlchemyPotionHandlerComponent
             {
                 if (itemStack.getItem() instanceof ItemBlock)
                 {
-                    return comparedStack.equals(itemStack) && comparedStack.getItemDamage() == itemStack.getItemDamage();
+                    return comparedStack.getItem().equals(itemStack.getItem()) && comparedStack.getItemDamage() == itemStack.getItemDamage();
                 }
             } else if (!(itemStack.getItem() instanceof ItemBlock))
             {
-                return comparedStack.equals(itemStack) && comparedStack.getItemDamage() == itemStack.getItemDamage();
+                return comparedStack.getItem().equals(itemStack.getItem()) && comparedStack.getItemDamage() == itemStack.getItemDamage();
             }
         }
 

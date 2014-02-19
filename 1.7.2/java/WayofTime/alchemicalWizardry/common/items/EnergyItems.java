@@ -382,6 +382,11 @@ public class EnergyItems extends Item implements IBindable
             world.setItemData(ownerName, data);
         }
 
+        if(data.currentEssence>=maximum)
+        {
+        	return;
+        }
+        
         data.currentEssence = Math.min(maximum, data.currentEssence + amount);
         data.markDirty();
     }

@@ -38,6 +38,7 @@ public class ArmourForge extends Block
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("armourForge");
         //setUnlocalizedName("armourForge");
         // TODO Auto-generated constructor stub
     }

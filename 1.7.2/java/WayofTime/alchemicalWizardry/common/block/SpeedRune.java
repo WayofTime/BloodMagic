@@ -10,7 +10,7 @@ public class SpeedRune extends BloodRune
     public SpeedRune()
     {
         super();
-        //setUnlocalizedName("speedRune");
+        this.setBlockName("speedRune");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

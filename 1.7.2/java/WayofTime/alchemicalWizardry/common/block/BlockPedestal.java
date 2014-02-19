@@ -38,7 +38,7 @@ public class BlockPedestal extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("bloodPedestal");
+        this.setBlockName("bloodPedestal");
         //func_111022_d("AlchemicalWizardry:blocks");
     }
 

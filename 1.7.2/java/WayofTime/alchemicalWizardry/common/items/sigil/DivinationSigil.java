@@ -68,7 +68,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade
         //PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(ownerName));
         int currentEssence = EnergyItems.getCurrentEssence(ownerName);
         
-        par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + 0));
+        par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName)));
         
         return par1ItemStack;
     }

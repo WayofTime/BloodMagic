@@ -19,7 +19,7 @@ public class BlockBloodLightSource extends Block
     {
         super(Material.cloth);
         //setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //this.setUnlocalizedName("blockBloodLightSource");
+        this.setBlockName("blockBloodLightSource");
     }
 
     @Override

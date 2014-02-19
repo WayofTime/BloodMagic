@@ -60,7 +60,7 @@ public class ModBlocks
         efficiencyRune = new EfficiencyRune();
         runeOfSacrifice = new RuneOfSacrifice();
         runeOfSelfSacrifice = new RuneOfSelfSacrifice();
-        AlchemicalWizardry.lifeEssenceFluid = new LifeEssence("Life Essence");
+        
         blockTeleposer = new BlockTeleposer();
         spectralBlock = new SpectralBlock();
         ritualStone = new RitualStone();
@@ -81,12 +81,14 @@ public class ModBlocks
         blockSpellParadigm = new BlockSpellParadigm();
         blockSpellModifier = new BlockSpellModifier();
         blockSpellEnhancement = new BlockSpellEnhancement();
+        
+        blockLifeEssence = new LifeEssenceBlock();
     }
     
-    public static void registerBlocks()
+    public static void registerBlocksInPre()
     {
+    	GameRegistry.registerBlock(ModBlocks.blockAltar, "Altar");
     	GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
-        GameRegistry.registerBlock(ModBlocks.blockAltar, "bloodAltar");
         GameRegistry.registerBlock(ModBlocks.blockLifeEssence, "lifeEssence");
         GameRegistry.registerBlock(ModBlocks.blockSpellParadigm, ItemSpellParadigmBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
         GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
@@ -113,5 +115,10 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.spectralBlock, "spectralBlock");
         GameRegistry.registerBlock(ModBlocks.blockBloodLight, "bloodLight");
         GameRegistry.registerBlock(ModBlocks.blockConduit,"blockConduit");
+    }
+    
+    public static void registerBlocksInInit()
+    {
+        //GameRegistry.registerBlock(ModBlocks.blockLifeEssence, "lifeEssence");
     }
 }

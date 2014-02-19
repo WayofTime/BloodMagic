@@ -15,7 +15,7 @@ public class EmptySocket extends Block
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("emptySocket");
+        this.setBlockName("emptySocket");
         // TODO Auto-generated constructor stub
     }
 

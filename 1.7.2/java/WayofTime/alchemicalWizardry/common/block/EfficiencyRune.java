@@ -10,7 +10,7 @@ public class EfficiencyRune extends BloodRune
     public EfficiencyRune()
     {
         super();
-        //setUnlocalizedName("efficiencyRune");
+        this.setBlockName("efficiencyRune");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

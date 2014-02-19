@@ -71,10 +71,10 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         World world = par3EntityPlayer.worldObj;
 
-        if (par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
-        {
-            return par1ItemStack;
-        }
+//        if (par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
+//        {
+//            return par1ItemStack;
+//        }
 
         if (world != null)
         {
@@ -85,10 +85,10 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
             SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
         }
 
-        if (!(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
-        {
-            return par1ItemStack;
-        }
+//        if (!(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
+//        {
+//            return par1ItemStack;
+//        }
         
         
 

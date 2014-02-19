@@ -25,7 +25,7 @@ public class ImperfectRitualStone extends Block
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("imperfectRitualStone");
+        this.setBlockName("imperfectRitualStone");
         // TODO Auto-generated constructor stub
     }
 

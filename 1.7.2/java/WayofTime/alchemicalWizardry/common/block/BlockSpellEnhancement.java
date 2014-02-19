@@ -20,13 +20,31 @@ public class BlockSpellEnhancement extends BlockOrientable
 	public BlockSpellEnhancement() 
 	{
 		super();
-		//setUnlocalizedName("blockSpellEnhancement");
+		this.setBlockName("blockSpellEnhancement");
 	}
 	
 	@Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return new TESpellEnhancementBlock();
+    }
+	
+	@Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
     }
 	
 	@SideOnly(Side.CLIENT)

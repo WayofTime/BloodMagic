@@ -27,7 +27,7 @@ public class BlockSpellParadigm extends BlockOrientable
 	public BlockSpellParadigm() 
 	{
 		super();
-		//setUnlocalizedName("blockSpellParadigm");
+		this.setBlockName("blockSpellParadigm");
 		//setBlockBounds(minPos, minPos, minPos, maxPos, maxPos, maxPos);
 	}
 	

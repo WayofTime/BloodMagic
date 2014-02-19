@@ -38,7 +38,7 @@ public class BlockPlinth extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("bloodPlinth");
+        this.setBlockName("bloodPlinth");
         //func_111022_d("AlchemicalWizardry:blocks");
     }
 

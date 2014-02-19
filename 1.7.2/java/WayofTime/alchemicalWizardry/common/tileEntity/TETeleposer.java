@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -309,8 +310,8 @@ public class TETeleposer extends TileEntity implements IInventory
 
     @Override
     public Packet getDescriptionPacket()
-    {
-        return NewPacketHandler.getPacket(this);
+    {    
+    	return NewPacketHandler.getPacket(this);
     }
 
     public void handlePacketData(int[] intData)

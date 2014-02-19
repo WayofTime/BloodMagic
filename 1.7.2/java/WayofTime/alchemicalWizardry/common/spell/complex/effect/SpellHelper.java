@@ -3,9 +3,11 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -121,7 +123,10 @@ public class SpellHelper
 	
 	public static void sendParticleToPlayer(EntityPlayer player, String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
 	{
-		
+		if(player instanceof EntityPlayerMP)
+		{
+			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getParticlePacket(str, xCoord, yCoord, zCoord, xVel, yVel, zVel),(EntityPlayerMP) player);
+		}
 	}
 	
 	public static void sendIndexedParticleToPlayer(EntityPlayer player, int index, double xCoord, double yCoord, double zCoord)
@@ -130,10 +135,13 @@ public class SpellHelper
 		{
 		case 1:
 			SpellHelper.sendParticleToPlayer(player, "mobSpell", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 0.5117D, 0.0117D, 0.0117D);
+			break;
 		case 2:
 			SpellHelper.sendParticleToPlayer(player, "reddust", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 0.82D, 0.941D, 0.91D);
+			break;
 		case 3:
 			SpellHelper.sendParticleToPlayer(player, "mobSpell", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 1.0D, 0.371D, 0.371D);
+			break;
 		case 4:
 			float f = (float) 1.0F;
             float f1 = f * 0.6F + 0.4F;
@@ -144,6 +152,7 @@ public class SpellHelper
             {
                 SpellHelper.sendParticleToPlayer(player,"reddust", xCoord + Math.random() - Math.random(), yCoord + Math.random() - Math.random(), zCoord + Math.random() - Math.random(), f1, f2, f3);
             }
+            break;
 		}
 	}
 	
@@ -179,6 +188,9 @@ public class SpellHelper
 	
 	public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ)
 	{
-		
+		if(player instanceof EntityPlayerMP)
+		{
+			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getVelSettingPacket(motionX, motionY, motionZ), (EntityPlayerMP) player);
+		}
 	}
 }

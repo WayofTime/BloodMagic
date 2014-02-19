@@ -41,7 +41,7 @@ public class BlockTeleposer extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("bloodTeleposer");
+        this.setBlockName("bloodTeleposer");
         //func_111022_d("AlchemicalWizardry:blocks");
     }
 

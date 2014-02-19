@@ -38,7 +38,7 @@ public class BlockWritingTable extends BlockContainer
         super(Material.wood);
         setHardness(2.0F);
         setResistance(5.0F);
-        //setUnlocalizedName("blockWritingTable");
+        this.setBlockName("blockWritingTable");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

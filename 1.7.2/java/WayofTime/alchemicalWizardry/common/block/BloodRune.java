@@ -26,7 +26,7 @@ public class BloodRune extends Block
     public BloodRune()
     {
         super(Material.iron);
-        //setUnlocalizedName("bloodRune");
+        this.setBlockName("bloodRune");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

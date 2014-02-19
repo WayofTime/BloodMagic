@@ -19,7 +19,7 @@ public class BlockSpellModifier extends BlockOrientable
 	public BlockSpellModifier() 
 	{
 		super();
-		//setUnlocalizedName("blockSpellModifier");
+		this.setBlockName("blockSpellModifier");
 	}
 	
 	@Override

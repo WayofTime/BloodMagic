@@ -99,4 +99,17 @@ public class TESpellEnhancementBlock extends TESpellBlock
 	{
 		
 	}
+	
+	@Override
+	public String getResourceLocationForMeta(int meta)
+	{
+		switch(meta)
+		{
+		case 0: return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";
+		case 1: return "alchemicalwizardry:textures/models/SpellEnhancementPower2.png";
+		case 2: return "alchemicalwizardry:textures/models/SpellEnhancementPower3.png";
+
+		}
+    	return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";
+	}
 }

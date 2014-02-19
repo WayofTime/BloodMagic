@@ -11,8 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -32,6 +34,7 @@ import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipeRegist
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler
@@ -682,9 +685,10 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     @Override
     public Packet getDescriptionPacket()
     {
-        return NewPacketHandler.getPacket(this);
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        this.writeToNBT(nbttagcompound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, nbttagcompound);
     }
-
 
     public void handlePacketData(int[] intData, int[] fluidData, int capacity)
     {
@@ -1020,5 +1024,12 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     	}
     	
         return sortList;
+    }
+    
+    public void sendChatInfoToPlayer(EntityPlayer player)
+    {
+        player.addChatMessage(new ChatComponentText("Altar's Current Essence: " + this.fluid.amount+ "LP"));
+        player.addChatMessage(new ChatComponentText("Altar's Current Tier: " + UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord)));
+        player.addChatMessage(new ChatComponentText("Capacity: " + this.getCapacity() + "LP"));
     }
 }

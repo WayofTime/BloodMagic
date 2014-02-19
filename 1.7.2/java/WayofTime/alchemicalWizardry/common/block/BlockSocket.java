@@ -37,7 +37,7 @@ public class BlockSocket extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("bloodSocket");
+        this.setBlockName("bloodSocket");
         //func_111022_d("AlchemicalWizardry:blocks");
     }
 

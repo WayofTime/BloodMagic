@@ -15,7 +15,7 @@ public class LargeBloodStoneBrick extends Block
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("largeBloodStoneBrick");
+        this.setBlockName("largeBloodStoneBrick");
     }
 
     @Override

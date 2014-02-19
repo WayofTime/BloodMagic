@@ -6,6 +6,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.EnumMap;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -21,6 +24,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
+import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -47,7 +51,7 @@ public enum NewPacketHandler
    {
        // request a channel pair for IronChest from the network registry
        // Add the IronChestCodec as a member of both channel pipelines
-       this.channels = NetworkRegistry.INSTANCE.newChannel("BloodMagic", new TEAltarCodec(), new TEOrientableCodec(), new TEPedestalCodec(), new TEPlinthCodec(), new TESocketCodec());
+       this.channels = NetworkRegistry.INSTANCE.newChannel("BloodMagic", new TEAltarCodec());
        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
        {
            addClientHandler();
@@ -64,22 +68,17 @@ public enum NewPacketHandler
    private void addClientHandler() 
    {
        FMLEmbeddedChannel clientChannel = this.channels.get(Side.CLIENT);
-       // These two lines find the existing codec (Ironchestcodec) and insert our message handler after it
-       // in the pipeline
+
        String tileAltarCodec = clientChannel.findChannelHandlerNameForType(TEAltarCodec.class);
-       clientChannel.pipeline().addAfter(tileAltarCodec, "TEAltarHandler", new TEAltarMessageHandler());
-       
-       String tileOrientableCodec = clientChannel.findChannelHandlerNameForType(TEOrientableCodec.class);
-       clientChannel.pipeline().addAfter(tileOrientableCodec, "TEOrientableHandler", new TEOrientableMessageHandler());
-       
-       String tilePedestalCodec = clientChannel.findChannelHandlerNameForType(TEPedestalCodec.class);
-       clientChannel.pipeline().addAfter(tilePedestalCodec, "TEPedestalHandler", new TEPedestalMessageHandler());
-       
-       String tilePlinthCodec = clientChannel.findChannelHandlerNameForType(TEPlinthCodec.class);
-       clientChannel.pipeline().addAfter(tilePlinthCodec, "TEPlinthHandler", new TEPlinthMessageHandler());
-       
-       String tileSocketCodec = clientChannel.findChannelHandlerNameForType(TESocketCodec.class);
-       clientChannel.pipeline().addAfter(tileSocketCodec, "TESocketHandler", new TESocketMessageHandler());
+       clientChannel.pipeline().addAfter(tileAltarCodec, "ClientHandler", new TEAltarMessageHandler());  
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEOrientableHandler", new TEOrientableMessageHandler()); 
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEPedestalHandler", new TEPedestalMessageHandler()); 
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEPlinthHandler", new TEPlinthMessageHandler());      
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TESocketHandler", new TESocketMessageHandler());      
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TETeleposerHandler", new TETeleposerMessageHandler());      
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEWritingTableHandler", new TEWritingTableMessageHandler());
+       clientChannel.pipeline().addAfter(tileAltarCodec, "ParticleHandler", new ParticleMessageHandler());
+       clientChannel.pipeline().addAfter(tileAltarCodec, "VelocityHandler", new VelocityMessageHandler());
    }
 
 
@@ -101,6 +100,12 @@ public enum NewPacketHandler
            if (te instanceof TEAltar)
            {
                TEAltar altar = (TEAltar) te;
+               
+               System.out.println("x: " + msg.x + ", y: " + msg.y + ", z: " + msg.z);
+               for(int in : msg.items)
+               {
+            	   System.out.println("" + in);
+               }
 
                altar.handlePacketData(msg.items, msg.fluids, msg.capacity);
            }
@@ -203,8 +208,40 @@ public enum NewPacketHandler
            }
        }
    }
+   
+   private static class ParticleMessageHandler extends SimpleChannelInboundHandler<ParticleMessage>
+   {
+       @Override
+       protected void channelRead0(ChannelHandlerContext ctx, ParticleMessage msg) throws Exception
+       {
+           World world = AlchemicalWizardry.proxy.getClientWorld();
+           
+           world.spawnParticle(msg.particle, msg.xCoord, msg.yCoord, msg.zCoord, msg.xVel, msg.yVel, msg.zVel);
+       }
+   }
+   
+   private static class VelocityMessageHandler extends SimpleChannelInboundHandler<VelocityMessage>
+   {
+       @Override
+       protected void channelRead0(ChannelHandlerContext ctx, VelocityMessage msg) throws Exception
+       {
+           EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+           
+           if(player!=null)
+           {
+        	   player.motionX = msg.xVel;
+        	   player.motionY = msg.yVel;
+        	   player.motionZ = msg.zVel;
+           }
+       }
+   }
 
-   public static class TEAltarMessage
+   public static class BMMessage
+   {
+	   int index;
+   }
+   
+   public static class TEAltarMessage extends BMMessage
    {
        int x;
        int y;
@@ -215,7 +252,7 @@ public enum NewPacketHandler
        int capacity;
    }
    
-   public static class TEOrientableMessage
+   public static class TEOrientableMessage extends BMMessage
    {
        int x;
        int y;
@@ -225,7 +262,7 @@ public enum NewPacketHandler
        int output;
    }
    
-   public static class TEPedestalMessage
+   public static class TEPedestalMessage extends BMMessage
    {
 	   int x;
        int y;
@@ -234,7 +271,7 @@ public enum NewPacketHandler
        int[] items;
    }
    
-   public static class TEPlinthMessage
+   public static class TEPlinthMessage extends BMMessage
    {
 	   int x;
        int y;
@@ -243,7 +280,7 @@ public enum NewPacketHandler
        int[] items;
    }
    
-   public static class TESocketMessage
+   public static class TESocketMessage extends BMMessage
    {
 	   int x;
        int y;
@@ -252,7 +289,7 @@ public enum NewPacketHandler
        int[] items;
    }
    
-   public static class TETeleposerMessage
+   public static class TETeleposerMessage extends BMMessage
    {
 	   int x;
        int y;
@@ -261,7 +298,7 @@ public enum NewPacketHandler
        int[] items;
    }
    
-   public static class TEWritingTableMessage
+   public static class TEWritingTableMessage extends BMMessage
    {
 	   int x;
        int y;
@@ -269,344 +306,385 @@ public enum NewPacketHandler
 
        int[] items;
    }
+   
+   public static class ParticleMessage extends BMMessage
+   {
+	   String particle;
+	   
+	   double xCoord;
+	   double yCoord;
+	   double zCoord;
+	   
+	   double xVel;
+	   double yVel;
+	   double zVel;
+   }
+   
+   public static class VelocityMessage extends BMMessage
+   {
+	   double xVel;
+	   double yVel;
+	   double zVel;
+   }
 
-   private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<TEAltarMessage>
+   private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
    {
        public TEAltarCodec()
        {
            addDiscriminator(0, TEAltarMessage.class);
+           addDiscriminator(1, TEOrientableMessage.class);
+           addDiscriminator(2, TEPedestalMessage.class);
+           addDiscriminator(3, TEPlinthMessage.class);
+           addDiscriminator(4, TESocketMessage.class);
+           addDiscriminator(5, TETeleposerMessage.class);
+           addDiscriminator(6, TEWritingTableMessage.class);
+           addDiscriminator(7, ParticleMessage.class);
+           addDiscriminator(8, VelocityMessage.class);
        }
        
        @Override
-       public void encodeInto(ChannelHandlerContext ctx, TEAltarMessage msg, ByteBuf target) throws Exception
+       public void encodeInto(ChannelHandlerContext ctx, BMMessage msg, ByteBuf target) throws Exception
        {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
+    	   target.writeInt(msg.index);
+    	   
+    	   switch(msg.index)
+    	   {
+    	   case 0:
+    		   target.writeInt(((TEAltarMessage)msg).x);
+               target.writeInt(((TEAltarMessage)msg).y);
+               target.writeInt(((TEAltarMessage)msg).z);
 
-           target.writeBoolean(msg.items != null);
-           if (msg.items != null)
-           {
-               int[] items = msg.items;
-               for (int j = 0; j < items.length; j++)
+               target.writeBoolean(((TEAltarMessage)msg).items != null);
+               if (((TEAltarMessage)msg).items != null)
                {
-                   int i = items[j];
-                   target.writeInt(i);
+                   int[] items = ((TEAltarMessage)msg).items;
+                   for (int j = 0; j < items.length; j++)
+                   {
+                       int i = items[j];
+                       target.writeInt(i);
+                       System.out.println("" + i);
+                   }
                }
-           }
-           
-           if(msg.fluids != null)
-           {
-        	   int[] fluids = msg.fluids;
-        	   for (int j = 0; j < fluids.length; j++)
+               
+               target.writeBoolean(((TEAltarMessage)msg).fluids != null);
+               if(((TEAltarMessage)msg).fluids != null)
                {
-                   int i = fluids[j];
-                   target.writeInt(i);
+            	   int[] fluids = ((TEAltarMessage)msg).fluids;
+            	   for (int j = 0; j < fluids.length; j++)
+                   {
+                       int i = fluids[j];
+                       target.writeInt(i);
+                   }
                }
-           }
-           
-           target.writeInt(msg.capacity);    
+               
+               target.writeInt(((TEAltarMessage)msg).capacity); 
+               
+               break;
+               
+    	   case 1:
+    		   target.writeInt(((TEOrientableMessage)msg).x);
+               target.writeInt(((TEOrientableMessage)msg).y);
+               target.writeInt(((TEOrientableMessage)msg).z);
+
+               target.writeInt(((TEOrientableMessage)msg).input);
+               target.writeInt(((TEOrientableMessage)msg).output);
+               
+               break;
+               
+    	   case 2:
+    		   target.writeInt(((TEPedestalMessage)msg).x);
+               target.writeInt(((TEPedestalMessage)msg).y);
+               target.writeInt(((TEPedestalMessage)msg).z);
+
+               target.writeBoolean(((TEPedestalMessage)msg).items != null);
+               if (((TEPedestalMessage)msg).items != null)
+               {
+                   int[] items = ((TEPedestalMessage)msg).items;
+                   for (int j = 0; j < items.length; j++)
+                   {
+                       int i = items[j];
+                       target.writeInt(i);
+                   }
+               }
+               
+               break;
+               
+    	   case 3:
+    		   target.writeInt(((TEPlinthMessage)msg).x);
+               target.writeInt(((TEPlinthMessage)msg).y);
+               target.writeInt(((TEPlinthMessage)msg).z);
+
+               target.writeBoolean(((TEPlinthMessage)msg).items != null);
+               if (((TEPlinthMessage)msg).items != null)
+               {
+                   int[] items = ((TEPlinthMessage)msg).items;
+                   for (int j = 0; j < items.length; j++)
+                   {
+                       int i = items[j];
+                       target.writeInt(i);
+                   }
+               }
+               
+    		   break;
+    		   
+    	   case 4:
+    		   target.writeInt(((TESocketMessage)msg).x);
+               target.writeInt(((TESocketMessage)msg).y);
+               target.writeInt(((TESocketMessage)msg).z);
+
+               target.writeBoolean(((TESocketMessage)msg).items != null);
+               if (((TESocketMessage)msg).items != null)
+               {
+                   int[] items = ((TESocketMessage)msg).items;
+                   for (int j = 0; j < items.length; j++)
+                   {
+                       int i = items[j];
+                       target.writeInt(i);
+                   }
+               }
+               
+    		   break;
+    		   
+    	   case 5:
+    		   target.writeInt(((TETeleposerMessage)msg).x);
+               target.writeInt(((TETeleposerMessage)msg).y);
+               target.writeInt(((TETeleposerMessage)msg).z);
+
+               target.writeBoolean(((TETeleposerMessage)msg).items != null);
+               if (((TETeleposerMessage)msg).items != null)
+               {
+                   int[] items = ((TETeleposerMessage)msg).items;
+                   for (int j = 0; j < items.length; j++)
+                   {
+                       int i = items[j];
+                       target.writeInt(i);
+                   }
+               }
+               
+    		   break;
+    		   
+    	   case 6:
+    		   target.writeInt(((TEWritingTableMessage)msg).x);
+               target.writeInt(((TEWritingTableMessage)msg).y);
+               target.writeInt(((TEWritingTableMessage)msg).z);
+
+               target.writeBoolean(((TEWritingTableMessage)msg).items != null);
+               if (((TEWritingTableMessage)msg).items != null)
+               {
+                   int[] items = ((TEWritingTableMessage)msg).items;
+                   for (int j = 0; j < items.length; j++)
+                   {
+                       int i = items[j];
+                       target.writeInt(i);
+                   }
+               }
+               
+    		   break;
+    		   
+    	   case 7:
+    		   String str = ((ParticleMessage)msg).particle;
+    		   target.writeInt(str.length());
+    		   for(int i=0; i<str.length(); i++)
+    		   {
+    			   target.writeChar(str.charAt(i));
+    		   }
+    		   
+    		   target.writeDouble(((ParticleMessage)msg).xCoord);
+    		   target.writeDouble(((ParticleMessage)msg).yCoord);
+    		   target.writeDouble(((ParticleMessage)msg).zCoord);
+    		   
+    		   target.writeDouble(((ParticleMessage)msg).xVel);
+    		   target.writeDouble(((ParticleMessage)msg).yVel);
+    		   target.writeDouble(((ParticleMessage)msg).zVel);
+    		   
+    		   break;
+    		   
+    	   case 8:
+    		   target.writeDouble(((VelocityMessage)msg).xVel);
+    		   target.writeDouble(((VelocityMessage)msg).yVel);
+    		   target.writeDouble(((VelocityMessage)msg).zVel);
+    		   
+    		   break;
+    	   }
        }
 
 
        @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TEAltarMessage msg)
+       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, BMMessage msg)
        {
-           msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           int typDat = dat.readByte();
-           boolean hasStacks = dat.readBoolean();
-           
-           msg.items = new int[TEAltar.sizeInv*3];
-           if (hasStacks)
-           {
-               msg.items = new int[TEAltar.sizeInv*3];
-               for (int i = 0; i < msg.items.length; i++)
+    	   int index = dat.readInt();
+    	   
+    	   switch(index)
+    	   {
+    	   case 0:
+    		   ((TEAltarMessage)msg).x = dat.readInt();
+               ((TEAltarMessage)msg).y = dat.readInt();
+               ((TEAltarMessage)msg).z = dat.readInt();
+               boolean hasStacks = dat.readBoolean();
+               
+               ((TEAltarMessage)msg).items = new int[TEAltar.sizeInv*3];
+               if (hasStacks)
                {
-                   msg.items[i] = dat.readInt();
+                   ((TEAltarMessage)msg).items = new int[TEAltar.sizeInv*3];
+                   for (int i = 0; i < ((TEAltarMessage)msg).items.length; i++)
+                   {
+                       ((TEAltarMessage)msg).items[i] = dat.readInt();
+                   }
                }
-           }
-           
-           msg.fluids = new int[6];
-           for (int i = 0; i < msg.fluids.length; i++)
-           {
-               msg.fluids[i] = dat.readInt();
-           }
-           
-           msg.capacity = dat.readInt();
+               
+               boolean hasFluids = dat.readBoolean();
+               ((TEAltarMessage)msg).fluids = new int[6];
+               if(hasFluids)
+    	           for (int i = 0; i < ((TEAltarMessage)msg).fluids.length; i++)
+    	           {
+    	               ((TEAltarMessage)msg).fluids[i] = dat.readInt();
+    	           }
+               
+               ((TEAltarMessage)msg).capacity = dat.readInt();
+               
+               break;
+               
+    	   case 1:
+    		   ((TEOrientableMessage)msg).x = dat.readInt();
+               ((TEOrientableMessage)msg).y = dat.readInt();
+               ((TEOrientableMessage)msg).z = dat.readInt();
+               
+               ((TEOrientableMessage)msg).input = dat.readInt();
+               ((TEOrientableMessage)msg).output = dat.readInt();
+               
+               break;
+               
+    	   case 2:
+    		   ((TEPedestalMessage)msg).x = dat.readInt();
+               ((TEPedestalMessage)msg).y = dat.readInt();
+               ((TEPedestalMessage)msg).z = dat.readInt();
+
+               boolean hasStacks1 = dat.readBoolean();
+               
+               ((TEPedestalMessage)msg).items = new int[TEPedestal.sizeInv*3];
+               if (hasStacks1)
+               {
+                   ((TEPedestalMessage)msg).items = new int[TEPedestal.sizeInv*3];
+                   for (int i = 0; i < ((TEPedestalMessage)msg).items.length; i++)
+                   {
+                       ((TEPedestalMessage)msg).items[i] = dat.readInt();
+                   }
+               }
+               
+    		   break;
+               
+    	   case 3:
+    		   ((TEPlinthMessage)msg).x = dat.readInt();
+               ((TEPlinthMessage)msg).y = dat.readInt();
+               ((TEPlinthMessage)msg).z = dat.readInt();
+
+               boolean hasStacks2 = dat.readBoolean();
+               
+               ((TEPlinthMessage)msg).items = new int[TEPlinth.sizeInv*3];
+               if (hasStacks2)
+               {
+                   ((TEPlinthMessage)msg).items = new int[TEPlinth.sizeInv*3];
+                   for (int i = 0; i < ((TEPlinthMessage)msg).items.length; i++)
+                   {
+                       ((TEPlinthMessage)msg).items[i] = dat.readInt();
+                   }
+               }
+               
+    		   break;
+               
+    	   case 4:
+    		   ((TESocketMessage)msg).x = dat.readInt();
+               ((TESocketMessage)msg).y = dat.readInt();
+               ((TESocketMessage)msg).z = dat.readInt();
+
+               boolean hasStacks3 = dat.readBoolean();
+               
+               ((TESocketMessage)msg).items = new int[TESocket.sizeInv*3];
+               if (hasStacks3)
+               {
+                   ((TESocketMessage)msg).items = new int[TESocket.sizeInv*3];
+                   for (int i = 0; i < ((TESocketMessage)msg).items.length; i++)
+                   {
+                       ((TESocketMessage)msg).items[i] = dat.readInt();
+                   }
+               }
+               
+    		   break;
+               
+    	   case 5:
+    		   ((TETeleposerMessage)msg).x = dat.readInt();
+               ((TETeleposerMessage)msg).y = dat.readInt();
+               ((TETeleposerMessage)msg).z = dat.readInt();
+
+               boolean hasStacks4 = dat.readBoolean();
+               
+               ((TETeleposerMessage)msg).items = new int[TETeleposer.sizeInv*3];
+               if (hasStacks4)
+               {
+                   ((TETeleposerMessage)msg).items = new int[TETeleposer.sizeInv*3];
+                   for (int i = 0; i < ((TETeleposerMessage)msg).items.length; i++)
+                   {
+                       ((TETeleposerMessage)msg).items[i] = dat.readInt();
+                   }
+               }
+               
+    		   break;
+               
+    	   case 6:
+    		   ((TEWritingTableMessage)msg).x = dat.readInt();
+               ((TEWritingTableMessage)msg).y = dat.readInt();
+               ((TEWritingTableMessage)msg).z = dat.readInt();
+
+               boolean hasStacks5 = dat.readBoolean();
+               
+               ((TEWritingTableMessage)msg).items = new int[TEWritingTable.sizeInv*3];
+               if (hasStacks5)
+               {
+                   ((TEWritingTableMessage)msg).items = new int[TEWritingTable.sizeInv*3];
+                   for (int i = 0; i < ((TEWritingTableMessage)msg).items.length; i++)
+                   {
+                       ((TEWritingTableMessage)msg).items[i] = dat.readInt();
+                   }
+               }
+               
+    		   break;   
+    		   
+    	   case 7:
+    		   int size = dat.readInt();
+	           String str = "";
+
+	           for (int i = 0; i < size; i++)
+	           {
+	               str = str + dat.readChar();
+	           }
+	           
+	           ((ParticleMessage)msg).particle = str;
+	           
+	           ((ParticleMessage)msg).xCoord = dat.readDouble();
+	           ((ParticleMessage)msg).yCoord = dat.readDouble();
+	           ((ParticleMessage)msg).zCoord = dat.readDouble();
+	           
+	           ((ParticleMessage)msg).xVel = dat.readDouble();
+	           ((ParticleMessage)msg).yVel = dat.readDouble();
+	           ((ParticleMessage)msg).zVel = dat.readDouble();
+	           
+	           break;
+	           
+    	   case 8:
+    		   ((VelocityMessage)msg).xVel = dat.readDouble();
+    		   ((VelocityMessage)msg).yVel = dat.readDouble();
+    		   ((VelocityMessage)msg).zVel = dat.readDouble();
+    		   
+    		   break;
+    	   }
        }
    }
-   
-   private class TEOrientableCodec extends FMLIndexedMessageToMessageCodec<TEOrientableMessage>
-   {
-       public TEOrientableCodec()
-       {
-           addDiscriminator(0, TEOrientableMessage.class);
-       }
-       
-       @Override
-       public void encodeInto(ChannelHandlerContext ctx, TEOrientableMessage msg, ByteBuf target) throws Exception
-       {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
 
-           target.writeInt(msg.input);
-           target.writeInt(msg.output);
-       }
-
-       @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TEOrientableMessage msg)
-       {
-           msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           
-           msg.input = dat.readInt();
-           msg.output = dat.readInt();
-       }
-   }
-   
-   private class TEPedestalCodec extends FMLIndexedMessageToMessageCodec<TEPedestalMessage>
-   {
-       public TEPedestalCodec()
-       {
-           addDiscriminator(0, TEPedestalMessage.class);
-       }
-       
-       @Override
-       public void encodeInto(ChannelHandlerContext ctx, TEPedestalMessage msg, ByteBuf target) throws Exception
-       {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
-
-           target.writeBoolean(msg.items != null);
-           if (msg.items != null)
-           {
-               int[] items = msg.items;
-               for (int j = 0; j < items.length; j++)
-               {
-                   int i = items[j];
-                   target.writeInt(i);
-               }
-           }
-       }
-
-       @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TEPedestalMessage msg)
-       {
-    	   msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           int typDat = dat.readByte();
-           boolean hasStacks = dat.readBoolean();
-           
-           msg.items = new int[TEPedestal.sizeInv*3];
-           if (hasStacks)
-           {
-               msg.items = new int[TEPedestal.sizeInv*3];
-               for (int i = 0; i < msg.items.length; i++)
-               {
-                   msg.items[i] = dat.readInt();
-               }
-           }
-       }
-   }
-   
-   private class TEPlinthCodec extends FMLIndexedMessageToMessageCodec<TEPlinthMessage>
-   {
-       public TEPlinthCodec()
-       {
-           addDiscriminator(0, TEPlinthMessage.class);
-       }
-       
-       @Override
-       public void encodeInto(ChannelHandlerContext ctx, TEPlinthMessage msg, ByteBuf target) throws Exception
-       {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
-
-           target.writeBoolean(msg.items != null);
-           if (msg.items != null)
-           {
-               int[] items = msg.items;
-               for (int j = 0; j < items.length; j++)
-               {
-                   int i = items[j];
-                   target.writeInt(i);
-               }
-           }
-       }
-
-       @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TEPlinthMessage msg)
-       {
-    	   msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           int typDat = dat.readByte();
-           boolean hasStacks = dat.readBoolean();
-           
-           msg.items = new int[TEPlinth.sizeInv*3];
-           if (hasStacks)
-           {
-               msg.items = new int[TEPlinth.sizeInv*3];
-               for (int i = 0; i < msg.items.length; i++)
-               {
-                   msg.items[i] = dat.readInt();
-               }
-           }
-       }
-   }
-   
-   private class TESocketCodec extends FMLIndexedMessageToMessageCodec<TESocketMessage>
-   {
-       public TESocketCodec()
-       {
-           addDiscriminator(0, TESocketMessage.class);
-       }
-       
-       @Override
-       public void encodeInto(ChannelHandlerContext ctx, TESocketMessage msg, ByteBuf target) throws Exception
-       {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
-
-           target.writeBoolean(msg.items != null);
-           if (msg.items != null)
-           {
-               int[] items = msg.items;
-               for (int j = 0; j < items.length; j++)
-               {
-                   int i = items[j];
-                   target.writeInt(i);
-               }
-           }
-       }
-
-       @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TESocketMessage msg)
-       {
-    	   msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           int typDat = dat.readByte();
-           boolean hasStacks = dat.readBoolean();
-           
-           msg.items = new int[TESocket.sizeInv*3];
-           if (hasStacks)
-           {
-               msg.items = new int[TESocket.sizeInv*3];
-               for (int i = 0; i < msg.items.length; i++)
-               {
-                   msg.items[i] = dat.readInt();
-               }
-           }
-       }
-   }
-   
-   private class TETeleposerCodec extends FMLIndexedMessageToMessageCodec<TETeleposerMessage>
-   {
-       public TETeleposerCodec()
-       {
-           addDiscriminator(0, TETeleposerMessage.class);
-       }
-       
-       @Override
-       public void encodeInto(ChannelHandlerContext ctx, TETeleposerMessage msg, ByteBuf target) throws Exception
-       {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
-
-           target.writeBoolean(msg.items != null);
-           if (msg.items != null)
-           {
-               int[] items = msg.items;
-               for (int j = 0; j < items.length; j++)
-               {
-                   int i = items[j];
-                   target.writeInt(i);
-               }
-           }
-       }
-
-       @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TETeleposerMessage msg)
-       {
-    	   msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           int typDat = dat.readByte();
-           boolean hasStacks = dat.readBoolean();
-           
-           msg.items = new int[TETeleposer.sizeInv*3];
-           if (hasStacks)
-           {
-               msg.items = new int[TETeleposer.sizeInv*3];
-               for (int i = 0; i < msg.items.length; i++)
-               {
-                   msg.items[i] = dat.readInt();
-               }
-           }
-       }
-   }
-   
-   private class TEWritingTableCodec extends FMLIndexedMessageToMessageCodec<TEWritingTableMessage>
-   {
-       public TEWritingTableCodec()
-       {
-           addDiscriminator(0, TEWritingTableMessage.class);
-       }
-       
-       @Override
-       public void encodeInto(ChannelHandlerContext ctx, TEWritingTableMessage msg, ByteBuf target) throws Exception
-       {
-           target.writeInt(msg.x);
-           target.writeInt(msg.y);
-           target.writeInt(msg.z);
-
-           target.writeBoolean(msg.items != null);
-           if (msg.items != null)
-           {
-               int[] items = msg.items;
-               for (int j = 0; j < items.length; j++)
-               {
-                   int i = items[j];
-                   target.writeInt(i);
-               }
-           }
-       }
-
-       @Override
-       public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, TEWritingTableMessage msg)
-       {
-    	   msg.x = dat.readInt();
-           msg.y = dat.readInt();
-           msg.z = dat.readInt();
-           int typDat = dat.readByte();
-           boolean hasStacks = dat.readBoolean();
-           
-           msg.items = new int[TEWritingTable.sizeInv*3];
-           if (hasStacks)
-           {
-               msg.items = new int[TEWritingTable.sizeInv*3];
-               for (int i = 0; i < msg.items.length; i++)
-               {
-                   msg.items[i] = dat.readInt();
-               }
-           }
-       }
-   }
-   
    //Packets to be obtained
    public static Packet getPacket(TEAltar tileAltar)
    {
        TEAltarMessage msg = new TEAltarMessage();
+       msg.index = 0;
        msg.x = tileAltar.xCoord;
        msg.y = tileAltar.yCoord;
        msg.z = tileAltar.zCoord;
@@ -620,6 +698,7 @@ public enum NewPacketHandler
    public static Packet getPacket(TEOrientable tileOrientable)
    {
        TEOrientableMessage msg = new TEOrientableMessage();
+       msg.index = 1;
        msg.x = tileOrientable.xCoord;
        msg.y = tileOrientable.yCoord;
        msg.z = tileOrientable.zCoord;
@@ -632,6 +711,7 @@ public enum NewPacketHandler
    public static Packet getPacket(TEPedestal tilePedestal)
    {
        TEPedestalMessage msg = new TEPedestalMessage();
+       msg.index = 2;
        msg.x = tilePedestal.xCoord;
        msg.y = tilePedestal.yCoord;
        msg.z = tilePedestal.zCoord;
@@ -643,6 +723,7 @@ public enum NewPacketHandler
    public static Packet getPacket(TEPlinth tilePlinth)
    {
        TEPlinthMessage msg = new TEPlinthMessage();
+       msg.index = 3;
        msg.x = tilePlinth.xCoord;
        msg.y = tilePlinth.yCoord;
        msg.z = tilePlinth.zCoord;
@@ -654,6 +735,7 @@ public enum NewPacketHandler
    public static Packet getPacket(TESocket tileSocket)
    {
        TESocketMessage msg = new TESocketMessage();
+       msg.index = 4;
        msg.x = tileSocket.xCoord;
        msg.y = tileSocket.yCoord;
        msg.z = tileSocket.zCoord;
@@ -665,6 +747,7 @@ public enum NewPacketHandler
    public static Packet getPacket(TETeleposer tileTeleposer)
    {
        TETeleposerMessage msg = new TETeleposerMessage();
+       msg.index = 5;
        msg.x = tileTeleposer.xCoord;
        msg.y = tileTeleposer.yCoord;
        msg.z = tileTeleposer.zCoord;
@@ -676,11 +759,58 @@ public enum NewPacketHandler
    public static Packet getPacket(TEWritingTable tileWritingTable)
    {
        TEWritingTableMessage msg = new TEWritingTableMessage();
+       msg.index = 6;
        msg.x = tileWritingTable.xCoord;
        msg.y = tileWritingTable.yCoord;
        msg.z = tileWritingTable.zCoord;
        msg.items = tileWritingTable.buildIntDataList();
        
        return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+   }
+   
+   public static Packet getParticlePacket(String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
+   {
+	   ParticleMessage msg = new ParticleMessage();
+	   msg.index = 7;
+	   msg.particle = str;
+	   msg.xCoord = xCoord;
+	   msg.yCoord = yCoord;
+	   msg.zCoord = zCoord;
+	   msg.xVel = xVel;
+	   msg.yVel = yVel;
+	   msg.zVel = zVel;
+	   
+	   return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+   }
+   
+   public static Packet getVelSettingPacket(double xVel, double yVel, double zVel)
+   {
+	   VelocityMessage msg = new VelocityMessage();
+	   msg.index = 8;
+	   msg.xVel = xVel;
+	   msg.yVel = yVel;
+	   msg.zVel = zVel;
+	   
+	   return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+   }
+   
+   public void sendTo(Packet message, EntityPlayerMP player) 
+   {
+       this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
+       this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
+       this.channels.get(Side.SERVER).writeAndFlush(message);
+   }
+   
+   public void sendToAll(Packet message) 
+   {
+       this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALL);
+       this.channels.get(Side.SERVER).writeAndFlush(message);
+   }
+   
+   public void sendToAllAround(Packet message, NetworkRegistry.TargetPoint point) 
+   {
+       this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
+       this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
+       this.channels.get(Side.SERVER).writeAndFlush(message);
    }
 }

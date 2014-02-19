@@ -18,7 +18,7 @@ public class BlockSpellEffect extends BlockOrientable
 	public BlockSpellEffect() 
 	{
 		super();
-		//setUnlocalizedName("blockSpellEffect");
+		this.setBlockName("blockSpellEffect");
 	}
 	
 	@Override

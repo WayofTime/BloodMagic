@@ -27,6 +27,7 @@ import WayofTime.alchemicalWizardry.common.AlchemicalWizardryTickHandler;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
+import WayofTime.alchemicalWizardry.common.LifeEssence;
 import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
@@ -234,7 +235,14 @@ public class AlchemicalWizardry
                 System.err.println(e);
             }
         }
+        AlchemicalWizardry.lifeEssenceFluid = new LifeEssence("Life Essence");
+        FluidRegistry.registerFluid(lifeEssenceFluid);
+        
         ModBlocks.init();
+        
+       
+        ModBlocks.registerBlocksInPre();
+        
         ModItems.init();
         
         ModItems.registerItems();
@@ -249,10 +257,8 @@ public class AlchemicalWizardry
         int craftingConstant = OreDictionary.WILDCARD_VALUE;
         //TickRegistry.registerTickHandler(new AlchemicalWizardryTickHandler(), Side.SERVER);
         
-        ModBlocks.registerBlocks();
-
+        ModBlocks.registerBlocksInInit();
         //blocks
-
         
         proxy.registerRenderers();
         proxy.registerEntities();
@@ -305,7 +311,7 @@ public class AlchemicalWizardry
         ItemStack energySwordStack = new ItemStack(ModItems.energySword);
         ItemStack energyBlasterStack = new ItemStack(ModItems.energyBlaster);
         ItemStack sacrificialDaggerStack = new ItemStack(ModItems.sacrificialDagger);
-        ItemStack bloodAltarStack = new ItemStack(ModBlocks.blockAltar);
+        ItemStack bloodAltarStack = new ItemStack(ModBlocks.blockAltar,1,0);
         ItemStack bloodRuneCraftedStack = new ItemStack(ModBlocks.bloodRune, 1);
         ItemStack bloodRuneStack = new ItemStack(ModBlocks.bloodRune);
         ItemStack speedRuneStack = new ItemStack(ModBlocks.speedRune);
@@ -430,105 +436,20 @@ public class AlchemicalWizardry
         customPotionReciprocation = (new PotionReciprocation(customPotionReciprocationID, false, 0xFFFFFF)).setIconIndex(0, 0).setPotionName("Reciprocation");
         customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID,false,0).setIconIndex(0,0).setPotionName("Flame Cloak"));
         customPotionIceCloak = (new PotionIceCloak(customPotionIceCloakID,false,0).setIconIndex(0,0).setPotionName("Ice Cloak"));
-        //All items registered go here
-        //LanguageRegistry.addName(orbOfTesting, "Orb of Testing");
-        LanguageRegistry.addName(ModItems.weakBloodOrb, "Weak Blood Orb");
-        LanguageRegistry.addName(ModItems.apprenticeBloodOrb, "Apprentice Blood Orb");
-        LanguageRegistry.addName(ModItems.magicianBloodOrb, "Magician's Blood Orb");
-        LanguageRegistry.addName(ModItems.archmageBloodOrb, "Archmage's Blood Orb");
-        LanguageRegistry.addName(ModItems.energyBlaster, "Energy Blaster");
-        LanguageRegistry.addName(ModItems.energySword, "Bound Blade");
-        LanguageRegistry.addName(ModItems.lavaCrystal, "Lava Crystal");
-        LanguageRegistry.addName(ModItems.waterSigil, "Water Sigil");
-        LanguageRegistry.addName(ModItems.lavaSigil, "Lava Sigil");
-        LanguageRegistry.addName(ModItems.voidSigil, "Void Sigil");
-        //LanguageRegistry.addName(glassShard, "Glass Shard");
-        //LanguageRegistry.addName(bloodiedShard, "Bloodied Shard");
-        LanguageRegistry.addName(ModItems.blankSlate, "Blank Slate");
-        LanguageRegistry.addName(ModItems.reinforcedSlate, "Reinforced Slate");
-        LanguageRegistry.addName(ModItems.sacrificialDagger, "Sacrificial Knife");
-        LanguageRegistry.addName(ModItems.daggerOfSacrifice, "Dagger of Sacrifice");
-        LanguageRegistry.addName(ModItems.airSigil, "Air Sigil");
-        LanguageRegistry.addName(ModItems.sigilOfTheFastMiner, "Sigil of the Fast Miner");
-        LanguageRegistry.addName(ModItems.sigilOfElementalAffinity, "Sigil of Elemental Affinity");
-        LanguageRegistry.addName(ModItems.sigilOfHaste, "Sigil of Haste");
-        LanguageRegistry.addName(ModItems.sigilOfHolding, "Sigil of Holding");
-        LanguageRegistry.addName(ModItems.growthSigil, "Sigil of the Green Grove");
-//        LanguageRegistry.addName(elementalInkWater, "Elemental Ink: Water");
-//        LanguageRegistry.addName(elementalInkFire, "Elemental Ink: Fire");
-//        LanguageRegistry.addName(elementalInkEarth, "Elemental Ink: Earth");
-//        LanguageRegistry.addName(elementalInkAir, "Elemental Ink: Air");
-        LanguageRegistry.addName(ModItems.divinationSigil, "Divination Sigil");
-        LanguageRegistry.addName(new ItemStack(ModItems.activationCrystal, 1, 0), "Weak Activation Crystal");
-        LanguageRegistry.addName(new ItemStack(ModItems.activationCrystal, 1, 1), "Awakened Activation Crystal");
-        LanguageRegistry.addName(ModItems.waterScribeTool, "Elemental Inscription Tool: Water");
-        LanguageRegistry.addName(ModItems.fireScribeTool, "Elemental Inscription Tool: Fire");
-        LanguageRegistry.addName(ModItems.earthScribeTool, "Elemental Inscription Tool: Earth");
-        LanguageRegistry.addName(ModItems.airScribeTool, "Elemental Inscription Tool: Air");
-        LanguageRegistry.addName(ModItems.boundPickaxe, "Bound Pickaxe");
-        LanguageRegistry.addName(ModItems.boundAxe, "Bound Axe");
-        LanguageRegistry.addName(ModItems.boundShovel, "Bound Shovel");
-        LanguageRegistry.addName(ModItems.boundHelmet, "Bound Helmet");
-        LanguageRegistry.addName(ModItems.boundPlate, "Bound Chestplate");
-        LanguageRegistry.addName(ModItems.boundLeggings, "Bound Leggings");
-        LanguageRegistry.addName(ModItems.boundBoots, "Bound Boots");
-        LanguageRegistry.addName(ModItems.weakBloodShard, "Weak Blood Shard");
-        LanguageRegistry.addName(ModItems.blankSpell, "Unbound Crystal");
-        LanguageRegistry.addName(ModItems.masterBloodOrb, "Master Blood Orb");
-        LanguageRegistry.addName(ModItems.alchemyFlask, "Potion Flask");
-        LanguageRegistry.addName(ModItems.mundanePowerCatalyst, "Mundane Power Catalyst");
-        LanguageRegistry.addName(ModItems.averagePowerCatalyst, "Average Power Catalyst");
-        LanguageRegistry.addName(ModItems.greaterPowerCatalyst, "Greater Power Catalyst");
-        LanguageRegistry.addName(ModItems.mundaneLengtheningCatalyst, "Mundane Lengthening Catalyst");
-        LanguageRegistry.addName(ModItems.averageLengtheningCatalyst, "Average Lengthening Catalyst");
-        LanguageRegistry.addName(ModItems.greaterLengtheningCatalyst, "Greater Lengthening Catalyst");
-        LanguageRegistry.addName(ModItems.standardBindingAgent, "Standard Binding Agent");
-        LanguageRegistry.addName(ModItems.incendium, "Incendium");
-        LanguageRegistry.addName(ModItems.magicales, "Magicales");
-        LanguageRegistry.addName(ModItems.sanctus, "Sanctus");
-        LanguageRegistry.addName(ModItems.aether, "Aether");
-        LanguageRegistry.addName(ModItems.simpleCatalyst, "Simple Catalyst");
-        LanguageRegistry.addName(ModItems.crepitous, "Crepitous");
-        LanguageRegistry.addName(ModItems.crystallos, "Crystallos");
-        LanguageRegistry.addName(ModItems.terrae, "Terrae");
-        LanguageRegistry.addName(ModItems.aquasalus, "Aquasalus");
-        LanguageRegistry.addName(ModItems.tennebrae, "Tennebrae");
-        LanguageRegistry.addName(ModItems.sigilOfWind, "Sigil of the Whirlwind");
-        LanguageRegistry.addName(ModItems.telepositionFocus, "Teleposition Focus");
-        LanguageRegistry.addName(ModItems.enhancedTelepositionFocus, "Enhanced Teleposition Focus");
-        LanguageRegistry.addName(ModItems.reinforcedTelepositionFocus, "Reinforced Teleposition Focus");
-        LanguageRegistry.addName(ModItems.demonicTelepositionFocus, "Demonic Teleposition Focus");
-        LanguageRegistry.addName(ModItems.imbuedSlate, "Imbued Slate");
-        LanguageRegistry.addName(ModItems.demonicSlate, "Demonic Slate");
-        LanguageRegistry.addName(ModItems.duskScribeTool, "Elemental Inscription Tool: Dusk");
-        LanguageRegistry.addName(ModItems.sigilOfTheBridge, "Sigil of the Phantom Bridge");
-        LanguageRegistry.addName(ModItems.armourInhibitor, "Armour Inhibitor");
-        LanguageRegistry.addName(ModItems.creativeFiller, "Orb of Testing");
-        LanguageRegistry.addName(ModItems.weakFillingAgent, "Weak Filling Agent");
-        LanguageRegistry.addName(ModItems.standardFillingAgent, "Standard Filling Agent");
-        LanguageRegistry.addName(ModItems.enhancedFillingAgent, "Enhanced Filling Agent");
-        LanguageRegistry.addName(ModItems.weakBindingAgent, "Weak Binding Agent");
-        LanguageRegistry.addName(ModItems.itemRitualDiviner, "Ritual Diviner");
-        LanguageRegistry.addName(ModItems.sigilOfMagnetism, "Sigil of Magnetism");
-        LanguageRegistry.addName(ModItems.itemKeyOfDiablo, "Key of Binding");
-        LanguageRegistry.addName(ModItems.energyBazooka, "Energy Bazooka");
-        LanguageRegistry.addName(ModItems.itemBloodLightSigil, "Sigil of the Blood Lamp");
-        LanguageRegistry.addName(ModItems.demonBloodShard, "Demon Blood Shard");
+
         //FluidStack lifeEssenceFluidStack = new FluidStack(lifeEssenceFluid, 1);
         //LiquidStack lifeEssence = new LiquidStack(lifeEssenceFlowing, 1);
         //LiquidDictionary.getOrCreateLiquid("Life Essence", lifeEssence);
-        FluidRegistry.registerFluid(lifeEssenceFluid);
-        ModBlocks.blockLifeEssence = new LifeEssenceBlock();
+        
+
 //        ModBlocks.blockLifeEssence.setUnlocalizedName("lifeEssenceBlock");
         FluidContainerRegistry.registerFluidContainer(lifeEssenceFluid, new ItemStack(ModItems.bucketLife), FluidContainerRegistry.EMPTY_BUCKET);
-        FluidRegistry.registerFluid(lifeEssenceFluid);
+        
         //lifeEssenceFluid.setUnlocalizedName("lifeEssence");
         //LiquidContainerRegistry.registerLiquid(new LiquidContainerData(LiquidDictionary.getLiquid("Life Essence", LiquidContainerRegistry.BUCKET_VOLUME), new ItemStack(AlchemicalWizardry.bucketLife), new ItemStack(Item.bucketEmpty)));
         //GameRegistry.registerBlock(testingBlock, "testingBlock");
         //LanguageRegistry.addName(testingBlock, "Testing Block");
         //(testingBlock, "pickaxe", 0);
-        LanguageRegistry.addName(ModBlocks.blockAltar, "Blood Altar");
-        LanguageRegistry.addName(ModBlocks.blockLifeEssence, "Life Essence");
         ModBlocks.blockAltar.setHarvestLevel("pickaxe", 1);
         //Register Tile Entity
         GameRegistry.registerTileEntity(TEAltar.class, "containerAltar");
@@ -545,69 +466,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TESpellEffectBlock.class, "containerSpellEffectBlock");
         GameRegistry.registerTileEntity(TESpellModifierBlock.class, "containerSpellModifierBlock");
         GameRegistry.registerTileEntity(TESpellEnhancementBlock.class, "containerSpellEnhancementBlock");
-        //
-        LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 0), "Blood Rune");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 1), "Rune of Augmented Capacity");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 2), "Rune of Dislocation");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 3), "Rune of the Orb");
-        //TODO
-        
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellParadigm, 1, 0), "Particle Generator");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellParadigm, 1, 1), "Self Augmentator");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellParadigm, 1, 2), "Melee Aggregator");
-        
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 0), "Unstable Spell Empowerer");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 1), "Standard Spell Empowerer");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 2), "Reinforced Spell Empowerer");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 3), "Imbued Spell Empowerer");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 4), "Demonic Spell Empowerer");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 5), "Unstable Spell Dampener");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 6), "Standard Spell Dampener");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 7), "Reinforced Spell Dampener");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 8), "Imbued Spell Dampener");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 9), "Demonic Spell Dampener");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 10), "Unstable Spell Augmenter");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 11), "Standard Spell Augmenter");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 12), "Reinforced Spell Augmenter");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 13), "Imbued Spell Augmenter");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEnhancement, 1, 14), "Demonic Spell Augmenter");
-       
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 0), "Default Spell Modifier");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 1), "Offensive Spell Modifier");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 2), "Defensive Spell Modifier");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellModifier, 1, 3), "Environmental Spell Modifier");
-        
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 0), "Crucible of Fire");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 1), "Ice Maker");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 2), "Wind Generator");
-        LanguageRegistry.addName(new ItemStack(ModBlocks.blockSpellEffect, 1, 3), "Earth Former");
-        
-        LanguageRegistry.addName(ModBlocks.speedRune, "Speed Rune");
-        LanguageRegistry.addName(ModBlocks.efficiencyRune, "Efficiency Rune");
-        LanguageRegistry.addName(ModBlocks.runeOfSacrifice, "Rune of Sacrifice");
-        LanguageRegistry.addName(ModBlocks.runeOfSelfSacrifice, "Rune of Self-sacrifice");
-//        GameRegistry.registerBlock(lifeEssenceStill, "lifeEssenceStill");
-//        GameRegistry.registerBlock(lifeEssenceFlowing, "lifeEssenceFlowing");
-        //LanguageRegistry.addName(lifeEssenceStill, "Life Essence");
-        LanguageRegistry.addName(ModItems.bucketLife, "Bucket of Life");
-        LanguageRegistry.addName(ModBlocks.blockMasterStone, "Master Ritual Stone");
-        LanguageRegistry.addName(ModBlocks.imperfectRitualStone, "Imperfect Ritual Stone");
-        LanguageRegistry.addName(ModBlocks.ritualStone, "Ritual Stone");
-        LanguageRegistry.addName(ModBlocks.armourForge, "Soul Armour Forge");
-        LanguageRegistry.addName(ModBlocks.emptySocket, "Empty Socket");
-        LanguageRegistry.addName(ModBlocks.bloodSocket, "Filled Socket");
-        LanguageRegistry.addName(ModBlocks.bloodStoneBrick, "Bloodstone Brick");
-        LanguageRegistry.addName(ModBlocks.largeBloodStoneBrick, "Large Bloodstone Brick");
-        LanguageRegistry.addName(ModBlocks.blockHomHeart, "Spell Table");
-        LanguageRegistry.addName(ModBlocks.blockPedestal, "Arcane Pedestal");
-        LanguageRegistry.addName(ModBlocks.blockPlinth, "Arcane Plinth");
-        LanguageRegistry.addName(ModBlocks.blockWritingTable, "Alchemic Chemistry Set");
-        LanguageRegistry.addName(ModBlocks.blockTeleposer, "Teleposer");
-        LanguageRegistry.addName(ModBlocks.spectralBlock, "Spectral Block");
-        LanguageRegistry.addName(ModBlocks.blockBloodLight, "Blood Light");
-        LanguageRegistry.addName(ModBlocks.blockConduit, "Spell Conduit");
-        //TODO
-        
+            
         //GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
@@ -715,21 +574,6 @@ public class AlchemicalWizardry
         EntityRegistry.registerModEntity(EntityShadeElemental.class, "ShadeElemental", this.entityShadeElementalID, this, 120, 3, true);
         EntityRegistry.registerModEntity(EntityHolyElemental.class, "HolyElemental", this.entityHolyElementalID, this, 120, 3, true);
         //EntityRegistry.addSpawn(EntityFallenAngel.class, 5, 1, 5, EnumCreatureType.creature, BiomeGenBase.biomeList);
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.FallenAngel.name", "en_US", "Fallen Angel");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.LowerGuardian.name", "en_US", "Lower Stone Guardian");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.BileDemon.name", "en_US", "Bile Demon");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.WingedFireDemon.name", "en_US", "Winged Fire Demon");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.SmallEarthGolem.name", "en_US", "Small Earth Golem");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.IceDemon.name", "en_US", "Ice Demon");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.BoulderFist.name", "en_US", "Boulder Fist");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.Shade.name", "en_US", "Shade");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.AirElemental.name", "en_US", "Air Elemental");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.WaterElemental.name", "en_US", "Water Elemental");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.EarthElemental.name", "en_US", "Earth Elemental");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.FireElemental.name", "en_US", "Fire Elemental");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.ShadeElemental.name", "en_US", "Shade Elemental");
-        LanguageRegistry.instance().addStringLocalization("entity.AlchemicalWizardry.HolyElemental.name", "en_US", "Holy Elemental");
-        LanguageRegistry.instance().addStringLocalization("itemGroup.tabBloodMagic", "en_US", "Blood Magic");
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.standardBindingAgent), 1, 3, this.standardBindingAgentDungeonChance));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.mundanePowerCatalyst), 1, 1, this.mundanePowerCatalystDungeonChance));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.mundaneLengtheningCatalyst), 1, 1, this.mundaneLengtheningCatalystDungeonChance));

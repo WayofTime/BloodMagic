@@ -41,7 +41,7 @@ public class ItemSpellEffectBlock extends ItemBlock
                 break;
 
             case 3:
-                name = "water";
+                name = "earth";
                 break;
 
             default:

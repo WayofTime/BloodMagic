@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
@@ -88,8 +89,9 @@ public class TEOrientable extends TileEntity implements IOrientable
     @Override
     public Packet getDescriptionPacket()
     {
-        return NewPacketHandler.getPacket(this);
+    	return NewPacketHandler.getPacket(this);
     }
+
     
     public boolean isSideRendered(ForgeDirection side)
     {

@@ -27,7 +27,7 @@ public class BlockHomHeart extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("blockHomHeart");
+        this.setBlockName("blockHomHeart");
     }
 
     @Override

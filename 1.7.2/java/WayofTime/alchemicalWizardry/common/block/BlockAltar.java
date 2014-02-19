@@ -43,6 +43,7 @@ public class BlockAltar extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("bloodAltar");
         //setUnlocalizedName("blockAltar");
         //func_111022_d("AlchemicalWizardry:blocks");
     }
@@ -99,6 +100,9 @@ public class BlockAltar extends BlockContainer
                 if (player.worldObj.isRemote)
                 {
                     world.markBlockForUpdate(x, y, z);
+                }else
+                {
+                	tileEntity.sendChatInfoToPlayer(player);
                 }
 
                 return true;
@@ -111,8 +115,11 @@ public class BlockAltar extends BlockContainer
                     if (player.worldObj.isRemote)
                     {
                     	world.markBlockForUpdate(x, y, z);
+                    }else
+                    {
+                    	tileEntity.sendChatInfoToPlayer(player);
                     }
-
+                    
                     return true;
                 }
             }

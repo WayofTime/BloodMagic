@@ -35,7 +35,7 @@ public class RitualStone extends Block
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
-        //setUnlocalizedName("ritualStone");
+        this.setBlockName("ritualStone");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

@@ -26,12 +26,6 @@ public class TEConduit extends TESpellBlock
 
     }
 
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        return super.getDescriptionPacket();
-    }
-
 	@Override
 	protected void applySpellChange(SpellParadigm parad) 
 	{

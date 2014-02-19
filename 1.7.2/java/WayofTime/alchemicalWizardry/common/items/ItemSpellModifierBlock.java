@@ -26,18 +26,22 @@ public class ItemSpellModifierBlock extends ItemBlock
         {
             case 0:
             {
-                name = "power";
+                name = "default";
                 break;
             }
 
             case 1:
             {
-                name = "efficiency";
+                name = "offensive";
                 break;
             }
 
             case 2:
-                name = "potency";
+                name = "defensive";
+                break;
+                
+            case 3:
+                name = "environmental";
                 break;
 
             default:

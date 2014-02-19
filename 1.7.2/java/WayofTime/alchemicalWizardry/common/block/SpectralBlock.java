@@ -17,7 +17,7 @@ public class SpectralBlock extends Block
     public SpectralBlock()
     {
         super(Material.rock);
-        //this.setUnlocalizedName("spectralBlock");
+        this.setBlockName("spectralBlock");
     }
 
 //	@Override

@@ -22,7 +22,7 @@ public class BlockMasterStone extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("blockMasterStone");
+        this.setBlockName("blockMasterStone");
         // TODO Auto-generated constructor stub
     }
 

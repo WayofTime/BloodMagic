@@ -10,7 +10,7 @@ public class RuneOfSacrifice extends BloodRune
     public RuneOfSacrifice()
     {
         super();
-        //setUnlocalizedName("runeOfSacrifice");
+        this.setBlockName("runeOfSacrifice");
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

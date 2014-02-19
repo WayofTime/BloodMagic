@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.client;
 
+import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -25,11 +26,13 @@ import WayofTime.alchemicalWizardry.common.renderer.block.RenderConduit;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderPedestal;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderPlinth;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEffectBlock;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderWritingTable;
 import WayofTime.alchemicalWizardry.common.renderer.block.TEAltarRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAltarItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEConduitItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TESpellEffectBlockItemRenderer;
+import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TESpellEnhancementBlockItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.mob.RenderBileDemon;
 import WayofTime.alchemicalWizardry.common.renderer.mob.RenderBoulderFist;
 import WayofTime.alchemicalWizardry.common.renderer.mob.RenderElemental;
@@ -57,6 +60,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -103,15 +107,19 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityShadeElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
         //EntityRegistry.registerGlobalEntityID(EntityHolyElemental.class, "AlchemicalWizardry.HolyElemental", EntityRegistry.findGlobalUniqueEntityId(),0x40FF00, 0x0B610B);
         RenderingRegistry.registerEntityRenderingHandler(EntityHolyElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+        ClientRegistry.bindTileEntitySpecialRenderer(TEAltar.class, new TEAltarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new RenderPedestal());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPlinth.class, new RenderPlinth());
         ClientRegistry.bindTileEntitySpecialRenderer(TEWritingTable.class, new RenderWritingTable());
         ClientRegistry.bindTileEntitySpecialRenderer(TEConduit.class, new RenderConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEffectBlock.class, new RenderSpellEffectBlock());
+        ClientRegistry.bindTileEntitySpecialRenderer(TESpellEnhancementBlock.class, new RenderSpellEnhancementBlock());
         
         //Item Renderer stuff
-        //MinecraftForgeClient.registerItemRenderer(ModBlocks.blockConduit.blockID, new TEConduitItemRenderer());
-        //MinecraftForgeClient.registerItemRenderer(ModBlocks.blockSpellEffect.blockID, new TESpellEffectBlockItemRenderer());
+        MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());
+        MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellEffect), new TESpellEffectBlockItemRenderer());
+        MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellEnhancement), new TESpellEnhancementBlockItemRenderer());
+
         //RenderingRegistry.registerEntityRenderingHandler(FireProjectile.class, new RenderFireProjectile());
         //RenderingRegistry.registerBlockHandler(new AltarRenderer());
     }
@@ -125,8 +133,8 @@ public class ClientProxy extends CommonProxy
     @Override
     public void InitRendering()
     {
-        ClientRegistry.bindTileEntitySpecialRenderer(TEAltar.class, new TEAltarRenderer());
-        //MinecraftForgeClient.registerItemRenderer(ModBlocks.blockAltar.blockID, new TEAltarItemRenderer());
+        
+        MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAltar), new TEAltarItemRenderer());
         //MinecraftForgeClient.registerItemRenderer(AlchemicalWizardry.blockWritingTable.blockID, new TEWritingTableItemRenderer());
     }
 }

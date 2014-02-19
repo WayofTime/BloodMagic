@@ -17,6 +17,7 @@ public class LifeEssenceBlock extends BlockFluidClassic
         super(AlchemicalWizardry.lifeEssenceFluid, Material.water);
         AlchemicalWizardry.lifeEssenceFluid.setBlock(this);
         //setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("lifeEssenceFluidBlock");
     }
 
     @Override
@@ -31,7 +32,7 @@ public class LifeEssenceBlock extends BlockFluidClassic
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill");
-        this.getFluid().setIcons(blockIcon);
+        //this.getFluid().setIcons(blockIcon);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BlockConduit extends BlockOrientable
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setUnlocalizedName("blockConduit");
+        this.setBlockName("blockConduit");
         //func_111022_d("AlchemicalWizardry:blocks");
     }
 
