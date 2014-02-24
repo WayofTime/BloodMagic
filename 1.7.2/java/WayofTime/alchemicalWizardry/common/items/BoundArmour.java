@@ -16,14 +16,18 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.IBindable;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,IRevealer, IGoggles
+@Optional.InterfaceList(value = {@Interface(iface="IRevealer", modid = "Thaumcraft"), @Interface(iface="IGoggles", modid = "Thaumcraft")})
+public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable //,IRevealer, IGoggles
 {
     private static int invSize = 9;
     private static IIcon helmetIcon;
@@ -111,7 +115,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (helmet.equals(ModItems.boundHelmet) || plate.equals(ModItems.boundPlate) || leggings.equals(ModItems.boundLeggings) || boots.equals(ModItems.boundBoots))
+        if (helmet.getItem().equals(ModItems.boundHelmet) || plate.getItem().equals(ModItems.boundPlate) || leggings.getItem().equals(ModItems.boundLeggings) || boots.getItem().equals(ModItems.boundBoots))
         {
             if (source.isUnblockable())
             {
@@ -329,12 +333,12 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,
 
             if (itemStack != null)
             {
-                if (itemStack.equals(ModItems.weakBloodShard))
+                if (itemStack.getItem().equals(ModItems.weakBloodShard))
                 {
                     max = Math.max(max, 1);
                 }
 
-                if (itemStack.equals(ModItems.demonBloodShard))
+                if (itemStack.getItem().equals(ModItems.demonBloodShard))
                 {
                     max = Math.max(max, 2);
                 }
@@ -394,11 +398,10 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,
         if (itemTag == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
-            return null;
         }
 
         ItemStack[] inv = new ItemStack[9];
-        NBTTagList tagList = itemTag.getTagList("Inventory",0);
+        NBTTagList tagList = itemTag.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
         if (tagList == null)
         {
@@ -407,14 +410,13 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = new NBTTagCompound();
+            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < invSize)
             {
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
-            tagList.appendTag(tag);
         }
 
         return inv;
@@ -463,7 +465,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,
                 continue;
             }
 
-            if (item.equals(ModItems.voidSigil))
+            if (item.getItem().equals(ModItems.voidSigil))
             {
                 return true;
             }
@@ -540,27 +542,27 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable//,
                 continue;
             }
 
-            if (item.equals(ModItems.weakBloodOrb))
+            if (item.getItem().equals(ModItems.weakBloodOrb))
             {
                 return 0.75f;
             }
 
-            if (item.equals(ModItems.apprenticeBloodOrb))
+            if (item.getItem().equals(ModItems.apprenticeBloodOrb))
             {
                 return 0.50f;
             }
 
-            if (item.equals(ModItems.magicianBloodOrb))
+            if (item.getItem().equals(ModItems.magicianBloodOrb))
             {
                 return 0.25f;
             }
 
-            if (item.equals(ModItems.masterBloodOrb))
+            if (item.getItem().equals(ModItems.masterBloodOrb))
             {
                 return 0.0f;
             }
 
-            if (item.equals(ModItems.archmageBloodOrb))
+            if (item.getItem().equals(ModItems.archmageBloodOrb))
             {
                 return 0.0f;
             }

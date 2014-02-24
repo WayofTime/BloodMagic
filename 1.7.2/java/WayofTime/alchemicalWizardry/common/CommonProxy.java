@@ -76,7 +76,7 @@ public class CommonProxy
         EntityRegistry.registerModEntity(EntityEnergyBazookaMainProjectile.class, "energyBazookaMain", 10, AlchemicalWizardry.instance, 128, 3, true);
         EntityRegistry.registerModEntity(EntityEnergyBazookaSecondaryProjectile.class, "energyBazookaSecondary", 11, AlchemicalWizardry.instance, 128, 3, true);
         EntityRegistry.registerModEntity(EntityBloodLightProjectile.class, "bloodLightProjectile", 12, AlchemicalWizardry.instance, 128, 3, true);
-        EntityRegistry.registerModEntity(EntityMeteor.class, "Meteor", 13, AlchemicalWizardry.instance, 128, 3, true);
+        EntityRegistry.registerModEntity(EntityMeteor.class, "meteor", 13, AlchemicalWizardry.instance, 120, 3, true);
         EntityRegistry.registerModEntity(EntitySpellProjectile.class, "spellProjectile", 14, AlchemicalWizardry.instance, 128, 3, true);
     }
 

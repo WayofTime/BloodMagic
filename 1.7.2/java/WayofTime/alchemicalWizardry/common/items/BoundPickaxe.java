@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -136,10 +136,11 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         {
             return par1ItemStack;
         }
-
-        int posX = (int) par3EntityPlayer.posX;
-        int posY = (int) par3EntityPlayer.posY;
-        int posZ = (int) par3EntityPlayer.posZ;
+        
+        Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
+        int posX = (int)(blockVec.xCoord);
+        int posY = (int)(blockVec.xCoord);
+        int posZ = (int)(blockVec.xCoord);
         boolean silkTouch = false;
         int so = Enchantment.silkTouch.effectId;
         int fortune = Enchantment.fortune.effectId;

@@ -685,9 +685,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     @Override
     public Packet getDescriptionPacket()
     {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        this.writeToNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, nbttagcompound);
+        return NewPacketHandler.getPacket(this);
     }
 
     public void handlePacketData(int[] intData, int[] fluidData, int capacity)

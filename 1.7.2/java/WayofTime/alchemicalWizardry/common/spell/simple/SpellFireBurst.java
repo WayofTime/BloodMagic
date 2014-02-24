@@ -45,7 +45,8 @@ public class SpellFireBurst extends HomSpell
         if (!par2World.isRemote)
         {
             //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
-            par2World.spawnEntityInWorld(new FireProjectile(par2World, par3EntityPlayer, 7));
+        	FireProjectile proj = new FireProjectile(par2World, par3EntityPlayer, 7);
+            par2World.spawnEntityInWorld(proj);
         }
 
         return par1ItemStack;

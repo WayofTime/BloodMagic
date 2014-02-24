@@ -82,14 +82,14 @@ public class AlchemicalWizardryEventHooks
 //		event.setResult(Result.DEFAULT);
 //	}
 
-    @SubscribeEvent
-    public void onPlayerTickEnd(PlayerTickEvent event)
-    {
-    	if(event.type.equals(Type.PLAYER) && event.phase.equals(TickEvent.Phase.END))
-    	{
-    		ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, event.player.capabilities, Float.valueOf(0.1f), new String[]{"walkSpeed", "g", "field_75097_g"});
-    	}
-    }
+//    @SubscribeEvent
+//    public void onPlayerTickEnd(PlayerTickEvent event)
+//    {
+//    	if(event.type.equals(Type.PLAYER) && event.phase.equals(TickEvent.Phase.END))
+//    	{
+//    		ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, event.player.capabilities, Float.valueOf(0.1f), new String[]{"walkSpeed", "g", "field_75097_g"});
+//    	}
+//    }
     
     @SubscribeEvent
     public void onEntityUpdate(LivingUpdateEvent event)
@@ -104,6 +104,11 @@ public class AlchemicalWizardryEventHooks
         int yPos = (int)(blockVector.yCoord);
         int zPos = (int)(blockVector.zCoord);
 
+        if(entityLiving instanceof EntityPlayer)
+        {
+        	ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer)event.entityLiving).capabilities, Float.valueOf(0.1f), new String[]{"walkSpeed", "g", "field_75097_g"});
+        }
+        
         if (entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote)
         {
             EntityPlayer entityPlayer = (EntityPlayer) entityLiving;

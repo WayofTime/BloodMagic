@@ -152,7 +152,7 @@ public class Rituals
             case 2:
                 for (RitualComponent rc : ritual)
                 {
-                	test = world.getBlock(x + rc.getX(), y + rc.getY(), z + rc.getZ());
+                	test = world.getBlock(x - rc.getZ(), y + rc.getY(), z + rc.getX());
                 	
                     if (!(test instanceof RitualStone))
                     {
@@ -170,7 +170,7 @@ public class Rituals
             case 3:
                 for (RitualComponent rc : ritual)
                 {
-                	test = world.getBlock(x + rc.getX(), y + rc.getY(), z + rc.getZ());
+                	test = world.getBlock(x - rc.getX(), y + rc.getY(), z - rc.getZ());
                 	
                     if (!(test instanceof RitualStone))
                     {
@@ -188,7 +188,7 @@ public class Rituals
             case 4:
                 for (RitualComponent rc : ritual)
                 {
-                	test = world.getBlock(x + rc.getX(), y + rc.getY(), z + rc.getZ());
+                	test = world.getBlock(x + rc.getZ(), y + rc.getY(), z - rc.getX());
                 	
                 	if (!(test instanceof RitualStone))
                     {

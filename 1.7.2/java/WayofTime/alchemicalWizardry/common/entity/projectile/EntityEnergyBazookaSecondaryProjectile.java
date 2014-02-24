@@ -213,7 +213,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             Vec3 var17 = worldObj.getWorldVec3Pool().getVecFromPool(posX, posY, posZ);
             Vec3 var3 = worldObj.getWorldVec3Pool().getVecFromPool(posX + motionX, posY + motionY, posZ + motionZ);
-            MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, true);
+            MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
             var17 = worldObj.getWorldVec3Pool().getVecFromPool(posX, posY, posZ);
             var3 = worldObj.getWorldVec3Pool().getVecFromPool(posX + motionX, posY + motionY, posZ + motionZ);
 

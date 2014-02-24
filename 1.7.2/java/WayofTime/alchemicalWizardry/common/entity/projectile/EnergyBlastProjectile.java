@@ -17,11 +17,12 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.IThrowableEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 //Shamelessly ripped off from x3n0ph0b3
-public class EnergyBlastProjectile extends Entity implements IProjectile
+public class EnergyBlastProjectile extends Entity implements IProjectile, IThrowableEntity
 {
     protected int xTile = -1;
     protected int yTile = -1;
@@ -43,6 +44,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
     {
         super(par1World);
         this.setSize(0.5F, 0.5F);
+        this.maxTicksInAir = 600;
     }
 
     public EnergyBlastProjectile(World par1World, double par2, double par4, double par6)
@@ -51,6 +53,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
         this.setSize(0.5F, 0.5F);
         this.setPosition(par2, par4, par6);
         yOffset = 0.0F;
+        this.maxTicksInAir = 600;
     }
 
     public EnergyBlastProjectile(World par1World, EntityLivingBase par2EntityPlayer, int damage)
@@ -267,7 +270,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
 
             Vec3 var17 = worldObj.getWorldVec3Pool().getVecFromPool(posX, posY, posZ);
             Vec3 var3 = worldObj.getWorldVec3Pool().getVecFromPool(posX + motionX, posY + motionY, posZ + motionZ);
-            MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, true);
+            MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
             var17 = worldObj.getWorldVec3Pool().getVecFromPool(posX, posY, posZ);
             var3 = worldObj.getWorldVec3Pool().getVecFromPool(posX + motionX, posY + motionY, posZ + motionZ);
 
@@ -505,4 +508,19 @@ public class EnergyBlastProjectile extends Entity implements IProjectile
     {
         return 0;
     }
+
+	@Override
+	public Entity getThrower() 
+	{
+		// TODO Auto-generated method stub
+		return this.shootingEntity;
+	}
+
+	@Override
+	public void setThrower(Entity entity) 
+	{
+		if(entity instanceof EntityLivingBase)
+			this.shootingEntity = (EntityLivingBase)entity;
+		
+	}
 }

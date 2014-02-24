@@ -247,7 +247,8 @@ public class AlchemicalWizardry
         
         ModItems.registerItems();
         
-        FMLCommonHandler.instance().bus().register(new AlchemicalWizardryEventHooks());
+        //FMLCommonHandler.instance().bus().register(new AlchemicalWizardryEventHooks());
+        MinecraftForge.EVENT_BUS.register(new AlchemicalWizardryEventHooks());
         NewPacketHandler.INSTANCE.ordinal();
     }
 
@@ -262,6 +263,7 @@ public class AlchemicalWizardry
         
         proxy.registerRenderers();
         proxy.registerEntities();
+        proxy.registerEntityTrackers();
         //ItemStacks used for crafting go here
         ItemStack lavaBucketStack = new ItemStack(Items.lava_bucket);
         ItemStack cobblestoneStack = new ItemStack(Blocks.cobblestone);
@@ -489,7 +491,7 @@ public class AlchemicalWizardry
         //Fuel handler
         GameRegistry.registerFuelHandler(new AlchemicalWizardryFuelHandler());
         //EntityRegistry.registerModEntity(EnergyBlastProjectile.class, "BlasterProj", 0, this, 128, 5, true);
-        proxy.registerEntityTrackers();
+        
         //Gui registration
         // NetworkRegistry.instance().registerGuiHandler(this, new GuiHandlerAltar());
         Rituals.loadRituals();
@@ -502,7 +504,7 @@ public class AlchemicalWizardry
         //MinecraftForge.setToolClass(ModItems.boundPickaxe, "pickaxe", 5);
         //MinecraftForge.setToolClass(ModItems.boundAxe, "axe", 5);
         //MinecraftForge.setToolClass(ModItems.boundShovel, "shovel", 5);
-        FMLCommonHandler.instance().bus().register(new ModLivingDropsEvent());
+        MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 //        ItemStack[] comp = new ItemStack[5];

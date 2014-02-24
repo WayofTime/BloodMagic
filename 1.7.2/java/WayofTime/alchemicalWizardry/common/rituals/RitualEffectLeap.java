@@ -67,7 +67,7 @@ public class RitualEffectLeap extends RitualEffect
                     switch (direction)
                     {
                         case 1:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)entityplayer, 0, 1.2, 3.0);
+                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)entityplayer, 0, 1.2, -3.0);
                             break;
 
                         case 2:
@@ -75,7 +75,7 @@ public class RitualEffectLeap extends RitualEffect
                             break;
 
                         case 3:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)entityplayer, 0, 1.2, -3.0);
+                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)entityplayer, 0, 1.2, 3.0);
                             break;
 
                         case 4:

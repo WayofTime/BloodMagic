@@ -70,7 +70,7 @@ public enum NewPacketHandler
        FMLEmbeddedChannel clientChannel = this.channels.get(Side.CLIENT);
 
        String tileAltarCodec = clientChannel.findChannelHandlerNameForType(TEAltarCodec.class);
-       clientChannel.pipeline().addAfter(tileAltarCodec, "ClientHandler", new TEAltarMessageHandler());  
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEAltarHandler", new TEAltarMessageHandler());  
        clientChannel.pipeline().addAfter(tileAltarCodec, "TEOrientableHandler", new TEOrientableMessageHandler()); 
        clientChannel.pipeline().addAfter(tileAltarCodec, "TEPedestalHandler", new TEPedestalMessageHandler()); 
        clientChannel.pipeline().addAfter(tileAltarCodec, "TEPlinthHandler", new TEPlinthMessageHandler());      
@@ -100,12 +100,6 @@ public enum NewPacketHandler
            if (te instanceof TEAltar)
            {
                TEAltar altar = (TEAltar) te;
-               
-               System.out.println("x: " + msg.x + ", y: " + msg.y + ", z: " + msg.z);
-               for(int in : msg.items)
-               {
-            	   System.out.println("" + in);
-               }
 
                altar.handlePacketData(msg.items, msg.fluids, msg.capacity);
            }
@@ -362,7 +356,6 @@ public enum NewPacketHandler
                    {
                        int i = items[j];
                        target.writeInt(i);
-                       System.out.println("" + i);
                    }
                }
                
