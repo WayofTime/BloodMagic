@@ -66,11 +66,6 @@ public class SacrificialDagger extends Item
             par2World.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
         }
 
-        if (!par2World.isRemote && !(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
-        {
-            return par1ItemStack;
-        }
-
         findAndFillAltar(par2World, par3EntityPlayer, 200);
 
         if (par3EntityPlayer.getHealth() <= 0.5f)

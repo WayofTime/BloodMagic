@@ -145,6 +145,7 @@ public class AlchemicalWizardry
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
+    public static boolean isGCLoaded;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -957,6 +958,14 @@ public class AlchemicalWizardry
         }else
         {
         	this.isForestryLoaded = false;
+        }
+        
+        if(Loader.isModLoaded("GalacticraftCore"))
+        {
+        	this.isGCLoaded = true;
+        }else
+        {
+        	this.isGCLoaded = false;
         }
     }
 }

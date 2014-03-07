@@ -39,6 +39,7 @@ public class AlchemyFlask extends Item
         super(id);
         this.setMaxDamage(8);
         this.setMaxStackSize(1);
+        setNoRepair();
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         // TODO Auto-generated constructor stub
     }

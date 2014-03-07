@@ -3,6 +3,8 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import micdoodle8.mods.galacticraft.core.entities.player.GCCorePlayerMP;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -116,13 +118,13 @@ public class SpellHelper
 			return false;
 		}
 		
-		if(player instanceof FakePlayer)
+		if(player instanceof FakePlayer || player.username.contains("[CoFH]"))
 		{
 			return true;
 		}
 		
-		String str = player.getClass().getCanonicalName();
-		if(str.contains("GCEntityPlayerMP"))
+		String str = player.getClass().getSimpleName();
+		if(str.contains("GC"))
 		{
 			return false;
 		}
@@ -132,6 +134,6 @@ public class SpellHelper
 			return false;
 		}
 		
-		return true;
+		return false;
 	}
 }
