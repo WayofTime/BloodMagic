@@ -5,12 +5,15 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.FakePlayer;
 import net.minecraftforge.common.ForgeDirection;
 
 public class SpellHelper 
@@ -104,5 +107,31 @@ public class SpellHelper
 		{
 			world.setBlock(posX, posY, posZ, Block.ice.blockID);
 		}
+	}
+	
+	public static boolean isFakePlayer(World world, EntityPlayer player)
+	{
+		if(world.isRemote)
+		{
+			return false;
+		}
+		
+		if(player instanceof FakePlayer)
+		{
+			return true;
+		}
+		
+		String str = player.getClass().getCanonicalName();
+		if(str.contains("GCEntityPlayerMP"))
+		{
+			return false;
+		}
+		
+		if(player.getClass().equals(EntityPlayerMP.class))
+		{
+			return false;
+		}
+		
+		return true;
 	}
 }

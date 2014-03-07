@@ -52,7 +52,7 @@ public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect
 						if(!worldObj.isAirBlock(posX+i, posY+j, posZ+k)&&blocksBroken<maxBlocks)
 						{
 							Block block = worldObj.getBlock(posX+i, posY+j, posZ+k);
-							if(block == null || block.getBlockHardness(worldObj, posX+i, posY+j, posZ+k)==-1)
+							if(block == null || block.getBlockHardness(worldObj, posX+i, posY+j, posZ+k)==-1 || SpellHelper.isBlockFluid(block))
 							{
 								continue;
 							}

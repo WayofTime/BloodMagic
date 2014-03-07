@@ -484,6 +484,10 @@ public class TEPlinth extends TileEntity implements IInventory
                             if (itemStack.getItem()== possibleItem.getItem() && (itemStack.getItemDamage() == possibleItem.getItemDamage() || itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
                             {
                                 ((TEPedestal) tileEntity).decrStackSize(0, 1);
+                                if(((TEPedestal) tileEntity).getStackInSlot(0) !=null && ((TEPedestal) tileEntity).getStackInSlot(0).stackSize==0)
+                                {
+                                	((TEPedestal) tileEntity).setInventorySlotContents(0, null);
+                                }
                                 ((TEPedestal) tileEntity).onItemDeletion();
                                 worldObj.markBlockForUpdate(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
                                 return true;

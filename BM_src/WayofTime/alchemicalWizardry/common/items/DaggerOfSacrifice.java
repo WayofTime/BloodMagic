@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
 import com.google.common.collect.Multimap;
@@ -55,9 +56,17 @@ public class DaggerOfSacrifice extends EnergyItems
     @Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
-        if (par3EntityLivingBase == null || par2EntityLivingBase == null || par3EntityLivingBase.worldObj.isRemote || !(par3EntityLivingBase.getClass().equals(EntityPlayerMP.class)))
+        if (par3EntityLivingBase == null || par2EntityLivingBase == null || par3EntityLivingBase.worldObj.isRemote)
         {
             return false;
+        }
+        
+        if(par3EntityLivingBase instanceof EntityPlayer)
+        {
+        	if(SpellHelper.isFakePlayer(par3EntityLivingBase.worldObj, (EntityPlayer)par3EntityLivingBase))
+            {
+            	return false;
+            }
         }
 
         //EntityWither d;

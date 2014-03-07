@@ -4,6 +4,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -72,6 +73,11 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        {
+        	return par1ItemStack;
+        }
+        
         if (par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;

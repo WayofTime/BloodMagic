@@ -900,7 +900,7 @@ public class Rituals
         ritualList.add(new Rituals(biomeChangerRitual, 2, 1000000, new RitualEffectBiomeChanger(), "Ritual of Gaia's Transformation"));
         ritualList.add(new Rituals(flightRitual, 2, 1000000, new RitualEffectFlight(), "Reverence of the Condor"));
         ritualList.add(new Rituals(meteorRitual, 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower"));
-        ritualList.add(new Rituals(apiaryRitual,1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
+        //ritualList.add(new Rituals(apiaryRitual,1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
     public static int getCostForActivation(int ritualID)

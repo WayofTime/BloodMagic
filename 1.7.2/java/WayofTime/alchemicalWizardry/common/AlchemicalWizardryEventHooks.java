@@ -42,6 +42,11 @@ public class AlchemicalWizardryEventHooks
         {
             int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionBoost).getAmplifier();
             event.entityLiving.motionY += (0.1f) * (2 + i);
+        } 
+        
+        if(event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionHeavyHeart))
+        {
+        	event.entityLiving.motionY = 0;
         }
     }
 
@@ -298,6 +303,32 @@ public class AlchemicalWizardryEventHooks
 	        		}
 	        	}
         	}
-        }   	
+        } 
+        
+        if(entityLiving.isPotionActive(AlchemicalWizardry.customPotionHeavyHeart))
+        {
+        	entityLiving.worldObj.spawnParticle("flame", x+SpellHelper.gaussian(1),y-1.3+SpellHelper.gaussian(0.3),z+SpellHelper.gaussian(1), 0, 0.06d, 0);
+        	
+            int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionHeavyHeart).getAmplifier();
+        	double decrease = 0.025*(i+1);
+        	
+        	if(entityLiving.motionY>-0.5)
+        	{
+        		entityLiving.motionY-=decrease;
+        	}
+        }
+        
+        if(entityLiving.isPotionActive(AlchemicalWizardry.customPotionFireFuse))
+        {
+        	entityLiving.worldObj.spawnParticle("flame", x+SpellHelper.gaussian(1),y-1.3+SpellHelper.gaussian(0.3),z+SpellHelper.gaussian(1), 0, 0.06d, 0);
+
+            int r = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFireFuse).getAmplifier();
+        	int radius = r+1;
+        	
+        	if(entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFireFuse).getDuration()<=2)
+        	{
+        		entityLiving.worldObj.createExplosion(null, x, y, z, radius, false);
+        	}
+        } 
     }
 }

@@ -1,10 +1,10 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry.common.potion;
 
 import net.minecraft.potion.Potion;
 
-public class PotionDrowning extends Potion
+public class PotionFlight extends Potion
 {
-    public PotionDrowning(int par1, boolean par2, int par3)
+    public PotionFlight(int par1, boolean par2, int par3)
     {
         super(par1, par2, par3);
     }

@@ -679,14 +679,14 @@ public class TEWritingTable extends TileEntity implements IInventory
 
             if (getStackInSlot(6) == null)
             {
-                if (worldTime % 4 == 0)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
-                }
-
                 if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed))
                 {
                     return;
+                }
+                
+                if (worldTime % 4 == 0)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
                 }
 
                 progress++;

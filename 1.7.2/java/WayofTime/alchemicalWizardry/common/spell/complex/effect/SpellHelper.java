@@ -3,8 +3,8 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import java.util.List;
 import java.util.Random;
 
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,8 +15,8 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 
 public class SpellHelper 
 {
@@ -191,6 +191,39 @@ public class SpellHelper
 		if(player instanceof EntityPlayerMP)
 		{
 			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getVelSettingPacket(motionX, motionY, motionZ), (EntityPlayerMP) player);
+		}
+	}
+	
+	public static void smashBlock(World world, int posX, int posY, int posZ)
+	{
+		Block block = world.getBlock(posX, posY, posZ);
+		
+		if(block==Blocks.stone)
+		{
+			world.setBlock(posX, posY, posZ, Blocks.cobblestone);
+		}
+		else if(block==Blocks.cobblestone)
+		{
+			world.setBlock(posX, posY, posZ, Blocks.gravel);
+		}
+		else if(block==Blocks.gravel)
+		{
+			world.setBlock(posX, posY, posZ, Blocks.sand);
+		}
+	}
+	
+	public static boolean isBlockFluid(Block block)
+	{
+		return block instanceof BlockLiquid;
+	}
+	
+	public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)
+	{
+		Block block = world.getBlock(posX, posY, posZ);
+		
+		if(block == Blocks.water || block == Blocks.flowing_water)
+		{
+			world.setBlockToAir(posX, posY, posZ);
 		}
 	}
 }

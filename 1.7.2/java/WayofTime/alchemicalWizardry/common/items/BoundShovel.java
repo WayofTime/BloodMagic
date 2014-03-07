@@ -143,8 +143,8 @@ public class BoundShovel extends ItemSpade implements IBindable
 
         Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
         int posX = (int)(blockVec.xCoord);
-        int posY = (int)(blockVec.xCoord);
-        int posZ = (int)(blockVec.xCoord);
+        int posY = (int)(blockVec.yCoord);
+        int posZ = (int)(blockVec.zCoord);
         boolean silkTouch = false;
         int so = Enchantment.silkTouch.effectId;
         int fortune = Enchantment.fortune.effectId;

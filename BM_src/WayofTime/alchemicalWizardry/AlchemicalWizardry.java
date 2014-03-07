@@ -946,14 +946,14 @@ public class AlchemicalWizardry
         {
         	this.isForestryLoaded = true;
         	
-        	ModItems.itemBloodFrame = new ItemBloodFrame(this.itemBloodFrameItemID).setUnlocalizedName("bloodFrame");
-        	
-        	ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
-        	
-        	if(provenFrame !=null)
-        	{
-        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
-        	}
+//        	ModItems.itemBloodFrame = new ItemBloodFrame(this.itemBloodFrameItemID).setUnlocalizedName("bloodFrame");
+//        	
+//        	ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
+//        	
+//        	if(provenFrame !=null)
+//        	{
+//        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
+//        	}
         }else
         {
         	this.isForestryLoaded = false;

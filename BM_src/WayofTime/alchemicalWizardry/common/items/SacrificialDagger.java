@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -46,9 +47,9 @@ public class SacrificialDagger extends Item
             par3EntityPlayer.setHealth(par3EntityPlayer.getHealth() - 2);
         }
 
-        if (par3EntityPlayer instanceof FakePlayer)
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
-            return par1ItemStack;
+        	return par1ItemStack;
         }
 
         double posX = par3EntityPlayer.posX;

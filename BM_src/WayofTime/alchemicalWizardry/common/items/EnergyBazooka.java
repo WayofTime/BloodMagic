@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -68,6 +69,11 @@ public class EnergyBazooka extends EnergyItems
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        {
+        	return par1ItemStack;
+        }
+        
         if (par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));

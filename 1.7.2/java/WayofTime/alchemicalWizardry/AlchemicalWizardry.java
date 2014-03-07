@@ -4,7 +4,6 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -23,27 +22,16 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardryTickHandler;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
 import WayofTime.alchemicalWizardry.common.LifeEssence;
 import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.PotionBoost;
-import WayofTime.alchemicalWizardry.common.PotionDrowning;
-import WayofTime.alchemicalWizardry.common.PotionFlameCloak;
-import WayofTime.alchemicalWizardry.common.PotionFlight;
-import WayofTime.alchemicalWizardry.common.PotionIceCloak;
-import WayofTime.alchemicalWizardry.common.PotionInhibit;
-import WayofTime.alchemicalWizardry.common.PotionProjectileProtect;
-import WayofTime.alchemicalWizardry.common.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
-import WayofTime.alchemicalWizardry.common.block.LifeEssenceBlock;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
@@ -58,16 +46,18 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
-import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
-import WayofTime.alchemicalWizardry.common.items.LifeBucket;
-import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
+import WayofTime.alchemicalWizardry.common.potion.PotionBoost;
+import WayofTime.alchemicalWizardry.common.potion.PotionDrowning;
+import WayofTime.alchemicalWizardry.common.potion.PotionFireFuse;
+import WayofTime.alchemicalWizardry.common.potion.PotionFlameCloak;
+import WayofTime.alchemicalWizardry.common.potion.PotionFlight;
+import WayofTime.alchemicalWizardry.common.potion.PotionHeavyHeart;
+import WayofTime.alchemicalWizardry.common.potion.PotionIceCloak;
+import WayofTime.alchemicalWizardry.common.potion.PotionInhibit;
+import WayofTime.alchemicalWizardry.common.potion.PotionProjectileProtect;
+import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellEarthBender;
@@ -97,7 +87,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -109,8 +98,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v0.8.0")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
@@ -135,6 +122,8 @@ public class AlchemicalWizardry
     public static Potion customPotionReciprocation;
     public static Potion customPotionFlameCloak;
     public static Potion customPotionIceCloak;
+    public static Potion customPotionHeavyHeart;
+    public static Potion customPotionFireFuse;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -144,6 +133,8 @@ public class AlchemicalWizardry
     public static int customPotionReciprocationID;
     public static int customPotionFlameCloakID;
     public static int customPotionIceCloakID;
+    public static int customPotionHeavyHeartID;
+    public static int customPotionFireFuseID;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
@@ -438,7 +429,10 @@ public class AlchemicalWizardry
         customPotionReciprocation = (new PotionReciprocation(customPotionReciprocationID, false, 0xFFFFFF)).setIconIndex(0, 0).setPotionName("Reciprocation");
         customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID,false,0).setIconIndex(0,0).setPotionName("Flame Cloak"));
         customPotionIceCloak = (new PotionIceCloak(customPotionIceCloakID,false,0).setIconIndex(0,0).setPotionName("Ice Cloak"));
-
+        customPotionHeavyHeart = (new PotionHeavyHeart(customPotionHeavyHeartID,true,0).setIconIndex(0, 0).setPotionName("Heavy Heart"));
+        customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID,true,0).setIconIndex(0, 0).setPotionName("Fire Fuse"));
+        
+        
         //FluidStack lifeEssenceFluidStack = new FluidStack(lifeEssenceFluid, 1);
         //LiquidStack lifeEssence = new LiquidStack(lifeEssenceFlowing, 1);
         //LiquidDictionary.getOrCreateLiquid("Life Essence", lifeEssence);

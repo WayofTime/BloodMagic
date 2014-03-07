@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry.common.potion;
 
 import net.minecraft.potion.Potion;
 

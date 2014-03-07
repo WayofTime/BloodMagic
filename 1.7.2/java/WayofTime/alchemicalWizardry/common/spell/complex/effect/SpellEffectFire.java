@@ -4,6 +4,9 @@ import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileDefensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileEnvironmentalFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileOffensiveFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfDefaultFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfDefensiveFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfEnvironmentalFire;
@@ -21,25 +24,19 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	public void offensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-		parad.addImpactEffect(new ProjectileDefaultFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
-		parad.damage+=this.potencyEnhancement;
+		parad.addImpactEffect(new ProjectileOffensiveFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-		parad.addImpactEffect(new ProjectileDefaultFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
-		parad.damage+=this.potencyEnhancement;
+		parad.addImpactEffect(new ProjectileDefensiveFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void environmentalModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-		parad.addImpactEffect(new ProjectileDefaultFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
-		parad.damage+=this.potencyEnhancement;
+		parad.addUpdateEffect(new ProjectileEnvironmentalFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
@@ -97,48 +94,43 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	protected int getCostForDefaultProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)((5*Math.pow(1.5*this.powerEnhancement+1, 2)*(1.5*this.potencyEnhancement+1)+this.potencyEnhancement*15)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(10*Math.pow((this.powerEnhancement)*1.3+1,2)*((1.5*this.potencyEnhancement+1))*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(25*Math.pow(1*this.powerEnhancement+1,2)*(1*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(75*(0.5*this.powerEnhancement+1)*(0.5*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultSelf() 
 	{
-		return 10*(int)(10*Math.pow(1.5, this.powerEnhancement+1.5*this.potencyEnhancement));
+		return 10*(int)(10*Math.pow(1.5, this.powerEnhancement+1.5*this.potencyEnhancement)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseSelf() 
 	{
-		return 500*(int)((this.powerEnhancement+1)*Math.pow(2, potencyEnhancement));
+		return 500*(int)((this.powerEnhancement+1)*Math.pow(2, potencyEnhancement)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseSelf() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(25*(3*this.potencyEnhancement+1)*(2*this.powerEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
@@ -174,5 +166,4 @@ public class SpellEffectFire extends SpellEffect
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

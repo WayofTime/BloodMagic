@@ -90,10 +90,6 @@ public class ModBlocks
     	GameRegistry.registerBlock(ModBlocks.blockAltar, "Altar");
     	GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(ModBlocks.blockLifeEssence, "lifeEssence");
-        GameRegistry.registerBlock(ModBlocks.blockSpellParadigm, ItemSpellParadigmBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellModifier, ItemSpellModifierBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
         GameRegistry.registerBlock(ModBlocks.speedRune, "speedRune");
         GameRegistry.registerBlock(ModBlocks.efficiencyRune, "efficiencyRune");
         GameRegistry.registerBlock(ModBlocks.runeOfSacrifice, "runeOfSacrifice");
@@ -114,7 +110,13 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockTeleposer, "blockTeleposer");
         GameRegistry.registerBlock(ModBlocks.spectralBlock, "spectralBlock");
         GameRegistry.registerBlock(ModBlocks.blockBloodLight, "bloodLight");
+        
         GameRegistry.registerBlock(ModBlocks.blockConduit,"blockConduit");
+        GameRegistry.registerBlock(ModBlocks.blockSpellParadigm, ItemSpellParadigmBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
+        GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
+        GameRegistry.registerBlock(ModBlocks.blockSpellModifier, ItemSpellModifierBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
+        GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
+        
     }
     
     public static void registerBlocksInInit()

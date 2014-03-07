@@ -15,7 +15,7 @@ public class ProjectileDefaultIce extends ProjectileImpactEffect
 	}
 
 	@Override
-	public void onEntityImpact(Entity mop) 
+	public void onEntityImpact(Entity mop, Entity proj) 
 	{
 		return;
 	}

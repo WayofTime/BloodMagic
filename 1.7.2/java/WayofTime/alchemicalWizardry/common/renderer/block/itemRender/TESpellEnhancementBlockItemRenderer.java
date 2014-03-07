@@ -95,13 +95,20 @@ public class TESpellEnhancementBlockItemRenderer implements IItemRenderer
 	}
 	
 	public String getResourceLocationForMeta(int meta)
-    {
+	{
 		switch(meta)
 		{
 		case 0: return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";
 		case 1: return "alchemicalwizardry:textures/models/SpellEnhancementPower2.png";
 		case 2: return "alchemicalwizardry:textures/models/SpellEnhancementPower3.png";
+		case 5: return "alchemicalwizardry:textures/models/SpellEnhancementCost1.png";
+		case 6: return "alchemicalwizardry:textures/models/SpellEnhancementCost2.png";
+		case 7: return "alchemicalwizardry:textures/models/SpellEnhancementCost3.png";
+		case 10: return "alchemicalwizardry:textures/models/SpellEnhancementPotency1.png";
+		case 11: return "alchemicalwizardry:textures/models/SpellEnhancementPotency2.png";
+		case 12: return "alchemicalwizardry:textures/models/SpellEnhancementPotency3.png";
+
 		}
     	return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";
-    }
+	}
 }
