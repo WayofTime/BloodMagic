@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import micdoodle8.mods.galacticraft.core.entities.player.GCCorePlayerMP;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

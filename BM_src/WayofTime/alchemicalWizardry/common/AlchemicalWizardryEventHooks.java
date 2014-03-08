@@ -127,18 +127,22 @@ public class AlchemicalWizardryEventHooks
             EntityLivingBase entity = event.entityLiving;
             //if(!entity.isSneaking())
             {
-                double percentIncrease = (i + 1) * 0.03d;
+                float percentIncrease = (i + 1) * 0.05f;
 
                 if (event.entityLiving instanceof EntityPlayer)
                 {
                     EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
                     entityPlayer.stepHeight = 1.0f;
 
-                    if (!entityPlayer.worldObj.isRemote)
-                    {
-                        float speed = ((Float) ReflectionHelper.getPrivateValue(PlayerCapabilities.class, entityPlayer.capabilities, new String[]{"walkSpeed", "g", "field_75097_g"})).floatValue();
-                        ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, entityPlayer.capabilities, Float.valueOf(speed + (float) percentIncrease), new String[]{"walkSpeed", "g", "field_75097_g"}); //CAUTION
-                    }
+                    if((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
+            			entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease/2.0f) : percentIncrease);
+
+                    
+//                    if (!entityPlayer.worldObj.isRemote)
+//                    {
+//                        float speed = ((Float) ReflectionHelper.getPrivateValue(PlayerCapabilities.class, entityPlayer.capabilities, new String[]{"walkSpeed", "g", "field_75097_g"})).floatValue();
+//                        ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, entityPlayer.capabilities, Float.valueOf(speed + (float) percentIncrease), new String[]{"walkSpeed", "g", "field_75097_g"}); //CAUTION
+//                    }
                 }
             }
         }

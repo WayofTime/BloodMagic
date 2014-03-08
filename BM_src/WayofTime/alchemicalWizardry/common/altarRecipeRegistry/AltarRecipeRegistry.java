@@ -76,7 +76,7 @@ public class AltarRecipeRegistry
 		{
 			if(recipe.doesRequiredItemMatch(testItem, currentTierAltar))
 			{
-				return recipe.getResult();
+				return recipe.getResult().copy();
 			}
 		}
 		

@@ -509,7 +509,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 continue;
             }
 
-            if (item.getItem() instanceof IRevealer)
+            if (AlchemicalWizardry.isThaumcraftLoaded && item.getItem() instanceof IRevealer)
             {
                 return true;
             }
@@ -534,7 +534,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 continue;
             }
 
-            if (item.getItem() instanceof IGoggles)
+            if (AlchemicalWizardry.isThaumcraftLoaded && item.getItem() instanceof IGoggles)
             {
                 return true;
             }
@@ -593,13 +593,11 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
         return 0;
     }
 
-    @Override
     public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
     {
         return this.hasIRevealer(itemstack);
     }
 
-    @Override
     public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
     {
         return this.hasIGoggles(itemstack);

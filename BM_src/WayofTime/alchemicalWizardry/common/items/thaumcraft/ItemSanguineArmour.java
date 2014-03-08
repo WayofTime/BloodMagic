@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.thaumcraft;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,12 +11,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import thaumcraft.api.IGoggles;
-import thaumcraft.api.IVisDiscounter;
+import thaumcraft.api.IVisDiscountGear;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-import java.util.List;
-
-public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUpgrade, IGoggles, IVisDiscounter
+public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUpgrade, IGoggles, IVisDiscountGear
 {
     private static Icon helmetIcon;
 
@@ -54,7 +55,7 @@ public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUp
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add("A pair of goggles imbued with power");
-        par3List.add("Vis discount: " + this.getVisDiscount() + "%");
+        par3List.add("Vis discount: " + 8 + "%");
     }
 
     @Override
@@ -88,8 +89,8 @@ public class ItemSanguineArmour extends ItemArmor implements IRevealer, ArmourUp
     }
 
     @Override
-    public int getVisDiscount()
+    public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect)
     {
-        return 10;
+        return 8;
     }
 }

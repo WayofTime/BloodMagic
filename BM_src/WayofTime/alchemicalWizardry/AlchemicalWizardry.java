@@ -367,7 +367,7 @@ public class AlchemicalWizardry
     public void load(FMLInitializationEvent event)
     {
         int craftingConstant = OreDictionary.WILDCARD_VALUE;
-        TickRegistry.registerTickHandler(new AlchemicalWizardryTickHandler(), Side.SERVER);
+        //TickRegistry.registerTickHandler(new AlchemicalWizardryTickHandler(), Side.SERVER);
         //orbOfTesting = new OrbOfTesting(17000);
 
         //public final static Item glassShard = new GlassShard(17009).setUnlocalizedName("glassShard");
