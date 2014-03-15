@@ -289,7 +289,7 @@ public class EnergyItems extends Item implements IBindable
         }
     }
 
-    public String getOwnerName(ItemStack item)
+    public static String getOwnerName(ItemStack item)
     {
         if (item.stackTagCompound == null)
         {

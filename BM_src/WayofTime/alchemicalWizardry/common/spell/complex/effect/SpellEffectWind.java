@@ -3,36 +3,34 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileDefaultWind;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileEnvironmentalWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileOffensiveWind;
 
 public class SpellEffectWind extends SpellEffect 
 {
 	@Override
 	public void defaultModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addImpactEffect(new ProjectileDefaultWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void offensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addImpactEffect(new ProjectileOffensiveWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.ricochetMax+=this.potencyEnhancement;
 	}
 
 	@Override
 	public void environmentalModificationProjectile(SpellParadigmProjectile parad)
 	{
 		parad.addUpdateEffect(new ProjectileEnvironmentalWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
-
 	}
 
 	@Override
@@ -94,15 +92,13 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	protected int getCostForDefaultProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(100*(this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseProjectile()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(100*(0.5*this.potencyEnhancement+1)*(this.powerEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
@@ -115,8 +111,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	protected int getCostForEnvironmentProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(50*(this.powerEnhancement+1)*(this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override

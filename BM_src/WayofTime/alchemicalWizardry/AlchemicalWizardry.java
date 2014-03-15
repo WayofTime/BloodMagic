@@ -22,7 +22,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ItemApi;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
-import WayofTime.alchemicalWizardry.common.AlchemicalWizardryTickHandler;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
@@ -30,10 +29,13 @@ import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.PotionBoost;
 import WayofTime.alchemicalWizardry.common.PotionDrowning;
+import WayofTime.alchemicalWizardry.common.PotionFireFuse;
 import WayofTime.alchemicalWizardry.common.PotionFlameCloak;
 import WayofTime.alchemicalWizardry.common.PotionFlight;
+import WayofTime.alchemicalWizardry.common.PotionHeavyHeart;
 import WayofTime.alchemicalWizardry.common.PotionIceCloak;
 import WayofTime.alchemicalWizardry.common.PotionInhibit;
+import WayofTime.alchemicalWizardry.common.PotionPlanarBinding;
 import WayofTime.alchemicalWizardry.common.PotionProjectileProtect;
 import WayofTime.alchemicalWizardry.common.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
@@ -62,7 +64,6 @@ import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
-import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.rituals.Rituals;
@@ -107,10 +108,8 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v0.7.3c")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v0.7.3e")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -124,6 +123,8 @@ public class AlchemicalWizardry
     public static int ironBlockMeteorRadius;
     public static String[] netherStarMeteorArray;
     public static int netherStarMeteorRadius;
+    
+    public static String[] allowedCrushedOresArray;
 
     public static Potion customPotionDrowning;
     public static Potion customPotionBoost;
@@ -133,6 +134,9 @@ public class AlchemicalWizardry
     public static Potion customPotionReciprocation;
     public static Potion customPotionFlameCloak;
     public static Potion customPotionIceCloak;
+    public static Potion customPotionHeavyHeart;
+    public static Potion customPotionFireFuse;
+    public static Potion customPotionPlanarBinding;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -142,6 +146,9 @@ public class AlchemicalWizardry
     public static int customPotionReciprocationID;
     public static int customPotionFlameCloakID;
     public static int customPotionIceCloakID;
+    public static int customPotionHeavyHeartID;
+    public static int customPotionFireFuseID;
+    public static int customPotionPlanarBindingID;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
@@ -274,6 +281,8 @@ public class AlchemicalWizardry
     public static int itemBloodLightSigilItemID;
     public static int itemComplexSpellCrystalItemID;
     public static int itemBloodFrameItemID;
+    public static int baseComponentsItemID;
+    public static int baseAlchemyComponentsItemID;
 
     public static int testingBlockBlockID;
     public static int lifeEssenceFlowingBlockID;
@@ -392,7 +401,7 @@ public class AlchemicalWizardry
         ItemStack lavaBucketStack = new ItemStack(Item.bucketLava);
         ItemStack cobblestoneStack = new ItemStack(Block.cobblestone);
         ItemStack glassStack = new ItemStack(Block.glass, 1, craftingConstant);
-        ItemStack ironStack = new ItemStack(Item.ingotIron);
+        ItemStack ironIngotStack = new ItemStack(Item.ingotIron);
         ItemStack diamondStack = new ItemStack(Item.diamond, 1, craftingConstant);
         ItemStack woolStack = new ItemStack(Block.cloth);
         ItemStack goldNuggetStack = new ItemStack(Item.goldNugget);
@@ -495,18 +504,18 @@ public class AlchemicalWizardry
         ItemStack magicalesStack = new ItemStack(ModItems.magicales);
         //All crafting goes here
         // GameRegistry.addRecipe(orbOfTestingStack, "x x", "   ", "x x", 'x', cobblestoneStack);
-        //GameRegistry.addRecipe(glassShardStack, " x", "y ", 'x', ironStack, 'y', glassStack);
+        //GameRegistry.addRecipe(glassShardStack, " x", "y ", 'x', ironIngotStack, 'y', glassStack);
         //GameRegistry.addRecipe(weakBloodOrbStackCrafted, "xxx", "xdx", "www", 'x', bloodiedShardStack, 'd', diamondStack, 'w', woolStack);
-        GameRegistry.addRecipe(sacrificialDaggerStack, "ggg", " dg", "i g", 'g', glassStack, 'd', goldIngotStack, 'i', ironStack);
-        //GameRegistry.addRecipe(blankSlateStack, "sgs", "gig", "sgs", 's', stoneStack, 'g', goldNuggetStack, 'i', ironStack);
-        //GameRegistry.addRecipe(reinforcedSlateStack, "rir", "ibi", "gig", 'r', redstoneStack, 'i', ironStack, 'b', blankSlateStack, 'g', glowstoneBlockStack);
+        GameRegistry.addRecipe(sacrificialDaggerStack, "ggg", " dg", "i g", 'g', glassStack, 'd', goldIngotStack, 'i', ironIngotStack);
+        //GameRegistry.addRecipe(blankSlateStack, "sgs", "gig", "sgs", 's', stoneStack, 'g', goldNuggetStack, 'i', ironIngotStack);
+        //GameRegistry.addRecipe(reinforcedSlateStack, "rir", "ibi", "gig", 'r', redstoneStack, 'i', ironIngotStack, 'b', blankSlateStack, 'g', glowstoneBlockStack);
         GameRegistry.addRecipe(lavaCrystalStackCrafted, "glg", "lbl", "odo", 'g', glassStack, 'l', lavaBucketStack, 'b', weakBloodOrbStack, 'd', diamondStack, 'o', obsidianStack);
         GameRegistry.addRecipe(waterSigilStackCrafted, "www", "wbw", "wow", 'w', waterBucketStack, 'b', blankSlateStack, 'o', weakBloodOrbStack);
         GameRegistry.addRecipe(lavaSigilStackCrafted, "lml", "lbl", "lcl", 'l', lavaBucketStack, 'b', blankSlateStack, 'm', magmaCreamStack, 'c', lavaCrystalStack);
         GameRegistry.addRecipe(voidSigilStackCrafted, "ese", "ere", "eoe", 'e', emptyBucketStack, 'r', reinforcedSlateStack, 'o', apprenticeBloodOrbStack, 's', stringStack);
         GameRegistry.addRecipe(bloodAltarStack, "s s", "scs", "gdg", 's', stoneStack, 'c', furnaceStack, 'd', diamondStack, 'g', goldIngotStack);
         //GameRegistry.addRecipe(energySwordStack, " o ", " o ", " s ", 'o', weakBloodOrbStack, 's', diamondSwordStack);
-        //GameRegistry.addRecipe(energyBlasterStack, "oi ", "gdi", " rd", 'o', weakBloodOrbStack, 'i', ironStack, 'd', diamondStack, 'r', reinforcedSlateStack, 'g', goldIngotStack);
+        //GameRegistry.addRecipe(energyBlasterStack, "oi ", "gdi", " rd", 'o', weakBloodOrbStack, 'i', ironIngotStack, 'd', diamondStack, 'r', reinforcedSlateStack, 'g', goldIngotStack);
         GameRegistry.addRecipe(bloodRuneCraftedStack, "sss", "ror", "sss", 's', stoneStack, 'o', weakBloodOrbStack, 'r', blankSlateStack);
         GameRegistry.addRecipe(speedRuneStack, "sbs", "uru", "sbs", 'u', sugarStack, 's', stoneStack, 'r', bloodRuneStack, 'b', blankSlateStack);
         //GameRegistry.addRecipe(efficiencyRuneStack, "sbs", "rur", "sbs", 'r', redstoneStack, 's', stoneStack, 'u', bloodRuneStack,'b',blankSlateStack);
@@ -562,6 +571,10 @@ public class AlchemicalWizardry
         customPotionReciprocation = (new PotionReciprocation(customPotionReciprocationID, false, 0xFFFFFF)).setIconIndex(0, 0).setPotionName("Reciprocation");
         customPotionFlameCloak = (new PotionFlameCloak(customPotionFlameCloakID,false,0).setIconIndex(0,0).setPotionName("Flame Cloak"));
         customPotionIceCloak = (new PotionIceCloak(customPotionIceCloakID,false,0).setIconIndex(0,0).setPotionName("Ice Cloak"));
+        customPotionHeavyHeart = (new PotionHeavyHeart(customPotionHeavyHeartID,true,0).setIconIndex(0, 0).setPotionName("Heavy Heart"));
+        customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID,true,0).setIconIndex(0, 0).setPotionName("Fire Fuse"));
+        customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID,true,0).setIconIndex(0,0).setPotionName("Planar Binding"));
+        
         //All items registered go here
         //LanguageRegistry.addName(orbOfTesting, "Orb of Testing");
         LanguageRegistry.addName(ModItems.weakBloodOrb, "Weak Blood Orb");
@@ -902,6 +915,56 @@ public class AlchemicalWizardry
         MeteorRegistry.registerMeteorParadigm(stoneStack, this.stoneMeteorArray, this.stoneMeteorRadius);
         MeteorRegistry.registerMeteorParadigm(ironBlockStack, this.ironBlockMeteorArray, this.ironBlockMeteorRadius);
         MeteorRegistry.registerMeteorParadigm(new ItemStack(Item.netherStar), this.netherStarMeteorArray, this.netherStarMeteorRadius);
+        
+      //Register spell component recipes
+        ItemStack quartzRodStack = new ItemStack(ModItems.baseItems,1,0);
+        ItemStack emptyCoreStack = new ItemStack(ModItems.baseItems,1,1);
+        ItemStack magicalesCableStack = new ItemStack(ModItems.baseItems,1,2);
+        ItemStack woodBraceStack = new ItemStack(ModItems.baseItems,1,3);
+        ItemStack stoneBraceStack = new ItemStack(ModItems.baseItems,1,4);
+        ItemStack projectileCoreStack = new ItemStack(ModItems.baseItems,1,5);
+        ItemStack selfCoreStack = new ItemStack(ModItems.baseItems,1,6);
+        ItemStack meleeCoreStack = new ItemStack(ModItems.baseItems,1,7);
+        ItemStack paradigmBackPlateStack = new ItemStack(ModItems.baseItems,1,8);
+        ItemStack outputCableStack = new ItemStack(ModItems.baseItems,1,9);
+        ItemStack flameCoreStack = new ItemStack(ModItems.baseItems,1,10);
+        ItemStack iceCoreStack = new ItemStack(ModItems.baseItems,1,11);
+        ItemStack windCoreStack = new ItemStack(ModItems.baseItems,1,12);
+        ItemStack earthCoreStack = new ItemStack(ModItems.baseItems,1,13);
+        ItemStack inputCableStack = new ItemStack(ModItems.baseItems,1,14);
+        
+        ItemStack magicalesCraftedCableStack = new ItemStack(ModItems.baseItems,5,2);
+        
+        GameRegistry.addRecipe(quartzRodStack, "qqq", 'q', new ItemStack(Item.netherQuartz));
+        GameRegistry.addRecipe(emptyCoreStack,"gig","nrn","gig",'n',goldIngotStack,'i',ironIngotStack,'g',glassStack,'r',simpleCatalystStack);
+        GameRegistry.addRecipe(magicalesCraftedCableStack,"sss","mmm","sss",'s',new ItemStack(Item.silk),'m',magicalesStack);
+        GameRegistry.addRecipe(woodBraceStack," il","ili","li ",'l', new ItemStack(Block.wood,1,craftingConstant),'i',new ItemStack(Item.silk));
+        GameRegistry.addRecipe(stoneBraceStack," is","isi","si ",'i', ironIngotStack,'s',reinforcedSlateStack);
+        
+        GameRegistry.addRecipe(projectileCoreStack, "mbm","aca","mom",'c', emptyCoreStack,'b',weakBloodShardStack,'m', magicalesStack,'o', magicianBloodOrbStack,'a',new ItemStack(Item.arrow));
+        GameRegistry.addRecipe(selfCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',sanctusStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',glowstoneDustStack);
+        GameRegistry.addRecipe(meleeCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',incendiumStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',new ItemStack(Item.flintAndSteel));
+        GameRegistry.addRecipe(paradigmBackPlateStack,"isi","rgr","isi",'i',ironIngotStack,'r',stoneStack,'g',goldIngotStack,'s',reinforcedSlateStack);
+        GameRegistry.addRecipe(outputCableStack, " si","s c"," si",'s',stoneStack,'i',ironIngotStack,'c',simpleCatalystStack); 
+        
+        GameRegistry.addRecipe(flameCoreStack,"mdm","scs","mom",'m',incendiumStack,'c',emptyCoreStack,'o',magicianBloodOrbStack,'d',diamondStack,'s',weakBloodShardStack);
+        GameRegistry.addRecipe(iceCoreStack,"mdm","scs","mom",'m',crystallosStack,'c',emptyCoreStack,'o',magicianBloodOrbStack,'d',diamondStack,'s',weakBloodShardStack);
+        GameRegistry.addRecipe(windCoreStack,"mdm","scs","mom",'m',aetherStack,'c',emptyCoreStack,'o',magicianBloodOrbStack,'d',diamondStack,'s',weakBloodShardStack);
+        GameRegistry.addRecipe(earthCoreStack,"mdm","scs","mom",'m',terraeStack,'c',emptyCoreStack,'o',magicianBloodOrbStack,'d',diamondStack,'s',weakBloodShardStack);
+
+        GameRegistry.addRecipe(inputCableStack, "ws ","rcs","ws ",'w',blankSlateStack,'s',stoneStack,'r',imbuedSlateStack,'c',simpleCatalystStack);
+        
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockConduit,1,0),"q q","ccc","q q",'q', quartzRodStack,'c', magicalesCableStack);
+        
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,0),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', projectileCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,1),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', selfCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,2),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', meleeCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
+        
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEffect,1,0),"bgb","ico","bgb",'c',flameCoreStack,'b',stoneBraceStack,'g',goldIngotStack,'i',inputCableStack,'o',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEffect,1,1),"bgb","ico","bgb",'c',iceCoreStack,'b',stoneBraceStack,'g',goldIngotStack,'i',inputCableStack,'o',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEffect,1,2),"bgb","ico","bgb",'c',windCoreStack,'b',stoneBraceStack,'g',goldIngotStack,'i',inputCableStack,'o',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEffect,1,3),"bgb","ico","bgb",'c',earthCoreStack,'b',stoneBraceStack,'g',goldIngotStack,'i',inputCableStack,'o',outputCableStack);
+        
 //        sanguineHelmet = new ItemSanguineArmour(sanguineHelmetItemID).setUnlocalizedName("sanguineHelmet");
 //
 //        LanguageRegistry.addName(sanguineHelmet,"Sanguine Helmet");

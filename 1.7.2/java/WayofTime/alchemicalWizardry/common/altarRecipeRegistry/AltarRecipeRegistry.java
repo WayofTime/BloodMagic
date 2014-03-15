@@ -42,7 +42,7 @@ public class AltarRecipeRegistry
 		
 		registerAltarRecipe(new ItemStack(ModItems.telepositionFocus), new ItemStack(Items.ender_pearl),4,2000,10,10,false);
 		registerAltarRecipe(new ItemStack(ModItems.enhancedTelepositionFocus), new ItemStack(ModItems.telepositionFocus),4,10000,25,15,false);
-		registerAltarRecipe(new ItemStack(ModItems.imbuedSlate), new ItemStack(ModItems.imbuedSlate),4,15000,20,20,false);
+		registerAltarRecipe(new ItemStack(ModItems.demonicSlate), new ItemStack(ModItems.imbuedSlate),4,15000,20,20,false);
 		registerAltarRecipe(new ItemStack(ModItems.duskScribeTool), new ItemStack(Blocks.coal_block),4,2000,20,10,false);
 		registerAltarRecipe(new ItemStack(ModBlocks.bloodSocket), new ItemStack(ModBlocks.emptySocket),3,30000,40,10,false);
 		registerAltarRecipe(new ItemStack(ModItems.earthScribeTool), new ItemStack(Blocks.obsidian),3,1000,5,5,false);

@@ -42,4 +42,22 @@ public class BlockSpellModifier extends BlockOrientable
             super.getSubBlocks(par1, par2CreativeTabs, par3List);
         }
     }
+	
+	@Override
+	public boolean isOpaqueCube() 
+	{
+		return false;
+	}
+	
+	@Override
+	public boolean renderAsNormalBlock()
+	{
+		return false;
+	}
+	
+	@Override
+	public int getRenderType()
+	{
+		return -1;
+	}
 }

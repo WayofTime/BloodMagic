@@ -16,6 +16,7 @@ import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.IHolding;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -304,6 +305,13 @@ public class SigilOfHolding extends EnergyItems
             return false;
         }
 
+        if(addedItemStack.getItem() instanceof IHolding)
+        {
+        	inv[candidateSlot] = addedItemStack;
+            saveInternalInventory(sigilItemStack, inv);
+            return true;
+        }
+        
         for (ItemStack i : allowedSigils)
         {
             if (i != null && i.getItem() == item)

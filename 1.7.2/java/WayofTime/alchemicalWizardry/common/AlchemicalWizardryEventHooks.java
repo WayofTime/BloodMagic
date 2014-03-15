@@ -16,6 +16,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -48,6 +49,15 @@ public class AlchemicalWizardryEventHooks
         {
         	event.entityLiving.motionY = 0;
         }
+    }
+    
+    @SubscribeEvent
+    public void onEndermanTeleportEvent(EnderTeleportEvent event)
+    {
+    	if(event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionPlanarBinding) && event.isCancelable())
+    	{
+    		event.setCanceled(true);
+    	}
     }
 
     @SubscribeEvent
@@ -149,18 +159,15 @@ public class AlchemicalWizardryEventHooks
             EntityLivingBase entity = event.entityLiving;
             //if(!entity.isSneaking())
             {
-                double percentIncrease = (i + 1) * 0.03d;
+                float percentIncrease = (i + 1) * 0.05f;
 
                 if (event.entityLiving instanceof EntityPlayer)
                 {
                     EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
                     entityPlayer.stepHeight = 1.0f;
 
-                    if (!entityPlayer.worldObj.isRemote)
-                    {
-                        float speed = ((Float) ReflectionHelper.getPrivateValue(PlayerCapabilities.class, entityPlayer.capabilities, new String[]{"walkSpeed", "g", "field_75097_g"})).floatValue();
-                        ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, entityPlayer.capabilities, Float.valueOf(speed + (float) percentIncrease), new String[]{"walkSpeed", "g", "field_75097_g"}); //CAUTION
-                    }
+                    if((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
+            			entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease/2.0f) : percentIncrease);
                 }
             }
         }
@@ -312,7 +319,7 @@ public class AlchemicalWizardryEventHooks
             int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionHeavyHeart).getAmplifier();
         	double decrease = 0.025*(i+1);
         	
-        	if(entityLiving.motionY>-0.5)
+        	if(entityLiving.motionY>-0.9)
         	{
         		entityLiving.motionY-=decrease;
         	}

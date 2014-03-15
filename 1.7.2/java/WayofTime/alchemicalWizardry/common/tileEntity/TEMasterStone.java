@@ -13,6 +13,7 @@ public class TEMasterStone extends TileEntity
     private int currentRitual;
     private boolean isActive;
     private String owner;
+    private String varString1;
     private int cooldown;
     private int var1;
     private int direction;
@@ -37,6 +38,7 @@ public class TEMasterStone extends TileEntity
         cooldown = par1NBTTagCompound.getInteger("cooldown");
         var1 = par1NBTTagCompound.getInteger("var1");
         direction = par1NBTTagCompound.getInteger("direction");
+        varString1 = par1NBTTagCompound.getString("varString1");
     }
 
     @Override
@@ -49,6 +51,7 @@ public class TEMasterStone extends TileEntity
         par1NBTTagCompound.setInteger("cooldown", cooldown);
         par1NBTTagCompound.setInteger("var1", var1);
         par1NBTTagCompound.setInteger("direction", direction);
+        par1NBTTagCompound.setString(varString1, "varString1");
     }
 
     public void activateRitual(World world, int crystalLevel)
@@ -179,6 +182,16 @@ public class TEMasterStone extends TileEntity
     public int getVar1()
     {
         return this.var1;
+    }
+    
+    public void setVarString1(String newVar)
+    {
+    	this.varString1 = newVar;
+    }
+    
+    public String getVarString1()
+    {
+    	return this.varString1;
     }
 
     public void setActive(boolean active)

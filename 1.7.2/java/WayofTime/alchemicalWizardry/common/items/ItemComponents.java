@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemComponents extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{"QuartzRod"};
+    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore","MeleeCore","ParadigmBackPlate","OutputCable","FlameCore","IcyCore","GustCore","EarthenCore","InputCable","CrackedRunicPlate","RunicPlate","ScribedRunicPlate","DefaultCore","OffensiveCore","DefensiveCore","EnvironmentalCore"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -29,7 +29,7 @@ public class ItemComponents extends Item
     public ItemComponents()
     {
         super();
-        this.maxStackSize = 1;
+        this.maxStackSize = 64;
         this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
     }

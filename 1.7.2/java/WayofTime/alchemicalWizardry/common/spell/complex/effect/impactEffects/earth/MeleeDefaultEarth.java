@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.e
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.MeleeSpellCenteredWorldEffect;
 
@@ -10,17 +11,19 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
 	public MeleeDefaultEarth(int power, int potency, int cost) 
 	{
 		super(power, potency, cost);
-		this.setRange(2);
+		this.setRange(3*power + 2);
 	}
 
 	@Override
-	public void onCenteredWorldEffect(World world, int posX, int posY, int posZ) 
+	public void onCenteredWorldEffect(EntityPlayer player, World world, int posX, int posY, int posZ) 
 	{
-		for(int i=-3; i<=3; i++)
+		int radius = this.potencyUpgrades;
+		
+		for(int i=-radius; i<=radius; i++)
 		{
-			for(int j=-3; j<=3; j++)
+			for(int j=-radius; j<=radius; j++)
 			{
-				for(int k=-3; k<=3; k++)
+				for(int k=-radius; k<=radius; k++)
 				{
 					if(!world.isAirBlock(posX + i, posY + j, posZ + k) && world.getTileEntity(posX + i, posY + j, posZ + k)==null)
 					{

@@ -16,6 +16,6 @@ public class SelfOffensiveFire extends SelfSpellEffect
 	@Override
 	public void onSelfUse(World world, EntityPlayer player) 
 	{
-		player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlameCloak.id,(this.powerUpgrades+1)*this.powerUpgrades,this.potencyUpgrades));
+		player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlameCloak.id,200*(this.powerUpgrades+1)*(this.powerUpgrades+1),this.potencyUpgrades));
 	}
 }

@@ -524,7 +524,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		{
 			for(IProjectileImpactEffect impactEffect : impactList)
 			{
-				impactEffect.onEntityImpact(mop);
+				impactEffect.onEntityImpact(mop,this);
 			}
 		}
 	}

@@ -40,6 +40,7 @@ public class ProjectileEnvironmentalWind extends ProjectileUpdateEffect
 					{
 						if(entity instanceof EntityItem)
 						{
+							((EntityItem)entity).delayBeforeCanPickup = 0;
 							entity.onCollideWithPlayer((EntityPlayer)shooter);
 						}
 					}

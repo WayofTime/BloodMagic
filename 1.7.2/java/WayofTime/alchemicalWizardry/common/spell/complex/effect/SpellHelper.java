@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -16,6 +17,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 
 public class SpellHelper 
@@ -201,14 +204,17 @@ public class SpellHelper
 		if(block==Blocks.stone)
 		{
 			world.setBlock(posX, posY, posZ, Blocks.cobblestone);
+			return;
 		}
 		else if(block==Blocks.cobblestone)
 		{
 			world.setBlock(posX, posY, posZ, Blocks.gravel);
+			return;
 		}
 		else if(block==Blocks.gravel)
 		{
 			world.setBlock(posX, posY, posZ, Blocks.sand);
+			return;
 		}
 	}
 	
@@ -225,5 +231,41 @@ public class SpellHelper
 		{
 			world.setBlockToAir(posX, posY, posZ);
 		}
+	}
+	
+	public static ItemStack getDustForOre(ItemStack item)
+	{
+		String oreName = OreDictionary.getOreName(OreDictionary.getOreID(item));
+		
+		if(oreName.contains("ore"))
+		{
+			String lowercaseOre = oreName;
+			lowercaseOre.toLowerCase();
+			boolean isAllowed = false;
+			
+			for(String str : AlchemicalWizardry.allowedCrushedOresArray)
+			{
+				if(lowercaseOre.contains(str))
+				{
+					isAllowed = true;
+				}
+			}
+			
+			if(!isAllowed)
+			{
+				return null;
+			}
+			
+			String dustName = oreName.replace("ore", "dust");
+			
+			ArrayList<ItemStack> items = OreDictionary.getOres(dustName);
+			
+			if(items!=null && items.size()>=1)
+			{
+				return(items.get(0).copy());
+			}
+		}
+		
+		return null;
 	}
 }

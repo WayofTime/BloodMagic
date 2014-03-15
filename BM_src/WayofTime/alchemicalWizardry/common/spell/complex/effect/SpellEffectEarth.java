@@ -3,141 +3,134 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.MeleeDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.MeleeDefensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.MeleeEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.MeleeOffensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileDefensiveEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileOffensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfDefensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfOffensiveEarth;
 
 public class SpellEffectEarth extends SpellEffect 
 {
 	@Override
 	public void defaultModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addImpactEffect(new ProjectileDefaultEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void offensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addImpactEffect(new ProjectileOffensiveEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addImpactEffect(new ProjectileDefensiveEarth(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void environmentalModificationProjectile(SpellParadigmProjectile parad)
 	{
 		parad.addUpdateEffect(new ProjectileEnvironmentalEarth(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
-
 	}
 
 	@Override
 	public void defaultModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfDefaultEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void offensiveModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfOffensiveEarth(this.powerEnhancement,this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationSelf(SpellParadigmSelf parad)
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfDefensiveEarth(this.powerEnhancement,this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void environmentalModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfEnvironmentalEarth(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defaultModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addWorldEffect(new MeleeDefaultEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void offensiveModificationMelee(SpellParadigmMelee parad)
 	{
-		// TODO Auto-generated method stub
-
+		parad.addWorldEffect(new MeleeOffensiveEarth(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addWorldEffect(new MeleeDefensiveEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void environmentalModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addWorldEffect(new MeleeEnvironmentalEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(10*Math.pow((0.5*(this.powerEnhancement)+1)*2 + 1,3)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseProjectile()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return (int)(10*(1.5*this.potencyEnhancement+1)*(Math.pow(1*this.powerEnhancement+1,2))*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(3*Math.pow((this.powerEnhancement*2+1),2)*(this.potencyEnhancement*2+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentProjectile() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(10*2*(0.1d*(this.potencyEnhancement+1))*Math.pow(3.47,this.potencyEnhancement)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultSelf()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(20*Math.pow(1.5*powerEnhancement+1,2)*(2*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseSelf()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(10*Math.pow(2*this.powerEnhancement+1,2)*(this.potencyEnhancement+1));
 	}
 
 	@Override
 	protected int getCostForDefenseSelf() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(750*(1.1*this.powerEnhancement+1)*(0.5*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
@@ -150,28 +143,24 @@ public class SpellEffectEarth extends SpellEffect
 	@Override
 	protected int getCostForDefaultMelee()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(50*Math.pow(1.5*this.potencyEnhancement + 1,3)*(0.5*this.powerEnhancement + 1)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseMelee()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(20*Math.pow(1.5*this.powerEnhancement+1,3)*(0.25*this.powerEnhancement+1));
 	}
 
 	@Override
 	protected int getCostForDefenseMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(5*(1.2*this.powerEnhancement+1)*(1.0f/3.0f*Math.pow(this.potencyEnhancement,2)+2+1.0f/2.0f*this.potencyEnhancement)*Math.pow(0.8, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(500*Math.pow(2*this.potencyEnhancement+1, 3)*(0.25*this.powerEnhancement+1)*Math.pow(0.8, costEnhancement));
 	}
 }

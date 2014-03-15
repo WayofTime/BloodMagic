@@ -27,12 +27,16 @@ import WayofTime.alchemicalWizardry.common.renderer.block.RenderPedestal;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderPlinth;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEnhancementBlock;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellModifierBlock;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderWritingTable;
 import WayofTime.alchemicalWizardry.common.renderer.block.TEAltarRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAltarItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEConduitItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TESpellEffectBlockItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TESpellEnhancementBlockItemRenderer;
+import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TESpellModifierBlockItemRenderer;
+import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TESpellParadigmBlockItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.mob.RenderBileDemon;
 import WayofTime.alchemicalWizardry.common.renderer.mob.RenderBoulderFist;
 import WayofTime.alchemicalWizardry.common.renderer.mob.RenderElemental;
@@ -61,6 +65,8 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -114,12 +120,16 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TEConduit.class, new RenderConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEffectBlock.class, new RenderSpellEffectBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEnhancementBlock.class, new RenderSpellEnhancementBlock());
+        ClientRegistry.bindTileEntitySpecialRenderer(TESpellParadigmBlock.class, new RenderSpellParadigmBlock());
+        ClientRegistry.bindTileEntitySpecialRenderer(TESpellModifierBlock.class, new RenderSpellModifierBlock());
         
         //Item Renderer stuff
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellEffect), new TESpellEffectBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellEnhancement), new TESpellEnhancementBlockItemRenderer());
-
+        MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellParadigm), new TESpellParadigmBlockItemRenderer());
+        MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier), new TESpellModifierBlockItemRenderer());
+        
         //RenderingRegistry.registerEntityRenderingHandler(FireProjectile.class, new RenderFireProjectile());
         //RenderingRegistry.registerBlockHandler(new AltarRenderer());
     }

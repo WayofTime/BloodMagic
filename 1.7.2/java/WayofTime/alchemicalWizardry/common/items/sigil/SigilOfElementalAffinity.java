@@ -27,7 +27,6 @@ public class SigilOfElementalAffinity extends EnergyItems
     {
         super();
         this.maxStackSize = 1;
-        setMaxDamage(100);
         setEnergyUsed(200);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }

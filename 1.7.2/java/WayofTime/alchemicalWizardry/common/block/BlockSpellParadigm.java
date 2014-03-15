@@ -91,23 +91,23 @@ public class BlockSpellParadigm extends BlockOrientable
 		return super.onBlockActivated(world, x, y, z, player, side, what, these, are);
 	}
 	
-//	@Override
-//	public boolean isOpaqueCube() 
-//	{
-//		return false;
-//	}
-//	
-//	@Override
-//	public boolean renderAsNormalBlock()
-//	{
-//		return false;
-//	}
+	@Override
+	public boolean isOpaqueCube() 
+	{
+		return false;
+	}
 	
-//	@Override
-//	public int getRenderType()
-//	{
-//		return -1;
-//	}
+	@Override
+	public boolean renderAsNormalBlock()
+	{
+		return false;
+	}
+	
+	@Override
+	public int getRenderType()
+	{
+		return -1;
+	}
 	
 	//TODO Need to make a renderer for the paradigm blocks and other spell blocks.
 	/*

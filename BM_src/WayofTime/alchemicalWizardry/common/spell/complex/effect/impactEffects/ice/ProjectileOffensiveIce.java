@@ -16,7 +16,7 @@ public class ProjectileOffensiveIce extends ProjectileImpactEffect
 	}
 
 	@Override
-	public void onEntityImpact(Entity mop) 
+	public void onEntityImpact(Entity mop, Entity proj) 
 	{
 		if(mop instanceof EntityLivingBase)
 		{

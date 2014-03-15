@@ -48,6 +48,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionIceCloakID = config.get("Potion ID","IceCloak",107).getInt();
             AlchemicalWizardry.customPotionHeavyHeartID = config.get("Potion ID","HeavyHeart",108).getInt();
             AlchemicalWizardry.customPotionFireFuseID = config.get("Potion ID","FireFuse",109).getInt();
+            AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID","PlanarBinding",110).getInt();
             
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
@@ -60,6 +61,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.netherStarMeteorArray = config.get("meteor", "netherStarMeteor", new String[]{"oreDiamond", "150", "oreEmerald", "100", "oreQuartz", "250", "oreSunstone", "5", "oreMoonstone", "50", "oreIridium", "5", "oreCertusQuartz", "150"}).getStringList();
             AlchemicalWizardry.netherStarMeteorRadius = config.get("meteor", "netherStarMeteorRadius", 3).getInt();
 
+            AlchemicalWizardry.allowedCrushedOresArray = config.get("oreCrushing", "allowedOres", new String[]{"iron","gold","copper","tin","lead","silver","osmium"}).getStringList();
 //            AlchemicalWizardry.testingBlockBlockID = config.getBlock("TestingBlock", 1400).getInt();
 //            AlchemicalWizardry.lifeEssenceFlowingBlockID = config.getBlock("LifeEssenceFlowing", 1401).getInt();
 //            AlchemicalWizardry.lifeEssenceStillBlockID = config.getBlock("LifeEssenceStill", 1402).getInt();

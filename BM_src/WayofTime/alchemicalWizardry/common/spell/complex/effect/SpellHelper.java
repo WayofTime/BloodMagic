@@ -1,10 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFluid;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,6 +17,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.FakePlayer;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.common.network.Player;
 
 public class SpellHelper 
 {
@@ -44,6 +50,11 @@ public class SpellHelper
 	public static List<Entity> getEntitiesInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
 	{
 		return world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX-0.5f, posY-0.5f, posZ-0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
+	}
+	
+	public static List<EntityPlayer> getPlayersInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
+	{
+		return world.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(posX-0.5f, posY-0.5f, posZ-0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
 	}
 	
 	public static double gaussian(double d) 
@@ -110,6 +121,11 @@ public class SpellHelper
 		}
 	}
 	
+	public static String getUsername(EntityPlayer player)
+	{
+		return player.getDisplayName();
+	}
+	
 	public static boolean isFakePlayer(World world, EntityPlayer player)
 	{
 		if(world.isRemote)
@@ -134,5 +150,83 @@ public class SpellHelper
 		}
 		
 		return false;
+	}
+	
+	public static void smashBlock(World world, int posX, int posY, int posZ)
+	{
+		Block block = Block.blocksList[world.getBlockId(posX, posY, posZ)];
+		
+		if(block==Block.stone)
+		{
+			world.setBlock(posX, posY, posZ, Block.cobblestone.blockID);
+			return;
+		}
+		else if(block==Block.cobblestone)
+		{
+			world.setBlock(posX, posY, posZ, Block.gravel.blockID);
+			return;
+		}
+		else if(block==Block.gravel)
+		{
+			world.setBlock(posX, posY, posZ, Block.sand.blockID);
+			return;
+		}
+	}
+	
+	public static boolean isBlockFluid(Block block)
+	{
+		return block instanceof BlockFluid;
+	}
+	
+	public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)
+	{
+		Block block = Block.blocksList[world.getBlockId(posX, posY, posZ)];
+		
+		if(block == Block.waterMoving || block == Block.waterStill)
+		{
+			world.setBlockToAir(posX, posY, posZ);
+		}
+	}
+	
+	public static ItemStack getDustForOre(ItemStack item)
+	{
+		String oreName = OreDictionary.getOreName(OreDictionary.getOreID(item));
+		
+		if(oreName.contains("ore"))
+		{
+			String lowercaseOre = oreName;
+			lowercaseOre.toLowerCase();
+			boolean isAllowed = false;
+			
+			for(String str : AlchemicalWizardry.allowedCrushedOresArray)
+			{
+				if(lowercaseOre.contains(str))
+				{
+					isAllowed = true;
+				}
+			}
+			
+			if(!isAllowed)
+			{
+				return null;
+			}
+			
+			String dustName = oreName.replace("ore", "dust");
+			
+			ArrayList<ItemStack> items = OreDictionary.getOres(dustName);
+			
+			if(items!=null && items.size()>=1)
+			{
+				return(items.get(0).copy());
+			}
+		}
+		
+		return null;
+	}
+
+	public static void setPlayerSpeedFromServer(EntityPlayer player, double xVel, double yVel, double zVel) 
+	{
+		PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(xVel, yVel, zVel), (Player)player);
+		
 	}
 }

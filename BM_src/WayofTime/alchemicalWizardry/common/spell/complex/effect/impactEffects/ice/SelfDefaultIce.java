@@ -1,12 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.SelfSpellEffect;
 
@@ -28,7 +25,8 @@ public class SelfDefaultIce extends SelfSpellEffect
 		
 		double yVel = 1*(0.4*this.powerUpgrades+0.75);
 		
-		PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(player.motionX, yVel, player.motionZ),(Player)player);
+		//PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(player.motionX, yVel, player.motionZ),(Player)player);
+		SpellHelper.setPlayerSpeedFromServer(player, player.motionX, yVel, player.motionZ);
 		
 		for(int i=0;i<2;i++)
 		{

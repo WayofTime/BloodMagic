@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.EntitySpellProjectile;
@@ -20,9 +24,9 @@ public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect
 	{
 		Vec3 posVec = SpellHelper.getEntityBlockVector(projectile);
 		
-		int horizRange = this.powerUpgrades+2;
-		int vertRange = 0*this.potencyUpgrades+1;
-		int maxBlocks = (int)(2*Math.pow(this.potencyUpgrades,3)) + 3;
+		int horizRange = this.powerUpgrades+1;
+		int vertRange = (int)(0.5*(this.powerUpgrades+1));
+		int maxBlocks = (int)(2*Math.pow(3.47, this.potencyUpgrades));
 		
 		int posX = (int)(posVec.xCoord);
 		int posY = (int)(posVec.yCoord);
@@ -48,12 +52,14 @@ public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect
 						if(!worldObj.isAirBlock(posX+i, posY+j, posZ+k)&&blocksBroken<maxBlocks)
 						{
 							Block block = Block.blocksList[worldObj.getBlockId(posX+i, posY+j, posZ+k)];
-							if(block == null || block.blockHardness==-1)
+							if(block == null || block.getBlockHardness(worldObj, posX+i, posY+j, posZ+k)==-1 || SpellHelper.isBlockFluid(block))
 							{
 								continue;
 							}
 							//block.breakBlock(worldObj, posX+i, posY+j, posZ+k, block.blockID, worldObj.getBlockMetadata(posX+i, posY+j, posZ+k));
+							//worldObj.destroyBlock(posX+i, posY+j, posZ+k, true);
 							worldObj.destroyBlock(posX+i, posY+j, posZ+k, true);
+
 							blocksBroken++;
 						}
 					}

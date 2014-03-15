@@ -27,4 +27,17 @@ public class TESpellModifierBlock extends TESpellBlock
 		}
 		return new SpellModifierDefault();
 	}
+	
+	@Override
+	public String getResourceLocationForMeta(int meta)
+    {
+		switch(meta)
+		{
+		case 0: return "alchemicalwizardry:textures/models/SpellModifierDefault.png";
+		case 1: return "alchemicalwizardry:textures/models/SpellModifierOffensive.png";
+		case 2: return "alchemicalwizardry:textures/models/SpellModifierDefensive.png";
+		case 3: return "alchemicalwizardry:textures/models/SpellModifierEnvironmental.png";
+		}
+    	return "alchemicalwizardry:textures/models/SpellModifierDefault.png";
+    }
 }

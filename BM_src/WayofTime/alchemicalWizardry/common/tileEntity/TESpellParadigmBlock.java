@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
@@ -71,5 +69,27 @@ public class TESpellParadigmBlock extends TESpellBlock
 		
 	}
 	
+	@Override
+	public String getResourceLocationForMeta(int meta)
+    {
+		switch(meta)
+		{
+		case 0: return "alchemicalwizardry:textures/models/SpellParadigmProjectile.png";
+		case 1: return "alchemicalwizardry:textures/models/SpellParadigmSelf.png";
+		case 2: return "alchemicalwizardry:textures/models/SpellParadigmMelee.png";
+		}
+    	return "alchemicalwizardry:textures/models/SpellParadigmProjectile.png";
+    }
 	
+	@Override
+    public void setInputDirection(ForgeDirection direction)
+    {
+
+    }
+	
+	@Override
+	public ForgeDirection getInputDirection()
+	{
+		return ForgeDirection.UNKNOWN;
+	}
 }

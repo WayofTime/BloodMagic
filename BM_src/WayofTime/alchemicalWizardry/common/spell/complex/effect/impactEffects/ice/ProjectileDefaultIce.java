@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ProjectileImpactEffect;
 
 public class ProjectileDefaultIce extends ProjectileImpactEffect 
@@ -16,7 +15,7 @@ public class ProjectileDefaultIce extends ProjectileImpactEffect
 	}
 
 	@Override
-	public void onEntityImpact(Entity mop) 
+	public void onEntityImpact(Entity mop, Entity proj) 
 	{
 		return;
 	}

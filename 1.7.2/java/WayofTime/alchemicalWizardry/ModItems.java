@@ -27,6 +27,7 @@ import WayofTime.alchemicalWizardry.common.items.EnergyBlast;
 import WayofTime.alchemicalWizardry.common.items.EnergySword;
 import WayofTime.alchemicalWizardry.common.items.EnhancedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
+import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
 import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
 import WayofTime.alchemicalWizardry.common.items.ItemComponents;
 import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
@@ -55,6 +56,7 @@ import WayofTime.alchemicalWizardry.common.items.potion.WeakFillingAgent;
 import WayofTime.alchemicalWizardry.common.items.sigil.AirSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemBloodLightSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfEnderSeverance;
 import WayofTime.alchemicalWizardry.common.items.sigil.LavaSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfElementalAffinity;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfGrowth;
@@ -145,6 +147,7 @@ public class ModItems
     public static Item demonPlacer;
     
     public static Item baseItems;
+    public static Item baseAlchemyItems;
 
     public static Item weakFillingAgent;
     public static Item standardFillingAgent;
@@ -160,6 +163,8 @@ public class ModItems
     public static Item itemBloodLightSigil;
     public static Item itemComplexSpellCrystal;
     public static Item itemBloodFrame;
+    
+    public static Item itemSigilOfEnderSeverance;
     
     public static Item bucketLife;
 
@@ -243,7 +248,9 @@ public class ModItems
         itemBloodLightSigil = new ItemBloodLightSigil().setUnlocalizedName("bloodLightSigil");
         itemComplexSpellCrystal = new ItemComplexSpellCrystal().setUnlocalizedName("itemComplexSpellCrystal");
         bucketLife = (new LifeBucket(ModBlocks.blockLifeEssence)).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
+        itemSigilOfEnderSeverance = (new ItemSigilOfEnderSeverance()).setUnlocalizedName("itemSigilOfEnderSeverance");
         baseItems = new ItemComponents().setUnlocalizedName("baseItems");
+        baseAlchemyItems = new ItemAlchemyBase().setUnlocalizedName("baseAlchemyItems");
     }
     
     public static void registerItems()
@@ -330,9 +337,12 @@ public class ModItems
         GameRegistry.registerItem(ModItems.energyBazooka, "energyBazooka");
         GameRegistry.registerItem(ModItems.itemBloodLightSigil, "itemBloodLightSigil");
         GameRegistry.registerItem(ModItems.itemComplexSpellCrystal, "itemComplexSpellCrystal");
+        GameRegistry.registerItem(ModItems.itemSigilOfEnderSeverance, "sigilOfEnderSeverance");
+        
         GameRegistry.registerItem(ModItems.bucketLife, "bucketLife");
         
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
+        GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }
