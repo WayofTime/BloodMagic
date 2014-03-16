@@ -2,21 +2,25 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemComponents extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore","MeleeCore","ParadigmBackPlate","OutputCable","FlameCore","IcyCore","GustCore","EarthenCore","InputCable","CrackedRunicPlate","RunicPlate","ScribedRunicPlate","DefaultCore","OffensiveCore","DefensiveCore","EnvironmentalCore"};
+    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore","MeleeCore","ParadigmBackPlate","OutputCable","FlameCore","IcyCore","GustCore","EarthenCore","InputCable","CrackedRunicPlate","RunicPlate","ScribedRunicPlate","DefaultCore","OffensiveCore","DefensiveCore","EnvironmentalCore","PowerCore","CostCore","PotencyCore"};
 
     @SideOnly(Side.CLIENT)
     private Icon[] icons;
@@ -38,6 +42,37 @@ public class ItemComponents extends Item
         for (int i = 0; i < ITEM_NAMES.length; ++i)
         {
             icons[i] = iconRegister.registerIcon("AlchemicalWizardry:" + "baseItem" + ITEM_NAMES[i]);
+        }
+    }
+    
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+        if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+        {
+            ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
+
+            if (recipe != null)
+            {
+            	par3List.add("Used in alchemy");
+                par3List.add(EnumChatFormatting.BLUE + "Recipe:");
+
+                for (ItemStack item : recipe)
+                {
+                    if (item != null)
+                    {
+                        par3List.add("" + item.getDisplayName());
+                    }
+                }
+            }
+        } else
+        {
+        	ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
+        	if(recipe!=null)
+        	{
+        		par3List.add("Used in alchemy");
+        		par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+        	}	
         }
     }
 

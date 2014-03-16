@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAlchemyBase extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{};
+    private static final String[] ITEM_NAMES = new String[]{"Offensa","Praesidium","OrbisTerrae","StrengthenedCatalyst","ConcentratedCatalyst","FracturedBone"};
 
     @SideOnly(Side.CLIENT)
     private Icon[] icons;
@@ -49,14 +49,13 @@ public class ItemAlchemyBase extends Item
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used in alchemy");
-
         if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
         {
             ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
 
             if (recipe != null)
             {
+            	par3List.add("Used in alchemy");
                 par3List.add(EnumChatFormatting.BLUE + "Recipe:");
 
                 for (ItemStack item : recipe)
@@ -69,7 +68,12 @@ public class ItemAlchemyBase extends Item
             }
         } else
         {
-            par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+        	ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
+        	if(recipe!=null)
+        	{
+        		par3List.add("Used in alchemy");
+        		par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+        	}	
         }
     }
 
