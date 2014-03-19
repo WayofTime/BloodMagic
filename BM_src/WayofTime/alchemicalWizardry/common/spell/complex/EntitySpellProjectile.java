@@ -5,27 +5,23 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileImpactEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileUpdateEffect;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileUpdateEffect;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,7 +45,8 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	public List<IProjectileImpactEffect> impactList = new ArrayList();
 	private boolean penetration = false;
 	public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
-	public List<String> effectList = new LinkedList();
+	public List<SpellEffect> spellEffectList = new LinkedList();
+	private int blocksBroken = 0;
 
 	public EntitySpellProjectile(World par1World) 
 	{
@@ -81,6 +78,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		motionZ = MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI);
 		motionY = -MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI);
 		this.setThrowableHeading(motionX, motionY, motionZ, par3 * 1.5F, 1.0F);
+		
 	}
 
 	@Override
@@ -272,19 +270,24 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		
 		NBTTagList effectList = new NBTTagList();
 
-        for (String str : this.effectList)
-        {
-            if (str != null)
-            {
-                NBTTagCompound tag = new NBTTagCompound();
+		for(SpellEffect eff : spellEffectList)
+		{
+			effectList.appendTag(eff.getTag());
+		}
+		
+//        for (String str : this.effectList)
+//        {
+//            if (str != null)
+//            {
+//                NBTTagCompound tag = new NBTTagCompound();
+//
+//                tag.setString("Class", str);
+//                effectList.appendTag(tag);
+//            }
+//        }
 
-                tag.setString("Class", str);
-                effectList.appendTag(tag);
-            }
-        }
-
-        par1NBTTagCompound.setTag("Effects", effectList);
-        
+        par1NBTTagCompound.setTag("Effects", effectList);  
+        par1NBTTagCompound.setInteger("blocksBroken", blocksBroken);
 	}
 
 	/**
@@ -299,17 +302,35 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		inTile = par1NBTTagCompound.getByte("inTile") & 255;
 		inData = par1NBTTagCompound.getByte("inData") & 255;
 		inGround = par1NBTTagCompound.getByte("inGround") == 1;
+		blocksBroken = par1NBTTagCompound.getInteger("blocksBroken");
 		
 		NBTTagList tagList = par1NBTTagCompound.getTagList("Effects");
-		this.effectList = new LinkedList();
-        for (int i = 0; i < tagList.tagCount(); i++)
+		
+		List<SpellEffect> spellEffectList = new LinkedList();
+		for (int i = 0; i < tagList.tagCount(); i++)
         {
             NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
 
-            this.effectList.add(tag.getString("Class"));
+            SpellEffect eff = SpellEffect.getEffectFromTag(tag);
+            if(eff!=null)
+            {
+            	spellEffectList.add(eff);
+            }
         }
+		this.spellEffectList = spellEffectList;
+		
+		
+//		this.effectList = new LinkedList();
+//        for (int i = 0; i < tagList.tagCount(); i++)
+//        {
+//            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+//
+//            this.effectList.add(tag.getString("Class"));
+//        }
         
-        SpellParadigmProjectile parad = SpellParadigmProjectile.getParadigmForStringArray(effectList);
+        //SpellParadigmProjectile parad = SpellParadigmProjectile.getParadigmForStringArray(effectList);
+        SpellParadigmProjectile parad = SpellParadigmProjectile.getParadigmForEffectArray(spellEffectList);
+        parad.applyAllSpellEffects();
         parad.prepareProjectile(this);
 	}
 
@@ -503,7 +524,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		{
 			for(IProjectileImpactEffect impactEffect : impactList)
 			{
-				impactEffect.onEntityImpact(mop);
+				impactEffect.onEntityImpact(mop,this);
 			}
 		}
 	}
@@ -514,7 +535,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		{
 			for(IProjectileImpactEffect impactEffect : impactList)
 			{
-				impactEffect.onTileImpact(mop);
+				impactEffect.onTileImpact(worldObj, mop);
 			}
 		}
 	}
@@ -545,8 +566,18 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		this.damage = damage;
 	}
 	
-	public void setEffectList(List<String> stringList)
+	public void setSpellEffectList(List<SpellEffect> list)
 	{
-		this.effectList = stringList;
+		this.spellEffectList = list;
+	}
+	
+	public int getBlocksBroken()
+	{
+		return this.blocksBroken;
+	}
+	
+	public void setBlocksBroken(int blocksBroken)
+	{
+		this.blocksBroken = blocksBroken;
 	}
 }

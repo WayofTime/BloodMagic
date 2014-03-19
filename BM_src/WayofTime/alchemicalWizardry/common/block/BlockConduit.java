@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -12,8 +8,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockConduit extends BlockContainer
+public class BlockConduit extends BlockOrientable
 {
     @SideOnly(Side.CLIENT)
     private static Icon topIcon;
@@ -26,7 +27,7 @@ public class BlockConduit extends BlockContainer
 
     public BlockConduit(int id)
     {
-        super(id, Material.rock);
+        super(id);
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -63,44 +64,6 @@ public class BlockConduit extends BlockContainer
             default:
                 return sideIcon2;
         }
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
-    {
-        if (world.isRemote)
-        {
-            return false;
-        }
-
-        ForgeDirection sideClicked = ForgeDirection.getOrientation(side);
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
-
-        if (tile instanceof TEConduit)
-        {
-            //TODO NEEDS WORK
-            if (((TEConduit) tile).getInputDirection().equals(sideClicked))
-            {
-                ((TEConduit) tile).setInputDirection(((TEConduit) tile).getOutputDirection());
-                ((TEConduit) tile).setOutputDirection(sideClicked);
-            } else if (((TEConduit) tile).getOutputDirection().equals(sideClicked))
-            {
-                ((TEConduit) tile).setOutputDirection(((TEConduit) tile).getInputDirection());
-                ((TEConduit) tile).setInputDirection(sideClicked);
-            } else
-            {
-                if (!player.isSneaking())
-                {
-                    ((TEConduit) tile).setOutputDirection(sideClicked);
-                } else
-                {
-                    ((TEConduit) tile).setOutputDirection(sideClicked.getOpposite());
-                }
-            }
-        }
-
-        world.markBlockForUpdate(x, y, z);
-        return true;
     }
 
     @Override

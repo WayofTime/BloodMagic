@@ -75,7 +75,7 @@ public class AlchemyRecipeRegistry
             {
                 if (result.isItemEqual(itemStack))
                 {
-                    return ar.getRecipe();
+                    return ar.getRecipe().clone();
                 }
             }
         }

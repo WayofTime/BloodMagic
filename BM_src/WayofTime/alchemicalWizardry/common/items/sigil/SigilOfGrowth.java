@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.*;
@@ -103,6 +104,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
 
+        if(SpellHelper.isFakePlayer(par2EntityPlayer.worldObj, par2EntityPlayer))
+        {
+        	return false;
+        }
+        
         if (applyBonemeal(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer))
         {
             EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
@@ -160,6 +166,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         if (!(par3Entity instanceof EntityPlayer))
         {
             return;
+        }
+        
+        if(SpellHelper.isFakePlayer(par3Entity.worldObj, (EntityPlayer)par3Entity))
+        {
+        	return;
         }
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;

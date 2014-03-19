@@ -4,6 +4,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -51,6 +52,12 @@ public class ItemBloodLightSigil extends EnergyItems
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
+        
+        if(SpellHelper.isFakePlayer(par2EntityPlayer.worldObj, par2EntityPlayer))
+        {
+        	return false;
+        }
+        
         EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
 
         if (par3World.isRemote)

@@ -869,6 +869,18 @@ public class Rituals
         meteorRitual.add(new RitualComponent(-2, 4, -3, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-3, 4, -2, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-3, 4, -3, RitualComponent.FIRE));
+        
+        ArrayList<RitualComponent> apiaryRitual = new ArrayList();
+        apiaryRitual.add(new RitualComponent(1,0,0, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(1,0,1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(1,0,-1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1,0,-1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1,0,1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1,0,0, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(0,0,-1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(0,0,1, RitualComponent.DUSK));
+
+        
         ritualList.add(new Rituals(waterRitual, 1, 500, new RitualEffectWater(), "Ritual of the Full Spring"));
         ritualList.add(new Rituals(lavaRitual, 1, 10000, new RitualEffectLava(), "Serenade of the Nether"));
         ritualList.add(new Rituals(growthRitual, 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove"));
@@ -888,6 +900,7 @@ public class Rituals
         ritualList.add(new Rituals(biomeChangerRitual, 2, 1000000, new RitualEffectBiomeChanger(), "Ritual of Gaia's Transformation"));
         ritualList.add(new Rituals(flightRitual, 2, 1000000, new RitualEffectFlight(), "Reverence of the Condor"));
         ritualList.add(new Rituals(meteorRitual, 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower"));
+        //ritualList.add(new Rituals(apiaryRitual,1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
     public static int getCostForActivation(int ritualID)

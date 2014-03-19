@@ -1,0 +1,22 @@
+[
+{
+  "modid": "AWWayofTime",
+  "name": "XAlchemical Wizardry",
+  "description": "Two words: magical swag. Oh, and a gun.",
+  "version": "0.0.1",
+  "url": "http://www.minecraftforum.net/topic/1596973-",
+  "updateUrl": "",
+  "logoFile": "",
+  "mcversion": "1.5.x",
+  "authorList": [
+  "WayofTime"
+  ],
+  "credits": "",
+  "screenshots": [
+  ],
+  "parent": "",
+  "dependencies": [
+  ]
+}
+]
+

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
@@ -59,11 +60,11 @@ public class ItemDiabloKey extends EnergyItems
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         World world = par3EntityPlayer.worldObj;
 
-        if (par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
-            return par1ItemStack;
+        	return par1ItemStack;
         }
-
+        
         if (world != null)
         {
             double posX = par3EntityPlayer.posX;

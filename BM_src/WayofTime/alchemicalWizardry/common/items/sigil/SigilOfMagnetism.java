@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -116,6 +117,11 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        {
+        	return par1ItemStack;
+        }
+        
         if (par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
@@ -152,6 +158,11 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
         if (!(par3Entity instanceof EntityPlayer))
         {
             return;
+        }
+        
+        if(SpellHelper.isFakePlayer(par2World, (EntityPlayer)par3Entity))
+        {
+        	return;
         }
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;

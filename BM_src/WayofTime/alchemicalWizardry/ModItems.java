@@ -90,7 +90,10 @@ public class ModItems
     public static Item armourInhibitor;
     public static Item creativeFiller;
     public static Item demonPlacer;
-    public static Item itemBloodRuneBlock;
+    
+    public static Item baseItems;
+    public static Item baseAlchemyItems;
+
     public static Item weakFillingAgent;
     public static Item standardFillingAgent;
     public static Item enhancedFillingAgent;
@@ -104,6 +107,7 @@ public class ModItems
     public static Item energyBazooka;
     public static Item itemBloodLightSigil;
     public static Item itemComplexSpellCrystal;
+    public static Item itemBloodFrame;
 
     public static void init()
     {
@@ -184,5 +188,7 @@ public class ModItems
         energyBazooka = new EnergyBazooka(AlchemicalWizardry.energyBazookaItemID).setUnlocalizedName("energyBazooka");
         itemBloodLightSigil = new ItemBloodLightSigil(AlchemicalWizardry.itemBloodLightSigilItemID).setUnlocalizedName("bloodLightSigil");
         itemComplexSpellCrystal = new ItemComplexSpellCrystal(AlchemicalWizardry.itemComplexSpellCrystalItemID).setUnlocalizedName("itemComplexSpellCrystal");
+        baseItems = new ItemComponents(AlchemicalWizardry.baseComponentsItemID).setUnlocalizedName("baseItems");
+        baseAlchemyItems = new ItemAlchemyBase(AlchemicalWizardry.baseAlchemyComponentsItemID).setUnlocalizedName("baseAlchemyItems");
     }
 }

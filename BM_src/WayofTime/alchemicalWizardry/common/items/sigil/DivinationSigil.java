@@ -4,6 +4,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -52,6 +53,11 @@ public class DivinationSigil extends Item implements ArmourUpgrade
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        {
+        	return par1ItemStack;
+        }
+        
         if (!par3EntityPlayer.worldObj.isRemote)
         {
             return par1ItemStack;

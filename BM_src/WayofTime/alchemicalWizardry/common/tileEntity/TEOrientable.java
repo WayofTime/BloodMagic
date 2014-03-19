@@ -1,9 +1,12 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.block.IOrientable;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.block.IOrientable;
 
 public class TEOrientable extends TileEntity implements IOrientable
 {
@@ -81,5 +84,25 @@ public class TEOrientable extends TileEntity implements IOrientable
             default:
                 return 0;
         }
+    }
+    
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        return PacketHandler.getBlockOrientationPacket(this);
+    }
+    
+    public boolean isSideRendered(ForgeDirection side)
+    {
+    	if(side.equals(this.getInputDirection()) || side.equals(this.getOutputDirection()))
+    	{
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public String getResourceLocationForMeta(int meta)
+    {
+    	return "";
     }
 }

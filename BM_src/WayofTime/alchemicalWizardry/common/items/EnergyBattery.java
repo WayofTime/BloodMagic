@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.*;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
@@ -68,9 +69,9 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         World world = par3EntityPlayer.worldObj;
 
-        if (par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
-            return par1ItemStack;
+        	return par1ItemStack;
         }
 
         if (world != null)
@@ -81,12 +82,11 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
             PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, world.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short) 4));
         }
-
-        if (!par3EntityPlayer.worldObj.isRemote && !(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
+        
+        if(!world.isRemote)
         {
-            return par1ItemStack;
+        	return par1ItemStack;
         }
-
 //        if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
 //        {
 //            return par1ItemStack;

@@ -1,10 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 
-public class TEConduit extends TEOrientable
+public class TEConduit extends TESpellBlock
 {
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
@@ -22,10 +23,7 @@ public class TEConduit extends TEOrientable
     @Override
     public void updateEntity()
     {
-        //this.capacity=(int) (10000*this.capacityMultiplier);
-        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
-        {
-        }
+
     }
 
     @Override
@@ -33,4 +31,10 @@ public class TEConduit extends TEOrientable
     {
         return PacketHandler.getBlockOrientationPacket(this);
     }
+
+	@Override
+	protected void applySpellChange(SpellParadigm parad) 
+	{
+		return;		
+	}
 }

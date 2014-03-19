@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,9 +18,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.nodes.IRevealer;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.IBindable;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.Optional.Interface;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-import java.util.List;
-
+@Optional.InterfaceList(value = {@Interface(iface="IRevealer", modid = "Thaumcraft"), @Interface(iface="IGoggles", modid = "Thaumcraft")})
 public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IBindable
 {
     private static int invSize = 9;
@@ -506,7 +509,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 continue;
             }
 
-            if (item.getItem() instanceof IRevealer)
+            if (AlchemicalWizardry.isThaumcraftLoaded && item.getItem() instanceof IRevealer)
             {
                 return true;
             }
@@ -531,7 +534,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
                 continue;
             }
 
-            if (item.getItem() instanceof IGoggles)
+            if (AlchemicalWizardry.isThaumcraftLoaded && item.getItem() instanceof IGoggles)
             {
                 return true;
             }
@@ -590,13 +593,11 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
         return 0;
     }
 
-    @Override
     public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
     {
         return this.hasIRevealer(itemstack);
     }
 
-    @Override
     public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
     {
         return this.hasIGoggles(itemstack);

@@ -1,47 +1,52 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefault;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffectFire;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.common.DimensionManager;
 
-public class ItemComplexSpellCrystal extends EnergyItems 
+import java.util.List;
+
+public class ItemComplexSpellCrystal extends EnergyItems
 {
-
-	public ItemComplexSpellCrystal(int id) 
-	{
-		super(id);
-		this.maxStackSize = 1;
-        //setMaxDamage(1000);
-        setEnergyUsed(50);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-	}
-	
-	@Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public ItemComplexSpellCrystal(int par1)
     {
-        par3List.add("I feel lighter already...");
-
-        if (!(par1ItemStack.stackTagCompound == null))
-        {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-        }
+        super(par1);
+        this.setMaxStackSize(1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
-	
-	@Override
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AirSigil");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BlankSpell");
+    }
+
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+        par3List.add("Crystal of infinite possibilities.");
+
+        if (!(par1ItemStack.stackTagCompound == null))
+        {
+            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+
+            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            {
+                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            }
+
+            par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
+            par3List.add("Bound Dimension: " + getDimensionID(par1ItemStack));
+        }
     }
 
     @Override
@@ -54,11 +59,50 @@ public class ItemComplexSpellCrystal extends EnergyItems
             return par1ItemStack;
         }
 
-        SpellParadigm parad = new SpellParadigmSelf();
-        parad.addBufferedEffect(new SpellEffectFire());
-        parad.modifyBufferedEffect(new SpellModifierDefault());
-        parad.castSpell(par2World, par3EntityPlayer, par1ItemStack);
+        if (!par2World.isRemote)
+        {
+            //World world = MinecraftServer.getServer().worldServers[getDimensionID(par1ItemStack)];
+            World world = DimensionManager.getWorld(getDimensionID(par1ItemStack));
 
+            if (world != null)
+            {
+                NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+                TileEntity tileEntity = world.getBlockTileEntity(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord"));
+
+                if (tileEntity instanceof TESpellParadigmBlock)
+                {
+                    TESpellParadigmBlock tileParad = (TESpellParadigmBlock) tileEntity;
+
+                    tileParad.castSpell(par2World, par3EntityPlayer, par1ItemStack);
+                } else
+                {
+                    return par1ItemStack;
+                }
+            } else
+            {
+                return par1ItemStack;
+            }
+        } else
+        {
+            return par1ItemStack;
+        }
+
+        par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+//        if (!par2World.isRemote)
+//        {
+//            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
+//            par2World.spawnEntityInWorld(new FireProjectile(par2World, par3EntityPlayer, 10));
+//        }
         return par1ItemStack;
+    }
+
+    public int getDimensionID(ItemStack itemStack)
+    {
+        if (itemStack.stackTagCompound == null)
+        {
+            itemStack.setTagCompound(new NBTTagCompound());
+        }
+
+        return itemStack.stackTagCompound.getInteger("dimensionId");
     }
 }

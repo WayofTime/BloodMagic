@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -46,9 +47,9 @@ public class SacrificialDagger extends Item
             par3EntityPlayer.setHealth(par3EntityPlayer.getHealth() - 2);
         }
 
-        if (par3EntityPlayer instanceof FakePlayer)
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
-            return par1ItemStack;
+        	return par1ItemStack;
         }
 
         double posX = par3EntityPlayer.posX;
@@ -63,11 +64,6 @@ public class SacrificialDagger extends Item
         for (int l = 0; l < 8; ++l)
         {
             par2World.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
-        }
-
-        if (!par2World.isRemote && !(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
-        {
-            return par1ItemStack;
         }
 
         findAndFillAltar(par2World, par3EntityPlayer, 200);
