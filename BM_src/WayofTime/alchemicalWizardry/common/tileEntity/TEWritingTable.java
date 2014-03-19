@@ -1,14 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.*;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
-import cpw.mods.fml.common.network.PacketDispatcher;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,12 +13,20 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.IBindingAgent;
+import WayofTime.alchemicalWizardry.common.ICatalyst;
+import WayofTime.alchemicalWizardry.common.IFillingAgent;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-public class TEWritingTable extends TileEntity implements IInventory
+public class TEWritingTable extends TileEntity implements ISidedInventory
 {
     private ItemStack[] inv;
     private int progress;
@@ -75,6 +80,37 @@ public class TEWritingTable extends TileEntity implements IInventory
                     setInventorySlotContents(slot, null);
                 }
             }
+        }
+
+        return stack;
+    }
+    
+    public ItemStack decrStackSizeLeaveContainer(int slot, int amt)
+    {
+    	ItemStack stack = getStackInSlot(slot);
+    	
+        if (stack != null)
+        {
+        	ItemStack containedStack = stack.getItem().getContainerItemStack(stack);
+        	if(containedStack!=null)
+        	{
+        		setInventorySlotContents(slot,containedStack);
+        	}
+        	else
+        	{
+        		if (stack.stackSize <= amt)
+                {
+                    setInventorySlotContents(slot, null);
+                } else
+                {
+                    stack = stack.splitStack(amt);
+
+                    if (stack.stackSize == 0)
+                    {
+                        setInventorySlotContents(slot, null);
+                    }
+                }
+        	} 
         }
 
         return stack;
@@ -716,7 +752,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                     for (int i = 0; i < 5; i++)
                     {
-                        this.decrStackSize(i + 1, 1);
+                        this.decrStackSizeLeaveContainer(i + 1, 1);
                     }
 
                     if (worldObj != null)
@@ -747,7 +783,7 @@ public class TEWritingTable extends TileEntity implements IInventory
 
                     for (int i = 0; i < 5; i++)
                     {
-                        this.decrStackSize(i + 1, 1);
+                        this.decrStackSizeLeaveContainer(i + 1, 1);
                     }
 
                     if (worldObj != null)
@@ -760,4 +796,49 @@ public class TEWritingTable extends TileEntity implements IInventory
 
         //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int var1) 
+	{
+		ForgeDirection dir = ForgeDirection.getOrientation(var1);
+		
+		switch(dir)
+		{
+		case DOWN:
+			return new int[]{0};
+		case UP:
+			return new int[]{6};
+		case NORTH:
+		case SOUTH:
+		case EAST:
+		case WEST:
+			return new int[]{1,2,3,4,5};
+		default:
+			return new int[]{};
+		}
+	}
+
+	@Override
+	public boolean canInsertItem(int i, ItemStack itemStack, int j) 
+	{
+		ForgeDirection dir = ForgeDirection.getOrientation(j);
+		
+		if(itemStack == null)
+		{
+			return false;
+		}
+
+		if(dir.equals(ForgeDirection.DOWN) && !(itemStack.getItem() instanceof EnergyBattery))
+		{
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public boolean canExtractItem(int i, ItemStack itemstack, int j) 
+	{
+		return true;
+	}
 }

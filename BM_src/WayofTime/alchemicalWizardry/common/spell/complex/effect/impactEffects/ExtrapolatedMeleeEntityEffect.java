@@ -45,7 +45,7 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
             {
         		if(hit<maxHit&&!entity.equals(entityPlayer))
         		{
-        			if(this.entityEffect(world, entity))
+        			if(this.entityEffect(world, entity, entityPlayer))
         			{
         				hit++;
         			}
@@ -55,7 +55,7 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
         }
 	}
 	
-	protected abstract boolean entityEffect(World world, Entity entity);
+	protected abstract boolean entityEffect(World world, Entity entity, EntityPlayer player);
 	
 	public void setRange(float range)
 	{

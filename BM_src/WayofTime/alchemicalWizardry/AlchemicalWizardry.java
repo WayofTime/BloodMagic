@@ -109,7 +109,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v0.7.3e")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -962,6 +962,7 @@ public class AlchemicalWizardry
         ItemStack offenseCoreStack = new ItemStack(ModItems.baseItems,1,19);
         ItemStack defensiveCoreStack = new ItemStack(ModItems.baseItems,1,20);
         ItemStack environmentalCoreStack = new ItemStack(ModItems.baseItems,1,21);
+        ItemStack powerCoreStack = new ItemStack(ModItems.baseItems,1,22);
         
         ItemStack magicalesCraftedCableStack = new ItemStack(ModItems.baseItems,5,2);
         ItemStack crackedRunicPlateStackCrafted = new ItemStack(ModItems.baseItems,2,15);
@@ -975,7 +976,7 @@ public class AlchemicalWizardry
         
         GameRegistry.addRecipe(projectileCoreStack, "mbm","aca","mom",'c', emptyCoreStack,'b',weakBloodShardStack,'m', magicalesStack,'o', magicianBloodOrbStack,'a',new ItemStack(Item.arrow));
         GameRegistry.addRecipe(selfCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',sanctusStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',glowstoneDustStack);
-        GameRegistry.addRecipe(meleeCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',incendiumStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',new ItemStack(Item.flintAndSteel));
+        GameRegistry.addRecipe(meleeCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',incendiumStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',new ItemStack(Item.fireballCharge));
         GameRegistry.addRecipe(paradigmBackPlateStack,"isi","rgr","isi",'i',ironIngotStack,'r',stoneStack,'g',goldIngotStack,'s',reinforcedSlateStack);
         GameRegistry.addRecipe(outputCableStack, " si","s c"," si",'s',stoneStack,'i',ironIngotStack,'c',simpleCatalystStack); 
         
@@ -1011,7 +1012,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellModifier,1,2),"bgb","ico","bgb",'c',defensiveCoreStack,'i',inputCableStack,'o',outputCableStack,'b',stoneBraceStack,'g',ironIngotStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellModifier,1,3),"bgb","ico","bgb",'c',environmentalCoreStack,'i',inputCableStack,'o',outputCableStack,'b',stoneBraceStack,'g',ironIngotStack);
         
-        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEnhancement,1,0),"bpb","ico","bpb",'c', emptyCoreStack,'b',woodBraceStack,'p',crackedRunicPlateStack,'i',inputCableStack,'o',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEnhancement,1,0),"bpb","ico","bpb",'c', powerCoreStack,'b',woodBraceStack,'p',crackedRunicPlateStack,'i',inputCableStack,'o',outputCableStack);
         
         GameRegistry.addShapelessRecipe(new ItemStack(Item.dyePowder,5,15),fracturedBoneStack);
         
@@ -1044,6 +1045,7 @@ public class AlchemicalWizardry
         LanguageRegistry.addName(crackedRunicPlateStack,"Cracked Runic Plate");
         LanguageRegistry.addName(runicPlateStack,"Runic Plate");
         LanguageRegistry.addName(imbuedRunicPlateStack,"Imbued Runic Plate");
+        
     }
 
     @EventHandler

@@ -1,13 +1,14 @@
-package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
+package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ExtrapolatedMeleeEntityEffect;
 
-public class MeleeDefaultIce extends ExtrapolatedMeleeEntityEffect {
-
-	public MeleeDefaultIce(int power, int potency, int cost) 
+public class MeleeDefaultFire extends ExtrapolatedMeleeEntityEffect 
+{
+	public MeleeDefaultFire(int power, int potency, int cost) 
 	{
 		super(power, potency, cost);
 		this.setRange(3+0.3f*potency);
@@ -18,11 +19,12 @@ public class MeleeDefaultIce extends ExtrapolatedMeleeEntityEffect {
 	@Override
 	protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer) 
 	{
-		if(entity.hurtResistantTime>0)
+		if(entity instanceof EntityLiving)
 		{
-			entity.hurtResistantTime = Math.max(0, -(potencyUpgrades+1)+entity.hurtResistantTime);
+			entity.setFire(3*this.powerUpgrades+3);
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 }

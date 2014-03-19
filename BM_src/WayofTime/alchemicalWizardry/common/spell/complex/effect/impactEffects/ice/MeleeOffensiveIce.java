@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.i
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -18,7 +19,7 @@ public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect
 	}
 
 	@Override
-	protected boolean entityEffect(World world, Entity entity) 
+	protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer) 
 	{
 		Vec3 blockVector = SpellHelper.getEntityBlockVector(entity);
 		

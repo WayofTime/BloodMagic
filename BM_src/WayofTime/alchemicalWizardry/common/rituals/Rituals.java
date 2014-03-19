@@ -879,6 +879,16 @@ public class Rituals
         apiaryRitual.add(new RitualComponent(-1,0,0, RitualComponent.DUSK));
         apiaryRitual.add(new RitualComponent(0,0,-1, RitualComponent.DUSK));
         apiaryRitual.add(new RitualComponent(0,0,1, RitualComponent.DUSK));
+        
+        ArrayList<RitualComponent> autoAlchemyRitual = new ArrayList();
+        autoAlchemyRitual.add(new RitualComponent(1,0,1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(1,0,-1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(-1,0,-1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(-1,0,1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(2,0,2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(2,0,-2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,-2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,2, RitualComponent.WATER));
 
         
         ritualList.add(new Rituals(waterRitual, 1, 500, new RitualEffectWater(), "Ritual of the Full Spring"));
@@ -900,6 +910,7 @@ public class Rituals
         ritualList.add(new Rituals(biomeChangerRitual, 2, 1000000, new RitualEffectBiomeChanger(), "Ritual of Gaia's Transformation"));
         ritualList.add(new Rituals(flightRitual, 2, 1000000, new RitualEffectFlight(), "Reverence of the Condor"));
         ritualList.add(new Rituals(meteorRitual, 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower"));
+        ritualList.add(new Rituals(autoAlchemyRitual,1,20000,new RitualEffectAutoAlchemy(),"Ballad of Alchemy"));
         //ritualList.add(new Rituals(apiaryRitual,1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 

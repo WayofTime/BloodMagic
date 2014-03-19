@@ -3,6 +3,10 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.MeleeDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.MeleeDefensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.MeleeEnvironmentalFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.MeleeOffensiveFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileDefaultFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileDefensiveFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ProjectileEnvironmentalFire;
@@ -66,104 +70,96 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	public void defaultModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-		
+		parad.addEntityEffect(new MeleeDefaultFire(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));		
 	}
 
 	@Override
 	public void offensiveModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-		
+		parad.addEntityEffect(new MeleeOffensiveFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-		
+		parad.addWorldEffect(new MeleeDefensiveFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void environmentalModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-		
+		parad.addWorldEffect(new MeleeEnvironmentalFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultProjectile() 
 	{
-		return (int)((5*Math.pow(1.5*this.powerEnhancement+1, 2)*(1.5*this.potencyEnhancement+1)+this.potencyEnhancement*15)*Math.pow(0.8, costEnhancement));
+		return (int)((5*Math.pow(1.5*this.powerEnhancement+1, 2)*(1.5*this.potencyEnhancement+1)+this.potencyEnhancement*15)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseProjectile() 
 	{
-		return (int)(10*Math.pow((this.powerEnhancement)*1.3+1,2)*((1.5*this.potencyEnhancement+1))*Math.pow(0.8, costEnhancement));
+		return (int)(10*Math.pow((this.powerEnhancement)*1.3+1,2)*((1.5*this.potencyEnhancement+1))*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseProjectile() 
 	{
-		return (int)(25*Math.pow(1*this.powerEnhancement+1,2)*(1*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
+		return (int)(25*Math.pow(1*this.powerEnhancement+1,2)*(1*this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentProjectile() 
 	{
-		return (int)(75*(0.5*this.powerEnhancement+1)*(0.5*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
+		return (int)(75*(0.5*this.powerEnhancement+1)*(0.5*this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultSelf() 
 	{
-		return 10*(int)(10*Math.pow(1.5, this.powerEnhancement+1.5*this.potencyEnhancement)*Math.pow(0.8, costEnhancement));
+		return 10*(int)(10*Math.pow(1.5, this.powerEnhancement+1.5*this.potencyEnhancement)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseSelf() 
 	{
-		return 500*(int)((this.powerEnhancement+1)*Math.pow(2, potencyEnhancement)*Math.pow(0.8, costEnhancement));
+		return (int)(300*(3*powerEnhancement+1)*(2*potencyEnhancement + 1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseSelf() 
 	{
-		return (int)(25*(3*this.potencyEnhancement+1)*(2*this.powerEnhancement+1)*Math.pow(0.8, costEnhancement));
+		return (int)(25*(3*this.potencyEnhancement+1)*(2*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentSelf() 
 	{
-		return (int) ((15*Math.pow(1.7, powerEnhancement)+10*Math.pow(potencyEnhancement,1.8))*Math.pow(0.8, costEnhancement));
+		return (int)((15*Math.pow(1.7, powerEnhancement)+10*Math.pow(potencyEnhancement,1.8))*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(25*(1.2*this.potencyEnhancement+1)*(2.5*this.powerEnhancement+2)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(500*(1+this.potencyEnhancement)*(this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(30*(1.5*potencyEnhancement+1)*(3*powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(25*Math.pow(1.5*this.powerEnhancement+1,3)*(0.25*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 }
