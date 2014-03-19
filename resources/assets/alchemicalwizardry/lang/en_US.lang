@@ -130,3 +130,8 @@ item.itemComplexSpellCrystal.name=[WIP] Complex Spell Crystal
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
+
+#Extra Strings
+bm.string.consume=Usage
+bm.string.drain=Drain
+bm.string.tier=Tier

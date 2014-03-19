@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import codechicken.nei.NEIServerUtils;
@@ -120,7 +121,7 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Alchemic Chemistry Set";
+		return StatCollector.translateToLocal("tile.blockWritingTable.name");
 	}
 
 	@Override
