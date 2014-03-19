@@ -86,6 +86,7 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 			for(ItemStack stack: stacks) {
 				if(NEIServerUtils.areStacksSameTypeCrafting(stack, ingredient)) {
 					arecipes.add(new CachedAlchemyRecipe(recipe));
+					break;
 				}
 			}
 			
