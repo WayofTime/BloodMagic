@@ -12,6 +12,8 @@ public class NEIConfig implements IConfigureNEI {
 	public void loadConfig() {
 		API.registerRecipeHandler(new NEIAlchemyRecipeHandler());
 		API.registerUsageHandler(new NEIAlchemyRecipeHandler());
+		API.registerRecipeHandler(new NEIAltarRecipeHandler());
+		API.registerUsageHandler(new NEIAltarRecipeHandler());
 		
 		NEIAlchemyRecipeHandler.bloodOrbs = new ArrayList<Item>();
 		NEIAlchemyRecipeHandler.bloodOrbs.add(ModItems.weakBloodOrb);
@@ -28,6 +30,6 @@ public class NEIConfig implements IConfigureNEI {
 
 	@Override
 	public String getVersion() {
-		return "1.0";
+		return "1.1";
 	}
 }
