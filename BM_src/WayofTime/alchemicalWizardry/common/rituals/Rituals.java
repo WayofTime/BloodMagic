@@ -889,6 +889,14 @@ public class Rituals
         autoAlchemyRitual.add(new RitualComponent(2,0,-2, RitualComponent.WATER));
         autoAlchemyRitual.add(new RitualComponent(-2,0,-2, RitualComponent.WATER));
         autoAlchemyRitual.add(new RitualComponent(-2,0,2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(-3,0,-2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,-3, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(-3,0,2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,3, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(3,0,-2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(2,0,-3, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(3,0,2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(2,0,3, RitualComponent.FIRE));
 
         
         ritualList.add(new Rituals(waterRitual, 1, 500, new RitualEffectWater(), "Ritual of the Full Spring"));

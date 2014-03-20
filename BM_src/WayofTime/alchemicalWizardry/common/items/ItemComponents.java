@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemComponents extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore","MeleeCore","ParadigmBackPlate","OutputCable","FlameCore","IcyCore","GustCore","EarthenCore","InputCable","CrackedRunicPlate","RunicPlate","ScribedRunicPlate","DefaultCore","OffensiveCore","DefensiveCore","EnvironmentalCore","PowerCore","CostCore","PotencyCore"};
+    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore","MeleeCore","ParadigmBackPlate","OutputCable","FlameCore","IcyCore","GustCore","EarthenCore","InputCable","CrackedRunicPlate","RunicPlate","ScribedRunicPlate","DefaultCore","OffensiveCore","DefensiveCore","EnvironmentalCore","PowerCore","CostCore","PotencyCore","ObsidianBrace"};
 
     @SideOnly(Side.CLIENT)
     private Icon[] icons;

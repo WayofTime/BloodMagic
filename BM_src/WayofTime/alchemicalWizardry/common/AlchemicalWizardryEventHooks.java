@@ -134,7 +134,7 @@ public class AlchemicalWizardryEventHooks
             EntityLivingBase entity = event.entityLiving;
             //if(!entity.isSneaking())
             {
-                float percentIncrease = (i + 1) * 0.05f;
+                float percentIncrease = (i + 1) * 0.1f;
 
                 if (event.entityLiving instanceof EntityPlayer)
                 {

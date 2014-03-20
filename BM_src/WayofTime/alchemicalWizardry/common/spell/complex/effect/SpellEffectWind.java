@@ -3,11 +3,17 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.MeleeDefaultWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.MeleeDefensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.MeleeEnvironmentalWind;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.MeleeOffensiveWind;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileDefaultWind;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileEnvironmentalWind;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.ProjectileOffensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfDefaultWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfDefensiveWind;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfEnvironmentalWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfOffensiveWind;
 
 public class SpellEffectWind extends SpellEffect 
 {
@@ -38,22 +44,19 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	public void defaultModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfDefaultWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void offensiveModificationSelf(SpellParadigmSelf parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfOffensiveWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationSelf(SpellParadigmSelf parad)
 	{
-		// TODO Auto-generated method stub
-
+		parad.addSelfSpellEffect(new SelfDefensiveWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
@@ -65,8 +68,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	public void defaultModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addEntityEffect(new MeleeDefaultWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
@@ -78,15 +80,13 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	public void defensiveModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		parad.addEntityEffect(new MeleeDefensiveWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
 	public void environmentalModificationMelee(SpellParadigmMelee parad) 
 	{
-		// TODO Auto-generated method stub
-
+		//TODO parad.addWorldEffect(new MeleeEnvironmentalWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
@@ -116,22 +116,19 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	protected int getCostForDefaultSelf()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(100*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseSelf()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(100*(0.5*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseSelf() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(500*(0.7d*this.powerEnhancement+1)*(0.8*this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
@@ -143,8 +140,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	protected int getCostForDefaultMelee()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(350*(1.0*this.potencyEnhancement+1)*(1.2*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
@@ -156,8 +152,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	protected int getCostForDefenseMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(150*(1.0*this.potencyEnhancement+1)*(0.7*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
