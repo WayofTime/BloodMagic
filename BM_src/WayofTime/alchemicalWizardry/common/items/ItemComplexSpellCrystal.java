@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -9,10 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
 import java.util.List;
+
+import org.lwjgl.input.Keyboard;
 
 public class ItemComplexSpellCrystal extends EnergyItems
 {
@@ -27,7 +31,7 @@ public class ItemComplexSpellCrystal extends EnergyItems
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BlankSpell");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ComplexCrystal");
     }
 
     @Override
@@ -46,6 +50,31 @@ public class ItemComplexSpellCrystal extends EnergyItems
 
             par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
             par3List.add("Bound Dimension: " + getDimensionID(par1ItemStack));
+        }
+        
+        if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+        {
+            ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
+
+            if (recipe != null)
+            {
+                par3List.add(EnumChatFormatting.BLUE + "Recipe:");
+
+                for (ItemStack item : recipe)
+                {
+                    if (item != null)
+                    {
+                        par3List.add("" + item.getDisplayName());
+                    }
+                }
+            }
+        } else
+        {
+        	ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(par1ItemStack);
+        	if(recipe!=null)
+        	{
+        		par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+        	}	
         }
     }
 

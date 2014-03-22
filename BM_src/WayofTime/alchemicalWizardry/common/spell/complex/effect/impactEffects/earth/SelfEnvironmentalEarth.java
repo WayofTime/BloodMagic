@@ -1,9 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
+import java.util.List;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.SelfSpellEffect;
 
@@ -17,28 +21,16 @@ public class SelfEnvironmentalEarth extends SelfSpellEffect
 	@Override
 	public void onSelfUse(World world, EntityPlayer player) 
 	{
-		int horizRadius = this.powerUpgrades + 1;
-		int vertRadius = this.potencyUpgrades + 2;
+		float radius = this.powerUpgrades*2 + 1.5f;
+		int dur = this.powerUpgrades*5*20 + 60;
 		
-		Vec3 blockVec = SpellHelper.getEntityBlockVector(player);
+		List<Entity> entities = SpellHelper.getEntitiesInRange(world, player.posX, player.posY, player.posZ, radius, radius);
 		
-		int posX = (int)(blockVec.xCoord);
-		int posY = (int)(blockVec.yCoord);
-		int posZ = (int)(blockVec.zCoord);
-		
-		for(int i=-horizRadius; i<=horizRadius; i++)
+		for(Entity entity : entities)
 		{
-			for(int j=0; j<vertRadius; j++)
+			if(entity instanceof EntityLiving)
 			{
-				for(int k=-horizRadius; k<=horizRadius; k++)
-				{
-//					if(k==0&&i==0)
-//					{
-//						continue;
-//					}
-					
-					BlockTeleposer.swapBlocks(world, world, posX + i, posY + j, posZ+k, posX+i, posY+j-vertRadius, posZ+k);
-				}
+				((EntityLiving) entity).addPotionEffect(new PotionEffect(Potion.weakness.id,dur,this.potencyUpgrades));
 			}
 		}
 	}

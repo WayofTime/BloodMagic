@@ -38,6 +38,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	private int ticksInAir = 0;
 	private int ricochetCounter = 0;
 	private boolean scheduledForDeath = false;
+	private boolean isSilkTouch = false;
 	
 	//Custom variables
 	private int maxRicochet = 0;
@@ -288,6 +289,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 
         par1NBTTagCompound.setTag("Effects", effectList);  
         par1NBTTagCompound.setInteger("blocksBroken", blocksBroken);
+        par1NBTTagCompound.setBoolean("isSilkTouch", isSilkTouch);
 	}
 
 	/**
@@ -303,6 +305,8 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 		inData = par1NBTTagCompound.getByte("inData") & 255;
 		inGround = par1NBTTagCompound.getByte("inGround") == 1;
 		blocksBroken = par1NBTTagCompound.getInteger("blocksBroken");
+		isSilkTouch = par1NBTTagCompound.getBoolean("isSilkTouch");
+		
 		
 		NBTTagList tagList = par1NBTTagCompound.getTagList("Effects");
 		
@@ -579,5 +583,15 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 	public void setBlocksBroken(int blocksBroken)
 	{
 		this.blocksBroken = blocksBroken;
+	}
+	
+	public boolean getIsSilkTouch()
+	{
+		return this.isSilkTouch;
+	}
+	
+	public void setIsSilkTouch(boolean bool)
+	{
+		this.isSilkTouch = bool;
 	}
 }

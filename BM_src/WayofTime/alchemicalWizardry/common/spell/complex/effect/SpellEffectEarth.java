@@ -136,8 +136,7 @@ public class SpellEffectEarth extends SpellEffect
 	@Override
 	protected int getCostForEnvironmentSelf()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(250*(1.2*this.potencyEnhancement+1)*(3*this.powerEnhancement+2.5)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override

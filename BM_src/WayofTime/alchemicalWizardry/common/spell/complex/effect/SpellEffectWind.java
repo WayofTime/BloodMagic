@@ -32,7 +32,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	public void defensiveModificationProjectile(SpellParadigmProjectile parad) 
 	{
-		parad.ricochetMax+=this.potencyEnhancement;
+		parad.isSilkTouch = true;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	public void environmentalModificationMelee(SpellParadigmMelee parad) 
 	{
-		//TODO parad.addWorldEffect(new MeleeEnvironmentalWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
+		parad.addWorldEffect(new MeleeEnvironmentalWind(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 	}
 
 	@Override
@@ -158,7 +158,6 @@ public class SpellEffectWind extends SpellEffect
 	@Override
 	protected int getCostForEnvironmentMelee() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(100*(1.0*this.potencyEnhancement+1)*(0.7*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 }

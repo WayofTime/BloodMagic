@@ -117,4 +117,10 @@ public class RitualStone extends Block
                 return blankIcon;
         }
     }
+    
+    @Override
+    public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int meta)
+    {
+    	return false;
+    }
 }
