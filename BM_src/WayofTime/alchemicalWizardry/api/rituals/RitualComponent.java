@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.rituals;
+package WayofTime.alchemicalWizardry.api.rituals;
 
 public class RitualComponent
 {

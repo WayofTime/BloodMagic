@@ -1,20 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.*;
-import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipe;
-import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipeRegistry;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import net.minecraft.block.Block;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -24,11 +15,24 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.fluids.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler
 {
@@ -575,12 +579,12 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             {
                 ItemStack returnedItem = getStackInSlot(0);
 
-                if (!(returnedItem.getItem() instanceof EnergyBattery))
+                if (!(returnedItem.getItem() instanceof IBloodOrb))
                 {
                     return;
                 }
 
-                EnergyBattery item = (EnergyBattery) (returnedItem.getItem());
+                IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
                 NBTTagCompound itemTag = returnedItem.stackTagCompound;
 
                 if (itemTag == null)

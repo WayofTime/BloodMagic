@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.common.network.PacketDispatcher;

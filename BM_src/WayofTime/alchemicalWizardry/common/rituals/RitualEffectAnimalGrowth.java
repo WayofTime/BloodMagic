@@ -1,23 +1,30 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-
-import java.util.Iterator;
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
 public class RitualEffectAnimalGrowth extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
+    	if(ritualStone instanceof TileEntity)
+    	{
+    		
+    	}
+    	
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
         LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
@@ -29,10 +36,10 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.worldObj;
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorldObj();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (world.getWorldTime() % 20 != 0)
         {

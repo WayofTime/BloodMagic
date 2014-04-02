@@ -2,8 +2,8 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.ArmourComponent;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;

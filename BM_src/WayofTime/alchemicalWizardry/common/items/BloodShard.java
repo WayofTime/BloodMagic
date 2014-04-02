@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;

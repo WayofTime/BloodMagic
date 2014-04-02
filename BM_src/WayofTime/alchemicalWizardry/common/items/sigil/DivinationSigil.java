@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;

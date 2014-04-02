@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,13 +12,15 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
 public class RitualEffectCrushing extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -32,16 +33,16 @@ public class RitualEffectCrushing extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.worldObj;
+        World world = ritualStone.getWorldObj();
 
         if (world.getWorldTime() % 40 != 0)
         {
             return;
         }
-
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
         TileEntity tile = world.getBlockTileEntity(x, y + 1, z);
         IInventory tileEntity;
 

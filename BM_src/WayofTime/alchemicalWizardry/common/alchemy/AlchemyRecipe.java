@@ -119,44 +119,6 @@ public class AlchemyRecipe
         }
 
         return true;
-//		if(slottedBloodOrbLevel<bloodOrbLevel)
-//		{
-//			return false;
-//		}
-//
-//		if(items.length<5)
-//		{
-//			return false;
-//		}
-//
-//		for(int i=0;i<5;i++)
-//		{
-//			ItemStack itemStackR = this.recipe[i];
-//			ItemStack itemStackC = items[i];
-//
-//			if(itemStackR==null&&itemStackC==null)
-//			{
-//				continue;
-//			}
-//
-//			if(itemStackR==null||itemStackC==null)
-//			{
-//				return false;
-//			}
-//
-//			Item itemR = itemStackR.getItem();
-//			Item itemC = itemStackC.getItem();
-//
-//			if(itemR.equals(itemC))
-//			{
-//				continue;
-//			}else
-//			{
-//				return false;
-//			}
-//		}
-//
-//		return true;
     }
 
     public ItemStack getResult()

@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,11 +13,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 
 public class RitualEffectBiomeChanger extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -32,26 +33,26 @@ public class RitualEffectBiomeChanger extends RitualEffect
             data = new LifeEssenceNetwork(owner);
             worldSave.setItemData(owner, data);
         }
-
+        World world = ritualStone.getWorldObj();
         int cooldown = ritualStone.getCooldown();
-
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
         if (cooldown > 0)
         {
             ritualStone.setCooldown(cooldown - 1);
 
-            if (ritualStone.worldObj.rand.nextInt(15) == 0)
+            if (world.rand.nextInt(15) == 0)
             {
-                ritualStone.worldObj.addWeatherEffect(new EntityLightningBolt(ritualStone.worldObj, ritualStone.xCoord - 1 + ritualStone.worldObj.rand.nextInt(3), ritualStone.yCoord + 1, ritualStone.zCoord - 1 + ritualStone.worldObj.rand.nextInt(3)));
+                world.addWeatherEffect(new EntityLightningBolt(world, x - 1 + world.rand.nextInt(3),y + 1, z - 1 + world.rand.nextInt(3)));
             }
 
             return;
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.worldObj;
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        
+        
         int range = 10;
 
         if (currentEssence < this.getCostPerRefresh())

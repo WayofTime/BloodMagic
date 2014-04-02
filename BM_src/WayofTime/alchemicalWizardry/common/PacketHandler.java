@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.tileEntity.*;
 

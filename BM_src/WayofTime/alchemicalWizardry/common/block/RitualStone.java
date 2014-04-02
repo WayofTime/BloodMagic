@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.ScribeTool;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -12,8 +8,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.rituals.IRitualStone;
+import WayofTime.alchemicalWizardry.common.items.ScribeTool;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class RitualStone extends Block
+public class RitualStone extends Block implements IRitualStone
 {
     @SideOnly(Side.CLIENT)
     private static Icon blankIcon;

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;

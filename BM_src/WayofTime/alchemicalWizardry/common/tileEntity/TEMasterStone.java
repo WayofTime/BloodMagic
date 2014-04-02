@@ -1,14 +1,15 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.rituals.Rituals;
-import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TEMasterStone extends TileEntity
+public class TEMasterStone extends TileEntity implements IMasterRitualStone
 {
     private int currentRitual;
     private boolean isActive;
@@ -138,7 +139,7 @@ public class TEMasterStone extends TileEntity
                 isActive = false;
                 currentRitual = 0;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                //PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short)3));
+
                 return;
             }
         }
@@ -190,4 +191,22 @@ public class TEMasterStone extends TileEntity
     {
         return this.direction;
     }
+
+	@Override
+	public int getXCoord() 
+	{
+		return this.xCoord;
+	}
+
+	@Override
+	public int getYCoord() 
+	{
+		return this.yCoord;
+	}
+
+	@Override
+	public int getZCoord() 
+	{
+		return this.zCoord;
+	}
 }

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;

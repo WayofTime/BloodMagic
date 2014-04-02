@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.altarRecipeRegistry;
+package WayofTime.alchemicalWizardry.api.altarRecipeRegistry;
 
 import net.minecraft.item.ItemStack;
 

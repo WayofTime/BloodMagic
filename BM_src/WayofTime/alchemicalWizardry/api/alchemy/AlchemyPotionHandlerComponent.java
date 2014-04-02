@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.alchemy;
+package WayofTime.alchemicalWizardry.api.alchemy;
 
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

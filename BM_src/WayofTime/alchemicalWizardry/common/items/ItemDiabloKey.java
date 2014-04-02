@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.common.network.PacketDispatcher;

@@ -1,6 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.*;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
@@ -20,7 +24,7 @@ import net.minecraftforge.common.FakePlayer;
 
 import java.util.List;
 
-public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
+public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBloodOrb
 {
     private int maxEssence;
     protected int orbLevel;
@@ -194,14 +198,6 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable
     @Override
     public ItemStack getContainerItemStack(ItemStack itemStack)
     {
-        //if(!syphonBatteries(itemStack, null, 10))
-        {
-            //syphonWhileInContainer(itemStack, this.getEnergyUsed());
-//            ItemStack copiedStack = itemStack.copy();
-//            copiedStack.setItemDamage(copiedStack.getItemDamage());
-//            copiedStack.stackSize = 1;
-//            return copiedStack;
-        }
         return itemStack;
     }
 
