@@ -109,7 +109,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.0")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.0b")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -1057,8 +1057,8 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Block.obsidian), 1, new ItemStack[]{waterBucketStack,lavaBucketStack}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Item.paper), 1, new ItemStack[]{new ItemStack(Item.reed)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Block.slowSand,3,0), 3, new ItemStack[]{new ItemStack(Block.sand),new ItemStack(Block.sand),new ItemStack(Block.sand),waterBucketStack,weakBloodShardStack}, 3);
-        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Block.mycelium,1,0), 5, new ItemStack[]{new ItemStack(Block.grass),new ItemStack(Block.mushroomCapBrown), new ItemStack(Block.mushroomCapRed)}, 2);
-
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Block.mycelium,1,0), 5, new ItemStack[]{new ItemStack(Block.grass),new ItemStack(Block.mushroomBrown), new ItemStack(Block.mushroomRed)}, 2);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Block.ice), 2, new ItemStack[]{waterBucketStack,new ItemStack(Item.snowball)}, 1);
 
 
 

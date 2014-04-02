@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +24,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -53,6 +56,10 @@ public class AlchemicalWizardryEventHooks
     public void onEntityDamaged(LivingAttackEvent event)
     {
         EntityLivingBase entityAttacked = event.entityLiving;
+        EntityLivingBase entity = event.entityLiving;
+        double posX = entity.posX;
+        double posY = entity.posY;
+        double posZ = entity.posZ;
 
         if (entityAttacked.isPotionActive(AlchemicalWizardry.customPotionReciprocation))
         {
@@ -78,6 +85,30 @@ public class AlchemicalWizardryEventHooks
         		entityAttacking.setFire(3);
         	}
         }
+        
+        //TODO Make this work for a different potion
+//        if(event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionPlanarBinding) && event.isCancelable())
+//    	{
+//        	if(event.ammount>event.entityLiving.getHealth())
+//        	{
+//        		int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionPlanarBinding).getAmplifier();
+//        		
+//        		event.setCanceled(true);
+//        		
+//        		if(event.entityLiving.worldObj.rand.nextFloat()>((i+1)/6))
+//        		{
+//        			event.entityLiving.removePotionEffect(AlchemicalWizardry.customPotionPlanarBinding.id);
+//        		}
+//        		
+//        		for(int j=0; j<10; j++)
+//        		{
+//            		PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 20, entity.worldObj.provider.dimensionId, TEAltar.getParticlePacket(posX, posY, posZ, (short) 4));
+//        		}
+//                event.entityLiving.worldObj.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (entity.worldObj.rand.nextFloat() - entity.worldObj.rand.nextFloat()) * 0.8F);
+//        		
+//        		event.entityLiving.heal(20);	
+//        	}	
+//    	}
     }
 
 //	@ForgeSubscribe
@@ -121,7 +152,7 @@ public class AlchemicalWizardryEventHooks
         {
             int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionDrowning).getAmplifier();
 
-            if (event.entityLiving.worldObj.getWorldTime() % ((int) (20 / (i + 1))) == 0)
+            if (event.entityLiving.worldObj.getWorldTime() % ((int) (20 / (i + 1))) == 0 && !event.entityLiving.isPotionActive(Potion.waterBreathing))
             {
                 event.entityLiving.attackEntityFrom(DamageSource.drown, 2);
                 event.entityLiving.hurtResistantTime = Math.min(event.entityLiving.hurtResistantTime, 20 / (i + 1));

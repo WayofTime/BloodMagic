@@ -23,11 +23,9 @@ public class SelfOffensiveWind extends SelfSpellEffect
 	public void onSelfUse(World world, EntityPlayer player) 
 	{
 		Vec3 vec = player.getLookVec();
-        double wantedVelocity = 1.2 + this.powerUpgrades*0.3;
+        double wantedVelocity = 1.5 + this.powerUpgrades*0.4;
 
-        player.motionX = vec.xCoord * wantedVelocity;
-        player.motionY = vec.yCoord * wantedVelocity;
-        player.motionZ = vec.zCoord * wantedVelocity;
+        SpellHelper.setPlayerSpeedFromServer(player, vec.xCoord * wantedVelocity, vec.yCoord * wantedVelocity, vec.zCoord * wantedVelocity);
         
         player.fallDistance = 0;
 	}

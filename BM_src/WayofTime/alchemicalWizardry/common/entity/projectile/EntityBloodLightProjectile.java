@@ -110,18 +110,9 @@ public class EntityBloodLightProjectile extends EnergyBlastProjectile
             //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
-                //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
-                ((EntityLivingBase) mop).setFire(50);
-                ((EntityLivingBase) mop).setRevengeTarget(shootingEntity);
-
-                if (((EntityLivingBase) mop).isPotionActive(Potion.fireResistance) || ((EntityLivingBase) mop).isImmuneToFire())
-                {
-                    ((EntityLivingBase) mop).attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
-                } else
-                {
-                    doDamage(projectileDamage, mop);
-                    ((EntityLivingBase) mop).hurtResistantTime = 0;
-                }
+                
+            	((EntityLivingBase) mop).attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
+                
             }
 
             //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);

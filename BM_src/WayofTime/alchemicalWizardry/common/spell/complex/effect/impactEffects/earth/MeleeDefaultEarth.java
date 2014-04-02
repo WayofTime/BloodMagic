@@ -28,6 +28,10 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
 					if(!world.isAirBlock(posX + i, posY + j, posZ + k) && world.getBlockTileEntity(posX + i, posY + j, posZ + k)==null)
 					{
 						int id = world.getBlockId(posX + i, posY + j, posZ + k);
+						if(Block.blocksList[id].getBlockHardness(world, posX + i, posY + j, posZ + k)==-1)
+						{
+							continue;
+						}
 						int meta = world.getBlockMetadata(posX + i, posY + j, posZ + k);
 						
 						EntityFallingSand entity = new EntityFallingSand(world, posX + i + 0.5f, posY + j + 0.5f, posZ + k + 0.5f, id, meta);
@@ -36,6 +40,5 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
 				}
 			}
 		}
-		
 	}
 }

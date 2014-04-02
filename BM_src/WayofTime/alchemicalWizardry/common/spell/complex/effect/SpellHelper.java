@@ -180,7 +180,8 @@ public class SpellHelper
 	
 	public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)
 	{
-		Block block = Block.blocksList[world.getBlockId(posX, posY, posZ)];
+		int id = world.getBlockId(posX, posY, posZ);
+		Block block = Block.blocksList[id];
 		
 		if(block == Block.waterMoving || block == Block.waterStill)
 		{
@@ -194,15 +195,17 @@ public class SpellHelper
 		
 		if(oreName.contains("ore"))
 		{
-			String lowercaseOre = oreName;
-			lowercaseOre.toLowerCase();
+			String lowercaseOre = oreName.toLowerCase();
 			boolean isAllowed = false;
-			
+
 			for(String str : AlchemicalWizardry.allowedCrushedOresArray)
-			{
-				if(lowercaseOre.contains(str))
+			{ 
+				String testStr = str.toLowerCase();
+
+				if(lowercaseOre.contains(testStr))
 				{
 					isAllowed = true;
+					break;
 				}
 			}
 			

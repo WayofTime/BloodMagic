@@ -117,7 +117,7 @@ public class ItemBloodLightSigil extends EnergyItems
 
         if (!par2World.isRemote)
         {
-            par2World.spawnEntityInWorld(new EntityBloodLightProjectile(par2World, par3EntityPlayer, 10));
+            par2World.spawnEntityInWorld(new EntityBloodLightProjectile(par2World, par3EntityPlayer, 1));
         }
 
         return par1ItemStack;
