@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.potion;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;

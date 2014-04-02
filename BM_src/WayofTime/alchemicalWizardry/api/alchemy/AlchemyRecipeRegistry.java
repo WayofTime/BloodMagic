@@ -1,10 +1,10 @@
-package WayofTime.alchemicalWizardry.common.alchemy;
-
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import net.minecraft.item.ItemStack;
+package WayofTime.alchemicalWizardry.api.alchemy;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.item.ItemStack;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 
 public class AlchemyRecipeRegistry
 {
@@ -22,12 +22,12 @@ public class AlchemyRecipeRegistry
             return null;
         }
 
-        if (!(bloodOrb.getItem() instanceof EnergyBattery))
+        if (!(bloodOrb.getItem() instanceof IBloodOrb))
         {
             return null;
         }
 
-        int bloodOrbLevel = ((EnergyBattery) bloodOrb.getItem()).getOrbLevel();
+        int bloodOrbLevel = ((IBloodOrb) bloodOrb.getItem()).getOrbLevel();
 
         for (AlchemyRecipe ar : recipes)
         {
@@ -47,12 +47,12 @@ public class AlchemyRecipeRegistry
             return 0;
         }
 
-        if (!(bloodOrb.getItem() instanceof EnergyBattery))
+        if (!(bloodOrb.getItem() instanceof IBloodOrb))
         {
             return 0;
         }
 
-        int bloodOrbLevel = ((EnergyBattery) bloodOrb.getItem()).getOrbLevel();
+        int bloodOrbLevel = ((IBloodOrb) bloodOrb.getItem()).getOrbLevel();
 
         for (AlchemyRecipe ar : recipes)
         {

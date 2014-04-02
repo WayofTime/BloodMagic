@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyPotionHelper;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
 
 import com.google.common.collect.HashMultimap;
 

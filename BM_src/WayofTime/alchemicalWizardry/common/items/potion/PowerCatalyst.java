@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.ICatalyst;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
