@@ -7,7 +7,7 @@ public class BindingRecipe
 	public ItemStack requiredItem;
 	public ItemStack outputItem;
 	
-	public BindingRecipe(ItemStack requiredItem, ItemStack outputItem)
+	public BindingRecipe(ItemStack outputItem, ItemStack requiredItem)
 	{
 		this.requiredItem = requiredItem;
 		this.outputItem = outputItem;

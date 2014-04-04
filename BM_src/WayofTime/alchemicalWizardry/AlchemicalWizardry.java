@@ -24,8 +24,11 @@ import thaumcraft.api.ItemApi;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
@@ -99,8 +102,7 @@ import WayofTime.alchemicalWizardry.common.spell.simple.SpellLightningBolt;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellWateryGrave;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellWindGust;
-import WayofTime.alchemicalWizardry.common.summoning.SummoningHelper;
-import WayofTime.alchemicalWizardry.common.summoning.SummoningRegistry;
+import WayofTime.alchemicalWizardry.common.summoning.SummoningHelperAW;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
@@ -840,6 +842,7 @@ public class AlchemicalWizardry
         this.initAlchemyPotionRecipes();
         this.initAltarRecipes();
         this.initRituals();
+        this.initBindingRecipes();
         
 
         MinecraftForge.setToolClass(ModItems.boundPickaxe, "pickaxe", 5);
@@ -918,20 +921,20 @@ public class AlchemicalWizardry
         HomSpellRegistry.registerBasicSpell(new ItemStack(Item.bucketWater), new SpellWateryGrave());
         HomSpellRegistry.registerBasicSpell(new ItemStack(Block.obsidian), new SpellEarthBender());
         HomSpellRegistry.registerBasicSpell(new ItemStack(Item.enderPearl), new SpellTeleport());
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityFallenAngelID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, aetherStack, tennebraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityLowerGuardianID), new ItemStack[]{cobblestoneStack, cobblestoneStack, terraeStack, tennebraeStack, new ItemStack(Item.ingotIron), new ItemStack(Item.goldNugget)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityBileDemonID), new ItemStack[]{new ItemStack(Item.poisonousPotato), tennebraeStack, terraeStack, new ItemStack(Item.porkRaw), new ItemStack(Item.egg), new ItemStack(Item.beefRaw)}, new ItemStack[]{crepitousStack, crepitousStack, terraeStack, ironBlockStack, ironBlockStack, diamondStack}, new ItemStack[]{}, 0, 5);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityWingedFireDemonID), new ItemStack[]{aetherStack, incendiumStack, incendiumStack, incendiumStack, tennebraeStack, new ItemStack(Block.netherrack)}, new ItemStack[]{diamondStack, new ItemStack(Block.blockGold), magicalesStack, magicalesStack, new ItemStack(Item.fireballCharge), new ItemStack(Block.coalBlock)}, new ItemStack[]{}, 0, 5);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entitySmallEarthGolemID), new ItemStack[]{new ItemStack(Item.clay), terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityIceDemonID), new ItemStack[]{crystallosStack, crystallosStack, aquasalusStack, crystallosStack, sanctusStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityBoulderFistID), new ItemStack[]{terraeStack, sanctusStack, tennebraeStack, new ItemStack(Item.bone), new ItemStack(Item.beefCooked), new ItemStack(Item.beefCooked)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityShadeID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, aetherStack, glassStack, new ItemStack(Item.glassBottle)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityAirElementalID), new ItemStack[]{aetherStack, aetherStack, aetherStack, aetherStack, aetherStack, aetherStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityWaterElementalID), new ItemStack[]{aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityEarthElementalID), new ItemStack[]{terraeStack, terraeStack, terraeStack, terraeStack, terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityFireElementalID), new ItemStack[]{incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        //TODO SummoningRegistry.registerSummon(new SummoningHelper(this.entityShadeElementalID), new ItemStack[]{tennebraeStack,tennebraeStack,tennebraeStack,tennebraeStack,tennebraeStack,tennebraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelper(this.entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityFallenAngelID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, aetherStack, tennebraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityLowerGuardianID), new ItemStack[]{cobblestoneStack, cobblestoneStack, terraeStack, tennebraeStack, new ItemStack(Item.ingotIron), new ItemStack(Item.goldNugget)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityBileDemonID), new ItemStack[]{new ItemStack(Item.poisonousPotato), tennebraeStack, terraeStack, new ItemStack(Item.porkRaw), new ItemStack(Item.egg), new ItemStack(Item.beefRaw)}, new ItemStack[]{crepitousStack, crepitousStack, terraeStack, ironBlockStack, ironBlockStack, diamondStack}, new ItemStack[]{}, 0, 5);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityWingedFireDemonID), new ItemStack[]{aetherStack, incendiumStack, incendiumStack, incendiumStack, tennebraeStack, new ItemStack(Block.netherrack)}, new ItemStack[]{diamondStack, new ItemStack(Block.blockGold), magicalesStack, magicalesStack, new ItemStack(Item.fireballCharge), new ItemStack(Block.coalBlock)}, new ItemStack[]{}, 0, 5);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entitySmallEarthGolemID), new ItemStack[]{new ItemStack(Item.clay), terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityIceDemonID), new ItemStack[]{crystallosStack, crystallosStack, aquasalusStack, crystallosStack, sanctusStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityBoulderFistID), new ItemStack[]{terraeStack, sanctusStack, tennebraeStack, new ItemStack(Item.bone), new ItemStack(Item.beefCooked), new ItemStack(Item.beefCooked)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityShadeID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, aetherStack, glassStack, new ItemStack(Item.glassBottle)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityAirElementalID), new ItemStack[]{aetherStack, aetherStack, aetherStack, aetherStack, aetherStack, aetherStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityWaterElementalID), new ItemStack[]{aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityEarthElementalID), new ItemStack[]{terraeStack, terraeStack, terraeStack, terraeStack, terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityFireElementalID), new ItemStack[]{incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        //TODO SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityShadeElementalID), new ItemStack[]{tennebraeStack,tennebraeStack,tennebraeStack,tennebraeStack,tennebraeStack,tennebraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         //Custom mobs
         EntityRegistry.registerModEntity(EntityFallenAngel.class, "FallenAngel", this.entityFallenAngelID, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityLowerGuardian.class, "LowerGuardian", this.entityLowerGuardianID, this, 80, 3, true);
@@ -1157,7 +1160,7 @@ public class AlchemicalWizardry
 
                 if (itemGoggles != null)
                 {
-                    //GameRegistry.addShapelessRecipe(new ItemStack(this.sanguineHelmet), itemGoggles);
+                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineHelmet), itemGoggles);
                 }
 
                 //LogHelper.log(Level.INFO, "Loaded RP2 World addon");
@@ -1957,5 +1960,14 @@ public class AlchemicalWizardry
         Rituals.ritualList.add(new Rituals(meteorRitual, 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower"));
         Rituals.ritualList.add(new Rituals(autoAlchemyRitual,1,20000,new RitualEffectAutoAlchemy(),"Ballad of Alchemy"));
         //Rituals.ritualList.add(new Rituals(apiaryRitual,1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
+    }
+    
+    public static void initBindingRecipes()
+    {
+    	BindingRegistry.registerRecipe(new ItemStack(ModItems.boundPickaxe), new ItemStack(Item.pickaxeDiamond));
+    	BindingRegistry.registerRecipe(new ItemStack(ModItems.boundAxe), new ItemStack(Item.axeDiamond));
+    	BindingRegistry.registerRecipe(new ItemStack(ModItems.boundShovel), new ItemStack(Item.shovelDiamond));
+    	BindingRegistry.registerRecipe(new ItemStack(ModItems.energySword), new ItemStack(Item.swordDiamond));
+    	BindingRegistry.registerRecipe(new ItemStack(ModItems.energyBlaster), new ItemStack(ModItems.apprenticeBloodOrb));
     }
 }

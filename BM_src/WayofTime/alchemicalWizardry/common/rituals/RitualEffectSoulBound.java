@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import thaumcraft.api.ItemApi;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
@@ -66,9 +67,7 @@ public class RitualEffectSoulBound extends RitualEffect
                 while (iterator.hasNext())
                 {
                     item = (EntityItem) iterator.next();
-//                double xDif = item.posX - (xCoord+0.5);
-//                double yDif = item.posY - (yCoord+1);
-//                double zDif = item.posZ - (zCoord+0.5);
+
                     ItemStack itemStack = item.getEntityItem();
 
                     if (itemStack == null)
@@ -76,55 +75,13 @@ public class RitualEffectSoulBound extends RitualEffect
                         continue;
                     }
 
-                    ItemStack itemGoggles = null;
-
-                    if (AlchemicalWizardry.isThaumcraftLoaded)
+                    if(BindingRegistry.isRequiredItemValid(itemStack))
                     {
-                        itemGoggles = ItemApi.getItem("itemGoggles", 0);
-                    }
-
-                    if (itemStack.itemID == ModItems.apprenticeBloodOrb.itemID)
-                    {
-                        ritualStone.setVar1(ModItems.energyBlaster.itemID);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
+                    	ritualStone.setVar1(BindingRegistry.getIndexForItem(itemStack)+1);
+                    	world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
-                        return;
-                    } else if (itemStack.itemID == Item.swordDiamond.itemID)
-                    {
-                        ritualStone.setVar1(ModItems.energySword.itemID);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
-                        ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
-                        return;
-                    } else if (itemStack.itemID == Item.pickaxeDiamond.itemID)
-                    {
-                        ritualStone.setVar1(ModItems.boundPickaxe.itemID);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
-                        ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
-                        return;
-                    } else if (itemStack.itemID == Item.axeDiamond.itemID)
-                    {
-                        ritualStone.setVar1(ModItems.boundAxe.itemID);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
-                        ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
-                        return;
-                    } else if (itemStack.itemID == Item.shovelDiamond.itemID)
-                    {
-                        ritualStone.setVar1(ModItems.boundShovel.itemID);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
-                        ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
-                        return;
-                    } else if (itemGoggles != null && itemGoggles.isItemEqual(itemStack))
-                    {
-                        ritualStone.setVar1(ModItems.sanguineHelmet.itemID);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
-                        ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
-                        return;
+                    	item.setDead();
+                    	break;
                     }
 
                     if (world.rand.nextInt(10) == 0)
@@ -181,7 +138,8 @@ public class RitualEffectSoulBound extends RitualEffect
 
                 if (ritualStone.getCooldown() <= 0)
                 {
-                    ItemStack spawnedItem = new ItemStack(ritualStone.getVar1(), 1, 0);
+                	
+                    ItemStack spawnedItem = BindingRegistry.getOutputForIndex(ritualStone.getVar1()-1);
 
                     if (spawnedItem != null)
                     {
