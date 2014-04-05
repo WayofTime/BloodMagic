@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAlchemyBase extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{};
+    private static final String[] ITEM_NAMES = new String[]{"Offensa","Praesidium","OrbisTerrae","StrengthenedCatalyst","ConcentratedCatalyst","FracturedBone","Virtus","Reductus","Potentia"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;

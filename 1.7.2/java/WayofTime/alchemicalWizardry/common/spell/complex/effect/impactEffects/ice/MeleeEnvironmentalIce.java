@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ExtrapolatedMeleeEntityEffect;
@@ -16,8 +17,9 @@ public class MeleeEnvironmentalIce extends ExtrapolatedMeleeEntityEffect
 	}
 
 	@Override
-	protected boolean entityEffect(World world, Entity entity) 
+	protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer) 
 	{
+		//TODO Change to an Ice Cage
 		for(int i=0;i<=this.powerUpgrades;i++)
 		{
 			double randX = (world.rand.nextDouble()-world.rand.nextDouble())*3;

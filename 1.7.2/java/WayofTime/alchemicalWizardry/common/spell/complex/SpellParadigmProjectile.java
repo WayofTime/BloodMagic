@@ -23,6 +23,7 @@ public class SpellParadigmProjectile extends SpellParadigm
 	public List<IProjectileUpdateEffect> updateEffectList;
 	public boolean penetration;
 	public int ricochetMax;
+	public boolean isSilkTouch;
 	
 	public SpellParadigmProjectile()
 	{
@@ -33,6 +34,7 @@ public class SpellParadigmProjectile extends SpellParadigm
 		this.updateEffectList = new ArrayList();
 		this.penetration = false;
 		this.ricochetMax = 0;
+		this.isSilkTouch = false;
 	}
 	
 	@Override
@@ -71,6 +73,7 @@ public class SpellParadigmProjectile extends SpellParadigm
 		proj.setUpdateEffectList(updateEffectList); 
 		proj.setPenetration(penetration);
 		proj.setRicochetMax(ricochetMax); 
+		proj.setIsSilkTouch(isSilkTouch);
 		proj.setSpellEffectList(bufferedEffectList);
 	}
 	

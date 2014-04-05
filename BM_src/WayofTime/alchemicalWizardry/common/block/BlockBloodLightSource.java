@@ -64,12 +64,18 @@ public class BlockBloodLightSource extends Block
 
     public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
     {
-        this.setBlockBounds(0.40F, 0.40F, 0.40F, 0.60F, 0.60F, 0.60F);
+        this.setBlockBounds(0.4f,0.4f,0.4f,0.6f,0.6f,0.6f);
         //super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
     }
 
     public int quantityDropped(Random par1Random)
     {
         return 0;
+    }
+    
+    @Override
+    public boolean isAirBlock(World world, int x, int y, int z)
+    {
+        return true;
     }
 }

@@ -32,7 +32,7 @@ public class LifeBucketHandler
 
         if (block!=null && (block.equals(ModBlocks.blockLifeEssence)) && world.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ) == 0)
         {
-            world.setBlock(pos.blockX, pos.blockY, pos.blockZ, block);
+            world.setBlockToAir(pos.blockX, pos.blockY, pos.blockZ);
             return new ItemStack(ModItems.bucketLife);
         } else
         {

@@ -93,6 +93,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.blockSpellParadigmBlockID = config.getBlock("BlockSpellParadigm", 1427).getInt();
             AlchemicalWizardry.blockSpellModifierBlockID = config.getBlock("BlockSpellModifier", 1428).getInt();
             AlchemicalWizardry.blockSpellEnhancementBlockID = config.getBlock("BlockSpellEnhancement", 1429).getInt();
+            AlchemicalWizardry.blockSpectralContainerBlockID = config.getBlock("BlockSpectralContainer", 1430).getInt();
             //Items
             AlchemicalWizardry.weakBloodOrbItemID = config.getItem("WeakBloodOrb", 17000).getInt();
             AlchemicalWizardry.energyBlasterItemID = config.getItem("EnergyBlaster", 17001).getInt();
@@ -183,6 +184,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.itemBloodFrameItemID = config.getItem("BloodFrame", 17082).getInt();
             AlchemicalWizardry.baseComponentsItemID = config.getItem("BaseComponents", 17083).getInt();
             AlchemicalWizardry.baseAlchemyComponentsItemID = config.getItem("BaseAlchemyComponents", 17084).getInt();
+            AlchemicalWizardry.itemSigilOfSupressionItemID = config.getItem("ItemSigilOfSupression", 17085).getInt();
             
         } catch (Exception e)
         {

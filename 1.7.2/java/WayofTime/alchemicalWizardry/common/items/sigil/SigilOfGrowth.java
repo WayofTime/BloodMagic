@@ -228,7 +228,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         {
             if (!p_150919_1_.isRemote)
             {
-                p_150919_0_.stackSize--;
+                
             }
             return true;
         }
@@ -246,7 +246,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                         igrowable.func_149853_b(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_);
                     }
 
-                    --p_150919_0_.stackSize;
+                    
                 }
 
                 return true;

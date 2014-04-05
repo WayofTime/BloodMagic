@@ -60,9 +60,10 @@ public class EnergyItems extends Item implements IBindable
             //player.setEntityHealth((player.getHealth()-1));
             player.setHealth((player.getHealth() - 1));
 
-            if (player.getHealth() <= 0)
+            if (player.getHealth() <= 0.0005)
             {
                 player.inventory.dropAllItems();
+                break;
             }
         }
     }
@@ -217,9 +218,10 @@ public class EnergyItems extends Item implements IBindable
                 //player.setEntityHealth((player.getHealth()-1));
                 user.setHealth((user.getHealth() - 1));
 
-                if (user.getHealth() <= 0.1f)
+                if (user.getHealth() <= 0.0005f)
                 {
                     user.onDeath(DamageSource.generic);
+                    
                 }
             }
         } else if (energySyphoned >= 100)
@@ -231,9 +233,10 @@ public class EnergyItems extends Item implements IBindable
                     //player.setEntityHealth((player.getHealth()-1));
                     user.setHealth((user.getHealth() - 1));
 
-                    if (user.getHealth() <= 0.1f)
+                    if (user.getHealth() <= 0.0005f)
                     {
                         user.onDeath(DamageSource.generic);
+                        break;
                     }
                 }
             }

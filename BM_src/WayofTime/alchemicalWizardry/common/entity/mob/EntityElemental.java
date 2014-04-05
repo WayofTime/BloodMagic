@@ -706,7 +706,7 @@ public class EntityElemental extends EntityDemon
         {
             EntityLivingBase entityLiving1 = entities.get(i);
 
-            if (!(entityLiving1 instanceof EntityPlayer && ((EntityPlayer) entityLiving1).capabilities.disableDamage) && entityLiving1.isEntityAlive())
+            if (!(entityLiving1 instanceof EntityPlayer && ((EntityPlayer) entityLiving1).capabilities.disableDamage) && entityLiving1.isEntityAlive() && !(entityLiving1 instanceof EntityElemental))
             {
                 double d5 = entityLiving1.getDistanceSq(par1, par3, par5);
                 double d6 = par2;

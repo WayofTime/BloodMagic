@@ -45,6 +45,7 @@ public class ModBlocks
     public static Block blockSpellParadigm;
     public static Block blockSpellModifier;
     public static Block blockSpellEnhancement;
+    public static Block blockSpectralContainer;
 
     public static void init()
     {
@@ -79,5 +80,6 @@ public class ModBlocks
         blockSpellParadigm = new BlockSpellParadigm(AlchemicalWizardry.blockSpellParadigmBlockID);
         blockSpellModifier = new BlockSpellModifier(AlchemicalWizardry.blockSpellModifierBlockID);
         blockSpellEnhancement = new BlockSpellEnhancement(AlchemicalWizardry.blockSpellEnhancementBlockID);
+        blockSpectralContainer = new BlockSpectralContainer(AlchemicalWizardry.blockSpectralContainerBlockID);
     }
 }

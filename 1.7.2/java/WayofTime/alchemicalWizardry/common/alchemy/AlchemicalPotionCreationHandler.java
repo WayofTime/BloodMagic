@@ -17,6 +17,7 @@ public class AlchemicalPotionCreationHandler
         addPotion(new ItemStack(Items.ghast_tear), Potion.regeneration.id, 450);
         addPotion(new ItemStack(Items.golden_carrot), Potion.nightVision.id, 2 * 60 * 20);
         addPotion(new ItemStack(Items.magma_cream), Potion.fireResistance.id, 2 * 60 * 20);
+        addPotion(new ItemStack(Items.water_bucket), Potion.waterBreathing.id, 2 * 60 * 20);
         addPotion(new ItemStack(Items.sugar), Potion.moveSpeed.id, 2 * 60 * 20);
         addPotion(new ItemStack(Items.speckled_melon), Potion.heal.id, 2 * 60 * 20);
         addPotion(new ItemStack(Items.spider_eye), Potion.poison.id, 450);
@@ -35,6 +36,7 @@ public class AlchemicalPotionCreationHandler
         addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 1 * 60 * 20);
         addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 1 * 60 * 20);
         addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
+        addPotion(new ItemStack(Items.ender_pearl),AlchemicalWizardry.customPotionPlanarBinding.id,1*60*20);
     }
 
     public static void addPotion(ItemStack itemStack, int potionID, int tickDuration)

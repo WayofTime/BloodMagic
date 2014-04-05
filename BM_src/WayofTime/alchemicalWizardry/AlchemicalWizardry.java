@@ -27,7 +27,6 @@ import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
@@ -77,6 +76,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectExpulsion;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredEarth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredKnife;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFlight;
@@ -89,6 +89,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSupression;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectUnbinding;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWater;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWellOfSuffering;
@@ -112,6 +113,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
@@ -307,6 +309,7 @@ public class AlchemicalWizardry
     public static int itemBloodFrameItemID;
     public static int baseComponentsItemID;
     public static int baseAlchemyComponentsItemID;
+    public static int itemSigilOfSupressionItemID;
 
     public static int testingBlockBlockID;
     public static int lifeEssenceFlowingBlockID;
@@ -338,6 +341,7 @@ public class AlchemicalWizardry
     public static int blockSpellParadigmBlockID;
     public static int blockSpellModifierBlockID;
     public static int blockSpellEnhancementBlockID;
+    public static int blockSpectralContainerBlockID;
 
     public static void registerRenderInformation()
     {
@@ -686,6 +690,7 @@ public class AlchemicalWizardry
         LanguageRegistry.addName(ModItems.energyBazooka, "Energy Bazooka");
         LanguageRegistry.addName(ModItems.itemBloodLightSigil, "Sigil of the Blood Lamp");
         LanguageRegistry.addName(ModItems.demonBloodShard, "Demon Blood Shard");
+        LanguageRegistry.addName(ModItems.itemSigilOfSupression, "Sigil of the Dome");
         //FluidStack lifeEssenceFluidStack = new FluidStack(lifeEssenceFluid, 1);
         //LiquidStack lifeEssence = new LiquidStack(lifeEssenceFlowing, 1);
         //LiquidDictionary.getOrCreateLiquid("Life Essence", lifeEssence);
@@ -720,6 +725,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TESpellEffectBlock.class, "containerSpellEffectBlock");
         GameRegistry.registerTileEntity(TESpellModifierBlock.class, "containerSpellModifierBlock");
         GameRegistry.registerTileEntity(TESpellEnhancementBlock.class, "containerSpellEnhancementBlock");
+        GameRegistry.registerTileEntity(TESpectralContainer.class, "containerSpectralBlock");
         //
         GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
         LanguageRegistry.addName(new ItemStack(ModBlocks.bloodRune, 1, 0), "Blood Rune");
@@ -1937,7 +1943,63 @@ public class AlchemicalWizardry
         autoAlchemyRitual.add(new RitualComponent(2,0,-3, RitualComponent.FIRE));
         autoAlchemyRitual.add(new RitualComponent(3,0,2, RitualComponent.FIRE));
         autoAlchemyRitual.add(new RitualComponent(2,0,3, RitualComponent.FIRE));
-
+        
+        ArrayList<RitualComponent> expulsionRitual = new ArrayList();
+        expulsionRitual.add(new RitualComponent(2,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(2,0,1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(1,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(2,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(2,0,-1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-1,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(1,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,-1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-1,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(4,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(5,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(4,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(5,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-4,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-5,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-4,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-5,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,-4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,-5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,-4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,-5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(0,0,6, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(0,0,-6, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(6,0,0, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-6,0,0, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-5,0,0, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-6,0,1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-6,0,-1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(5,0,0, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(6,0,1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(6,0,-1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(0,0,5, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(1,0,6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-1,0,6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(0,0,-5, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(1,0,-6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-1,0,-6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(4,0,4, RitualComponent.FIRE));
+        expulsionRitual.add(new RitualComponent(4,0,-4, RitualComponent.FIRE));
+        expulsionRitual.add(new RitualComponent(-4,0,4, RitualComponent.FIRE));
+        expulsionRitual.add(new RitualComponent(-4,0,-4, RitualComponent.FIRE));
+        
+        ArrayList<RitualComponent> supressionRitual = new ArrayList();
+        supressionRitual.add(new RitualComponent(2,0,2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(2,0,-2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(-2,0,2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(-2,0,-2, RitualComponent.WATER));
+        
         
         Rituals.ritualList.add(new Rituals(waterRitual, 1, 500, new RitualEffectWater(), "Ritual of the Full Spring"));
         Rituals.ritualList.add(new Rituals(lavaRitual, 1, 10000, new RitualEffectLava(), "Serenade of the Nether"));
@@ -1959,6 +2021,8 @@ public class AlchemicalWizardry
         Rituals.ritualList.add(new Rituals(flightRitual, 2, 1000000, new RitualEffectFlight(), "Reverence of the Condor"));
         Rituals.ritualList.add(new Rituals(meteorRitual, 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower"));
         Rituals.ritualList.add(new Rituals(autoAlchemyRitual,1,20000,new RitualEffectAutoAlchemy(),"Ballad of Alchemy"));
+        Rituals.ritualList.add(new Rituals(expulsionRitual,1,1000000,new RitualEffectExpulsion(),"Aura of Expulsion"));
+        Rituals.ritualList.add(new Rituals(supressionRitual,1,1000,new RitualEffectSupression(),"Supression"));
         //Rituals.ritualList.add(new Rituals(apiaryRitual,1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
     

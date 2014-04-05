@@ -1,9 +1,70 @@
 package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.common.items.*;
-import WayofTime.alchemicalWizardry.common.items.potion.*;
-import WayofTime.alchemicalWizardry.common.items.sigil.*;
 import net.minecraft.item.Item;
+import WayofTime.alchemicalWizardry.common.items.AWBaseItems;
+import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
+import WayofTime.alchemicalWizardry.common.items.AirScribeTool;
+import WayofTime.alchemicalWizardry.common.items.ApprenticeBloodOrb;
+import WayofTime.alchemicalWizardry.common.items.ArchmageBloodOrb;
+import WayofTime.alchemicalWizardry.common.items.ArmourInhibitor;
+import WayofTime.alchemicalWizardry.common.items.BlankSpell;
+import WayofTime.alchemicalWizardry.common.items.BloodShard;
+import WayofTime.alchemicalWizardry.common.items.BoundArmour;
+import WayofTime.alchemicalWizardry.common.items.BoundAxe;
+import WayofTime.alchemicalWizardry.common.items.BoundPickaxe;
+import WayofTime.alchemicalWizardry.common.items.BoundShovel;
+import WayofTime.alchemicalWizardry.common.items.CheatyItem;
+import WayofTime.alchemicalWizardry.common.items.DaggerOfSacrifice;
+import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
+import WayofTime.alchemicalWizardry.common.items.DemonicTelepositionFocus;
+import WayofTime.alchemicalWizardry.common.items.DuskScribeTool;
+import WayofTime.alchemicalWizardry.common.items.EarthScribeTool;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyBazooka;
+import WayofTime.alchemicalWizardry.common.items.EnergyBlast;
+import WayofTime.alchemicalWizardry.common.items.EnergySword;
+import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
+import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
+import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
+import WayofTime.alchemicalWizardry.common.items.ItemComponents;
+import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
+import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
+import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
+import WayofTime.alchemicalWizardry.common.items.MagicianBloodOrb;
+import WayofTime.alchemicalWizardry.common.items.MasterBloodOrb;
+import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
+import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
+import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
+import WayofTime.alchemicalWizardry.common.items.potion.AlchemyReagent;
+import WayofTime.alchemicalWizardry.common.items.potion.AverageLengtheningCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.AveragePowerCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.EnhancedFillingAgent;
+import WayofTime.alchemicalWizardry.common.items.potion.EnhancedTelepositionFocus;
+import WayofTime.alchemicalWizardry.common.items.potion.GreaterLengtheningCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.GreaterPowerCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.MundaneLengtheningCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.MundanePowerCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.StandardBindingAgent;
+import WayofTime.alchemicalWizardry.common.items.potion.StandardFillingAgent;
+import WayofTime.alchemicalWizardry.common.items.potion.WeakBindingAgent;
+import WayofTime.alchemicalWizardry.common.items.potion.WeakFillingAgent;
+import WayofTime.alchemicalWizardry.common.items.sigil.AirSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.ItemBloodLightSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfSupression;
+import WayofTime.alchemicalWizardry.common.items.sigil.LavaSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfElementalAffinity;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfGrowth;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHaste;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfMagnetism;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheBridge;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
+import WayofTime.alchemicalWizardry.common.items.sigil.VoidSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.WaterSigil;
 
 /**
  * Created with IntelliJ IDEA.
@@ -108,6 +169,7 @@ public class ModItems
     public static Item itemBloodLightSigil;
     public static Item itemComplexSpellCrystal;
     public static Item itemBloodFrame;
+    public static Item itemSigilOfSupression;
 
     public static void init()
     {
@@ -190,5 +252,6 @@ public class ModItems
         itemComplexSpellCrystal = new ItemComplexSpellCrystal(AlchemicalWizardry.itemComplexSpellCrystalItemID).setUnlocalizedName("itemComplexSpellCrystal");
         baseItems = new ItemComponents(AlchemicalWizardry.baseComponentsItemID).setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase(AlchemicalWizardry.baseAlchemyComponentsItemID).setUnlocalizedName("baseAlchemyItems");
+        itemSigilOfSupression = new ItemSigilOfSupression(AlchemicalWizardry.itemSigilOfSupressionItemID).setUnlocalizedName("itemSigilOfSupression");
     }
 }

@@ -239,15 +239,17 @@ public class SpellHelper
 		
 		if(oreName.contains("ore"))
 		{
-			String lowercaseOre = oreName;
-			lowercaseOre.toLowerCase();
+			String lowercaseOre = oreName.toLowerCase();
 			boolean isAllowed = false;
-			
+
 			for(String str : AlchemicalWizardry.allowedCrushedOresArray)
-			{
-				if(lowercaseOre.contains(str))
+			{ 
+				String testStr = str.toLowerCase();
+
+				if(lowercaseOre.contains(testStr))
 				{
 					isAllowed = true;
+					break;
 				}
 			}
 			

@@ -65,40 +65,14 @@ public class SpectralBlock extends Block
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
-    {
-        //TEAltar tileEntity = (TEAltar)world.getBlockTileEntity(x, y, z);
-        if (player.isSneaking())
-        {
-            return false;
-        }
-
-        ItemStack playerItem = player.getCurrentEquippedItem();
-
-        if (playerItem != null)
-        {
-            if (playerItem.getItem() instanceof ItemBlock)
-            {
-                world.setBlock(x, y, z, playerItem.itemID, playerItem.getItemDamage(), 3);
-
-                if (!player.capabilities.isCreativeMode)
-                {
-                    playerItem.stackSize--;
-                }
-
-                return true;
-            } else
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
     public void onBlockAdded(World par1World, int par2, int par3, int par4)
     {
         par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, 100);
     }
+    
+    @Override
+	public boolean isBlockReplaceable(World par1World, int par2, int par3, int par4)
+	{
+		return true;
+	}
 }

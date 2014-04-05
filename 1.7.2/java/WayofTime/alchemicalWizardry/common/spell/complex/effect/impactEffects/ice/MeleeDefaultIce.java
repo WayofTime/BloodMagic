@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ExtrapolatedMeleeEntityEffect;
 
@@ -15,7 +16,7 @@ public class MeleeDefaultIce extends ExtrapolatedMeleeEntityEffect {
 	}
 
 	@Override
-	protected boolean entityEffect(World world, Entity entity) 
+	protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer) 
 	{
 		if(entity.hurtResistantTime>0)
 		{

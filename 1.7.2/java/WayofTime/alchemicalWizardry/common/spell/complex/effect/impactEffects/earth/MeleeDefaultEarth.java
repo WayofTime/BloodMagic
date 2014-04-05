@@ -28,6 +28,11 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
 					if(!world.isAirBlock(posX + i, posY + j, posZ + k) && world.getTileEntity(posX + i, posY + j, posZ + k)==null)
 					{
 						Block block = world.getBlock(posX + i, posY + j, posZ + k);
+						
+						if(block.getBlockHardness(world, posX + i, posY + j, posZ + k)==-1)
+						{
+							continue;
+						}
 						int meta = world.getBlockMetadata(posX + i, posY + j, posZ + k);
 						
 						EntityFallingBlock entity = new EntityFallingBlock(world, posX + i + 0.5f, posY + j + 0.5f, posZ + k + 0.5f, block, meta);
@@ -36,6 +41,5 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
 				}
 			}
 		}
-		
 	}
 }

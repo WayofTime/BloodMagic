@@ -93,74 +93,73 @@ public class SpellEffectEarth extends SpellEffect
 	@Override
 	protected int getCostForDefaultProjectile() 
 	{
-		return (int)(10*Math.pow((0.5*(this.powerEnhancement)+1)*2 + 1,3)*Math.pow(0.8, costEnhancement));
+		return (int)(10*Math.pow((0.5*(this.powerEnhancement)+1)*2 + 1,3)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseProjectile()
 	{
 		
-		return (int)(10*(1.5*this.potencyEnhancement+1)*(Math.pow(1*this.powerEnhancement+1,2))*Math.pow(0.8, costEnhancement));
+		return (int)(10*(1.5*this.potencyEnhancement+1)*(Math.pow(1*this.powerEnhancement+1,2))*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseProjectile() 
 	{
-		return (int)(3*Math.pow((this.powerEnhancement*2+1),2)*(this.potencyEnhancement*2+1)*Math.pow(0.8, costEnhancement));
+		return (int)(3*Math.pow((this.powerEnhancement*2+1),2)*(this.potencyEnhancement*2+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentProjectile() 
 	{
-		return (int)(10*2*(0.1d*(this.potencyEnhancement+1))*Math.pow(3.47,this.potencyEnhancement)*Math.pow(0.8, costEnhancement));
+		return (int)(10*2*(0.1d*(this.potencyEnhancement+1))*Math.pow(3.47,this.potencyEnhancement)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultSelf()
 	{
-		return (int)(20*Math.pow(1.5*powerEnhancement+1,2)*(2*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
+		return (int)(20*Math.pow(1.5*powerEnhancement+1,2)*(2*this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseSelf()
 	{
-		return (int)(10*Math.pow(2*this.powerEnhancement+1,2)*(this.potencyEnhancement+1));
+		return (int)(10*Math.pow(2*this.powerEnhancement+1,2)*(this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseSelf() 
 	{
-		return (int)(750*(1.1*this.powerEnhancement+1)*(0.5*this.potencyEnhancement+1)*Math.pow(0.8, costEnhancement));
+		return (int)(750*(1.1*this.powerEnhancement+1)*(0.5*this.potencyEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentSelf()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)(250*(1.2*this.potencyEnhancement+1)*(3*this.powerEnhancement+2.5)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefaultMelee()
 	{
-		return (int)(50*Math.pow(1.5*this.potencyEnhancement + 1,3)*(0.5*this.powerEnhancement + 1)*Math.pow(0.8, costEnhancement));
+		return (int)(50*Math.pow(1.5*this.potencyEnhancement + 1,3)*(0.5*this.powerEnhancement + 1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseMelee()
 	{
-		return (int)(20*Math.pow(1.5*this.powerEnhancement+1,3)*(0.25*this.powerEnhancement+1));
+		return (int)(20*Math.pow(1.5*this.powerEnhancement+1,3)*(0.25*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForDefenseMelee() 
 	{
-		return (int)(5*(1.2*this.powerEnhancement+1)*(1.0f/3.0f*Math.pow(this.potencyEnhancement,2)+2+1.0f/2.0f*this.potencyEnhancement)*Math.pow(0.8, costEnhancement));
+		return (int)(5*(1.2*this.powerEnhancement+1)*(1.0f/3.0f*Math.pow(this.potencyEnhancement,2)+2+1.0f/2.0f*this.potencyEnhancement)*Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForEnvironmentMelee() 
 	{
-		return (int)(500*Math.pow(2*this.potencyEnhancement+1, 3)*(0.25*this.powerEnhancement+1)*Math.pow(0.8, costEnhancement));
+		return (int)(500*Math.pow(2*this.potencyEnhancement+1, 3)*(0.25*this.powerEnhancement+1)*Math.pow(0.85, costEnhancement));
 	}
 }
