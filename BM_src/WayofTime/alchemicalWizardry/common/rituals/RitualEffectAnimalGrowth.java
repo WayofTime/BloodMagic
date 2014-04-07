@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
@@ -97,4 +99,27 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         // TODO Auto-generated method stub
         return 2;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
+        animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.DUSK));
+        animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.DUSK));
+        animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
+        animalGrowthRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.DUSK));
+        animalGrowthRitual.add(new RitualComponent(0, 0, 1, RitualComponent.WATER));
+        animalGrowthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.WATER));
+        animalGrowthRitual.add(new RitualComponent(0, 0, -1, RitualComponent.WATER));
+        animalGrowthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.WATER));
+        animalGrowthRitual.add(new RitualComponent(1, 0, 2, RitualComponent.EARTH));
+        animalGrowthRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.EARTH));
+        animalGrowthRitual.add(new RitualComponent(1, 0, -2, RitualComponent.EARTH));
+        animalGrowthRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.EARTH));
+        animalGrowthRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
+        animalGrowthRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
+        animalGrowthRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
+        animalGrowthRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
+        return animalGrowthRitual;
+	}
 }

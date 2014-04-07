@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -8,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -33,8 +37,23 @@ public class RitualEffectSupression extends RitualEffect
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
-
-        if (currentEssence < this.getCostPerRefresh())
+        
+        Block blockish = Block.blocksList[world.getBlockId(x, y-1, z)];
+        int costMod = this.getCostModifier(blockish);
+        int radius = this.getRadiusForModifierBlock(blockish);
+        int masterRadius = radius;
+        
+        int yIndex = (int)(world.getWorldTime() % (2*radius + 1))-radius;
+        boolean expansion = false;
+        
+        if(ritualStone.getVar1()<(radius+1))
+        {
+        	expansion = true;
+        	radius = ritualStone.getVar1();
+        	ritualStone.setVar1(ritualStone.getVar1() + 1);
+        }
+        
+        if (currentEssence < this.getCostPerRefresh()*costMod)
         {
             EntityPlayer entityOwner = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(owner);
 
@@ -46,11 +65,9 @@ public class RitualEffectSupression extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
-            int radius = 10;
-
             for (int i = -radius; i <= radius; i++)
             {
-                for (int j = -radius; j <= radius; j++)
+                for (int j = (expansion ? -radius : yIndex); j <= (expansion ? radius : yIndex); j++)
                 {
                     for(int k = -radius; k <= radius; k++)
                     {
@@ -64,14 +81,14 @@ public class RitualEffectSupression extends RitualEffect
                     	
                     	if(SpellHelper.isBlockFluid(block))
                     	{
-                    		TESpectralContainer.createSpectralBlockAtLocation(world, x+i, y+j, z+k, 3);
+                    		TESpectralContainer.createSpectralBlockAtLocation(world, x+i, y+j, z+k, 3*masterRadius);
                     	}
                     	else
                     	{
                     		TileEntity tile = world.getBlockTileEntity(x+i, y+j, z+k);
                     		if(tile instanceof TESpectralContainer)
                     		{
-                    			((TESpectralContainer) tile).resetDuration(3);
+                    			((TESpectralContainer) tile).resetDuration(3*masterRadius);
                     		}
                     	}		
                     }
@@ -79,7 +96,7 @@ public class RitualEffectSupression extends RitualEffect
             }
 
             
-            data.currentEssence = currentEssence - this.getCostPerRefresh();
+            data.currentEssence = currentEssence - this.getCostPerRefresh()*costMod;
             data.markDirty();
             
         }
@@ -88,6 +105,75 @@ public class RitualEffectSupression extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 1;
+        return 2;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> supressionRitual = new ArrayList();
+        supressionRitual.add(new RitualComponent(2,0,2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(2,0,-2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(-2,0,2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(-2,0,-2, RitualComponent.WATER));
+        supressionRitual.add(new RitualComponent(-2,0,-1, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(-1,0,-2, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(-2,0,1, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(1,0,-2, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(2,0,1, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(1,0,2, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(2,0,-1, RitualComponent.AIR));
+        supressionRitual.add(new RitualComponent(-1,0,2, RitualComponent.AIR));
+        return supressionRitual;
+	}
+	
+	public int getRadiusForModifierBlock(Block block)
+	{
+		if(block == null)
+		{
+			return 10;
+		}
+		
+		if(block == Block.blockDiamond)
+		{
+			return 30;
+		}
+		
+		if(block == Block.blockGold)
+		{
+			return 20;
+		}
+		
+		if(block == Block.blockIron)
+		{
+			return 15;
+		}
+		
+		return 10;
+	}
+	
+	public int getCostModifier(Block block)
+	{
+		if(block == null)
+		{
+			return 1;
+		}
+		
+		if(block == Block.blockDiamond)
+		{
+			return 20;
+		}
+		
+		if(block == Block.blockGold)
+		{
+			return 10;
+		}
+		
+		if(block == Block.blockIron)
+		{
+			return 5;
+		}
+		
+		return 1;
+	}
 }

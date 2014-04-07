@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
@@ -91,4 +93,19 @@ public class RitualEffectInterdiction extends RitualEffect
     {
         return 1;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> interdictionRitual = new ArrayList();
+        interdictionRitual.add(new RitualComponent(1, 0, 0, 4));
+        interdictionRitual.add(new RitualComponent(-1, 0, 0, 4));
+        interdictionRitual.add(new RitualComponent(0, 0, 1, 4));
+        interdictionRitual.add(new RitualComponent(0, 0, -1, 4));
+        interdictionRitual.add(new RitualComponent(-1, 0, 1, 4));
+        interdictionRitual.add(new RitualComponent(1, 0, 1, 4));
+        interdictionRitual.add(new RitualComponent(-1, 0, -1, 4));
+        interdictionRitual.add(new RitualComponent(1, 0, -1, 4));
+        return interdictionRitual;
+	}
 }

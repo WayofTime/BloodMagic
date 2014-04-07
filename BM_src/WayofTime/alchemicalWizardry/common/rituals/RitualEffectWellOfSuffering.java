@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
@@ -73,8 +75,8 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         }
 
         //tileAltar = (TEAltar)world.getBlockTileEntity(x,y-1,z);
-        int d0 = 10;
-        int vertRange = 5;
+        int d0 = 15;
+        int vertRange = 10;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
         List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator1 = list.iterator();
@@ -133,4 +135,47 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         // TODO Auto-generated method stub
         return 2;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList();
+        wellOfSufferingRitual.add(new RitualComponent(1, 0, 1, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(2, -1, 2, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(2, -1, -2, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(-2, -1, 2, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(-2, -1, -2, RitualComponent.FIRE));
+        wellOfSufferingRitual.add(new RitualComponent(0, -1, 2, RitualComponent.EARTH));
+        wellOfSufferingRitual.add(new RitualComponent(2, -1, 0, RitualComponent.EARTH));
+        wellOfSufferingRitual.add(new RitualComponent(0, -1, -2, RitualComponent.EARTH));
+        wellOfSufferingRitual.add(new RitualComponent(-2, -1, 0, RitualComponent.EARTH));
+        wellOfSufferingRitual.add(new RitualComponent(-3, -1, -3, RitualComponent.DUSK));
+        wellOfSufferingRitual.add(new RitualComponent(3, -1, -3, RitualComponent.DUSK));
+        wellOfSufferingRitual.add(new RitualComponent(-3, -1, 3, RitualComponent.DUSK));
+        wellOfSufferingRitual.add(new RitualComponent(3, -1, 3, RitualComponent.DUSK));
+        wellOfSufferingRitual.add(new RitualComponent(2, -1, 4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(4, -1, 2, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-2, -1, 4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(4, -1, -2, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(2, -1, -4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-4, -1, 2, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-2, -1, -4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-4, -1, -2, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(1, 0, 4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(4, 0, 1, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(1, 0, -4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-4, 0, 1, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-1, 0, 4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(4, 0, -1, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-1, 0, -4, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(-4, 0, -1, RitualComponent.WATER));
+        wellOfSufferingRitual.add(new RitualComponent(4, 1, 0, RitualComponent.AIR));
+        wellOfSufferingRitual.add(new RitualComponent(0, 1, 4, RitualComponent.AIR));
+        wellOfSufferingRitual.add(new RitualComponent(-4, 1, 0, RitualComponent.AIR));
+        wellOfSufferingRitual.add(new RitualComponent(0, 1, -4, RitualComponent.AIR));
+        return wellOfSufferingRitual;
+	}
 }

@@ -171,8 +171,9 @@ public class ItemRitualDiviner extends EnergyItems
                         {
                             par2EntityPlayer.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
                         }
-
-                        par3World.setBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ(), ModBlocks.ritualStone.blockID, rc.getStoneType(), 3);
+                        
+                        if(!par3World.isRemote)
+                        	par3World.setBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ(), ModBlocks.ritualStone.blockID, rc.getStoneType(), 3);
 
                         if (par3World.isRemote)
                         {

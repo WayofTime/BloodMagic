@@ -17,6 +17,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.FakePlayer;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
@@ -175,7 +176,7 @@ public class SpellHelper
 	
 	public static boolean isBlockFluid(Block block)
 	{
-		return block instanceof BlockFluid;
+		return block instanceof BlockFluid || block instanceof IFluidBlock;
 	}
 	
 	public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)

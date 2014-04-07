@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -139,4 +141,51 @@ public class RitualEffectFeatheredKnife extends RitualEffect
         // TODO Auto-generated method stub
         return 20;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> featheredKnifeRitual = new ArrayList();
+        featheredKnifeRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
+        featheredKnifeRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
+        featheredKnifeRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));
+        featheredKnifeRitual.add(new RitualComponent(0, 0, -1, RitualComponent.DUSK));
+        featheredKnifeRitual.add(new RitualComponent(2, -1, 0, RitualComponent.WATER));
+        featheredKnifeRitual.add(new RitualComponent(-2, -1, 0, RitualComponent.WATER));
+        featheredKnifeRitual.add(new RitualComponent(0, -1, 2, RitualComponent.WATER));
+        featheredKnifeRitual.add(new RitualComponent(0, -1, -2, RitualComponent.WATER));
+        featheredKnifeRitual.add(new RitualComponent(1, -1, 1, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(1, -1, -1, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(-1, -1, 1, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(-1, -1, -1, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(4, -1, 2, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(2, -1, 4, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(-4, -1, 2, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(2, -1, -4, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(4, -1, -2, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(-2, -1, 4, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(-4, -1, -2, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(-2, -1, -4, RitualComponent.FIRE));
+        featheredKnifeRitual.add(new RitualComponent(4, 0, 2, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(2, 0, 4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-4, 0, 2, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(2, 0, -4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(4, 0, -2, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-2, 0, 4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-4, 0, -2, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-2, 0, -4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(4, 0, 3, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(3, 0, 4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-4, 0, 3, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(3, 0, -4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(4, 0, -3, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-3, 0, 4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-4, 0, -3, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(-3, 0, -4, RitualComponent.EARTH));
+        featheredKnifeRitual.add(new RitualComponent(3, 0, 3, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(3, 0, -3, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(-3, 0, 3, RitualComponent.AIR));
+        featheredKnifeRitual.add(new RitualComponent(-3, 0, -3, RitualComponent.AIR));
+        return featheredKnifeRitual;
+	}
 }

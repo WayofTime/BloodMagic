@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
@@ -227,4 +229,59 @@ public class RitualEffectExpulsion extends RitualEffect
             entityLiving.setPosition(x, y, z);
         }
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> expulsionRitual = new ArrayList();
+        expulsionRitual.add(new RitualComponent(2,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(2,0,1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(1,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(2,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(2,0,-1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-1,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(1,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-2,0,-1, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-1,0,-2, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(4,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(5,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(4,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(5,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-4,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-5,0,2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-4,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-5,0,-2, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,-4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(2,0,-5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,-4, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(-2,0,-5, RitualComponent.AIR));
+        expulsionRitual.add(new RitualComponent(0,0,6, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(0,0,-6, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(6,0,0, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-6,0,0, RitualComponent.EARTH));
+        expulsionRitual.add(new RitualComponent(-5,0,0, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-6,0,1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-6,0,-1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(5,0,0, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(6,0,1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(6,0,-1, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(0,0,5, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(1,0,6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-1,0,6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(0,0,-5, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(1,0,-6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(-1,0,-6, RitualComponent.DUSK));
+        expulsionRitual.add(new RitualComponent(4,0,4, RitualComponent.FIRE));
+        expulsionRitual.add(new RitualComponent(4,0,-4, RitualComponent.FIRE));
+        expulsionRitual.add(new RitualComponent(-4,0,4, RitualComponent.FIRE));
+        expulsionRitual.add(new RitualComponent(-4,0,-4, RitualComponent.FIRE));
+        return expulsionRitual;
+	}
 }

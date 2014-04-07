@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -8,6 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
@@ -84,4 +87,10 @@ public class RitualEffectEnhancedAlchemy extends RitualEffect
     {
         return 0;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

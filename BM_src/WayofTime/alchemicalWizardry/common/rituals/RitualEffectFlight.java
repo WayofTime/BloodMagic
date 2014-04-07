@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +11,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
@@ -86,4 +88,92 @@ public class RitualEffectFlight extends RitualEffect
     {
         return 1;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		 ArrayList<RitualComponent> flightRitual = new ArrayList();
+	        flightRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(0, 0, -1, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(2, 0, 2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(-2, 0, 2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(-2, 0, -2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(2, 0, -2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(1, 0, 3, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(0, 0, 3, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(-1, 0, 3, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(1, 0, -3, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(0, 0, -3, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(-1, 0, -3, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(3, 0, 1, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(3, 0, 0, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(3, 0, -1, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(-3, 0, 1, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(-3, 0, 0, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(-3, 0, -1, RitualComponent.EARTH));
+	        flightRitual.add(new RitualComponent(-3, 0, -4, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(-4, 0, -3, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(-3, 0, 4, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(4, 0, -3, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(3, 0, -4, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(-4, 0, 3, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(3, 0, 4, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(4, 0, 3, RitualComponent.WATER));
+	        flightRitual.add(new RitualComponent(-1, 1, 0, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(1, 1, 0, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(0, 1, -1, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(0, 1, 1, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(-2, 1, 0, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(2, 1, 0, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(0, 1, -2, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(0, 1, 2, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(-4, 1, 0, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(4, 1, 0, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(0, 1, -4, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(0, 1, 4, RitualComponent.BLANK));
+	        flightRitual.add(new RitualComponent(-5, 1, 0, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(5, 1, 0, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(0, 1, -5, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(0, 1, 5, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(5, 0, 0, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(-5, 0, 0, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(0, 0, 5, RitualComponent.DUSK));
+	        flightRitual.add(new RitualComponent(0, 0, -5, RitualComponent.DUSK));
+
+	        for (int i = 2; i <= 4; i++)
+	        {
+	            flightRitual.add(new RitualComponent(-i, 2, 0, RitualComponent.EARTH));
+	            flightRitual.add(new RitualComponent(i, 2, 0, RitualComponent.EARTH));
+	            flightRitual.add(new RitualComponent(0, 2, -i, RitualComponent.EARTH));
+	            flightRitual.add(new RitualComponent(0, 2, i, RitualComponent.EARTH));
+	        }
+
+	        flightRitual.add(new RitualComponent(2, 4, 1, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(1, 4, 2, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(-2, 4, 1, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(1, 4, -2, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(2, 4, -1, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(-1, 4, 2, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(-2, 4, -1, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(-1, 4, -2, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(2, 4, 2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(-2, 4, 2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(2, 4, -2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(-2, 4, -2, RitualComponent.AIR));
+	        flightRitual.add(new RitualComponent(-4, 2, -4, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(4, 2, 4, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(4, 2, -4, RitualComponent.FIRE));
+	        flightRitual.add(new RitualComponent(-4, 2, 4, RitualComponent.FIRE));
+
+	        for (int i = -1; i <= 1; i++)
+	        {
+	            flightRitual.add(new RitualComponent(3, 4, i, RitualComponent.EARTH));
+	            flightRitual.add(new RitualComponent(-3, 4, i, RitualComponent.EARTH));
+	            flightRitual.add(new RitualComponent(i, 4, 3, RitualComponent.EARTH));
+	            flightRitual.add(new RitualComponent(i, 4, -3, RitualComponent.EARTH));
+	        }
+	        return flightRitual;
+	}
 }

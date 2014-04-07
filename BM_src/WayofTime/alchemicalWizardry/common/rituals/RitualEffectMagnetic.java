@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
@@ -119,4 +123,27 @@ public class RitualEffectMagnetic extends RitualEffect
     {
         return 50;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> magneticRitual = new ArrayList();
+        magneticRitual.add(new RitualComponent(1, 0, 1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(1, 0, -1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(2, 1, 0, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(0, 1, 2, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(-2, 1, 0, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(0, 1, -2, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(2, 1, 2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(2, 1, -2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(-2, 1, 2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(-2, 1, -2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(2, 2, 0, RitualComponent.FIRE));
+        magneticRitual.add(new RitualComponent(0, 2, 2, RitualComponent.FIRE));
+        magneticRitual.add(new RitualComponent(-2, 2, 0, RitualComponent.FIRE));
+        magneticRitual.add(new RitualComponent(0, 2, -2, RitualComponent.FIRE));
+        return magneticRitual;
+	}
 }

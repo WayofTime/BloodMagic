@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
@@ -164,4 +166,43 @@ public class RitualEffectUnbinding extends RitualEffect
         // TODO Auto-generated method stub
         return 0;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> unbindingRitual = new ArrayList();
+        unbindingRitual.add(new RitualComponent(-2, 0, 0, 4));
+        unbindingRitual.add(new RitualComponent(2, 0, 0, 4));
+        unbindingRitual.add(new RitualComponent(0, 0, 2, 4));
+        unbindingRitual.add(new RitualComponent(0, 0, -2, 4));
+        unbindingRitual.add(new RitualComponent(-2, 0, -2, 3));
+        unbindingRitual.add(new RitualComponent(-2, 0, -3, 3));
+        unbindingRitual.add(new RitualComponent(-3, 0, -2, 3));
+        unbindingRitual.add(new RitualComponent(2, 0, -2, 3));
+        unbindingRitual.add(new RitualComponent(2, 0, -3, 3));
+        unbindingRitual.add(new RitualComponent(3, 0, -2, 3));
+        unbindingRitual.add(new RitualComponent(-2, 0, 2, 3));
+        unbindingRitual.add(new RitualComponent(-2, 0, 3, 3));
+        unbindingRitual.add(new RitualComponent(-3, 0, 2, 3));
+        unbindingRitual.add(new RitualComponent(2, 0, 2, 3));
+        unbindingRitual.add(new RitualComponent(2, 0, 3, 3));
+        unbindingRitual.add(new RitualComponent(3, 0, 2, 3));
+        unbindingRitual.add(new RitualComponent(3, 1, 3, 0));
+        unbindingRitual.add(new RitualComponent(3, 1, -3, 0));
+        unbindingRitual.add(new RitualComponent(-3, 1, -3, 0));
+        unbindingRitual.add(new RitualComponent(-3, 1, 3, 0));
+        unbindingRitual.add(new RitualComponent(3, 2, 3, 0));
+        unbindingRitual.add(new RitualComponent(3, 2, -3, 0));
+        unbindingRitual.add(new RitualComponent(-3, 2, -3, 0));
+        unbindingRitual.add(new RitualComponent(-3, 2, 3, 0));
+        unbindingRitual.add(new RitualComponent(3, 3, 3, 2));
+        unbindingRitual.add(new RitualComponent(3, 3, -3, 2));
+        unbindingRitual.add(new RitualComponent(-3, 3, -3, 2));
+        unbindingRitual.add(new RitualComponent(-3, 3, 3, 2));
+        unbindingRitual.add(new RitualComponent(-5, 0, 0, 2));
+        unbindingRitual.add(new RitualComponent(5, 0, 0, 2));
+        unbindingRitual.add(new RitualComponent(0, 0, 5, 2));
+        unbindingRitual.add(new RitualComponent(0, 0, -5, 2));
+        return unbindingRitual;
+	}
 }

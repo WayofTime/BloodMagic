@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -10,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
@@ -385,4 +389,27 @@ public class RitualEffectAutoAlchemy extends RitualEffect
     {
         return 10;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> autoAlchemyRitual = new ArrayList();
+        autoAlchemyRitual.add(new RitualComponent(1,0,1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(1,0,-1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(-1,0,-1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(-1,0,1, RitualComponent.DUSK));
+        autoAlchemyRitual.add(new RitualComponent(2,0,2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(2,0,-2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,-2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,2, RitualComponent.WATER));
+        autoAlchemyRitual.add(new RitualComponent(-3,0,-2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,-3, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(-3,0,2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(-2,0,3, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(3,0,-2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(2,0,-3, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(3,0,2, RitualComponent.FIRE));
+        autoAlchemyRitual.add(new RitualComponent(2,0,3, RitualComponent.FIRE));
+        return autoAlchemyRitual;
+	}
 }

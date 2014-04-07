@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Rituals
 {
-    private List<RitualComponent> components;
     private int crystalLevel;
     private int actCost;
     private RitualEffect effect;
@@ -17,22 +16,12 @@ public class Rituals
 
     public static List<Rituals> ritualList = new ArrayList();
 
-    public Rituals(List<RitualComponent> components, int crystalLevel, int actCost, RitualEffect effect, String name)
+    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name)
     {
-        this.components = components;
         this.crystalLevel = crystalLevel;
         this.actCost = actCost;
         this.effect = effect;
         this.name = name;
-    }
-
-    public Rituals(List<RitualComponent> components, int crystalLevel, int actCost, RitualEffect effect)
-    {
-        this.components = components;
-        this.crystalLevel = crystalLevel;
-        this.actCost = actCost;
-        this.effect = effect;
-        this.name = "";
     }
 
     public static int checkValidRitual(World world, int x, int y, int z)
@@ -219,7 +208,7 @@ public class Rituals
 
     private List<RitualComponent> obtainComponents()
     {
-        return this.components;
+        return this.effect.getRitualComponentList();
     }
 
     private int getCrystalLevel()

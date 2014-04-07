@@ -65,4 +65,10 @@ public class BlockSpectralContainer extends BlockContainer
 	{
 		return true;
 	}
+	
+	@Override
+	public boolean isAirBlock(World par1World, int par2, int par3, int par4)
+	{
+		return true;
+	}
 }

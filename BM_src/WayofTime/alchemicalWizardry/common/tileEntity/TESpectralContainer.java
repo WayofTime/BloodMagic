@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidBlock;
+import WayofTime.alchemicalWizardry.ModBlocks;
 
 public class TESpectralContainer extends TileEntity
 {
@@ -79,15 +80,15 @@ public class TESpectralContainer extends TileEntity
     
     public static boolean createSpectralBlockAtLocation(World world, int x, int y, int z, int duration)
     {
-    	if(world.getBlockTileEntity(x, y, z)==null)
+    	Block block = Block.blocksList[world.getBlockId(x, y, z)];
+    	
+    	if(block==null)
+		{
+			return false;
+		}
+    	
+    	if(world.getBlockTileEntity(x, y, z)==null || block instanceof IFluidBlock)
     	{
-    		Block block = Block.blocksList[world.getBlockId(x, y, z)];
-    		
-    		if(block==null)
-    		{
-    			return false;
-    		}
-    		
     		int meta = world.getBlockMetadata(x, y, z);
     		ItemStack item = new ItemStack(block, 1, meta);
     		

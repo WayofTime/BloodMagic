@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
@@ -48,8 +50,8 @@ public class RitualEffectHealing extends RitualEffect
 //			return;
 //		}
         //tileAltar = (TEAltar)world.getBlockTileEntity(x,y-1,z);
-        int d0 = 10;
-        int vertRange = 10;
+        int d0 = 15;
+        int vertRange = 20;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
         List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator1 = list.iterator();
@@ -124,4 +126,55 @@ public class RitualEffectHealing extends RitualEffect
         // TODO Auto-generated method stub
         return 20;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> healingRitual = new ArrayList();
+        healingRitual.add(new RitualComponent(4, 0, 0, RitualComponent.AIR));
+        healingRitual.add(new RitualComponent(5, 0, -1, RitualComponent.AIR));
+        healingRitual.add(new RitualComponent(5, 0, 1, RitualComponent.AIR));
+        healingRitual.add(new RitualComponent(-4, 0, 0, RitualComponent.AIR));
+        healingRitual.add(new RitualComponent(-5, 0, -1, RitualComponent.AIR));
+        healingRitual.add(new RitualComponent(-5, 0, 1, RitualComponent.AIR));
+        healingRitual.add(new RitualComponent(0, 0, 4, RitualComponent.FIRE));
+        healingRitual.add(new RitualComponent(-1, 0, 5, RitualComponent.FIRE));
+        healingRitual.add(new RitualComponent(1, 0, 5, RitualComponent.FIRE));
+        healingRitual.add(new RitualComponent(0, 0, -4, RitualComponent.FIRE));
+        healingRitual.add(new RitualComponent(-1, 0, -5, RitualComponent.FIRE));
+        healingRitual.add(new RitualComponent(1, 0, -5, RitualComponent.FIRE));
+        healingRitual.add(new RitualComponent(3, 0, 5, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(5, 0, 3, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(3, 0, -5, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(5, 0, -3, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(-3, 0, 5, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(-5, 0, 3, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(-3, 0, -5, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(-5, 0, -3, RitualComponent.WATER));
+        healingRitual.add(new RitualComponent(-3, 0, -3, RitualComponent.DUSK));
+        healingRitual.add(new RitualComponent(-3, 0, 3, RitualComponent.DUSK));
+        healingRitual.add(new RitualComponent(3, 0, -3, RitualComponent.DUSK));
+        healingRitual.add(new RitualComponent(3, 0, 3, RitualComponent.DUSK));
+        healingRitual.add(new RitualComponent(4, 0, 5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(4, -1, 5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(5, 0, 4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(5, -1, 4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(5, 0, 5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(4, 0, -5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(4, -1, -5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(5, 0, -4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(5, -1, -4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(5, 0, -5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-4, 0, 5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-4, -1, 5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-5, 0, 4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-5, -1, 4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-5, 0, 5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-4, 0, -5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-4, -1, -5, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-5, 0, -4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-5, -1, -4, RitualComponent.EARTH));
+        healingRitual.add(new RitualComponent(-5, 0, -5, RitualComponent.EARTH));
+        return healingRitual;
+	}
 }

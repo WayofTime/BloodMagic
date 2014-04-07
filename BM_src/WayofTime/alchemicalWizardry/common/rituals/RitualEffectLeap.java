@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
@@ -139,4 +141,20 @@ public class RitualEffectLeap extends RitualEffect
     {
         return 5;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> leapingRitual = new ArrayList();
+        leapingRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
+        leapingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.AIR));
+        leapingRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.AIR));
+
+        for (int i = 0; i <= 2; i++)
+        {
+            leapingRitual.add(new RitualComponent(2, 0, i, RitualComponent.AIR));
+            leapingRitual.add(new RitualComponent(-2, 0, i, RitualComponent.AIR));
+        }
+        return leapingRitual;
+	}
 }

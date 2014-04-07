@@ -34,14 +34,14 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
     {
         super(id);
         this.maxStackSize = 1;
-        setEnergyUsed(200);
+        setEnergyUsed(400);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("I have a very magnetic personality!");
+        par3List.add("Better than telekinesis");
 
         if (!(par1ItemStack.stackTagCompound == null))
         {
@@ -61,9 +61,9 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfMagnetism_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfMagnetism_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfMagnetism_deactivated");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_deactivated");
+        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_activated");
+        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_deactivated");
     }
 
     @Override
@@ -181,6 +181,10 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
                     	
                     	if(SpellHelper.isBlockFluid(block))
                     	{
+                    		if(par2World.getBlockTileEntity(x+i, y+j, z+k)!=null)
+                    		{
+                    			par2World.setBlockToAir(x+i, y+j, z+k);
+                    		}
                     		TESpectralContainer.createSpectralBlockAtLocation(par2World, x+i, y+j, z+k, refresh);
                     	}
                     	else
@@ -193,6 +197,16 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
                     	}		
                     }
                 }
+            }
+        }
+        
+        if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
+        {
+            //par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400,99));
+            if (!par3EntityPlayer.capabilities.isCreativeMode)
+            {
+                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
+                
             }
         }
 
@@ -223,6 +237,10 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
                 	
                 	if(SpellHelper.isBlockFluid(block))
                 	{
+                		if(world.getBlockTileEntity(x+i, y+j, z+k)!=null)
+                		{
+                			world.setBlockToAir(x+i, y+j, z+k);
+                		}
                 		TESpectralContainer.createSpectralBlockAtLocation(world, x+i, y+j, z+k, refresh);
                 	}
                 	else

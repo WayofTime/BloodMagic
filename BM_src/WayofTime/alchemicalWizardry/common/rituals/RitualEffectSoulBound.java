@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
@@ -164,4 +166,35 @@ public class RitualEffectSoulBound extends RitualEffect
     {
         return 200;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> boundSoulRitual = new ArrayList();
+        boundSoulRitual.add(new RitualComponent(3, 0, 0, 2));
+        boundSoulRitual.add(new RitualComponent(-3, 0, 0, 2));
+        boundSoulRitual.add(new RitualComponent(0, 0, 3, 2));
+        boundSoulRitual.add(new RitualComponent(0, 0, -3, 2));
+        boundSoulRitual.add(new RitualComponent(2, 0, 2, 4));
+        boundSoulRitual.add(new RitualComponent(-2, 0, 2, 4));
+        boundSoulRitual.add(new RitualComponent(2, 0, -2, 4));
+        boundSoulRitual.add(new RitualComponent(-2, 0, -2, 4));
+        boundSoulRitual.add(new RitualComponent(4, 2, 0, 1));
+        boundSoulRitual.add(new RitualComponent(-4, 2, 0, 1));
+        boundSoulRitual.add(new RitualComponent(0, 2, 4, 1));
+        boundSoulRitual.add(new RitualComponent(0, 2, -4, 1));
+        boundSoulRitual.add(new RitualComponent(3, 2, 3, 3));
+        boundSoulRitual.add(new RitualComponent(3, 2, -3, 3));
+        boundSoulRitual.add(new RitualComponent(-3, 2, 3, 3));
+        boundSoulRitual.add(new RitualComponent(-3, 2, -3, 3));
+        boundSoulRitual.add(new RitualComponent(4, 1, 0, 0));
+        boundSoulRitual.add(new RitualComponent(-4, 1, 0, 0));
+        boundSoulRitual.add(new RitualComponent(0, 1, 4, 0));
+        boundSoulRitual.add(new RitualComponent(0, 1, -4, 0));
+        boundSoulRitual.add(new RitualComponent(3, 1, 3, 0));
+        boundSoulRitual.add(new RitualComponent(3, 1, -3, 0));
+        boundSoulRitual.add(new RitualComponent(-3, 1, 3, 0));
+        boundSoulRitual.add(new RitualComponent(-3, 1, -3, 0));
+        return boundSoulRitual;
+	}
 }
