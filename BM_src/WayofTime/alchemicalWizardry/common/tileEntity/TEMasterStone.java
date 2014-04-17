@@ -209,4 +209,10 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 	{
 		return this.zCoord;
 	}
+	
+	@Override
+	public World getWorld()
+	{
+		return this.getWorldObj();
+	}
 }

@@ -733,6 +733,7 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
 
             if (getStackInSlot(6) == null)
             {
+            	
                 if (worldTime % 4 == 0)
                 {
                     PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, getParticlePacket(xCoord, yCoord, zCoord, (short) 1));

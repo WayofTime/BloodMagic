@@ -36,6 +36,7 @@ import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
+import WayofTime.alchemicalWizardry.common.items.books.ItemBloodArchives;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyReagent;
 import WayofTime.alchemicalWizardry.common.items.potion.AverageLengtheningCatalyst;
@@ -74,8 +75,6 @@ import WayofTime.alchemicalWizardry.common.items.sigil.WaterSigil;
  */
 public class ModItems
 {
-
-
     public static Item orbOfTesting;
     public static Item weakBloodOrb;
     public static Item apprenticeBloodOrb;
@@ -170,6 +169,7 @@ public class ModItems
     public static Item itemComplexSpellCrystal;
     public static Item itemBloodFrame;
     public static Item itemSigilOfSupression;
+    public static Item itemBloodBook;
 
     public static void init()
     {
@@ -253,5 +253,6 @@ public class ModItems
         baseItems = new ItemComponents(AlchemicalWizardry.baseComponentsItemID).setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase(AlchemicalWizardry.baseAlchemyComponentsItemID).setUnlocalizedName("baseAlchemyItems");
         itemSigilOfSupression = new ItemSigilOfSupression(AlchemicalWizardry.itemSigilOfSupressionItemID).setUnlocalizedName("itemSigilOfSupression");
+        itemBloodBook = new ItemBloodArchives(AlchemicalWizardry.itemBloodBookItemID).setUnlocalizedName("bloodanomicon");
     }
 }

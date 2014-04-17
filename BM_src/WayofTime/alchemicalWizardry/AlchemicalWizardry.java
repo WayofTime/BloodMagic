@@ -69,6 +69,7 @@ import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
+import WayofTime.alchemicalWizardry.common.items.books.ItemBloodArchives;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
@@ -179,6 +180,8 @@ public class AlchemicalWizardry
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     public static boolean isGCLoaded;
+    
+    public static boolean wimpySettings;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -310,6 +313,7 @@ public class AlchemicalWizardry
     public static int baseComponentsItemID;
     public static int baseAlchemyComponentsItemID;
     public static int itemSigilOfSupressionItemID;
+    public static int itemBloodBookItemID;
 
     public static int testingBlockBlockID;
     public static int lifeEssenceFlowingBlockID;
@@ -622,7 +626,16 @@ public class AlchemicalWizardry
         //LanguageRegistry.addName(bloodiedShard, "Bloodied Shard");
         LanguageRegistry.addName(ModItems.blankSlate, "Blank Slate");
         LanguageRegistry.addName(ModItems.reinforcedSlate, "Reinforced Slate");
-        LanguageRegistry.addName(ModItems.sacrificialDagger, "Sacrificial Knife");
+        
+        if(this.wimpySettings)
+        {
+        	LanguageRegistry.addName(ModItems.sacrificialDagger, "Sacrificial Orb");
+        }else
+        {
+        	LanguageRegistry.addName(ModItems.sacrificialDagger, "Sacrificial Knife");
+        }
+        
+        
         LanguageRegistry.addName(ModItems.daggerOfSacrifice, "Dagger of Sacrifice");
         LanguageRegistry.addName(ModItems.airSigil, "Air Sigil");
         LanguageRegistry.addName(ModItems.sigilOfTheFastMiner, "Sigil of the Fast Miner");
@@ -849,6 +862,7 @@ public class AlchemicalWizardry
         this.initAltarRecipes();
         this.initRituals();
         this.initBindingRecipes();
+        ItemBloodArchives.initBooks();
         
 
         MinecraftForge.setToolClass(ModItems.boundPickaxe, "pickaxe", 5);

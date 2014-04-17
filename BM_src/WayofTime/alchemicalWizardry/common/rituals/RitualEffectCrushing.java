@@ -35,7 +35,7 @@ public class RitualEffectCrushing extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
+        World world = ritualStone.getWorld();
 
         if (world.getWorldTime() % 40 != 0)
         {

@@ -103,9 +103,7 @@ public class EnergyItems extends Item implements IBindable
 
     public static boolean syphonWhileInContainer(ItemStack ist, int damageToBeDone)
     {
-        SoulNetworkHandler.syphonFromNetwork(ist, damageToBeDone);
-
-        return true;
+        return SoulNetworkHandler.syphonFromNetwork(ist, damageToBeDone)!=0;
     }
 
     public static boolean canSyphonInContainer(ItemStack ist, int damageToBeDone)

@@ -32,7 +32,7 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
+        World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();

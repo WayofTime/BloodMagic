@@ -26,6 +26,7 @@ public class CommonProxy
 {
     public static String ITEMS_PNG = "/WayofTime/alchemicalWizardry/items.png";
     public static String BLOCK_PNG = "/WayofTime/alchemicalWizardry/block.png";
+    public static int manualGuiID = -1;
 
     // Client stuff
     public void registerRenderers()

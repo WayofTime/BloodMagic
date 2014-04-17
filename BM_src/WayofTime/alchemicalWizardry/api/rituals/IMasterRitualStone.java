@@ -20,7 +20,7 @@ public interface IMasterRitualStone
 
     public int getDirection();
     
-    public World getWorldObj();
+    public World getWorld();
     
     public int getXCoord();
     

@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
-import cpw.mods.fml.common.FMLLog;
-import net.minecraftforge.common.Configuration;
-
 import java.io.File;
 import java.util.logging.Level;
+
+import net.minecraftforge.common.Configuration;
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
+import cpw.mods.fml.common.FMLLog;
 
 /**
  * Created with IntelliJ IDEA.
@@ -185,6 +185,9 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.baseComponentsItemID = config.getItem("BaseComponents", 17083).getInt();
             AlchemicalWizardry.baseAlchemyComponentsItemID = config.getItem("BaseAlchemyComponents", 17084).getInt();
             AlchemicalWizardry.itemSigilOfSupressionItemID = config.getItem("ItemSigilOfSupression", 17085).getInt();
+            AlchemicalWizardry.itemBloodBookItemID = config.getItem("BloodBooks", 17086).getInt();
+            
+            AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
             
         } catch (Exception e)
         {

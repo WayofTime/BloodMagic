@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.client.ClientProxy;
+import WayofTime.alchemicalWizardry.client.GuiManual;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 import cpw.mods.fml.common.network.IGuiHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -34,6 +37,13 @@ public class GuiHandler implements IGuiHandler
                 {
                     return new ContainerTeleposer(player.inventory, (TETeleposer) tileEntity);
                 }
+                
+//            case 2:
+//                {
+//                    ItemStack stack = player.getCurrentEquippedItem();
+//                    return new GuiManual(stack, ClientProxy.getManualFromStack(stack));
+//                }
+
         }
 
         return null;
@@ -66,6 +76,12 @@ public class GuiHandler implements IGuiHandler
                 }
 
                 break;
+                
+            case 2:
+	            {
+	                ItemStack stack = player.getCurrentEquippedItem();
+	                return new GuiManual(stack, ClientProxy.getManualFromStack(stack));
+	            }
         }
 
         return null;

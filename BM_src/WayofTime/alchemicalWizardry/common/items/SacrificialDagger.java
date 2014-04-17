@@ -31,13 +31,25 @@ public class SacrificialDagger extends Item
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SacrificialDagger");
+    	if(AlchemicalWizardry.wimpySettings)
+    	{
+    		this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
+    	}else
+    	{
+    		this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SacrificialDagger");
+    	}       
     }
 
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Just a prick of the");
-        par3List.add("finger will suffice...");
+    	if(AlchemicalWizardry.wimpySettings)
+    	{
+    		par3List.add(">:(");
+    	}else
+    	{
+    		par3List.add("Just a prick of the");
+            par3List.add("finger will suffice...");
+    	}
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
