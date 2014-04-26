@@ -187,6 +187,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                 EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
             }
 
+            if(par2World.isRemote)
+        	{
+        		return;
+        	}
+            
             int range = 5;
             int verticalRange = 2;
             int posX = (int) Math.round(par3Entity.posX - 0.5f);
@@ -204,7 +209,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
 
                         if (block instanceof IPlantable)
                         {
-                            if (par2World.rand.nextInt(20) == 0)
+                            if (par2World.rand.nextInt(17) == 0)
                             {
                                 block.updateTick(par2World, ix, iy, iz, par2World.rand);
                             }
@@ -361,6 +366,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
+    	if(world.isRemote)
+    	{
+    		return;
+    	}
+    	
         int range = 5;
         int verticalRange = 2;
         int posX = (int) Math.round(player.posX - 0.5f);

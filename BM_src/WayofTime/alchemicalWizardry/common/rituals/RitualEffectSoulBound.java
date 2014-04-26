@@ -145,7 +145,7 @@ public class RitualEffectSoulBound extends RitualEffect
 
                     if (spawnedItem != null)
                     {
-                        EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, spawnedItem);
+                        EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, spawnedItem.copy());
                         world.spawnEntityInWorld(newItem);
                     }
 

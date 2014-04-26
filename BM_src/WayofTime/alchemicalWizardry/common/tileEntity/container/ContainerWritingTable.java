@@ -80,7 +80,7 @@ public class ContainerWritingTable extends Container
                 }
             }
             //places it into the tileEntity is possible since its in the player inventory
-            else if (!this.mergeItemStack(stackInSlot, 0, 6, false))
+            else if (!this.mergeItemStack(stackInSlot, 0, 7, false))
             {
                 return null;
             }

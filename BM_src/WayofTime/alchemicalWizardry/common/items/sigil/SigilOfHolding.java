@@ -344,6 +344,10 @@ public class SigilOfHolding extends EnergyItems
         allowedSigils.add(new Integer(ModItems.growthSigil.itemID));
         allowedSigils.add(new Integer(ModItems.sigilOfHaste.itemID));
         allowedSigils.add(new Integer(ModItems.sigilOfWind.itemID));
+        allowedSigils.add(new Integer(ModItems.sigilOfTheBridge.itemID));
+        allowedSigils.add(new Integer(ModItems.sigilOfMagnetism.itemID));
+        allowedSigils.add(new Integer(ModItems.itemSigilOfSupression.itemID));
+        allowedSigils.add(new Integer(ModItems.itemBloodLightSigil.itemID));
     }
 
     public ItemStack getCurrentItem(ItemStack sigilItemStack)

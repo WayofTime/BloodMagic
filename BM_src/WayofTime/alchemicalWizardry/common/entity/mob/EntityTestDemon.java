@@ -23,7 +23,7 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, Player
+public class EntityTestDemon extends EntityDemon implements IRangedAttackMob, Player
 {
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
@@ -31,7 +31,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     private static float maxTamedHealth = 50.0F;
     private static float maxUntamedHealth = 50.0F;
 
-    public EntityFallenAngel(World par1World)
+    public EntityTestDemon(World par1World)
     {
         super(par1World, AlchemicalWizardry.entityFallenAngelID);
         this.setSize(0.7F, 1.8F);
@@ -211,7 +211,6 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     public void onUpdate()
     {
         super.onUpdate();
-        this.onGround = false;
     }
 
     public float getEyeHeight()
@@ -448,9 +447,9 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
     {
         if (!(par1EntityLivingBase instanceof EntityCreeper) && !(par1EntityLivingBase instanceof EntityGhast))
         {
-            if (par1EntityLivingBase instanceof EntityFallenAngel)
+            if (par1EntityLivingBase instanceof EntityTestDemon)
             {
-                EntityFallenAngel entitywolf = (EntityFallenAngel) par1EntityLivingBase;
+                EntityTestDemon entitywolf = (EntityTestDemon) par1EntityLivingBase;
 
                 if (entitywolf.isTamed() && entitywolf.func_130012_q() == par2EntityLivingBase)
                 {
@@ -491,5 +490,13 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob, 
         this.tasks.removeTask(this.aiArrowAttack);
         ItemStack itemstack = this.getHeldItem();
         this.tasks.addTask(4, this.aiArrowAttack);
+    }
+    
+    protected void fall(float par1)
+    {
+    }
+    
+    protected void updateFallState(double par1, boolean par3)
+    {
     }
 }

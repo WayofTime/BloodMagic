@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.Potion;
@@ -24,8 +24,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -162,6 +160,18 @@ public class AlchemicalWizardryEventHooks
         if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionBoost))
         {
             int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionBoost).getAmplifier();
+            
+            //Testing code
+            List<Entity> entities = SpellHelper.getEntitiesInRange(event.entity.worldObj, xPos, yPos, zPos, 10, 10);
+            for(Entity entity : entities)
+            {
+            	if(entity instanceof EntityZombie)
+            	{
+            		((EntityZombie) entity).setAttackTarget(null);
+            	}
+            }
+            //
+            
             EntityLivingBase entity = event.entityLiving;
             //if(!entity.isSneaking())
             {

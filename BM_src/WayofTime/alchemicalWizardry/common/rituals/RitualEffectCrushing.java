@@ -37,7 +37,7 @@ public class RitualEffectCrushing extends RitualEffect
         int currentEssence = data.currentEssence;
         World world = ritualStone.getWorld();
 
-        if (world.getWorldTime() % 40 != 0)
+        if (world.getWorldTime() % 40 != 20)
         {
             return;
         }
@@ -86,7 +86,7 @@ public class RitualEffectCrushing extends RitualEffect
 
                         if (block != null)
                         {
-                            if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)))
+                            if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)) || block.getBlockHardness(world, x + i, y + j, z + k) == -1)
                             {
                                 continue;
                             }

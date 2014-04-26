@@ -43,6 +43,7 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityShade;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityTestDemon;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
@@ -144,6 +145,8 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityShadeElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
         //EntityRegistry.registerGlobalEntityID(EntityHolyElemental.class, "AlchemicalWizardry.HolyElemental", EntityRegistry.findGlobalUniqueEntityId(),0x40FF00, 0x0B610B);
         RenderingRegistry.registerEntityRenderingHandler(EntityHolyElemental.class, new RenderElemental(new ModelElemental(), 0.5F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityTestDemon.class, new RenderFallenAngel(new ModelFallenAngel(), 0.5F));
+
         ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new RenderPedestal());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPlinth.class, new RenderPlinth());
         ClientRegistry.bindTileEntitySpecialRenderer(TEWritingTable.class, new RenderWritingTable());

@@ -253,6 +253,6 @@ public class ModItems
         baseItems = new ItemComponents(AlchemicalWizardry.baseComponentsItemID).setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase(AlchemicalWizardry.baseAlchemyComponentsItemID).setUnlocalizedName("baseAlchemyItems");
         itemSigilOfSupression = new ItemSigilOfSupression(AlchemicalWizardry.itemSigilOfSupressionItemID).setUnlocalizedName("itemSigilOfSupression");
-        itemBloodBook = new ItemBloodArchives(AlchemicalWizardry.itemBloodBookItemID).setUnlocalizedName("bloodanomicon");
+        //itemBloodBook = new ItemBloodArchives(AlchemicalWizardry.itemBloodBookItemID).setUnlocalizedName("bloodanomicon");
     }
 }

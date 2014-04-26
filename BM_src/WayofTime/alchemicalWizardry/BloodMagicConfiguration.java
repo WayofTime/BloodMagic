@@ -50,6 +50,29 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionFireFuseID = config.get("Potion ID","FireFuse",109).getInt();
             AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID","PlanarBinding",110).getInt();
             
+            AlchemicalWizardry.regenerationAllowed = config.get("AlchemyPotionRegistry", "regeneration", true).getBoolean(true);
+            AlchemicalWizardry.nightVisionAllowed = config.get("AlchemyPotionRegistry", "nightVision", true).getBoolean(true);
+            AlchemicalWizardry.fireResistanceAllowed = config.get("AlchemyPotionRegistry", "fireResistance", true).getBoolean(true);
+            AlchemicalWizardry.waterBreathingAllowed = config.get("AlchemyPotionRegistry", "waterBreathing", true).getBoolean(true);
+            AlchemicalWizardry.moveSpeedAllowed = config.get("AlchemyPotionRegistry", "moveSpeed", true).getBoolean(true);
+            AlchemicalWizardry.healAllowed = config.get("AlchemyPotionRegistry", "heal", true).getBoolean(true);
+            AlchemicalWizardry.poisonAllowed = config.get("AlchemyPotionRegistry", "poison", true).getBoolean(true);
+            AlchemicalWizardry.weaknessAllowed = config.get("AlchemyPotionRegistry", "weakness", true).getBoolean(true);
+            AlchemicalWizardry.damageBoostAllowed = config.get("AlchemyPotionRegistry", "damageBoost", true).getBoolean(true);
+            AlchemicalWizardry.jumpAllowed = config.get("AlchemyPotionRegistry", "jump", true).getBoolean(true);
+            AlchemicalWizardry.moveSlowdownAllowed = config.get("AlchemyPotionRegistry", "moveSlowdown", true).getBoolean(true);
+            AlchemicalWizardry.digSpeedAllowed = config.get("AlchemyPotionRegistry", "digSpeed", true).getBoolean(true);
+            AlchemicalWizardry.drowningAllowed = config.get("AlchemyPotionRegistry", "drowning", true).getBoolean(true);
+            AlchemicalWizardry.invisibilityAllowed = config.get("AlchemyPotionRegistry", "invisibility", true).getBoolean(true);
+            AlchemicalWizardry.resistanceAllowed = config.get("AlchemyPotionRegistry", "resistance", true).getBoolean(true);
+            AlchemicalWizardry.saturationAllowed = config.get("AlchemyPotionRegistry", "saturation", true).getBoolean(true);
+            AlchemicalWizardry.healthBoostAllowed = config.get("AlchemyPotionRegistry", "healthBoost", true).getBoolean(true);
+            AlchemicalWizardry.absorptionAllowed = config.get("AlchemyPotionRegistry", "absorption", true).getBoolean(true);
+            AlchemicalWizardry.boostAllowed = config.get("AlchemyPotionRegistry", "boost", true).getBoolean(true);
+            AlchemicalWizardry.flightAllowed = config.get("AlchemyPotionRegistry", "flight", true).getBoolean(true);
+            AlchemicalWizardry.reciprocationAllowed = config.get("AlchemyPotionRegistry", "reciprocation", true).getBoolean(true);
+            AlchemicalWizardry.planarBindingAllowed = config.get("AlchemyPotionRegistry", "planarBinding", true).getBoolean(true);
+            
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
             AlchemicalWizardry.diamondMeteorArray = config.get("meteor", "diamondMeteor", new String[]{"oreDiamond", "100", "oreEmerald", "75", "oreCinnabar", "200", "oreAmber", "200"}).getStringList();

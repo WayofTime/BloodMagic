@@ -18,13 +18,13 @@ public class RenderFallenAngel extends RenderLiving
         super(par1ModelBase, par2);
     }
 
-    public ResourceLocation func_110832_a(EntityFallenAngel par1EntityFallenAngel)
+    public ResourceLocation func_110832_a(Entity par1EntityFallenAngel)
     {
         return field_110833_a;
     }
 
     public ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.func_110832_a((EntityFallenAngel) par1Entity);
+        return this.func_110832_a(par1Entity);
     }
 }

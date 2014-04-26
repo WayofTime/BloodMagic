@@ -17,6 +17,7 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityShade;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityTestDemon;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 
@@ -97,6 +98,11 @@ public class SummoningHelperAW extends SummoningHelper
         if (this.id == AlchemicalWizardry.entityHolyElementalID)
         {
             return new EntityHolyElemental(worldObj);
+        }
+        
+        if	(this.id == AlchemicalWizardry.entityTestDemonID)
+        {
+        	return new EntityTestDemon(worldObj);
         }
 
         return new EntityPig(worldObj);
