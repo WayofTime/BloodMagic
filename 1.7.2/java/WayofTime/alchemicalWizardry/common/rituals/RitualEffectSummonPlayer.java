@@ -10,15 +10,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
 public class RitualEffectSummonPlayer extends RitualEffect //Summons a player via the bound item
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -31,10 +33,10 @@ public class RitualEffectSummonPlayer extends RitualEffect //Summons a player vi
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (ritualStone.getCooldown() > 0)
         {
@@ -100,4 +102,10 @@ public class RitualEffectSummonPlayer extends RitualEffect //Summons a player vi
     {
         return 0;
     }
+
+	@Override
+	public List<RitualComponent> getRitualComponentList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

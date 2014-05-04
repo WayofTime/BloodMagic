@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.common.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -63,6 +63,7 @@ public class ItemRitualDiviner extends EnergyItems
             par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
             par3List.add("RitualID: " + (ritualID + 1));
             List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack) + 1);
+
             int blankStones = 0;
             int airStones = 0;
             int waterStones = 0;

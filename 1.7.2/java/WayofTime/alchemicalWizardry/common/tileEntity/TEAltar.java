@@ -1,9 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -11,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
@@ -27,14 +22,13 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipe;
-import WayofTime.alchemicalWizardry.common.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler
@@ -583,12 +577,12 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             {
                 ItemStack returnedItem = getStackInSlot(0);
 
-                if (!(returnedItem.getItem() instanceof EnergyBattery))
+                if (!(returnedItem.getItem() instanceof IBloodOrb))
                 {
                     return;
                 }
 
-                EnergyBattery item = (EnergyBattery) (returnedItem.getItem());
+                IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
                 NBTTagCompound itemTag = returnedItem.stackTagCompound;
 
                 if (itemTag == null)

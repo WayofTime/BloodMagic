@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,11 +11,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 
 public class RitualEffectMagnetic extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -28,10 +33,10 @@ public class RitualEffectMagnetic extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (world.getWorldTime() % 40 != 0)
         {
@@ -118,4 +123,27 @@ public class RitualEffectMagnetic extends RitualEffect
     {
         return 50;
     }
+
+    @Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> magneticRitual = new ArrayList();
+        magneticRitual.add(new RitualComponent(1, 0, 1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(1, 0, -1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(2, 1, 0, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(0, 1, 2, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(-2, 1, 0, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(0, 1, -2, RitualComponent.EARTH));
+        magneticRitual.add(new RitualComponent(2, 1, 2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(2, 1, -2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(-2, 1, 2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(-2, 1, -2, RitualComponent.AIR));
+        magneticRitual.add(new RitualComponent(2, 2, 0, RitualComponent.FIRE));
+        magneticRitual.add(new RitualComponent(0, 2, 2, RitualComponent.FIRE));
+        magneticRitual.add(new RitualComponent(-2, 2, 0, RitualComponent.FIRE));
+        magneticRitual.add(new RitualComponent(0, 2, -2, RitualComponent.FIRE));
+        return magneticRitual;
+	}
 }

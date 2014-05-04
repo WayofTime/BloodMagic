@@ -57,6 +57,7 @@ import WayofTime.alchemicalWizardry.common.items.sigil.AirSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemBloodLightSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfEnderSeverance;
+import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfSupression;
 import WayofTime.alchemicalWizardry.common.items.sigil.LavaSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfElementalAffinity;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfGrowth;
@@ -165,6 +166,7 @@ public class ModItems
     public static Item itemBloodFrame;
     
     public static Item itemSigilOfEnderSeverance;
+    public static Item itemSigilOfSupression;
     
     public static Item bucketLife;
 
@@ -251,6 +253,7 @@ public class ModItems
         itemSigilOfEnderSeverance = (new ItemSigilOfEnderSeverance()).setUnlocalizedName("itemSigilOfEnderSeverance");
         baseItems = new ItemComponents().setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase().setUnlocalizedName("baseAlchemyItems");
+        itemSigilOfSupression = new ItemSigilOfSupression().setUnlocalizedName("itemSigilOfSupression");
     }
     
     public static void registerItems()
@@ -337,6 +340,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.energyBazooka, "energyBazooka");
         GameRegistry.registerItem(ModItems.itemBloodLightSigil, "itemBloodLightSigil");
         GameRegistry.registerItem(ModItems.itemComplexSpellCrystal, "itemComplexSpellCrystal");
+        GameRegistry.registerItem(ModItems.itemSigilOfSupression, "sigilOfSupression");
         GameRegistry.registerItem(ModItems.itemSigilOfEnderSeverance, "sigilOfEnderSeverance");
         
         GameRegistry.registerItem(ModItems.bucketLife, "bucketLife");

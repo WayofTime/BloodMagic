@@ -751,10 +751,7 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
                     progress = 0;
                     this.setInventorySlotContents(6, getResultingItemStack());
 
-                    for (int i = 0; i < 5; i++)
-                    {
-                        this.decrStackSizeLeaveContainer(i + 1, 1);
-                    }
+                    this.decrementSlots(AlchemyRecipeRegistry.getRecipeForItemStack(getResultingItemStack()));
 
                     if (worldObj != null)
                     {
@@ -782,10 +779,7 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
                     result.stackSize += getStackInSlot(6).stackSize;
                     this.setInventorySlotContents(6, result);
 
-                    for (int i = 0; i < 5; i++)
-                    {
-                        this.decrStackSizeLeaveContainer(i + 1, 1);
-                    }
+                    this.decrementSlots(AlchemyRecipeRegistry.getRecipeForItemStack(getResultingItemStack()));
 
                     if (worldObj != null)
                     {
@@ -842,4 +836,31 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
 	{
 		return true;
 	}
+	
+	public void decrementSlots(ItemStack[] recipe)
+    {
+		boolean[] decrementedList = new boolean[]{false,false,false,false,false};
+		
+		for(int i=0; i<(Math.min(recipe.length,5)); i++)
+		{
+			ItemStack decStack = recipe[i];
+			
+			if(decStack == null)
+			{
+				continue;
+			}
+			
+			for(int j=0; j<5; j++)
+			{
+				ItemStack testStack = this.getStackInSlot(j+1);
+				
+				if(testStack != null && testStack.isItemEqual(decStack) && !(decrementedList[j]))
+				{
+					this.decrStackSize(j+1, 1);
+					decrementedList[j] = true;
+					break;
+				}
+			}
+		}	
+    }
 }

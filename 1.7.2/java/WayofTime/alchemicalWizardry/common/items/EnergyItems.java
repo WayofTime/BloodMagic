@@ -8,8 +8,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.IBindable;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
@@ -67,45 +67,6 @@ public class EnergyItems extends Item implements IBindable
             }
         }
     }
-
-//    public static boolean syphonBatteriesWithoutParticles(ItemStack ist, EntityPlayer player, int damageToBeDone, boolean particles)
-//    {
-//        if (!player.capabilities.isCreativeMode)
-//        {
-//            NBTTagCompound itemTag = ist.stackTagCompound;
-//
-//            if (itemTag == null || itemTag.getString("ownerName").equals(""))
-//            {
-//                return false;
-//            }
-//
-//            World world = player.worldObj;
-//
-//            if (world != null)
-//            {
-//                double posX = player.posX;
-//                double posY = player.posY;
-//                double posZ = player.posZ;
-//
-//                if (particles)
-//                {
-//                    SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
-//                    world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-//                }
-//            }
-//
-//            if (!player.worldObj.isRemote)
-//            {
-//                return false;
-//            }
-//
-//            PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(itemTag.getString("ownerName"), -damageToBeDone, 0));
-//            return true;
-//        } else
-//        {
-//            return true;
-//        }
-//    }
 
     public static boolean syphonBatteries(ItemStack ist, EntityPlayer player, int damageToBeDone)
     {

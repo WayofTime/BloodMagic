@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.summoning;
+package WayofTime.alchemicalWizardry.api.summoningRegistry;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemBlock;

@@ -25,7 +25,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyPotionHelper;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
 
 import com.google.common.collect.HashMultimap;
 

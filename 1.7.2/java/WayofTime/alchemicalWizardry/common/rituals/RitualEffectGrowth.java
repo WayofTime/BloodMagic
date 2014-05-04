@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -7,14 +10,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
 public class RitualEffectGrowth extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -27,10 +32,10 @@ public class RitualEffectGrowth extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -81,4 +86,19 @@ public class RitualEffectGrowth extends RitualEffect
     {
         return 100;
     }
+
+    @Override
+	public List<RitualComponent> getRitualComponentList()
+	{
+		ArrayList<RitualComponent> growthRitual = new ArrayList();
+        growthRitual.add(new RitualComponent(1, 0, 0, 1));
+        growthRitual.add(new RitualComponent(-1, 0, 0, 1));
+        growthRitual.add(new RitualComponent(0, 0, 1, 1));
+        growthRitual.add(new RitualComponent(0, 0, -1, 1));
+        growthRitual.add(new RitualComponent(-1, 0, 1, 3));
+        growthRitual.add(new RitualComponent(1, 0, 1, 3));
+        growthRitual.add(new RitualComponent(-1, 0, -1, 3));
+        growthRitual.add(new RitualComponent(1, 0, -1, 3));
+        return growthRitual;
+	}
 }

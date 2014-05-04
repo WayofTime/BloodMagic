@@ -12,8 +12,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.IHolding;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -56,9 +56,9 @@ public class ItemSigilOfEnderSeverance extends EnergyItems implements IHolding
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfTheFastMiner");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalSigil_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:ElementalSigil_deactivated");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSeverance_deactivated");
+        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSeverance_activated");
+        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSeverance_deactivated");
     }
 
     @Override
@@ -152,7 +152,7 @@ public class ItemSigilOfEnderSeverance extends EnergyItems implements IHolding
             {
             	if(!entity.equals(par3Entity)&&entity instanceof EntityLiving)	
             	{
-            		((EntityLiving)entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionPlanarBinding.id,2,0));
+            		((EntityLiving)entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionPlanarBinding.id,5,0));
             	}
             }
         }

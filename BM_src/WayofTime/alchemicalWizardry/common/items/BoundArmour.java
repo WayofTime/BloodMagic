@@ -27,7 +27,7 @@ import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Optional.InterfaceList(value = {@Interface(iface="IRevealer", modid = "Thaumcraft"), @Interface(iface="IGoggles", modid = "Thaumcraft")})
+@Optional.InterfaceList(value = {@Interface(iface="thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IGoggles", modid = "Thaumcraft")})
 public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IBindable
 {
     private static int invSize = 9;
@@ -493,6 +493,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
         return false;
     }
 
+    @Optional.Method(modid = "Thaumcraft")
     public boolean hasIRevealer(ItemStack itemStack)
     {
         ItemStack[] inv = getInternalInventory(itemStack);
@@ -518,6 +519,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
         return false;
     }
 
+    @Optional.Method(modid = "Thaumcraft")
     public boolean hasIGoggles(ItemStack itemStack)
     {
         ItemStack[] inv = getInternalInventory(itemStack);
@@ -593,11 +595,13 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor, IRevealer, 
         return 0;
     }
 
+    @Optional.Method(modid = "Thaumcraft")
     public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
     {
         return this.hasIRevealer(itemstack);
     }
 
+    @Optional.Method(modid = "Thaumcraft")
     public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
     {
         return this.hasIGoggles(itemstack);

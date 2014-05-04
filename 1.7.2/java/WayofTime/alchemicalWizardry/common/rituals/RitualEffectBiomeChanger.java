@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,14 +19,16 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 
 public class RitualEffectBiomeChanger extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -36,24 +41,25 @@ public class RitualEffectBiomeChanger extends RitualEffect
         }
 
         int cooldown = ritualStone.getCooldown();
-
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
         if (cooldown > 0)
         {
             ritualStone.setCooldown(cooldown - 1);
 
-            if (ritualStone.getWorldObj().rand.nextInt(15) == 0)
+            if (world.rand.nextInt(15) == 0)
             {
-                ritualStone.getWorldObj().addWeatherEffect(new EntityLightningBolt(ritualStone.getWorldObj(), ritualStone.xCoord - 1 + ritualStone.getWorldObj().rand.nextInt(3), ritualStone.yCoord + 1, ritualStone.zCoord - 1 + ritualStone.getWorldObj().rand.nextInt(3)));
+                world.addWeatherEffect(new EntityLightningBolt(world, x - 1 + world.rand.nextInt(3), y + 1, z - 1 + world.rand.nextInt(3)));
             }
 
             return;
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        
+        
         int range = 10;
 
         if (currentEssence < this.getCostPerRefresh())
@@ -315,4 +321,127 @@ public class RitualEffectBiomeChanger extends RitualEffect
     {
         return 200;
     }
+
+    @Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> biomeChangerRitual = new ArrayList();
+        biomeChangerRitual.add(new RitualComponent(1, 0, -2, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(1, 0, -3, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(3, 0, -1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(1, 0, 2, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(1, 0, 3, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(3, 0, 1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, -3, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-3, 0, -1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, 3, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-3, 0, 1, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(3, 0, -3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(3, 0, -4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(4, 0, -3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(4, 0, -5, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(5, 0, -4, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(3, 0, 3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(3, 0, 4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(4, 0, 3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(4, 0, 5, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(5, 0, 4, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-3, 0, 3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-3, 0, 4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, 3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, 5, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, 4, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-3, 0, -3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-3, 0, -4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, -3, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, -5, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, -4, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(0, 0, -5, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, -6, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(1, 0, -6, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, -8, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(0, 0, -8, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(1, 0, -8, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, -10, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(0, 0, -10, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(1, 0, -10, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(0, 0, 5, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, 6, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(1, 0, 6, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, 8, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(0, 0, 8, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(1, 0, 8, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(-1, 0, 10, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(0, 0, 10, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(1, 0, 10, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, 0, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-6, 0, -1, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-6, 0, 1, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, -1, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, 0, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, 1, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(-10, 0, -1, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-10, 0, 0, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-10, 0, 1, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(5, 0, 0, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(6, 0, -1, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(6, 0, 1, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(8, 0, -1, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(8, 0, 0, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(8, 0, 1, RitualComponent.BLANK));
+        biomeChangerRitual.add(new RitualComponent(10, 0, -1, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(10, 0, 0, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(10, 0, 1, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(6, 0, -6, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(6, 0, -7, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(7, 0, -6, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(7, 0, -5, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(5, 0, -7, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(8, 0, -5, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(8, 0, -4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(9, 0, -4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(5, 0, -8, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(4, 0, -8, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(4, 0, -9, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-6, 0, 6, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-6, 0, 7, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-7, 0, 6, RitualComponent.AIR));
+        biomeChangerRitual.add(new RitualComponent(-7, 0, 5, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, 7, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, 5, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, 4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-9, 0, 4, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, 8, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, 8, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, 9, RitualComponent.EARTH));
+        biomeChangerRitual.add(new RitualComponent(6, 0, 6, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(6, 0, 7, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(7, 0, 6, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(7, 0, 5, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(5, 0, 7, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(8, 0, 5, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(8, 0, 4, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(9, 0, 4, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(5, 0, 8, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(4, 0, 8, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(4, 0, 9, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-6, 0, -6, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-6, 0, -7, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-7, 0, -6, RitualComponent.FIRE));
+        biomeChangerRitual.add(new RitualComponent(-7, 0, -5, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, -7, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, -5, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-8, 0, -4, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-9, 0, -4, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-5, 0, -8, RitualComponent.DUSK));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, -8, RitualComponent.WATER));
+        biomeChangerRitual.add(new RitualComponent(-4, 0, -9, RitualComponent.WATER));
+        return biomeChangerRitual;
+	}
 }

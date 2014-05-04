@@ -17,17 +17,19 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.Constants;
+import thaumcraft.api.IGoggles;
+import thaumcraft.api.nodes.IRevealer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Optional.InterfaceList(value = {@Interface(iface="IRevealer", modid = "Thaumcraft"), @Interface(iface="IGoggles", modid = "Thaumcraft")})
-public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable //,IRevealer, IGoggles
+@Optional.InterfaceList(value = {@Interface(iface="thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IGoggles", modid = "Thaumcraft")})
+public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,IRevealer, IGoggles
 {
     private static int invSize = 9;
     private static IIcon helmetIcon;
@@ -119,7 +121,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable //
         {
             if (source.isUnblockable())
             {
-                return new ArmorProperties(-1, 3, 3);
+                return new ArmorProperties(-1, 3, 4);
             }
 
             return new ArmorProperties(-1, 3, 100000);
@@ -474,57 +476,57 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable //
         return false;
     }
 
-//    @Override
-//    public boolean hasIRevealer(ItemStack itemStack)
-//    {
-//        ItemStack[] inv = getInternalInventory(itemStack);
-//
-//        if (inv == null)
-//        {
-//            return false;
-//        }
-//
-//        for (ItemStack item : inv)
-//        {
-//            if (item == null)
-//            {
-//                continue;
-//            }
-//
-//            if (item.getItem() instanceof IRevealer)
-//            {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean hasIGoggles(ItemStack itemStack)
-//    {
-//        ItemStack[] inv = getInternalInventory(itemStack);
-//
-//        if (inv == null)
-//        {
-//            return false;
-//        }
-//
-//        for (ItemStack item : inv)
-//        {
-//            if (item == null)
-//            {
-//                continue;
-//            }
-//
-//            if (item.getItem() instanceof IGoggles)
-//            {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
+    @Optional.Method(modid = "Thaumcraft")
+    public boolean hasIRevealer(ItemStack itemStack)
+    {
+        ItemStack[] inv = getInternalInventory(itemStack);
+
+        if (inv == null)
+        {
+            return false;
+        }
+
+        for (ItemStack item : inv)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (item.getItem() instanceof IRevealer)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Optional.Method(modid = "Thaumcraft")
+    public boolean hasIGoggles(ItemStack itemStack)
+    {
+        ItemStack[] inv = getInternalInventory(itemStack);
+
+        if (inv == null)
+        {
+            return false;
+        }
+
+        for (ItemStack item : inv)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (item.getItem() instanceof IGoggles)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     
     public float getUpgradeCostMultiplier(ItemStack itemStack)
     {
@@ -576,15 +578,17 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable //
         return 0;
     }
 
-//    @Override
-//    public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
-//    {
-//        return this.hasIRevealer(itemstack);
-//    }
-//
-//    @Override
-//    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
-//    {
-//        return this.hasIGoggles(itemstack);
-//    }
+    @Override
+    @Optional.Method(modid = "Thaumcraft")
+    public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
+    {
+        return this.hasIRevealer(itemstack);
+    }
+
+    @Override
+    @Optional.Method(modid = "Thaumcraft")
+    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
+    {
+        return this.hasIGoggles(itemstack);
+    }
 }

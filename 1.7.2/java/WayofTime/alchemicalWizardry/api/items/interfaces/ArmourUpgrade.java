@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry.api.items.interfaces;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

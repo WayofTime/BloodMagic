@@ -127,6 +127,8 @@ item.itemDiabloKey.name=Key of Binding
 item.energyBazooka.name=Energy Bazooka
 item.bloodLightSigil.name=Sigil of the Blood Lamp
 item.itemComplexSpellCrystal.name=Complex Spell Crystal
+item.itemSigilOfSupression.name=Sigil of Supression
+item.itemSigilOfEnderSeverance.name=Sigil of Ender Severance
 item.bucketLive.name=Bucket of Life
 item.bloodMagicBaseItem.quartzRod.name=Quartz Rod
 item.bloodMagicBaseItem.EmptyCore.name=Empty Core
@@ -163,6 +165,8 @@ item.bloodMagicAlchemyItem.FracturedBone.name=Fractured Bone
 item.bloodMagicAlchemyItem.Virtus.name=Virtus
 item.bloodMagicAlchemyItem.Reductus.name=Reductus
 item.bloodMagicAlchemyItem.Potentia.name=Potentia
+item.sanguineHelmet.name=Sanguine Helmet
+
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

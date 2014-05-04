@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,14 +11,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
 public class RitualEffectLeap extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -30,10 +33,10 @@ public class RitualEffectLeap extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -136,4 +139,20 @@ public class RitualEffectLeap extends RitualEffect
     {
         return 5;
     }
+
+    @Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> leapingRitual = new ArrayList();
+        leapingRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
+        leapingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.AIR));
+        leapingRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.AIR));
+
+        for (int i = 0; i <= 2; i++)
+        {
+            leapingRitual.add(new RitualComponent(2, 0, i, RitualComponent.AIR));
+            leapingRitual.add(new RitualComponent(-2, 0, i, RitualComponent.AIR));
+        }
+        return leapingRitual;
+	}
 }

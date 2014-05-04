@@ -10,12 +10,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.IBindingAgent;
 import WayofTime.alchemicalWizardry.common.ICatalyst;
 import WayofTime.alchemicalWizardry.common.IFillingAgent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemicalPotionCreationHandler;
-import WayofTime.alchemicalWizardry.common.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -696,10 +696,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     progress = 0;
                     this.setInventorySlotContents(6, getResultingItemStack());
 
-                    for (int i = 0; i < 5; i++)
-                    {
-                        this.decrStackSize(i + 1, 1);
-                    }
+                    this.decrementSlots(AlchemyRecipeRegistry.getRecipeForItemStack(getResultingItemStack()));
 
                     if (worldObj != null)
                     {
@@ -727,10 +724,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     result.stackSize += getStackInSlot(6).stackSize;
                     this.setInventorySlotContents(6, result);
 
-                    for (int i = 0; i < 5; i++)
-                    {
-                        this.decrStackSize(i + 1, 1);
-                    }
+                    this.decrementSlots(AlchemyRecipeRegistry.getRecipeForItemStack(getResultingItemStack()));
 
                     if (worldObj != null)
                     {
@@ -741,5 +735,32 @@ public class TEWritingTable extends TileEntity implements IInventory
         }
 
         //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    }
+    
+    public void decrementSlots(ItemStack[] recipe)
+    {
+		boolean[] decrementedList = new boolean[]{false,false,false,false,false};
+		
+		for(int i=0; i<(Math.min(recipe.length,5)); i++)
+		{
+			ItemStack decStack = recipe[i];
+			
+			if(decStack == null)
+			{
+				continue;
+			}
+			
+			for(int j=0; j<5; j++)
+			{
+				ItemStack testStack = this.getStackInSlot(j+1);
+				
+				if(testStack != null && testStack.isItemEqual(decStack) && !(decrementedList[j]))
+				{
+					this.decrStackSize(j+1, 1);
+					decrementedList[j] = true;
+					break;
+				}
+			}
+		}	
     }
 }

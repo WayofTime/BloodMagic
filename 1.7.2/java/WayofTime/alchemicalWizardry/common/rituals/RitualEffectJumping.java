@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import ibxm.Player;
-
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,15 +11,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
 public class RitualEffectJumping extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -33,10 +33,10 @@ public class RitualEffectJumping extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -96,4 +96,19 @@ public class RitualEffectJumping extends RitualEffect
     {
         return 5;
     }
+
+    @Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> jumpingRitual = new ArrayList();
+
+        for (int i = -1; i <= 1; i++)
+        {
+            jumpingRitual.add(new RitualComponent(1, i, 1, RitualComponent.AIR));
+            jumpingRitual.add(new RitualComponent(-1, i, 1, RitualComponent.AIR));
+            jumpingRitual.add(new RitualComponent(-1, i, -1, RitualComponent.AIR));
+            jumpingRitual.add(new RitualComponent(1, i, -1, RitualComponent.AIR));
+        }
+        return jumpingRitual;
+	}
 }

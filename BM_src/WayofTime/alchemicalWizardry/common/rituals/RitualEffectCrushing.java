@@ -60,6 +60,9 @@ public class RitualEffectCrushing extends RitualEffect
         {
             return;
         }
+        
+        boolean isSilkTouch = this.isSilkTouch(world, x, y, z);
+    	int fortuneLevel = this.getFortuneLevel(world, x, y, z);
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -73,6 +76,7 @@ public class RitualEffectCrushing extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
+        	
             //boolean flag = false;
             for (int j = -3; j < 0; j++)
             {
@@ -90,57 +94,108 @@ public class RitualEffectCrushing extends RitualEffect
                             {
                                 continue;
                             }
-
-                            ArrayList<ItemStack> itemDropList = block.getBlockDropped(world, x + i, y + j, z + k, meta, 0);
-
-                            if (itemDropList != null)
+                            
+                            if(isSilkTouch && block.canSilkHarvest(world, null, x + i, y + j, z + k, meta))
                             {
-                                int invSize = tileEntity.getSizeInventory();
+                            	int invSize = tileEntity.getSizeInventory();
+                            	
+                            	ItemStack item =  new ItemStack(block,1,meta);
+                                ItemStack copyStack = item.copyItemStack(item);
 
-                                for (ItemStack item : itemDropList)
+                                for (int n = 0; n < invSize; n++)
                                 {
-                                    ItemStack copyStack = item.copyItemStack(item);
-
-                                    for (int n = 0; n < invSize; n++)
+                                    if (tileEntity.isItemValidForSlot(n, copyStack) && copyStack.stackSize != 0)
                                     {
-                                        if (tileEntity.isItemValidForSlot(n, copyStack) && copyStack.stackSize != 0)
+                                        ItemStack itemStack = tileEntity.getStackInSlot(n);
+
+                                        if (itemStack == null)
                                         {
-                                            ItemStack itemStack = tileEntity.getStackInSlot(n);
+                                            tileEntity.setInventorySlotContents(n, item);
+                                            copyStack.stackSize = 0;
+                                        } else
+                                        {
+                                            if (itemStack.getItem().equals(copyStack.getItem()))
+                                            {
+                                                int itemSize = itemStack.stackSize;
+                                                int copySize = copyStack.stackSize;
+                                                int maxSize = itemStack.getMaxStackSize();
 
-                                            if (itemStack == null)
-                                            {
-                                                tileEntity.setInventorySlotContents(n, copyStack);
-                                                copyStack.stackSize = 0;
-                                            } else
-                                            {
-                                                if (itemStack.getItem().equals(copyStack.getItem()))
+                                                if (copySize + itemSize < maxSize)
                                                 {
-                                                    int itemSize = itemStack.stackSize;
-                                                    int copySize = copyStack.stackSize;
-                                                    int maxSize = itemStack.getMaxStackSize();
-
-                                                    if (copySize + itemSize < maxSize)
-                                                    {
-                                                        copyStack.stackSize = 0;
-                                                        itemStack.stackSize = itemSize + copySize;
-                                                        tileEntity.setInventorySlotContents(n, itemStack);
-                                                    } else
-                                                    {
-                                                        copyStack.stackSize = itemSize + copySize - maxSize;
-                                                        itemStack.stackSize = maxSize;
-                                                    }
+                                                    copyStack.stackSize = 0;
+                                                    itemStack.stackSize = itemSize + copySize;
+                                                    tileEntity.setInventorySlotContents(n, itemStack);
+                                                } else
+                                                {
+                                                    copyStack.stackSize = itemSize + copySize - maxSize;
+                                                    itemStack.stackSize = maxSize;
                                                 }
                                             }
                                         }
                                     }
-
-                                    if (copyStack.stackSize > 0)
-                                    {
-                                        world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
-                                        //flag=true;
-                                    }
                                 }
+
+                                if (copyStack.stackSize > 0)
+                                {
+                                    world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+                                    //flag=true;
+                                }
+                                
                             }
+                            else
+                            {
+	                            ArrayList<ItemStack> itemDropList = block.getBlockDropped(world, x + i, y + j, z + k, meta, fortuneLevel);
+	
+	                            if (itemDropList != null)
+	                            {
+	                                int invSize = tileEntity.getSizeInventory();
+	
+	                                for (ItemStack item : itemDropList)
+	                                {
+	                                    ItemStack copyStack = item.copyItemStack(item);
+	
+	                                    for (int n = 0; n < invSize; n++)
+	                                    {
+	                                        if (tileEntity.isItemValidForSlot(n, copyStack) && copyStack.stackSize != 0)
+	                                        {
+	                                            ItemStack itemStack = tileEntity.getStackInSlot(n);
+	
+	                                            if (itemStack == null)
+	                                            {
+	                                                tileEntity.setInventorySlotContents(n, item);
+	                                                copyStack.stackSize = 0;
+	                                            } else
+	                                            {
+	                                                if (itemStack.getItem().equals(copyStack.getItem()))
+	                                                {
+	                                                    int itemSize = itemStack.stackSize;
+	                                                    int copySize = copyStack.stackSize;
+	                                                    int maxSize = itemStack.getMaxStackSize();
+	
+	                                                    if (copySize + itemSize < maxSize)
+	                                                    {
+	                                                        copyStack.stackSize = 0;
+	                                                        itemStack.stackSize = itemSize + copySize;
+	                                                        tileEntity.setInventorySlotContents(n, itemStack);
+	                                                    } else
+	                                                    {
+	                                                        copyStack.stackSize = itemSize + copySize - maxSize;
+	                                                        itemStack.stackSize = maxSize;
+	                                                    }
+	                                                }
+	                                            }
+	                                        }
+	                                    }
+	
+	                                    if (copyStack.stackSize > 0)
+	                                    {
+	                                        world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+	                                        //flag=true;
+	                                    }
+	                                }
+	                            }
+                            
+                        	}
 
                             //if(flag)
                             world.setBlockToAir(x + i, y + j, z + k);
@@ -153,6 +208,67 @@ public class RitualEffectCrushing extends RitualEffect
                 }
             }
         }
+    }
+    
+    public boolean isSilkTouch(World world, int x, int y, int z)
+    {
+    	int index = 0;
+    	for(int i=-2; i<=2; i++)
+    	{
+    		for(int j=-2; j<=2; j++)
+    		{
+    			int index1 = Math.abs(i);
+    			int index2 = Math.abs(j);
+    			
+    			if((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2))
+    			{
+    				int blockID = world.getBlockId(x + i, y + 1, z + j);
+                    Block block = Block.blocksList[blockID];
+                    if(block == Block.blockGold)
+                    {
+                    	index++;
+                    }
+    			}
+    		}
+    	}
+    	
+    	return index>=12;
+    }
+    
+    public int getFortuneLevel(World world, int x, int y, int z)
+    {
+    	int index = 0;
+    	for(int i=-2; i<=2; i++)
+    	{
+    		for(int j=-2; j<=2; j++)
+    		{
+    			int index1 = Math.abs(i);
+    			int index2 = Math.abs(j);
+    			
+    			if((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2))
+    			{
+    				int blockID = world.getBlockId(x + i, y + 1, z + j);
+                    Block block = Block.blocksList[blockID];
+                    if(block == Block.blockEmerald)
+                    {
+                    	index++;
+                    }
+    			}
+    		}
+    	}
+    	
+    	if(index>=12)
+    	{
+    		return 3;
+    	}else if(index>=8)
+    	{
+    		return 2;
+    	}else if(index>=4)
+    	{
+    		return 1;
+    	}
+    	
+    	return 0;
     }
 
     @Override

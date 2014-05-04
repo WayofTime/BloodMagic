@@ -1,19 +1,22 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 
 public class RitualEffectApiaryOverclock extends RitualEffect
 {
     @Override
-    public void performEffect(TEMasterStone ritualStone)
+    public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
         World worldSave = MinecraftServer.getServer().worldServers[0];
@@ -26,10 +29,10 @@ public class RitualEffectApiaryOverclock extends RitualEffect
         }
 
         int currentEssence = data.currentEssence;
-        World world = ritualStone.getWorldObj();
-        int x = ritualStone.xCoord;
-        int y = ritualStone.yCoord;
-        int z = ritualStone.zCoord;
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         
         if (currentEssence < this.getCostPerRefresh())
@@ -78,4 +81,19 @@ public class RitualEffectApiaryOverclock extends RitualEffect
         // TODO Auto-generated method stub
         return 10;
     }
+
+    @Override
+	public List<RitualComponent> getRitualComponentList() 
+	{
+		ArrayList<RitualComponent> apiaryRitual = new ArrayList();
+        apiaryRitual.add(new RitualComponent(1,0,0, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(1,0,1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(1,0,-1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1,0,-1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1,0,1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1,0,0, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(0,0,-1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(0,0,1, RitualComponent.DUSK));
+        return apiaryRitual;
+	}
 }

@@ -10,13 +10,17 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import thaumcraft.api.IGoggles;
+import thaumcraft.api.IVisDiscountGear;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.nodes.IRevealer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade//, IGoggles, IVisDiscounter, IRevealer
+public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGoggles, IVisDiscountGear, IRevealer
 {
     private static IIcon helmetIcon;
 
@@ -47,12 +51,12 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade//, IG
         return null;
     }
 
-//    @Override
-//    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
-//    {
-//        par3List.add("A pair of goggles imbued with power");
-//        par3List.add("Vis discount: " + this.getVisDiscount() + "%");
-//    }
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+        par3List.add("A pair of goggles imbued with power");
+        par3List.add("Vis discount: " + 8 + "%");
+    }
 
     
 //    @Override
@@ -79,15 +83,21 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade//, IG
         return 0;
     }
 
-//    @Override
-//    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
-//    {
-//        return true;
-//    }
-//
-//    @Override
-//    public int getVisDiscount()
-//    {
-//        return 10;
-//    }
+	@Override
+	public boolean showNodes(ItemStack itemstack, EntityLivingBase player) 
+	{
+		return true;
+	}
+
+	@Override
+	public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) 
+	{
+		return 8;
+	}
+
+	@Override
+	public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player) 
+	{
+		return true;
+	}
 }

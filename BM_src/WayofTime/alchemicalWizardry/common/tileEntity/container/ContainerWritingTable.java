@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.container;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 
 public class ContainerWritingTable extends Container
 {
@@ -52,7 +53,7 @@ public class ContainerWritingTable extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slot)
     {
-        ItemStack stack = null;
+    	ItemStack stack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
 
         //null checks and checks if the item can be stacked (maxStackSize > 1)
@@ -61,26 +62,23 @@ public class ContainerWritingTable extends Container
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
 
-            if (slot == 7)
+            //merges the item into player inventory since its in the tileEntity
+            if (slot <= 6)
             {
-                if (!this.mergeItemStack(stackInSlot, 7, 35, true))
+                if (!this.mergeItemStack(stackInSlot, 7, 43, true))
                 {
                     return null;
                 }
-
-                slotObject.onSlotChange(stackInSlot, stack);
             }
-
-            //merges the item into player inventory since its in the tileEntity
-            if (slot < 6)
+            else if(stack.getItem() instanceof IBloodOrb)
             {
-                if (!this.mergeItemStack(stackInSlot, 7, 35, true))
+            	if (!this.mergeItemStack(stackInSlot, 0, 1, false))
                 {
                     return null;
                 }
             }
             //places it into the tileEntity is possible since its in the player inventory
-            else if (!this.mergeItemStack(stackInSlot, 0, 7, false))
+            else if (!this.mergeItemStack(stackInSlot, 1, 6, false))
             {
                 return null;
             }

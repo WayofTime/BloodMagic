@@ -11,6 +11,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -190,15 +191,20 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             			}
             		}
 
-            		for(int i=0; i<recipe.length;i++)
+            		for(int i=0; i<5;i++)
             		{
-            			ItemStack recItem = recipe[i];
-            			if(recItem==null)
+            			ItemStack recItem;
+            			if(recipe.length<=i)
             			{
-            				continue;
+            				recItem = null;
             			}
+            			else
+            			{
+            				recItem = recipe[i];
+            			}
+
             			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
-            			if(alchStack!=null&&!(recItem.isItemEqual(alchStack)))
+            			if((recItem==null&&alchStack!=null) || (alchStack!=null&&!(areItemStacksEqualWithWildcard(recItem,alchStack))))
             			{
             				for(int j=0;j<outputInv.getSizeInventory();j++)
             				{
@@ -243,132 +249,136 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             		}
             		
             	}
-            	if(flag==0&&inputInv1!=null)
+            	
+            	if(world.getWorldTime()%10 == 0)
             	{
-            		for(int i=0;i<recipe.length;i++)
-            		{
-            			ItemStack recItem = recipe[i];
-            			if(recItem==null)
-            			{
-            				continue;
-            			}
-            			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
-            			
-            			if(alchStack!=null&&((!recItem.isItemEqual(alchStack))||alchStack.stackSize>=alchStack.getMaxStackSize()))
-            			{
-            				continue;
-            			}
-            			
-            			for(int j=0;j<inputInv1.getSizeInventory();j++)
-            			{
-            				ItemStack curItem = inputInv1.getStackInSlot(j);
-            				if(curItem==null)
-            				{
-            					continue;
-            				}
-            				if(curItem.isItemEqual(recItem))
-            				{
-            					if(alchStack==null)
-            					{
-            						ItemStack copyStack = recItem.copy();
-                        			copyStack.stackSize = 1;
-                        			alchemyEntity.setInventorySlotContents(i+1, copyStack);
-                        			
-                        			curItem.stackSize--;
-                        			if(curItem.stackSize<=0)
-                        			{
-                        				inputInv1.setInventorySlotContents(j, null);
-                        			}else
-                        			{
-                        				inputInv1.setInventorySlotContents(j, curItem);
-                        			}
-
-                        			flag++;
-                        			break;
-                        			
-            					}else
-            					{
-            						alchStack.stackSize++;
-                        			alchemyEntity.setInventorySlotContents(i+1, alchStack);
-                        			
-                        			curItem.stackSize--;
-                        			if(curItem.stackSize<=0)
-                        			{
-                        				inputInv1.setInventorySlotContents(j, null);
-                        			}else
-                        			{
-                        				inputInv1.setInventorySlotContents(j, curItem);
-                        			}
-                        			
-                        			flag++;
-                        			break;
-            					}
-            				}
-            			}
-            		}
-            	}
-            	if(flag==0&&inputInv2!=null)
-            	{
-            		for(int i=0;i<recipe.length;i++)
-            		{
-            			ItemStack recItem = recipe[i];
-            			if(recItem==null)
-            			{
-            				continue;
-            			}
-            			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
-            			if(alchStack!=null&&((!recItem.isItemEqual(alchStack))||alchStack.stackSize>=alchStack.getMaxStackSize()))
-            			{
-            				continue;
-            			}
-            			
-            			for(int j=0;j<inputInv2.getSizeInventory();j++)
-            			{
-            				ItemStack curItem = inputInv2.getStackInSlot(j);
-            				if(curItem==null)
-            				{
-            					continue;
-            				}
-            				if(curItem.isItemEqual(recItem))
-            				{
-            					if(alchStack==null)
-            					{
-            						ItemStack copyStack = recItem.copy();
-                        			copyStack.stackSize = 1;
-                        			alchemyEntity.setInventorySlotContents(i+1, copyStack);
-                        			
-                        			curItem.stackSize--;
-                        			if(curItem.stackSize<=0)
-                        			{
-                        				inputInv2.setInventorySlotContents(j, null);
-                        			}else
-                        			{
-                        				inputInv2.setInventorySlotContents(j, curItem);
-                        			}
-
-                        			flag++;
-                        			break;
-                        			
-            					}else
-            					{
-            						alchStack.stackSize++;
-                        			alchemyEntity.setInventorySlotContents(i+1, alchStack);
-                        			
-                        			curItem.stackSize--;
-                        			if(curItem.stackSize<=0)
-                        			{
-                        				inputInv2.setInventorySlotContents(j, null);
-                        			}else
-                        			{
-                        				inputInv2.setInventorySlotContents(j, curItem);
-                        			}
-                        			
-                        			flag++;
-                        			break;
-            					}
-            				}
-            			}
-            		}
+	            	if(flag==0&&inputInv1!=null)
+	            	{
+	            		for(int i=0;i<recipe.length;i++)
+	            		{
+	            			ItemStack recItem = recipe[i];
+	            			if(recItem==null)
+	            			{
+	            				continue;
+	            			}
+	            			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
+	            			
+	            			if(alchStack!=null&&((!areItemStacksEqualWithWildcard(recItem,alchStack))||alchStack.stackSize>=alchStack.getMaxStackSize()))
+	            			{
+	            				continue;
+	            			}
+	            			
+	            			for(int j=0;j<inputInv1.getSizeInventory();j++)
+	            			{
+	            				ItemStack curItem = inputInv1.getStackInSlot(j);
+	            				if(curItem==null)
+	            				{
+	            					continue;
+	            				}
+	            				if(areItemStacksEqualWithWildcard(recItem,curItem))
+	            				{
+	            					if(alchStack==null)
+	            					{
+	            						ItemStack copyStack = recItem.copy();
+	                        			copyStack.stackSize = 1;
+	                        			alchemyEntity.setInventorySlotContents(i+1, copyStack);
+	                        			
+	                        			curItem.stackSize--;
+	                        			if(curItem.stackSize<=0)
+	                        			{
+	                        				inputInv1.setInventorySlotContents(j, null);
+	                        			}else
+	                        			{
+	                        				inputInv1.setInventorySlotContents(j, curItem);
+	                        			}
+	
+	                        			flag++;
+	                        			break;
+	                        			
+	            					}else
+	            					{
+	            						alchStack.stackSize++;
+	                        			alchemyEntity.setInventorySlotContents(i+1, alchStack);
+	                        			
+	                        			curItem.stackSize--;
+	                        			if(curItem.stackSize<=0)
+	                        			{
+	                        				inputInv1.setInventorySlotContents(j, null);
+	                        			}else
+	                        			{
+	                        				inputInv1.setInventorySlotContents(j, curItem);
+	                        			}
+	                        			
+	                        			flag++;
+	                        			break;
+	            					}
+	            				}
+	            			}
+	            		}
+	            	}
+	            	if(flag==0&&inputInv2!=null)
+	            	{
+	            		for(int i=0;i<recipe.length;i++)
+	            		{
+	            			ItemStack recItem = recipe[i];
+	            			if(recItem==null)
+	            			{
+	            				continue;
+	            			}
+	            			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
+	            			if(alchStack!=null&&((!areItemStacksEqualWithWildcard(recItem,alchStack))||alchStack.stackSize>=alchStack.getMaxStackSize()))
+	            			{
+	            				continue;
+	            			}
+	            			
+	            			for(int j=0;j<inputInv2.getSizeInventory();j++)
+	            			{
+	            				ItemStack curItem = inputInv2.getStackInSlot(j);
+	            				if(curItem==null)
+	            				{
+	            					continue;
+	            				}
+	            				if(areItemStacksEqualWithWildcard(recItem,curItem))
+	            				{
+	            					if(alchStack==null)
+	            					{
+	            						ItemStack copyStack = recItem.copy();
+	                        			copyStack.stackSize = 1;
+	                        			alchemyEntity.setInventorySlotContents(i+1, copyStack);
+	                        			
+	                        			curItem.stackSize--;
+	                        			if(curItem.stackSize<=0)
+	                        			{
+	                        				inputInv2.setInventorySlotContents(j, null);
+	                        			}else
+	                        			{
+	                        				inputInv2.setInventorySlotContents(j, curItem);
+	                        			}
+	
+	                        			flag++;
+	                        			break;
+	                        			
+	            					}else
+	            					{
+	            						alchStack.stackSize++;
+	                        			alchemyEntity.setInventorySlotContents(i+1, alchStack);
+	                        			
+	                        			curItem.stackSize--;
+	                        			if(curItem.stackSize<=0)
+	                        			{
+	                        				inputInv2.setInventorySlotContents(j, null);
+	                        			}else
+	                        			{
+	                        				inputInv2.setInventorySlotContents(j, curItem);
+	                        			}
+	                        			
+	                        			flag++;
+	                        			break;
+	            					}
+	            				}
+	            			}
+	            		}
+	            	}
             	}
             }
 
@@ -411,5 +421,10 @@ public class RitualEffectAutoAlchemy extends RitualEffect
         autoAlchemyRitual.add(new RitualComponent(3,0,2, RitualComponent.FIRE));
         autoAlchemyRitual.add(new RitualComponent(2,0,3, RitualComponent.FIRE));
         return autoAlchemyRitual;
+	}
+	
+	public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack)
+	{
+		return recipeStack.isItemEqual(comparedStack) || (recipeStack.getItemDamage() == OreDictionary.WILDCARD_VALUE && recipeStack.getItem() == comparedStack.getItem());
 	}
 }

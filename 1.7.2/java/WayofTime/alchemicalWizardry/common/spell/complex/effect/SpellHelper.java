@@ -16,9 +16,11 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 
 public class SpellHelper 
@@ -121,7 +123,7 @@ public class SpellHelper
 	
 	public static String getUsername(EntityPlayer player)
 	{
-		return player.getDisplayName();
+		return SoulNetworkHandler.getUsername(player);
 	}
 	
 	public static void sendParticleToPlayer(EntityPlayer player, String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
@@ -195,6 +197,32 @@ public class SpellHelper
 		{
 			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getVelSettingPacket(motionX, motionY, motionZ), (EntityPlayerMP) player);
 		}
+	}
+	
+	public static boolean isFakePlayer(World world, EntityPlayer player)
+	{
+		if(world.isRemote)
+		{
+			return false;
+		}
+		
+		if(player instanceof FakePlayer || SpellHelper.getUsername(player).contains("[CoFH]"))
+		{
+			return true;
+		}
+		
+		String str = player.getClass().getSimpleName();
+		if(str.contains("GC"))
+		{
+			return false;
+		}
+		
+		if(player.getClass().equals(EntityPlayerMP.class))
+		{
+			return false;
+		}
+		
+		return false;
 	}
 	
 	public static void smashBlock(World world, int posX, int posY, int posZ)
