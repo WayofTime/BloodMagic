@@ -24,9 +24,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy
 {
-    public static String ITEMS_PNG = "/WayofTime/alchemicalWizardry/items.png";
-    public static String BLOCK_PNG = "/WayofTime/alchemicalWizardry/block.png";
-
     // Client stuff
     public void registerRenderers()
     {
