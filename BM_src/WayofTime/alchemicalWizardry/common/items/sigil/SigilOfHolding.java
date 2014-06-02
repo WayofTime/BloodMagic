@@ -149,6 +149,7 @@ public class SigilOfHolding extends EnergyItems
         if (itemTag == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
+            return null;
         }
 
         ItemStack[] inv = new ItemStack[9];

@@ -188,7 +188,7 @@ public class SigilOfHaste extends EnergyItems implements ArmourUpgrade
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionBoost.id, 3, 1));
+        player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionBoost.id, 3, 1,true));
     }
 
     @Override

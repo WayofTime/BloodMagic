@@ -14,9 +14,12 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.common.IBindingAgent;
 import WayofTime.alchemicalWizardry.common.ICatalyst;
 import WayofTime.alchemicalWizardry.common.IFillingAgent;
@@ -751,7 +754,14 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
                     progress = 0;
                     this.setInventorySlotContents(6, getResultingItemStack());
 
-                    this.decrementSlots(AlchemyRecipeRegistry.getRecipeForItemStack(getResultingItemStack()));
+                    ItemStack[] composedRecipe = new ItemStack[5];
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        composedRecipe[i] = inv[i + 1];
+                    }
+
+                    this.decrementSlots(this.getRecipeForItems(composedRecipe, inv[0]));
 
                     if (worldObj != null)
                     {
@@ -779,7 +789,14 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
                     result.stackSize += getStackInSlot(6).stackSize;
                     this.setInventorySlotContents(6, result);
 
-                    this.decrementSlots(AlchemyRecipeRegistry.getRecipeForItemStack(getResultingItemStack()));
+                    ItemStack[] composedRecipe = new ItemStack[5];
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        composedRecipe[i] = inv[i + 1];
+                    }
+
+                    this.decrementSlots(this.getRecipeForItems(composedRecipe, inv[0]));
 
                     if (worldObj != null)
                     {
@@ -837,7 +854,7 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
 		return true;
 	}
 	
-	public void decrementSlots(ItemStack[] recipe)
+	public void decrementSlots(ItemStack[] recipe) //TODO Fix this. This doesn't work.
     {
 		boolean[] decrementedList = new boolean[]{false,false,false,false,false};
 		
@@ -854,13 +871,45 @@ public class TEWritingTable extends TileEntity implements ISidedInventory
 			{
 				ItemStack testStack = this.getStackInSlot(j+1);
 				
-				if(testStack != null && testStack.isItemEqual(decStack) && !(decrementedList[j]))
+				if(testStack != null && (testStack.isItemEqual(decStack) || (testStack.getItem() == decStack.getItem() && decStack.getItemDamage() == OreDictionary.WILDCARD_VALUE)) && !(decrementedList[j]))
 				{
-					this.decrStackSize(j+1, 1);
+					if(testStack.getItem().hasContainerItem())
+					{
+						this.inv[j+1] = testStack.getItem().getContainerItemStack(testStack);
+					}else
+					{
+						this.decrStackSize(j+1, 1);
+					}
+					
 					decrementedList[j] = true;
 					break;
 				}
 			}
 		}	
+    }
+    
+    public ItemStack[] getRecipeForItems(ItemStack[] recipe, ItemStack bloodOrb)
+    {
+    	if (bloodOrb == null)
+        {
+            return null;
+        }
+
+        if (!(bloodOrb.getItem() instanceof IBloodOrb))
+        {
+            return null;
+        }
+
+        int bloodOrbLevel = ((IBloodOrb) bloodOrb.getItem()).getOrbLevel();
+
+        for (AlchemyRecipe ar : AlchemyRecipeRegistry.recipes)
+        {
+            if (ar.doesRecipeMatch(recipe, bloodOrbLevel))
+            {
+                return ar.getRecipe();
+            }
+        }
+
+        return null;
     }
 }

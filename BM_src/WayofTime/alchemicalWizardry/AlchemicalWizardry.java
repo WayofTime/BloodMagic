@@ -83,6 +83,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFlight;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectInterdiction;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemSuction;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectJumping;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
@@ -135,7 +136,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.1d")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.1e")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -1329,6 +1330,7 @@ public class AlchemicalWizardry
         Rituals.ritualList.add(new Rituals(1, 20000,new RitualEffectAutoAlchemy(), "Ballad of Alchemy"));
         Rituals.ritualList.add(new Rituals(1, 1000000,new RitualEffectExpulsion(), "Aura of Expulsion"));
         Rituals.ritualList.add(new Rituals(1, 10000,new RitualEffectSupression(), "Dome of Supression"));
+        Rituals.ritualList.add(new Rituals(1, 25000, new RitualEffectItemSuction(),"Call of the Zephyr"));
         //Rituals.ritualList.add(new Rituals(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
     

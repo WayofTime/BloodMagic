@@ -249,7 +249,7 @@ public class RitualEffectCrushing extends RitualEffect
     			{
     				int blockID = world.getBlockId(x + i, y + 1, z + j);
                     Block block = Block.blocksList[blockID];
-                    if(block == Block.blockEmerald)
+                    if(block == Block.blockEmerald || block == Block.blockDiamond)
                     {
                     	index++;
                     }

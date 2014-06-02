@@ -1,12 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,11 +10,21 @@ import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-
-import java.util.List;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class LavaSigil extends ItemBucket implements ArmourUpgrade
 {
@@ -106,6 +111,26 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
                     return par1ItemStack;
                 }
 
+                TileEntity tile = par2World.getBlockTileEntity(i, j, k);
+                if(tile instanceof IFluidHandler)
+                {
+                	FluidStack fluid = new FluidStack(FluidRegistry.LAVA,1000);
+                	int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, false);
+                	
+                	if(amount>0)
+                	{
+                		((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, true);
+                		if (!par3EntityPlayer.capabilities.isCreativeMode)
+                        {
+                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                            {
+                            }
+                        }
+                	}
+                	
+                	return par1ItemStack;
+                }
+                
                 if (this.isFull == 0)
                 {
                     //Empty
@@ -271,7 +296,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
                                ItemStack thisItemStack)
     {
         // TODO Auto-generated method stub
-        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 9));
+        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 9,true));
         player.extinguish();
     }
 

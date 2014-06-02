@@ -80,7 +80,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade
                                ItemStack thisItemStack)
     {
         // TODO Auto-generated method stub
-        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9));
+        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9,true));
     }
 
     @Override

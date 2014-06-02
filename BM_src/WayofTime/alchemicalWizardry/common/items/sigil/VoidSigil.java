@@ -1,5 +1,22 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
+import java.util.List;
+
+import net.minecraft.block.material.MaterialLiquid;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemBucket;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
@@ -7,19 +24,6 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.material.MaterialLiquid;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemBucket;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
-
-import java.util.List;
 
 public class VoidSigil extends ItemBucket implements ArmourUpgrade
 {
@@ -184,6 +188,25 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
                 if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
                 {
                     return par1ItemStack;
+                }
+                
+                TileEntity tile = par2World.getBlockTileEntity(i, j, k);
+                if(tile instanceof IFluidHandler)
+                {
+                	FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, false);
+                	
+                	if(amount != null && amount.amount > 0)
+                	{
+                		((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, true);
+                		if (!par3EntityPlayer.capabilities.isCreativeMode)
+                        {
+                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                            {
+                            }
+                        }
+                	}
+                	
+                	return par1ItemStack;
                 }
 
                 if (this.isFull == 0)
