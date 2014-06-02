@@ -23,7 +23,7 @@ public class Rituals
 
     public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name)
     {
-        this.crystalLevel = crystalLevel;
+        this.crystalLevel = crystalLevel; //For a test commit
         this.actCost = actCost;
         this.effect = effect;
         this.name = name;
