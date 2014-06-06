@@ -1,5 +1,7 @@
 package joshie.alchemicalWizardy.nei;
 
+import static joshie.alchemicalWizardy.nei.NEIConfig.bloodOrbs;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +12,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 
 public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
-	public static ArrayList<Item> bloodOrbs;
-	
 	public class CachedAlchemyRecipe extends CachedRecipe {
 		public class BloodOrbs {
 			public PositionedStack stack;
@@ -29,6 +31,12 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 		PositionedStack output;
 		List<PositionedStack> inputs;
 		int lp;
+		
+		public CachedAlchemyRecipe(AlchemyRecipe recipe, ItemStack orb) {
+			this(recipe);
+			this.orbs = new ArrayList<BloodOrbs>();
+			orbs.add(new BloodOrbs(orb));
+		}
 		
 		public CachedAlchemyRecipe(AlchemyRecipe recipe) {
 			List<PositionedStack> inputs = new ArrayList<PositionedStack>();
@@ -47,9 +55,10 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 			this.output = new PositionedStack(recipe.getResult(), 76, 25);
 			this.lp = recipe.getAmountNeeded() * 100;
 			this.orbs = new ArrayList<BloodOrbs>();
-			for(int i = recipe.getOrbLevel(); i <= bloodOrbs.size(); i++) {
-				ItemStack orb = new ItemStack(bloodOrbs.get(i - 1));
-				orbs.add(new BloodOrbs(orb));
+			for(Item orb: bloodOrbs) {
+				if(((IBloodOrb)orb).getOrbLevel() >= recipe.getOrbLevel()) {
+					orbs.add(new BloodOrbs(new ItemStack(orb)));
+				}
 			}
 		}
 		
@@ -65,9 +74,21 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 		
 		@Override
 		public PositionedStack getOtherStack() {
+			if(orbs == null || orbs.size() <= 0) return null;
             return orbs.get((cycleticks/48) % orbs.size()).stack;
         }
 	}
+	
+	@Override
+    public TemplateRecipeHandler newInstance() {
+		for(ItemStack item : ItemList.items)  {
+			if(item != null && item.getItem() instanceof IBloodOrb) {
+				bloodOrbs.add(item.getItem());
+			}
+		}
+		
+        return super.newInstance();
+    }
 	
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
@@ -81,20 +102,20 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 	
 	@Override
     public void loadUsageRecipes(ItemStack ingredient)  {
-		for(AlchemyRecipe recipe: AlchemyRecipeRegistry.recipes) {
-			ItemStack[] stacks = recipe.getRecipe();
-			for(ItemStack stack: stacks) {
-				if(NEIServerUtils.areStacksSameTypeCrafting(stack, ingredient)) {
-					arecipes.add(new CachedAlchemyRecipe(recipe));
-					break;
+		if(ingredient.getItem() instanceof IBloodOrb) {
+			for(AlchemyRecipe recipe: AlchemyRecipeRegistry.recipes) {
+				if(((IBloodOrb)ingredient.getItem()).getOrbLevel() >= recipe.getOrbLevel()) {
+					arecipes.add(new CachedAlchemyRecipe(recipe, ingredient));
 				}
 			}
-			
-			ArrayList<ItemStack> orbs = new ArrayList<ItemStack>();
-			for(int i = recipe.getOrbLevel(); i <= bloodOrbs.size(); i++) {
-				ItemStack orb = new ItemStack(bloodOrbs.get(i - 1));
-				if(NEIServerUtils.areStacksSameTypeCrafting(orb, ingredient)) {
-					arecipes.add(new CachedAlchemyRecipe(recipe));
+		} else {
+			for(AlchemyRecipe recipe: AlchemyRecipeRegistry.recipes) {
+				ItemStack[] stacks = recipe.getRecipe();
+				for(ItemStack stack: stacks) {
+					if(NEIServerUtils.areStacksSameTypeCrafting(stack, ingredient)) {
+						arecipes.add(new CachedAlchemyRecipe(recipe));
+						break;
+					}
 				}
 			}
 		}

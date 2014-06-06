@@ -177,3 +177,5 @@ itemGroup.tabBloodMagic=Blood Magic
 bm.string.consume=Usage
 bm.string.drain=Drain
 bm.string.tier=Tier
+bm.string.crafting.orb.shaped=Shaped Orb Crafting
+bm.string.crafting.orb.shapeless=Shapeless Orb Crafting
