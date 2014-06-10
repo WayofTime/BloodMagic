@@ -16,6 +16,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ic
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfDefensiveIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfEnvironmentalIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.SelfOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ToolDefaultIce;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ToolDefensiveIce;
 
 public class SpellEffectIce extends SpellEffect 
@@ -168,9 +169,13 @@ public class SpellEffectIce extends SpellEffect
 	}
 
 	@Override
-	public void defaultModificationTool(SpellParadigmTool parad) {
-		// TODO Auto-generated method stub
+	public void defaultModificationTool(SpellParadigmTool parad) 
+	{
+		parad.addLeftClickEffect(new ToolDefaultIce(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 		
+		parad.addToolString("FrostTouch", "FrostTouch" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement+1)));
+		
+		parad.addCritChance("FrostCrit", this.potencyEnhancement * 0.5f);
 	}
 
 	@Override
@@ -190,32 +195,34 @@ public class SpellEffectIce extends SpellEffect
 	}
 
 	@Override
-	public void environmentalModificationTool(SpellParadigmTool parad) {
-		// TODO Auto-generated method stub
+	public void environmentalModificationTool(SpellParadigmTool parad) 
+	{
+		parad.addToolString("SilkTouch", "Silk Touch" + " " + SpellHelper.getNumeralForInt((this.powerEnhancement+1)));
 		
+		parad.setSilkTouch(true);
 	}
 
 	@Override
-	protected int getCostForDefaultTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForDefaultTool() 
+	{
+		return (int)(500 * (1 + this.powerEnhancement*0.3f) * (1 + this.potencyEnhancement*0.1f) * Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
 	protected int getCostForOffenseTool() 
 	{
-		return (int)(1000 * (1 + this.powerEnhancement*0.3f) * Math.pow(0.85, costEnhancement));
+		return (int)(1000 * (1 + this.powerEnhancement*0.3f) * (1 + this.potencyEnhancement*0.2f) * Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
-	protected int getCostForDefenseTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForDefenseTool() 
+	{
+		return (int)(500 * (1 + this.powerEnhancement*0.2) * (1 + this.potencyEnhancement*0.5) * Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
-	protected int getCostForEnvironmentTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForEnvironmentTool() 
+	{
+		return (int)(1000 * Math.pow(0.85, costEnhancement));
 	}
 }

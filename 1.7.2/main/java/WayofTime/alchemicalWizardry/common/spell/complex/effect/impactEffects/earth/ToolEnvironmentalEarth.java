@@ -28,8 +28,8 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
 		int z = blockPos.blockZ;
 		ForgeDirection sidehit = ForgeDirection.getOrientation(blockPos.sideHit);
 		
-		int radius = 2;
-		int depth = 5;
+		int radius = 1 + this.powerUpgrades;
+		int depth = 1 + this.potencyUpgrades*2;
 		
 		depth--;
 		
@@ -70,6 +70,8 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
 		default:
 		}
 		
+		int cost = (int)(10 * (1+depth*0.8) * Math.pow(1.5*radius + 1, 2) * Math.pow(0.85, this.costUpgrades));
+		
 		for(int xPos = x-negX; xPos <= x+posX; xPos++)
 		{
 			for(int yPos = y-negY; yPos <= y+posY; yPos++)
@@ -81,6 +83,6 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
 			}
 		}
 		
-		return 0;
+		return cost;
 	}
 }

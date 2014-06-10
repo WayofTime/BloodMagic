@@ -109,7 +109,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             {
                 entity = (EntityLivingBase) iterator2.next();
 
-                if (entity instanceof EntityPlayer)
+                if (entity instanceof EntityPlayer || entity.hurtResistantTime > 0)
                 {
                     continue;
                 }

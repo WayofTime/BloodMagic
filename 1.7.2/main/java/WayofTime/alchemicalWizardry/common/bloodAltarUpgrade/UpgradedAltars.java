@@ -262,7 +262,7 @@ public class UpgradedAltars
         fifthTierAltar.addAll(fourthTierAltar);
         fifthTierAltar.add(new AltarComponent(-8, -3, 8, Blocks.beacon, 0, false, false));
         fifthTierAltar.add(new AltarComponent(-8, -3, -8, Blocks.beacon, 0, false, false));
-        fifthTierAltar.add(new AltarComponent(8, -3, 8, Blocks.beacon, 0, false, false));
+        fifthTierAltar.add(new AltarComponent(8, -3, -8, Blocks.beacon, 0, false, false));
         fifthTierAltar.add(new AltarComponent(8, -3, 8, Blocks.beacon, 0, false, false));
 
         for (int i = -6; i <= 6; i++)

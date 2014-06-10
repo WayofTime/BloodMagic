@@ -66,6 +66,7 @@ public class SpellParadigmTool extends SpellParadigm
 		this.breakBlockEffectList = new LinkedList();
 		this.itemManipulatorEffectList = new LinkedList();
 		this.digAreaEffectList = new LinkedList();
+		this.specialDamageEffectList = new LinkedList();
 		
 		this.toolInfoString = new HashMap();
 		this.critChanceHash = new HashMap();

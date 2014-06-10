@@ -10,9 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -23,6 +26,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 
 public class RitualEffectExpulsion extends RitualEffect
@@ -70,7 +74,7 @@ public class RitualEffectExpulsion extends RitualEffect
             {
                 entityplayer = (EntityPlayer) iterator.next();
 
-                if (!(entityplayer.getEntityName().equals(owner)))
+                if (!(entityplayer.getEntityName().equals(owner)) && !this.isAllowed(entityplayer.getEntityName(), world, x, y, z))
                 {
                 	if(entityplayer.isPotionActive(AlchemicalWizardry.customPotionPlanarBinding)||entityplayer.capabilities.isCreativeMode)
                 	{
@@ -283,5 +287,30 @@ public class RitualEffectExpulsion extends RitualEffect
         expulsionRitual.add(new RitualComponent(-4,0,4, RitualComponent.FIRE));
         expulsionRitual.add(new RitualComponent(-4,0,-4, RitualComponent.FIRE));
         return expulsionRitual;
+	}
+	
+	public boolean isAllowed(String username, World world, int x, int y, int z)
+	{
+		TileEntity tile = world.getBlockTileEntity(x, y + 1, z);
+		if(tile instanceof IInventory)
+		{
+			for(int i=0; i<((IInventory) tile).getSizeInventory(); i++)
+			{
+				ItemStack stack = ((IInventory) tile).getStackInSlot(i);
+				
+				if(stack == null)
+				{
+					continue;
+				}
+				
+				String potentialUser = EnergyItems.getOwnerName(stack);
+				
+				if(username.equals(potentialUser))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

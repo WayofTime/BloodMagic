@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -107,7 +109,7 @@ public class RightClickTunnel extends RightClickEffect
 	
 	public double varyRate()
 	{
-		return 0.5;
+		return 2.0;
 	}
 	
 	public double getRandomVectorLength()
@@ -150,6 +152,12 @@ public class RightClickTunnel extends RightClickEffect
 	
 	public void destroyMunadeAt(World world, int x, int y, int z)
 	{
+		Block block = world.getBlock(x, y, z);
+
+		if(block.getBlockHardness(world, x, y, z) == -1)
+		{
+			return;
+		}
 		world.setBlockToAir(x, y, z);
 	}
 	

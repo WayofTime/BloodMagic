@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -27,6 +28,7 @@ import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.client.gui.GuiBuffBar;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
@@ -126,7 +128,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.2")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.1g")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -518,6 +520,7 @@ public class AlchemicalWizardry
         ModBlocks.blockPedestal.setHarvestLevel("pickaxe", 2);
         ModBlocks.blockPlinth.setHarvestLevel("pickaxe", 2);
         ModBlocks.blockTeleposer.setHarvestLevel("pickaxe", 2);
+//        Blocks.quartz_ore.setHarvestLevel("pickaxe", 0);
         //Fuel handler
         GameRegistry.registerFuelHandler(new AlchemicalWizardryFuelHandler());
         //EntityRegistry.registerModEntity(EnergyBlastProjectile.class, "BlasterProj", 0, this, 128, 5, true);
@@ -771,6 +774,8 @@ public class AlchemicalWizardry
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+    	//MinecraftForge.EVENT_BUS.register(new GuiBuffBar(Minecraft.getMinecraft()));
+    	
         //TODO Thaumcraft Integration
         if (Loader.isModLoaded("Thaumcraft"))
         {

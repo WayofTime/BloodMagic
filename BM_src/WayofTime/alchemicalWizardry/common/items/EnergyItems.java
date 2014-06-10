@@ -126,7 +126,7 @@ public class EnergyItems extends Item implements IBindable
         SoulNetworkHandler.checkAndSetItemOwner(item, ownerName);
     }
 
-    public String getOwnerName(ItemStack item)
+    public static String getOwnerName(ItemStack item)
     {
         if (item.stackTagCompound == null)
         {

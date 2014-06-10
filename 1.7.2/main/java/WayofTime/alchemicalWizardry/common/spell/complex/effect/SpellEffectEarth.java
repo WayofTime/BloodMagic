@@ -17,6 +17,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ea
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfEnvironmentalEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfOffensiveEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ToolEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ToolOffensiveEarth;
 
 public class SpellEffectEarth extends SpellEffect 
 {
@@ -198,8 +199,10 @@ public class SpellEffectEarth extends SpellEffect
 	}
 
 	@Override
-	public void offensiveModificationTool(SpellParadigmTool parad) {
-		// TODO Auto-generated method stub
+	public void offensiveModificationTool(SpellParadigmTool parad) 
+	{
+		parad.addItemManipulatorEffect(new ToolOffensiveEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
+		
 		
 	}
 
@@ -248,7 +251,8 @@ public class SpellEffectEarth extends SpellEffect
 	}
 
 	@Override
-	protected int getCostForOffenseTool() {
+	protected int getCostForOffenseTool() 
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -260,8 +264,8 @@ public class SpellEffectEarth extends SpellEffect
 	}
 
 	@Override
-	protected int getCostForEnvironmentTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForEnvironmentTool() 
+	{
+		return (int)(10 * (1+this.potencyEnhancement*0.8) * Math.pow(1.5*this.powerEnhancement + 3, 2) * Math.pow(0.85, this.costEnhancement));
 	}
 }

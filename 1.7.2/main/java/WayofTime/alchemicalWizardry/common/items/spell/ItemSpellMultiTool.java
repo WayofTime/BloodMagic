@@ -348,8 +348,7 @@ public class ItemSpellMultiTool extends Item
 	
 	@Override
 	public boolean canHarvestBlock(Block par1Block, ItemStack itemStack)
-    {
-		
+    {	
         return true; 
     }
 	
@@ -441,6 +440,11 @@ public class ItemSpellMultiTool extends Item
 	
 	//--------------Custom methods--------------//
 	
+ 	public boolean func_150897_b(Block p_150897_1_)
+ 	{
+ 		return true;
+ 	}
+ 	
 	public void setHarvestLevel(ItemStack stack, String toolClass, int harvestLevel)
 	{
 		if(stack.hasTagCompound())

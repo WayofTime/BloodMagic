@@ -15,7 +15,7 @@ public class SoulNetworkHandler
         {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
-            if (MinecraftServer.getServer() == null)
+            if (MinecraftServer.getServer() == null || MinecraftServer.getServer().worldServers.length <= 0)
             {
                 return 0;
             }

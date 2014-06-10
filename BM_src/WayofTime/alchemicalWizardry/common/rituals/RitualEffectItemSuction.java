@@ -80,6 +80,7 @@ public class RitualEffectItemSuction extends RitualEffect
                 	ItemStack item = itemEntity.getEntityItem();
                     ItemStack copyStack = itemEntity.getEntityItem().copy();
                     
+                    boolean hasUsed = false;
                     count++;
 
                     for (int n = 0; n < invSize; n++)
@@ -92,6 +93,7 @@ public class RitualEffectItemSuction extends RitualEffect
                             {
                                 tileEntity.setInventorySlotContents(n, item);
                                 copyStack.stackSize = 0;
+                                hasUsed = true;
                             } else
                             {
                                 if (itemStack.getItem().equals(copyStack.getItem()))
@@ -100,6 +102,10 @@ public class RitualEffectItemSuction extends RitualEffect
                                     int copySize = copyStack.stackSize;
                                     int maxSize = itemStack.getMaxStackSize();
 
+                                    if(itemSize >= maxSize)
+                                    {
+                                    	continue;
+                                    }
                                     if (copySize + itemSize < maxSize)
                                     {
                                         copyStack.stackSize = 0;
@@ -110,19 +116,22 @@ public class RitualEffectItemSuction extends RitualEffect
                                         copyStack.stackSize = itemSize + copySize - maxSize;
                                         itemStack.stackSize = maxSize;
                                     }
+                                    
+                                    hasUsed = true;
                                 }
                             }
                         }
                     }
 
-                    if(copyStack.stackSize<=0)
+                    if(copyStack.stackSize<=0 && hasUsed)
                     {
                     	itemEntity.setDead();
                     }
                     
-                    if (copyStack.stackSize > 0)
+                    if (copyStack.stackSize > 0 && hasUsed) //TODO ?
                     {
-                        world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+                    	itemEntity.getEntityItem().stackSize = copyStack.stackSize;
+//                        world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
                         //flag=true;
                     }
                 }

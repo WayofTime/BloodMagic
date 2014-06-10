@@ -125,7 +125,8 @@ public class RitualEffectItemSuction extends RitualEffect
                     
                     if (copyStack.stackSize > 0)
                     {
-                        world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+                    	itemEntity.getEntityItem().stackSize = copyStack.stackSize;
+                        //world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
                         //flag=true;
                     }
                 }
