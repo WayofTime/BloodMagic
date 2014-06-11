@@ -116,15 +116,6 @@ public class SigilOfElementalAffinity extends EnergyItems
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 0, true));
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 0, true));
-
-            //Test with added health boost
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400,99));
-            if (!par3EntityPlayer.capabilities.isCreativeMode)
-            {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                {
-                }
-            }
         } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
@@ -154,18 +145,6 @@ public class SigilOfElementalAffinity extends EnergyItems
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 0, true));
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 0, true));
         }
-
-        if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
-        {
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400,99));
-            if (!par3EntityPlayer.capabilities.isCreativeMode)
-            {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                {
-                }
-            }
-        }
-
         return;
     }
 }
