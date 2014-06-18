@@ -115,6 +115,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import  WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
@@ -505,7 +506,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TESpellEffectBlock.class, "containerSpellEffectBlock");
         GameRegistry.registerTileEntity(TESpellModifierBlock.class, "containerSpellModifierBlock");
         GameRegistry.registerTileEntity(TESpellEnhancementBlock.class, "containerSpellEnhancementBlock");
-            
+         GameRegistry.registerTileEntity(TESpectralContainer.class,"spectralContainerTileEntity");
         //GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
