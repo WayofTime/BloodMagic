@@ -43,6 +43,11 @@ public class BlockSet
 		}
 	}
 	
+	public List<Int3> getPositions()
+	{
+		return positions;
+	}
+	
 	public void addPositionToBlock(int xOffset, int yOffset, int zOffset)
 	{
 		positions.add(new Int3(xOffset, yOffset, zOffset));

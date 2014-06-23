@@ -1,6 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,16 +23,18 @@ import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonBuilding;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.GridSpace;
+import WayofTime.alchemicalWizardry.common.demonVillage.GridSpaceHolder;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class TEDemonPortal extends TileEntity
 {
-	public static List<BuildingSchematic> buildingList = new ArrayList();
+	public static List<DemonBuilding> buildingList = new ArrayList();
 	public Random rand = new Random();
 	private GridSpace[][] area;
 	
@@ -369,6 +373,180 @@ public class TEDemonPortal extends TileEntity
 		return new Int3(0,0,0);
 	}
 	
+	public Int3 findEmptySpaceNearRoad(ForgeDirection dir, int amount, int closeness)
+	{
+		int index = 0;
+		if(dir == ForgeDirection.NORTH)
+		{
+			System.out.print("NORTH!");
+			for(int i=0; i<= negZRadius + posZRadius; i++)
+			{
+				for(int j=0; j<= negXRadius + posXRadius; j++)
+				{
+					GridSpace space = area[j][i];
+					if(space.isEmpty())
+					{
+						int yLevel = this.findNearestRoadYLevel(j-negXRadius, i-negZRadius, closeness);
+						if(yLevel == -1)
+						{
+							continue;
+						}
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(j-negXRadius,yLevel,i-negZRadius);
+						}
+					}
+				}
+			}
+		}else if(dir == ForgeDirection.SOUTH)
+		{
+			for(int i=negZRadius + posZRadius; i >= 0 ; i--)
+			{
+				for(int j=0; j<= negXRadius + posXRadius; j++)
+				{
+					GridSpace space = area[j][i];
+					int yLevel = this.findNearestRoadYLevel(j-negXRadius, i-negZRadius, closeness);
+					if(yLevel == -1)
+					{
+						continue;
+					}
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(j-negXRadius,yLevel,i-negZRadius);
+						}
+					}
+				}
+			}
+		}else if(dir == ForgeDirection.EAST)
+		{				
+			for(int i=negXRadius + posXRadius; i >= 0; i--)
+			{
+				for(int j=0; j <= negZRadius + posZRadius ; j++)
+				{
+					GridSpace space = area[i][j];
+					int yLevel = this.findNearestRoadYLevel(i-negXRadius, j-negZRadius, closeness);
+					if(yLevel == -1)
+					{
+						continue;
+					}
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(i-negXRadius,yLevel,j-negZRadius);
+						}
+					}
+				}
+			}
+		}else if(dir == ForgeDirection.WEST)
+		{
+			for(int i=0; i <= negXRadius + posXRadius; i++)
+			{
+				for(int j=0; j <= negZRadius + posZRadius ; j++)
+				{
+					GridSpace space = area[i][j];
+					int yLevel = this.findNearestRoadYLevel(i-negXRadius, j-negZRadius, closeness);
+					if(yLevel == -1)
+					{
+						continue;
+					}
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(i-negXRadius,yLevel,j-negZRadius);
+						}
+					}
+				}
+			}
+		}
+		
+		return new Int3(0,0,0);
+	}
+	
+	public Int3 findEmptySpaceFromDirection(ForgeDirection dir, int amount)
+	{
+		int index = 0;
+		if(dir == ForgeDirection.NORTH)
+		{
+			System.out.print("NORTH!");
+			for(int i=0; i<= negZRadius + posZRadius; i++)
+			{
+				for(int j=0; j<= negXRadius + posXRadius; j++)
+				{
+					GridSpace space = area[j][i];
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(j-negXRadius,space.getYLevel(),i-negZRadius);
+						}
+					}
+				}
+			}
+		}else if(dir == ForgeDirection.SOUTH)
+		{
+			for(int i=negZRadius + posZRadius; i >= 0 ; i--)
+			{
+				for(int j=0; j<= negXRadius + posXRadius; j++)
+				{
+					GridSpace space = area[j][i];
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(j-negXRadius,space.getYLevel(),i-negZRadius);
+						}
+					}
+				}
+			}
+		}else if(dir == ForgeDirection.EAST)
+		{				
+			for(int i=negXRadius + posXRadius; i >= 0; i--)
+			{
+				for(int j=0; j <= negZRadius + posZRadius ; j++)
+				{
+					GridSpace space = area[i][j];
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(i-negXRadius,space.getYLevel(),j-negZRadius);
+						}
+					}
+				}
+			}
+		}else if(dir == ForgeDirection.WEST)
+		{
+			for(int i=0; i <= negXRadius + posXRadius; i++)
+			{
+				for(int j=0; j <= negZRadius + posZRadius ; j++)
+				{
+					GridSpace space = area[i][j];
+					if(space.isEmpty())
+					{
+						index++;
+						if(index >= amount)
+						{
+							return new Int3(i-negXRadius,space.getYLevel(),j-negZRadius);
+						}
+					}
+				}
+			}
+		}
+		
+		return new Int3(0,0,0);
+	}
+	
 	public void createGriddedRoad(int gridXi, int yi, int gridZi, ForgeDirection dir, int gridLength, boolean convertStarter) //Total grid length
 	{	
 		if(gridLength == 0 || gridLength == 1)
@@ -402,6 +580,7 @@ public class TEDemonPortal extends TileEntity
 			if(next != null)
 			{
 				initY = next.yCoord;
+				System.out.println("" + initY);
 			}
 			
 			initGridX += dir.offsetX;
@@ -540,12 +719,101 @@ public class TEDemonPortal extends TileEntity
 	
 	public void rightClickBlock(EntityPlayer player, int side)
 	{
-		this.testGson();
+		//this.testGson();
 		Int3 roadMarker = this.getNextRoadMarker();
 		
 		this.initialize();
 		
-		this.createRandomRoad();
+		if(ForgeDirection.getOrientation(side) == ForgeDirection.UP)
+		{
+			this.createRandomBuilding();
+		}else
+		{
+			this.createRandomRoad();
+		}
+	}
+	
+	public void createRandomBuilding()
+	{
+		int next = rand.nextInt(4);
+		ForgeDirection dir;
+		
+		switch(next)
+		{
+		case 0:
+			dir = ForgeDirection.NORTH;
+			break;
+		case 1:
+			dir = ForgeDirection.SOUTH;
+			break;
+		case 2:
+			dir = ForgeDirection.EAST;
+			break;
+		case 3:
+			dir = ForgeDirection.WEST;
+			break;
+		default:
+			dir = ForgeDirection.NORTH;
+		}
+		
+		int length = 5;
+		
+		Int3 space = findEmptySpaceNearRoad(dir, 3*(rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius))+1, 2);
+		
+		int x = space.xCoord;
+		int z = space.zCoord;
+		int yLevel = space.yCoord;
+
+		GridSpace newSpace = this.getGridSpace(x, z);
+		if(!newSpace.isEmpty())
+		{
+			return;
+		}
+		
+		if(yLevel == -1)
+		{
+			return;
+		}
+		
+		GridSpaceHolder grid = this.createGSH();
+		
+		ForgeDirection chosenDirection = ForgeDirection.NORTH;
+		
+		for(DemonBuilding build : TEDemonPortal.buildingList)
+		{
+			if(build.isValid(grid, x, z, chosenDirection))
+			{
+				build.buildAll(worldObj, xCoord + x*5, yLevel, zCoord + z*5, chosenDirection);
+				build.setAllGridSpaces(x, z, yLevel, chosenDirection, GridSpace.HOUSE, grid);
+				this.loadGSH(grid);
+			}
+		}
+		
+		System.out.println("X: " + x + " Z: " + z + " Direction: " + dir.toString());
+	}
+	
+	public int findNearestRoadYLevel(int xCoord, int zCoord, int maxDistance)
+	{
+		for(int l=1; l<=maxDistance; l++)
+		{
+			for(int i=-l; i<=l; i++)
+			{
+				for(int j=-l; j<=l; j++)
+				{
+					if(Math.abs(i)!=l && Math.abs(j)!=l)
+					{
+						continue;
+					}
+					
+					if(this.getGridSpace(xCoord + i, zCoord + j).isRoadSegment())
+					{
+						return this.getGridSpace(xCoord + i, zCoord + j).getYLevel();
+					}
+				}
+			}
+		}
+		
+		return -1;
 	}
 	
 	public void testGson()
@@ -650,5 +918,59 @@ public class TEDemonPortal extends TileEntity
 	public int getRoadSpacer()
 	{
 		return 1;
+	}
+	
+	public GridSpaceHolder createGSH()
+	{
+		GridSpaceHolder grid = new GridSpaceHolder();
+		grid.area = this.area;
+		grid.negXRadius = this.negXRadius;
+		grid.negZRadius = this.negZRadius;
+		grid.posXRadius = this.posXRadius;
+		grid.posZRadius = this.posZRadius;
+		
+		return grid;
+	}
+	
+	public void loadGSH(GridSpaceHolder grid)
+	{
+		this.area = grid.area;
+		this.negXRadius = grid.negXRadius;
+		this.negZRadius = grid.negZRadius;
+		this.posXRadius = grid.posXRadius;
+		this.posZRadius = grid.posZRadius;
+	}
+	
+	public static void loadBuildingList()
+	{
+		String folder = "config/BloodMagic/schematics";
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		File file = new File(folder);
+		File[] files = file.listFiles();
+		BufferedReader br;
+
+		try{
+			for(File f : files)
+			{
+				br = new BufferedReader(new FileReader(f));
+				BuildingSchematic schema = gson.fromJson(br, BuildingSchematic.class);
+				TEDemonPortal.buildingList.add(new DemonBuilding(schema));
+			}
+		}catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+//		
+//		try {
+//			br = new BufferedReader(new FileReader(folder + "test3.json"));
+//			BuildingSchematic schema = gson.fromJson(br, BuildingSchematic.class);
+//			TEDemonPortal.buildingList.add(new DemonBuilding(schema));
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
 	}
 }

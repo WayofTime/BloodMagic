@@ -107,8 +107,8 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 		int width;
 		int height;
 		try {
-			width = ReflectionManager.getField(ShapedBloodOrbRecipe.class, Integer.class, recipe, 4);
-			height = ReflectionManager.getField(ShapedBloodOrbRecipe.class, Integer.class, recipe, 5);
+			width = recipe.width;
+			height = recipe.height;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

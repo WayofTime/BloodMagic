@@ -105,17 +105,19 @@ import WayofTime.alchemicalWizardry.common.summoning.SummoningHelperAW;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESchematicSaver;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import  WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
@@ -234,6 +236,10 @@ public class AlchemicalWizardry
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	(new File("config/BloodMagic/schematics")).mkdirs();
+    	
+    	TEDemonPortal.loadBuildingList();
+    	
         MinecraftForge.EVENT_BUS.register(new LifeBucketHandler());
         BloodMagicConfiguration.init(new File(event.getModConfigurationDirectory(), "AWWayofTime.cfg"));
 
@@ -506,7 +512,9 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TESpellEffectBlock.class, "containerSpellEffectBlock");
         GameRegistry.registerTileEntity(TESpellModifierBlock.class, "containerSpellModifierBlock");
         GameRegistry.registerTileEntity(TESpellEnhancementBlock.class, "containerSpellEnhancementBlock");
-         GameRegistry.registerTileEntity(TESpectralContainer.class,"spectralContainerTileEntity");
+        GameRegistry.registerTileEntity(TESpectralContainer.class,"spectralContainerTileEntity");
+        GameRegistry.registerTileEntity(TEDemonPortal.class, "containerDemonPortal");
+        GameRegistry.registerTileEntity(TESchematicSaver.class, "containerSchematicSaver");
         //GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);

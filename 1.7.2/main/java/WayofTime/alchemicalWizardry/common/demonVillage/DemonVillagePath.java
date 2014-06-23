@@ -95,8 +95,9 @@ public class DemonVillagePath
 				int sign = 1;
 				
 				Block block1 = world.getBlock(xPos + xOffset, yPos + sign*yOffset, zPos + zOffset);
+				Block highBlock1 = world.getBlock(xPos + xOffset, yPos + sign*yOffset + 1, zPos + zOffset);
 				
-				if(!world.isAirBlock(xPos + xOffset, yPos + sign*yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && world.isAirBlock(xPos + xOffset, yPos + sign*yOffset + 1, zPos + zOffset))
+				if(!block1.isReplaceable(world, xPos + xOffset, yPos + sign*yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign*yOffset + 1, zPos + zOffset))
 				{
 					yPos += sign*yOffset;
 					break;
@@ -104,8 +105,9 @@ public class DemonVillagePath
 				{
 					sign = -1;
 					Block block2 = world.getBlock(xPos + xOffset, yPos + sign*yOffset, zPos + zOffset);
+					Block highBlock2 = world.getBlock(xPos + xOffset, yPos + sign*yOffset + 1, zPos + zOffset);
 					
-					if(!world.isAirBlock(xPos + xOffset, yPos + sign*yOffset, zPos + zOffset) && this.isBlockReplaceable(block2) && world.isAirBlock(xPos + xOffset, yPos + sign*yOffset + 1, zPos + zOffset))
+					if(!block2.isReplaceable(world, xPos + xOffset, yPos + sign*yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign*yOffset + 1, zPos + zOffset))
 					{
 						yPos += sign*yOffset;
 						break;
@@ -114,7 +116,7 @@ public class DemonVillagePath
 			}
 		}
 		
-		return new Int3(xi,yi,zi);
+		return new Int3(xPos,yPos,zPos);
 	}
 	
 	public int getRoadRadius()

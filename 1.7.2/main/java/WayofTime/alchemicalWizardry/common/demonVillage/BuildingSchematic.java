@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.common.Int3;
 
 public class BuildingSchematic 
 {
@@ -38,8 +40,29 @@ public class BuildingSchematic
 		blockList.add(set);
 	}
 	
-	public void buildAll(World world, int xCoord, int yCoord, int zCoord)
+	public void buildAll(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
 	{
+		for(BlockSet set : blockList)
+		{
+			set.buildAll(world, xCoord, yCoord, zCoord, dir);
+		}
+	}
+	
+	public GridSpaceHolder createGSH()
+	{
+		GridSpaceHolder holder = new GridSpaceHolder();
 		
+		for(BlockSet set : blockList)
+		{
+			for(Int3 coords : set.getPositions())
+			{
+				int gridX = (int)((coords.xCoord+2*Math.signum(coords.xCoord))/5);
+				int gridZ = (int)((coords.zCoord+2*Math.signum(coords.zCoord))/5);
+				
+				holder.setGridSpace(gridX, gridZ, new GridSpace());
+			}
+		}
+		
+		return holder;
 	}
 }

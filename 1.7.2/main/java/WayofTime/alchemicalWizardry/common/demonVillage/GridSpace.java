@@ -69,4 +69,9 @@ public class GridSpace
 	{
 		return type == this.ROAD || type == this.CROSSROAD;
 	}
+	
+	public boolean isBuilding()
+	{
+		return type == this.HOUSE;
+	}
 }
