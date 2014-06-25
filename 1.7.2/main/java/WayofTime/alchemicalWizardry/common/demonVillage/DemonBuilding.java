@@ -6,17 +6,20 @@ import WayofTime.alchemicalWizardry.common.Int3;
 
 public class DemonBuilding 
 {
+	public static final int BUILDING_HOUSE = 0;
+	public static final int BUILDING_PORTAL = 1;
+	
 	public BuildingSchematic schematic;
 	public GridSpaceHolder area;
 	public int buildingTier;
-	public int type;
+	public int buildingType;
 	public Int3 doorGridSpace;
 	
 	public DemonBuilding(BuildingSchematic schematic)
 	{
 		this.schematic = schematic;
-		this.type = 0;
-		this.buildingTier = 0;
+		this.buildingType = schematic.buildingType;
+		this.buildingTier = schematic.buildingTier;
 		this.area = this.createGSHForSchematic(schematic);
 		this.doorGridSpace = schematic.getGridSpotOfDoor();
 	}
@@ -43,6 +46,13 @@ public class DemonBuilding
 	
 	public GridSpaceHolder createGSHForSchematic(BuildingSchematic scheme)
 	{
+		switch(this.buildingType)
+		{
+		case DemonBuilding.BUILDING_HOUSE:
+			return scheme.createGSH();
+		case DemonBuilding.BUILDING_PORTAL:
+			
+		}
 		return scheme.createGSH();
 	}
 	
@@ -70,7 +80,7 @@ public class DemonBuilding
 			break;
 		}
 		
-		return new Int3(x, 0, z);
+		return new Int3(x, doorGridSpace.yCoord, z);
 	}
 	
 	public Int3 getGridOffsetFromRoad(ForgeDirection sideOfRoad, int yLevel)
@@ -96,5 +106,10 @@ public class DemonBuilding
 		}
 		
 		return new Int3(x, yLevel, z);
+	}
+	
+	public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
+	{
+		schematic.destroyAllInField(world, xCoord, yCoord, zCoord, dir);
 	}
 }

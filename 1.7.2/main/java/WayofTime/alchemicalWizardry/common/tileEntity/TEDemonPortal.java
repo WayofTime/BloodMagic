@@ -23,6 +23,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonBuilding;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
@@ -720,7 +721,6 @@ public class TEDemonPortal extends TileEntity
 	
 	public void rightClickBlock(EntityPlayer player, int side)
 	{
-		//this.testGson();
 		if(worldObj.isRemote)
 		{
 			return;
@@ -731,14 +731,97 @@ public class TEDemonPortal extends TileEntity
 		
 		if(ForgeDirection.getOrientation(side) == ForgeDirection.UP)
 		{
-			this.createRandomBuilding();
+			this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, 0);
 		}else
 		{
 			this.createRandomRoad();
 		}
 	}
 	
-	public void createRandomBuilding()
+	public void createRandomBuilding(int type, int tier)
+	{
+		switch(type)
+		{
+		case DemonBuilding.BUILDING_HOUSE:
+			this.createRandomHouse(tier);
+			break;
+		case DemonBuilding.BUILDING_PORTAL:
+			this.createPortalBuilding(tier);
+			break;
+		}
+	}
+	
+	public void createPortalBuilding(int buildingTier)
+	{
+		int x = 0;
+		int z = 0;
+		
+		GridSpace home = this.getGridSpace(x, z);
+		int yLevel = home.getYLevel();
+		
+		GridSpaceHolder grid = this.createGSH();
+		
+		List<ForgeDirection> directions = new ArrayList();
+		
+		for(int i=2; i<6; i++)
+		{
+			ForgeDirection testDir = ForgeDirection.getOrientation(i);
+			if(this.getGridSpace(x + testDir.offsetX, z + testDir.offsetZ).isEmpty())
+			{
+				directions.add(testDir);
+			}
+		}
+		
+		if(directions.isEmpty())
+		{
+			return;
+		}
+					
+		HashMap<ForgeDirection, List<DemonBuilding>> schemMap = new HashMap();
+		
+		for(ForgeDirection nextDir : directions)
+		{
+			for(DemonBuilding build : TEDemonPortal.buildingList)
+			{
+				if(schemMap.containsKey(nextDir))
+				{
+					schemMap.get(nextDir).add(build);
+				}else
+				{
+					schemMap.put(nextDir, new ArrayList());
+					schemMap.get(nextDir).add(build);
+				}
+			}
+		}
+		
+		if(schemMap.keySet().isEmpty())
+		{
+			return;
+		}
+		
+		ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
+		DemonBuilding build = schemMap.get(chosenDirection).get(new Random().nextInt(schemMap.get(chosenDirection).size()));
+					
+		build.destroyAllInField(worldObj, xCoord + (x)*5, yLevel, zCoord + (z)*5, chosenDirection.getOpposite());
+		
+		Int3 portalSpace = build.getDoorSpace(chosenDirection);
+		int yOffset = portalSpace.yCoord;
+		
+		for(int i=0; i<256; i++)
+		{
+			Block block = worldObj.getBlock(xCoord + (x)*5, i, zCoord + (z)*5);
+			if(block == ModBlocks.blockDemonPortal)
+			{
+				BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, i, zCoord, xCoord, yLevel + yOffset, zCoord);
+			}
+		}
+		
+		build.buildAll(worldObj, xCoord + (x)*5, yLevel, zCoord + (z)*5, chosenDirection.getOpposite());
+		build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
+		this.loadGSH(grid);
+	}
+	
+	public void createRandomHouse(int buildingTier)
 	{
 		int next = rand.nextInt(4);
 		ForgeDirection dir;
@@ -804,13 +887,16 @@ public class TEDemonPortal extends TileEntity
 			{
 				for(DemonBuilding build : TEDemonPortal.buildingList)
 				{
+					if(build.buildingTier != buildingTier || build.buildingType != DemonBuilding.BUILDING_HOUSE)
+					{
+						continue;
+					}
 					Int3 offsetSpace = build.getGridOffsetFromRoad(nextDir, yLevel);
 					int xOff = offsetSpace.xCoord;
 					int zOff = offsetSpace.zCoord;
 					
 					if(build.isValid(grid, x + xOff, z + zOff, nextDir.getOpposite()))
 					{
-						System.out.println("This one is valid! Direction: " + nextDir.toString());
 						if(schemMap.containsKey(nextDir))
 						{
 							schemMap.get(nextDir).add(build);
@@ -837,11 +923,10 @@ public class TEDemonPortal extends TileEntity
 			Int3 offsetSpace = build.getGridOffsetFromRoad(chosenDirection, yLevel);
 			int xOff = offsetSpace.xCoord;
 			int zOff = offsetSpace.zCoord;
-			
-//			System.out.println("xOff: " + xOff + " zOff: " + zOff + " Direction: " + chosenDirection.toString());
-			
+						
+			build.destroyAllInField(worldObj, xCoord + (x + xOff)*5, yLevel, zCoord + (z + zOff)*5, chosenDirection.getOpposite());
 			build.buildAll(worldObj, xCoord + (x + xOff)*5, yLevel, zCoord + (z + zOff)*5, chosenDirection.getOpposite());
-			build.setAllGridSpaces(x + xOff, yLevel, z + zOff, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
+			build.setAllGridSpaces(x + xOff, z + zOff, yLevel, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
 			this.loadGSH(grid);
 		}else
 		{

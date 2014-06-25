@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class GridSpaceHolder
@@ -192,6 +195,7 @@ public class GridSpaceHolder
 	
 	public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master)
 	{
+		System.out.println("Grid space selected: (" + xInit + "," + zInit + ")");
 		if(master != null)
 		{
 			for(int i=-negXRadius; i<=posXRadius; i++)
@@ -227,7 +231,60 @@ public class GridSpaceHolder
 						break;
 					}
 					
+					System.out.println("Grid space (" + (xInit + xOff) + "," + (zInit + zOff) + ")");
+					
 					master.setGridSpace(xInit + xOff, zInit + zOff, new GridSpace(type, yLevel));
+				}
+			}
+		}
+	}
+	
+	public void destroyAllInGridSpaces(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
+	{
+		for(int i=-negXRadius; i<=posXRadius; i++)
+		{
+			for(int j=-negZRadius; j<=posZRadius; j++)
+			{
+				GridSpace thisSpace = this.getGridSpace(i, j);
+				if(thisSpace.isEmpty())
+				{
+					continue;
+				}
+				
+				int xOff = 0;
+				int zOff = 0;
+				
+				switch(dir)
+				{
+				case SOUTH:
+					xOff = -i;
+					zOff = -j;
+					break;
+				case WEST:
+					xOff = j;
+					zOff = -i;
+					break;
+				case EAST:
+					xOff = -j;
+					zOff = i;
+					break;
+				default:
+					xOff = i;
+					zOff = j;
+					break;
+				}
+				
+				for(int l = -2; l<=2; l++)
+				{
+					for(int m = -2; m<=2; m++)
+					{
+						Block block = world.getBlock(xCoord + xOff*5 + l, yCoord, zCoord + zOff*5 + m);
+						if(block == ModBlocks.blockDemonPortal)
+						{
+							continue;
+						}
+						world.setBlockToAir(xCoord + xOff*5 + l, yCoord, zCoord + zOff*5 + m);
+					}
 				}
 			}
 		}

@@ -199,9 +199,9 @@ public class SpellEffectFire extends SpellEffect
 	}
 
 	@Override
-	protected int getCostForOffenseTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForOffenseTool() 
+	{
+		return (int)(0); //TODO
 	}
 
 	@Override

@@ -79,6 +79,7 @@ public class TESpellParadigmBlock extends TESpellBlock
 		case 0: return "alchemicalwizardry:textures/models/SpellParadigmProjectile.png";
 		case 1: return "alchemicalwizardry:textures/models/SpellParadigmSelf.png";
 		case 2: return "alchemicalwizardry:textures/models/SpellParadigmMelee.png";
+		case 3: return "alchemicalwizardry:textures/models/SpellParadigmTool.png";
 		}
     	return "alchemicalwizardry:textures/models/SpellParadigmProjectile.png";
     }

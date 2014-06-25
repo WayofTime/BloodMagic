@@ -17,6 +17,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ea
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfEnvironmentalEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.SelfOffensiveEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ToolEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ToolOffensiveEarth;
 
 public class SpellEffectEarth extends SpellEffect 
 {
@@ -169,9 +170,11 @@ public class SpellEffectEarth extends SpellEffect
 	public void defaultModificationTool(SpellParadigmTool parad) 
 	{
 		String toolClass = "pickaxe";
-		
+
+
 		float digSpeed = 7.0f;
-		
+
+
 		switch(this.powerEnhancement)
 		{
 		case 1:
@@ -190,26 +193,31 @@ public class SpellEffectEarth extends SpellEffect
 			digSpeed = 27.0f;
 			break;
 		}
-		
+
+
 		parad.setDigSpeed(toolClass, digSpeed);
-		
+
+
 		int hlvl = this.potencyEnhancement + 2;
 		parad.setHarvestLevel(toolClass, hlvl);
 	}
 
+
 	@Override
-	public void offensiveModificationTool(SpellParadigmTool parad) {
-		// TODO Auto-generated method stub
-		
+	public void offensiveModificationTool(SpellParadigmTool parad) 
+	{
+		parad.addItemManipulatorEffect(new ToolOffensiveEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
 	@Override
 	public void defensiveModificationTool(SpellParadigmTool parad) 
 	{
 		String toolClass = "shovel";
-		
+
+
 		float digSpeed = 7.0f;
-		
+
+
 		switch(this.powerEnhancement)
 		{
 		case 1:
@@ -228,12 +236,15 @@ public class SpellEffectEarth extends SpellEffect
 			digSpeed = 27.0f;
 			break;
 		}
-		
+
+
 		parad.setDigSpeed(toolClass, digSpeed);
-		
+
+
 		int hlvl = this.potencyEnhancement + 2;
 		parad.setHarvestLevel(toolClass, hlvl);
 	}
+
 
 	@Override
 	public void environmentalModificationTool(SpellParadigmTool parad) 
@@ -241,17 +252,21 @@ public class SpellEffectEarth extends SpellEffect
 		parad.addDigAreaEffect(new ToolEnvironmentalEarth(this.powerEnhancement, this.potencyEnhancement, this.costEnhancement));
 	}
 
+
 	@Override
 	protected int getCostForDefaultTool() 
 	{
 		return (int)(1000 * (1 + this.potencyEnhancement*0.1f) * (1 + this.powerEnhancement*0.2f) * Math.pow(0.85, costEnhancement));
 	}
 
+
 	@Override
-	protected int getCostForOffenseTool() {
+	protected int getCostForOffenseTool() 
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	@Override
 	protected int getCostForDefenseTool() 
@@ -259,9 +274,11 @@ public class SpellEffectEarth extends SpellEffect
 		return (int)(1000 * (1 + this.potencyEnhancement*0.1f) * (1 + this.powerEnhancement*0.2f) * Math.pow(0.85, costEnhancement));
 	}
 
+
 	@Override
-	protected int getCostForEnvironmentTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForEnvironmentTool() 
+	{
+		return (int)(10 * (1+this.potencyEnhancement*0.8) * Math.pow(1.5*this.powerEnhancement + 3, 2) * Math.pow(0.85, this.costEnhancement));
 	}
+
 }
