@@ -11,6 +11,8 @@ import WayofTime.alchemicalWizardry.common.Int3;
 public class BuildingSchematic 
 {
 	public String name;
+	public int doorX;
+	public int doorZ;
 	public List<BlockSet> blockList;
 	
 	public BuildingSchematic()
@@ -22,6 +24,8 @@ public class BuildingSchematic
 	{
 		this.name = name;
 		blockList = new ArrayList();
+		this.doorX = 0;
+		this.doorZ = 0;
 	}
 	
 	public void addBlockWithMeta(Block block, int meta, int xOffset, int yOffset, int zOffset)
@@ -58,11 +62,19 @@ public class BuildingSchematic
 			{
 				int gridX = (int)((coords.xCoord+2*Math.signum(coords.xCoord))/5);
 				int gridZ = (int)((coords.zCoord+2*Math.signum(coords.zCoord))/5);
-				
-				holder.setGridSpace(gridX, gridZ, new GridSpace());
+								
+				holder.setGridSpace(gridX, gridZ, new GridSpace(GridSpace.HOUSE,0));
 			}
 		}
 		
 		return holder;
+	}
+	
+	public Int3 getGridSpotOfDoor()
+	{
+		int gridX = (int)((doorX+2*Math.signum(doorX))/5);
+		int gridZ = (int)((doorZ+2*Math.signum(doorZ))/5);
+		
+		return new Int3(gridX, 0, gridZ);
 	}
 }

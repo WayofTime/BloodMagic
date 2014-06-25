@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -720,6 +721,10 @@ public class TEDemonPortal extends TileEntity
 	public void rightClickBlock(EntityPlayer player, int side)
 	{
 		//this.testGson();
+		if(worldObj.isRemote)
+		{
+			return;
+		}
 		Int3 roadMarker = this.getNextRoadMarker();
 		
 		this.initialize();
@@ -758,38 +763,153 @@ public class TEDemonPortal extends TileEntity
 		
 		int length = 5;
 		
-		Int3 space = findEmptySpaceNearRoad(dir, 3*(rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius))+1, 2);
+		boolean newProtocol = true;
 		
-		int x = space.xCoord;
-		int z = space.zCoord;
-		int yLevel = space.yCoord;
-
-		GridSpace newSpace = this.getGridSpace(x, z);
-		if(!newSpace.isEmpty())
+		if(newProtocol)
 		{
-			return;
-		}
-		
-		if(yLevel == -1)
-		{
-			return;
-		}
-		
-		GridSpaceHolder grid = this.createGSH();
-		
-		ForgeDirection chosenDirection = ForgeDirection.NORTH;
-		
-		for(DemonBuilding build : TEDemonPortal.buildingList)
-		{
-			if(build.isValid(grid, x, z, chosenDirection))
+			Int3 space = this.findRoadSpaceFromDirection(dir, 1*(rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius))+1);
+			
+			int x = space.xCoord;
+			int z = space.zCoord;
+			int yLevel = space.yCoord;
+			
+			System.out.println("Road space - x: " + x + " z: " + z);
+			
+			GridSpaceHolder grid = this.createGSH();
+			
+			if(!this.getGridSpace(x, z).isRoadSegment())
 			{
-				build.buildAll(worldObj, xCoord + x*5, yLevel, zCoord + z*5, chosenDirection);
-				build.setAllGridSpaces(x, z, yLevel, chosenDirection, GridSpace.HOUSE, grid);
-				this.loadGSH(grid);
+				return;
 			}
+						
+			List<ForgeDirection> directions = new ArrayList();
+			
+			for(int i=2; i<6; i++)
+			{
+				ForgeDirection testDir = ForgeDirection.getOrientation(i);
+				if(this.getGridSpace(x + testDir.offsetX, z + testDir.offsetZ).isEmpty())
+				{
+					directions.add(testDir);
+				}
+			}
+			
+			if(directions.isEmpty())
+			{
+				return;
+			}
+						
+			HashMap<ForgeDirection, List<DemonBuilding>> schemMap = new HashMap();
+			
+			for(ForgeDirection nextDir : directions)
+			{
+				for(DemonBuilding build : TEDemonPortal.buildingList)
+				{
+					Int3 offsetSpace = build.getGridOffsetFromRoad(nextDir, yLevel);
+					int xOff = offsetSpace.xCoord;
+					int zOff = offsetSpace.zCoord;
+					
+					if(build.isValid(grid, x + xOff, z + zOff, nextDir.getOpposite()))
+					{
+						System.out.println("This one is valid! Direction: " + nextDir.toString());
+						if(schemMap.containsKey(nextDir))
+						{
+							schemMap.get(nextDir).add(build);
+						}else
+						{
+							schemMap.put(nextDir, new ArrayList());
+							schemMap.get(nextDir).add(build);
+						}
+					}else
+					{
+						System.out.println("This ISN'T valid!");
+					}
+				}
+			}
+			
+			if(schemMap.keySet().isEmpty())
+			{
+				return;
+			}
+			
+			ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
+			DemonBuilding build = schemMap.get(chosenDirection).get(new Random().nextInt(schemMap.get(chosenDirection).size()));
+			
+			Int3 offsetSpace = build.getGridOffsetFromRoad(chosenDirection, yLevel);
+			int xOff = offsetSpace.xCoord;
+			int zOff = offsetSpace.zCoord;
+			
+//			System.out.println("xOff: " + xOff + " zOff: " + zOff + " Direction: " + chosenDirection.toString());
+			
+			build.buildAll(worldObj, xCoord + (x + xOff)*5, yLevel, zCoord + (z + zOff)*5, chosenDirection.getOpposite());
+			build.setAllGridSpaces(x + xOff, yLevel, z + zOff, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
+			this.loadGSH(grid);
+		}else
+		{
+			Int3 space = findEmptySpaceNearRoad(dir, 3*(rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius))+1, 2);
+			
+			int x = space.xCoord;
+			int z = space.zCoord;
+			int yLevel = space.yCoord;
+	
+			GridSpace newSpace = this.getGridSpace(x, z);
+			if(!newSpace.isEmpty())
+			{
+				return;
+			}
+			
+			if(yLevel == -1)
+			{
+				return;
+			}
+			
+			GridSpaceHolder grid = this.createGSH();
+			
+			ForgeDirection chosenDirection = ForgeDirection.NORTH;
+			
+			HashMap<ForgeDirection,List<DemonBuilding>> bigList = new HashMap();
+			
+			for(DemonBuilding build : TEDemonPortal.buildingList)
+			{
+				for(int i=2; i<6; i++)
+				{
+					chosenDirection = ForgeDirection.getOrientation(i);
+					System.out.println("" + chosenDirection.toString());
+					if(build.isValid(grid, x, z, chosenDirection))
+					{
+						System.out.println("Valid!");
+						if(bigList.containsKey(chosenDirection))
+						{
+							bigList.get(chosenDirection).add(build);
+						}else
+						{
+							bigList.put(chosenDirection, new ArrayList());
+							bigList.get(chosenDirection).add(build);
+						}
+					}
+				}		
+			}
+			
+			chosenDirection = ForgeDirection.getOrientation(new Random().nextInt(4) + 2); //Change to favour a direction with a road nearby
+			
+			List<DemonBuilding> buildingList = bigList.get(chosenDirection);
+			DemonBuilding build;
+	
+			if(buildingList != null && buildingList.size() > 0)
+			{
+				build = buildingList.get(new Random().nextInt(buildingList.size()));
+			}else
+			{
+				return;
+			}
+			//TODO: Finish the selection algorythm
+			//TODO: Should favour those directions that have a road right next to them.
+			
+			build.buildAll(worldObj, xCoord + x*5, yLevel, zCoord + z*5, chosenDirection);
+			build.setAllGridSpaces(x, z, yLevel, chosenDirection, GridSpace.HOUSE, grid);
+			this.loadGSH(grid);
+			
+			System.out.println("X: " + x + " Z: " + z + " Direction: " + chosenDirection.toString());
 		}
-		
-		System.out.println("X: " + x + " Z: " + z + " Direction: " + dir.toString());
 	}
 	
 	public int findNearestRoadYLevel(int xCoord, int zCoord, int maxDistance)
@@ -815,36 +935,7 @@ public class TEDemonPortal extends TileEntity
 		
 		return -1;
 	}
-	
-	public void testGson()
-	{
-		boolean write = true;
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String json = gson.toJson(new BuildingSchematic());
-		try {
-			if(write)
-			{
-				Writer writer = new FileWriter("config/test3.json");
-				writer.write(json);
-				writer.close();
-			}
-			{
-				BufferedReader br = new BufferedReader(new FileReader("config/test3.json"));
-				BuildingSchematic schema = gson.fromJson(br, BuildingSchematic.class);
-				String newJson = gson.toJson(schema);
-				Writer writer = new FileWriter("config/test4.json");
-				writer.write(newJson);
-				writer.close();
-			}
-			{
-				
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-	}
-	
+
 	public void createRoad(int xi, int yi, int zi, ForgeDirection dir, int length, boolean doesNotDrop)
 	{
 		int curX = xi;

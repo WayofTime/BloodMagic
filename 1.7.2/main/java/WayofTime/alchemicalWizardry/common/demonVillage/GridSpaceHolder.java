@@ -144,6 +144,7 @@ public class GridSpaceHolder
 	{
 		if(master != null)
 		{
+			System.out.println("negXRadius: " + negXRadius + " posXRadius: " + posXRadius + " negZRadius: " + negZRadius + " posZRadius: " + posZRadius);
 			for(int i=-negXRadius; i<=posXRadius; i++)
 			{
 				for(int j=-negZRadius; j<=posZRadius; j++)
@@ -153,6 +154,8 @@ public class GridSpaceHolder
 					{
 						continue;
 					}
+					
+					System.out.println("x: " + i + " z: " + j);
 					
 					int xOff = 0;
 					int zOff = 0;

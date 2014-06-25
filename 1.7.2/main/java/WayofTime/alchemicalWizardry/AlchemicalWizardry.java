@@ -1,8 +1,12 @@
 package WayofTime.alchemicalWizardry;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import joshie.alchemicalWizardy.ShapedBloodOrbRecipe;
 import joshie.alchemicalWizardy.ShapelessBloodOrbRecipe;
@@ -236,9 +240,50 @@ public class AlchemicalWizardry
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-    	(new File("config/BloodMagic/schematics")).mkdirs();
+    	File bmDirectory = new File("config/BloodMagic/schematics");
     	
-    	TEDemonPortal.loadBuildingList();
+    	if(!bmDirectory.exists() && bmDirectory.mkdirs())
+    	{
+    		try
+    		{
+    			InputStream in = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardry/schematics/building/buildings.zip");
+    			System.out.println("none yet!");
+    			if(in != null)
+    			{
+    				System.out.println("I have found a zip!");
+    				ZipInputStream zipStream = new ZipInputStream(in);
+    				ZipEntry entry = null;
+    				
+    				int extractCount = 0;
+    				
+    				while((entry = zipStream.getNextEntry()) != null)
+    				{
+    					File file = new File(bmDirectory, entry.getName());
+    					if(file.exists() && file.length() > 3L)
+    					{
+    						continue;
+    					}
+    					FileOutputStream out = new FileOutputStream(file);
+    					
+    					byte[] buffer = new byte[8192];
+    					int len;
+    					while((len = zipStream.read(buffer)) != -1)
+    					{
+    						out.write(buffer, 0, len);
+    					}
+    					out.close();
+    					
+    					extractCount++;
+    				}
+    			}
+    		}
+    		catch(Exception e)
+    		{
+    			
+    		}
+    	}
+
+        TEDemonPortal.loadBuildingList();
     	
         MinecraftForge.EVENT_BUS.register(new LifeBucketHandler());
         BloodMagicConfiguration.init(new File(event.getModConfigurationDirectory(), "AWWayofTime.cfg"));

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -40,6 +41,45 @@ public class BlockSet
 		for(int i=0; i<metadata.length; i++)
 		{
 			metadata[i] = meta;
+		}
+		if(block instanceof BlockStairs)
+		{
+			int[] northSet = new int[]{2,3,0,1};
+			int[] eastSet = new int[]{1,0,2,3};
+			int[] southSet = new int[]{3,2,1,0};
+			int[] westSet = new int[]{0,1,3,2};
+			int[] northUpSet = new int[]{6,7,4,5};
+			int[] eastUpSet = new int[]{5,4,6,7};
+			int[] southUpSet = new int[]{7,6,5,4};
+			int[] westUpSet = new int[]{4,5,7,6};
+			
+			switch(meta)
+			{
+			case 0:
+				metadata = westSet;
+				break;
+			case 1:
+				metadata = eastSet;
+				break;
+			case 2:
+				metadata = northSet;
+				break;
+			case 3:
+				metadata = southSet;
+				break;
+			case 4:
+				metadata = westUpSet;
+				break;
+			case 5:
+				metadata = eastUpSet;
+				break;
+			case 6:
+				metadata = northUpSet;
+				break;
+			case 7:
+				metadata = southUpSet;
+				break;
+			}
 		}
 	}
 	
@@ -121,7 +161,7 @@ public class BlockSet
 			break;
 		case SOUTH:
 			xOff *= -1;
-			yOff *= -1;
+			zOff *= -1;
 			break;
 		case WEST:
 			int temp = zOff;
