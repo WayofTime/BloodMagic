@@ -14,7 +14,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -58,7 +57,11 @@ public class RitualEffectItemSuction extends RitualEffect
             return;
         }
         
-        if (currentEssence < this.getCostPerRefresh()*100)
+        Block block = world.getBlock(x, y-1, z);
+        int range = this.getRange(block);
+        int refCost = this.getCostMod(block);
+        
+        if (currentEssence < this.getCostPerRefresh()*100*refCost)
         {
             EntityPlayer entityOwner = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(owner);
 
@@ -132,7 +135,7 @@ public class RitualEffectItemSuction extends RitualEffect
             
             if(count>0)
             {
-            	data.currentEssence = currentEssence - this.getCostPerRefresh()*Math.min(count, 100);
+            	data.currentEssence = currentEssence - this.getCostPerRefresh()*Math.min(count, 100)*refCost;
                 data.markDirty();
                 return;
             }
@@ -143,6 +146,48 @@ public class RitualEffectItemSuction extends RitualEffect
     public int getCostPerRefresh()
     {
         return 5;
+    }
+    
+    public int getRange(Block block)
+    {
+    	if(block == null)
+    	{
+    		return 10;
+    	}
+    	if(block == Blocks.iron_block)
+    	{
+    		return 15;
+    	}
+    	if(block == Blocks.gold_block)
+    	{
+    		return 25;
+    	}
+    	if(block == Blocks.diamond_block)
+    	{
+    		return 40;
+    	}
+    	return 10;
+    }
+    
+    public int getCostMod(Block block)
+    {
+    	if(block == null)
+    	{
+    		return 1;
+    	}
+    	if(block == Blocks.iron_block)
+    	{
+    		return 2;
+    	}
+    	if(block == Blocks.gold_block)
+    	{
+    		return 3;
+    	}
+    	if(block == Blocks.diamond_block)
+    	{
+    		return 4;
+    	}
+    	return 1;
     }
 
     @Override

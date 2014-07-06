@@ -14,9 +14,9 @@ import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BlockSet 
 {
-	private String blockid;
-	private int[] metadata;
-	private List<Int3> positions;
+	protected String blockid;
+	protected int[] metadata;
+	protected List<Int3> positions;
 	
 	public BlockSet()
 	{

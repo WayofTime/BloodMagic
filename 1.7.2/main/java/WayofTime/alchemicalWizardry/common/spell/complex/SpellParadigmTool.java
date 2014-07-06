@@ -48,6 +48,7 @@ public class SpellParadigmTool extends SpellParadigm
 	private HashMap<String,Float> digSpeed;
 	private HashMap<String,Float> maxDamageHash;
 	private HashMap<String,Float> critChanceHash;
+	private HashMap<String,Integer> durationHash; //ticks
 	
 	private HashMap<String, String> toolInfoString;
 	
@@ -66,6 +67,8 @@ public class SpellParadigmTool extends SpellParadigm
 		this.breakBlockEffectList = new LinkedList();
 		this.itemManipulatorEffectList = new LinkedList();
 		this.digAreaEffectList = new LinkedList();
+		this.specialDamageEffectList = new LinkedList();
+		this.durationHash = new HashMap();
 		
 		this.toolInfoString = new HashMap();
 		this.critChanceHash = new HashMap();
@@ -73,12 +76,12 @@ public class SpellParadigmTool extends SpellParadigm
 		this.maxDamage = 5;
 		
 		this.harvestLevel = new HashMap();
-		this.harvestLevel.put("pickaxe", 2);
+		this.harvestLevel.put("pickaxe", -1);
 		this.harvestLevel.put("shovel", -1);
 		this.harvestLevel.put("axe", -1);
 		
 		this.digSpeed = new HashMap();
-		this.digSpeed.put("pickaxe", 6.0f);
+		this.digSpeed.put("pickaxe", 1.0f);
 		this.digSpeed.put("shovel", 1.0f);
 		this.digSpeed.put("axe", 1.0f);
 		
@@ -88,7 +91,9 @@ public class SpellParadigmTool extends SpellParadigm
 		this.fortuneLevel = 0;
 		this.silkTouch = false;
 		
-		this.duration = 2400;
+		this.duration = 0;
+		
+		this.durationHash.put("default", 2400);
 		
 		//this.addRightClickEffect(new RightClickTunnel(0,0,0));
 		
@@ -177,6 +182,11 @@ public class SpellParadigmTool extends SpellParadigm
 		}
 		
 		itemTool.setToolListString(toolStack, toolStringList);
+		
+		for(Integer integ : this.durationHash.values())
+		{
+			this.duration += integ;
+		}
 		
 		itemTool.setDuration(toolStack, world, this.duration);
 		itemTool.loadParadigmIntoStack(toolStack, this.bufferedEffectList);
@@ -451,6 +461,11 @@ public class SpellParadigmTool extends SpellParadigm
 	{
 		//Chance is in percentage chance i.e. chance = 1.0 means 1.0%
 		this.critChanceHash.put(key, chance);
+	}
+	
+	public void addDuration(String key, int dur)
+	{
+		this.durationHash.put(key, dur);
 	}
 	
 	public float getCritChance()

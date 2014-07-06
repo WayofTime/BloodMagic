@@ -743,6 +743,7 @@ public class AlchemicalWizardry
         ItemStack costCoreStack = new ItemStack(ModItems.baseItems,1,23);
         ItemStack potencyCoreStack = new ItemStack(ModItems.baseItems,1,24);
         ItemStack obsidianBraceStack = new ItemStack(ModItems.baseItems,1,25);
+        ItemStack toolCoreStack = new ItemStack(ModItems.baseItems,1,26);
         
         ItemStack magicalesCraftedCableStack = new ItemStack(ModItems.baseItems,5,2);
         ItemStack crackedRunicPlateStackCrafted = new ItemStack(ModItems.baseItems,2,15);
@@ -758,6 +759,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(projectileCoreStack, "mbm","aca","mom",'c', emptyCoreStack,'b',weakBloodShardStack,'m', magicalesStack,'o', magicianBloodOrbStack,'a',new ItemStack(Items.arrow)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(selfCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',sanctusStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',glowstoneDustStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(meleeCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',incendiumStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',new ItemStack(Items.fire_charge)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(meleeCoreStack,"sbs","ncn","sos",'c', emptyCoreStack, 's',incendiumStack,'b', weakBloodShardStack,'o', magicianBloodOrbStack,'n',new ItemStack(Blocks.obsidian)));
         GameRegistry.addRecipe(paradigmBackPlateStack,"isi","rgr","isi",'i',ironIngotStack,'r',stoneStack,'g',goldIngotStack,'s',reinforcedSlateStack);
         GameRegistry.addRecipe(outputCableStack, " si","s c"," si",'s',stoneStack,'i',ironIngotStack,'c',simpleCatalystStack); 
         
@@ -787,6 +789,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,0),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', projectileCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,1),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', selfCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,2),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', meleeCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellParadigm,1,3),"gb ","pcw","gb ",'p',paradigmBackPlateStack,'c', meleeCoreStack,'g',goldIngotStack,'b',stoneBraceStack,'w',outputCableStack);
         
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEffect,1,0),"bgb","ico","bgb",'c',flameCoreStack,'b',stoneBraceStack,'g',goldIngotStack,'i',inputCableStack,'o',outputCableStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockSpellEffect,1,1),"bgb","ico","bgb",'c',iceCoreStack,'b',stoneBraceStack,'g',goldIngotStack,'i',inputCableStack,'o',outputCableStack);

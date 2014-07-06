@@ -25,6 +25,7 @@ tile.blockConduit.name=Spell Conduit
 tile.blockSpellParadigm.projectile.name=Particle Generator
 tile.blockSpellParadigm.self.name=Self Augmentator
 tile.blockSpellParadigm.melee.name=Melee Aggregator
+tile.blockSpellParadigm.tool.name=Tool Forger
 tile.blockSpellEnhancement.power1.name=Unstable Spell Empowerer
 tile.blockSpellEnhancement.power2.name=Standard Spell Empowerer
 tile.blockSpellEnhancement.power3.name=Reinforced Spell Empowerer
@@ -138,6 +139,7 @@ item.bloodMagicBaseItem.StoneBrace.name=Stone Brace
 item.bloodMagicBaseItem.ProjectileCore.name=Projectile Core
 item.bloodMagicBaseItem.SelfCore.name=Self Core
 item.bloodMagicBaseItem.MeleeCore.name=Melee Core
+item.bloodMagicBaseItem.ToolCore.name=Tool Core
 item.bloodMagicBaseItem.ParadigmBackPlate.name=Paradigm Plate
 item.bloodMagicBaseItem.OutputCable.name=Output Spell Cable
 item.bloodMagicBaseItem.InputCable.name=Input Spell Cable
@@ -168,7 +170,7 @@ item.bloodMagicAlchemyItem.Potentia.name=Potentia
 item.sanguineHelmet.name=Sanguine Helmet
 item.itemSeerSigil.name=Sigil of Sight
 item.itemFluidSigil.name=
-
+item.multiTool.name=Dynamic Mace
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

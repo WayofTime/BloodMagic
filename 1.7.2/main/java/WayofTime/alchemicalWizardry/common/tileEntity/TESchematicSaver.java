@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 
 public class TESchematicSaver extends TileEntity
 {
-	public Block targetBlock = ModBlocks.largeBloodStoneBrick;
+	public Block targetBlock = ModBlocks.blockBuildingSchematicSaver;
 	
 	public void rightClickBlock(EntityPlayer player, int side)
 	{
