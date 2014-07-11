@@ -289,4 +289,21 @@ public class GridSpaceHolder
 			}
 		}
 	}
+	
+	public int getNumberOfGridSpaces()
+	{
+		int num = 0;
+		for(int i=-this.negXRadius; i<=this.posXRadius; i++)
+		{
+			for(int j=-this.negZRadius; j<=this.posZRadius; j++)
+			{
+				if(!this.getGridSpace(i, j).isEmpty())
+				{
+					num++;
+				}
+			}
+		}
+		
+		return num;
+	}
 }

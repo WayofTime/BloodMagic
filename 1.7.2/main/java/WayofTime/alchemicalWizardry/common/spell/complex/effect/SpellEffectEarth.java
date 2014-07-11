@@ -263,10 +263,8 @@ public class SpellEffectEarth extends SpellEffect
 	@Override
 	protected int getCostForOffenseTool() 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return 1000;
 	}
-
 
 	@Override
 	protected int getCostForDefenseTool() 
@@ -274,11 +272,9 @@ public class SpellEffectEarth extends SpellEffect
 		return (int)(1000 * (1 + this.potencyEnhancement*0.1f) * (1 + this.powerEnhancement*0.2f) * Math.pow(0.85, costEnhancement));
 	}
 
-
 	@Override
 	protected int getCostForEnvironmentTool() 
 	{
 		return (int)(10 * (1+this.potencyEnhancement*0.8) * Math.pow(1.5*this.powerEnhancement + 3, 2) * Math.pow(0.85, this.costEnhancement));
 	}
-
 }

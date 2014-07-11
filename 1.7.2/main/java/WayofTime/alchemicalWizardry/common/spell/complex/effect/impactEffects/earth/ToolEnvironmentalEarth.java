@@ -28,8 +28,8 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
 		int z = blockPos.blockZ;
 		ForgeDirection sidehit = ForgeDirection.getOrientation(blockPos.sideHit);
 		
-		int radius = 2;
-		int depth = 5;
+		int radius = this.powerUpgrades + 1;
+		int depth = 1 + this.potencyUpgrades * 2;
 		
 		depth--;
 		

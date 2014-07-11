@@ -144,6 +144,10 @@ public class ItemRitualDiviner extends EnergyItems
         {
             TEMasterStone masterStone = (TEMasterStone) tileEntity;
             List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
+            if(ritualList == null)
+            {
+            	return false;
+            }
             int playerInvRitualStoneLocation = -1;
 
             for (int i = 0; i < playerInventory.length; i++)

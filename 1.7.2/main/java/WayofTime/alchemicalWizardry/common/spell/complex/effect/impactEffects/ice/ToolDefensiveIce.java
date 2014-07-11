@@ -25,7 +25,7 @@ public class ToolDefensiveIce extends SummonToolEffect
 	public int onSummonTool(ItemStack toolStack, World world, Entity entity) 
 	{
 		int horizRadius = this.powerUpgrades*2+2;
-		int vertRadius = this.powerUpgrades * 3 + 2;
+		int vertRadius = this.potencyUpgrades * 3 + 2;
 		List<Entity> entityList = SpellHelper.getEntitiesInRange(world, entity.posX, entity.posY, entity.posZ, horizRadius, vertRadius);
 
 		for(Entity ent : entityList)

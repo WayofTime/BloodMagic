@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
@@ -73,7 +74,7 @@ public class RitualEffectItemSuction extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
-            List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x+0.5f, y+0.5f, z+0.5f, 10, 10);
+            List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x+0.5f, y+0.5f, z+0.5f, range, range);
 
             int count = 0;
             
@@ -100,7 +101,10 @@ public class RitualEffectItemSuction extends RitualEffect
                                 copyStack.stackSize = 0;
                             } else
                             {
-                                if (itemStack.getItem().equals(copyStack.getItem()) && itemStack.getItemDamage() == copyStack.getItemDamage())
+                            	NBTTagCompound data1 = itemStack.getTagCompound();
+                            	NBTTagCompound data2 = copyStack.getTagCompound();
+                            	//TODO
+                                if (itemStack.getItem().equals(copyStack.getItem()) && itemStack.getItemDamage() == copyStack.getItemDamage() && ((data1 == null && data2 == null) || (data1 != null && data1.equals(data2))))
                                 {
                                     int itemSize = itemStack.stackSize;
                                     int copySize = copyStack.stackSize;

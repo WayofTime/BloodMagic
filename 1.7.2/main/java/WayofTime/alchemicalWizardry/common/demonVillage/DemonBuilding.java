@@ -112,4 +112,9 @@ public class DemonBuilding
 	{
 		schematic.destroyAllInField(world, xCoord, yCoord, zCoord, dir);
 	}
+	
+	public int getNumberOfGridSpaces()
+	{
+		return area.getNumberOfGridSpaces();
+	}
 }
