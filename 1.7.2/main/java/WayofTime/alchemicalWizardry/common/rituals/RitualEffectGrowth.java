@@ -84,7 +84,7 @@ public class RitualEffectGrowth extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 100;
+        return 25;
     }
 
     @Override

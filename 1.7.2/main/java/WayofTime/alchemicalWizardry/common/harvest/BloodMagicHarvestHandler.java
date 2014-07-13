@@ -17,7 +17,7 @@ public class BloodMagicHarvestHandler implements IHarvestHandler
 	@Override
 	public boolean canHandleBlock(Block block) 
 	{
-		return block == Blocks.wheat || block == Blocks.carrots || block == Blocks.potatoes;
+		return block == Blocks.wheat || block == Blocks.carrots || block == Blocks.potatoes || block == Blocks.nether_wart;
 	}
 
 	@Override
@@ -34,6 +34,10 @@ public class BloodMagicHarvestHandler implements IHarvestHandler
 		if(block == Blocks.potatoes)
 		{
 			return 7;
+		}
+		if(block == Blocks.nether_wart)
+		{
+			return 3;
 		}
 		return 7;
 	}
@@ -115,6 +119,10 @@ public class BloodMagicHarvestHandler implements IHarvestHandler
 		if(block == Blocks.potatoes)
 		{
 			return (IPlantable) Items.potato;
+		}
+		if(block == Blocks.nether_wart)
+		{
+			return (IPlantable) Items.nether_wart;
 		}
 		
 		return null;

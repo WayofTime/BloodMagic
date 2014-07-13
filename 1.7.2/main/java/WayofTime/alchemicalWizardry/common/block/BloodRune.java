@@ -22,6 +22,7 @@ public class BloodRune extends Block
     private IIcon altarCapacityRuneIcon;
     private IIcon dislocationRuneIcon;
     private IIcon orbCapacityRuneIcon;
+    private IIcon betterCapacityRuneIcon;
 
     public BloodRune()
     {
@@ -40,6 +41,7 @@ public class BloodRune extends Block
         this.altarCapacityRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:AltarCapacityRune");
         this.dislocationRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:DislocationRune");
         this.orbCapacityRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:OrbCapacityRune");
+        this.betterCapacityRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:BetterCapacityRune");
     }
 
     public int getRuneEffect(int metaData)
@@ -57,6 +59,9 @@ public class BloodRune extends Block
 
             case 3: //Orb Capacity rune
                 return 7;
+                
+            case 4: //Better Capacity rune
+            	return 8; 
         }
 
         return 0;
@@ -75,6 +80,7 @@ public class BloodRune extends Block
             par3List.add(new ItemStack(par1, 1, 1));
             par3List.add(new ItemStack(par1, 1, 2));
             par3List.add(new ItemStack(par1, 1, 3));
+            par3List.add(new ItemStack(par1, 1, 4));
         } else
         {
             super.getSubBlocks(par1, par2CreativeTabs, par3List);
@@ -98,6 +104,9 @@ public class BloodRune extends Block
 
             case 3:
                 return this.orbCapacityRuneIcon;
+                
+            case 4:
+            	return this.betterCapacityRuneIcon;
 
             default:
                 return blockIcon;
