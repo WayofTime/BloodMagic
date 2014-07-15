@@ -25,10 +25,7 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjecti
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Type;
-import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -36,6 +33,15 @@ public class AlchemicalWizardryEventHooks
     public static Map<String,Boolean> playerBoostStepHeight = new HashMap();
     public static List<String> playersWith1Step = new ArrayList();
 
+    @SubscribeEvent
+    public void onPlayerRespawnEvent(PlayerRespawnEvent event)
+    {
+    	if(AlchemicalWizardry.respawnWithLowerHealth)
+    	{
+        	event.player.setHealth(6);
+    	}
+    }
+    
     @SubscribeEvent
     public void onLivingJumpEvent(LivingJumpEvent event)
     {

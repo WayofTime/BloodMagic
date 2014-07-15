@@ -36,6 +36,9 @@ import com.google.gson.GsonBuilder;
 
 public class TEDemonPortal extends TileEntity
 {
+	public static int buildingGridDelay = 25;
+	public static int roadGridDelay = 10;
+	
 	public static List<DemonBuilding> buildingList = new ArrayList();
 	public Random rand = new Random();
 	private GridSpace[][] area;
@@ -46,6 +49,11 @@ public class TEDemonPortal extends TileEntity
 	private int posZRadius;
 	
 	private boolean isInitialized;
+	
+	public int houseCooldown;
+	public int roadCooldown;
+	public int tier; //Tier of the demon portal - Should select buildings 2 below to this
+	public int totalPoints;
 	
 	public TEDemonPortal()
 	{
@@ -71,6 +79,9 @@ public class TEDemonPortal extends TileEntity
 		isInitialized = false;
 		
 		this.setGridSpace(0, 0, new GridSpace(GridSpace.MAIN_PORTAL, yCoord));
+		
+		this.houseCooldown = 0;
+		this.roadCooldown = 0;
 	}
 	
 	public void initialize()
@@ -87,6 +98,9 @@ public class TEDemonPortal extends TileEntity
 				if(Math.abs(xIndex) == 1 || Math.abs(zIndex) == 1)
 				{
 					this.setGridSpace(xIndex, zIndex, new GridSpace(GridSpace.ROAD,yCoord));
+				}else if(xIndex == 0 && zIndex == 0)
+				{
+					this.setGridSpace(0, 0, new GridSpace(GridSpace.MAIN_PORTAL, yCoord));
 				}else
 				{
 					this.setGridSpace(xIndex, zIndex, new GridSpace());
@@ -94,7 +108,39 @@ public class TEDemonPortal extends TileEntity
 			}
 		}
 		
+		this.houseCooldown = TEDemonPortal.buildingGridDelay;
+		this.roadCooldown = TEDemonPortal.roadGridDelay;
+		
 		isInitialized = true;
+	}
+	
+	@Override
+	public void updateEntity()
+	{
+		if(!isInitialized)
+		{
+			return;
+		}
+		
+		if(this.roadCooldown <= 0)
+		{
+			int roadsMade = this.createRandomRoad();
+			if(roadsMade > 0)
+			{
+				this.roadCooldown = TEDemonPortal.roadGridDelay * roadsMade;
+			}
+		}
+		else if(this.houseCooldown <= 0)
+		{
+			int gridsUsed = this.createRandomBuilding(0, 0);
+			if(gridsUsed > 0)
+			{
+				this.houseCooldown = TEDemonPortal.buildingGridDelay * gridsUsed;
+			}
+		}
+		
+		this.houseCooldown = Math.max(0, this.houseCooldown - 1);
+		this.roadCooldown = Math.max(0, this.roadCooldown - 1);
 	}
 	
 	@Override
@@ -105,6 +151,8 @@ public class TEDemonPortal extends TileEntity
         this.negZRadius = par1NBTTagCompound.getInteger("negZRadius");
         this.posXRadius = par1NBTTagCompound.getInteger("posXRadius");
         this.posZRadius = par1NBTTagCompound.getInteger("posZRadius");
+        this.houseCooldown = par1NBTTagCompound.getInteger("houseCooldown");
+        this.roadCooldown = par1NBTTagCompound.getInteger("roadCooldown");
         
         area = new GridSpace[negXRadius + posXRadius + 1][negZRadius + posZRadius + 1];
         
@@ -124,6 +172,9 @@ public class TEDemonPortal extends TileEntity
         }
         
         this.isInitialized = par1NBTTagCompound.getBoolean("init");
+        
+        this.tier = par1NBTTagCompound.getInteger("tier");
+        this.totalPoints = par1NBTTagCompound.getInteger("totalPoints");
     }
 	
 	@Override
@@ -134,6 +185,8 @@ public class TEDemonPortal extends TileEntity
         par1NBTTagCompound.setInteger("negZRadius", negZRadius);
         par1NBTTagCompound.setInteger("posXRadius", posXRadius);
         par1NBTTagCompound.setInteger("posZRadius", posZRadius);
+        par1NBTTagCompound.setInteger("houseCooldown", houseCooldown);
+        par1NBTTagCompound.setInteger("roadCooldown", roadCooldown);
 
         NBTTagList gridList = new NBTTagList();
 
@@ -161,9 +214,11 @@ public class TEDemonPortal extends TileEntity
         par1NBTTagCompound.setTag("Grid", gridList);
         
         par1NBTTagCompound.setBoolean("init", isInitialized);
+        par1NBTTagCompound.setInteger("tier", this.tier);
+        par1NBTTagCompound.setInteger("totalPoints", this.totalPoints);
     }
 	
-	public void createRandomRoad()
+	public int createRandomRoad() //Return the number of road spaces
 	{
 		int next = rand.nextInt(4);
 		ForgeDirection dir;
@@ -200,7 +255,7 @@ public class TEDemonPortal extends TileEntity
 		
 		if(directions.size() <= 0)
 		{
-			return;
+			return 0;
 		}
 		
 		int maxDistance = 5;
@@ -223,12 +278,14 @@ public class TEDemonPortal extends TileEntity
 		
 		if(dominantDirection == null)
 		{
-			return;
+			return 0;
 		}
 		System.out.println("I got here!");
 		System.out.println("Distance: " + distance + " Direction: " + dominantDirection.toString() + " yLevel: " + yLevel);
 		
 		this.createGriddedRoad(x, yLevel, z, dominantDirection, distance+1, true);
+		
+		return distance;
 	}
 	
 	public List<ForgeDirection> findValidExtentionDirection(int x, int z)
@@ -725,33 +782,35 @@ public class TEDemonPortal extends TileEntity
 		{
 			return;
 		}
-		Int3 roadMarker = this.getNextRoadMarker();
 		
 		this.initialize();
 		
 		if(ForgeDirection.getOrientation(side) == ForgeDirection.UP)
 		{
 			this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, 0);
+		}else if(ForgeDirection.getOrientation(side) == ForgeDirection.DOWN)
+		{
+			this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, 0);
 		}else
 		{
 			this.createRandomRoad();
 		}
 	}
 	
-	public void createRandomBuilding(int type, int tier)
+	public int createRandomBuilding(int type, int tier)
 	{
 		switch(type)
 		{
 		case DemonBuilding.BUILDING_HOUSE:
-			this.createRandomHouse(tier);
-			break;
+			return this.createRandomHouse(tier);
 		case DemonBuilding.BUILDING_PORTAL:
-			this.createPortalBuilding(tier);
-			break;
+			return this.createPortalBuilding(tier);
 		}
+		
+		return 0;
 	}
 	
-	public void createPortalBuilding(int buildingTier)
+	public int createPortalBuilding(int buildingTier)
 	{
 		int x = 0;
 		int z = 0;
@@ -766,7 +825,7 @@ public class TEDemonPortal extends TileEntity
 		for(int i=2; i<6; i++)
 		{
 			ForgeDirection testDir = ForgeDirection.getOrientation(i);
-			if(this.getGridSpace(x + testDir.offsetX, z + testDir.offsetZ).isEmpty())
+			//if(this.getGridSpace(x + testDir.offsetX, z + testDir.offsetZ).isEmpty())
 			{
 				directions.add(testDir);
 			}
@@ -774,7 +833,7 @@ public class TEDemonPortal extends TileEntity
 		
 		if(directions.isEmpty())
 		{
-			return;
+			return 0;
 		}
 					
 		HashMap<ForgeDirection, List<DemonBuilding>> schemMap = new HashMap();
@@ -783,6 +842,10 @@ public class TEDemonPortal extends TileEntity
 		{
 			for(DemonBuilding build : TEDemonPortal.buildingList)
 			{
+				if(build.buildingType != DemonBuilding.BUILDING_PORTAL)
+				{
+					continue;
+				}
 				if(schemMap.containsKey(nextDir))
 				{
 					schemMap.get(nextDir).add(build);
@@ -796,7 +859,7 @@ public class TEDemonPortal extends TileEntity
 		
 		if(schemMap.keySet().isEmpty())
 		{
-			return;
+			return 0;
 		}
 		
 		ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
@@ -820,9 +883,11 @@ public class TEDemonPortal extends TileEntity
 		build.buildAll(worldObj, xCoord + (x)*5, yLevel, zCoord + (z)*5, chosenDirection.getOpposite());
 		build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
 		this.loadGSH(grid);
+		
+		return build.getNumberOfGridSpaces();
 	}
 	
-	public void createRandomHouse(int buildingTier)
+	public int createRandomHouse(int buildingTier)
 	{
 		int next = rand.nextInt(4);
 		ForgeDirection dir;
@@ -845,8 +910,6 @@ public class TEDemonPortal extends TileEntity
 			dir = ForgeDirection.NORTH;
 		}
 		
-		int length = 5;
-		
 		boolean newProtocol = true;
 		
 		if(newProtocol)
@@ -863,7 +926,7 @@ public class TEDemonPortal extends TileEntity
 			
 			if(!this.getGridSpace(x, z).isRoadSegment())
 			{
-				return;
+				return 0;
 			}
 						
 			List<ForgeDirection> directions = new ArrayList();
@@ -879,7 +942,7 @@ public class TEDemonPortal extends TileEntity
 			
 			if(directions.isEmpty())
 			{
-				return;
+				return 0;
 			}
 						
 			HashMap<ForgeDirection, List<DemonBuilding>> schemMap = new HashMap();
@@ -915,7 +978,7 @@ public class TEDemonPortal extends TileEntity
 			
 			if(schemMap.keySet().isEmpty())
 			{
-				return;
+				return 0;
 			}
 			
 			ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
@@ -929,6 +992,8 @@ public class TEDemonPortal extends TileEntity
 			build.buildAll(worldObj, xCoord + (x + xOff)*5, yLevel, zCoord + (z + zOff)*5, chosenDirection.getOpposite());
 			build.setAllGridSpaces(x + xOff, z + zOff, yLevel, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
 			this.loadGSH(grid);
+			
+			return build.getNumberOfGridSpaces();
 		}else
 		{
 			Int3 space = findEmptySpaceNearRoad(dir, 3*(rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius))+1, 2);
@@ -940,12 +1005,12 @@ public class TEDemonPortal extends TileEntity
 			GridSpace newSpace = this.getGridSpace(x, z);
 			if(!newSpace.isEmpty())
 			{
-				return;
+				return 0;
 			}
 			
 			if(yLevel == -1)
 			{
-				return;
+				return 0;
 			}
 			
 			GridSpaceHolder grid = this.createGSH();
@@ -985,7 +1050,7 @@ public class TEDemonPortal extends TileEntity
 				build = buildingList.get(new Random().nextInt(buildingList.size()));
 			}else
 			{
-				return;
+				return 0;
 			}
 			//TODO: Finish the selection algorythm
 			//TODO: Should favour those directions that have a road right next to them.
@@ -994,7 +1059,8 @@ public class TEDemonPortal extends TileEntity
 			build.setAllGridSpaces(x, z, yLevel, chosenDirection, GridSpace.HOUSE, grid);
 			this.loadGSH(grid);
 			
-			System.out.println("X: " + x + " Z: " + z + " Direction: " + chosenDirection.toString());
+			return build.getNumberOfGridSpaces();
+//			System.out.println("X: " + x + " Z: " + z + " Direction: " + chosenDirection.toString());
 		}
 	}
 	
@@ -1064,34 +1130,6 @@ public class TEDemonPortal extends TileEntity
 		return 10;
 	}
 	
-	public Block getRoadMarker()
-	{
-		return ModBlocks.ritualStone;
-	}
-	
-	public Int3 getNextRoadMarker()
-	{
-		int horizSearchMax = 25;
-		int vertSearchMax = 10;
-		
-		for(int xPos=xCoord-horizSearchMax; xPos<=xCoord+horizSearchMax; xPos++)
-		{
-			for(int zPos=zCoord-horizSearchMax; zPos<=zCoord+horizSearchMax; zPos++)
-			{
-				for(int yPos=yCoord-vertSearchMax; yPos<=yCoord+vertSearchMax; yPos++)
-				{
-					Block block = worldObj.getBlock(xPos, yPos, zPos);
-					if(block == this.getRoadMarker())
-					{
-						return new Int3(xPos,yPos,zPos);
-					}
-				}
-			}
-		}
-		
-		return null;
-	}
-	
 	public int getRoadSpacer()
 	{
 		return 1;
@@ -1149,5 +1187,15 @@ public class TEDemonPortal extends TileEntity
 //		}
 		
 		
+	}
+	
+	public int getTotalPoints()
+	{
+		return this.totalPoints;
+	}
+	
+	public void addToPoints(int addition)
+	{
+		this.totalPoints += addition;
 	}
 }

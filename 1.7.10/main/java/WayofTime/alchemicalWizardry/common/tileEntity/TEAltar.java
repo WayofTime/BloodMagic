@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -27,6 +26,7 @@ import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
@@ -867,11 +867,11 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
         this.isUpgraded = checkUpgrade;
         this.upgradeLevel = upgradeState;
-        this.consumptionMultiplier = (float) (0.15 * upgrades.getSpeedUpgrades());
+        this.consumptionMultiplier = (float) (0.20 * upgrades.getSpeedUpgrades());
         this.efficiencyMultiplier = (float) Math.pow(0.85, upgrades.getSpeedUpgrades());
         this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrades.getSacrificeUpgrades());
         this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrades.getSelfSacrificeUpgrades());
-        this.capacityMultiplier = (float) (1 + 0.15 * upgrades.getAltarCapacitiveUpgrades());
+        this.capacityMultiplier = (float) ((1*Math.pow(1.10,upgrades.getBetterCapacitiveUpgrades()) + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
         //TODO finalize values
         this.dislocationMultiplier = (float) (Math.pow(1.2, upgrades.getDisplacementUpgrades()));
         this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrades.getOrbCapacitiveUpgrades());

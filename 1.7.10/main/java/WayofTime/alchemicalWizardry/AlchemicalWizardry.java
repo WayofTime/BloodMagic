@@ -33,6 +33,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
+import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
@@ -58,6 +59,8 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
+import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
+import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
@@ -82,12 +85,14 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredEarth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredKnife;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFlight;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHarvest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectInterdiction;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemSuction;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectJumping;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
@@ -125,6 +130,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -182,6 +188,7 @@ public class AlchemicalWizardry
     public static boolean isForestryLoaded;
     
     public static boolean wimpySettings;
+    public static boolean respawnWithLowerHealth;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -330,8 +337,9 @@ public class AlchemicalWizardry
         RecipeSorter.INSTANCE.register("AWWayofTime:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
         RecipeSorter.INSTANCE.register("AWWayofTime:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
         
-        //FMLCommonHandler.instance().bus().register(new AlchemicalWizardryEventHooks());
-        MinecraftForge.EVENT_BUS.register(new AlchemicalWizardryEventHooks());
+        Object eventHook = new AlchemicalWizardryEventHooks();
+        FMLCommonHandler.instance().bus().register(eventHook);
+        MinecraftForge.EVENT_BUS.register(eventHook);
         NewPacketHandler.INSTANCE.ordinal();
     }
 
@@ -406,6 +414,7 @@ public class AlchemicalWizardry
         ItemStack runeOfSelfSacrificeStack = new ItemStack(ModBlocks.runeOfSelfSacrifice);
         ItemStack miningSigilStackCrafted = new ItemStack(ModItems.sigilOfTheFastMiner);
         ItemStack divinationSigilStackCrafted = new ItemStack(ModItems.divinationSigil);
+        ItemStack seerSigilStack = new ItemStack(ModItems.itemSeerSigil);
 //        ItemStack elementalInkWaterStack = new ItemStack(elementalInkWater);
 //        ItemStack elementalInkFireStack = new ItemStack(elementalInkFire);
 //        ItemStack elementalInkEarthStack = new ItemStack(elementalInkEarth);
@@ -478,6 +487,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(runeOfSacrificeStack, "srs", "gog", "srs", 's', stoneStack, 'g', goldIngotStack, 'o', apprenticeBloodOrbStack, 'r', reinforcedSlateStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(runeOfSelfSacrificeStack, "srs", "gog", "srs", 's', stoneStack, 'g', glowstoneDustStack, 'o', apprenticeBloodOrbStack, 'r', reinforcedSlateStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(divinationSigilStackCrafted, "ggg", "gsg", "gog", 'g', glassStack, 's', blankSlateStack, 'o', weakBloodOrbStack));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(seerSigilStack, "gbg", "gsg", "gog", 'g', glassStack, 's', divinationSigilStackCrafted, 'o', apprenticeBloodOrbStack,'b', new ItemStack(ModItems.bucketLife)));
 //        GameRegistry.addRecipe(waterScribeToolStack, "f", "i", 'f', featherStack, 'i', elementalInkWaterStack);
 //        GameRegistry.addRecipe(fireScribeToolStack, "f", "i", 'f', featherStack, 'i', elementalInkFireStack);
 //        GameRegistry.addRecipe(earthScribeToolStack, "f", "i", 'f', featherStack, 'i', elementalInkEarthStack);
@@ -594,6 +604,7 @@ public class AlchemicalWizardry
         this.initAltarRecipes();
         this.initRituals();
         this.initBindingRecipes(); 
+        this.initHarvestRegistry();
         
         //MinecraftForge.setToolClass(ModItems.boundPickaxe, "pickaxe", 5);
         //MinecraftForge.setToolClass(ModItems.boundAxe, "axe", 5);
@@ -965,6 +976,8 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW021Expulsion", 1, 1000000, new RitualEffectExpulsion(), "Aura of Expulsion");
         Rituals.registerRitual("AW022Supression", 1, 10000, new RitualEffectSupression(), "Dome of Supression");
         Rituals.registerRitual("AW023Zephyr", 1, 25000, new RitualEffectItemSuction(),"Call of the Zephyr");
+        Rituals.registerRitual("AW024Harvest", 1, 20000, new RitualEffectHarvest(), "Reap of the Harvest Moon");
+        Rituals.registerRitual("AW025Conduit", 2, 2000000, new RitualEffectLifeConduit(), "Cry of the Eternal Soul");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
     
@@ -975,5 +988,11 @@ public class AlchemicalWizardry
     	BindingRegistry.registerRecipe(new ItemStack(ModItems.boundShovel), new ItemStack(Items.diamond_shovel));
     	BindingRegistry.registerRecipe(new ItemStack(ModItems.energySword), new ItemStack(Items.diamond_sword));
     	BindingRegistry.registerRecipe(new ItemStack(ModItems.energyBlaster), new ItemStack(ModItems.apprenticeBloodOrb));
+    }
+    
+    public static void initHarvestRegistry()
+    {
+    	HarvestRegistry.registerHarvestHandler(new BloodMagicHarvestHandler());
+    	HarvestRegistry.registerHarvestHandler(new GourdHarvestHandler());
     }
 }

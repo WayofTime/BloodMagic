@@ -138,7 +138,6 @@ public class EntityBoulderFist extends EntityDemon
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setBoolean("Angry", this.isAngry());
         par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
     }
 
@@ -149,11 +148,6 @@ public class EntityBoulderFist extends EntityDemon
     {
         super.readEntityFromNBT(par1NBTTagCompound);
         this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
-
-        if (par1NBTTagCompound.hasKey("CollarColor"))
-        {
-            this.setCollarColor(par1NBTTagCompound.getByte("CollarColor"));
-        }
 
         this.setCombatTask();
     }

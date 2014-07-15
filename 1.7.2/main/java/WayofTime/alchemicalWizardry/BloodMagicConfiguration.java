@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry;
 
 import java.io.File;
-import java.util.logging.Level;
 
 import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
-import cpw.mods.fml.common.FMLLog;
 
 /**
  * Created with IntelliJ IDEA.
@@ -64,7 +62,8 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.allowedCrushedOresArray = config.get("oreCrushing", "allowedOres", new String[]{"iron","gold","copper","tin","lead","silver","osmium"}).getStringList();
             
             AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
-            
+            AlchemicalWizardry.respawnWithLowerHealth = config.get("WimpySettings", "RespawnWithLowerHealth", true).getBoolean(true);
+
         } catch (Exception e)
         {
 

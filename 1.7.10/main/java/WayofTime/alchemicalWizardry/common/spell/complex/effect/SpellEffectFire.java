@@ -17,6 +17,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fi
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfEnvironmentalFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.SelfOffensiveFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ToolDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ToolEnvironmentalFire;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire.ToolOffensiveFire;
 
 public class SpellEffectFire extends SpellEffect
@@ -181,15 +182,21 @@ public class SpellEffectFire extends SpellEffect
 	}
 
 	@Override
-	public void defensiveModificationTool(SpellParadigmTool parad) {
-		// TODO Auto-generated method stub
+	public void defensiveModificationTool(SpellParadigmTool parad) 
+	{
+		parad.addCritChance("defFire", this.potencyEnhancement);
 		
+		parad.addDuration("defFire", 1200 * this.powerEnhancement);
+		
+		parad.addToolString("defFire", "Unbreaking" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
 	}
 
 	@Override
-	public void environmentalModificationTool(SpellParadigmTool parad) {
-		// TODO Auto-generated method stub
+	public void environmentalModificationTool(SpellParadigmTool parad) 
+	{
+		parad.addBlockBreakEffect(new ToolEnvironmentalFire(this.powerEnhancement,this.potencyEnhancement,this.costEnhancement));
 		
+		parad.addToolString("envFire", "Magma Plume" + " " + SpellHelper.getNumeralForInt(this.powerEnhancement + 1));
 	}
 
 	@Override
@@ -201,18 +208,18 @@ public class SpellEffectFire extends SpellEffect
 	@Override
 	protected int getCostForOffenseTool() 
 	{
-		return (int)(0); //TODO
+		return (int)(1000 * (1 + this.powerEnhancement*0.3f) * (1 + this.potencyEnhancement*0.2f) * Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
-	protected int getCostForDefenseTool() {
-		// TODO Auto-generated method stub
-		return 0;
+	protected int getCostForDefenseTool() 
+	{
+		return (int)(500 * (1 + this.powerEnhancement*0.5f) * (1 + this.potencyEnhancement) * Math.pow(0.85, costEnhancement));
 	}
 
 	@Override
-	protected int getCostForEnvironmentTool() {
-		// TODO Auto-generated method stub
+	protected int getCostForEnvironmentTool() 
+	{
 		return 0;
 	}
 }

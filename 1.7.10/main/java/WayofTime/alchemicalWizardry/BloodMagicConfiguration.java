@@ -64,6 +64,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.allowedCrushedOresArray = config.get("oreCrushing", "allowedOres", new String[]{"iron","gold","copper","tin","lead","silver","osmium"}).getStringList();
             
             AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
+            AlchemicalWizardry.respawnWithLowerHealth = config.get("WimpySettings", "RespawnWithLowerHealth", true).getBoolean();
             
         } catch (Exception e)
         {

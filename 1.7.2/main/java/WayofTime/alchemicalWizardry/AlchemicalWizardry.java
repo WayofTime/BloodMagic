@@ -130,6 +130,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -187,6 +188,7 @@ public class AlchemicalWizardry
     public static boolean isForestryLoaded;
     
     public static boolean wimpySettings;
+    public static boolean respawnWithLowerHealth;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -335,8 +337,9 @@ public class AlchemicalWizardry
         RecipeSorter.INSTANCE.register("AWWayofTime:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
         RecipeSorter.INSTANCE.register("AWWayofTime:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
         
-        //FMLCommonHandler.instance().bus().register(new AlchemicalWizardryEventHooks());
-        MinecraftForge.EVENT_BUS.register(new AlchemicalWizardryEventHooks());
+        Object eventHook = new AlchemicalWizardryEventHooks();
+        FMLCommonHandler.instance().bus().register(eventHook);
+        MinecraftForge.EVENT_BUS.register(eventHook);
         NewPacketHandler.INSTANCE.ordinal();
     }
 

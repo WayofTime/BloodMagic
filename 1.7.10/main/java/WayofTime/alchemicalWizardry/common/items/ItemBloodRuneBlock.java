@@ -41,11 +41,15 @@ public class ItemBloodRuneBlock extends ItemBlock
                 break;
 
             case 3:
-                name = "test";
+                name = "orb";
                 break;
 
+            case 4:
+                name = "betterCapacity";
+                break;
+                
             default:
-                name = "broken";
+            	name = "broken";
         }
 
         return getUnlocalizedName() + "." + name;

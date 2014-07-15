@@ -9,6 +9,7 @@ public class AltarUpgradeComponent
     private int displacementUpgrades;
     private int altarCapacitiveUpgrades;
     private int orbCapacitiveUpgrades;
+    private int betterCapacitiveUpgrades;
 
     public AltarUpgradeComponent()
     {
@@ -19,6 +20,7 @@ public class AltarUpgradeComponent
         displacementUpgrades = 0;
         altarCapacitiveUpgrades = 0;
         orbCapacitiveUpgrades = 0;
+        betterCapacitiveUpgrades = 0;
     }
 
     public void addSpeedUpgrade()
@@ -55,6 +57,11 @@ public class AltarUpgradeComponent
     {
         orbCapacitiveUpgrades++;
     }
+    
+    public void addBetterCapacitiveUpgrade()
+    {
+    	betterCapacitiveUpgrades++;
+    }
 
     public int getSpeedUpgrades()
     {
@@ -89,5 +96,10 @@ public class AltarUpgradeComponent
     public int getOrbCapacitiveUpgrades()
     {
         return this.orbCapacitiveUpgrades;
+    }
+    
+    public int getBetterCapacitiveUpgrades()
+    {
+    	return this.betterCapacitiveUpgrades;
     }
 }

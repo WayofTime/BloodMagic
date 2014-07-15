@@ -417,7 +417,7 @@ public class ItemSpellMultiTool extends Item
  	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Here's a 'Tool Tip' :D");
+        par3List.add("A mace filled with ancient alchemy");
 
         if (!(par1ItemStack.stackTagCompound == null))
         {
@@ -434,7 +434,7 @@ public class ItemSpellMultiTool extends Item
             par3List.add("");
             float damage = this.getCustomItemAttack(par1ItemStack);
             par3List.add("\u00A79+" + ((int)(damage*10))/10.0f + " " + "Attack Damage");
-            float critChance = ((int)(this.getCritChance(par1ItemStack)*1000))/10;
+            float critChance = ((int)(this.getCritChance(par1ItemStack)*1000))/10.0f;
             par3List.add("\u00A79+" + critChance + "% " + "Crit Chance");
         }
     }
