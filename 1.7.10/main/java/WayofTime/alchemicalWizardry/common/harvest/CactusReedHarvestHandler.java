@@ -12,17 +12,22 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
 
-public class GourdHarvestHandler implements IHarvestHandler
+public class CactusReedHarvestHandler implements IHarvestHandler
 {
 	public boolean canHandleBlock(Block block) 
 	{
-		return block == Blocks.melon_block || block == Blocks.pumpkin;
+		return block == Blocks.reeds || block == Blocks.cactus;
 	}
 
 	@Override
 	public boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta) 
 	{
 		if(!this.canHandleBlock(block))
+		{
+			return false;
+		}
+		
+		if(world.getBlock(xCoord, yCoord-1, zCoord) != block || world.getBlock(xCoord, yCoord-2, zCoord) != block)
 		{
 			return false;
 		}

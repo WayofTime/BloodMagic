@@ -60,6 +60,7 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
+import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
@@ -75,11 +76,14 @@ import WayofTime.alchemicalWizardry.common.potion.PotionInhibit;
 import WayofTime.alchemicalWizardry.common.potion.PotionPlanarBinding;
 import WayofTime.alchemicalWizardry.common.potion.PotionProjectileProtect;
 import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
+import WayofTime.alchemicalWizardry.common.potion.PotionSoulFray;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEllipsoid;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEvaporation;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectExpulsion;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredEarth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredKnife;
@@ -122,6 +126,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESchematicSaver;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
@@ -171,6 +176,7 @@ public class AlchemicalWizardry
     public static Potion customPotionHeavyHeart;
     public static Potion customPotionFireFuse;
     public static Potion customPotionPlanarBinding;
+    public static Potion customPotionSoulFray;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -183,12 +189,13 @@ public class AlchemicalWizardry
     public static int customPotionHeavyHeartID;
     public static int customPotionFireFuseID;
     public static int customPotionPlanarBindingID;
+    public static int customPotionSoulFrayID;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     
     public static boolean wimpySettings;
-    public static boolean respawnWithLowerHealth;
+    public static boolean respawnWithDebuff;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -414,7 +421,7 @@ public class AlchemicalWizardry
         ItemStack runeOfSelfSacrificeStack = new ItemStack(ModBlocks.runeOfSelfSacrifice);
         ItemStack miningSigilStackCrafted = new ItemStack(ModItems.sigilOfTheFastMiner);
         ItemStack divinationSigilStackCrafted = new ItemStack(ModItems.divinationSigil);
-        ItemStack seerSigilStack = new ItemStack(ModItems.itemSeerSigil);
+        ItemStack seerSigilStackCrafted = new ItemStack(ModItems.itemSeerSigil);
 //        ItemStack elementalInkWaterStack = new ItemStack(elementalInkWater);
 //        ItemStack elementalInkFireStack = new ItemStack(elementalInkFire);
 //        ItemStack elementalInkEarthStack = new ItemStack(elementalInkEarth);
@@ -482,12 +489,14 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 1), "sbs", "bob", "srs", 's', stoneStack, 'o', magicianBloodOrbStack, 'b', emptyBucketStack, 'r', new ItemStack(ModItems.imbuedSlate)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 2), "sbs", "bob", "srs", 's', stoneStack, 'o', magicianBloodOrbStack, 'b', waterBucketStack, 'r', new ItemStack(ModItems.imbuedSlate)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 3), "sws", "ror", "sws", 's', stoneStack, 'o', new ItemStack(ModItems.masterBloodOrb), 'w', weakBloodOrbStack, 'r', new ItemStack(ModItems.demonicSlate)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 4), "srs", "beb", "sos", 's', obsidianStack, 'o', new ItemStack(ModItems.masterBloodOrb), 'r', new ItemStack(ModItems.demonicSlate), 'b', emptyBucketStack,'e',new ItemStack(ModBlocks.bloodRune, 1, 1)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(airSigilStack, "fgf", "fsf", "fof", 'f', featherStack, 'g', ghastTearStack, 's', reinforcedSlateStack, 'o', apprenticeBloodOrbStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(miningSigilStackCrafted, "sps", "hra", "sos", 'o', apprenticeBloodOrbStack, 's', stoneStack, 'p', ironPickaxeStack, 'h', ironShovelStack, 'a', ironAxeStack, 'r', reinforcedSlateStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(runeOfSacrificeStack, "srs", "gog", "srs", 's', stoneStack, 'g', goldIngotStack, 'o', apprenticeBloodOrbStack, 'r', reinforcedSlateStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(runeOfSelfSacrificeStack, "srs", "gog", "srs", 's', stoneStack, 'g', glowstoneDustStack, 'o', apprenticeBloodOrbStack, 'r', reinforcedSlateStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(divinationSigilStackCrafted, "ggg", "gsg", "gog", 'g', glassStack, 's', blankSlateStack, 'o', weakBloodOrbStack));
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(seerSigilStack, "gbg", "gsg", "gog", 'g', glassStack, 's', divinationSigilStackCrafted, 'o', apprenticeBloodOrbStack,'b', new ItemStack(ModItems.bucketLife)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(seerSigilStackCrafted, "gbg", "gsg", "gog", 'g', glassStack, 's', divinationSigilStackCrafted, 'o', apprenticeBloodOrbStack, 'b', new ItemStack(ModItems.bucketLife)));
+
 //        GameRegistry.addRecipe(waterScribeToolStack, "f", "i", 'f', featherStack, 'i', elementalInkWaterStack);
 //        GameRegistry.addRecipe(fireScribeToolStack, "f", "i", 'f', featherStack, 'i', elementalInkFireStack);
 //        GameRegistry.addRecipe(earthScribeToolStack, "f", "i", 'f', featherStack, 'i', elementalInkEarthStack);
@@ -535,6 +544,7 @@ public class AlchemicalWizardry
         customPotionHeavyHeart = (new PotionHeavyHeart(customPotionHeavyHeartID,true,0).setIconIndex(0, 0).setPotionName("Heavy Heart"));
         customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID,true,0).setIconIndex(0, 0).setPotionName("Fire Fuse"));
         customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID,true,0).setIconIndex(0,0).setPotionName("Planar Binding"));
+        customPotionSoulFray = (new PotionSoulFray(customPotionSoulFrayID,true,0).setIconIndex(0,0).setPotionName("Soul Fray"));
         
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
         
@@ -570,6 +580,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TESpectralContainer.class,"spectralContainerTileEntity");
         GameRegistry.registerTileEntity(TEDemonPortal.class, "containerDemonPortal");
         GameRegistry.registerTileEntity(TESchematicSaver.class, "containerSchematicSaver");
+        GameRegistry.registerTileEntity(TESpectralBlock.class, "containerSpectralBlock");
         //GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
@@ -916,6 +927,7 @@ public class AlchemicalWizardry
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 1 * 60 * 20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl),AlchemicalWizardry.customPotionPlanarBinding.id,1*60*20);
+    	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand),AlchemicalWizardry.customPotionSoulFray.id,30*20);
     }
     
     public static void initAltarRecipes()
@@ -978,6 +990,8 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW023Zephyr", 1, 25000, new RitualEffectItemSuction(),"Call of the Zephyr");
         Rituals.registerRitual("AW024Harvest", 1, 20000, new RitualEffectHarvest(), "Reap of the Harvest Moon");
         Rituals.registerRitual("AW025Conduit", 2, 2000000, new RitualEffectLifeConduit(), "Cry of the Eternal Soul");
+        Rituals.registerRitual("AW026Ellipsoid", 1, 25000, new RitualEffectEllipsoid(), "Ellipsoid");
+        Rituals.registerRitual("AW027Evaporation", 1, 1000, new RitualEffectEvaporation(), "Evaporation");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
     
@@ -994,5 +1008,6 @@ public class AlchemicalWizardry
     {
     	HarvestRegistry.registerHarvestHandler(new BloodMagicHarvestHandler());
     	HarvestRegistry.registerHarvestHandler(new GourdHarvestHandler());
+    	HarvestRegistry.registerHarvestHandler(new CactusReedHarvestHandler());
     }
 }

@@ -82,7 +82,13 @@ public class SacrificialDagger extends Item
             return par1ItemStack;
         }
 
-        findAndFillAltar(par2World, par3EntityPlayer, 200);
+        if(par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+        {
+            findAndFillAltar(par2World, par3EntityPlayer, 20);
+        }else
+        {
+            findAndFillAltar(par2World, par3EntityPlayer, 200);
+        }
 
         if (par3EntityPlayer.getHealth() <= 0.001f)
         {

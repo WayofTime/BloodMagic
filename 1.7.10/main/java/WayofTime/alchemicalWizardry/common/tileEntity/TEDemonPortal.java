@@ -39,6 +39,8 @@ public class TEDemonPortal extends TileEntity
 	public static int buildingGridDelay = 25;
 	public static int roadGridDelay = 10;
 	
+	public static int[] tierCostList = new int[]{1000,50000}; //Cost to get to NEXT tier
+	
 	public static List<DemonBuilding> buildingList = new ArrayList();
 	public Random rand = new Random();
 	private GridSpace[][] area;
@@ -54,6 +56,9 @@ public class TEDemonPortal extends TileEntity
 	public int roadCooldown;
 	public int tier; //Tier of the demon portal - Should select buildings 2 below to this
 	public int totalPoints;
+	
+	public int yLevelDestination;
+	public boolean hasLocationChanged;
 	
 	public TEDemonPortal()
 	{
@@ -82,6 +87,10 @@ public class TEDemonPortal extends TileEntity
 		
 		this.houseCooldown = 0;
 		this.roadCooldown = 0;
+		this.tier = 0;
+		
+		this.yLevelDestination = 0;
+		this.hasLocationChanged = false;
 	}
 	
 	public void initialize()
@@ -122,12 +131,24 @@ public class TEDemonPortal extends TileEntity
 			return;
 		}
 		
+		if(this.hasLocationChanged)
+		{
+			if(this.changePortalLocation())
+			{
+				return;
+			}else
+			{
+				this.hasLocationChanged = false;
+			}
+		}
+		
 		if(this.roadCooldown <= 0)
 		{
 			int roadsMade = this.createRandomRoad();
 			if(roadsMade > 0)
 			{
 				this.roadCooldown = TEDemonPortal.roadGridDelay * roadsMade;
+				this.totalPoints += this.roadCooldown;
 			}
 		}
 		else if(this.houseCooldown <= 0)
@@ -136,10 +157,20 @@ public class TEDemonPortal extends TileEntity
 			if(gridsUsed > 0)
 			{
 				this.houseCooldown = TEDemonPortal.buildingGridDelay * gridsUsed;
+				this.totalPoints += this.houseCooldown;
 			}
 		}
 		
-		this.houseCooldown = Math.max(0, this.houseCooldown - 1);
+		if(this.tier < this.tierCostList.length && this.totalPoints > this.tierCostList[this.tier])
+		{
+			this.tier++;
+
+			if(this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, tier+1) >= 1)
+			{
+			}
+		}
+		
+		this.houseCooldown = Math.max(0, this.houseCooldown - 1); //Current dummy implementation of the increasing costs
 		this.roadCooldown = Math.max(0, this.roadCooldown - 1);
 	}
 	
@@ -175,6 +206,8 @@ public class TEDemonPortal extends TileEntity
         
         this.tier = par1NBTTagCompound.getInteger("tier");
         this.totalPoints = par1NBTTagCompound.getInteger("totalPoints");
+        this.yLevelDestination = par1NBTTagCompound.getInteger("yLevelDestination");
+        this.hasLocationChanged = par1NBTTagCompound.getBoolean("hasLocationChanged");
     }
 	
 	@Override
@@ -213,9 +246,11 @@ public class TEDemonPortal extends TileEntity
 
         par1NBTTagCompound.setTag("Grid", gridList);
         
-        par1NBTTagCompound.setBoolean("init", isInitialized);
+        par1NBTTagCompound.setBoolean("init", this.isInitialized);
         par1NBTTagCompound.setInteger("tier", this.tier);
         par1NBTTagCompound.setInteger("totalPoints", this.totalPoints);
+        par1NBTTagCompound.setInteger("yLevelDestination", this.yLevelDestination);
+        par1NBTTagCompound.setBoolean("hasLocationChanged", this.hasLocationChanged);
     }
 	
 	public int createRandomRoad() //Return the number of road spaces
@@ -870,15 +905,17 @@ public class TEDemonPortal extends TileEntity
 		Int3 portalSpace = build.getDoorSpace(chosenDirection);
 		int yOffset = portalSpace.yCoord;
 		
-		for(int i=0; i<256; i++)
-		{
-			Block block = worldObj.getBlock(xCoord + (x)*5, i, zCoord + (z)*5);
-			if(block == ModBlocks.blockDemonPortal)
-			{
-				BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, i, zCoord, xCoord, yLevel + yOffset, zCoord);
-				break;
-			}
-		}
+		//TODO
+		
+//		for(int i=0; i<256; i++)
+//		{
+//			Block block = worldObj.getBlock(xCoord + (x)*5, i, zCoord + (z)*5);
+//			if(block == ModBlocks.blockDemonPortal)
+//			{
+//				BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, i, zCoord, xCoord, yLevel + yOffset, zCoord);
+//				break;
+//			}
+//		}
 		
 		build.buildAll(worldObj, xCoord + (x)*5, yLevel, zCoord + (z)*5, chosenDirection.getOpposite());
 		build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
@@ -1197,5 +1234,26 @@ public class TEDemonPortal extends TileEntity
 	public void addToPoints(int addition)
 	{
 		this.totalPoints += addition;
+	}
+	
+	public void setPortalDestination(int yLevel)
+	{
+		if(yLevel != this.yCoord)
+		{
+			this.hasLocationChanged = true;
+			this.yLevelDestination = yLevel;
+		}
+	}
+	
+	public boolean changePortalLocation()
+	{
+		if(yLevelDestination == yCoord)
+		{
+			return false;
+		}
+		
+		BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, yCoord, zCoord, xCoord, yLevelDestination, zCoord);
+		
+		return true;
 	}
 }

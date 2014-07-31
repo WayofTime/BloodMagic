@@ -3,16 +3,22 @@ package WayofTime.alchemicalWizardry.common.block;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Facing;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SpectralBlock extends Block
+public class SpectralBlock extends BlockContainer
 {
     public SpectralBlock()
     {
@@ -26,15 +32,6 @@ public class SpectralBlock extends Block
 //        return 10;
 //    }
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
-    @Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
-    {
-        //if(!par1World.isRemote)
-        par1World.setBlockToAir(par2, par3, par4);
-    }
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -46,6 +43,7 @@ public class SpectralBlock extends Block
     @Override
     public boolean isOpaqueCube()
     {
+    	Block d;
         return false;
     }
 
@@ -53,6 +51,24 @@ public class SpectralBlock extends Block
     public int quantityDropped(Random par1Random)
     {
         return 0;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    {
+        Block block = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_);
+
+        if (p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_) != p_149646_1_.getBlockMetadata(p_149646_2_ - Facing.offsetsXForSide[p_149646_5_], p_149646_3_ - Facing.offsetsYForSide[p_149646_5_], p_149646_4_ - Facing.offsetsZForSide[p_149646_5_]))
+        {
+            return true;
+        }
+
+        if (block == this)
+        {
+            return false;
+        }
+
+        return block == this ? false : super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
     }
 
     @SideOnly(Side.CLIENT)
@@ -96,9 +112,9 @@ public class SpectralBlock extends Block
         return true;
     }
 
-    @Override
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
-    {
-        par1World.scheduleBlockUpdate(par2, par3, par4, this, 100);
-    }
+	@Override
+	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) 
+	{
+		return new TESpectralBlock();
+	}
 }

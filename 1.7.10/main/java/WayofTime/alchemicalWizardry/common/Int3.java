@@ -13,4 +13,10 @@ public class Int3
 		this.yCoord = yCoord;
 		this.zCoord = zCoord;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		return o instanceof Int3 ? ((Int3)o).xCoord == this.xCoord && ((Int3)o).yCoord == this.yCoord && ((Int3)o).zCoord == this.zCoord : false;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
@@ -37,7 +38,7 @@ public class RitualEffectHarvest extends RitualEffect
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
-        int maxCount = 9;
+        int maxCount = 100;
 
         if (currentEssence < this.getCostPerRefresh() * maxCount)
         {
@@ -51,21 +52,23 @@ public class RitualEffectHarvest extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
-            if (world.getWorldTime() % 20 != 0)
+            if (world.getWorldTime() % 5 != 0)
             {
                 return;
             }
-
+            
+            Block block = world.getBlock(x, y-1, z);
             int flag = 0;
-            int range = 4;
+            int range = this.getRadiusForModifierBlock(block);
+            int vertRange = 4;            
 
             for (int i = -range; i <= range; i++)
             {
-                for (int j = -range; j <= range; j++)
+                for (int j = -vertRange; j <= vertRange; j++)
                 {
                 	for(int k = -range; k<=range; k++)
                 	{
-                        if(HarvestRegistry.harvestBlock(world, x + i, y + j, z + k))
+                        if(HarvestRegistry.harvestBlock(world, x + i, y + j, z + k) && flag < maxCount)
                         {
                         	flag++;
                         }
@@ -87,6 +90,31 @@ public class RitualEffectHarvest extends RitualEffect
 		return 20;
 	}
 
+	public int getRadiusForModifierBlock(Block block)
+	{
+		if(block == null)
+		{
+			return 4;
+		}
+		
+		if(block == Blocks.diamond_block)
+		{
+			return 15;
+		}
+		
+		if(block == Blocks.gold_block)
+		{
+			return 10;
+		}
+		
+		if(block == Blocks.iron_block)
+		{
+			return 6;
+		}
+		
+		return 4;
+	}
+	
 	@Override
 	public List<RitualComponent> getRitualComponentList() 
 	{

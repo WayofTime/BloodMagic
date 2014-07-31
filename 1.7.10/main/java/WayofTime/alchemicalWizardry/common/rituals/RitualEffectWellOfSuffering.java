@@ -77,7 +77,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 
         //tileAltar = (TEAltar)world.getBlockTileEntity(x,y-1,z);
         int d0 = 10;
-        int vertRange = 5;
+        int vertRange = 10;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
         List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator1 = list.iterator();

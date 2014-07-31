@@ -131,6 +131,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        
+        if(par2World.isRemote)
+        {
+        	return par1ItemStack;
+        }
 
         if (par3EntityPlayer.isSneaking())
         {
@@ -259,6 +264,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
+    	if(world.isRemote)
+        {
+        	return;
+        }
+    	
         int range = 5;
         int verticalRange = 2;
         int posX = (int) Math.round(player.posX - 0.5f);

@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
@@ -36,9 +37,9 @@ public class AlchemicalWizardryEventHooks
     @SubscribeEvent
     public void onPlayerRespawnEvent(PlayerRespawnEvent event)
     {
-    	if(AlchemicalWizardry.respawnWithLowerHealth)
+    	if(AlchemicalWizardry.respawnWithDebuff)
     	{
-        	event.player.setHealth(6);
+        	event.player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, 20*60*5,0));
     	}
     }
     

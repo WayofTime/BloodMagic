@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.Int3;
 
 public class BuildingSchematic 
@@ -84,12 +85,65 @@ public class BuildingSchematic
 		return new Int3(gridX, doorY, gridZ);
 	}
 	
+	public List<Int3> getGriddedPositions(ForgeDirection dir)
+	{
+		List<Int3> positionList = new ArrayList();
+		
+		for(BlockSet blockSet : blockList)
+		{
+			for(Int3 pos : blockSet.getPositions())
+			{
+				int xOff = pos.xCoord;
+				int zOff = pos.zCoord;
+				
+				switch(dir)
+				{
+				case SOUTH:
+					xOff *= -1;
+					zOff *= -1;
+					break;
+				case WEST:
+					int temp = zOff;
+					zOff = xOff * -1;
+					xOff = temp;
+					break;
+				case EAST:
+					int temp2 = zOff * -1;
+					zOff = xOff;
+					xOff = temp2;
+					break;
+				default:
+				}
+				
+				Int3 nextPos = new Int3(xOff, 0, zOff);
+				if(!positionList.contains(nextPos))
+				{
+					positionList.add(nextPos);
+				}
+			}
+		}
+		
+		return positionList;
+	}
+	
 	public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
 	{
-		GridSpaceHolder grid = this.createGSH();
+		GridSpaceHolder grid = this.createGSH(); //GridSpaceHolder is not aware of the buildings - need to use the schematic
+		
+		List<Int3> positionList = getGriddedPositions(dir);
+		
 		for(int i=this.getMinY(); i<=this.getMaxY(); i++)
 		{
-			grid.destroyAllInGridSpaces(world, xCoord, yCoord + i, zCoord, dir);
+			for(Int3 pos : positionList)
+			{
+				Block block = world.getBlock(xCoord + pos.xCoord, yCoord + i, zCoord + pos.zCoord);
+				if(block != ModBlocks.blockDemonPortal)
+				{
+					world.setBlockToAir(xCoord + pos.xCoord, yCoord + i, zCoord + pos.zCoord);
+				}
+			}
+			
+			//grid.destroyAllInGridSpaces(world, xCoord, yCoord + i, zCoord, dir); //Deprecated method
 		}
 	}
 	

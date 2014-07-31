@@ -37,7 +37,7 @@ public class RitualEffectGrowth extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (currentEssence < this.getCostPerRefresh())
+        if (currentEssence < this.getCostPerRefresh()*9)
         {
             EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
 
@@ -54,7 +54,7 @@ public class RitualEffectGrowth extends RitualEffect
                 return;
             }
 
-            boolean flag = false;
+            int flag = 0;
 
             for (int i = -1; i <= 1; i++)
             {
@@ -67,15 +67,15 @@ public class RitualEffectGrowth extends RitualEffect
                         {
                             SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
                             block.updateTick(world, x + i, y + 2, z + j, world.rand);
-                            flag = true;
+                            flag++;
                         }
                     }
                 }
             }
 
-            if (flag)
+            if (flag > 0)
             {
-                data.currentEssence = currentEssence - this.getCostPerRefresh();
+                data.currentEssence = currentEssence - this.getCostPerRefresh()*flag;
                 data.markDirty();
             }
         }
@@ -84,7 +84,7 @@ public class RitualEffectGrowth extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 100;
+        return 20;
     }
 
     @Override

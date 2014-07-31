@@ -49,6 +49,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionHeavyHeartID = config.get("Potion ID","HeavyHeart",108).getInt();
             AlchemicalWizardry.customPotionFireFuseID = config.get("Potion ID","FireFuse",109).getInt();
             AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID","PlanarBinding",110).getInt();
+            AlchemicalWizardry.customPotionSoulFrayID = config.get("Potion ID","SoulFray",111).getInt();
             
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
@@ -64,7 +65,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.allowedCrushedOresArray = config.get("oreCrushing", "allowedOres", new String[]{"iron","gold","copper","tin","lead","silver","osmium"}).getStringList();
             
             AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
-            AlchemicalWizardry.respawnWithLowerHealth = config.get("WimpySettings", "RespawnWithLowerHealth", true).getBoolean();
+            AlchemicalWizardry.respawnWithDebuff = config.get("WimpySettings", "RespawnWithDebuff", true).getBoolean();
             
         } catch (Exception e)
         {

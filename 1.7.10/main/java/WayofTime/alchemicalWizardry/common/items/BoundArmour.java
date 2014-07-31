@@ -117,11 +117,18 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (helmet.getItem().equals(ModItems.boundHelmet) || plate.getItem().equals(ModItems.boundPlate) || leggings.getItem().equals(ModItems.boundLeggings) || boots.getItem().equals(ModItems.boundBoots))
+        if (helmet.getItem().equals(ModItems.boundHelmet) && plate.getItem().equals(ModItems.boundPlate) && leggings.getItem().equals(ModItems.boundLeggings) && boots.getItem().equals(ModItems.boundBoots))
         {
             if (source.isUnblockable())
             {
                 return new ArmorProperties(-1, 3, 4);
+            }
+            
+            if(player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+            {
+                int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
+                
+                return new ArmorProperties(-1, 3, (int)(25*(1.0f - 0.15f*i)));
             }
 
             return new ArmorProperties(-1, 3, 100000);
@@ -209,7 +216,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
         //TODO Make the armour invisible when the player has Invisibility on.
         if (entity instanceof EntityLivingBase)
         {
-            if (((EntityLivingBase) entity).isPotionActive(Potion.invisibility.id))
+            if (this.getIsInvisible(stack))
             {
                 if (this== ModItems.boundHelmet || this == ModItems.boundPlate || this == ModItems.boundBoots)
                 {
@@ -265,6 +272,8 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
         {
             tickInternalInventory(itemStack, world, player, 0, false);
         }
+        
+        this.setIsInvisible(itemStack, player.isPotionActive(Potion.invisibility.id));
 
         if (itemStack.getItemDamage() > 0)
         {
@@ -576,6 +585,30 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
     public int getItemEnchantability()
     {
         return 0;
+    }
+    
+    public boolean getIsInvisible(ItemStack armourStack)
+    {
+    	NBTTagCompound tag = armourStack.getTagCompound();
+    	if(tag != null)
+    	{
+    		return tag.getBoolean("invisible");
+    	}
+    	
+    	return false;
+    }
+    
+    public void setIsInvisible(ItemStack armourStack, boolean invisible)
+    {
+    	NBTTagCompound tag = armourStack.getTagCompound();
+    	
+    	if(tag == null)
+    	{
+    		armourStack.setTagCompound(new NBTTagCompound());
+    		tag = armourStack.getTagCompound();
+    	}
+    	
+    	tag.setBoolean("invisible", invisible);
     }
 
     @Override

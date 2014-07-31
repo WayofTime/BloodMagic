@@ -90,6 +90,8 @@ public class BloodMagicHarvestHandler implements IHarvestHandler
 			int plantMeta = seed.getPlantMetadata(world, xCoord, yCoord, zCoord);
 			Block plantBlock = seed.getPlant(world, xCoord, yCoord, zCoord);
 			
+			world.func_147480_a(xCoord, yCoord, zCoord, false);
+
 			world.setBlock(xCoord, yCoord, zCoord, plantBlock, plantMeta, 3);
 			
 			for(ItemStack stack : list)
