@@ -10,6 +10,7 @@ import WayofTime.alchemicalWizardry.common.block.BlockHomHeart;
 import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
 import WayofTime.alchemicalWizardry.common.block.BlockPedestal;
 import WayofTime.alchemicalWizardry.common.block.BlockPlinth;
+import WayofTime.alchemicalWizardry.common.block.BlockReagentConduit;
 import WayofTime.alchemicalWizardry.common.block.BlockSchematicSaver;
 import WayofTime.alchemicalWizardry.common.block.BlockSocket;
 import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
@@ -80,6 +81,7 @@ public class ModBlocks
     public static Block blockSpectralContainer;
     public static Block blockBuildingSchematicSaver;
     public static Block blockDemonPortal;
+    public static Block blockReagentConduit;
 
     public static void init()
     {
@@ -113,6 +115,7 @@ public class ModBlocks
         blockSpectralContainer = new BlockSpectralContainer();
         blockDemonPortal = new BlockDemonPortal();
         blockBuildingSchematicSaver = new BlockSchematicSaver();
+        blockReagentConduit = new BlockReagentConduit();
         
         blockLifeEssence = new LifeEssenceBlock();
     }
@@ -152,7 +155,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockSpectralContainer, "spectralContainer");
         GameRegistry.registerBlock(ModBlocks.blockDemonPortal, "demonPortalMain");
         GameRegistry.registerBlock(ModBlocks.blockBuildingSchematicSaver, "blockSchemSaver");
-        
+        GameRegistry.registerBlock(ModBlocks.blockReagentConduit, "blockReagentConduit"); 
     }
     
     public static void registerBlocksInInit()

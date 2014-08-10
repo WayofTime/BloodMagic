@@ -88,7 +88,7 @@ public class RitualEffectFeatheredKnife extends RitualEffect
         {
             entity = (EntityPlayer) iterator1.next();
 
-            if (entity.getClass().equals(EntityPlayerMP.class) || entity.getClass().equals(EntityPlayer.class))
+            if (!SpellHelper.isFakePlayer(world, entity))
             {
                 entityCount++;
             }
@@ -114,9 +114,9 @@ public class RitualEffectFeatheredKnife extends RitualEffect
                 entity = (EntityPlayer) iterator2.next();
 
                 //entity = (EntityPlayer)iterator1.next();
-                if (entity.getClass().equals(EntityPlayerMP.class) || entity.getClass().equals(EntityPlayer.class))
+                if (!SpellHelper.isFakePlayer(world, entity))
                 {
-                    if (entity.getHealth() > 6.2f)
+                    if (entity.getHealth()/entity.getMaxHealth() > 0.3d)
                     {
                         entity.setHealth(entity.getHealth() - 1);
                         entityCount++;

@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.Constants;
 import thaumcraft.api.IGoggles;
+import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.nodes.IRevealer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
@@ -28,8 +29,8 @@ import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Optional.InterfaceList(value = {@Interface(iface="thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IGoggles", modid = "Thaumcraft")})
-public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,IRevealer, IGoggles
+@Optional.InterfaceList(value = {@Interface(iface="thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IGoggles", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IRunicArmor", modid = "Thaumcraft")})
+public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,IRevealer, IGoggles, IRunicArmor
 {
     private static int invSize = 9;
     private static IIcon helmetIcon;
@@ -56,7 +57,6 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
     }
 
     @SideOnly(Side.CLIENT)
-
     public IIcon getIconFromDamage(int par1)
     {
         if (this.equals(ModItems.boundHelmet))
@@ -91,6 +91,26 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
     {
+    	double armourReduction = 0.0;
+    	
+    	if(player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+        {
+            int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
+            
+            armourReduction = (i+1)*0.1;
+        }
+  	
+    	double damageAmount = 0.25;
+    	
+    	if(!player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
+    	{
+    		damageAmount *= 0.9;
+    	}
+    	
+    	damageAmount *= (1.0-armourReduction);
+    	
+    	int maxAbsorption = 100000;
+    	
         if (source.equals(DamageSource.drown))
         {
             return new ArmorProperties(-1, 0, 0);
@@ -100,7 +120,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
         {
             if (isImmuneToVoid(armor))
             {
-                return new ArmorProperties(-1, 3, 100000);
+                return new ArmorProperties(-1, damageAmount, maxAbsorption);
             } else
             {
                 return new ArmorProperties(-1, 0, 0);
@@ -121,17 +141,10 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
         {
             if (source.isUnblockable())
             {
-                return new ArmorProperties(-1, 3, 4);
-            }
-            
-            if(player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
-            {
-                int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
-                
-                return new ArmorProperties(-1, 3, (int)(25*(1.0f - 0.15f*i)));
+                return new ArmorProperties(-1, damageAmount * 0.8d, maxAbsorption);
             }
 
-            return new ArmorProperties(-1, 3, 100000);
+            return new ArmorProperties(-1, damageAmount, maxAbsorption);
         }
 
         return new ArmorProperties(-1, 0, 0);
@@ -410,6 +423,7 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
+        itemTag = itemStack.stackTagCompound;
 
         ItemStack[] inv = new ItemStack[9];
         NBTTagList tagList = itemTag.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
@@ -624,4 +638,60 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
     {
         return this.hasIGoggles(itemstack);
     }
+
+	@Override
+	@Optional.Method(modid = "Thaumcraft")
+	public int getRunicCharge(ItemStack itemstack) 
+	{
+		ItemStack[] inv = this.getInternalInventory(itemstack);
+		int shardLevel = this.getMaxBloodShardLevel(itemstack);
+		int count = 0;
+		int harden = 0;
+		
+		if(inv == null)
+		{
+			return 0;
+		}
+		
+		for(ItemStack stack : inv)
+		{
+			if(count >= shardLevel)
+			{
+				break;
+			}
+			
+			if(stack == null || !(stack.getItem() instanceof ArmourUpgrade))
+			{
+				continue;
+			}
+			
+			if(stack.getItem() instanceof ItemArmor && ((ItemArmor)stack.getItem()).armorType != this.armorType)
+			{
+				continue;
+			}
+			
+			if(stack.hasTagCompound())
+			{
+				NBTTagCompound tag = stack.getTagCompound();
+				
+				int enchLvl = tag.getByte("RS.HARDEN");
+				
+				if(stack.getItem() instanceof IRunicArmor)
+				{
+					enchLvl += ((IRunicArmor)stack.getItem()).getRunicCharge(stack);
+				}
+				
+				if(enchLvl > 0)
+				{
+					harden += enchLvl;
+					if(((ArmourUpgrade)stack.getItem()).isUpgrade())
+					{
+						count += 1;
+					}	
+				}
+			}
+		}
+		
+		return harden;
+	}
 }

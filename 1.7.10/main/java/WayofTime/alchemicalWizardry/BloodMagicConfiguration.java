@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry;
 
 import java.io.File;
-import java.util.logging.Level;
 
 import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
-import cpw.mods.fml.common.FMLLog;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,6 +48,7 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionFireFuseID = config.get("Potion ID","FireFuse",109).getInt();
             AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID","PlanarBinding",110).getInt();
             AlchemicalWizardry.customPotionSoulFrayID = config.get("Potion ID","SoulFray",111).getInt();
+            AlchemicalWizardry.customPotionSoulHardenID = config.get("Potion ID", "SoulHarden", 112).getInt();
             
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
@@ -66,6 +65,9 @@ public class BloodMagicConfiguration
             
             AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
             AlchemicalWizardry.respawnWithDebuff = config.get("WimpySettings", "RespawnWithDebuff", true).getBoolean();
+//            AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
+            AlchemicalWizardry.lockdownAltar = false;
+
             
         } catch (Exception e)
         {

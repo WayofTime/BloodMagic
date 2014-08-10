@@ -115,7 +115,7 @@ public class ThaumcraftApi {
 	 */
 	public static void addSmeltingBonus(ItemStack in, ItemStack out) {
 		smeltingBonus.put(
-				Arrays.asList(Item.getIdFromItem(in.getItem()),in.getItemDamage()), 
+				Arrays.asList(in.getItem(),in.getItemDamage()), 
 				new ItemStack(out.getItem(),0,out.getItemDamage()));
 	}
 	
@@ -135,9 +135,9 @@ public class ThaumcraftApi {
 	 * @return the The bonus item that can be produced
 	 */
 	public static ItemStack getSmeltingBonus(ItemStack in) {
-		ItemStack out = smeltingBonus.get(Arrays.asList(Item.getIdFromItem(in.getItem()),in.getItemDamage()));
+		ItemStack out = smeltingBonus.get(Arrays.asList(in.getItem(),in.getItemDamage()));
 		if (out==null) {
-			out = smeltingBonus.get(Arrays.asList(Item.getIdFromItem(in.getItem()),OreDictionary.WILDCARD_VALUE));
+			out = smeltingBonus.get(Arrays.asList(in.getItem(),OreDictionary.WILDCARD_VALUE));
 		}
 		if (out==null) {
 			String od = OreDictionary.getOreName( OreDictionary.getOreID(in));
@@ -232,6 +232,7 @@ public class ThaumcraftApi {
     /**
      * @param key the research key required for this recipe to work. 
      * @param result the output result
+     * @param catalyst an itemstack of the catalyst or a string if it is an ore dictionary item
      * @param cost the vis cost
      * @param tags the aspects required to craft this
      */
@@ -388,6 +389,43 @@ public class ThaumcraftApi {
 			registerObjectTag(item,tmp);
 		}
 	}
+	
+	//WARP ///////////////////////////////////////////////////////////////////////////////////////
+		private static HashMap<Object,Integer> warpMap = new HashMap<Object,Integer>();
+		
+		/**
+		 * This method is used to determine how much warp is gained if the item is crafted
+		 * @param craftresult The item crafted
+		 * @param amount how much warp is gained
+		 */
+		public static void addWarpToItem(ItemStack craftresult, int amount) {
+			warpMap.put(Arrays.asList(craftresult.getItem(),craftresult.getItemDamage()),amount);
+		}
+		
+		/**
+		 * This method is used to determine how much warp is gained if the sent item is crafted
+		 * @param in The item crafted
+		 * @param amount how much warp is gained
+		 */
+		public static void addWarpToResearch(String research, int amount) {
+			warpMap.put(research, amount);
+		}
+		
+		/**
+		 * Returns how much warp is gained from the item or research passed in
+		 * @param in itemstack or string
+		 * @return how much warp it will give
+		 */
+		public static int getWarp(Object in) {
+			if (in==null) return 0;
+			if (in instanceof ItemStack && warpMap.containsKey(Arrays.asList(((ItemStack)in).getItem(),((ItemStack)in).getItemDamage()))) {
+				return warpMap.get(Arrays.asList(((ItemStack)in).getItem(),((ItemStack)in).getItemDamage()));
+			} else
+			if (in instanceof String && warpMap.containsKey((String)in)) {
+				return warpMap.get((String)in);
+			}
+			return 0;
+		}
 		
 	//CROPS //////////////////////////////////////////////////////////////////////////////////////////
 	

@@ -12,6 +12,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -77,7 +78,8 @@ public class SacrificialDagger extends Item
             par2World.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
         }
 
-        if (!par2World.isRemote && !(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
+        if(!par2World.isRemote && SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        //if (!(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
         {
             return par1ItemStack;
         }

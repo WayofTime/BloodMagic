@@ -49,13 +49,13 @@ public class EntityDemon extends EntityTameable implements IDemon
 
     protected void dropFewItems(boolean par1, int par2)
     {
-    	if(!(this.getOwner() instanceof EntityPlayer))
-    	{
-    		return;
-    	}
         ItemStack drop = new ItemStack(ModItems.demonPlacer, 1, this.getDemonID());
-        DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer)this.getOwner()));
 
+    	if((this.getOwner() instanceof EntityPlayer))
+    	{
+            DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer)this.getOwner()));
+    	}
+    	
         if (this.hasCustomNameTag())
         {
             drop.setStackDisplayName(this.getCustomNameTag());

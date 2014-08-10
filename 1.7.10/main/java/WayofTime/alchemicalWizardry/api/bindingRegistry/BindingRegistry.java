@@ -33,7 +33,7 @@ public class BindingRegistry
 		{
 			if(recipe.doesRequiredItemMatch(testItem))
 			{
-				return recipe.getResult().copy();
+				return recipe.getResult(testItem).copy();
 			}
 		}
 		

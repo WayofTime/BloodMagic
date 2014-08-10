@@ -19,6 +19,8 @@ import WayofTime.alchemicalWizardry.common.IBindingAgent;
 import WayofTime.alchemicalWizardry.common.ICatalyst;
 import WayofTime.alchemicalWizardry.common.IFillingAgent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
+import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -281,6 +283,30 @@ public class TEWritingTable extends TileEntity implements IInventory
         for (int i = 1; i <= 5; i++)
         {
             if (inv[i] != null && !(inv[i].getItem() instanceof ItemBlock) && inv[i].getItem() == ModItems.alchemyFlask)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+    
+    public boolean containsCombinationCatalyst()
+    {
+        if (getCombinationCatalystPosition() != -1)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public int getCombinationCatalystPosition()
+    {
+        for (int i = 1; i <= 5; i++)
+        {
+            if (inv[i] != null && inv[i].getItem() instanceof ICombinationalCatalyst)
             {
                 return i;
             }
@@ -615,7 +641,6 @@ public class TEWritingTable extends TileEntity implements IInventory
             }
         } else if (this.containsFillingAgent() && this.containsPotionFlask())
         {
-            //TODO
             if (getStackInSlot(6) == null)
             {
                 progress++;
@@ -661,7 +686,55 @@ public class TEWritingTable extends TileEntity implements IInventory
                     }
                 }
             }
-        } else
+        }
+        else if (this.containsPotionFlask() && this.containsCombinationCatalyst())
+        {
+            //TODO
+            if (getStackInSlot(6) == null && CombinedPotionRegistry.hasCombinablePotionEffect(inv[this.getPotionFlaskPosition()]))
+            {
+                progress++;
+
+                if (worldTime % 4 == 0)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                }
+
+                if (progress >= progressNeeded)
+                {
+                    ItemStack flaskStack = inv[this.getPotionFlaskPosition()];
+                    //ItemStack ingredientStack = inv[this.getRegisteredPotionIngredientPosition()];
+                    ItemStack combinationCatalyst = inv[this.getCombinationCatalystPosition()];
+
+                    if (flaskStack == null || combinationCatalyst == null)
+                    {
+                        progress = 0;
+
+                        if (worldObj != null)
+                        {
+                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        }
+
+                        return;
+                    }
+                    
+                    ItemStack newFlask = CombinedPotionRegistry.applyPotionEffect(flaskStack);
+                    if(newFlask != null)
+                    {
+                    	this.setInventorySlotContents(6, newFlask);
+                        this.decrStackSize(this.getPotionFlaskPosition(), 1);
+                        this.decrStackSize(this.getCombinationCatalystPosition(), 1);
+
+                        progress = 0;
+
+                        if (worldObj != null)
+                        {
+                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        }
+                    }
+                }
+            }
+        }
+        else
         {
             if (!isRecipeValid())
             {

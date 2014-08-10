@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public interface IMasterRitualStone 

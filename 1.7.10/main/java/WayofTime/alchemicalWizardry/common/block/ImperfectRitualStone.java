@@ -66,9 +66,9 @@ public class ImperfectRitualStone extends Block
                 if (world.isRemote)
                 {
                     world.setRainStrength(1.0F);
+                    world.setThunderStrength(1.0f);
                 }
 
-                world.setThunderStrength(1.0f);
                 world.getWorldInfo().setThunderTime(0);
                 world.getWorldInfo().setThundering(true);
                 return true;

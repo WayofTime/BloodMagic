@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import java.util.List;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -7,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
@@ -60,6 +65,8 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     protected FluidStack fluidOutput;
     protected FluidStack fluidInput;
     private int progress;
+    
+    private int lockdownDuration;
 
     public TEAltar()
     {
@@ -81,6 +88,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         upgradeLevel = 0;
         isResultBlock = false;
         progress = 0;
+        this.lockdownDuration = 0;
     }
 
     @Override
@@ -145,6 +153,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         bufferCapacity = par1NBTTagCompound.getInteger("bufferCapacity");
         progress = par1NBTTagCompound.getInteger("progress");
         isResultBlock = par1NBTTagCompound.getBoolean("isResultBlock");
+        lockdownDuration = par1NBTTagCompound.getInteger("lockdownDuration");
     }
 
     public void setMainFluid(FluidStack fluid)
@@ -221,6 +230,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         par1NBTTagCompound.setInteger("capacity", capacity);
         par1NBTTagCompound.setInteger("progress", progress);
         par1NBTTagCompound.setInteger("bufferCapacity", bufferCapacity);
+        par1NBTTagCompound.setInteger("lockdownDuration", lockdownDuration);
     }
 
     @Override
@@ -527,6 +537,11 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     public void updateEntity()
     {
         //this.capacity=(int) (10000*this.capacityMultiplier);
+    	if(this.lockdownDuration > 0)
+    	{
+    		this.lockdownDuration --;
+    	}
+    	
         if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
         {
             //TODO
@@ -541,9 +556,23 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
             this.fluidOutput.amount += fluidOutputted;
             this.fluid.amount -= fluidOutputted;
-        }
+            
+            if(AlchemicalWizardry.lockdownAltar)
+            {
+            	List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5, 15, 15);
+                boolean hasHighRegen = false;
+                for(EntityPlayer player : list)
+                {
+                	PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
+                	if(regenEffect != null && regenEffect.getAmplifier() >= 2)
+                	{
+                		this.lockdownDuration += 20;
+                	}
+                }
+            }  
+        }  
 
-        if (worldObj.getWorldTime() % 150 == 0)
+        if (worldObj.getWorldTime() % 100 == 0)
         {
             startCycle();
         }
@@ -563,6 +592,30 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         if (worldObj.isRemote)
         {
             return;
+        }
+        
+        int range = 5;
+        
+        for(int i=-range; i<=range; i++)
+        {
+        	for(int j=-range; j<=range; j++)
+        	{
+        		for(int k=-range; k<=range; k++)
+        		{
+        			Block block = worldObj.getBlock(xCoord + i, yCoord + j, zCoord + k);
+                	int meta = worldObj.getBlockMetadata(xCoord + i, yCoord + j, zCoord + k);
+                	
+                	List<ItemStack> list = block.getDrops(worldObj, xCoord + i, yCoord + j, zCoord + k, meta, 1);
+                	for(ItemStack stack : list)
+                	{
+                		String str = stack.getUnlocalizedName();
+                		if(str.contains("fallenKanade"))
+                		{
+                			System.out.println("" + str);
+                		}
+                	}
+        		}
+        	}
         }
 
         //o,o this is always true
@@ -726,7 +779,14 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
     public void sacrificialDaggerCall(int amount, boolean isSacrifice)
     {
-        fluid.amount += Math.min(capacity - fluid.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
+    	if(!isSacrifice && this.lockdownDuration > 0)
+    	{
+    		int amt = (int) Math.min(bufferCapacity - fluidInput.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
+    		fluidInput.amount += amt;
+    	}else
+    	{
+            fluid.amount += Math.min(capacity - fluid.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
+    	}
     }
 
     @Override

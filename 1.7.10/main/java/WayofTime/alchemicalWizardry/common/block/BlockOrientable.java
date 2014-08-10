@@ -18,9 +18,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockOrientable extends BlockContainer
 {    
-    @SideOnly(Side.CLIENT)
-    private static IIcon[] fireIcons;
-
     public BlockOrientable()
     {
         super(Material.rock);
@@ -31,77 +28,16 @@ public class BlockOrientable extends BlockContainer
         //func_111022_d("AlchemicalWizardry:blocks");
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {      
-        this.fireIcons = this.registerIconsWithString(iconRegister, "fireEffectBlock");
-    }
-
-    @SideOnly(Side.CLIENT)
-    public static IIcon[] registerIconsWithString(IIconRegister iconRegister, String blockString)
-    {
-    	IIcon[] icons = new IIcon[7];
-    	
-    	icons[0] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_input");
-    	icons[1] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_output");
-    	icons[2] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_upArrow");
-    	icons[3] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_downArrow");
-    	icons[4] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_leftArrow");
-    	icons[5] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_rightArrow");
-    	icons[6] = iconRegister.registerIcon("AlchemicalWizardry:" + blockString + "_blank");
-    	
-    	return icons;
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-    	IIcon[] icons = this.getIconsForMeta(meta);
-        switch (side)
-        {
-            case 4: return icons[1];
-            default: return icons[6];
-        }
-    }
-
 //    @Override
 //    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
 //    {
 //        return false;
 //    }
-    
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
-     */
-    public IIcon getBlockTexture(IBlockAccess par1IBlockAccess, int x, int y, int z, int side)
-    {
-    	TileEntity tile = par1IBlockAccess.getTileEntity(x, y, z);
-    	int meta = par1IBlockAccess.getBlockMetadata(x, y, z);
-    	
-    	if(tile instanceof TEOrientable)
-    	{
-    		ForgeDirection input = ((TEOrientable)tile).getInputDirection();
-    		ForgeDirection output = ((TEOrientable)tile).getOutputDirection();
-    		
-    		return this.getIconsForMeta(meta)[this.getTextureIndexForSideAndOrientation(side, input, output)];
-    	}
-    	
-        return this.getIcon(side, meta);
-    }
 
     @Override
     public TileEntity createNewTileEntity(World world, int dunno)
     {
         return new TEOrientable();
-    }
-    
-    public IIcon[] getIconsForMeta(int metadata)
-    {
-    	return this.fireIcons;
     }
     
     @Override

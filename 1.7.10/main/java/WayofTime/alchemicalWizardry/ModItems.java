@@ -44,6 +44,7 @@ import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyReagent;
 import WayofTime.alchemicalWizardry.common.items.potion.AverageLengtheningCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.AveragePowerCatalyst;
+import WayofTime.alchemicalWizardry.common.items.potion.CombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.EnhancedFillingAgent;
 import WayofTime.alchemicalWizardry.common.items.potion.GreaterLengtheningCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.GreaterPowerCatalyst;
@@ -159,6 +160,9 @@ public class ModItems
     public static Item weakBindingAgent;
     public static Item itemRitualDiviner;
     public static Item sanguineHelmet;
+    public static Item sanguineRobe;
+    public static Item sanguinePants;
+    public static Item sanguineBoots;
     public static Item focusBloodBlast;
     public static Item focusGravityWell;
     public static Item sigilOfMagnetism;
@@ -172,6 +176,7 @@ public class ModItems
     public static Item itemSigilOfSupression;
     public static Item itemFluidSigil;
     public static Item itemSeerSigil;
+    public static Item itemCombinationalCatalyst;
     
     public static Item customTool;
     
@@ -264,6 +269,7 @@ public class ModItems
         itemFluidSigil = new ItemFluidSigil().setUnlocalizedName("itemFluidSigil");
         itemSeerSigil = new ItemSeerSigil().setUnlocalizedName("itemSeerSigil");
         customTool = new ItemSpellMultiTool().setUnlocalizedName("multiTool");
+        itemCombinationalCatalyst = new CombinationalCatalyst().setUnlocalizedName("itemCombinationalCatalyst");
     }
     
     public static void registerItems()
@@ -358,6 +364,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.customTool, "customTool");
         
         GameRegistry.registerItem(ModItems.bucketLife, "bucketLife");
+        GameRegistry.registerItem(ModItems.itemCombinationalCatalyst, "itemCombinationalCatalyst");
         
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
         GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");

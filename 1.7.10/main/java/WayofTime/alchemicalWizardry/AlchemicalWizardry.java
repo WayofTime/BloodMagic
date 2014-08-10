@@ -18,6 +18,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,6 +45,7 @@ import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
 import WayofTime.alchemicalWizardry.common.LifeEssence;
 import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
@@ -77,6 +79,8 @@ import WayofTime.alchemicalWizardry.common.potion.PotionPlanarBinding;
 import WayofTime.alchemicalWizardry.common.potion.PotionProjectileProtect;
 import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulFray;
+import WayofTime.alchemicalWizardry.common.potion.PotionSoulHarden;
+import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
@@ -124,6 +128,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESchematicSaver;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
@@ -148,7 +153,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.0.1g")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.1.1")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -177,6 +182,7 @@ public class AlchemicalWizardry
     public static Potion customPotionFireFuse;
     public static Potion customPotionPlanarBinding;
     public static Potion customPotionSoulFray;
+    public static Potion customPotionSoulHarden;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -190,12 +196,14 @@ public class AlchemicalWizardry
     public static int customPotionFireFuseID;
     public static int customPotionPlanarBindingID;
     public static int customPotionSoulFrayID;
+    public static int customPotionSoulHardenID;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     
     public static boolean wimpySettings;
     public static boolean respawnWithDebuff;
+    public static boolean lockdownAltar;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -213,7 +221,7 @@ public class AlchemicalWizardry
     };
 
     public static ToolMaterial bloodBoundToolMaterial = EnumHelper.addToolMaterial("BoundBlood", 4, 1000, 12.0f, 8.0f, 50);
-    public static ArmorMaterial sanguineArmourArmourMaterial = EnumHelper.addArmorMaterial("SanguineArmour", 1000, new int[]{3, 6, 5, 2}, 30);
+    public static ArmorMaterial sanguineArmourArmourMaterial = EnumHelper.addArmorMaterial("SanguineArmour", 33, new int[]{3, 8, 6, 3}, 30);
 
     //Dungeon loot chances
     public static int standardBindingAgentDungeonChance;
@@ -545,6 +553,7 @@ public class AlchemicalWizardry
         customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID,true,0).setIconIndex(0, 0).setPotionName("Fire Fuse"));
         customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID,true,0).setIconIndex(0,0).setPotionName("Planar Binding"));
         customPotionSoulFray = (new PotionSoulFray(customPotionSoulFrayID,true,0).setIconIndex(0,0).setPotionName("Soul Fray"));
+        customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID,false,0).setIconIndex(0,0).setPotionName("Soul Harden"));
         
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
         
@@ -581,6 +590,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TEDemonPortal.class, "containerDemonPortal");
         GameRegistry.registerTileEntity(TESchematicSaver.class, "containerSchematicSaver");
         GameRegistry.registerTileEntity(TESpectralBlock.class, "containerSpectralBlock");
+        GameRegistry.registerTileEntity(TEReagentConduit.class, "containerReagentConduit");
         //GameRegistry.registerBlock(ModBlocks.blockSpellEffect,"blockSpellEffect");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
@@ -616,6 +626,7 @@ public class AlchemicalWizardry
         this.initRituals();
         this.initBindingRecipes(); 
         this.initHarvestRegistry();
+        this.initCombinedAlchemyPotionRecipes();
         
         //MinecraftForge.setToolClass(ModItems.boundPickaxe, "pickaxe", 5);
         //MinecraftForge.setToolClass(ModItems.boundAxe, "axe", 5);
@@ -862,15 +873,39 @@ public class AlchemicalWizardry
             try
             {
                 //do stuff
-                ModItems.sanguineHelmet = new ItemSanguineArmour().setUnlocalizedName("sanguineHelmet");
+                ModItems.sanguineHelmet = new ItemSanguineArmour(0).setUnlocalizedName("sanguineHelmet");
+                ModItems.sanguineRobe = new ItemSanguineArmour(1).setUnlocalizedName("sanguineRobe");
+                ModItems.sanguinePants = new ItemSanguineArmour(2).setUnlocalizedName("sanguinePants");
+                ModItems.sanguineBoots = new ItemSanguineArmour(3).setUnlocalizedName("sanguineBoots");
                 GameRegistry.registerItem(ModItems.sanguineHelmet, "sanguineHelmet");
+                GameRegistry.registerItem(ModItems.sanguineRobe, "sanguineRobe");
+                GameRegistry.registerItem(ModItems.sanguinePants, "sanguinePants");
+                GameRegistry.registerItem(ModItems.sanguineBoots, "sanguineBoots");              
 
                 ItemStack itemGoggles = ItemApi.getItem("itemGoggles", 0);
+                Item itemThaumChest = GameRegistry.findItem("Thaumcraft", "ItemChestplateThaumium");
+                Item itemThaumLeggings = GameRegistry.findItem("Thaumcraft", "ItemLeggingsThaumium");
+                Item itemThaumBoots = GameRegistry.findItem("Thaumcraft", "ItemBootsThaumium");
 
+                
                 if (itemGoggles != null)
                 {
                 	BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineHelmet), itemGoggles);
-                	
+                }
+                
+                if(itemThaumChest != null)
+                {
+                	BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineRobe), new ItemStack(itemThaumChest));
+                }
+                
+                if(itemThaumLeggings != null)
+                {
+                	BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguinePants), new ItemStack(itemThaumLeggings));
+                }
+                
+                if(itemThaumBoots != null)
+                {
+                	BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineBoots), new ItemStack(itemThaumBoots));
                 }
 
                 //LogHelper.log(Level.INFO, "Loaded RP2 World addon");
@@ -899,7 +934,7 @@ public class AlchemicalWizardry
         }else
         {
         	this.isForestryLoaded = false;
-        }
+        }    
     }
     
     public static void initAlchemyPotionRecipes()
@@ -928,6 +963,7 @@ public class AlchemicalWizardry
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl),AlchemicalWizardry.customPotionPlanarBinding.id,1*60*20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand),AlchemicalWizardry.customPotionSoulFray.id,30*20);
+    	AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.baseItems,1,16),AlchemicalWizardry.customPotionSoulHarden.id,30*20);
     }
     
     public static void initAltarRecipes()
@@ -965,19 +1001,19 @@ public class AlchemicalWizardry
     
     public static void initRituals()
     {
-    	Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring");
-    	Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether");
-    	Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove");
-    	Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual");
+    	Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,30,255,255,0,0.501,0.8,0, 1.5));
+    	Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),255,0,0,255,0,0.501,0.8,0, 1.5));
+    	Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),244,164,96,255,0,1.0,1.6,0, 1.5));
+    	Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,255,255,0,0.501,0.8,0, 1.5));
     	Rituals.registerRitual("AW005Containment", 1, 2000, new RitualEffectContainment(), "Ritual of Containment");
-    	Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectSoulBound(), "Ritual of Binding");
+    	Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectSoulBound(), "Ritual of Binding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleBinding.png"),193,7,7,255,0,0.501,1.0,0, 2.5));
         Rituals.registerRitual("AW007Unbinding", 1, 30000, new RitualEffectUnbinding(), "Ritual of Unbinding");
         Rituals.registerRitual("AW008HighJump", 1, 1000, new RitualEffectJumping(), "Ritual of the High Jump");
         Rituals.registerRitual("AW009Magnetism", 1, 5000, new RitualEffectMagnetic(), "Ritual of Magnetism");
         Rituals.registerRitual("AW010Crusher", 1, 2500, new RitualEffectCrushing(), "Ritual of the Crusher");
         Rituals.registerRitual("AW011Speed", 1, 1000, new RitualEffectLeap(), "Ritual of Speed");
-        Rituals.registerRitual("AW012AnimalGrowth", 1, 10000, new RitualEffectAnimalGrowth(), "Ritual of the Shepherd");
-        Rituals.registerRitual("AW013Suffering", 1, 50000, new RitualEffectWellOfSuffering(), "Well of Suffering");
+        Rituals.registerRitual("AW012AnimalGrowth", 1, 10000, new RitualEffectAnimalGrowth(), "Ritual of the Shepherd"); 
+        Rituals.registerRitual("AW013Suffering", 1, 50000, new RitualEffectWellOfSuffering(), "Well of Suffering", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleSuffering.png"),0,0,0,255,0,0.501,0.8,0, 2.5));
         Rituals.registerRitual("AW014Regen", 1, 25000, new RitualEffectHealing(), "Ritual of Regeneration");
         Rituals.registerRitual("AW015FeatheredKnife", 1, 50000, new RitualEffectFeatheredKnife(), "Ritual of the Feathered Knife");
         Rituals.registerRitual("AW016FeatheredEarth", 2, 100000, new RitualEffectFeatheredEarth(), "Ritual of the Feathered Earth");
@@ -1009,5 +1045,10 @@ public class AlchemicalWizardry
     	HarvestRegistry.registerHarvestHandler(new BloodMagicHarvestHandler());
     	HarvestRegistry.registerHarvestHandler(new GourdHarvestHandler());
     	HarvestRegistry.registerHarvestHandler(new CactusReedHarvestHandler());
+    }
+    
+    public static void initCombinedAlchemyPotionRecipes()
+    {
+    	CombinedPotionRegistry.registerCombinedPotionRecipe(customPotionFlameCloak, Potion.moveSpeed, Potion.regeneration);
     }
 }

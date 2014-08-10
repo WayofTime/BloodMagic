@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
@@ -58,12 +59,6 @@ public enum NewPacketHandler
        }
    }
 
-
-   /**
-    * This is only called on the client side - it adds an
-    * {@link IronChestMessageHandler} to the client side pipeline, since the
-    * only place we expect to <em>handle</em> messages is on the client.
-    */
    @SideOnly(Side.CLIENT)
    private void addClientHandler() 
    {
@@ -79,6 +74,7 @@ public enum NewPacketHandler
        clientChannel.pipeline().addAfter(tileAltarCodec, "TEWritingTableHandler", new TEWritingTableMessageHandler());
        clientChannel.pipeline().addAfter(tileAltarCodec, "ParticleHandler", new ParticleMessageHandler());
        clientChannel.pipeline().addAfter(tileAltarCodec, "VelocityHandler", new VelocityMessageHandler());
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEMasterStoneHandler", new TEMasterStoneMessageHandler());
    }
 
 
@@ -229,6 +225,23 @@ public enum NewPacketHandler
            }
        }
    }
+   
+   private static class TEMasterStoneMessageHandler extends SimpleChannelInboundHandler<TEMasterStoneMessage>
+   {
+       @Override
+       protected void channelRead0(ChannelHandlerContext ctx, TEMasterStoneMessage msg) throws Exception
+       {
+           World world = AlchemicalWizardry.proxy.getClientWorld();
+           TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
+           if (te instanceof TEMasterStone)
+           {
+               TEMasterStone masterStone = (TEMasterStone) te;
+
+               masterStone.setCurrentRitual(msg.ritual);
+               masterStone.isRunning = msg.isRunning;
+           }
+       }
+   }
 
    public static class BMMessage
    {
@@ -320,6 +333,16 @@ public enum NewPacketHandler
 	   double yVel;
 	   double zVel;
    }
+   
+   public static class TEMasterStoneMessage extends BMMessage
+   {
+	   int x;
+       int y;
+       int z;
+       
+	   String ritual;
+	   boolean isRunning;
+   }
 
    private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
    {
@@ -334,6 +357,7 @@ public enum NewPacketHandler
            addDiscriminator(6, TEWritingTableMessage.class);
            addDiscriminator(7, ParticleMessage.class);
            addDiscriminator(8, VelocityMessage.class);
+           addDiscriminator(9, TEMasterStoneMessage.class);
        }
        
        @Override
@@ -496,6 +520,22 @@ public enum NewPacketHandler
     		   target.writeDouble(((VelocityMessage)msg).xVel);
     		   target.writeDouble(((VelocityMessage)msg).yVel);
     		   target.writeDouble(((VelocityMessage)msg).zVel);
+    		   
+    		   break;
+    		   
+    	   case 9:
+    		   target.writeInt(((TEMasterStoneMessage)msg).x);
+               target.writeInt(((TEMasterStoneMessage)msg).y);
+               target.writeInt(((TEMasterStoneMessage)msg).z);
+    		   
+    		   String ritual = ((TEMasterStoneMessage)msg).ritual;
+    		   target.writeInt(ritual.length());
+    		   for(int i=0; i<ritual.length(); i++)
+    		   {
+    			   target.writeChar(ritual.charAt(i));
+    		   }
+    		   
+    		   target.writeBoolean(((TEMasterStoneMessage)msg).isRunning);
     		   
     		   break;
     	   }
@@ -669,6 +709,22 @@ public enum NewPacketHandler
     		   ((VelocityMessage)msg).zVel = dat.readDouble();
     		   
     		   break;
+    		   
+    	   case 9:
+    		   ((TEMasterStoneMessage)msg).x = dat.readInt();
+               ((TEMasterStoneMessage)msg).y = dat.readInt();
+               ((TEMasterStoneMessage)msg).z = dat.readInt();
+    		   
+    		   int ritualStrSize = dat.readInt();
+	           String ritual = "";
+
+	           for (int i = 0; i < ritualStrSize; i++)
+	           {
+	        	   ritual = ritual + dat.readChar();
+	           }
+	           
+	           ((TEMasterStoneMessage)msg).ritual = ritual;
+	           ((TEMasterStoneMessage)msg).isRunning = dat.readBoolean();
     	   }
        }
    }
@@ -785,6 +841,20 @@ public enum NewPacketHandler
 	   msg.zVel = zVel;
 	   
 	   return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+   }
+   
+   public static Packet getPacket(TEMasterStone tile)
+   {
+	   TEMasterStoneMessage msg = new TEMasterStoneMessage();
+	   msg.index = 9;
+	   msg.x = tile.xCoord;
+	   msg.y = tile.yCoord;
+	   msg.z = tile.zCoord;
+	   
+	   msg.ritual = tile.getCurrentRitual();
+	   msg.isRunning = tile.isRunning;
+	   
+       return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
    }
    
    public void sendTo(Packet message, EntityPlayerMP player) 

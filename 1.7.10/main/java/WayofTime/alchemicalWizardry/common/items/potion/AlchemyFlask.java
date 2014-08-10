@@ -92,7 +92,7 @@ public class AlchemyFlask extends Item
         }
     }
 
-    public void setEffects(ItemStack par1ItemStack, ArrayList<AlchemyPotionHelper> list)
+    public static void setEffects(ItemStack par1ItemStack, List<AlchemyPotionHelper> list)
     {
         NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 

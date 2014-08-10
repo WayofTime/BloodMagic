@@ -172,6 +172,10 @@ item.sanguineHelmet.name=Sanguine Helmet
 item.itemSeerSigil.name=Sigil of Sight
 item.itemFluidSigil.name=
 item.multiTool.name=Dynamic Mace
+item.itemCombinationalCatalyst.name=Combinational Catalyst
+item.sanguineRobe.name=Sanguine Robes
+item.sanguinePants.name=Sanguine Leggings
+item.sanguineBoots.name=Sanguine Boots
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

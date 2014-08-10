@@ -3,6 +3,7 @@ package thaumcraft.api.research;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -24,7 +25,8 @@ public class ResearchPage {
         NORMAL_CRAFTING,
         INFUSION_CRAFTING,
         COMPOUND_CRAFTING,
-        INFUSION_ENCHANTMENT
+        INFUSION_ENCHANTMENT,
+        SMELTING
     }
 	
 	public PageType type = PageType.TEXT;
@@ -80,6 +82,14 @@ public class ResearchPage {
 	}
 	
 	/**
+	 * @param recipe a collection of arcane crafting recipes.
+	 */
+	public ResearchPage(CrucibleRecipe[] recipe) {
+		this.type = PageType.CRUCIBLE_CRAFTING;
+		this.recipe = recipe;
+	}
+	
+	/**
 	 * @param recipe a collection of infusion crafting recipes.
 	 */
 	public ResearchPage(InfusionRecipe[] recipe) {
@@ -111,6 +121,15 @@ public class ResearchPage {
 		this.type = PageType.CRUCIBLE_CRAFTING;
 		this.recipe = recipe;
 		this.recipeOutput = recipe.getRecipeOutput();
+	}
+	
+	/**
+	 * @param recipe a furnace smelting crafting recipe.
+	 */
+	public ResearchPage(ItemStack input) {
+		this.type = PageType.SMELTING;
+		this.recipe = input;
+		this.recipeOutput = FurnaceRecipes.smelting().getSmeltingResult(input);
 	}
 	
 	/**

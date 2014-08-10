@@ -2,18 +2,20 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TEMasterStone extends TileEntity implements IMasterRitualStone
 {
-    //private int currentRitual;
     private String currentRitualString;
     private boolean isActive;
     private String owner;
@@ -21,10 +23,11 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     private int cooldown;
     private int var1;
     private int direction;
+    public boolean isRunning;
+    public int runningTime;
 
     public TEMasterStone()
     {
-        //currentRitual = 0;
         isActive = false;
         owner = "";
         cooldown = 0;
@@ -32,34 +35,36 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         direction = 0;
         varString1 = "";
         currentRitualString = "";
+        isRunning = false;
+        runningTime = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        //currentRitual = par1NBTTagCompound.getInteger("currentRitual");
         isActive = par1NBTTagCompound.getBoolean("isActive");
         owner = par1NBTTagCompound.getString("owner");
         cooldown = par1NBTTagCompound.getInteger("cooldown");
         var1 = par1NBTTagCompound.getInteger("var1");
         direction = par1NBTTagCompound.getInteger("direction");
         currentRitualString = par1NBTTagCompound.getString("currentRitualString");
-//        varString1 = par1NBTTagCompound.getString("varString1");
+        isRunning = par1NBTTagCompound.getBoolean("isRunning");
+        runningTime = par1NBTTagCompound.getInteger("runningTime");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        //par1NBTTagCompound.setInteger("currentRitual", currentRitual);
         par1NBTTagCompound.setBoolean("isActive", isActive);
         par1NBTTagCompound.setString("owner", owner);
         par1NBTTagCompound.setInteger("cooldown", cooldown);
         par1NBTTagCompound.setInteger("var1", var1);
         par1NBTTagCompound.setInteger("direction", direction);
         par1NBTTagCompound.setString("currentRitualString", currentRitualString);
-//        par1NBTTagCompound.setString("varString1", varString1);
+        par1NBTTagCompound.setBoolean("isRunning", isRunning);
+        par1NBTTagCompound.setInteger("runningTime",runningTime);
     }
 
     public void activateRitual(World world, int crystalLevel, EntityPlayer player)
@@ -101,7 +106,6 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         {
         	player.addChatMessage(new ChatComponentText("You feel a pull, but you are too weak to push any further."));
 
-            //TODO Bad stuff
             return;
         }
 
@@ -122,6 +126,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         var1 = 0;
         currentRitualString = testRitual;
         isActive = true;
+        isRunning = true;
         direction = Rituals.getDirectionOfRitual(world, xCoord, yCoord, zCoord, testRitual);
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
@@ -134,6 +139,14 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     @Override
     public void updateEntity()
     {
+    	if(isRunning && runningTime < 100)
+    	{
+    		runningTime++;
+    	}else if(!isRunning && runningTime > 0)
+    	{
+    		runningTime--;
+    	}
+    	
         if (!isActive)
         {
             return;
@@ -156,14 +169,25 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                 isActive = false;
                 currentRitualString = "";
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                //PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(xCoord, yCoord, zCoord, (short)3));
                 return;
             }
         }
 
         if (worldObj.getBlockPowerInput(xCoord, yCoord, zCoord) > 0)
         {
+        	if(isRunning)
+        	{
+        		isRunning = false;
+        		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        	}
             return;
+        }else
+        {
+        	if(!isRunning)
+        	{
+        		isRunning = true;
+        		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        	}
         }
 
         performRitual(worldObj, xCoord, yCoord, zCoord, currentRitualString);
@@ -202,6 +226,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     public void setActive(boolean active)
     {
         this.isActive = active;
+        this.isRunning = active;
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     public int getDirection()
@@ -231,5 +257,28 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 	public int getZCoord() 
 	{
 		return zCoord;
+	}
+	
+	public String getCurrentRitual()
+	{
+		return this.currentRitualString;
+	}
+	
+	public void setCurrentRitual(String str)
+	{
+		this.currentRitualString = str;
+	}
+	
+	@Override
+    public Packet getDescriptionPacket()
+    {
+        return NewPacketHandler.getPacket(this);
+    }
+	
+	public AxisAlignedBB getRenderBoundingBox()
+	{
+		double renderExtention = 1.0d;
+		AxisAlignedBB bb = AxisAlignedBB. getBoundingBox(xCoord-renderExtention, yCoord-renderExtention, zCoord-renderExtention, xCoord+1+renderExtention, yCoord+1+renderExtention, zCoord+1+renderExtention);
+		return bb;
 	}
 }

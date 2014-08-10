@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -8,6 +9,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -86,6 +88,25 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             GL11.glPopMatrix();
             GL11.glEnable(GL11.GL_CULL_FACE);
             GL11.glEnable(GL11.GL_LIGHTING);
+            
+    		
+    		GL11.glPushMatrix();
+    		GL11.glDisable(GL11.GL_LIGHTING);
+    		GL11.glDisable(GL11.GL_CULL_FACE);
+    		GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
+
+    		FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
+    		GL11.glPushMatrix();
+    		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+//    		this.modelInputMirror.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileSpellBlock.getInputDirection(), tileSpellBlock.getOutputDirection());
+    		GL11.glPopMatrix();
+    		
+    		GL11.glEnable(GL11.GL_CULL_FACE);
+    		GL11.glEnable(GL11.GL_LIGHTING);
+    		GL11.glPopMatrix();
+			
+			
+
         }
     }
 

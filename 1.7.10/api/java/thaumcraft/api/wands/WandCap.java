@@ -115,6 +115,13 @@ public class WandCap {
 		this.craftCost = craftCost;
 	}
 	
+	/**
+	 * The research a player needs to have finished to be able to craft a wand with this cap. 
+	 */
+	public String getResearch() {
+		return "CAP_"+getTag();
+	}
+	
 	//  Some examples:
 	//  WandCap WAND_CAP_IRON = new WandCap("iron", 1.1f, Arrays.asList(Aspect.ORDER),1, new ItemStack(ConfigItems.itemWandCap,1,0),1);
 	//  WandCap WAND_CAP_GOLD = new WandCap("gold", 1f, new ItemStack(ConfigItems.itemWandCap,1,1),3);

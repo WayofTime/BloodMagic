@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import scala.reflect.internal.Trees.This;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.renderer.MRSRenderer;
 
 public class Rituals
 {
@@ -15,22 +15,28 @@ public class Rituals
     private int actCost;
     private RitualEffect effect;
     private String name;
+    
+    private MRSRenderer customRenderer;
 
     public static Map<String,Rituals> ritualMap = new HashMap();
-    @Deprecated
-    public static List<Rituals> ritualList = new LinkedList();
    	public static List<String> keyList = new LinkedList();
 
-    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name)
+    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer)
     {
-        this.crystalLevel = crystalLevel; //For a test commit
+        this.crystalLevel = crystalLevel;
         this.actCost = actCost;
         this.effect = effect;
         this.name = name;
         keyList.add(name);
         ritualMap.put(name, this);
+        this.customRenderer = renderer;
     }
     
+    public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name)
+    {
+    	this(crystalLevel, actCost, effect, name, null);
+    }
+  
     /**
      * Static method to register a ritual to the Ritual Registry
      * @param key	Unique identification key - must be different from all others to properly register
@@ -40,6 +46,22 @@ public class Rituals
      * @param name	The name of the ritual
      * @return	Returns true if properly registered, or false if the key is already used
      */
+    public static boolean registerRitual(String key, int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer)
+    {
+    	if(ritualMap.containsKey(key))
+    	{
+    		return false;
+    	}
+    	else
+    	{
+    		Rituals ritual = new Rituals(crystalLevel, actCost, effect, name, renderer);
+    		ritual.removeRitualFromList();
+    		ritualMap.put(key, ritual);
+    		keyList.add(key);
+    		return true;
+    	}
+    }
+    
     public static boolean registerRitual(String key, int crystalLevel, int actCost, RitualEffect effect, String name)
     {
     	if(ritualMap.containsKey(key))
@@ -270,6 +292,11 @@ public class Rituals
     {
         return this.crystalLevel;
     }
+    
+    private MRSRenderer getRenderer()
+    {
+    	return this.customRenderer;
+    }
 
     public static void performEffect(IMasterRitualStone ritualStone, String ritualID)
     {
@@ -329,5 +356,19 @@ public class Rituals
     	}
 
     	return firstKey;
+    }
+    
+    public static MRSRenderer getRendererForKey(String ritualID)
+    {
+    	if(ritualMap.containsKey(ritualID))
+    	{
+    		Rituals ritual = ritualMap.get(ritualID);
+    		if(ritual != null)
+    		{
+    			return ritual.getRenderer();
+    		}
+    	}
+    	
+    	return null;
     }
 }
