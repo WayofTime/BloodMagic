@@ -1,8 +1,13 @@
 package WayofTime.alchemicalWizardry;
 
 import java.io.File;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLLog;
@@ -93,6 +98,24 @@ public class BloodMagicConfiguration
         config.save();
 
 
+    }
+    
+    public static void loadBlacklist()
+    {
+    	AlchemicalWizardry.wellBlacklist=new ArrayList<Class>();
+    	for( Object o : EntityList.stringToClassMapping.entrySet())
+    	{
+    		Entry entry=(Entry) o;
+    		Class curClass=(Class)entry.getValue();
+    		boolean valid=EntityLivingBase.class.isAssignableFrom(curClass) && !Modifier.isAbstract(curClass.getModifiers());
+    		if(valid)
+    		{
+    			boolean blacklisted=config.get("wellOfSufferingBlackList", entry.getKey().toString(), false).getBoolean();
+    			if(blacklisted)
+    				AlchemicalWizardry.wellBlacklist.add(curClass);
+    		}
+    	}
+    	config.save();
     }
 
 }
