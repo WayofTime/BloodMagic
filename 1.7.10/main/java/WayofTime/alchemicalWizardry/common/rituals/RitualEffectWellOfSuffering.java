@@ -12,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -110,7 +111,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             {
                 entity = (EntityLivingBase) iterator2.next();
 
-                if (entity instanceof EntityPlayer)
+                if (entity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(entity.getClass()))
                 {
                     continue;
                 }

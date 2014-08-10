@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -204,6 +205,8 @@ public class AlchemicalWizardry
     public static boolean wimpySettings;
     public static boolean respawnWithDebuff;
     public static boolean lockdownAltar;
+    
+    public static List<Class> wellBlacklist;
 
     public static CreativeTabs tabBloodMagic = new CreativeTabs("tabBloodMagic")
     {
@@ -934,7 +937,9 @@ public class AlchemicalWizardry
         }else
         {
         	this.isForestryLoaded = false;
-        }    
+        }   
+        
+        BloodMagicConfiguration.loadBlacklist();
     }
     
     public static void initAlchemyPotionRecipes()
