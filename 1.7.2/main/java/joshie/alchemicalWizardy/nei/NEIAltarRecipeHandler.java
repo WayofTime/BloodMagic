@@ -49,7 +49,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
-		if (outputId.equals("altarrecipes") && getClass() == NEIAltarRecipeHandler.class) {
+		if (outputId.equals("alchemicalwizardry.bloodaltar") && getClass() == NEIAltarRecipeHandler.class) {
 			for(AltarRecipe recipe: AltarRecipeRegistry.altarRecipes) {
 				if(recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
 			}
@@ -145,12 +145,12 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	
 	@Override
 	public String getOverlayIdentifier() {
-		return "altarrecipes";
+		return "alchemicalwizardry.bloodaltar";
 	}
 	
 	@Override
 	public void loadTransferRects() {
-		transferRects.add(new RecipeTransferRect(new Rectangle(90, 32, 22, 16), "altarrecipes"));
+		transferRects.add(new RecipeTransferRect(new Rectangle(90, 32, 22, 16), "alchemicalwizardry.bloodaltar"));
 	}
 	
 	@Override
