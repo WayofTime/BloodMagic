@@ -1,8 +1,11 @@
 package WayofTime.alchemicalWizardry.api.soulNetwork;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -15,28 +18,35 @@ public class SoulNetworkHandler
         {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
-            if (MinecraftServer.getServer() == null)
-            {
-                return 0;
-            }
-
-            World world = MinecraftServer.getServer().worldServers[0];
-            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
-
-            if (data == null)
-            {
-                data = new LifeEssenceNetwork(ownerName);
-                world.setItemData(ownerName, data);
-            }
-
-            if (data.currentEssence >= damageToBeDone)
-            {
-                data.currentEssence -= damageToBeDone;
-                data.markDirty();
-                return damageToBeDone;
-            }
+            return syphonFromNetwork(ownerName, damageToBeDone);
         }
 		return 0;
+	}
+	
+	public static int syphonFromNetwork(String ownerName, int damageToBeDone)
+	{
+        if (MinecraftServer.getServer() == null)
+        {
+            return 0;
+        }
+
+        World world = MinecraftServer.getServer().worldServers[0];
+        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+
+        if (data == null)
+        {
+            data = new LifeEssenceNetwork(ownerName);
+            world.setItemData(ownerName, data);
+        }
+
+        if (data.currentEssence >= damageToBeDone)
+        {
+            data.currentEssence -= damageToBeDone;
+            data.markDirty();
+            return damageToBeDone;
+        }
+        
+        return 0;
 	}
 	
 	/**
@@ -68,24 +78,29 @@ public class SoulNetworkHandler
         {
             String ownerName = ist.getTagCompound().getString("ownerName");
 
-            if (MinecraftServer.getServer() == null)
-            {
-                return false;
-            }
-
-            World world = MinecraftServer.getServer().worldServers[0];
-            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
-
-            if (data == null)
-            {
-                data = new LifeEssenceNetwork(ownerName);
-                world.setItemData(ownerName, data);
-            }
-
-            return data.currentEssence >= damageToBeDone;
+            return canSyphonFromOnlyNetwork(ownerName, damageToBeDone);
         }
 
         return false;
+    }
+	
+	public static boolean canSyphonFromOnlyNetwork(String ownerName, int damageToBeDone)
+    {
+        if (MinecraftServer.getServer() == null)
+        {
+            return false;
+        }
+
+        World world = MinecraftServer.getServer().worldServers[0];
+        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+
+        if (data == null)
+        {
+            data = new LifeEssenceNetwork(ownerName);
+            world.setItemData(ownerName, data);
+        }
+
+        return data.currentEssence >= damageToBeDone;
     }
 	
 	public static int getCurrentEssence(String ownerName)
@@ -225,4 +240,35 @@ public class SoulNetworkHandler
 	{
 		return player.getDisplayName();
 	}
+    
+    public static EntityPlayer getPlayerForUsername(String str)
+	{
+		if(MinecraftServer.getServer() == null)
+		{
+			return null;
+		}
+		return MinecraftServer.getServer().getConfigurationManager().func_152612_a(str);
+	}
+    
+    public static void causeNauseaToPlayer(ItemStack stack)
+    {
+    	if (stack.getTagCompound() != null && !(stack.getTagCompound().getString("ownerName").equals("")))
+        {
+            String ownerName = stack.getTagCompound().getString("ownerName");
+            
+            SoulNetworkHandler.causeNauseaToPlayer(ownerName);
+        }
+    }
+    
+    public static void causeNauseaToPlayer(String ownerName)
+    {
+    	EntityPlayer entityOwner = SoulNetworkHandler.getPlayerForUsername(ownerName);
+
+        if (entityOwner == null)
+        {
+            return;
+        }
+
+        entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+    }
 }

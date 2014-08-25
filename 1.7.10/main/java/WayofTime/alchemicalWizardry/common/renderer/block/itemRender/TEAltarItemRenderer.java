@@ -2,9 +2,11 @@ package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
 import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
 public class TEAltarItemRenderer implements IItemRenderer
@@ -38,30 +40,25 @@ public class TEAltarItemRenderer implements IItemRenderer
         // TODO Auto-generated method stub
         switch (type)
         {
-            case ENTITY:
-            {
-                renderBloodAltar(0f, 0f, 0f, scale);
-                return;
-            }
-
-            case EQUIPPED:
-            {
-                renderBloodAltar(0f, 0f, 0f, scale);
-                return;
-            }
-
-            case INVENTORY:
-            {
-                renderBloodAltar(0f, -0.25f, 0f, scale);
-                return;
-            }
+        case ENTITY:
+			renderBloodAltar((RenderBlocks) data[0], item, 0, 0, 0, scale);
+			break;
+		case EQUIPPED:
+			renderBloodAltar((RenderBlocks) data[0], item, 0, 0, 0.5f, scale);
+			break;
+		case EQUIPPED_FIRST_PERSON:
+			renderBloodAltar((RenderBlocks) data[0], item, +0.5f, 0.5f, +0.5f, scale);
+			break;
+		case INVENTORY:
+			renderBloodAltar((RenderBlocks) data[0], item, -0.5f, -0.75f, -0.5f, scale);
+			break;
 
             default:
                 return;
         }
     }
 
-    private void renderBloodAltar(float x, float y, float z, float scale)
+    private void renderBloodAltar(RenderBlocks render, ItemStack item, float x, float y, float z, float scale)
     {
         GL11.glPushMatrix();
         // Disable Lighting Calculations

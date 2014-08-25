@@ -10,14 +10,19 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectFlight extends RitualEffect
 {
+	public static final int aetherDrain = 10;
+	public static final int reductusDrain = 5;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -37,12 +42,6 @@ public class RitualEffectFlight extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (ritualStone.getCooldown() > 0)
-        {
-            //TODO Cool stuffs
-            ritualStone.setCooldown(0);
-        }
-
         int range = 20;
         int verticalRange = 30;
         AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
@@ -50,6 +49,9 @@ public class RitualEffectFlight extends RitualEffect
         axis.minY = 0;
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, axis);
         int entityCount = 0;
+        
+        boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
+        boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
         for (EntityPlayer entity : entities)
         {
@@ -58,16 +60,10 @@ public class RitualEffectFlight extends RitualEffect
 
         if (currentEssence < this.getCostPerRefresh() * entityCount)
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
+        	
             for (EntityPlayer entity : entities)
             {
                 entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlight.id, 20, 0));

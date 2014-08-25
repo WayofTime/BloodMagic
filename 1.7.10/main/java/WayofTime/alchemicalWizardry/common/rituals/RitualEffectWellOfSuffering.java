@@ -17,13 +17,14 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
 public class RitualEffectWellOfSuffering extends RitualEffect
 {
-    public final int timeDelay = 25;
-    public final int amount = 10;
+    public static final int timeDelay = 25;
+    public static final int amount = 10;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -49,10 +50,6 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             return;
         }
 
-//		if(!(world.getBlockTileEntity(x, y-1, z) instanceof TEAltar))
-//		{
-//			return;
-//		}
         TEAltar tileAltar = null;
         boolean testFlag = false;
 
@@ -76,54 +73,30 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             return;
         }
 
-        //tileAltar = (TEAltar)world.getBlockTileEntity(x,y-1,z);
         int d0 = 10;
         int vertRange = 10;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
-        List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
-        Iterator iterator1 = list.iterator();
-        EntityLivingBase entity;
+        List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
+
         int entityCount = 0;
-        boolean flag = false;
 
-        while (iterator1.hasNext())
+        if (currentEssence < this.getCostPerRefresh() * list.size())
         {
-            entity = (EntityLivingBase) iterator1.next();
-            entityCount++;
-        }
-
-        if (currentEssence < this.getCostPerRefresh() * entityCount)
-        {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            Iterator iterator2 = list.iterator();
-            entityCount = 0;
-
-            while (iterator2.hasNext())
+            for(EntityLivingBase livingEntity : list)
             {
-                entity = (EntityLivingBase) iterator2.next();
-
-                if (entity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(entity.getClass()))
+                if (livingEntity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass()))
                 {
                     continue;
                 }
 
-                //entity.setHealth(entity.getHealth()-1);
-                entity.attackEntityFrom(DamageSource.outOfWorld, 1);
-                entityCount++;
-//                if(entity.getHealth()<=0.2f)
-//                {
-//                	entity.onDeath(DamageSource.inFire);
-//                }
-                tileAltar.sacrificialDaggerCall(this.amount, true);
+                if(livingEntity.attackEntityFrom(DamageSource.outOfWorld, 1))
+                {
+                    entityCount++;
+                    tileAltar.sacrificialDaggerCall(this.amount, true);
+                }
             }
 
             data.currentEssence = currentEssence - this.getCostPerRefresh() * entityCount;
@@ -134,7 +107,6 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        // TODO Auto-generated method stub
         return 2;
     }
 

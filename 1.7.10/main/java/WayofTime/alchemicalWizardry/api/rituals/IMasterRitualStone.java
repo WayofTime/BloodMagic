@@ -1,9 +1,10 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public interface IMasterRitualStone 
+public interface IMasterRitualStone extends ISegmentedReagentHandler
 {
 	public void performRitual(World world, int x, int y, int z, String ritualID);
 	

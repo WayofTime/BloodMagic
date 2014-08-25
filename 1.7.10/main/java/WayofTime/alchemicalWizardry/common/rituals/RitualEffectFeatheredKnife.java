@@ -11,17 +11,23 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
 public class RitualEffectFeatheredKnife extends RitualEffect
 {
-    public final int timeDelay = 20;
     public final int amount = 100;
+    
+    public static final int sanctusDrain = 5;
+    public static final int reductusDrain = 3;
+    public static final int magicalesDrain = 2;
+    public static final int potentiaDrain = 5;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -41,16 +47,16 @@ public class RitualEffectFeatheredKnife extends RitualEffect
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
+        
+        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        
+        int timeDelay = hasPotentia ? 10 : 20;
 
-        if (world.getWorldTime() % this.timeDelay != 0)
+        if (world.getWorldTime() % timeDelay != 0)
         {
             return;
         }
 
-//		if(!(world.getBlockTileEntity(x, y-1, z) instanceof TEAltar))
-//		{
-//			return;
-//		}
         TEAltar tileAltar = null;
         boolean testFlag = false;
 
@@ -73,73 +79,72 @@ public class RitualEffectFeatheredKnife extends RitualEffect
         {
             return;
         }
+        
+        boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
-        //tileAltar = (TEAltar)world.getBlockTileEntity(x,y-1,z);
-        int d0 = 15;
-        int vertRange = 20;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
-        List list = world.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
-        Iterator iterator1 = list.iterator();
-        EntityPlayer entity;
+        double range = hasReductus ? 8 : 15;
+        double vertRange = hasReductus ? 8 : 20;
+        List<EntityPlayer> list = SpellHelper.getPlayersInRange(world, x+0.5, y+0.5, z+0.5, range, vertRange);
+
         int entityCount = 0;
         boolean flag = false;
-
-        while (iterator1.hasNext())
+        
+        if (currentEssence < this.getCostPerRefresh() * list.size())
         {
-            entity = (EntityPlayer) iterator1.next();
-
-            if (!SpellHelper.isFakePlayer(world, entity))
-            {
-                entityCount++;
-            }
-        }
-
-        if (currentEssence < this.getCostPerRefresh() * entityCount)
-        {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            Iterator iterator2 = list.iterator();
-            entityCount = 0;
-
-            while (iterator2.hasNext())
+        	boolean hasMagicales = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+        	boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+        	
+        	EntityPlayer ownerPlayer = SpellHelper.getPlayerForUsername(owner);
+            for(EntityPlayer player : list)
             {
-                entity = (EntityPlayer) iterator2.next();
+            	hasSanctus = hasSanctus && this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+                double threshold = hasSanctus ? 0.7d : 0.3d;
 
-                //entity = (EntityPlayer)iterator1.next();
-                if (!SpellHelper.isFakePlayer(world, entity))
-                {
-                    if (entity.getHealth()/entity.getMaxHealth() > 0.3d)
+            	if((hasMagicales && player == ownerPlayer) || !hasMagicales)
+            	{
+            		if (!SpellHelper.isFakePlayer(world, player))
                     {
-                        entity.setHealth(entity.getHealth() - 1);
-                        entityCount++;
-                        tileAltar.sacrificialDaggerCall(this.amount, false);
+                        if (player.getHealth()/player.getMaxHealth() > threshold)
+                        {
+                            player.setHealth(player.getHealth() - 1);
+                            entityCount++;
+                            tileAltar.sacrificialDaggerCall(this.amount, false);
+                            if(hasSanctus)
+                            {
+                            	this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+                            }
+                            if(hasMagicales)
+                            {
+                            	this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, true);
+                            	break;
+                            }
+                        }
                     }
-                }
-
-                //entity.setHealth(entity.getHealth()-1);
-//                if(entity.getHealth()<=0.2f)
-//                {
-//                	entity.onDeath(DamageSource.inFire);
-//                }
+            	}  
             }
 
-            data.currentEssence = currentEssence - this.getCostPerRefresh() * entityCount;
-            data.markDirty();
+            if(entityCount > 0)
+            {
+            	if(hasReductus)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+            	}
+            	if(hasPotentia)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+            	}
+            	data.currentEssence = currentEssence - this.getCostPerRefresh() * entityCount;
+                data.markDirty();
+            }
         }
     }
 
     @Override
     public int getCostPerRefresh()
     {
-        // TODO Auto-generated method stub
         return 20;
     }
 

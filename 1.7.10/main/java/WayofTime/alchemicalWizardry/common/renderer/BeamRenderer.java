@@ -8,16 +8,54 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 
 public class BeamRenderer 
 {
     private static final ResourceLocation field_110629_a = new ResourceLocation("textures/entity/beacon_beam.png");
-    protected static TileEntityRendererDispatcher field_147501_a;
-
+    
+    public int xInit;
+    public int yInit;
+    public int zInit;
+    
+    public int xFinal;
+    public int yFinal;
+    public int zFinal;
+    
+    public int colourRed;
+    public int colourGreen;
+    public int colourBlue;
+    public int colourIntensity;
+    
+    public double size;
+    
+    public void setInitialPosition(int x, int y, int z)
+    {
+    	this.xInit = x;
+    	this.yInit = y;
+    	this.zInit = z;
+    }
+    
+    public void setColourAndFinalPosition(ColourAndCoords col)
+    {
+    	this.colourRed = col.colourRed;
+    	this.colourGreen = col.colourGreen;
+    	this.colourBlue = col.colourBlue;
+    	this.colourIntensity = col.colourIntensity;
+    	
+    	this.xFinal = col.xCoord;
+    	this.yFinal = col.yCoord;
+    	this.zFinal = col.zCoord;
+    }
+    
+    public void setSize(double size)
+    {
+    	this.size = size;
+    }
+    
     protected static void bindTexture(ResourceLocation p_147499_1_)
     {
-        TextureManager texturemanager = BeamRenderer.field_147501_a.field_147553_e;
+        TextureManager texturemanager = TileEntityRendererDispatcher.instance.field_147553_e;
 
         if (texturemanager != null)
         {
@@ -25,14 +63,16 @@ public class BeamRenderer
         }
     }
     
-	public static void render()
+	public void render(double d0, double d1, double d2)
 	{
-		double d0 = 0;
-		double d1 = 0;
-		double d2 = 0;
-
-
-		float distance = 5; //Total distance
+		int xDiff = this.xFinal - this.xInit;
+		int yDiff = this.yFinal - this.yInit;
+		int zDiff = this.zFinal - this.zInit;
+		
+		float planarAngle = (float)(Math.atan2(-zDiff, xDiff) * 180d / Math.PI); //Radians
+		float verticalAngle = (float)(Math.atan2(yDiff, Math.sqrt(xDiff*xDiff + zDiff+zDiff)) * 180d / Math.PI);
+		
+		float distance = (float) Math.sqrt(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff); //Total distance
 
 		GL11.glPushMatrix();
 		float f1 = 1.0f;
@@ -51,11 +91,11 @@ public class BeamRenderer
 		GL11.glDepthMask(false);
 
 		tessellator.startDrawingQuads();
-		tessellator.setColorRGBA(255, 0, 0, 50);
+		tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
 		//tessellator.setColorOpaque(255, 255, 255);
 		
-		double inside = 0.45d-0.5d;
-		double outside = 1.0d-0.45d-0.5d;
+		double inside = -(this.size/2d);
+		double outside = 1.0d-(0.50d - this.size/2d)-0.5d;
 		
 		double d18 = inside;
 		double d19 = inside;
@@ -73,8 +113,8 @@ public class BeamRenderer
 		
 		GL11.glTranslated(d0+0.5, d1+0.5, d2+0.5);
 
-		GL11.glRotatef(45F, 0F, 1F, 0F); //Rotate on planar axis
-		GL11.glRotatef(30F, 0F, 0F, 1F); //Rotate vertical axis
+		GL11.glRotatef(planarAngle, 0F, 1F, 0F); //Rotate on planar axis
+		GL11.glRotatef(verticalAngle, 0F, 0F, 1F); //Rotate vertical axis
 		//GL11.glRotatef(tileAltar.getWorldObj().getWorldTime()*2f, 1F, 0F, 0F); //Rotate cylindrically
 		
 		double offset = 0;

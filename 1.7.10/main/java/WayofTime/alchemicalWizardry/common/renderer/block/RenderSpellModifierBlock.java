@@ -22,7 +22,7 @@ public class RenderSpellModifierBlock extends TileEntitySpecialRenderer
         {
             TESpellModifierBlock tileSpellBlock = (TESpellModifierBlock) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_CULL_FACE);
+//            GL11.glDisable(GL11.GL_CULL_FACE);
             /**
              * Render the ghost item inside of the Altar, slowly spinning
              */

@@ -44,7 +44,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
         {
             TEPedestal tileAltar = (TEPedestal) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_CULL_FACE);
+//            GL11.glDisable(GL11.GL_CULL_FACE);
             /**
              * Render the ghost item inside of the Altar, slowly spinning
              */
@@ -92,7 +92,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
     		
     		GL11.glPushMatrix();
     		GL11.glDisable(GL11.GL_LIGHTING);
-    		GL11.glDisable(GL11.GL_CULL_FACE);
+//    		GL11.glDisable(GL11.GL_CULL_FACE);
     		GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
 
     		FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);

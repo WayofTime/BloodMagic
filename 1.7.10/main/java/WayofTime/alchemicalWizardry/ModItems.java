@@ -40,6 +40,9 @@ import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
+import WayofTime.alchemicalWizardry.common.items.energy.ItemAttunedCrystal;
+import WayofTime.alchemicalWizardry.common.items.energy.ItemDestinationClearer;
+import WayofTime.alchemicalWizardry.common.items.energy.ItemTankSegmenter;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyReagent;
 import WayofTime.alchemicalWizardry.common.items.potion.AverageLengtheningCatalyst;
@@ -180,6 +183,10 @@ public class ModItems
     
     public static Item customTool;
     
+    public static Item itemAttunedCrystal;
+    public static Item itemTankSegmenter;
+    public static Item itemDestinationClearer;
+    
     public static Item bucketLife;
 
     public static void init()
@@ -270,6 +277,9 @@ public class ModItems
         itemSeerSigil = new ItemSeerSigil().setUnlocalizedName("itemSeerSigil");
         customTool = new ItemSpellMultiTool().setUnlocalizedName("multiTool");
         itemCombinationalCatalyst = new CombinationalCatalyst().setUnlocalizedName("itemCombinationalCatalyst");
+        itemAttunedCrystal = new ItemAttunedCrystal().setUnlocalizedName("itemAttunedCrystal");
+        itemTankSegmenter = new ItemTankSegmenter().setUnlocalizedName("itemTankSegmenter");
+        itemDestinationClearer = new ItemDestinationClearer().setUnlocalizedName("destinationClearer");
     }
     
     public static void registerItems()
@@ -348,9 +358,6 @@ public class ModItems
         GameRegistry.registerItem(ModItems.enhancedFillingAgent, "enhancedFillingAgent");
         GameRegistry.registerItem(ModItems.weakBindingAgent, "weakBindingAgent");
         GameRegistry.registerItem(ModItems.itemRitualDiviner, "itemRitualDiviner");
-        //GameRegistry.registerItem(ModItems.sanguineHelmet, "sanguineHelmet");
-        //GameRegistry.registerItem(ModItems.focusBloodBlast, "focusBloodBlast");
-        //GameRegistry.registerItem(ModItems.focusGravityWell, "focusGravityWell");
         GameRegistry.registerItem(ModItems.sigilOfMagnetism, "sigilOfMagnetism");
         GameRegistry.registerItem(ModItems.itemKeyOfDiablo, "itemKeyOfDiablo");
         GameRegistry.registerItem(ModItems.energyBazooka, "energyBazooka");
@@ -365,6 +372,10 @@ public class ModItems
         
         GameRegistry.registerItem(ModItems.bucketLife, "bucketLife");
         GameRegistry.registerItem(ModItems.itemCombinationalCatalyst, "itemCombinationalCatalyst");
+        
+        GameRegistry.registerItem(ModItems.itemAttunedCrystal, "itemAttunedCrystal");
+        GameRegistry.registerItem(ModItems.itemTankSegmenter, "itemTankSegmenter");
+        GameRegistry.registerItem(ModItems.itemDestinationClearer, "itemDestinationClearer");
         
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
         GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");

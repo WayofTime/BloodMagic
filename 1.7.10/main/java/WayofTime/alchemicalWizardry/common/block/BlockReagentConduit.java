@@ -15,7 +15,9 @@ public class BlockReagentConduit extends BlockContainer
 {	
 	public BlockReagentConduit() 
 	{
-		super(Material.rock);
+		super(Material.cloth);
+		setHardness(2.0F);
+        setResistance(5.0F);
 		this.setBlockName("blockReagentConduit");
 		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 	}
@@ -24,13 +26,19 @@ public class BlockReagentConduit extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister)
     {      
-		super.registerBlockIcons(iconRegister);
+		this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SimpleTransCircle");
     }
 	
 	@Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return new TEReagentConduit();
+    }
+	
+	@Override
+    public boolean canProvidePower()
+    {
+        return true;
     }
 	
 //	@Override

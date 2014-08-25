@@ -2,21 +2,20 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSeerSigil extends Item implements IHolding
+public class ItemSeerSigil extends Item implements IHolding, ArmourUpgrade
 {
     public ItemSeerSigil()
     {
@@ -64,4 +63,26 @@ public class ItemSeerSigil extends Item implements IHolding
         
         return par1ItemStack;
     }
+
+	@Override
+	public void onArmourUpdate(World world, EntityPlayer player,
+			ItemStack thisItemStack) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isUpgrade() 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getEnergyForTenSeconds() 
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

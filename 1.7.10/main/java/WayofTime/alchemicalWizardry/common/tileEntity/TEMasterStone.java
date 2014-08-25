@@ -1,13 +1,27 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
@@ -25,9 +39,15 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     private int direction;
     public boolean isRunning;
     public int runningTime;
+    
+    protected ReagentContainer[] tanks;
+    protected Map<Reagent, Integer> attunedTankMap;
 
     public TEMasterStone()
     {
+    	tanks = new ReagentContainer[]{new ReagentContainer(1000),new ReagentContainer(1000),new ReagentContainer(1000)};
+    	this.attunedTankMap = new HashMap();
+    	
         isActive = false;
         owner = "";
         cooldown = 0;
@@ -39,32 +59,117 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         runningTime = 0;
     }
 
-    @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readClientNBT(NBTTagCompound tag)
     {
-        super.readFromNBT(par1NBTTagCompound);
-        isActive = par1NBTTagCompound.getBoolean("isActive");
-        owner = par1NBTTagCompound.getString("owner");
-        cooldown = par1NBTTagCompound.getInteger("cooldown");
-        var1 = par1NBTTagCompound.getInteger("var1");
-        direction = par1NBTTagCompound.getInteger("direction");
-        currentRitualString = par1NBTTagCompound.getString("currentRitualString");
-        isRunning = par1NBTTagCompound.getBoolean("isRunning");
-        runningTime = par1NBTTagCompound.getInteger("runningTime");
+    	currentRitualString = tag.getString("currentRitualString");
+        isRunning = tag.getBoolean("isRunning");
+        runningTime = tag.getInteger("runningTime");
+        
+        NBTTagList tagList = tag.getTagList("reagentTanks", Constants.NBT.TAG_COMPOUND);
+
+        int size = tagList.tagCount();
+        this.tanks = new ReagentContainer[size];
+        
+        for(int i=0; i<size; i++)
+        {
+        	NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
+        	this.tanks[i] = ReagentContainer.readFromNBT(savedTag);
+        }
+    }
+    
+    public void writeClientNBT(NBTTagCompound tag)
+    {
+    	tag.setString("currentRitualString", currentRitualString);
+        tag.setBoolean("isRunning", isRunning);
+        tag.setInteger("runningTime",runningTime);
+        
+        NBTTagList tagList = new NBTTagList();
+        
+        for(int i=0; i<this.tanks.length; i++)
+        {
+        	NBTTagCompound savedTag = new NBTTagCompound();
+        	if(this.tanks[i] != null)
+        	{
+        		this.tanks[i].writeToNBT(savedTag);
+        	}
+        	tagList.appendTag(savedTag);
+        }
+        
+        tag.setTag("reagentTanks", tagList);
+    }
+    
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        super.readFromNBT(tag);
+        isActive = tag.getBoolean("isActive");
+        owner = tag.getString("owner");
+        cooldown = tag.getInteger("cooldown");
+        var1 = tag.getInteger("var1");
+        direction = tag.getInteger("direction");
+        currentRitualString = tag.getString("currentRitualString");
+        isRunning = tag.getBoolean("isRunning");
+        runningTime = tag.getInteger("runningTime");
+        
+        NBTTagList tagList = tag.getTagList("reagentTanks", Constants.NBT.TAG_COMPOUND);
+
+        int size = tagList.tagCount();
+        this.tanks = new ReagentContainer[size];
+        
+        for(int i=0; i<size; i++)
+        {
+        	NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
+        	this.tanks[i] = ReagentContainer.readFromNBT(savedTag);
+        }
+        
+        NBTTagList attunedTagList = tag.getTagList("attunedTankMap", Constants.NBT.TAG_COMPOUND);
+        
+        for(int i=0; i<attunedTagList.tagCount(); i++)
+        {
+        	NBTTagCompound savedTag = attunedTagList.getCompoundTagAt(i);
+        	Reagent reagent = ReagentRegistry.getReagentForKey(savedTag.getString("reagent"));
+        	this.attunedTankMap.put(reagent, savedTag.getInteger("amount"));
+        }
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(NBTTagCompound tag)
     {
-        super.writeToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setBoolean("isActive", isActive);
-        par1NBTTagCompound.setString("owner", owner);
-        par1NBTTagCompound.setInteger("cooldown", cooldown);
-        par1NBTTagCompound.setInteger("var1", var1);
-        par1NBTTagCompound.setInteger("direction", direction);
-        par1NBTTagCompound.setString("currentRitualString", currentRitualString);
-        par1NBTTagCompound.setBoolean("isRunning", isRunning);
-        par1NBTTagCompound.setInteger("runningTime",runningTime);
+        super.writeToNBT(tag);
+        tag.setBoolean("isActive", isActive);
+        tag.setString("owner", owner);
+        tag.setInteger("cooldown", cooldown);
+        tag.setInteger("var1", var1);
+        tag.setInteger("direction", direction);
+        tag.setString("currentRitualString", currentRitualString);
+        tag.setBoolean("isRunning", isRunning);
+        tag.setInteger("runningTime",runningTime);
+        
+        NBTTagList tagList = new NBTTagList();
+        
+        for(int i=0; i<this.tanks.length; i++)
+        {
+        	NBTTagCompound savedTag = new NBTTagCompound();
+        	if(this.tanks[i] != null)
+        	{
+        		this.tanks[i].writeToNBT(savedTag);
+        	}
+        	tagList.appendTag(savedTag);
+        }
+        
+        tag.setTag("reagentTanks", tagList);
+        
+        NBTTagList attunedTagList = new NBTTagList();
+        
+        for(Entry<Reagent, Integer> entry : this.attunedTankMap.entrySet())
+        {
+        	NBTTagCompound savedTag = new NBTTagCompound();
+        	savedTag.setString("reagent", ReagentRegistry.getKeyForReagent(entry.getKey()));
+        	savedTag.setInteger("amount", entry.getValue());
+        	attunedTagList.appendTag(savedTag);
+        }
+        
+        tag.setTag("attunedTankMap", attunedTagList);
     }
 
     public void activateRitual(World world, int crystalLevel, EntityPlayer player)
@@ -269,16 +374,218 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 		this.currentRitualString = str;
 	}
 	
-	@Override
-    public Packet getDescriptionPacket()
-    {
-        return NewPacketHandler.getPacket(this);
-    }
+//	@Override
+//    public Packet getDescriptionPacket()
+//    {
+//        return NewPacketHandler.getPacket(this);
+//    }
+	
+	@Override 
+	public Packet getDescriptionPacket() 
+	{ 
+		NBTTagCompound nbttagcompound = new NBTTagCompound(); 
+		writeClientNBT(nbttagcompound); 
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound); 
+	} 
+		 
+	@Override 
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) 
+	{ 
+		super.onDataPacket(net, packet); 
+		readClientNBT(packet.func_148857_g()); 
+	} 
 	
 	public AxisAlignedBB getRenderBoundingBox()
 	{
 		double renderExtention = 1.0d;
 		AxisAlignedBB bb = AxisAlignedBB. getBoundingBox(xCoord-renderExtention, yCoord-renderExtention, zCoord-renderExtention, xCoord+1+renderExtention, yCoord+1+renderExtention, zCoord+1+renderExtention);
 		return bb;
+	}
+	
+	/* ISegmentedReagentHandler */
+    @Override
+    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
+    {
+    	if(doFill)
+    	{
+    		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    	}
+    	
+    	int totalFill = 0;
+    	
+    	boolean useTankLimit = !this.attunedTankMap.isEmpty();
+    	
+    	if(resource != null)
+    	{
+        	int totalTanksFillable = useTankLimit ? this.getTanksTunedToReagent(resource.reagent) : this.tanks.length;
+        	int tanksFilled = 0;
+
+    		int maxFill = resource.amount;
+    		
+    		for(int i=this.tanks.length-1; i>=0; i--)
+    		{
+    			ReagentStack remainingStack = resource.copy();
+    			remainingStack.amount = maxFill - totalFill;
+    			
+    			boolean doesReagentMatch = tanks[i].getReagent() == null ? false : tanks[i].getReagent().isReagentEqual(remainingStack);
+    			
+    			if(doesReagentMatch)
+    			{
+    				totalFill += tanks[i].fill(remainingStack, doFill);
+    				tanksFilled++;
+    			}else
+    			{
+    				continue;
+    			}
+    			
+    			if(totalFill >= maxFill || tanksFilled >= totalTanksFillable)
+    			{
+    				return totalFill;
+    			}
+    		}
+    		
+    		if(tanksFilled >= totalTanksFillable)
+    		{
+    			return totalFill;
+    		}
+    		
+    		for(int i=this.tanks.length-1; i>=0; i--)
+    		{
+    			ReagentStack remainingStack = resource.copy();
+    			remainingStack.amount = maxFill - totalFill;
+    			
+    			boolean isTankEmpty = tanks[i].getReagent() == null;
+    			
+    			if(isTankEmpty)
+    			{
+    				totalFill += tanks[i].fill(remainingStack, doFill);
+    				tanksFilled++;
+    			}else
+    			{
+    				continue;
+    			}
+    			
+    			if(totalFill >= maxFill || tanksFilled >= totalTanksFillable)
+    			{
+    				return totalFill;
+    			}
+    		}
+    	}
+        return totalFill;
+    }
+
+    @Override
+    public ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain)
+    {
+    	if(resource == null)
+    	{
+    		return null;
+    	}
+    	
+    	if(doDrain)
+    	{
+    		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    	}
+    	
+    	int maxDrain = resource.amount;
+    	Reagent reagent = resource.reagent;
+    	int drained = 0;
+    	
+    	for(int i=0; i<tanks.length; i++)
+    	{
+    		if(drained >= maxDrain)
+    		{
+    			break;
+    		}
+    		
+    		if (resource.isReagentEqual(tanks[i].getReagent()))
+            {
+    			ReagentStack drainStack = tanks[i].drain(maxDrain-drained, doDrain);
+    			if(drainStack != null)
+    			{
+                    drained += drainStack.amount;
+    			}
+            }
+    	}
+        
+        return new ReagentStack(reagent, drained);
+    }
+
+    /* Only returns the amount from the first available tank */
+    @Override
+    public ReagentStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+    {
+    	for(int i=0; i<tanks.length; i++)
+    	{
+    		ReagentStack stack = tanks[i].drain(maxDrain, doDrain);
+    		if(stack != null)
+    		{
+    			if(doDrain)
+    	    	{
+    	    		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+    	    	}
+    			
+    			return stack;
+    		}
+    	}
+    	
+    	return null;
+    }
+
+    @Override
+    public boolean canFill(ForgeDirection from, Reagent reagent)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean canDrain(ForgeDirection from, Reagent reagent)
+    {
+        return true;
+    }
+
+    @Override
+    public ReagentContainerInfo[] getContainerInfo(ForgeDirection from)
+    {
+    	ReagentContainerInfo[] info = new ReagentContainerInfo[this.getNumberOfTanks()];
+    	for(int i=0; i<this.getNumberOfTanks(); i++)
+    	{
+    		info[i] = tanks[i].getInfo();
+    	}
+        return info;
+    }
+
+	@Override
+	public int getNumberOfTanks() 
+	{
+		return tanks.length;
+	}
+
+	@Override
+	public int getTanksTunedToReagent(Reagent reagent) 
+	{
+		if(this.attunedTankMap.containsKey(reagent) && this.attunedTankMap.get(reagent) != null)
+		{
+			return this.attunedTankMap.get(reagent);
+		}
+		return 0;
+	}
+
+	@Override
+	public void setTanksTunedToReagent(Reagent reagent, int total) 
+	{
+		if(total == 0 && this.attunedTankMap.containsKey(reagent))
+		{
+			this.attunedTankMap.remove(reagent);
+			return;
+		}
+		
+		this.attunedTankMap.put(reagent, new Integer(total));
+	}
+
+	@Override
+	public Map<Reagent, Integer> getAttunedTankMap()
+	{
+		return this.attunedTankMap;
 	}
 }

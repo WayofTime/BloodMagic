@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -10,24 +9,33 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 
 public class RitualEffectExpulsion extends RitualEffect
 {
+	public static final int virtusDrain = 10;
+	public static final int potentiaDrain = 10;
+	public static final int tennebraeDrain = 5;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -49,43 +57,103 @@ public class RitualEffectExpulsion extends RitualEffect
 
         if (currentEssence < this.getCostPerRefresh())
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            int d0 = 25;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, d0, d0);
-            axisalignedbb.maxY = Math.min((double) world.getHeight(), (double) (y + 1 + d0));
-            List list = world.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
-            Iterator iterator = list.iterator();
-            EntityPlayer entityplayer;
+        	boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+        	boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        	
+        	int teleportDistance = hasVirtus ? 300 : 100;
+            int range = hasPotentia ? 50 : 25;
+            List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             boolean flag = false;
 
-            while (iterator.hasNext())
+            TileEntity tile = world.getTileEntity(x, y+1, z);
+            IInventory inventoryTile = null;
+            if(tile instanceof IInventory)
             {
-                entityplayer = (EntityPlayer) iterator.next();
-
-                if (!(SpellHelper.getUsername(entityplayer).equals(owner)))
+            	inventoryTile = (IInventory)tile;
+            }
+            
+            for(EntityPlayer entityplayer : playerList)
+            {
+            	String playerString = SpellHelper.getUsername(entityplayer);
+                if (!playerString.equals(owner))
                 {
-                	if(entityplayer.isPotionActive(AlchemicalWizardry.customPotionPlanarBinding)||entityplayer.capabilities.isCreativeMode)
+                	if(inventoryTile != null)
                 	{
-                		continue;
+                		for(int i=0; i<inventoryTile.getSizeInventory(); i++)
+                		{
+                			ItemStack stack = inventoryTile.getStackInSlot(i);
+                			if(stack != null && stack.getItem() instanceof IBindable && EnergyItems.getOwnerName(stack).equals(playerString))
+                			{
+                				continue;
+                			}
+                		}
                 	}
+//                	if(entityplayer.isPotionActive(AlchemicalWizardry.customPotionPlanarBinding)||entityplayer.capabilities.isCreativeMode)
+//                	{
+//                		continue;
+//                	}
                 	
-                    flag = teleportRandomly(entityplayer,100);
+                	
+                    flag = teleportRandomly(entityplayer, teleportDistance) || flag;
                 }
             }
 
             if (flag)
             {
+            	if(hasVirtus)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
+            	}
+            	
+            	if(hasPotentia)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+            	}
+            	
                 data.currentEssence = currentEssence - this.getCostPerRefresh();
                 data.markDirty();
+            }
+        }
+        
+        boolean hasTennebrae = this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
+        if(hasTennebrae && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, 1000))
+        {
+        	boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+        	boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        	
+        	int teleportDistance = hasVirtus ? 300 : 100;
+            int range = hasPotentia ? 50 : 25;
+            List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+            boolean flag = false;
+            
+            for(EntityLivingBase livingEntity : livingList)
+            {
+            	if(livingEntity instanceof EntityPlayer)
+            	{
+            		continue;
+            	}
+            	
+            	flag = teleportRandomly(livingEntity, teleportDistance) || flag;
+            }
+            
+            if(flag)
+            {
+            	if(hasVirtus)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
+            	}
+            	
+            	if(hasPotentia)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+            	}
+            	
+            	this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, true);
+            	
+            	SoulNetworkHandler.syphonFromNetwork(owner, 1000);
             }
         }
     }

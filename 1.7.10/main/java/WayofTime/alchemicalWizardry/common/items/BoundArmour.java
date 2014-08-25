@@ -22,6 +22,7 @@ import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.nodes.IRevealer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import cpw.mods.fml.common.Optional;
@@ -30,7 +31,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.InterfaceList(value = {@Interface(iface="thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IGoggles", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IRunicArmor", modid = "Thaumcraft")})
-public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,IRevealer, IGoggles, IRunicArmor
+public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialArmor,IBindable ,IRevealer, IGoggles, IRunicArmor
 {
     private static int invSize = 9;
     private static IIcon helmetIcon;
@@ -693,5 +694,31 @@ public class BoundArmour extends ItemArmor implements ISpecialArmor,IBindable ,I
 		}
 		
 		return harden;
+	}
+
+	@Override
+	public boolean showIngameHUD(World world, ItemStack stack, EntityPlayer player) 
+	{
+		ItemStack[] inv = getInternalInventory(stack);
+
+        if (inv == null)
+        {
+            return false;
+        }
+
+        for (ItemStack item : inv)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            if (item.getItem().equals(ModItems.itemSeerSigil))
+            {
+                return true;
+            }
+        }
+
+        return false;
 	}
 }

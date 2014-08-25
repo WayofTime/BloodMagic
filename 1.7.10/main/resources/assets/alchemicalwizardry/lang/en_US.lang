@@ -50,6 +50,9 @@ tile.blockSpellEffect.fire.name=Crucible of Fire
 tile.blockSpellEffect.ice.name=Ice Maker
 tile.blockSpellEffect.wind.name=Wind Generator
 tile.blockSpellEffect.earth.name=Earth Former
+tile.alchemicCalcinator.name=Alchemic Calcinator
+tile.crystalBelljar.name=Crystal Belljar
+tile.blockReagentConduit.name=Alchemy Relay
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb
@@ -176,6 +179,9 @@ item.itemCombinationalCatalyst.name=Combinational Catalyst
 item.sanguineRobe.name=Sanguine Robes
 item.sanguinePants.name=Sanguine Leggings
 item.sanguineBoots.name=Sanguine Boots
+item.itemAttunedCrystal.name=Alchemic Router
+item.itemTankSegmenter.name=Alchemic Segmenter
+item.destinationClearer.name=Alchemic Cleanser
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

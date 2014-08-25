@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 
 public class Int3 
 {
@@ -12,6 +14,20 @@ public class Int3
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
 		this.zCoord = zCoord;
+	}
+	
+	public static Int3 readFromNBT(NBTTagCompound tag)
+	{
+		return new Int3(tag.getInteger("xCoord"), tag.getInteger("yCoord"), tag.getInteger("zCoord"));
+	}
+	
+	public NBTTagCompound writeToNBT(NBTTagCompound tag)
+	{
+		tag.setInteger("xCoord", xCoord);
+		tag.setInteger("yCoord", yCoord);
+		tag.setInteger("zCoord", zCoord);
+		
+		return tag;
 	}
 	
 	@Override

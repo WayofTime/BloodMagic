@@ -7,15 +7,16 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -25,6 +26,8 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 
@@ -52,9 +55,38 @@ public class SpellHelper
 		}
 	}
 	
+	public static boolean canPlayerSeeAlchemy(EntityPlayer player)
+	{
+		if(player != null)
+    	{
+    		ItemStack stack = player.getCurrentArmor(3);
+        	if(stack != null)
+        	{
+        		Item item = stack.getItem();
+        		if(item instanceof IAlchemyGoggles && ((IAlchemyGoggles)item).showIngameHUD(player.worldObj, stack, player))
+        		{
+        			return true;
+        		}
+        	}
+      
+    		ItemStack heldStack = player.getHeldItem();
+    		if(heldStack != null && heldStack.getItem() instanceof IReagentManipulator)
+    		{
+    			return true;
+    		}
+    	}
+		
+		return false;
+	}
+	
 	public static List<Entity> getEntitiesInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
 	{
 		return world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX-0.5f, posY-0.5f, posZ-0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
+	}
+	
+	public static List<EntityLivingBase> getLivingEntitiesInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
+	{
+		return world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX-0.5f, posY-0.5f, posZ-0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
 	}
 	
 	public static List<EntityItem> getItemsInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
@@ -121,14 +153,17 @@ public class SpellHelper
 		return ForgeDirection.EAST;
 	}
 	
-	public static void freezeWaterBlock(World world, int posX, int posY, int posZ)
+	public static boolean freezeWaterBlock(World world, int posX, int posY, int posZ)
 	{
 		Block block = world.getBlock(posX, posY, posZ);
 		
 		if(block == Blocks.water || block == Blocks.flowing_water)
 		{
 			world.setBlock(posX, posY, posZ, Blocks.ice);
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public static String getUsername(EntityPlayer player)
@@ -138,11 +173,7 @@ public class SpellHelper
 	
 	public static EntityPlayer getPlayerForUsername(String str)
 	{
-		if(MinecraftServer.getServer() == null)
-		{
-			return null;
-		}
-		return MinecraftServer.getServer().getConfigurationManager().func_152612_a(str);
+		return SoulNetworkHandler.getPlayerForUsername(str);
 	}
 	
 	public static void sendParticleToPlayer(EntityPlayer player, String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
@@ -388,5 +419,100 @@ public class SpellHelper
 		case 10: return "X";
 		default: return "";
 		}
+	}
+	
+	/**
+	 * Used to determine if stack1 can be placed into stack2. If stack2 is null and stack1 isn't null, returns true. Ignores stack size
+	 * @param stack1 Stack that is placed into a slot
+	 * @param stack2 Slot content that stack1 is placed into
+	 * @return True if they can be combined
+	 */
+	public static boolean canCombine(ItemStack stack1, ItemStack stack2)
+	{
+		if(stack1 == null)
+		{
+			return false;
+		}
+		
+		if(stack2 == null)
+		{
+			return true;
+		}
+		
+		if(stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
+		{
+			return false;
+		}
+		
+		boolean tagsEqual = ItemStack.areItemStackTagsEqual(stack1, stack2);
+		
+		return stack1.getItem() == stack2.getItem() && tagsEqual && stack1.getItemDamage() == stack2.getItemDamage() && Math.min(stack2.getMaxStackSize() - stack2.stackSize, stack1.stackSize) > 0;
+	}
+	
+	/**
+	 * 
+	 * @param stack1 Stack that is placed into a slot
+	 * @param stack2 Slot content that stack1 is placed into
+	 * @return Stacks after stacking
+	 */
+	public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2)
+	{
+		ItemStack[] returned = new ItemStack[2];
+		
+		if(canCombine(stack1, stack2))
+		{
+			int transferedAmount = stack2 == null ? stack1.stackSize : Math.min(stack2.getMaxStackSize() - stack2.stackSize, stack1.stackSize);
+			if(transferedAmount > 0)
+			{
+				ItemStack copyStack = stack1.splitStack(transferedAmount);
+				if(stack2 == null)
+				{
+					stack2 = copyStack;
+				}else
+				{
+					stack2.stackSize+=transferedAmount;
+				}
+			}
+		}
+		
+		returned[0] = stack1;
+		returned[1] = stack2;
+		
+		return returned;
+	}
+	
+	public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory)
+	{
+		if(stack == null)
+		{
+			return stack;
+		}
+		
+		for(int i=0; i<inventory.getSizeInventory(); i++)
+		{
+			ItemStack[] combinedStacks = combineStacks(stack, inventory.getStackInSlot(i));
+			stack = combinedStacks[0];
+			inventory.setInventorySlotContents(i, combinedStacks[1]);
+			
+			if(stack.stackSize <= 0)
+			{
+				return stack;
+			}
+		}
+		
+		return stack;
+	}
+	
+	public static boolean hydrateSoil(World world, int x, int y, int z)
+	{
+		Block block = world.getBlock(x, y, z);
+		if(block == Blocks.dirt || block == Blocks.grass || (block == Blocks.farmland && world.getBlockMetadata(x, y, z) == 0))
+		{
+			world.setBlock(x, y, z, Blocks.farmland, 15, 2);
+			
+			return true;
+		}
+		
+		return false;
 	}
 }

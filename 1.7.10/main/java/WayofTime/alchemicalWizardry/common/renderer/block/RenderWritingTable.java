@@ -21,11 +21,6 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
 {
     private ModelWritingTable modelWritingTable = new ModelWritingTable();
     private final RenderItem customRenderItem;
-//	private final RenderItem customRenderItem1;
-//	private final RenderItem customRenderItem2;
-//	private final RenderItem customRenderItem3;
-//	private final RenderItem customRenderItem4;
-//	private final RenderItem customRenderItem5;
 
     public RenderWritingTable()
     {
@@ -47,7 +42,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
         {
             TEWritingTable tileAltar = (TEWritingTable) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_CULL_FACE);
+//            GL11.glDisable(GL11.GL_CULL_FACE);
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/WritingTable.png");

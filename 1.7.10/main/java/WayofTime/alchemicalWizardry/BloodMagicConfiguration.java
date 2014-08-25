@@ -3,11 +3,14 @@ package WayofTime.alchemicalWizardry;
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
+import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
+import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 
 /**
@@ -18,7 +21,8 @@ import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
  */
 public class BloodMagicConfiguration
 {
-
+	private static final String       DEFAULT_COLOR_LIST          = "100,f; 80,7; 60,e; 40,6; 25,c; 10,4";
+	public static final List<ColourThreshold> colorList                   = new ArrayList<ColourThreshold>();
 
     public static Configuration config;
     public static final String CATEGORY_GAMEPLAY = "gameplay";
@@ -26,7 +30,13 @@ public class BloodMagicConfiguration
 
     public static void init(File configFile)
     {
+    	for (String s : DEFAULT_COLOR_LIST.split(";")) 
+    	{ 
+    	    String[] ct = s.split(","); 
+    	    colorList.add(new ColourThreshold(Integer.valueOf(ct[0].trim()), ct[1].trim())); 
+    	} 
 
+    	
         config = new Configuration(configFile);
 
         try
@@ -54,6 +64,8 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID","PlanarBinding",110).getInt();
             AlchemicalWizardry.customPotionSoulFrayID = config.get("Potion ID","SoulFray",111).getInt();
             AlchemicalWizardry.customPotionSoulHardenID = config.get("Potion ID", "SoulHarden", 112).getInt();
+            AlchemicalWizardry.customPotionDeafID = config.get("Potion ID", "Deaf", 113).getInt();
+            AlchemicalWizardry.customPotionFeatherFallID = config.get("Potion ID", "FeatherFall", 114).getInt();
             
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
@@ -70,8 +82,12 @@ public class BloodMagicConfiguration
             
             AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
             AlchemicalWizardry.respawnWithDebuff = config.get("WimpySettings", "RespawnWithDebuff", true).getBoolean();
+            AlchemicalWizardry.causeHungerWithRegen = config.get("WimpySettings", "causeHungerWithRegen", true).getBoolean();
 //            AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
             AlchemicalWizardry.lockdownAltar = false;
+            
+            RenderHelper.xOffset = config.get("ClientSettings", "AlchemyHUDxOffset", 50).getInt();
+            RenderHelper.yOffset = config.get("ClientSettings", "AlchemyHUDyOffset", 2).getInt();
 
             
         } catch (Exception e)

@@ -12,15 +12,21 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectMagnetic extends RitualEffect
 {
+	private static final int potentiaDrain = 10;
+	private static final int terraeDrain = 10;
+	private static final int orbisTerraeDrain = 10;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -40,24 +46,21 @@ public class RitualEffectMagnetic extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if (world.getWorldTime() % 40 != 0)
+        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        
+        if(world.getWorldTime() % (hasPotentia ? 10 : 40) != 0)
         {
-            return;
+        	return;
         }
 
-        Block powerBlock = world.getBlock(x, y-1, z);
-        int radius = this.getRadiusForModifierBlock(powerBlock);
+        boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
+        boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+
+        int radius = this.getRadiusForReagents(hasTerrae, hasOrbisTerrae);
         
         if (currentEssence < this.getCostPerRefresh())
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+        	SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
             int xRep = 0;
@@ -113,6 +116,22 @@ public class RitualEffectMagnetic extends RitualEffect
                                     BlockTeleposer.swapBlocks(world, world, x + i, j, z + k, xRep, yRep, zRep);
                                     data.currentEssence = currentEssence - this.getCostPerRefresh();
                                     data.markDirty();
+                                    
+                                    if(hasPotentia)
+                                    {
+                                        this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                                    }
+                                    
+                                    if(hasTerrae)
+                                    {
+                                        this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
+                                    }
+                                    
+                                    if(hasOrbisTerrae)
+                                    {
+                                        this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+                                    }
+                                    
                                     return;
                                 }
                             }
@@ -152,28 +171,26 @@ public class RitualEffectMagnetic extends RitualEffect
         return magneticRitual;
 	}
     
-    public int getRadiusForModifierBlock(Block block)
+    public int getRadiusForReagents(boolean hasTerrae, boolean hasOrbisTerrae)
 	{
-		if(block == null)
-		{
-			return 3;
-		}
-		
-		if(block == Blocks.diamond_block)
-		{
-			return 31;
-		}
-		
-		if(block == Blocks.gold_block)
-		{
-			return 15;
-		}
-		
-		if(block == Blocks.iron_block)
-		{
-			return 7;
-		}
-		
-		return 3;
+    	if(hasTerrae)
+    	{
+    		if(hasOrbisTerrae)
+    		{
+    			return 31;
+    		}else
+    		{
+    			return 7;
+    		}
+    	}else
+    	{
+    		if(hasOrbisTerrae)
+    		{
+    			return 12;
+    		}else
+    		{
+    			return 3;
+    		}
+    	}
 	}
 }

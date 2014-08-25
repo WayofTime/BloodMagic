@@ -4,20 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectGrowth extends RitualEffect
 {
+	private static final int aquasalusDrain = 10;
+	private static final int terraeDrain = 20;
+	private static final int orbisTerraeDrain = 20;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -39,20 +44,35 @@ public class RitualEffectGrowth extends RitualEffect
 
         if (currentEssence < this.getCostPerRefresh()*9)
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+        	SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            if (world.getWorldTime() % 20 != 0)
+        	boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
+        	boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+
+        	int speed = this.getSpeedForReagents(hasTerrae, hasOrbisTerrae);
+            if (world.getWorldTime() % speed != 0)
             {
                 return;
             }
+            
+            if(this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false))
+        	{
+        		int hydrationRange = 1;
+            	for(int i=-hydrationRange; i<=hydrationRange; i++)
+            	{
+            		for(int j=-hydrationRange; j<=hydrationRange; j++)
+            		{
+                    	if(this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false))
+                    	{
+                    		if(SpellHelper.hydrateSoil(world, x + i, y + 1, z + j))
+                    		{
+                				this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
+                    		}
+                    	}
+            		}
+            	}
+        	}
 
             int flag = 0;
 
@@ -75,6 +95,9 @@ public class RitualEffectGrowth extends RitualEffect
 
             if (flag > 0)
             {
+            	this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
+            	this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+
                 data.currentEssence = currentEssence - this.getCostPerRefresh()*flag;
                 data.markDirty();
             }
@@ -101,4 +124,27 @@ public class RitualEffectGrowth extends RitualEffect
         growthRitual.add(new RitualComponent(1, 0, -1, 3));
         return growthRitual;
 	}
+    
+    public int getSpeedForReagents(boolean hasTerrae, boolean hasOrbisTerrae)
+    {
+    	if(hasOrbisTerrae)
+    	{
+    		if(hasTerrae)
+    		{
+    			return 10;
+    		}else
+    		{
+    			return 15;
+    		}
+    	}else
+    	{
+    		if(hasTerrae)
+    		{
+    			return 20;
+    		}else
+    		{
+    			return 30;
+    		}
+    	}
+    }
 }

@@ -5,6 +5,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +16,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
@@ -75,6 +79,7 @@ public enum NewPacketHandler
        clientChannel.pipeline().addAfter(tileAltarCodec, "ParticleHandler", new ParticleMessageHandler());
        clientChannel.pipeline().addAfter(tileAltarCodec, "VelocityHandler", new VelocityMessageHandler());
        clientChannel.pipeline().addAfter(tileAltarCodec, "TEMasterStoneHandler", new TEMasterStoneMessageHandler());
+       clientChannel.pipeline().addAfter(tileAltarCodec, "TEReagentConduitHandler", new TEReagentConduitMessageHandler());
    }
 
 
@@ -242,6 +247,22 @@ public enum NewPacketHandler
            }
        }
    }
+   
+   private static class TEReagentConduitMessageHandler extends SimpleChannelInboundHandler<TEReagentConduitMessage>
+   {
+       @Override
+       protected void channelRead0(ChannelHandlerContext ctx, TEReagentConduitMessage msg) throws Exception
+       {
+           World world = AlchemicalWizardry.proxy.getClientWorld();
+           TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
+           if (te instanceof TEReagentConduit)
+           {
+               TEReagentConduit reagentConduit = (TEReagentConduit) te;
+
+               reagentConduit.destinationList = msg.destinationList;
+           }
+       }
+   }
 
    public static class BMMessage
    {
@@ -343,6 +364,15 @@ public enum NewPacketHandler
 	   String ritual;
 	   boolean isRunning;
    }
+   
+   public static class TEReagentConduitMessage extends BMMessage
+   {
+	   int x;
+	   int y;
+	   int z;
+	   
+	   List<ColourAndCoords> destinationList;
+   }
 
    private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
    {
@@ -358,6 +388,7 @@ public enum NewPacketHandler
            addDiscriminator(7, ParticleMessage.class);
            addDiscriminator(8, VelocityMessage.class);
            addDiscriminator(9, TEMasterStoneMessage.class);
+           addDiscriminator(10, TEReagentConduitMessage.class);
        }
        
        @Override
@@ -536,6 +567,27 @@ public enum NewPacketHandler
     		   }
     		   
     		   target.writeBoolean(((TEMasterStoneMessage)msg).isRunning);
+    		   
+    		   break;
+    		   
+    	   case 10:
+    		   target.writeInt(((TEReagentConduitMessage)msg).x);
+               target.writeInt(((TEReagentConduitMessage)msg).y);
+               target.writeInt(((TEReagentConduitMessage)msg).z);
+               
+               List<ColourAndCoords> list = ((TEReagentConduitMessage)msg).destinationList;
+               target.writeInt(list.size());
+               
+               for(ColourAndCoords colourSet : list)
+               {
+            	   target.writeInt(colourSet.colourRed);
+            	   target.writeInt(colourSet.colourGreen);
+            	   target.writeInt(colourSet.colourBlue);
+            	   target.writeInt(colourSet.colourIntensity);
+            	   target.writeInt(colourSet.xCoord);
+            	   target.writeInt(colourSet.yCoord);
+            	   target.writeInt(colourSet.zCoord);
+               }
     		   
     		   break;
     	   }
@@ -725,6 +777,26 @@ public enum NewPacketHandler
 	           
 	           ((TEMasterStoneMessage)msg).ritual = ritual;
 	           ((TEMasterStoneMessage)msg).isRunning = dat.readBoolean();
+	           
+	           break;
+	           
+    	   case 10:
+    		   ((TEReagentConduitMessage)msg).x = dat.readInt();
+               ((TEReagentConduitMessage)msg).y = dat.readInt();
+               ((TEReagentConduitMessage)msg).z = dat.readInt();
+               
+               int listSize = dat.readInt();
+               
+               List<ColourAndCoords> list = new LinkedList();
+    		   
+               for(int i=0; i < listSize; i++)
+               {
+            	   list.add(new ColourAndCoords(dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt()));
+               }
+               
+               ((TEReagentConduitMessage)msg).destinationList = list;
+               
+    		   break;
     	   }
        }
    }
@@ -855,6 +927,19 @@ public enum NewPacketHandler
 	   msg.isRunning = tile.isRunning;
 	   
        return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+   }
+   
+   public static Packet getPacket(TEReagentConduit tile)
+   {
+	   TEReagentConduitMessage msg = new TEReagentConduitMessage();
+	   msg.index = 10;
+	   msg.x = tile.xCoord;
+	   msg.y = tile.yCoord;
+	   msg.z = tile.zCoord;
+	   
+	   msg.destinationList = tile.destinationList;
+	   
+	   return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
    }
    
    public void sendTo(Packet message, EntityPlayerMP player) 

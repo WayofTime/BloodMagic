@@ -568,8 +568,21 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                 	{
                 		this.lockdownDuration += 20;
                 	}
-                }
-            }  
+                } 
+            } 
+            
+            if(AlchemicalWizardry.causeHungerWithRegen)
+            {
+            	List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5, 15, 15);
+            	for(EntityPlayer player : list)
+            	{
+            		PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
+            		if(regenEffect != null && regenEffect.getAmplifier() > 0)
+            		{
+            			player.addPotionEffect(new PotionEffect(Potion.hunger.id, 40, regenEffect.getAmplifier()*2 - 2));
+            		}
+            	}
+            }
         }  
 
         if (worldObj.getWorldTime() % 100 == 0)

@@ -28,6 +28,7 @@ public class TEConduitItemRenderer implements IItemRenderer
 		
 		GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_CULL_FACE);
+
         /**
          * Render the ghost item inside of the Altar, slowly spinning
          */

@@ -4,21 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectLava extends RitualEffect
 {
+	public static final int sanctusDrain = 20;
+	public static final int offensaDrain = 50;
+	public static final int reductusDrain = 5;
+	
+	public static final int fireFuseCost = 1000;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -44,14 +58,7 @@ public class RitualEffectLava extends RitualEffect
         {
             if (currentEssence < this.getCostPerRefresh())
             {
-                EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-                if (entityOwner == null)
-                {
-                    return;
-                }
-
-                entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            	SoulNetworkHandler.causeNauseaToPlayer(owner);
             } else
             {
                 for (int i = 0; i < 10; i++)
@@ -63,7 +70,59 @@ public class RitualEffectLava extends RitualEffect
                 data.currentEssence = currentEssence - this.getCostPerRefresh();
                 data.markDirty();
             }
+        }else
+        {
+        	boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+        	TileEntity tile = world.getTileEntity(x, y + 1, z);
+        	if(tile instanceof IFluidHandler)
+        	{
+        		int amount = ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), false);
+        		if(amount >= 1000)
+        		{
+        			((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), true);
+        			
+        			this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+        			
+        			data.currentEssence = currentEssence - this.getCostPerRefresh();
+                    data.markDirty();
+        		}
+        	}
         }
+        
+        
+        
+        if(this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false) && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, fireFuseCost))
+        {
+        	boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+        	boolean drainReductus = world.getWorldTime() % 100 == 0;
+        	
+        	int range = 5;
+            List<EntityLivingBase> entityList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+            EntityPlayer player = SpellHelper.getPlayerForUsername(owner);
+            
+            for(EntityLivingBase entity : entityList)
+            {
+            	if(entity != player && this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false) && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, fireFuseCost) && !entity.isPotionActive(AlchemicalWizardry.customPotionFireFuse))
+            	{
+            		if(hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false))
+                	{
+                		if(entity instanceof EntityPlayer)
+                		{
+                			if(drainReductus)
+                			{
+                    			this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+                			}
+                			
+                			continue;
+                		}
+                	}
+            		entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFireFuse.id,100,0));
+            		this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true);
+            		SoulNetworkHandler.syphonFromNetwork(owner, fireFuseCost);
+            	}
+            }
+        }
+        
     }
 
     @Override

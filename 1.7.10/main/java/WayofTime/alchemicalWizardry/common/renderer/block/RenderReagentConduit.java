@@ -8,19 +8,24 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.renderer.BeamRenderer;
+import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderReagentConduit extends TileEntitySpecialRenderer
 {	
-    private static final ResourceLocation field_110629_a = new ResourceLocation("alchemicalwizardry:textures/models/TransCircle.png");
+    private static final ResourceLocation field_110629_a = new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png");
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
     {
         if (tileEntity instanceof TEReagentConduit)
         {
+        	int renderCount = ((TEReagentConduit)tileEntity).renderCount;
+        	float key1 = (tileEntity.xCoord*54f - tileEntity.yCoord*38.72f + tileEntity.zCoord*10.432f);
+        	float key2 = (tileEntity.xCoord*21.43f - tileEntity.yCoord*9.96f + tileEntity.zCoord*12.8f);
+        	
+        	Int3 colourMap = ((TEReagentConduit) tileEntity).getColour();
+        	
     		GL11.glPushMatrix();
     		float f1 = 1.0f;
     		Tessellator tessellator = Tessellator.instance;
@@ -38,14 +43,14 @@ public class RenderReagentConduit extends TileEntitySpecialRenderer
     		GL11.glDepthMask(false);
 
     		tessellator.startDrawingQuads();
-    		tessellator.setColorRGBA(0, 0, 255, 90);
+    		tessellator.setColorRGBA(colourMap.xCoord, colourMap.yCoord, colourMap.zCoord, 200);
     		//tessellator.setColorOpaque(255, 255, 255);
     		
     		GL11.glTranslated(d0+0.5, d1+0.5, d2+0.5);
 
     		GL11.glRotatef(tileEntity.getWorldObj().getWorldTime()/3.0f, 0F, 1F, 0F); //Rotate on planar axis
-    		//GL11.glRotatef(30F, 0F, 0F, 1F); //Rotate vertical axis
-    		//GL11.glRotatef(tileAltar.getWorldObj().getWorldTime()*2f, 1F, 0F, 0F); //Rotate cylindrically
+    		GL11.glRotatef(renderCount + key1, 0F, 0F, 1F); //Rotate vertical axis
+    		GL11.glRotatef(renderCount*2f + key2, 1F, 0F, 0F); //Rotate cylindrically
     		
     		double offset = 0;
     		

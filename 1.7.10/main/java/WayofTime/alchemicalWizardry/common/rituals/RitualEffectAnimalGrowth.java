@@ -5,20 +5,30 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectAnimalGrowth extends RitualEffect
 {
+	public static final int breedingCost = 50;
+	public static final int reductusDrain = 1;
+	public static final int virtusDrain = 10;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -43,48 +53,90 @@ public class RitualEffectAnimalGrowth extends RitualEffect
             return;
         }
 
-        int d0 = 2;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 3), (double) (z + 1)).expand(d0, 0, d0);
-        List list = world.getEntitiesWithinAABB(EntityAgeable.class, axisalignedbb);
-        Iterator iterator1 = list.iterator();
-        EntityAgeable entity;
+        double range = 2;
+        
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 3), (double) (z + 1)).expand(range, 0, range);
+        List<EntityAgeable> list = world.getEntitiesWithinAABB(EntityAgeable.class, axisalignedbb);
+
         int entityCount = 0;
         boolean flag = false;
 
-        while (iterator1.hasNext())
+        if (currentEssence < this.getCostPerRefresh() * list.size())
         {
-            entity = (EntityAgeable) iterator1.next();
-            entityCount++;
-        }
-
-        if (currentEssence < this.getCostPerRefresh() * entityCount)
-        {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            Iterator iterator2 = list.iterator();
-            entityCount = 0;
+            boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
-            while (iterator2.hasNext())
+            for(EntityAgeable entity : list)
             {
-                entity = (EntityAgeable) iterator2.next();
-
                 if (entity.getGrowingAge() < 0)
                 {
                     entity.addGrowth(5);
                     entityCount++;
-                }
+                }else 
+                {
+                	hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+                	if(hasReductus && entity instanceof EntityAnimal && entity.getGrowingAge() > 0)
+                	{
+                		EntityAnimal animal = (EntityAnimal)entity;
+                    	entity.setGrowingAge(Math.max(0, animal.getGrowingAge() - 20*2));
+                    	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+                    	entityCount++;
+                	}
+                }	
             }
 
             data.currentEssence = currentEssence - this.getCostPerRefresh() * entityCount;
             data.markDirty();
+        }
+        
+        boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+        
+        if(hasVirtus && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, breedingCost))
+        {
+        	List<EntityAnimal> animalList = world.getEntitiesWithinAABB(EntityAnimal.class, axisalignedbb);
+        	TileEntity tile = world.getTileEntity(x, y+1, z);
+        	IInventory inventory = null;
+        	if(tile instanceof IInventory)
+        	{
+        		inventory = (IInventory)tile;
+        	}else
+        	{
+        		tile = world.getTileEntity(x, y-1, z);
+        		if(tile instanceof IInventory)
+            	{
+            		inventory = (IInventory)tile;
+            	}
+        	}
+        	
+        	if(inventory != null)
+        	{
+        		for(EntityAnimal entityAnimal : animalList)
+            	{
+        			if(entityAnimal.isInLove() || entityAnimal.isChild() || entityAnimal.getGrowingAge() > 0)
+        			{
+        				continue;
+        			}
+        			
+        			hasVirtus = hasVirtus && this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+        			boolean hasLP = SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, breedingCost);
+        			
+        			for(int i=0; i<inventory.getSizeInventory(); i++)
+        			{
+        				ItemStack stack = inventory.getStackInSlot(i);
+                		
+                		if(stack != null && entityAnimal.isBreedingItem(stack))
+                		{
+                			inventory.decrStackSize(i, 1);
+                			entityAnimal.func_146082_f(null);
+                			this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
+                			SoulNetworkHandler.syphonFromNetwork(owner, breedingCost);
+                			break;
+                		}
+        			}
+            	}
+        	}
         }
     }
 

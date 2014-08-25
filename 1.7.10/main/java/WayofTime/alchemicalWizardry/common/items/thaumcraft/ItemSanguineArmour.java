@@ -164,10 +164,10 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
 	{
 		switch(this.armorType)
 		{
-		case 0: return 8;
-		case 1: return 4;
-		case 2: return 3;
-		case 3: return 3;
+		case 0: return 7;
+		case 1: return 3;
+		case 2: return 2;
+		case 3: return 2;
 		}
 		return 0;
 	}

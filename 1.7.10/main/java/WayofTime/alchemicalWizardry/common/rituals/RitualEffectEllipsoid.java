@@ -42,14 +42,7 @@ public class RitualEffectEllipsoid extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
         
-        TileEntity tile = world.getTileEntity(x, y+1, z);
-
-        
-        if(((IInventory) tile).getSizeInventory() < 3)
-    	{
-    		return;
-    	}
-    	
+        TileEntity tile = world.getTileEntity(x, y+1, z);    	
         
         if(!(tile instanceof IInventory) || ((IInventory)tile).getSizeInventory() < 3)
         {

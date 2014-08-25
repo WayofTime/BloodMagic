@@ -6,34 +6,151 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class AlchemicalWizardryEventHooks
 {
     public static Map<String,Boolean> playerFlightBuff = new HashMap();
     public static Map<String,Boolean> playerBoostStepHeight = new HashMap();
     public static List<String> playersWith1Step = new ArrayList();
-
+    
+    public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
+    public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
+    
+    @SubscribeEvent
+    public void onPlayerSoundEvent(SoundEvent event)
+    {
+    	if(event.isCancelable() && Minecraft.getMinecraft() != null)
+    	{
+        	EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        	
+        	if(player != null && player.isPotionActive(AlchemicalWizardry.customPotionBoost))
+        	{
+        		event.setCanceled(true);
+        	}
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onLivingSpawnEvent(CheckSpawn event)
+    {
+    	if(!(event.entityLiving instanceof EntityMob))
+    	{
+    		return;
+    	}
+    	
+    	String respawnRitual = "AW028SpawnWard";
+    	
+    	Integer dimension = new Integer(event.world.provider.dimensionId);
+    	if(respawnMap.containsKey(dimension))
+    	{
+    		List<CoordAndRange> list = respawnMap.get(dimension);
+    		
+    		if(list != null)
+    		{
+    			for(CoordAndRange coords : list)
+    			{
+    				TileEntity tile = event.world.getTileEntity(coords.xCoord, coords.yCoord, coords.zCoord);
+    				
+    				if(tile instanceof TEMasterStone && ((TEMasterStone) tile).isRunning && ((TEMasterStone) tile).getCurrentRitual().equals(respawnRitual))
+    				{
+    					if(event.x > coords.xCoord-coords.horizRadius && event.x < coords.xCoord+coords.horizRadius && event.z > coords.zCoord-coords.horizRadius && event.z < coords.zCoord+coords.horizRadius && event.y > coords.yCoord-coords.vertRadius && event.y < coords.yCoord+coords.vertRadius)
+    					{
+    						switch(event.getResult())
+    						{
+							case ALLOW:
+								event.setResult(Result.DEFAULT);
+								break;
+							case DEFAULT:
+								event.setResult(Result.DENY);
+								break;
+							case DENY:
+								break;
+							default:
+								break;
+    						}
+        		    		break;
+    					}
+    				}else
+    				{
+    					list.remove(coords);
+    				}
+    			}
+    		}	
+    	}
+    	
+    	String forceSpawnRitual = "AW028SpawnWard";
+    	
+    	if(forceSpawnMap.containsKey(dimension))
+    	{
+    		List<CoordAndRange> list = forceSpawnMap.get(dimension);
+    		
+    		if(list != null)
+    		{
+    			for(CoordAndRange coords : list)
+    			{
+    				TileEntity tile = event.world.getTileEntity(coords.xCoord, coords.yCoord, coords.zCoord);
+    				
+    				if(tile instanceof TEMasterStone && ((TEMasterStone) tile).isRunning && ((TEMasterStone) tile).getCurrentRitual().equals(forceSpawnRitual))
+    				{
+    					if(event.x > coords.xCoord-coords.horizRadius && event.x < coords.xCoord+coords.horizRadius && event.z > coords.zCoord-coords.horizRadius && event.z < coords.zCoord+coords.horizRadius && event.y > coords.yCoord-coords.vertRadius && event.y < coords.yCoord+coords.vertRadius)
+    					{
+    						switch(event.getResult())
+    						{
+							case ALLOW:
+								break;
+							case DEFAULT:
+								event.setResult(Result.ALLOW);
+								break;
+							case DENY:
+								event.setResult(Result.DEFAULT);
+								break;
+							default:
+								break;
+    						}
+        		    		break;
+    					}
+    				}else
+    				{
+    					list.remove(coords);
+    				}
+    			}
+    		}	
+    	}
+    }
+    
     @SubscribeEvent
     public void onPlayerRespawnEvent(PlayerRespawnEvent event)
     {
@@ -149,6 +266,11 @@ public class AlchemicalWizardryEventHooks
             }
         }
 
+        if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionFeatherFall))
+        {
+        	event.entityLiving.fallDistance = 0;
+        }
+        
         if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionDrowning))
         {
             int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionDrowning).getAmplifier();

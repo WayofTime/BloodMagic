@@ -173,7 +173,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             					flag++;
             					break;
             				}
-            				else if(curStack.isItemEqual(outputStack)&&curStack.stackSize<curStack.getMaxStackSize())
+            				else if(curStack.isItemEqual(outputStack)&&curStack.stackSize<curStack.getMaxStackSize() && ItemStack.areItemStackTagsEqual(outputStack, curStack))
             				{
             					outputStack.stackSize--;
             					if(outputStack.stackSize<=0)
@@ -228,7 +228,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                 					flag++;
                 					break;
                 				}
-                				else if(curStack.isItemEqual(alchStack)&&curStack.stackSize<curStack.getMaxStackSize())
+                				else if(curStack.isItemEqual(alchStack)&&curStack.stackSize<curStack.getMaxStackSize()&&ItemStack.areItemStackTagsEqual(alchStack, curStack))
                 				{
                 					alchStack.stackSize--;
                 					if(alchStack.stackSize<=0)

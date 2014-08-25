@@ -9,16 +9,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class DivinationSigil extends Item implements ArmourUpgrade
+public class DivinationSigil extends Item implements ArmourUpgrade, IReagentManipulator, IBindable
 {
     public DivinationSigil()
     {
@@ -67,8 +74,44 @@ public class DivinationSigil extends Item implements ArmourUpgrade
         String ownerName = itemTag.getString("ownerName");
         //PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(ownerName));
         int currentEssence = EnergyItems.getCurrentEssence(ownerName);
-        
-        par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+                
+        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
+
+        if (movingobjectposition == null)
+        {
+            par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+
+            return par1ItemStack;
+        } else
+        {
+        	if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            {
+                int x = movingobjectposition.blockX;
+                int y = movingobjectposition.blockY;
+                int z = movingobjectposition.blockZ;
+                
+                TileEntity tile = par2World.getTileEntity(x, y, z);
+                
+                if(!(tile instanceof IReagentHandler))
+                {
+                	return par1ItemStack;
+                }
+                
+                IReagentHandler relay = (IReagentHandler)tile;
+
+                ReagentContainerInfo[] infoList = relay.getContainerInfo(ForgeDirection.UNKNOWN);
+                if(infoList != null)
+                {
+                	for(ReagentContainerInfo info : infoList)
+                	{
+                		if(info != null && info.reagent != null && info.reagent.reagent != null)
+                		{
+                    		par3EntityPlayer.addChatComponentMessage(new ChatComponentText("Reagent: " + ReagentRegistry.getKeyForReagent(info.reagent.reagent) + ", Amount: " + info.reagent.amount));
+                		}
+                	}
+                }
+            }
+        }
         
         return par1ItemStack;
     }
@@ -77,7 +120,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
         // TODO Auto-generated method stub
-        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9,true));
+        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9, true));
     }
 
     @Override

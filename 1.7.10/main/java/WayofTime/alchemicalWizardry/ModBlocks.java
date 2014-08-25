@@ -2,7 +2,9 @@ package WayofTime.alchemicalWizardry;
 
 import net.minecraft.block.Block;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
+import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.block.BlockAltar;
+import WayofTime.alchemicalWizardry.common.block.BlockBelljar;
 import WayofTime.alchemicalWizardry.common.block.BlockBloodLightSource;
 import WayofTime.alchemicalWizardry.common.block.BlockConduit;
 import WayofTime.alchemicalWizardry.common.block.BlockDemonPortal;
@@ -82,6 +84,8 @@ public class ModBlocks
     public static Block blockBuildingSchematicSaver;
     public static Block blockDemonPortal;
     public static Block blockReagentConduit;
+    public static Block blockAlchemicCalcinator;
+    public static Block blockCrystalBelljar;
 
     public static void init()
     {
@@ -116,6 +120,8 @@ public class ModBlocks
         blockDemonPortal = new BlockDemonPortal();
         blockBuildingSchematicSaver = new BlockSchematicSaver();
         blockReagentConduit = new BlockReagentConduit();
+        blockAlchemicCalcinator = new BlockAlchemicCalcinator();
+        blockCrystalBelljar = new BlockBelljar();
         
         blockLifeEssence = new LifeEssenceBlock();
     }
@@ -156,6 +162,8 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockDemonPortal, "demonPortalMain");
         GameRegistry.registerBlock(ModBlocks.blockBuildingSchematicSaver, "blockSchemSaver");
         GameRegistry.registerBlock(ModBlocks.blockReagentConduit, "blockReagentConduit"); 
+        GameRegistry.registerBlock(ModBlocks.blockAlchemicCalcinator, "blockAlchemicCalcinator");
+        GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, "blockCrystalBelljar");
     }
     
     public static void registerBlocksInInit()

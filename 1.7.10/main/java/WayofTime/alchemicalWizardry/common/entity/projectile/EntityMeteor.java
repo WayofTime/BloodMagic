@@ -50,14 +50,7 @@ public class EntityMeteor extends EnergyBlastProjectile
     @Override
     public void onImpact(Entity mop)
     {
-        if (mop == shootingEntity && ticksInAir > 3)
-        {
-            shootingEntity.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
-            this.setDead();
-        } else
-        {
-            MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID);
-        }
+    	MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID);
 
         this.setDead();
     }
