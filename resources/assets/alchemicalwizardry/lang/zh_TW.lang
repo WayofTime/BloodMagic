@@ -50,6 +50,9 @@ tile.blockSpellEffect.fire.name=火焰效應器
 tile.blockSpellEffect.ice.name=冰霜效應器
 tile.blockSpellEffect.wind.name=風暴效應器
 tile.blockSpellEffect.earth.name=塵土效應器
+tile.alchemicCalcinator.name=元素煅燒爐
+tile.crystalBelljar.name=玻璃鐘罩
+tile.blockReagentConduit.name=元素中續器
 
 #Item Localization
 item.weakBloodOrb.name=虛弱氣血寶珠
@@ -103,7 +106,7 @@ item.magicales.name=魔法粉末
 item.sanctus.name=神聖粉末
 item.aether.name=以太元素
 item.simpleCatalyst.name=簡單的催化劑
-item.crepitous.name=捻音粉末
+item.crepitous.name=爆破粉末
 item.crystallos.name=冰晶粉末
 item.terrae.name=泥土粉末
 item.aquasalus.name=液之粉末
@@ -172,6 +175,13 @@ item.sanguineHelmet.name=血紅頭盔
 item.itemSeerSigil.name=見解印記
 item.itemFluidSigil.name=
 item.multiTool.name=法術權杖
+item.itemCombinationalCatalyst.name=組合催化劑
+item.sanguineRobe.name=血紅法袍
+item.sanguinePants.name=血紅護腿
+item.sanguineBoots.name=血紅靴子
+item.itemAttunedCrystal.name=元素通遞仗
+item.itemTankSegmenter.name=元素分配仗
+item.destinationClearer.name=元素清通器
 
 #Creative Tab
 itemGroup.tabBloodMagic=血魔法
