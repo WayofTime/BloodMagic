@@ -624,7 +624,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                 		String str = stack.getUnlocalizedName();
                 		if(str.contains("fallenKanade"))
                 		{
-                			System.out.println("" + str);
+                			
                 		}
                 	}
         		}
