@@ -99,30 +99,61 @@ public class RitualEffectVeilOfEvil extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-
         return 20;
     }
 
     @Override
 	public List<RitualComponent> getRitualComponentList() 
 	{
-		ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
-        animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -1, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(1, 0, -2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
-        return animalGrowthRitual;
+		ArrayList<RitualComponent> veilRitual = new ArrayList();
+		
+        veilRitual.add(new RitualComponent(1, 0, 2, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(2, 0, 1, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(1, 0, -2, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(2, 0, -1, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.DUSK));
+        veilRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.DUSK));
+        
+        veilRitual.add(new RitualComponent(3, 0, 3, RitualComponent.FIRE));
+        veilRitual.add(new RitualComponent(-3, 0, 3, RitualComponent.FIRE));
+        veilRitual.add(new RitualComponent(3, 0, -3, RitualComponent.FIRE));
+        veilRitual.add(new RitualComponent(-3, 0, -3, RitualComponent.FIRE));
+        
+        for(int i=0; i<=1; i++)
+        {
+            veilRitual.add(new RitualComponent((4+i), i, 0, RitualComponent.DUSK));
+            veilRitual.add(new RitualComponent((4+i), i, -1, RitualComponent.BLANK));
+            veilRitual.add(new RitualComponent((4+i), i, 1, RitualComponent.BLANK));
+
+            veilRitual.add(new RitualComponent(-(4+i), i, 0, RitualComponent.DUSK));
+            veilRitual.add(new RitualComponent(-(4+i), i, -1, RitualComponent.BLANK));
+            veilRitual.add(new RitualComponent(-(4+i), i, 1, RitualComponent.BLANK));
+            
+            veilRitual.add(new RitualComponent(0, i, (4+i), RitualComponent.DUSK));
+            veilRitual.add(new RitualComponent(1, i, (4+i), RitualComponent.BLANK));
+            veilRitual.add(new RitualComponent(-1, i, (4+i), RitualComponent.BLANK));
+            
+            veilRitual.add(new RitualComponent(0, i, -(4+i), RitualComponent.DUSK));
+            veilRitual.add(new RitualComponent(1, i, -(4+i), RitualComponent.BLANK));
+            veilRitual.add(new RitualComponent(-1, i, -(4+i), RitualComponent.BLANK));
+            
+            veilRitual.add(new RitualComponent(4, i, 5, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(5, i, 4, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(4, i, -5, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(-5, i, 4, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(-4, i, 5, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(5, i, -4, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(-4, i, -5, RitualComponent.EARTH));
+            veilRitual.add(new RitualComponent(-5, i, -4, RitualComponent.EARTH));
+        }
+        
+        veilRitual.add(new RitualComponent(5, 1, 5, RitualComponent.BLANK));
+        veilRitual.add(new RitualComponent(-5, 1, 5, RitualComponent.BLANK));
+        veilRitual.add(new RitualComponent(5, 1, -5, RitualComponent.BLANK));
+        veilRitual.add(new RitualComponent(-5, 1, -5, RitualComponent.BLANK));
+
+        return veilRitual;
 	}
 }

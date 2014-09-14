@@ -97,7 +97,7 @@ public class RitualEffectWater extends RitualEffect
         			
         			if(hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false))
                 	{
-                		if(entity instanceof EntityPlayer)
+                		if(livingEntity instanceof EntityPlayer)
                 		{
                 			if(drainReductus)
                 			{
@@ -138,6 +138,10 @@ public class RitualEffectWater extends RitualEffect
         }else
         {
         	boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+        	if(!hasSanctus)
+        	{
+        		return;
+        	}
         	TileEntity tile = world.getTileEntity(x, y + 1, z);
         	if(tile instanceof IFluidHandler)
         	{

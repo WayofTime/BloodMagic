@@ -606,30 +606,30 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         {
             return;
         }
-        
-        int range = 5;
-        
-        for(int i=-range; i<=range; i++)
-        {
-        	for(int j=-range; j<=range; j++)
-        	{
-        		for(int k=-range; k<=range; k++)
-        		{
-        			Block block = worldObj.getBlock(xCoord + i, yCoord + j, zCoord + k);
-                	int meta = worldObj.getBlockMetadata(xCoord + i, yCoord + j, zCoord + k);
-                	
-                	List<ItemStack> list = block.getDrops(worldObj, xCoord + i, yCoord + j, zCoord + k, meta, 1);
-                	for(ItemStack stack : list)
-                	{
-                		String str = stack.getUnlocalizedName();
-                		if(str.contains("fallenKanade"))
-                		{
-                			System.out.println("" + str);
-                		}
-                	}
-        		}
-        	}
-        }
+//        
+//        int range = 5;
+//        
+//        for(int i=-range; i<=range; i++)
+//        {
+//        	for(int j=-range; j<=range; j++)
+//        	{
+//        		for(int k=-range; k<=range; k++)
+//        		{
+//        			Block block = worldObj.getBlock(xCoord + i, yCoord + j, zCoord + k);
+//                	int meta = worldObj.getBlockMetadata(xCoord + i, yCoord + j, zCoord + k);
+//                	
+//                	List<ItemStack> list = block.getDrops(worldObj, xCoord + i, yCoord + j, zCoord + k, meta, 1);
+//                	for(ItemStack stack : list)
+//                	{
+//                		String str = stack.getUnlocalizedName();
+//                		if(str.contains("fallenKanade"))
+//                		{
+//                			System.out.println("" + str);
+//                		}
+//                	}
+//        		}
+//        	}
+//        }
 
         //o,o this is always true
         if (worldTime % 1 == 0)

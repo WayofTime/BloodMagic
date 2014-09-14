@@ -99,30 +99,44 @@ public class RitualEffectSpawnWard extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-
-        return 20;
+        return 15;
     }
 
     @Override
 	public List<RitualComponent> getRitualComponentList() 
 	{
-		ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
-        animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -1, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(1, 0, -2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
-        return animalGrowthRitual;
+		ArrayList<RitualComponent> wardRitualRitual = new ArrayList();
+		
+		for(int i=2; i<=4; i++)
+		{
+	        if(i <= 3)
+	        {
+	        	wardRitualRitual.add(new RitualComponent(0, 0, i, RitualComponent.AIR));
+		        wardRitualRitual.add(new RitualComponent(0, 0, -i, RitualComponent.AIR));
+		        wardRitualRitual.add(new RitualComponent(i, 0, 0, RitualComponent.AIR));
+		        wardRitualRitual.add(new RitualComponent(-i, 0, 0, RitualComponent.AIR));
+	        }
+	        
+	        wardRitualRitual.add(new RitualComponent(i, 0, i, RitualComponent.FIRE));
+	        wardRitualRitual.add(new RitualComponent(i, 0, -i, RitualComponent.FIRE));
+	        wardRitualRitual.add(new RitualComponent(-i, 0, -i, RitualComponent.FIRE));
+	        wardRitualRitual.add(new RitualComponent(-i, 0, i, RitualComponent.FIRE));
+		}
+		
+        wardRitualRitual.add(new RitualComponent(0, 0, 5, RitualComponent.DUSK));
+        wardRitualRitual.add(new RitualComponent(0, 0, -5, RitualComponent.DUSK));
+        wardRitualRitual.add(new RitualComponent(5, 0, 0, RitualComponent.DUSK));
+        wardRitualRitual.add(new RitualComponent(-5, 0, 0, RitualComponent.DUSK));
+
+        wardRitualRitual.add(new RitualComponent(6, 0, 5, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(5, 0, 6, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(6, 0, -5, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(-5, 0, 6, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(-6, 0, 5, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(5, 0, -6, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(-6, 0, -5, RitualComponent.WATER));
+        wardRitualRitual.add(new RitualComponent(-5, 0, -6, RitualComponent.WATER));
+        
+        return wardRitualRitual;
 	}
 }

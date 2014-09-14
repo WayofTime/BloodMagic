@@ -73,6 +73,10 @@ public class RitualEffectLava extends RitualEffect
         }else
         {
         	boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+        	if(!hasSanctus)
+        	{
+        		return;
+        	}
         	TileEntity tile = world.getTileEntity(x, y + 1, z);
         	if(tile instanceof IFluidHandler)
         	{

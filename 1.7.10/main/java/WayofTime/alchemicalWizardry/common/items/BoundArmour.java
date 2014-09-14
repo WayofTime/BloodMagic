@@ -2,10 +2,12 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -25,6 +27,7 @@ import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.relauncher.Side;
@@ -38,12 +41,83 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     private static IIcon plateIcon;
     private static IIcon leggingsIcon;
     private static IIcon bootsIcon;
+    
+    private static final boolean tryComplexRendering = false;
 
     public BoundArmour(int armorType)
     {
         super(ItemArmor.ArmorMaterial.GOLD, 0, armorType);
         setMaxDamage(1000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+    }
+
+    ModelBiped model1 = null;
+    ModelBiped model2 = null;
+    ModelBiped model = null;
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
+    {
+    	if(tryComplexRendering)
+    	{
+    		int type = ((ItemArmor)itemStack.getItem()).armorType;
+    		if(this.model1 == null)
+    		{
+    			this.model1 = new ModelOmegaArmour(1.0f, true, true, false, true);
+    		}
+    		if(this.model2 == null)
+    		{
+    			this.model2 = new ModelOmegaArmour(0.5f, false, false, true, false);
+    		}
+    		
+    		if(type == 1 || type == 3 || type == 0)
+    		{
+    			this.model = model1;
+    		}else
+    		{
+    			this.model = model2;
+    		}
+    		
+    		if(this.model != null)
+    		{
+    			this.model.bipedHead.showModel = (type == 0);
+    		    this.model.bipedHeadwear.showModel = (type == 0);
+    		    this.model.bipedBody.showModel = ((type == 1) || (type == 2));
+    		    this.model.bipedLeftArm.showModel = (type == 1);
+    		    this.model.bipedRightArm.showModel = (type == 1);
+    		    this.model.bipedLeftLeg.showModel = (type == 2 || type == 3);
+    		    this.model.bipedRightLeg.showModel = (type == 2 || type == 3);
+    		    this.model.isSneak = entityLiving.isSneaking();
+    		    
+    		    this.model.isRiding = entityLiving.isRiding();
+    		    this.model.isChild = entityLiving.isChild();
+    		    
+    		    this.model.aimedBow = false;
+    		    this.model.heldItemRight = (entityLiving.getHeldItem() != null ? 1 : 0);
+    		    
+    		    if ((entityLiving instanceof EntityPlayer))
+    		    {
+    		        if (((EntityPlayer)entityLiving).getItemInUseDuration() > 0)
+    		        {
+    		        	EnumAction enumaction = ((EntityPlayer)entityLiving).getItemInUse().getItemUseAction();
+    		            if (enumaction == EnumAction.block) 
+    		            {
+    		            	this.model.heldItemRight = 3;
+    		            } else if (enumaction == EnumAction.bow) 
+    		            {
+    		            	this.model.aimedBow = true;
+    		            }
+    		        }
+    		    }
+    		}
+    		
+    		return model;
+    			
+    	}else
+    	{
+    		return super.getArmorModel(entityLiving, itemStack, armorSlot);
+    	}    	
     }
 
     @Override
@@ -227,6 +301,10 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
+    	if(this.tryComplexRendering)
+    	{
+    		return "alchemicalwizardry:models/armor/BloodArmour_WIP.png";
+    	}
         //TODO Make the armour invisible when the player has Invisibility on.
         if (entity instanceof EntityLivingBase)
         {

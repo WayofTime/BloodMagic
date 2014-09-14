@@ -6,26 +6,29 @@ import java.util.List;
 
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectUnbinding extends RitualEffect
 {
+	public static final int sanctusDrain = 1000;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -47,14 +50,7 @@ public class RitualEffectUnbinding extends RitualEffect
 
         if (currentEssence < this.getCostPerRefresh())
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
             int d0 = 0;
@@ -62,6 +58,8 @@ public class RitualEffectUnbinding extends RitualEffect
             List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityItem item;
+            
+            boolean drain = false;
 
             while (iterator.hasNext())
             {
@@ -74,6 +72,24 @@ public class RitualEffectUnbinding extends RitualEffect
                 if (itemStack == null)
                 {
                     continue;
+                }
+                
+                boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+                if(hasSanctus)
+                {
+                	if(itemStack.getItem() instanceof IBindable && !EnergyItems.getOwnerName(itemStack).equals(""))
+                	{
+                		world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
+                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
+                        world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
+                        world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
+                        
+                		EnergyItems.checkAndSetItemOwner(itemStack, "");
+                		this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+                		drain = true;
+                		ritualStone.setActive(false);
+                		break;
+                	}
                 }
 
                 if (itemStack.getItem() == ModItems.boundHelmet)
@@ -118,6 +134,7 @@ public class RitualEffectUnbinding extends RitualEffect
                     EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, ritualStone.getVar1()));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
+                    drain = true;
                     break;
                 } else if (ritualStone.getVar1() == -1)
                 {
@@ -144,17 +161,24 @@ public class RitualEffectUnbinding extends RitualEffect
                     EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModItems.sigilOfHolding, 1, 0));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
+                    drain = true;
                     break;
                 }
 
-                if (world.rand.nextInt(10) == 0)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
-                }
+                
+                
             }
 
-            data.currentEssence = currentEssence - this.getCostPerRefresh();
-            data.markDirty();
+            if(drain)
+            {
+            	data.currentEssence = currentEssence - this.getCostPerRefresh();
+                data.markDirty();
+            }   
+        }
+        
+        if (world.rand.nextInt(10) == 0)
+        {
+            SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
         }
     }
 

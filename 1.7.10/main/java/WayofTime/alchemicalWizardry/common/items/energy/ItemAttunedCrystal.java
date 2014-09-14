@@ -196,35 +196,21 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                     	
                     	Reagent pastReagent = this.getReagent(itemStack);
                     	
-                    	boolean goForNext = false;
-                    	boolean hasFound = false;
-                    	for(Reagent reagent : reagentList)
+                    	if(reagentList.size() <= 0)
                     	{
-                    		if(goForNext)
-                    		{
-                    			goForNext = false;
-                    			this.setReagentWithNotification(itemStack, reagent, player);
-                    		}
-                    		
-                    		if(reagent == pastReagent)
-                    		{
-                    			goForNext = true;
-                    			hasFound = true;
-                    		}
+                    		return itemStack;
                     	}
                     	
-                    	if(hasFound)
+                    	int reagentLocation = -1;
+                    	
+                    	reagentLocation = reagentList.indexOf(pastReagent);
+                    	
+                    	if(reagentLocation == -1 || reagentLocation+1 >= reagentList.size())
                     	{
-                    		if(goForNext)
-                    		{
-                        		this.setReagentWithNotification(itemStack, reagentList.get(0), player);
-                    		}
+                    		this.setReagentWithNotification(itemStack, reagentList.get(0), player);
                     	}else
                     	{
-                    		if(reagentList.size() >= 1)
-                    		{
-                        		this.setReagentWithNotification(itemStack, reagentList.get(0), player);
-                    		}
+                    		this.setReagentWithNotification(itemStack, reagentList.get(reagentLocation + 1), player);
                     	}
                 	}
                 }else
@@ -233,6 +219,11 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                     {
                     	Int3 coords = this.getCoordinates(itemStack);
                     	int dimension = this.getDimension(itemStack);
+                    	
+                    	if(coords == null)
+                    	{
+                    		return itemStack;
+                    	}
                     	
                     	if(dimension != world.provider.dimensionId || Math.abs(coords.xCoord - x) > maxDistance || Math.abs(coords.yCoord - y) > maxDistance || Math.abs(coords.zCoord - z) > maxDistance)
                     	{
@@ -248,6 +239,11 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                     	}
                     	
                     	Reagent reagent = this.getReagent(itemStack);
+                    	
+                    	if(reagent == null)
+                    	{
+                    		return itemStack;
+                    	}
                     	
                     	TEReagentConduit pastRelay = (TEReagentConduit)pastTile;
                     	

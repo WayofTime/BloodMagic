@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -20,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
@@ -30,6 +27,8 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.TileSegmentedReagentHandl
 import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TEReagentConduit extends TileSegmentedReagentHandler
 {
@@ -339,26 +338,33 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
 				return;
 			}			
 			
-			Minecraft mc = Minecraft.getMinecraft();
-			EntityPlayer player = mc.thePlayer;
-        	World world = mc.theWorld;
-        	if(SpellHelper.canPlayerSeeAlchemy(player))
-    		{
-    			for(ColourAndCoords colourSet : this.destinationList)
-    			{
-    				if(!(worldObj.getTileEntity(xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord) instanceof IReagentHandler))
-    				{
-    					continue;
-    				}
-    				EntityParticleBeam beam = new EntityParticleBeam(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
-    				double velocity = Math.sqrt(Math.pow(colourSet.xCoord, 2) + Math.pow(colourSet.yCoord, 2) + Math.pow(colourSet.zCoord, 2));
-    				double wantedVel = 0.3d;
-    				beam.setVelocity(wantedVel*colourSet.xCoord/velocity, wantedVel*colourSet.yCoord/velocity, wantedVel*colourSet.zCoord/velocity);
-    				beam.setColour(colourSet.colourRed / 255f, colourSet.colourGreen/255f, colourSet.colourBlue/255f);
-    				beam.setDestination(xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord);
-    				worldObj.spawnEntityInWorld(beam);
-    			}
-    		}
+			this.sendPlayerStuffs();
+		}
+	}
+	
+	
+	@SideOnly(Side.CLIENT)
+	public void sendPlayerStuffs()
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.thePlayer;
+    	World world = mc.theWorld;
+    	if(SpellHelper.canPlayerSeeAlchemy(player))
+		{
+			for(ColourAndCoords colourSet : this.destinationList)
+			{
+				if(!(worldObj.getTileEntity(xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord) instanceof IReagentHandler))
+				{
+					continue;
+				}
+				EntityParticleBeam beam = new EntityParticleBeam(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
+				double velocity = Math.sqrt(Math.pow(colourSet.xCoord, 2) + Math.pow(colourSet.yCoord, 2) + Math.pow(colourSet.zCoord, 2));
+				double wantedVel = 0.3d;
+				beam.setVelocity(wantedVel*colourSet.xCoord/velocity, wantedVel*colourSet.yCoord/velocity, wantedVel*colourSet.zCoord/velocity);
+				beam.setColour(colourSet.colourRed / 255f, colourSet.colourGreen/255f, colourSet.colourBlue/255f);
+				beam.setDestination(xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord);
+				worldObj.spawnEntityInWorld(beam);
+			}
 		}
 	}
 	
@@ -387,9 +393,17 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
 			if(entry.getValue() != null)
 			{
 				Reagent reagent = entry.getKey();
+				if(reagent == null)
+				{
+					continue;
+				}
 				List<Int3> coords = entry.getValue();
 				for(Int3 coord : coords)
 				{
+					if(coord == null)
+					{
+						continue;
+					}
 					list.add(new ColourAndCoords(reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), reagent.getColourIntensity(), coord.xCoord, coord.yCoord, coord.zCoord));
 				}
 			}

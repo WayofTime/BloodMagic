@@ -111,6 +111,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSupression;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectUnbinding;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectVeilOfEvil;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWater;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWellOfSuffering;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
@@ -160,7 +161,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.1.1")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0Beta16")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -1037,34 +1038,35 @@ public class AlchemicalWizardry
     
     public static void initRituals()
     {
-    	Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,30,255,255,0,0.501,0.8,0, 1.5));
-    	Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),255,0,0,255,0,0.501,0.8,0, 1.5));
-    	Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),244,164,96,255,0,1.0,1.6,0, 1.5));
-    	Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,255,255,0,0.501,0.8,0, 1.5));
-    	Rituals.registerRitual("AW005Containment", 1, 2000, new RitualEffectContainment(), "Ritual of Containment");
-    	Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectSoulBound(), "Ritual of Binding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleBinding.png"),193,7,7,255,0,0.501,1.0,0, 2.5));
-        Rituals.registerRitual("AW007Unbinding", 1, 30000, new RitualEffectUnbinding(), "Ritual of Unbinding");
-        Rituals.registerRitual("AW008HighJump", 1, 1000, new RitualEffectJumping(), "Ritual of the High Jump");
-        Rituals.registerRitual("AW009Magnetism", 1, 5000, new RitualEffectMagnetic(), "Ritual of Magnetism");
-        Rituals.registerRitual("AW010Crusher", 1, 2500, new RitualEffectCrushing(), "Ritual of the Crusher");
-        Rituals.registerRitual("AW011Speed", 1, 1000, new RitualEffectLeap(), "Ritual of Speed");
-        Rituals.registerRitual("AW012AnimalGrowth", 1, 10000, new RitualEffectAnimalGrowth(), "Ritual of the Shepherd"); 
-        Rituals.registerRitual("AW013Suffering", 1, 50000, new RitualEffectWellOfSuffering(), "Well of Suffering", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleSuffering.png"),0,0,0,255,0,0.501,0.8,0, 2.5));
-        Rituals.registerRitual("AW014Regen", 1, 25000, new RitualEffectHealing(), "Ritual of Regeneration");
-        Rituals.registerRitual("AW015FeatheredKnife", 1, 50000, new RitualEffectFeatheredKnife(), "Ritual of the Feathered Knife");
-        Rituals.registerRitual("AW016FeatheredEarth", 2, 100000, new RitualEffectFeatheredEarth(), "Ritual of the Feathered Earth");
-        Rituals.registerRitual("AW017Gaia", 2, 1000000, new RitualEffectBiomeChanger(), "Ritual of Gaia's Transformation");
-        Rituals.registerRitual("AW018Condor", 2, 1000000, new RitualEffectFlight(), "Reverence of the Condor");
-        Rituals.registerRitual("AW019FallingTower", 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower");
-        Rituals.registerRitual("AW020BalladOfAlchemy", 1, 20000, new RitualEffectAutoAlchemy(), "Ballad of Alchemy");
-        Rituals.registerRitual("AW021Expulsion", 1, 1000000, new RitualEffectExpulsion(), "Aura of Expulsion");
-        Rituals.registerRitual("AW022Supression", 1, 10000, new RitualEffectSupression(), "Dome of Supression");
-        Rituals.registerRitual("AW023Zephyr", 1, 25000, new RitualEffectItemSuction(),"Call of the Zephyr");
-        Rituals.registerRitual("AW024Harvest", 1, 20000, new RitualEffectHarvest(), "Reap of the Harvest Moon");
-        Rituals.registerRitual("AW025Conduit", 2, 2000000, new RitualEffectLifeConduit(), "Cry of the Eternal Soul");
-        Rituals.registerRitual("AW026Ellipsoid", 1, 25000, new RitualEffectEllipsoid(), "Ellipsoid");
-        Rituals.registerRitual("AW027Evaporation", 1, 20000, new RitualEffectEvaporation(), "Evaporation");
-        Rituals.registerRitual("AW028SpawnWard", 1, 1000, new RitualEffectSpawnWard(), "Ward of Sacrosanctity");
+    	Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,30,255,255,0,0.501,0.8,0, 1.5, false));
+    	Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),255,0,0,255,0,0.501,0.8,0, 1.5, false));
+    	Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),244,164,96,255,0,1.0,1.6,0, 1.5, false));
+    	Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),27,227,206,255,0,0.501,0.8, 0, 1.5, false));
+    	Rituals.registerRitual("AW005Containment", 1, 2000, new RitualEffectContainment(), "Ritual of Containment", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),186,21,21,255,0,2.5, 2.5, 0, 2.5, false));
+    	Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectSoulBound(), "Ritual of Binding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleBinding.png"),193,7,7,255,0,0.501,1.0,0, 2.5, true));
+        Rituals.registerRitual("AW007Unbinding", 1, 30000, new RitualEffectUnbinding(), "Ritual of Unbinding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),193,7,7,255, 0, 0.5, 0.8, 0, 2.5, false));
+        Rituals.registerRitual("AW008HighJump", 1, 1000, new RitualEffectJumping(), "Ritual of the High Jump", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),10,183,173,255, 0, 0.501, 1.501, 0, 1.5, false));
+        Rituals.registerRitual("AW009Magnetism", 1, 5000, new RitualEffectMagnetic(), "Ritual of Magnetism", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),126,39,0,255, 0, 0.501, 2.0, 0, 1.5, false));
+        Rituals.registerRitual("AW010Crusher", 1, 2500, new RitualEffectCrushing(), "Ritual of the Crusher", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW011Speed", 1, 1000, new RitualEffectLeap(), "Ritual of Speed", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW012AnimalGrowth", 1, 10000, new RitualEffectAnimalGrowth(), "Ritual of the Shepherd", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false)); 
+        Rituals.registerRitual("AW013Suffering", 1, 50000, new RitualEffectWellOfSuffering(), "Well of Suffering", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleSuffering.png"),0,0,0,255,0,0.501,0.8,0, 2.5, true));
+        Rituals.registerRitual("AW014Regen", 1, 25000, new RitualEffectHealing(), "Ritual of Regeneration", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW015FeatheredKnife", 1, 50000, new RitualEffectFeatheredKnife(), "Ritual of the Feathered Knife", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW016FeatheredEarth", 2, 100000, new RitualEffectFeatheredEarth(), "Ritual of the Feathered Earth", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW017Gaia", 2, 1000000, new RitualEffectBiomeChanger(), "Ritual of Gaia's Transformation", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW018Condor", 2, 1000000, new RitualEffectFlight(), "Reverence of the Condor", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW019FallingTower", 2, 1000000, new RitualEffectSummonMeteor(), "Mark of the Falling Tower", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW020BalladOfAlchemy", 1, 20000, new RitualEffectAutoAlchemy(), "Ballad of Alchemy", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW021Expulsion", 1, 1000000, new RitualEffectExpulsion(), "Aura of Expulsion", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW022Supression", 1, 10000, new RitualEffectSupression(), "Dome of Supression", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW023Zephyr", 1, 25000, new RitualEffectItemSuction(),"Call of the Zephyr", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW024Harvest", 1, 20000, new RitualEffectHarvest(), "Reap of the Harvest Moon", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW025Conduit", 2, 2000000, new RitualEffectLifeConduit(), "Cry of the Eternal Soul", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW026Ellipsoid", 1, 25000, new RitualEffectEllipsoid(), "Ellipsoid", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW027Evaporation", 1, 20000, new RitualEffectEvaporation(), "Evaporation", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW028SpawnWard", 1, 150000, new RitualEffectSpawnWard(), "Ward of Sacrosanctity", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
     

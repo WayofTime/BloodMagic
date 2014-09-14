@@ -36,6 +36,11 @@ public class SpellHelper
 	public static Random rand = new Random();
 	public static final double root2 = Math.sqrt(2);
 	
+	public static boolean canEntityBeSeen(Entity entity, Entity entity2)
+	{
+		return entity.worldObj.rayTraceBlocks(Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ), Vec3.createVectorHelper(entity2.posX, entity2.posY, entity2.posZ), false) == null;
+	}
+	
 	public static void smeltBlockInWorld(World world, int posX, int posY, int posZ)
 	{
 		FurnaceRecipes recipes = FurnaceRecipes.smelting();

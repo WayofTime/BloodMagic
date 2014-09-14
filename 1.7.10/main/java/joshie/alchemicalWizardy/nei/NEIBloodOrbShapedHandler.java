@@ -11,11 +11,9 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import codechicken.core.ReflectionManager;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.ShapedRecipeHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect;
 
 /** Extended from the default recipe handler **/
 public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {

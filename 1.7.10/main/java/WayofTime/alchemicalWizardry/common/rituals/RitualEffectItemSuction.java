@@ -15,14 +15,20 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectItemSuction extends RitualEffect
 {
+	public static final int reductusDrain = 1;
+	
+	public static final int timeDelayMin = 10;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -60,17 +66,12 @@ public class RitualEffectItemSuction extends RitualEffect
         
         if (currentEssence < this.getCostPerRefresh()*100)
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
             List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x+0.5f, y+0.5f, z+0.5f, 10, 10);
+            
+            boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
             int count = 0;
             
@@ -80,53 +81,70 @@ public class RitualEffectItemSuction extends RitualEffect
 
                 for (EntityItem itemEntity : itemDropList)
                 {
+                	hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+                	if(hasReductus && itemEntity.age < this.timeDelayMin)
+                	{
+                		continue;
+                	}
                 	ItemStack item = itemEntity.getEntityItem();
                     ItemStack copyStack = itemEntity.getEntityItem().copy();
                     
+                    int pastAmount = copyStack.stackSize;
+
+//                    for (int n = 0; n < invSize; n++)
+//                    {
+//                        if (tileEntity.isItemValidForSlot(n, copyStack) && copyStack.stackSize != 0)
+//                        {
+//                            ItemStack itemStack = tileEntity.getStackInSlot(n);
+//
+//                            if (itemStack == null)
+//                            {
+//                                tileEntity.setInventorySlotContents(n, item);
+//                                copyStack.stackSize = 0;
+//                            } else
+//                            {
+//                                if (itemStack.getItem().equals(copyStack.getItem()) && itemStack.getItemDamage() == copyStack.getItemDamage())
+//                                {
+//                                    int itemSize = itemStack.stackSize;
+//                                    int copySize = copyStack.stackSize;
+//                                    int maxSize = itemStack.getMaxStackSize();
+//
+//                                    if (copySize + itemSize < maxSize)
+//                                    {
+//                                        copyStack.stackSize = 0;
+//                                        itemStack.stackSize = itemSize + copySize;
+//                                        tileEntity.setInventorySlotContents(n, itemStack);
+//                                    } else
+//                                    {
+//                                        copyStack.stackSize = itemSize + copySize - maxSize;
+//                                        itemStack.stackSize = maxSize;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+
                     count++;
-
-                    for (int n = 0; n < invSize; n++)
-                    {
-                        if (tileEntity.isItemValidForSlot(n, copyStack) && copyStack.stackSize != 0)
-                        {
-                            ItemStack itemStack = tileEntity.getStackInSlot(n);
-
-                            if (itemStack == null)
-                            {
-                                tileEntity.setInventorySlotContents(n, item);
-                                copyStack.stackSize = 0;
-                            } else
-                            {
-                                if (itemStack.getItem().equals(copyStack.getItem()) && itemStack.getItemDamage() == copyStack.getItemDamage())
-                                {
-                                    int itemSize = itemStack.stackSize;
-                                    int copySize = copyStack.stackSize;
-                                    int maxSize = itemStack.getMaxStackSize();
-
-                                    if (copySize + itemSize < maxSize)
-                                    {
-                                        copyStack.stackSize = 0;
-                                        itemStack.stackSize = itemSize + copySize;
-                                        tileEntity.setInventorySlotContents(n, itemStack);
-                                    } else
-                                    {
-                                        copyStack.stackSize = itemSize + copySize - maxSize;
-                                        itemStack.stackSize = maxSize;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if(copyStack.stackSize<=0)
-                    {
-                    	itemEntity.setDead();
-                    }
                     
-                    if (copyStack.stackSize > 0)
+                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
+                    
+                    if(newStack != null && newStack.stackSize < pastAmount)
                     {
-                        itemEntity.getEntityItem().stackSize = copyStack.stackSize;
-                    }
+                    	count++;
+                    	if(newStack.stackSize<=0)
+                        {
+                        	itemEntity.setDead();
+                        }
+                        
+                        if (newStack.stackSize > 0)
+                        {
+                            itemEntity.getEntityItem().stackSize = newStack.stackSize;
+                        }
+                        if(hasReductus)
+                        {
+                        	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+                        }
+                    }   
                 }
             }
             

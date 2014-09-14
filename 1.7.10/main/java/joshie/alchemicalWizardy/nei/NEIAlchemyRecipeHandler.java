@@ -17,6 +17,7 @@ import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import codechicken.nei.recipe.TemplateRecipeHandler.CachedRecipe;
 
 public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 	public class CachedAlchemyRecipe extends CachedRecipe {

@@ -2,8 +2,6 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import java.util.Random;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
@@ -162,69 +160,33 @@ public class BlockTeleposer extends BlockContainer
 
     public static boolean swapBlocks(World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
     {
-        //TODO Fix sapling duplication glitch
         TileEntity tileEntityI = worldI.getTileEntity(xi, yi, zi);
         TileEntity tileEntityF = worldF.getTileEntity(xf, yf, zf);
         TileEntity tileI;
         TileEntity tileF;
-//    	ItemStack[] inv1 = new ItemStack[0];
-//    	ItemStack[] inv2 = new ItemStack[0];
+
         NBTTagCompound nbttag1 = new NBTTagCompound();
         NBTTagCompound nbttag2 = new NBTTagCompound();
 
         if (tileEntityI != null)
         {
-            //NBTTagCompound nbttag1 = new NBTTagCompound();
-//    		tileEntityI.xCoord=xf;
-//    		tileEntityI.yCoord=yf;
-//    		tileEntityI.zCoord=zf;
             tileEntityI.writeToNBT(nbttag1);
-            //tileEntityI.readFromNBT(new NBTTagCompound());
         }
-
-//    	if(tileEntityI instanceof IInventory)
-//    	{
-//    		int size = ((IInventory)tileEntityI).getSizeInventory();
-//    		inv1 = new ItemStack[size];
-//    		for(int i=0; i<size; i++)
-//    		{
-//    			inv1[i] = ((IInventory)tileEntityI).getStackInSlot(i);
-//    			((IInventory)tileEntityI).setInventorySlotContents(i, null);
-//    		}
-//    	}
 
         if (tileEntityF != null)
         {
-//    		tileEntityF.xCoord=xi;
-//    		tileEntityF.yCoord=yi;
-//    		tileEntityF.zCoord=zi;
             tileEntityF.writeToNBT(nbttag2);
         }
 
-//    	if(tileEntityF instanceof IInventory)
-//    	{
-//    		int size = ((IInventory)tileEntityF).getSizeInventory();
-//    		inv2 = new ItemStack[size];
-//    		for(int i=0; i<size; i++)
-//    		{
-//    			inv2[i] = ((IInventory)tileEntityF).getStackInSlot(i);
-//    			((IInventory)tileEntityF).setInventorySlotContents(i, null);
-//    		}
-//    	}
         Block blockI = worldI.getBlock(xi, yi, zi);
         Block blockF = worldF.getBlock(xf, yf, zf);
 
-//    	if(ThaumcraftApi.portableHoleBlackList.contains(idI)||ThaumcraftApi.portableHoleBlackList.contains(idF))
-//    	{
-//    		return false;
-//    	}
 
         if (blockI.equals(Blocks.air) && blockF.equals(Blocks.air))
         {
             return false;
         }
 
-        //if(Block.blocksList[idI] instanceof IPlantable || Block.blocksList[idF] instanceof IPlantable||Block.blocksList[idI] instanceof BlockMobSpawner || Block.blocksList[idF] instanceof BlockMobSpawner)
         if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner)
         {
             return false;
@@ -240,9 +202,7 @@ public class BlockTeleposer extends BlockContainer
         if (finalBlock != null)
         {
             TileEntity tileToSet = finalBlock.createTileEntity(worldF, metaF);
-//    		tileToSet.xCoord = xf;
-//    		tileToSet.yCoord = yf;
-//    		tileToSet.zCoord = zf;
+
             worldF.setTileEntity(xf, yf, zf, tileToSet);
         }
 
@@ -251,9 +211,7 @@ public class BlockTeleposer extends BlockContainer
         if (initialBlock != null)
         {
             TileEntity tileToSet = initialBlock.createTileEntity(worldI, metaI);
-//    		tileToSet.xCoord = xi;
-//    		tileToSet.yCoord = yi;
-//    		tileToSet.zCoord = zi;
+
             worldI.setTileEntity(xi, yi, zi, tileToSet);
         }
 
@@ -262,6 +220,7 @@ public class BlockTeleposer extends BlockContainer
 //    	worldI.destroyBlock(xi, yi, zi, false);
 //    	worldI.setBlockToAir(xi, yi, zi);
 //    	worldF.setBlockToAir(xf, yf, zf);
+        
         worldF.setBlock(xf, yf, zf, initialBlock, metaI, 3);
 
         if (tileEntityI != null)
@@ -271,6 +230,12 @@ public class BlockTeleposer extends BlockContainer
             newTileEntityI.xCoord = xf;
             newTileEntityI.yCoord = yf;
             newTileEntityI.zCoord = zf;
+            
+//            TileEntity tile = worldI.getTileEntity(xf, yf, zf);
+//            if(tile instanceof TileMultipart)
+//            {
+//            	TileMultipart.createFromNBT(nbttag1);
+//            }
         }
 
         worldI.setBlock(xi, yi, zi, finalBlock, metaF, 3);
@@ -282,40 +247,14 @@ public class BlockTeleposer extends BlockContainer
             newTileEntityF.xCoord = xi;
             newTileEntityF.yCoord = yi;
             newTileEntityF.zCoord = zi;
+            
+            TileEntity tile = worldI.getTileEntity(xi, yi, zi);
+//            if(tile instanceof TileMultipart)
+//            {
+//            	TileMultipart.createFromNBT(nbttag2);
+//            }
         }
 
-//    	if(finalBlock!=null)
-//    		finalBlock.onNeighborBlockChange(worldI, xi, yi, zi, AlchemicalWizardry.blockTeleposer.blockID);
-//    	if(initialBlock!=null)
-//    		initialBlock.onNeighborBlockChange(worldF, xf, yf, zf, AlchemicalWizardry.blockTeleposer.blockID);
-//    	tileI = worldI.getBlockTileEntity(xi, yi, zi);
-//    	tileF = worldF.getBlockTileEntity(xf, yf, zf);
-//    	if(tileI!=null)
-//    	{
-//    		tileI.readFromNBT(nbttag2);
-//    	}
-//
-//    	if(tileF!=null)
-//    	{
-//    		tileF.readFromNBT(nbttag1);
-//    	}
-//    	if(tileI instanceof IInventory && inv2.length>0)
-//    	{
-//    		for(int i=0;i<((IInventory)tileI).getSizeInventory();i++)
-//    		{
-//    			((IInventory)tileI).setInventorySlotContents(i, inv2[i]);
-//    		}
-//    	}
-//
-//    	if(tileF instanceof IInventory && inv1.length>0)
-//    	{
-//    		for(int i=0;i<((IInventory)tileF).getSizeInventory();i++)
-//    		{
-//    			((IInventory)tileF).setInventorySlotContents(i, inv1[i]);
-//    		}
-//    	}
-//    	worldI.markBlockForUpdate(xi, yi, zi);
-//    	worldF.markBlockForUpdate(xf, yf, zf);
         return true;
     }
 }

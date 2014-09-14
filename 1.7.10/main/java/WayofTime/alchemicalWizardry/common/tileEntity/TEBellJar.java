@@ -1,11 +1,14 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
+import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 
 public class TEBellJar extends TEReagentConduit 
@@ -29,6 +32,69 @@ public class TEBellJar extends TEReagentConduit
 			}
 		}
 		return 0;
+	}
+	
+	public static ReagentContainerInfo[] getContainerInfoFromItem(ItemStack stack)
+	{
+		if(stack != null && stack.getItem() instanceof ItemBlock && ModBlocks.blockCrystalBelljar == ((ItemBlock)stack.getItem()).field_150939_a)
+		{
+			NBTTagCompound tag = stack.getTagCompound();
+			if(tag != null)
+			{
+				NBTTagList tagList = tag.getTagList("reagentTanks", Constants.NBT.TAG_COMPOUND);
+		        
+		        int size = tagList.tagCount();
+		        ReagentContainer[] tanks = new ReagentContainer[size];
+		        
+		        ReagentContainerInfo[] infos = new ReagentContainerInfo[size];
+		        
+		        for(int i=0; i<size; i++)
+		        {
+		        	NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
+		        	tanks[i] = ReagentContainer.readFromNBT(savedTag);
+		        	
+		        	if(tanks[i] != null)
+		        	{
+		        		infos[i] = tanks[i].getInfo();
+		        	}
+		        }
+		        
+		        return infos;
+			}
+		}
+		
+		return new ReagentContainerInfo[0];
+	}
+	
+	public void readTankNBTOnPlace(NBTTagCompound tag)
+	{
+		NBTTagList tagList = tag.getTagList("reagentTanks", Constants.NBT.TAG_COMPOUND);
+        
+        int size = tagList.tagCount();
+        this.tanks = new ReagentContainer[size];
+        
+        for(int i=0; i<size; i++)
+        {
+        	NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
+        	this.tanks[i] = ReagentContainer.readFromNBT(savedTag);
+        }
+	}
+	
+	public void writeTankNBT(NBTTagCompound tag)
+	{
+		NBTTagList tagList = new NBTTagList();
+        
+        for(int i=0; i<this.tanks.length; i++)
+        {
+        	NBTTagCompound savedTag = new NBTTagCompound();
+        	if(this.tanks[i] != null)
+        	{
+        		this.tanks[i].writeToNBT(savedTag);
+        	}
+        	tagList.appendTag(savedTag);
+        }
+        
+        tag.setTag("reagentTanks", tagList);
 	}
 	
 //	@Override

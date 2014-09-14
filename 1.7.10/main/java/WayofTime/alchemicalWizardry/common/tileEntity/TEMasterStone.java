@@ -588,4 +588,17 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 	{
 		return this.attunedTankMap;
 	}
+	
+	public boolean areTanksEmpty()
+	{
+		for(int i=0; i<this.tanks.length; i++)
+		{
+			if(tanks[i] != null && tanks[i].getReagent() != null)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

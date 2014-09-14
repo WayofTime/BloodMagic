@@ -94,6 +94,8 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
                 
                 if(!(tile instanceof IReagentHandler))
                 {
+                	par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+                	
                 	return par1ItemStack;
                 }
                 

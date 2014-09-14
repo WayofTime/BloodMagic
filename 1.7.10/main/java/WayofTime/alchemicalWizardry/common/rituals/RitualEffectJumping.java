@@ -41,8 +41,8 @@ public class RitualEffectJumping extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
         
-        int range = 0;
-        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x+0.5, y+0.5, z+0.5, range, range);
+       	double range = 0.5;
+        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x+0.5, y+1.5, z+0.5, range, range);
 
         if (currentEssence < this.getCostPerRefresh() * livingList.size())
         {

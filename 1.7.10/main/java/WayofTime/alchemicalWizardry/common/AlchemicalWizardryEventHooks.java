@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
@@ -20,25 +20,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -48,20 +42,6 @@ public class AlchemicalWizardryEventHooks
     
     public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
     public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
-    
-    @SubscribeEvent
-    public void onPlayerSoundEvent(SoundEvent event)
-    {
-    	if(event.isCancelable() && Minecraft.getMinecraft() != null)
-    	{
-        	EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        	
-        	if(player != null && player.isPotionActive(AlchemicalWizardry.customPotionBoost))
-        	{
-        		event.setCanceled(true);
-        	}
-    	}
-    }
     
     @SubscribeEvent
     public void onLivingSpawnEvent(CheckSpawn event)
@@ -111,7 +91,12 @@ public class AlchemicalWizardryEventHooks
     		}	
     	}
     	
-    	String forceSpawnRitual = "AW028SpawnWard";
+    	if(event.entityLiving instanceof EntityCreeper)
+    	{
+    		return;
+    	}
+    	
+    	String forceSpawnRitual = "AW029VeilOfEvil";
     	
     	if(forceSpawnMap.containsKey(dimension))
     	{

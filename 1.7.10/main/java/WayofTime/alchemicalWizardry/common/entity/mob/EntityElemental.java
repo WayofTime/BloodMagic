@@ -341,7 +341,6 @@ public class EntityElemental extends EntityDemon
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
     }
 
     /**
@@ -574,30 +573,6 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    /**
-     * Return this wolf's collar color.
-     */
-    public int getCollarColor()
-    {
-        return this.dataWatcher.getWatchableObjectByte(20) & 15;
-    }
-
-    /**
-     * Set this wolf's collar color.
-     */
-    public void setCollarColor(int par1)
-    {
-        this.dataWatcher.updateObject(20, Byte.valueOf((byte) (par1 & 15)));
-    }
-
-    /**
-     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-     */
-    public EntityWolf spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-    {
-        return null;
-    }
-
     public void func_70918_i(boolean par1)
     {
         if (par1)
@@ -654,10 +629,6 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
-    {
-        return this.spawnBabyAnimal(par1EntityAgeable);
-    }
 
     /**
      * sets this entity's combat AI.

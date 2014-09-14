@@ -34,6 +34,7 @@ import WayofTime.alchemicalWizardry.common.block.RuneOfSacrifice;
 import WayofTime.alchemicalWizardry.common.block.RuneOfSelfSacrifice;
 import WayofTime.alchemicalWizardry.common.block.SpectralBlock;
 import WayofTime.alchemicalWizardry.common.block.SpeedRune;
+import WayofTime.alchemicalWizardry.common.items.ItemBlockCrystalBelljar;
 import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
@@ -163,7 +164,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockBuildingSchematicSaver, "blockSchemSaver");
         GameRegistry.registerBlock(ModBlocks.blockReagentConduit, "blockReagentConduit"); 
         GameRegistry.registerBlock(ModBlocks.blockAlchemicCalcinator, "blockAlchemicCalcinator");
-        GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, "blockCrystalBelljar");
+        GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, ItemBlockCrystalBelljar.class, "blockCrystalBelljar");
     }
     
     public static void registerBlocksInInit()

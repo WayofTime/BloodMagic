@@ -81,8 +81,6 @@ public class RitualEffectLeap extends RitualEffect
                 
             	double motionY = hasTerrae ? 0.6 : 1.2;
             	double speed = hasAether ? 6.0 : 3.0;
-            	
-            	
 
                 if (!(hasTenebrae || hasSanctus) && livingEntity instanceof EntityPlayer)
                 {
@@ -141,6 +139,15 @@ public class RitualEffectLeap extends RitualEffect
                             break;
                     }
 
+                    if(hasTenebrae)
+                    {
+                    	this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, true);
+                    }
+                    if(hasSanctus)
+                    {
+                    	this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+                    }
+                    
                     livingEntity.fallDistance = 0;
                     flag++;
                 }
@@ -161,14 +168,7 @@ public class RitualEffectLeap extends RitualEffect
                     	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
                 	}
                 }
-                if(hasTenebrae)
-                {
-                	this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, true);
-                }
-                if(hasSanctus)
-                {
-                	this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
-                }
+                
             }
 
             if (flag > 0)

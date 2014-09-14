@@ -11,6 +11,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -20,6 +21,9 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 
 public class RitualEffectSupression extends RitualEffect
 {
+	public static final int aquasalusDrain = 15;
+	public static final int aetherDrain = 15;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -40,8 +44,12 @@ public class RitualEffectSupression extends RitualEffect
         int z = ritualStone.getZCoord();
         
         Block blockish = world.getBlock(x, y-1, z);
+        
+        boolean hasAquasalus = this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
+        boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
+        
         int costMod = this.getCostModifier(blockish);
-        int radius = this.getRadiusForModifierBlock(blockish);
+        int radius = this.getRadiusForReagents(hasAether, hasAquasalus);
         int masterRadius = radius;
         
         int yIndex = (int)(world.getWorldTime() % (2*radius + 1))-radius;
@@ -100,6 +108,17 @@ public class RitualEffectSupression extends RitualEffect
             data.currentEssence = currentEssence - this.getCostPerRefresh()*costMod;
             data.markDirty();
             
+            if(world.getWorldTime() % 100 == 0)
+            {
+            	if(hasAquasalus)
+                {
+                	this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
+                }
+                if(hasAether)
+                {
+                	this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
+                }
+            }  
         }
     }
 
@@ -128,53 +147,51 @@ public class RitualEffectSupression extends RitualEffect
         return supressionRitual;
 	}
 	
-	public int getRadiusForModifierBlock(Block block)
-	{
-		if(block == null)
-		{
-			return 10;
-		}
-		
-		if(block == Blocks.diamond_block)
-		{
-			return 30;
-		}
-		
-		if(block == Blocks.gold_block)
-		{
-			return 20;
-		}
-		
-		if(block == Blocks.iron_block)
-		{
-			return 15;
-		}
-		
-		return 10;
-	}
-	
 	public int getCostModifier(Block block)
 	{
-		if(block == null)
-		{
-			return 1;
-		}
-		
-		if(block == Blocks.diamond_block)
-		{
-			return 20;
-		}
-		
-		if(block == Blocks.gold_block)
-		{
-			return 10;
-		}
-		
-		if(block == Blocks.iron_block)
-		{
-			return 5;
-		}
+//		if(block == null)
+//		{
+//			return 1;
+//		}
+//		
+//		if(block == Blocks.diamond_block)
+//		{
+//			return 20;
+//		}
+//		
+//		if(block == Blocks.gold_block)
+//		{
+//			return 10;
+//		}
+//		
+//		if(block == Blocks.iron_block)
+//		{
+//			return 5;
+//		}
 		
 		return 1;
+	}
+	
+	public int getRadiusForReagents(boolean hasAether, boolean hasAquasalus)
+	{
+    	if(hasAether)
+    	{
+    		if(hasAquasalus)
+    		{
+    			return 30;
+    		}else
+    		{
+    			return 20;
+    		}
+    	}else
+    	{
+    		if(hasAquasalus)
+    		{
+    			return 15;
+    		}else
+    		{
+    			return 10;
+    		}
+    	}
 	}
 }

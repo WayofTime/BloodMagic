@@ -85,6 +85,25 @@ public class ModelCrystalBelljar extends ModelBase
     jar5.render(f5);
   }
   
+  public void renderSpecialItem(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int part)
+  {
+	  super.render(entity, f, f1, f2, f3, f4, f5);
+	    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+	    if(part == 0)
+	    {
+		    woodBottom.render(f5);
+	    }else
+	    {
+	    	handle1.render(f5);
+		    handle2.render(f5);
+		    jar1.render(f5);
+		    jar2.render(f5);
+		    jar3.render(f5);
+		    jar4.render(f5);
+		    jar5.render(f5);
+	    }   
+  }
+  
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;

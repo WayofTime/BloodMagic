@@ -10,12 +10,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBloodLightSigil extends EnergyItems
+public class ItemBloodLightSigil extends EnergyItems implements IHolding
 {
     private int tickDelay = 100;
 

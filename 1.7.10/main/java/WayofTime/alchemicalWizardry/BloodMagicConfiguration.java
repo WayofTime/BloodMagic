@@ -12,6 +12,8 @@ import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * Created with IntelliJ IDEA.
@@ -86,8 +88,12 @@ public class BloodMagicConfiguration
 //            AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
             AlchemicalWizardry.lockdownAltar = false;
             
-            RenderHelper.xOffset = config.get("ClientSettings", "AlchemyHUDxOffset", 50).getInt();
-            RenderHelper.yOffset = config.get("ClientSettings", "AlchemyHUDyOffset", 2).getInt();
+            Side side = FMLCommonHandler.instance().getSide();
+            if(side == Side.CLIENT)
+            {
+                RenderHelper.xOffset = config.get("ClientSettings", "AlchemyHUDxOffset", 50).getInt();
+                RenderHelper.yOffset = config.get("ClientSettings", "AlchemyHUDyOffset", 2).getInt();
+            }
 
             
         } catch (Exception e)

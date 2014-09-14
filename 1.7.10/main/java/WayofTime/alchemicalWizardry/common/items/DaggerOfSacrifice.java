@@ -56,7 +56,7 @@ public class DaggerOfSacrifice extends EnergyItems
     @Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
-        if (par3EntityLivingBase == null || par2EntityLivingBase == null || par3EntityLivingBase.worldObj.isRemote || !(par3EntityLivingBase.getClass().equals(EntityPlayerMP.class)))
+        if (par3EntityLivingBase == null || par2EntityLivingBase == null || par3EntityLivingBase.worldObj.isRemote || (par3EntityLivingBase instanceof EntityPlayer && SpellHelper.isFakePlayer(par3EntityLivingBase.worldObj, (EntityPlayer) par3EntityLivingBase)))
         {
             return false;
         }

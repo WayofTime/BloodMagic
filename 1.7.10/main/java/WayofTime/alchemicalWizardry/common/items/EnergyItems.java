@@ -10,9 +10,8 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
 public class EnergyItems extends Item implements IBindable
 {
@@ -224,7 +223,7 @@ public class EnergyItems extends Item implements IBindable
 
         if (item.stackTagCompound.getString("ownerName").equals(""))
         {
-            item.stackTagCompound.setString("ownerName", SpellHelper.getUsername(player));
+            item.stackTagCompound.setString("ownerName", SoulNetworkHandler.getUsername(player));
         }
 
         initializePlayer(player);

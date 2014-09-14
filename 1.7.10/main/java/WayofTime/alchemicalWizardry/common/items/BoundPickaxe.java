@@ -127,7 +127,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             return par1ItemStack;
         }
 
-        if (!getActivated(par1ItemStack))
+        if (!getActivated(par1ItemStack) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
             return par1ItemStack;
         }

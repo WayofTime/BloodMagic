@@ -20,8 +20,9 @@ public class AlchemyCircleRenderer extends MRSRenderer
     private double zOffset;
     private double radius;
     private double initialY;
+    private boolean renderWithoutReagents;
     
-    public AlchemyCircleRenderer(ResourceLocation resource, int red, int green, int blue, int intensity, double xOff, double initialY, double yOff, double zOff, double radius)
+    public AlchemyCircleRenderer(ResourceLocation resource, int red, int green, int blue, int intensity, double xOff, double initialY, double yOff, double zOff, double radius, boolean renderWithoutReagents)
     {
     	this.resourceLocation = resource;
     	this.colourRed = red;
@@ -33,11 +34,17 @@ public class AlchemyCircleRenderer extends MRSRenderer
     	this.yOffset = yOff;
     	this.zOffset = zOff;
     	this.radius = radius;
+    	this.renderWithoutReagents = renderWithoutReagents;
     }
     
 	@Override
 	public void renderAt(TEMasterStone tile, double x, double y, double z) 
 	{
+		if(tile.areTanksEmpty() && !renderWithoutReagents)
+		{
+			return;
+		}
+		
 		GL11.glPushMatrix();
 		float f1 = 1.0f;
 		Tessellator tessellator = Tessellator.instance;

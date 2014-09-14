@@ -81,6 +81,8 @@ public class RitualEffectHealing extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
+        	entityCount = 0;
+        	
         	boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
         	
             for(EntityLivingBase livingEntity : list)
@@ -94,7 +96,7 @@ public class RitualEffectHealing extends RitualEffect
                 if (livingEntity.getHealth() + 0.1f < livingEntity.getMaxHealth())
                 {
                 	PotionEffect effect = livingEntity.getActivePotionEffect(Potion.regeneration);
-                	if(effect != null && effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay)
+                	if(effect == null || (effect != null && effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay))
                 	{
                 		if(!hasVirtus || (this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false)))
                 		{

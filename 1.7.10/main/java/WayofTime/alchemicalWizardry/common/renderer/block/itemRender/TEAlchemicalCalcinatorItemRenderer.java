@@ -24,7 +24,9 @@ public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer
 
 		Block block = ModBlocks.blockAlchemicCalcinator;
 		
-		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_BLEND); 
+		GL11.glEnable(GL11.GL_CULL_FACE); 
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA); 
         /**
          * Render the ghost item inside of the Altar, slowly spinning
          */
@@ -41,7 +43,8 @@ public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer
         GL11.glPopMatrix();
         GL11.glPopMatrix();
         
-        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_CULL_FACE); 
+        GL11.glDisable(GL11.GL_BLEND); 
 	}
 
 
