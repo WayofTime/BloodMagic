@@ -12,7 +12,6 @@ public class HarvestRegistry
 	
 	public static void registerHarvestHandler(IHarvestHandler handler)
 	{
-		System.out.println("Heeeeelllooooo");
 		handlerList.add(handler);
 	}
 	

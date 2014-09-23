@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.soulNetwork;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,8 +11,25 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import com.mojang.authlib.GameProfile;
+
 public class SoulNetworkHandler 
 {
+	public static UUID getUUIDFromPlayer(EntityPlayer player)
+	{
+		return player.getPersistentID();
+	}
+	
+	public static EntityPlayer getPlayerFromUUID(UUID uuid)
+	{
+		MinecraftServer server = MinecraftServer.getServer();
+		GameProfile gameProfile;
+		gameProfile = server.func_152358_ax().func_152652_a(uuid);
+//		LogHelper.info("player is " + gameProfile.getName() + " : " + gameProfile.getId());
+		
+		return null;
+	}
+	
 	public static int syphonFromNetwork(ItemStack ist, int damageToBeDone)
 	{
 		if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))

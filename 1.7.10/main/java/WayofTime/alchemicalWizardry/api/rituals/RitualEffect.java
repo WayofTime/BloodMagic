@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.api.rituals;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
@@ -9,6 +10,16 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 public abstract class RitualEffect
 {
     public abstract void performEffect(IMasterRitualStone ritualStone);
+    
+    public boolean startRitual(IMasterRitualStone ritualStone, EntityPlayer player)
+    {
+    	return true;
+    }
+    
+    public void onRitualBroken(IMasterRitualStone ritualStone)
+    {
+    	
+    }
 
     public abstract int getCostPerRefresh();
 

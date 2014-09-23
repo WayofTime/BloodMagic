@@ -22,6 +22,7 @@ public class RitualEffectGrowth extends RitualEffect
 	private static final int aquasalusDrain = 10;
 	private static final int terraeDrain = 20;
 	private static final int orbisTerraeDrain = 20;
+	private static final int virtusDrain = 10;
 	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -49,6 +50,7 @@ public class RitualEffectGrowth extends RitualEffect
         {
         	boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
         	boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        	boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
 
         	int speed = this.getSpeedForReagents(hasTerrae, hasOrbisTerrae);
             if (world.getWorldTime() % speed != 0)
@@ -58,7 +60,7 @@ public class RitualEffectGrowth extends RitualEffect
             
             if(this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false))
         	{
-        		int hydrationRange = 1;
+        		int hydrationRange = hasVirtus ? 4 : 1;
             	for(int i=-hydrationRange; i<=hydrationRange; i++)
             	{
             		for(int j=-hydrationRange; j<=hydrationRange; j++)
@@ -76,9 +78,10 @@ public class RitualEffectGrowth extends RitualEffect
 
             int flag = 0;
 
-            for (int i = -1; i <= 1; i++)
+            int range = hasVirtus ? 4 : 1;
+            for (int i = -range; i <= range; i++)
             {
-                for (int j = -1; j <= 1; j++)
+                for (int j = -range; j <= range; j++)
                 {
                     Block block = world.getBlock(x + i, y + 2, z + j);
 
@@ -95,8 +98,12 @@ public class RitualEffectGrowth extends RitualEffect
 
             if (flag > 0)
             {
-            	this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
-            	this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+            	if(hasTerrae)
+            		this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
+            	if(hasOrbisTerrae)
+            		this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+            	if(hasVirtus)
+            		this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
 
                 data.currentEssence = currentEssence - this.getCostPerRefresh()*flag;
                 data.markDirty();

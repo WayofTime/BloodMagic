@@ -33,6 +33,11 @@ public class GenericSeededHarvestHandler implements IHarvestHandler
 		}
 	}
 	
+	public boolean isHarvesterValid()
+	{
+		return harvestBlock != null && harvestSeed != null;
+	}
+	
 	public static Block getBlockForString(String str)
 	{
 		String[] parts = str.split(":");
@@ -129,23 +134,6 @@ public class GenericSeededHarvestHandler implements IHarvestHandler
 	
 	public IPlantable getSeedItem(Block block) 
 	{
-		if(block == Blocks.wheat)
-		{
-			return (IPlantable) Items.wheat_seeds;
-		}
-		if(block == Blocks.carrots)
-		{
-			return (IPlantable) Items.carrot;
-		}
-		if(block == Blocks.potatoes)
-		{
-			return (IPlantable) Items.potato;
-		}
-		if(block == Blocks.nether_wart)
-		{
-			return (IPlantable) Items.nether_wart;
-		}
-		
-		return null;
+		return harvestSeed;
 	}
 }

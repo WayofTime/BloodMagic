@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.renderer.MRSRenderer;
 
@@ -306,6 +307,32 @@ public class Rituals
     		if(ritual != null && ritual.effect != null)
     		{
     			ritual.effect.performEffect(ritualStone);
+    		}
+    	}
+    }
+    
+    public static boolean startRitual(IMasterRitualStone ritualStone, String ritualID, EntityPlayer player)
+    {
+    	if(ritualMap.containsKey(ritualID))
+    	{
+    		Rituals ritual = ritualMap.get(ritualID);
+    		if(ritual != null && ritual.effect != null)
+    		{
+    			return ritual.effect.startRitual(ritualStone, player);
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    public static void onRitualBroken(IMasterRitualStone ritualStone, String ritualID)
+    {
+    	if(ritualMap.containsKey(ritualID))
+    	{
+    		Rituals ritual = ritualMap.get(ritualID);
+    		if(ritual != null && ritual.effect != null)
+    		{
+    			ritual.effect.onRitualBroken(ritualStone);
     		}
     	}
     }

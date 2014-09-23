@@ -216,15 +216,23 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
         if (!world.isRemote)
         {
-            data.currentEssence = currentEssence - Rituals.getCostForActivation(testRitual);
-            data.markDirty();
-            
-        	player.addChatMessage(new ChatComponentText("A rush of energy flows through the ritual!"));
+        	if(!Rituals.startRitual(this, testRitual, player))
+        	{
+        		player.addChatMessage(new ChatComponentText("The ritual appears to actively resist you!"));
+        		
+        		return;
+        	}else
+        	{
+        		data.currentEssence = currentEssence - Rituals.getCostForActivation(testRitual);
+                data.markDirty();
+                
+            	player.addChatMessage(new ChatComponentText("A rush of energy flows through the ritual!"));
 
-            for (int i = 0; i < 12; i++)
-            {
-                SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
-            }
+                for (int i = 0; i < 12; i++)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                }
+        	}   
         }
 
         cooldown = Rituals.getInitialCooldown(testRitual);
@@ -241,6 +249,11 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         this.owner = owner;
     }
 
+    public void useOnRitualBroken()
+    {
+    	Rituals.onRitualBroken(this, this.currentRitualString);
+    }
+    
     @Override
     public void updateEntity()
     {
@@ -271,6 +284,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
             if (!testRunes)
             {
+            	Rituals.onRitualBroken(this, currentRitualString);
                 isActive = false;
                 currentRitualString = "";
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);

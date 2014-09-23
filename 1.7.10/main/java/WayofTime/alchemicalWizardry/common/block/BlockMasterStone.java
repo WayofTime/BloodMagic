@@ -32,6 +32,18 @@ public class BlockMasterStone extends BlockContainer
     {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:MasterStone");
     }
+    
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
+    {
+    	TileEntity tile = world.getTileEntity(x, y, z);
+    	if(tile instanceof TEMasterStone)
+    	{
+    		((TEMasterStone) tile).useOnRitualBroken();
+    	}
+    	
+    	super.onBlockHarvested(world, x, y, z, meta, player);
+    }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
