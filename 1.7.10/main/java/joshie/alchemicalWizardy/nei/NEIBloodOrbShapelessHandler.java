@@ -119,11 +119,6 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
     }
 
 	@Override
-	public String getOverlayIdentifier() {
-		return "orbCrafting";
-	}
-
-	@Override
 	public String getRecipeName() {
 		return StatCollector.translateToLocal("bm.string.crafting.orb.shapeless");
 	}
