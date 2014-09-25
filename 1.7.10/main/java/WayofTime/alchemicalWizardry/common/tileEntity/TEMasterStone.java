@@ -40,6 +40,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     public boolean isRunning;
     public int runningTime;
     
+    private NBTTagCompound customRitualTag;
+    
     protected ReagentContainer[] tanks;
     protected Map<Reagent, Integer> attunedTankMap;
 
@@ -57,6 +59,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         currentRitualString = "";
         isRunning = false;
         runningTime = 0;
+        
+        this.customRitualTag = new NBTTagCompound();
     }
 
     public void readClientNBT(NBTTagCompound tag)
@@ -130,6 +134,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         	Reagent reagent = ReagentRegistry.getReagentForKey(savedTag.getString("reagent"));
         	this.attunedTankMap.put(reagent, savedTag.getInteger("amount"));
         }
+        
+        customRitualTag = tag.getCompoundTag("customRitualTag");
     }
 
     @Override
@@ -170,6 +176,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         }
         
         tag.setTag("attunedTankMap", attunedTagList);
+        
+        tag.setTag("customRitualTag", customRitualTag);
     }
 
     public void activateRitual(World world, int crystalLevel, EntityPlayer player)
@@ -614,5 +622,17 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 		}
 		
 		return true;
+	}
+
+	@Override
+	public NBTTagCompound getCustomRitualTag() 
+	{
+		return this.customRitualTag;
+	}
+
+	@Override
+	public void setCustomRitualTag(NBTTagCompound tag) 
+	{
+		this.customRitualTag = tag;
 	}
 }

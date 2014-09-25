@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
-import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
 
 public interface IMasterRitualStone extends ISegmentedReagentHandler
 {
@@ -29,4 +29,8 @@ public interface IMasterRitualStone extends ISegmentedReagentHandler
     public int getYCoord();
     
     public int getZCoord();
+    
+    public NBTTagCompound getCustomRitualTag();
+    
+    public void setCustomRitualTag(NBTTagCompound tag);
 }
