@@ -13,30 +13,28 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 
 public class RitualEffectAutoAlchemy extends RitualEffect
 {
+	public static final boolean fillToOne = true;
+	
+	public static final int potentiaDrain = 2;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -44,16 +42,11 @@ public class RitualEffectAutoAlchemy extends RitualEffect
 
         if (currentEssence < this.getCostPerRefresh()*6)
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
+        	boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        	
             int flag = 0;
             
             TileEntity topEntity = world.getTileEntity(x, y+1, z);
@@ -145,6 +138,15 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             	}else
             	{
             		return;
+            	}
+            	
+            	if(alchemyEntity != null && hasPotentia)
+            	{
+            		alchemyEntity.setAccelerationTime(5);
+            		if(alchemyEntity.isWorking())
+            		{
+            			this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+            		}
             	}
             	
             	if(outputInv!=null)
@@ -264,7 +266,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
 	            			}
 	            			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
 	            			
-	            			if(alchStack!=null&&((!areItemStacksEqualWithWildcard(recItem,alchStack))||alchStack.stackSize>=alchStack.getMaxStackSize()))
+	            			if(alchStack!=null&&((!areItemStacksEqualWithWildcard(recItem,alchStack))||alchStack.stackSize>=(fillToOne ? 1 : alchStack.getMaxStackSize())))
 	            			{
 	            				continue;
 	            			}
@@ -327,7 +329,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
 	            				continue;
 	            			}
 	            			ItemStack alchStack = alchemyEntity.getStackInSlot(i+1);
-	            			if(alchStack!=null&&((!areItemStacksEqualWithWildcard(recItem,alchStack))||alchStack.stackSize>=alchStack.getMaxStackSize()))
+	            			if(alchStack!=null&&((!areItemStacksEqualWithWildcard(recItem,alchStack))||alchStack.stackSize>=(fillToOne ? 1 : alchStack.getMaxStackSize())))
 	            			{
 	            				continue;
 	            			}
@@ -389,8 +391,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             	world.markBlockForUpdate(x, y, z-1);
             	world.markBlockForUpdate(x+1, y, z);
             	world.markBlockForUpdate(x-1, y, z);
-                data.currentEssence = currentEssence - this.getCostPerRefresh()*flag;
-                data.markDirty();
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh()*flag);
             }
         }
     }

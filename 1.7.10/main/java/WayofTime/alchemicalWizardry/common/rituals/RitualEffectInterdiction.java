@@ -5,34 +5,32 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectInterdiction extends RitualEffect
 {
+	public static final int aetherDrain = 1;
+	public static final int magicalesDrain = 1;
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -40,51 +38,90 @@ public class RitualEffectInterdiction extends RitualEffect
 
         if (currentEssence < this.getCostPerRefresh())
         {
-            EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
-
-            if (entityOwner == null)
-            {
-                return;
-            }
-
-            entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
             int d0 = 5;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, d0, d0);
-            axisalignedbb.maxY = Math.min((double) world.getHeight(), (double) (y + 1 + d0));
-            List list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
-            Iterator iterator = list.iterator();
-            EntityLivingBase entityplayer;
+
+            List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, x+0.5, y+0.5, z+0.5, d0, d0);
             boolean flag = false;
+            
+            boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+            boolean playerFlag = false;
 
-            while (iterator.hasNext())
+            for(EntityLivingBase entityLiving : list)
             {
-                entityplayer = (EntityLivingBase) iterator.next();
-
-                if (!(entityplayer instanceof EntityPlayer && (SpellHelper.getUsername((EntityPlayer)entityplayer).equals(owner))))
+                if (!((!hasOffensa && entityLiving instanceof EntityPlayer) && (SpellHelper.getUsername((EntityPlayer)entityLiving).equals(owner))))
                 {
-                    double xDif = entityplayer.posX - x;
-                    double yDif = entityplayer.posY - (y + 1);
-                    double zDif = entityplayer.posZ - z;
-                    entityplayer.motionX = 0.1 * xDif;
-                    entityplayer.motionY = 0.1 * yDif;
-                    entityplayer.motionZ = 0.1 * zDif;
-                    entityplayer.fallDistance = 0;
-
-                    if (!(entityplayer instanceof EntityPlayer))
+                    double xDif = entityLiving.posX - x;
+                    double yDif = entityLiving.posY - (y + 1);
+                    double zDif = entityLiving.posZ - z;
+                    entityLiving.motionX = 0.1 * xDif;
+                    entityLiving.motionY = 0.1 * yDif;
+                    entityLiving.motionZ = 0.1 * zDif;
+                    
+                    if(hasOffensa && entityLiving instanceof EntityPlayer)
                     {
-                        flag = true;
+                    	SpellHelper.setPlayerSpeedFromServer((EntityPlayer)entityLiving, 0.1 * xDif, 0.1 * yDif, 0.1 * zDif);
+                    	playerFlag = true;
                     }
+                    
+                    entityLiving.fallDistance = 0;
 
-                    //entityplayer.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+                   
+                    flag = true;
+                    
+
+                    //entityLiving.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
                 }
             }
+            
+            if(playerFlag)
+            {
+            	this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, true);
+            }
+            
+            boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
+            
+            if(hasAether)
+            {
+            	int aetherDrainRate = 10;
+            	
+            	int horizontalRadius = 5;
+            	int verticalRadius = 5;
+            	List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(horizontalRadius, verticalRadius, horizontalRadius));
+            	
+            	if(itemList != null)
+            	{
+            		boolean itemFlag = false;
+                	
+                	for(EntityItem entity : itemList)
+                	{
+                		double xDif = entity.posX - x;
+                        double yDif = entity.posY - (y + 1);
+                        double zDif = entity.posZ - z;
+                        entity.motionX = 0.1 * xDif;
+                        entity.motionY = 0.1 * yDif;
+                        entity.motionZ = 0.1 * zDif;
+                        
+                        itemFlag = true;
+                	}
+                	
+                	if(itemFlag)
+                	{
+                		flag = true;
+                		if(world.getWorldTime() % aetherDrainRate == 0)
+                		{
+                			this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
+                		}
+                	}
+            	}	
+            }
+       
 
             if (world.getWorldTime() % 2 == 0 && flag)
             {
-                data.currentEssence = currentEssence - this.getCostPerRefresh();
-                data.markDirty();
+                SoulNetworkHandler.syphonFromNetwork(owner, getCostPerRefresh());
             }
         }
     }

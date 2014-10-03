@@ -14,6 +14,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
@@ -293,7 +294,7 @@ public class AlchemicalWizardryEventHooks
             int posX = (int) Math.round(entity.posX - 0.5f);
             int posY = (int) Math.round(entity.posY);
             int posZ = (int) Math.round(entity.posZ - 0.5f);
-            int d0 = i;
+            int d0 = (int)((i+1)*2.5);
             AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5).expand(d0, d0, d0);
             List list = event.entityLiving.worldObj.getEntitiesWithinAABB(Entity.class, axisalignedbb);
             Iterator iterator = list.iterator();
@@ -312,29 +313,38 @@ public class AlchemicalWizardryEventHooks
                 {
                     continue;
                 }
+                
+                Entity throwingEntity = null;
 
                 if (projectile instanceof EntityArrow)
                 {
-                    if (((EntityArrow) projectile).shootingEntity == null)
-                    {
-                    } else if (!(((EntityArrow) projectile).shootingEntity == null) && ((EntityArrow) projectile).shootingEntity.equals(entity))
-                    {
-                        break;
-                    }
+                    throwingEntity = ((EntityArrow) projectile).shootingEntity;
                 } else if (projectile instanceof EnergyBlastProjectile)
                 {
-                    if (!(((EnergyBlastProjectile) projectile).shootingEntity == null) && ((EnergyBlastProjectile) projectile).shootingEntity.equals(entity))
-                    {
-                        break;
-                    }
+                    throwingEntity = ((EnergyBlastProjectile) projectile).shootingEntity;
+                }else if(projectile instanceof EntityThrowable)
+                {
+                	throwingEntity = ((EntityThrowable) projectile).getThrower();
+                }
+                
+                if(throwingEntity != null && throwingEntity.equals(entity))
+                {
+                	continue;
                 }
 
                 double delX = projectile.posX - entity.posX;
                 double delY = projectile.posY - entity.posY;
                 double delZ = projectile.posZ - entity.posZ;
+                
+                if(throwingEntity != null)
+                {
+                	delX = -projectile.posX + throwingEntity.posX;
+                    delY = -projectile.posY + (throwingEntity.posY + throwingEntity.getEyeHeight());
+                    delZ = -projectile.posZ + throwingEntity.posZ;
+                }
+                
                 double curVel = Math.sqrt(delX * delX + delY * delY + delZ * delZ);
-                //NOTE: It appears that it constantly reverses the direction.
-                //Any way to do it only once? Or find the shooting entity?
+                
                 delX /= curVel;
                 delY /= curVel;
                 delZ /= curVel;

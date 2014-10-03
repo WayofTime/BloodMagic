@@ -23,6 +23,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 
@@ -32,14 +33,6 @@ public class RitualEffectBiomeChanger extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
-
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
 
         int cooldown = ritualStone.getCooldown();
         World world = ritualStone.getWorld();
@@ -58,7 +51,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
             return;
         }
 
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         
         
         int range = 10;
@@ -304,8 +297,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                 }
             }
 
-            data.currentEssence = currentEssence - this.getCostPerRefresh();
-            data.markDirty();
+            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
             ritualStone.setActive(false);
         }
     }

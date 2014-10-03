@@ -22,21 +22,14 @@ public class RitualEffectFlight extends RitualEffect
 {
 	public static final int aetherDrain = 10;
 	public static final int reductusDrain = 5;
+	public static final int reagentCooldown = 5;
 	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -63,14 +56,31 @@ public class RitualEffectFlight extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-        	
+        	entityCount = 0;
+        	EntityPlayer ownerEntity = SpellHelper.getPlayerForUsername(owner);
             for (EntityPlayer entity : entities)
             {
-                entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlight.id, 20, 0));
+            	if(hasReductus && entity != ownerEntity)
+            	{
+            		continue;
+            	}
+                entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlight.id, hasAether ? 100 : 20, 0));
+                entityCount ++;
             }
-
-            data.currentEssence = currentEssence - this.getCostPerRefresh() * entityCount;
-            data.markDirty();
+            
+            if(entityCount > 0 && world.getWorldTime() % reagentCooldown == 0)
+            {
+            	if(hasAether)
+            	{
+                    this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
+            	}
+            	if(hasReductus)
+            	{
+            		this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+            	}
+            }
+            
+            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
         }
     }
 

@@ -32,6 +32,8 @@ public class TEWritingTable extends TileEntity implements IInventory
     private int progressNeeded = 100;
     private int amountUsed;
     
+    private int accelerationTime;
+    
     public static final int sizeInv = 7;
 
     public TEWritingTable()
@@ -140,6 +142,8 @@ public class TEWritingTable extends TileEntity implements IInventory
 
         progress = tagCompound.getInteger("progress");
         amountUsed = tagCompound.getInteger("amountUsed");
+        
+        accelerationTime = tagCompound.getInteger("accelerationTime");
     }
 
     @Override
@@ -164,6 +168,8 @@ public class TEWritingTable extends TileEntity implements IInventory
         tagCompound.setTag("Inventory", itemList);
         tagCompound.setInteger("progress", progress);
         tagCompound.setInteger("amountUsed", amountUsed);
+        
+        tagCompound.setInteger("accelerationTime", accelerationTime);
     }
 
     @Override
@@ -455,6 +461,11 @@ public class TEWritingTable extends TileEntity implements IInventory
 //            }
 //    	}
 
+        if(accelerationTime > 0)
+        {
+        	accelerationTime--;
+        }
+        
         if (containsPotionFlask() && containsRegisteredPotionIngredient())
         {
             if (containsCatalyst())
@@ -752,10 +763,12 @@ public class TEWritingTable extends TileEntity implements IInventory
                     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                 }
             }
+            
+            int acceleration = this.getSpeedIncrease();
 
             if (getStackInSlot(6) == null)
             {
-                if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed))
+                if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed*acceleration))
                 {
                     return;
                 }
@@ -765,7 +778,7 @@ public class TEWritingTable extends TileEntity implements IInventory
                     SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
                 }
 
-                progress++;
+                progress+=acceleration;
 
                 if (progress >= progressNeeded)
                 {
@@ -793,12 +806,12 @@ public class TEWritingTable extends TileEntity implements IInventory
                     SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
                 }
 
-                if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed))
+                if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed*acceleration))
                 {
                     return;
                 }
 
-                progress++;
+                progress+=acceleration;
 
                 if (progress >= progressNeeded)
                 {
@@ -884,5 +897,20 @@ public class TEWritingTable extends TileEntity implements IInventory
         }
 
         return null;
+    }
+    
+    public int getSpeedIncrease()
+    {
+    	return accelerationTime > 0 ? 5 : 1;
+    }
+    
+    public boolean isWorking()
+    {
+    	return this.progress > 0;
+    }
+    
+    public void setAccelerationTime(int accelerationTime)
+    {
+    	this.accelerationTime = accelerationTime;
     }
 }

@@ -34,16 +34,8 @@ public class RitualEffectCrushing extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
 
         if (world.getWorldTime() % 10 != 5)
@@ -210,10 +202,8 @@ public class RitualEffectCrushing extends RitualEffect
                             //if(flag)
                             world.setBlockToAir(x + i, y + j, z + k);
                             world.playSoundEffect(x + i, y + j, z + k, "mob.endermen.portal", 1.0F, 1.0F);
-                            data.currentEssence = currentEssence - this.getCostPerRefresh();
-                            data.markDirty();
                             
-                            
+                            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
                             
                             return;
                         }
