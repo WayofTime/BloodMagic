@@ -27,6 +27,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.enchantment.EnchantmentHelper;
 
 public class BoundAxe extends ItemAxe implements IBindable
 {
@@ -144,33 +145,8 @@ public class BoundAxe extends ItemAxe implements IBindable
         int posX = (int)(blockVec.xCoord);
         int posY = (int)(blockVec.yCoord);
         int posZ = (int)(blockVec.zCoord);
-        boolean silkTouch = false;
-        int so = Enchantment.silkTouch.effectId;
-        int fortune = Enchantment.fortune.effectId;
-        int fortuneLvl = 0;
-        NBTTagList enchants = par1ItemStack.getEnchantmentTagList();
-
-        if (enchants != null)
-        {
-            for (int i = 0; i < enchants.tagCount(); i++)
-            {
-                if (enchants.getCompoundTagAt(i) instanceof NBTTagCompound)
-                {
-                    NBTTagCompound nbt = (NBTTagCompound) enchants.getCompoundTagAt(i);
-                    int id = nbt.getShort("id");
-
-                    if (id == so)
-                    {
-                        silkTouch = true;
-                    }
-
-                    if (id == fortune)
-                    {
-                        fortuneLvl = nbt.getShort("lvl");
-                    }
-                }
-            }
-        }
+        boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
+        int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
         for (int i = -5; i <= 5; i++)
         {
