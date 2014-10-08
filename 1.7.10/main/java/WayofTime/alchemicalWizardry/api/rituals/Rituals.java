@@ -384,6 +384,27 @@ public class Rituals
 
     	return firstKey;
     }
+
+    public static String getPreviousRitualKey(String key)
+    {
+        boolean hasSpotted = false;
+        String lastKey = keyList.get(keyList.size()-1);
+
+        for(String str : keyList)
+        {
+            if(str.equals(key))
+            {
+                hasSpotted = true;
+            }
+            if(hasSpotted)
+            {
+                return lastKey;
+            }
+            lastKey = str;
+        }
+
+        return lastKey;
+    }
     
     public static MRSRenderer getRendererForKey(String ritualID)
     {
