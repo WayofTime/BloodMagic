@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -255,6 +256,33 @@ public class ItemRitualDiviner extends EnergyItems
         }
 
         return par1ItemStack;
+    }
+
+    @Override
+    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
+    {
+        if(entityLiving instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) entityLiving;
+
+            if(player.isSneaking() && !player.isSwingInProgress)
+            {
+                int maxRitualID = Rituals.getNumberOfRituals();
+                String currentRitualID = this.getCurrentRitual(stack);
+
+                this.setCurrentRitual(stack, Rituals.getPreviousRitualKey(currentRitualID));
+
+                if (entityLiving.worldObj.isRemote)
+                {
+                    IChatComponent chatmessagecomponent = new ChatComponentText("Current Ritual: " + Rituals.getNameOfRitual(this.getCurrentRitual(stack)));
+                    //chatmessagecomponent.func_111072_b("Current Essence: " + data.currentEssence + "LP");
+                    //chatmessagecomponent.addText("Current Ritual: " + Rituals.getNameOfRitual(this.getCurrentRitual(par1ItemStack)));
+                    player.addChatComponentMessage(chatmessagecomponent);
+                }
+            }
+        }
+
+        return false;
     }
 
     public String getCurrentRitual(ItemStack par1ItemStack)
