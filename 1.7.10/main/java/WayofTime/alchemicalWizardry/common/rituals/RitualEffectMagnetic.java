@@ -31,16 +31,8 @@ public class RitualEffectMagnetic extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
-
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -114,8 +106,7 @@ public class RitualEffectMagnetic extends RitualEffect
                                     //TODO
                                     //Allow swapping code. This means the searched block is an ore.
                                     BlockTeleposer.swapBlocks(world, world, x + i, j, z + k, xRep, yRep, zRep);
-                                    data.currentEssence = currentEssence - this.getCostPerRefresh();
-                                    data.markDirty();
+                                    SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
                                     
                                     if(hasPotentia)
                                     {

@@ -46,10 +46,9 @@ public class ImperfectRitualStone extends Block
 
             if (block == Blocks.water)
             {
-                if (!player.capabilities.isCreativeMode && world.isRemote)
+            	if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
-                	
-                    //PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(SpellHelper.getUsername(player) , -5000, 0));
+                	EnergyItems.drainPlayerNetwork(player, 5000);
                 }
 
                 if (!world.isRemote)
@@ -74,7 +73,7 @@ public class ImperfectRitualStone extends Block
                 return true;
             } else if (block == Blocks.coal_block)
             {
-                if (!player.capabilities.isCreativeMode && world.isRemote)
+            	if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
                 	EnergyItems.drainPlayerNetwork(player, 5000);
                 }
@@ -104,7 +103,7 @@ public class ImperfectRitualStone extends Block
                 return true;
             } else if (block== Blocks.lapis_block)
             {
-                if (!player.capabilities.isCreativeMode && world.isRemote)
+                if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
                 	EnergyItems.drainPlayerNetwork(player, 5000);
                 }
@@ -120,9 +119,9 @@ public class ImperfectRitualStone extends Block
                 }
             } else if (block == Blocks.bedrock)
             {
-                if (!player.capabilities.isCreativeMode && world.isRemote)
+            	if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
-                    EnergyItems.drainPlayerNetwork(player, 5000);
+                	EnergyItems.drainPlayerNetwork(player, 5000);
                 }
 
                 if (!world.isRemote)

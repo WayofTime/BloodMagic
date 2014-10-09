@@ -137,6 +137,11 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             return par1ItemStack;
         }
         
+        if(par2World.isRemote)
+        {
+        	return par1ItemStack;
+        }
+        
         Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
         int posX = (int)(blockVec.xCoord);
         int posY = (int)(blockVec.yCoord);

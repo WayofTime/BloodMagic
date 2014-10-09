@@ -27,22 +27,14 @@ public class RitualEffectItemSuction extends RitualEffect
 {
 	public static final int reductusDrain = 1;
 	
-	public static final int timeDelayMin = 10;
+	public static final int timeDelayMin = 60;
 	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
-
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
 
         int x = ritualStone.getXCoord();
@@ -150,8 +142,7 @@ public class RitualEffectItemSuction extends RitualEffect
             
             if(count>0)
             {
-            	data.currentEssence = currentEssence - this.getCostPerRefresh()*Math.min(count, 100);
-                data.markDirty();
+            	SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh()*Math.min(count, 100));
                 return;
             }
         }                

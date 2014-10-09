@@ -42,7 +42,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     private static IIcon leggingsIcon;
     private static IIcon bootsIcon;
     
-    private static final boolean tryComplexRendering = false;
+    private static final boolean tryComplexRendering = true;
 
     public BoundArmour(int armorType)
     {
@@ -177,7 +177,11 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
   	
     	double damageAmount = 0.25;
     	
-    	if(!player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
+    	if(player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
+    	{
+    		int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
+    		damageAmount /= (1 - i*0.1);
+    	}else
     	{
     		damageAmount *= 0.9;
     	}
@@ -216,7 +220,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
         {
             if (source.isUnblockable())
             {
-                return new ArmorProperties(-1, damageAmount * 0.8d, maxAbsorption);
+                return new ArmorProperties(-1, damageAmount * 0.9d, maxAbsorption);
             }
 
             return new ArmorProperties(-1, damageAmount, maxAbsorption);

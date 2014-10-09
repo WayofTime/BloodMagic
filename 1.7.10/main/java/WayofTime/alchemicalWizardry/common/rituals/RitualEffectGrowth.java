@@ -28,16 +28,8 @@ public class RitualEffectGrowth extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -105,8 +97,7 @@ public class RitualEffectGrowth extends RitualEffect
             	if(hasVirtus)
             		this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
 
-                data.currentEssence = currentEssence - this.getCostPerRefresh()*flag;
-                data.markDirty();
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh()*flag);
             }
         }
     }

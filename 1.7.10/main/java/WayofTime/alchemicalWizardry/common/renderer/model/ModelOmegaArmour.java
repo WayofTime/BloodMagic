@@ -12,6 +12,25 @@ public class ModelOmegaArmour extends ModelBiped
 //    ModelRenderer leftarm;
 //    ModelRenderer rightleg;
 //    ModelRenderer leftleg;
+	ModelRenderer leftFacePlate;
+    ModelRenderer rightFacePlate;
+    ModelRenderer facePlate1;
+    ModelRenderer facePlate2;
+    ModelRenderer facePlate3;
+    ModelRenderer leftWingPlate1;
+    ModelRenderer leftWingPlate2;
+    ModelRenderer rightWingPlate1;
+    ModelRenderer rightWingPlate2;
+    ModelRenderer topPlate1;
+    ModelRenderer topPlate2;
+    ModelRenderer topPlate3;
+    ModelRenderer backPlate1;
+    ModelRenderer backPlate2;
+    ModelRenderer backPlate3;
+    ModelRenderer backPlate4;
+    ModelRenderer backPlate5;
+    ModelRenderer backPlate6;
+    ModelRenderer eyePlate;
     ModelRenderer rightArmMain;
     ModelRenderer rightKnucklePlate;
     ModelRenderer rightKnuckleBrace;
@@ -116,6 +135,148 @@ public class ModelOmegaArmour extends ModelBiped
 //      leftleg.setTextureSize(128, 128);
 //      leftleg.mirror = true;
 //      setRotation(leftleg, 0F, 0F, 0F);
+	  }
+	  
+	  /* Helmet */
+	  {
+		  leftFacePlate = new ModelRenderer(this, 66, 52);
+	      leftFacePlate.addBox(-2F, -5F, -5F, 5, 4, 1);
+	      leftFacePlate.setRotationPoint(0F, 0F, 0F);
+	      leftFacePlate.setTextureSize(128, 128);
+	      leftFacePlate.mirror = true;
+	      setRotation(leftFacePlate, 0.296706F, -0.3490659F, -0.0872665F);
+	      
+	      rightFacePlate = new ModelRenderer(this, 66, 52);
+	      rightFacePlate.addBox(-3F, -5F, -5F, 5, 4, 1);
+	      rightFacePlate.setRotationPoint(0F, 0F, 0F);
+	      rightFacePlate.setTextureSize(128, 128);
+	      rightFacePlate.mirror = true;
+	      setRotation(rightFacePlate, 0.296706F, 0.3490659F, 0.0872665F);
+	      rightFacePlate.mirror = false;
+	      
+	      facePlate1 = new ModelRenderer(this, 79, 52);
+	      facePlate1.addBox(-5F, -8F, -5F, 10, 3, 1);
+	      facePlate1.setRotationPoint(0F, 0F, 0F);
+	      facePlate1.setTextureSize(128, 128);
+	      facePlate1.mirror = true;
+	      setRotation(facePlate1, 0F, 0F, 0F);
+	      
+	      facePlate2 = new ModelRenderer(this, 79, 57);
+	      facePlate2.addBox(-1F, -5F, -5F, 2, 1, 1);
+	      facePlate2.setRotationPoint(0F, 0F, 0F);
+	      facePlate2.setTextureSize(128, 128);
+	      facePlate2.mirror = true;
+	      setRotation(facePlate2, 0F, 0F, 0F);
+	      
+	      facePlate3 = new ModelRenderer(this, 79, 60);
+	      facePlate3.addBox(-3F, -4F, -5F, 6, 1, 1);
+	      facePlate3.setRotationPoint(0F, 0F, 0F);
+	      facePlate3.setTextureSize(128, 128);
+	      facePlate3.mirror = true;
+	      setRotation(facePlate3, 0F, 0F, 0F);
+	      
+	      leftWingPlate1 = new ModelRenderer(this, 66, 58);
+	      leftWingPlate1.addBox(5F, -5F, -2.5F, 1, 5, 8);
+	      leftWingPlate1.setRotationPoint(0F, 0F, 0F);
+	      leftWingPlate1.setTextureSize(128, 128);
+	      leftWingPlate1.mirror = true;
+	      setRotation(leftWingPlate1, 0.2617994F, 0.1745329F, 0F);
+	      
+	      leftWingPlate2 = new ModelRenderer(this, 66, 72);
+	      leftWingPlate2.addBox(5F, -8F, -2F, 1, 3, 10);
+	      leftWingPlate2.setRotationPoint(0F, 0F, 0F);
+	      leftWingPlate2.setTextureSize(128, 128);
+	      leftWingPlate2.mirror = true;
+	      setRotation(leftWingPlate2, 0.2617994F, 0.1745329F, 0F);
+	      
+	      rightWingPlate1 = new ModelRenderer(this, 66, 58);
+	      rightWingPlate1.addBox(-6F, -5F, -2.5F, 1, 5, 8);
+	      rightWingPlate1.setRotationPoint(0F, 0F, 0F);
+	      rightWingPlate1.setTextureSize(128, 128);
+	      rightWingPlate1.mirror = true;
+	      setRotation(rightWingPlate1, 0.2617994F, -0.1745329F, 0F);
+	      rightWingPlate1.mirror = false;
+	      
+	      rightWingPlate2 = new ModelRenderer(this, 66, 72);
+	      rightWingPlate2.addBox(-6F, -8F, -2F, 1, 3, 10);
+	      rightWingPlate2.setRotationPoint(0F, 0F, 0F);
+	      rightWingPlate2.setTextureSize(128, 128);
+	      rightWingPlate2.mirror = true;
+	      setRotation(rightWingPlate2, 0.2617994F, -0.1745329F, 0F);
+	      rightWingPlate2.mirror = false;
+	      
+	      topPlate1 = new ModelRenderer(this, 79, 72);
+	      topPlate1.addBox(-5F, -9F, -0.5F, 10, 1, 5);
+	      topPlate1.setRotationPoint(0F, 0F, 0F);
+	      topPlate1.setTextureSize(128, 128);
+	      topPlate1.mirror = true;
+	      setRotation(topPlate1, 0.4363323F, 0F, 0F);
+	      
+	      topPlate2 = new ModelRenderer(this, 79, 72);
+	      topPlate2.addBox(-5F, -8F, 1.5F, 10, 1, 5);
+	      topPlate2.setRotationPoint(0F, 0F, 0F);
+	      topPlate2.setTextureSize(128, 128);
+	      topPlate2.mirror = true;
+	      setRotation(topPlate2, 0.4363323F, 0F, 0F);
+	      
+	      topPlate3 = new ModelRenderer(this, 79, 72);
+	      topPlate3.addBox(-5F, -7F, 3.5F, 10, 1, 5);
+	      topPlate3.setRotationPoint(0F, 0F, 0F);
+	      topPlate3.setTextureSize(128, 128);
+	      topPlate3.mirror = true;
+	      setRotation(topPlate3, 0.4363323F, 0F, 0F);
+	      
+	      backPlate1 = new ModelRenderer(this, 66, 86);
+	      backPlate1.addBox(-4.5F, -7F, 6F, 6, 4, 1);
+	      backPlate1.setRotationPoint(0F, 0F, 0F);
+	      backPlate1.setTextureSize(128, 128);
+	      backPlate1.mirror = true;
+	      setRotation(backPlate1, 0.2617994F, -0.2617994F, 0F);
+	      backPlate1.mirror = false;
+	      
+	      backPlate2 = new ModelRenderer(this, 66, 86);
+	      backPlate2.addBox(-4.5F, -6.5F, 6F, 6, 4, 1);
+	      backPlate2.setRotationPoint(0F, 2F, 0F);
+	      backPlate2.setTextureSize(128, 128);
+	      backPlate2.mirror = true;
+	      setRotation(backPlate2, 0.2617994F, -0.2617994F, 0F);
+	      backPlate2.mirror = false;
+	      
+	      backPlate3 = new ModelRenderer(this, 66, 86);
+	      backPlate3.addBox(-4.5F, -6F, 6F, 6, 4, 1);
+	      backPlate3.setRotationPoint(0F, 4F, 0F);
+	      backPlate3.setTextureSize(128, 128);
+	      backPlate3.mirror = true;
+	      setRotation(backPlate3, 0.2617994F, -0.2617994F, 0F);
+	      backPlate3.mirror = false;
+	      
+	      backPlate4 = new ModelRenderer(this, 66, 86);
+	      backPlate4.addBox(-1.5F, -7F, 6F, 6, 4, 1);
+	      backPlate4.setRotationPoint(0F, 0F, 0F);
+	      backPlate4.setTextureSize(128, 128);
+	      backPlate4.mirror = true;
+	      setRotation(backPlate4, 0.2617994F, 0.2617994F, 0F);
+	      
+	      backPlate5 = new ModelRenderer(this, 66, 86);
+	      backPlate5.addBox(-1.5F, -7F, 6F, 6, 4, 1);
+	      backPlate5.setRotationPoint(0F, 2.5F, 0F);
+	      backPlate5.setTextureSize(128, 128);
+	      backPlate5.mirror = true;
+	      setRotation(backPlate5, 0.2617994F, 0.2617994F, 0F);
+	      
+	      backPlate6 = new ModelRenderer(this, 66, 86);
+	      backPlate6.addBox(-1.5F, -7F, 6F, 6, 4, 1);
+	      backPlate6.setRotationPoint(0F, 5F, 0F);
+	      backPlate6.setTextureSize(128, 128);
+	      backPlate6.mirror = true;
+	      setRotation(backPlate6, 0.2617994F, 0.2617994F, 0F);
+	      
+	      eyePlate = new ModelRenderer(this, 63, 38);
+	      eyePlate.addBox(-4F, -5F, -4.5F, 8, 2, 1);
+	      eyePlate.setRotationPoint(0F, 0F, 0F);
+	      eyePlate.setTextureSize(128, 128);
+	      eyePlate.mirror = true;
+	      setRotation(eyePlate, 0F, 0F, 0F);
 	  }
 	  
 	  /* Right arm */
@@ -431,14 +592,14 @@ public class ModelOmegaArmour extends ModelBiped
       
       /* Left leg */
       {
-	      leftLegSidePlate = new ModelRenderer(this, 31, 71);
+	      leftLegSidePlate = new ModelRenderer(this, 40, 93);
 	      leftLegSidePlate.addBox(-0.5F, 12F, -3F, 1, 6, 6);
 	      leftLegSidePlate.setRotationPoint(-2F, -12F, 0F);
 	      leftLegSidePlate.setTextureSize(128, 128);
 	      leftLegSidePlate.mirror = true;
 	      setRotation(leftLegSidePlate, 0F, 0F, -0.3490659F);
 	      
-	      leftLegMain = new ModelRenderer(this, 53, 62);
+	      leftLegMain = new ModelRenderer(this, 40, 93);
 	      leftLegMain.addBox(-0.5F, 11F, -2.5F, 5, 9, 5);
 	      leftLegMain.setRotationPoint(-2F, -12F, 0F);
 	      leftLegMain.setTextureSize(128, 128);
@@ -523,7 +684,25 @@ public class ModelOmegaArmour extends ModelBiped
       this.bipedHeadwear.cubeList.clear();
       if(addHelmet)
       {
-    	  
+    	  this.bipedHead.addChild(this.leftFacePlate);
+    	  this.bipedHead.addChild(this.rightFacePlate);
+    	  this.bipedHead.addChild(this.facePlate1);
+    	  this.bipedHead.addChild(this.facePlate2);
+    	  this.bipedHead.addChild(this.facePlate3);
+    	  this.bipedHead.addChild(this.leftWingPlate1);
+    	  this.bipedHead.addChild(this.leftWingPlate2);
+    	  this.bipedHead.addChild(this.rightWingPlate1);
+    	  this.bipedHead.addChild(this.rightWingPlate2);
+    	  this.bipedHead.addChild(this.topPlate1);
+    	  this.bipedHead.addChild(this.topPlate2);
+    	  this.bipedHead.addChild(this.topPlate3);
+    	  this.bipedHead.addChild(this.backPlate1);
+    	  this.bipedHead.addChild(this.backPlate2);
+    	  this.bipedHead.addChild(this.backPlate3);
+    	  this.bipedHead.addChild(this.backPlate4);
+    	  this.bipedHead.addChild(this.backPlate5);
+    	  this.bipedHead.addChild(this.backPlate6);
+    	  this.bipedHead.addChild(this.eyePlate);
       }
       
       this.bipedBody.cubeList.clear();

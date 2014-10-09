@@ -26,16 +26,8 @@ public class RitualEffectJumping extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -87,7 +79,7 @@ public class RitualEffectJumping extends RitualEffect
                 {
                 	if(!livingEntity.isPotionActive(AlchemicalWizardry.customPotionFeatherFall))
                 	{
-                		livingEntity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFeatherFall.id, 3 * 20, 0));
+                		livingEntity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFeatherFall.id, 5 * 20, 0));
                     	this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
                 	}
                 }
@@ -95,8 +87,7 @@ public class RitualEffectJumping extends RitualEffect
 
             if (flag > 0)
             {
-                data.currentEssence = currentEssence - this.getCostPerRefresh()*flag;
-                data.markDirty();
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh()*flag);
             }
         }
     }

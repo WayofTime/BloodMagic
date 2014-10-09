@@ -191,6 +191,7 @@ public class TETeleposer extends TileEntity implements IInventory
     public void updateEntity()
     {
         super.updateEntity();
+        EntityPlayer d;
 
         if (worldObj.isRemote)
         {
@@ -281,6 +282,7 @@ public class TETeleposer extends TileEntity implements IInventory
                                 entityplayer1 = (EntityLivingBase) iterator1.next();
                                 entityplayer1.worldObj = worldF;
                                 entityplayer1.setPositionAndUpdate(entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf);
+                                //entityplayer1.travelToDimension(worldF.provider.dimensionId);
                             }
 
                             while (iterator2.hasNext())
@@ -288,6 +290,7 @@ public class TETeleposer extends TileEntity implements IInventory
                                 entityplayer2 = (EntityLivingBase) iterator2.next();
                                 entityplayer2.worldObj = worldF;
                                 entityplayer2.setPositionAndUpdate(entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf);
+                                //entityplayer2.travelToDimension(worldObj.provider.dimensionId);
                             }
                         }
                     }

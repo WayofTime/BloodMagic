@@ -10,10 +10,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
@@ -24,16 +26,8 @@ public class RitualEffectSummonMeteor extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -70,20 +64,36 @@ public class RitualEffectSummonMeteor extends RitualEffect
                     int meteorID = MeteorRegistry.getParadigmIDForItem(entityItem.getEntityItem());
                     EntityMeteor meteor = new EntityMeteor(world, x + 0.5f, 257, z + 0.5f, meteorID);
                     meteor.motionY = -1.0f;
+                    
+                    if(this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, 1000, true))
+                    {
+                    	meteor.hasTerrae = true;
+                    }
+                    if(this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, 1000, true))
+                    {
+                    	meteor.hasOrbisTerrae = true;
+                    }
+                    if(this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, 1000, true))
+                    {
+                    	meteor.hasCrystallos = true;
+                    }
+                    if(this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, 1000, true))
+                    {
+                    	meteor.hasIncendium = true;
+                    }
+                    if(this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, 1000, true))
+                    {
+                    	meteor.hasTennebrae = true;
+                    }
+                    
                     entityItem.setDead();
                     world.spawnEntityInWorld(meteor);
                     ritualStone.setActive(false);
                     break;
                 }
             }
-
-//        	EnergyBlastProjectile proj = new EnergyBlastProjectile(world, x, y+20, z);
-//        	proj.motionX = 0.0d;
-//        	proj.motionZ = 0.0d;
-//        	proj.motionY = -1.0d;
-//        	world.spawnEntityInWorld(proj);
-            data.currentEssence = currentEssence - this.getCostPerRefresh();
-            data.markDirty();
+            
+            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
         }
     }
 

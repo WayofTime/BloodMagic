@@ -162,7 +162,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0Beta22")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0Beta25")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -1005,8 +1005,8 @@ public class AlchemicalWizardry
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 1 * 60 * 20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl),AlchemicalWizardry.customPotionPlanarBinding.id,1*60*20);
-    	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand),AlchemicalWizardry.customPotionSoulFray.id,30*20);
-    	AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.baseItems,1,16),AlchemicalWizardry.customPotionSoulHarden.id,30*20);
+    	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand),AlchemicalWizardry.customPotionSoulFray.id,60*20);
+    	AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.baseItems,1,16),AlchemicalWizardry.customPotionSoulHarden.id,60*20);
     	AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.slime_ball),AlchemicalWizardry.customPotionDeaf.id,60*20);
     }
     

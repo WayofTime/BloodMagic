@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -16,6 +17,8 @@ public class MeteorParadigm
     public ItemStack focusStack;
     public int radius;
     public static int maxChance = 1000;
+    
+    public static Random rand = new Random();
 
     public MeteorParadigm(ItemStack focusStack, int radius)
     {
@@ -34,17 +37,51 @@ public class MeteorParadigm
         }
     }
 
-    public void createMeteorImpact(World world, int x, int y, int z)
+    public void createMeteorImpact(World world, int x, int y, int z, boolean[] flags)
     {
-        world.createExplosion(null, x, y, z, radius * 4, AlchemicalWizardry.doMeteorsDestroyBlocks);
-
-        for (int i = -radius; i <= radius; i++)
+        boolean hasTerrae = false;
+        boolean hasOrbisTerrae = false;
+        boolean hasCrystallos = false;
+        boolean hasIncendium = false;
+        boolean hasTennebrae = false;
+        
+        if(flags != null && flags.length >= 5)
         {
-            for (int j = -radius; j <= radius; j++)
+        	hasTerrae = flags[0];
+        	hasOrbisTerrae = flags[1];
+        	hasCrystallos = flags[2];
+        	hasIncendium = flags[3];
+        	hasTennebrae = flags[4];
+        }
+        
+        int newRadius = radius;
+    	int chance = maxChance;
+
+    	if(hasOrbisTerrae)
+    	{
+    		newRadius += 2;
+    		chance += 200;
+    	}else if(hasTerrae)
+    	{
+    		newRadius += 1;
+    		chance += 100;
+    	}
+    	
+        world.createExplosion(null, x, y, z, newRadius * 4, AlchemicalWizardry.doMeteorsDestroyBlocks);
+
+        float iceChance = hasCrystallos ? 1 : 0;
+    	float soulChance = hasIncendium ? 1 : 0;
+    	float obsidChance = hasTennebrae ? 1 : 0;
+    	
+    	float totalChance = iceChance + soulChance + obsidChance;
+        
+        for (int i = -newRadius; i <= newRadius; i++)
+        {
+            for (int j = -newRadius; j <= newRadius; j++)
             {
-                for (int k = -radius; k <= radius; k++)
+                for (int k = -newRadius; k <= newRadius; k++)
                 {
-                    if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
+                    if (i * i + j * j + k * k >= (newRadius + 0.50f) * (newRadius + 0.50f))
                     {
                         continue;
                     }
@@ -54,7 +91,7 @@ public class MeteorParadigm
                         continue;
                     }
 
-                    int randNum = world.rand.nextInt(maxChance);
+                    int randNum = world.rand.nextInt(chance);
                     boolean hasPlacedBlock = false;
 
                     for (MeteorParadigmComponent mpc : componentList)
@@ -77,7 +114,44 @@ public class MeteorParadigm
 
                     if (!hasPlacedBlock)
                     {
-                        world.setBlock(x + i, y + j, z + k, Blocks.stone, 0, 3);
+                    	float randChance = rand.nextFloat() * totalChance;
+                    	
+                    	if(randChance < iceChance)
+                    	{
+                    		world.setBlock(x + i, y + j, z + k, Blocks.ice, 0, 3);
+                    	}else
+                    	{
+                    		randChance-=iceChance;
+                    		
+                    		if(randChance < soulChance)
+                        	{
+                        		switch(rand.nextInt(3))
+                        		{
+                        		case 0:
+                            		world.setBlock(x + i, y + j, z + k, Blocks.soul_sand, 0, 3);
+                        			break;
+                        		case 1:
+                            		world.setBlock(x + i, y + j, z + k, Blocks.glowstone, 0, 3);
+                        			break;
+                        		case 2:
+                            		world.setBlock(x + i, y + j, z + k, Blocks.netherrack, 0, 3);
+                        			break;
+                        		}
+                        	}else
+                        	{
+                        		randChance-=soulChance;
+                        		
+                        		if(randChance < obsidChance)
+                            	{
+                            		world.setBlock(x + i, y + j, z + k, Blocks.obsidian, 0, 3);
+                            	}else
+                            	{
+                            		randChance-=obsidChance;
+                            		
+                                    world.setBlock(x + i, y + j, z + k, Blocks.stone, 0, 3);
+                            	}
+                        	}
+                    	}
                     }
                 }
             }

@@ -37,63 +37,13 @@ public class RitualEffectLava extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        Block block = world.getBlock(x, y + 1, z);
-        
-        if (world.isAirBlock(x, y + 1, z) && !(block instanceof BlockSpectralContainer))
-        {
-            if (currentEssence < this.getCostPerRefresh())
-            {
-            	SoulNetworkHandler.causeNauseaToPlayer(owner);
-            } else
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
-                }
-
-                world.setBlock(x, y + 1, z, Blocks.lava, 0, 3);
-                data.currentEssence = currentEssence - this.getCostPerRefresh();
-                data.markDirty();
-            }
-        }else
-        {
-        	boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
-        	if(!hasSanctus)
-        	{
-        		return;
-        	}
-        	TileEntity tile = world.getTileEntity(x, y + 1, z);
-        	if(tile instanceof IFluidHandler)
-        	{
-        		int amount = ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), false);
-        		if(amount >= 1000)
-        		{
-        			((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), true);
-        			
-        			this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
-        			
-        			data.currentEssence = currentEssence - this.getCostPerRefresh();
-                    data.markDirty();
-        		}
-        	}
-        }
-        
-        
         
         if(this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false) && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, fireFuseCost))
         {
@@ -120,12 +70,54 @@ public class RitualEffectLava extends RitualEffect
                 			continue;
                 		}
                 	}
+            		
             		entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFireFuse.id,100,0));
             		this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true);
             		SoulNetworkHandler.syphonFromNetwork(owner, fireFuseCost);
             	}
             }
         }
+        
+        Block block = world.getBlock(x, y + 1, z);
+        
+        if (world.isAirBlock(x, y + 1, z) && !(block instanceof BlockSpectralContainer))
+        {
+            if (currentEssence < this.getCostPerRefresh())
+            {
+            	SoulNetworkHandler.causeNauseaToPlayer(owner);
+            } else
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                }
+
+                world.setBlock(x, y + 1, z, Blocks.lava, 0, 3);
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
+            }
+        }else
+        {
+        	boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+        	if(!hasSanctus)
+        	{
+        		return;
+        	}
+        	TileEntity tile = world.getTileEntity(x, y + 1, z);
+        	if(tile instanceof IFluidHandler)
+        	{
+        		int amount = ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), false);
+        		if(amount >= 1000)
+        		{
+        			((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), true);
+        			
+        			this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+        			
+                    SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
+        		}
+        	}
+        } 
+        
+        
         
     }
 

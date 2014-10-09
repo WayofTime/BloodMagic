@@ -64,7 +64,7 @@ public class RitualEffectFlight extends RitualEffect
             	{
             		continue;
             	}
-                entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlight.id, hasAether ? 100 : 20, 0));
+                entity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFlight.id, hasAether ? 30*20 : 20, 0));
                 entityCount ++;
             }
             

@@ -80,11 +80,6 @@ public class ItemBlockCrystalBelljar extends ItemBlock
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
     {
-    	System.out.println("I am calling placeBlockAt");
-    	if(stack.getTagCompound() == null)
-    	{
-    		System.out.println("I have no NBT.");
-    	}
        if (!world.setBlock(x, y, z, field_150939_a, metadata, 3))
        {
            return false;

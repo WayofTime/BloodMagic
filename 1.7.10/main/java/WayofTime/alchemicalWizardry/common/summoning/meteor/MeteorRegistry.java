@@ -26,11 +26,11 @@ public class MeteorRegistry
         }
     }
 
-    public static void createMeteorImpact(World world, int x, int y, int z, int paradigmID)
+    public static void createMeteorImpact(World world, int x, int y, int z, int paradigmID, boolean[] flags)
     {
         if (paradigmID < paradigmList.size())
         {
-            paradigmList.get(paradigmID).createMeteorImpact(world, x, y, z);
+            paradigmList.get(paradigmID).createMeteorImpact(world, x, y, z, flags);
         }
     }
 

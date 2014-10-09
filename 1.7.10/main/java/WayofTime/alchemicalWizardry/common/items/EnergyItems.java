@@ -228,6 +228,16 @@ public class EnergyItems extends Item implements IBindable
 
         initializePlayer(player);
     }
+    
+    public static void setItemOwner(ItemStack item, String ownerName)
+    {
+    	if (item.stackTagCompound == null)
+        {
+            item.setTagCompound(new NBTTagCompound());
+        }
+
+    	item.stackTagCompound.setString("ownerName", ownerName);   
+    }
 
     public static void checkAndSetItemOwner(ItemStack item, String ownerName)
     {

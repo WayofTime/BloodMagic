@@ -45,6 +45,18 @@ public class AlchemicalWizardryEventHooks
     public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
     
     @SubscribeEvent
+    public void onPlayerDamageEvent(LivingAttackEvent event)
+    {
+    	if(event.source.isProjectile())
+    	{
+    		if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionProjProt) && event.isCancelable())
+    		{
+    			event.setCanceled(true);
+    		}
+    	}
+    }
+    
+    @SubscribeEvent
     public void onLivingSpawnEvent(CheckSpawn event)
     {
     	if(!(event.entityLiving instanceof EntityMob))

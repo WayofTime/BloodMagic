@@ -24,16 +24,8 @@ public class RitualEffectSpawnWard extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -91,8 +83,7 @@ public class RitualEffectSpawnWard extends RitualEffect
         	}
         	
 
-            data.currentEssence = currentEssence - this.getCostPerRefresh();
-            data.markDirty();
+            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
         }
     }
 

@@ -16,6 +16,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectHarvest extends RitualEffect
@@ -24,16 +25,8 @@ public class RitualEffectHarvest extends RitualEffect
 	public void performEffect(IMasterRitualStone ritualStone) 
 	{
 		String owner = ritualStone.getOwner();
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
 
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
@@ -78,8 +71,7 @@ public class RitualEffectHarvest extends RitualEffect
 
             if (flag > 0)
             {
-                data.currentEssence = currentEssence - this.getCostPerRefresh() * Math.min(maxCount, flag);
-                data.markDirty();
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * Math.min(maxCount, flag));
             }
         }
 	}
