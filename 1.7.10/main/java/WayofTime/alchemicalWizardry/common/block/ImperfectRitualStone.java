@@ -41,6 +41,7 @@ public class ImperfectRitualStone extends Block
     {
         //ItemStack ist = player.getItemInUse();
         //if (!world.isRemote)
+        if(!SpellHelper.isFakePlayer(world,player)
         {
             Block block = world.getBlock(x, y + 1, z);
 
