@@ -25,8 +25,10 @@ tile.blockConduit.name=Conduit à Sortilège
 tile.blockSpellParadigm.projectile.name=Générateur de Particule
 tile.blockSpellParadigm.self.name=Auto-Augmenteur
 tile.blockSpellParadigm.melee.name=Assembleur à Mêlée
-tile.blockSpellEnhancement.power1.name=Renforcement Instable à Sortilège tile.blockSpellEnhancement.power2.name=Renforcement Standard à Sortilège
-tile.blockSpellEnhancement.power3.name=Renforcement Renforcé à Sortilège tile.blockSpellEnhancement.power4.name=Renforcement Imprégné à Sortilège
+tile.blockSpellEnhancement.power1.name=Renforcement Instable à Sortilège 
+tile.blockSpellEnhancement.power2.name=Renforcement Standard à Sortilège
+tile.blockSpellEnhancement.power3.name=Renforcement Renforcé à Sortilège 
+tile.blockSpellEnhancement.power4.name=Renforcement Imprégné à Sortilège
 tile.blockSpellEnhancement.power5.name=Renforcement Démoniaque à Sortilège
 tile.blockSpellEnhancement.cost1.name=Atténuation Instable à Sortilège
 tile.blockSpellEnhancement.cost2.name=Atténuation Standard à Sortilège
@@ -39,7 +41,8 @@ tile.blockSpellEnhancement.potency3.name=Amélioration Renforcée à Sortilège
 tile.blockSpellEnhancement.potency4.name=Amélioration Imprégnée à Sortilège
 tile.blockSpellEnhancement.potency5.name=Amélioration Démoniaque à Sortilège
 tile.blockSpellModifier.default.name=Modification Basique à Sortilège
-tile.blockSpellModifier.offensive.name= Modification Offensive à Sortilège tile.blockSpellModifier.defensive.name= Modification Défensive à Sortilège
+tile.blockSpellModifier.offensive.name= Modification Offensive à Sortilège 
+tile.blockSpellModifier.defensive.name= Modification Défensive à Sortilège
 tile.blockSpellModifier.environmental.name=Modification Environnementale à Sortilège
 tile.blockSpellEffect.fire.name=Creuset des Flammes
 tile.blockSpellEffect.ice.name=Source des Glaces
@@ -107,7 +110,8 @@ item.demonBloodShard.name=Eclat Sanguinaire du Démon
 item.sigilOfWind.name=Symbole du Tourbillon
 item.telepositionFocus.name=Focus de Téléposition
 item.enhancedTelepositionFocus.name= Focus de Téléposition Amélioré
-item.reinforcedTelepositionFocus.name=Focus de Téléposition Renforcé item.demonicTelepositionFocus.name= Focus de Téléposition Démoniaque
+item.reinforcedTelepositionFocus.name=Focus de Téléposition Renforcé 
+item.demonicTelepositionFocus.name= Focus de Téléposition Démoniaque
 item.imbuedSlate.name=Tablette Imprégnée
 item.demonicSlate.name=Tablette Démoniaque
 item.sigilOfTheBridge.name=Symbole du Pont Fantôme
@@ -168,4 +172,3 @@ itemGroup.tabBloodMagic=Blood Magic
 bm.string.consume=Exaction
 bm.string.drain=Ponction Veineuse
 bm.string.tier=Tiers
-

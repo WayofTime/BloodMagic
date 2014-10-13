@@ -172,3 +172,19 @@ itemGroup.tabBloodMagic=Blood Magic
 bm.string.consume=Потребление
 bm.string.drain=Опустошение
 bm.string.tier=Уровень
+
+#Entities
+entity.AWWayofTime.EarthElemental.name=Элементаль земли
+entity.AWWayofTime.FireElemental.name=Элементаль огня
+entity.AWWayofTime.HolyElemental.name=Элементаль света
+entity.AWWayofTime.ShadeElemental.name=Элементаль тени
+entity.AWWayofTime.WaterElemental.name=Элементаль воды
+entity.AWWayofTime.AirElemental.name=Элементаль воздуха
+entity.AWWayofTime.Shade.name=Тень
+entity.AWWayofTime.BoulderFist.name=Каменный кулак
+entity.AWWayofTime.IceDemon.name=Ледяной демон
+entity.AWWayofTime.SmallEarthGolem.name=Маленький земляной голем
+entity.AWWayofTime.WingedFireDemon.name=Крылатый огненный демон
+entity.AWWayofTime.BileDemon.name=Желчный демон
+entity.AWWayofTime.LowerGuardian.name=Низший страж
+entity.AWWayofTime.FallenAngel.name=Падший ангел

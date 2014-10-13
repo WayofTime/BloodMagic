@@ -192,3 +192,19 @@ bm.string.drain=Drain
 bm.string.tier=Tier
 bm.string.crafting.orb.shaped=Shaped Orb Crafting
 bm.string.crafting.orb.shapeless=Shapeless Orb Crafting
+
+#Entities
+entity.AWWayofTime.EarthElemental.name=Earth Elemental
+entity.AWWayofTime.FireElemental.name=Fire Elemental
+entity.AWWayofTime.HolyElemental.name=Holy Elemental
+entity.AWWayofTime.ShadeElemental.name=Shade Elemental
+entity.AWWayofTime.WaterElemental.name=Water Elemental
+entity.AWWayofTime.AirElemental.name=Air Elemental
+entity.AWWayofTime.Shade.name=Shade
+entity.AWWayofTime.BoulderFist.name=Boulder Fist
+entity.AWWayofTime.IceDemon.name=Ice Demon
+entity.AWWayofTime.SmallEarthGolem.name=Small Earth Golem
+entity.AWWayofTime.WingedFireDemon.name=Winged Fire Demon
+entity.AWWayofTime.BileDemon.name=Bile Demon
+entity.AWWayofTime.LowerGuardian.name=Lower Guardian
+entity.AWWayofTime.FallenAngel.name=Fallen Angel
