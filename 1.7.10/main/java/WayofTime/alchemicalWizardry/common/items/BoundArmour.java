@@ -180,7 +180,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     	if(player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
     	{
     		int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
-    		damageAmount /= (1 - i*0.1);
+    		damageAmount /= Math.max((1 - i*0.1), 0.1);
     	}else
     	{
     		damageAmount *= 0.9;
@@ -309,8 +309,8 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     	{
     		return "alchemicalwizardry:models/armor/BloodArmour_WIP.png";
     	}
-        //TODO Make the armour invisible when the player has Invisibility on.
-        if (entity instanceof EntityLivingBase)
+
+    	if (entity instanceof EntityLivingBase)
         {
             if (this.getIsInvisible(stack))
             {

@@ -86,12 +86,12 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
         
         if (this == ModItems.sanguineRobe || this == ModItems.sanguineBoots)
         {
-            return "alchemicalwizardry:models/armor/boundArmour_layer_1.png";
+            return "alchemicalwizardry:models/armor/sanguineArmour_layer_1.png";
         }
 
         if (this == ModItems.sanguinePants)
         {
-            return "alchemicalwizardry:models/armor/boundArmour_layer_2.png";
+            return "alchemicalwizardry:models/armor/sanguineArmour_layer_2.png";
         } else
         {
             return null;
@@ -106,16 +106,16 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
     	switch(this.armorType)
 		{
 		case 0: 
-			discount = 8;
+			discount = 6;
 			break;
 		case 1: 
-			discount = 4;
+			discount = 3;
 			break;
 		case 2: 
 			discount = 3;
 			break;
 		case 3: 
-			discount = 3;
+			discount = 2;
 			break;
 		}
     	

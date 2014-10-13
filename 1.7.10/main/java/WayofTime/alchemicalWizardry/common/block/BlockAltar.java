@@ -23,6 +23,7 @@ import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -77,6 +78,34 @@ public class BlockAltar extends BlockContainer
             default:
                 return sideIcon2;
         }
+    }
+    
+    @Override
+    public boolean hasComparatorInputOverride()
+    {
+    	return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
+    {
+    	TileEntity tile = world.getTileEntity(x, y, z);
+
+        if (tile instanceof TEAltar)
+        {
+            ItemStack stack = ((TEAltar) tile).getStackInSlot(0);
+
+            if (stack != null && stack.getItem() instanceof EnergyBattery)
+            {
+                EnergyBattery bloodOrb = (EnergyBattery) stack.getItem();
+                int maxEssence = bloodOrb.getMaxEssence();
+                int currentEssence = bloodOrb.getCurrentEssence(stack);
+                int level = currentEssence * 15 / maxEssence;
+                return ((int) (Math.min(15, level))) % 16;
+            }
+        }
+
+        return 0;
     }
 
     @Override
@@ -271,11 +300,11 @@ public class BlockAltar extends BlockContainer
 //        return 1;
 //    }
 
-    @Override
-    public boolean canProvidePower()
-    {
-        return true;
-    }
+//    @Override
+//    public boolean canProvidePower()
+//    {
+//        return true;
+//    }
 
     @Override
     public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)

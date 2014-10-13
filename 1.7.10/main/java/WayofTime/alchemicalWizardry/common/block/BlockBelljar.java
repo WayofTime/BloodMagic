@@ -111,13 +111,13 @@ public class BlockBelljar extends BlockContainer
     }   
     
     @Override
-    public boolean canProvidePower()
+    public boolean hasComparatorInputOverride()
     {
-        return true;
+    	return true;
     }
 
     @Override
-    public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int meta)
+    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
     {
     	TileEntity tile = world.getTileEntity(x, y, z);
     	if(tile instanceof TEBellJar)

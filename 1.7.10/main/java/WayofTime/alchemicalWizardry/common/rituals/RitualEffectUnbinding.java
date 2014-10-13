@@ -76,7 +76,7 @@ public class RitualEffectUnbinding extends RitualEffect
                         world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
                         world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
                         
-                		EnergyItems.checkAndSetItemOwner(itemStack, "");
+                		EnergyItems.setItemOwner(itemStack, "");
                 		this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
                 		drain = true;
                 		ritualStone.setActive(false);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -116,7 +117,7 @@ public class RitualEffectItemSuction extends RitualEffect
 //                        }
 //                    }
 
-                    count++;
+                    //count++;
                     
                     ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
                     
@@ -126,6 +127,7 @@ public class RitualEffectItemSuction extends RitualEffect
                     	if(newStack.stackSize<=0)
                         {
                         	itemEntity.setDead();
+                        	itemEntity.getEntityItem().stackSize = newStack.stackSize;
                         }
                         
                         if (newStack.stackSize > 0)
@@ -134,8 +136,9 @@ public class RitualEffectItemSuction extends RitualEffect
                         }
                         if(hasReductus)
                         {
+                        	BlockFurnace d;
                         	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
-                        }
+                        }  
                     }   
                 }
             }

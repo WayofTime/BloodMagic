@@ -31,6 +31,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
 import thaumcraft.api.ItemApi;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -97,6 +100,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectExpulsion;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredEarth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredKnife;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFlight;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFullStomach;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHarvest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
@@ -162,7 +166,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0Beta25")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0Candidate1")
 //@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"BloodAltar", "particle", "SetLifeEssence", "GetLifeEssence", "Ritual", "GetAltarEssence", "TESocket", "TEWritingTable", "CustomParticle", "SetPlayerVel", "SetPlayerPos", "TEPedestal", "TEPlinth", "TETeleposer", "InfiniteLPPath", "TEOrientor"}, packetHandler = PacketHandler.class)
 
 public class AlchemicalWizardry
@@ -920,6 +924,15 @@ public class AlchemicalWizardry
                 Item itemThaumChest = GameRegistry.findItem("Thaumcraft", "ItemChestplateThaumium");
                 Item itemThaumLeggings = GameRegistry.findItem("Thaumcraft", "ItemLeggingsThaumium");
                 Item itemThaumBoots = GameRegistry.findItem("Thaumcraft", "ItemBootsThaumium");
+                
+                AspectList aspectList = new AspectList();
+                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
+                
+                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineHelmet), aspectList);
+                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineRobe), aspectList);
+                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguinePants), aspectList);
+                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineBoots), aspectList);
+
 
                 
                 if (itemGoggles != null)
@@ -1070,10 +1083,11 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW023Zephyr", 1, 25000, new RitualEffectItemSuction(),"Call of the Zephyr", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW024Harvest", 1, 20000, new RitualEffectHarvest(), "Reap of the Harvest Moon", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW025Conduit", 2, 2000000, new RitualEffectLifeConduit(), "Cry of the Eternal Soul", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
-        Rituals.registerRitual("AW026Ellipsoid", 1, 25000, new RitualEffectEllipsoid(), "Ellipsoid", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
-        Rituals.registerRitual("AW027Evaporation", 1, 20000, new RitualEffectEvaporation(), "Evaporation", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW026Ellipsoid", 1, 25000, new RitualEffectEllipsoid(), "Focus of the Ellipsoid", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW027Evaporation", 1, 20000, new RitualEffectEvaporation(), "Song of Evaporation", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW028SpawnWard", 1, 150000, new RitualEffectSpawnWard(), "Ward of Sacrosanctity", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"),0,0,0,255, 0, 0.501, 0.501, 0, 1.5, false));
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
     

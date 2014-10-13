@@ -35,8 +35,8 @@ public class RitualEffectFullStomach extends RitualEffect
             return;
         }
         
-        double horizRange = 5;
-        double vertRange = 5;
+        double horizRange = 16;
+        double vertRange = 16;
         
         List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x+0.5, y+0.5, z+0.5, horizRange, vertRange);
         
@@ -72,7 +72,7 @@ public class RitualEffectFullStomach extends RitualEffect
         		{
         			FoodStats foodStats = player.getFoodStats();
         			float satLevel = foodStats.getSaturationLevel();
-        			
+        			        			
         			for(int i=0; i<inventory.getSizeInventory(); i++)
         			{
         				ItemStack stack = inventory.getStackInSlot(i);
@@ -82,8 +82,8 @@ public class RitualEffectFullStomach extends RitualEffect
                 			ItemFood foodItem = (ItemFood)stack.getItem();
                 			
                 			int regularHeal = foodItem.func_150905_g(stack);
-                			float saturatedHeal = foodItem.func_150906_h(stack);
-                			
+                			float saturatedHeal = foodItem.func_150906_h(stack) * regularHeal * 2.0f;
+                			                			
                 			if(saturatedHeal + satLevel <= 20)
                 			{
                 				foodStats.setFoodSaturationLevel(saturatedHeal + satLevel);
@@ -109,23 +109,39 @@ public class RitualEffectFullStomach extends RitualEffect
     @Override
 	public List<RitualComponent> getRitualComponentList() 
 	{
-		ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
-        animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.DUSK));
-        animalGrowthRitual.add(new RitualComponent(0, 0, 1, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -1, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(1, 0, -2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.EARTH));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
-        return animalGrowthRitual;
+		ArrayList<RitualComponent> fullRitual = new ArrayList();
+        fullRitual.add(new RitualComponent(0, 0, 3, RitualComponent.FIRE));
+        fullRitual.add(new RitualComponent(0, 0, -3, RitualComponent.FIRE));
+        fullRitual.add(new RitualComponent(3, 0, 0, RitualComponent.FIRE));
+        fullRitual.add(new RitualComponent(-3, 0, 0, RitualComponent.FIRE));
+        fullRitual.add(new RitualComponent(1, 0, 1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(1, 0, -1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.AIR));
+        
+        fullRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(1, 0, 2, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(1, 0, -2, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.AIR));
+        fullRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.AIR));
+        
+        fullRitual.add(new RitualComponent(4, 0, 4, RitualComponent.WATER));
+        fullRitual.add(new RitualComponent(4, 0, -4, RitualComponent.WATER));
+        fullRitual.add(new RitualComponent(-4, 0, -4, RitualComponent.WATER));
+        fullRitual.add(new RitualComponent(-4, 0, 4, RitualComponent.WATER));
+        
+        fullRitual.add(new RitualComponent(4, 0, 3, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(3, 0, 4, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(-4, 0, 3, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(3, 0, -4, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(-4, 0, -3, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(-3, 0, -4, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(4, 0, -3, RitualComponent.EARTH));
+        fullRitual.add(new RitualComponent(-3, 0, 4, RitualComponent.EARTH));
+
+        return fullRitual;
 	}
 }

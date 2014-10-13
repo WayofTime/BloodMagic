@@ -147,6 +147,7 @@ public class ModelOmegaArmour extends ModelBiped
 	      setRotation(leftFacePlate, 0.296706F, -0.3490659F, -0.0872665F);
 	      
 	      rightFacePlate = new ModelRenderer(this, 66, 52);
+		  rightFacePlate.mirror = true;
 	      rightFacePlate.addBox(-3F, -5F, -5F, 5, 4, 1);
 	      rightFacePlate.setRotationPoint(0F, 0F, 0F);
 	      rightFacePlate.setTextureSize(128, 128);
@@ -190,6 +191,7 @@ public class ModelOmegaArmour extends ModelBiped
 	      setRotation(leftWingPlate2, 0.2617994F, 0.1745329F, 0F);
 	      
 	      rightWingPlate1 = new ModelRenderer(this, 66, 58);
+	      rightWingPlate1.mirror = true;
 	      rightWingPlate1.addBox(-6F, -5F, -2.5F, 1, 5, 8);
 	      rightWingPlate1.setRotationPoint(0F, 0F, 0F);
 	      rightWingPlate1.setTextureSize(128, 128);
@@ -198,6 +200,7 @@ public class ModelOmegaArmour extends ModelBiped
 	      rightWingPlate1.mirror = false;
 	      
 	      rightWingPlate2 = new ModelRenderer(this, 66, 72);
+	      rightWingPlate2.mirror = true;
 	      rightWingPlate2.addBox(-6F, -8F, -2F, 1, 3, 10);
 	      rightWingPlate2.setRotationPoint(0F, 0F, 0F);
 	      rightWingPlate2.setTextureSize(128, 128);
@@ -227,6 +230,7 @@ public class ModelOmegaArmour extends ModelBiped
 	      setRotation(topPlate3, 0.4363323F, 0F, 0F);
 	      
 	      backPlate1 = new ModelRenderer(this, 66, 86);
+	      backPlate1.mirror = true;
 	      backPlate1.addBox(-4.5F, -7F, 6F, 6, 4, 1);
 	      backPlate1.setRotationPoint(0F, 0F, 0F);
 	      backPlate1.setTextureSize(128, 128);
@@ -235,6 +239,7 @@ public class ModelOmegaArmour extends ModelBiped
 	      backPlate1.mirror = false;
 	      
 	      backPlate2 = new ModelRenderer(this, 66, 86);
+	      backPlate2.mirror = true;
 	      backPlate2.addBox(-4.5F, -6.5F, 6F, 6, 4, 1);
 	      backPlate2.setRotationPoint(0F, 2F, 0F);
 	      backPlate2.setTextureSize(128, 128);
@@ -243,6 +248,7 @@ public class ModelOmegaArmour extends ModelBiped
 	      backPlate2.mirror = false;
 	      
 	      backPlate3 = new ModelRenderer(this, 66, 86);
+	      backPlate3.mirror = true;
 	      backPlate3.addBox(-4.5F, -6F, 6F, 6, 4, 1);
 	      backPlate3.setRotationPoint(0F, 4F, 0F);
 	      backPlate3.setTextureSize(128, 128);

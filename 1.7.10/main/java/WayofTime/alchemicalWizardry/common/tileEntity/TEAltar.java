@@ -65,6 +65,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     protected FluidStack fluidOutput;
     protected FluidStack fluidInput;
     private int progress;
+    private int hasChanged = 0;
     
     private int lockdownDuration;
 
@@ -91,6 +92,11 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         this.lockdownDuration = 0;
     }
 
+    public int getRSPowerOutput()
+    {
+    	return 5;
+    }
+    
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
@@ -545,6 +551,21 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
         {
             //TODO
+    		{
+    			Block block = worldObj.getBlock(xCoord+1, yCoord, zCoord);
+    			block.onNeighborBlockChange(worldObj, xCoord+1, yCoord, zCoord, block);
+    			block = worldObj.getBlock(xCoord-1, yCoord, zCoord);
+    			block.onNeighborBlockChange(worldObj, xCoord-1, yCoord, zCoord, block);
+    			block = worldObj.getBlock(xCoord, yCoord+1, zCoord);
+    			block.onNeighborBlockChange(worldObj, xCoord, yCoord+1, zCoord, block);
+    			block = worldObj.getBlock(xCoord, yCoord-1, zCoord);
+    			block.onNeighborBlockChange(worldObj, xCoord, yCoord-1, zCoord, block);
+    			block = worldObj.getBlock(xCoord, yCoord, zCoord+1);
+    			block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord+1, block);
+    			block = worldObj.getBlock(xCoord, yCoord, zCoord-1);
+    			block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord-1, block);
+    		}
+        	
             int syphonMax = (int) (20 * this.dislocationMultiplier);
             int fluidInputted = 0;
             int fluidOutputted = 0;
@@ -648,6 +669,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
                     fluid.amount = fluid.amount - liquidDrained;
                     progress += liquidDrained;
+                                        
                     //getStackInSlot(0).setItemDamage(getStackInSlot(0).getItemDamage() + liquidDrained);
 
                     if (worldTime % 4 == 0)
@@ -733,7 +755,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                 //int currentEssence=playerTag.getInteger("currentEssence");
 
                 if (fluid != null && fluid.amount >= 1)
-                {
+                {                	
                     int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
                     if (liquidDrained > (item.getMaxEssence() * this.orbCapacityMultiplier - currentEssence))
