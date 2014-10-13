@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,17 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class EnergyBlast extends EnergyItems
 {
     private static IIcon activeIcon;
     private static IIcon passiveIcon;
     private static int damage;
-    //private static int delay;
     private static final int maxDelay = 15;
 
     public EnergyBlast()
@@ -32,7 +31,6 @@ public class EnergyBlast extends EnergyItems
         setMaxDamage(250);
         this.setEnergyUsed(150);
         damage = 12;
-        //delay = 0;
     }
 
     @Override
@@ -94,7 +92,6 @@ public class EnergyBlast extends EnergyItems
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             this.setDelay(par1ItemStack, maxDelay);
         }
@@ -109,18 +106,12 @@ public class EnergyBlast extends EnergyItems
         {
             return;
         }
-
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
-
-//        if(par1ItemStack.stackTagCompound.getBoolean("isActive"))
-//        {
-//        	EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 1);
-//        }
         int delay = this.getDelay(par1ItemStack);
 
         if (!par2World.isRemote && delay > 0)

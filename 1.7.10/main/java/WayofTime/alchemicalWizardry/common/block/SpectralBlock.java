@@ -1,22 +1,21 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Facing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class SpectralBlock extends BlockContainer
 {
@@ -25,13 +24,6 @@ public class SpectralBlock extends BlockContainer
         super(Material.rock);
         this.setBlockName("spectralBlock");
     }
-
-//	@Override
-//	public int tickRate(World par1World)
-//    {
-//        return 10;
-//    }
-
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -43,7 +35,7 @@ public class SpectralBlock extends BlockContainer
     @Override
     public boolean isOpaqueCube()
     {
-    	Block d;
+        Block d;
         return false;
     }
 
@@ -52,7 +44,7 @@ public class SpectralBlock extends BlockContainer
     {
         return 0;
     }
-    
+
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
     {
@@ -83,7 +75,6 @@ public class SpectralBlock extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        //TEAltar tileEntity = (TEAltar)world.getBlockTileEntity(x, y, z);
         if (player.isSneaking())
         {
             return false;
@@ -95,7 +86,7 @@ public class SpectralBlock extends BlockContainer
         {
             if (playerItem.getItem() instanceof ItemBlock)
             {
-                world.setBlock(x, y, z, ((ItemBlock)(playerItem.getItem())).field_150939_a, playerItem.getItemDamage(), 3);
+                world.setBlock(x, y, z, ((ItemBlock) (playerItem.getItem())).field_150939_a, playerItem.getItemDamage(), 3);
 
                 if (!player.capabilities.isCreativeMode)
                 {
@@ -112,9 +103,9 @@ public class SpectralBlock extends BlockContainer
         return true;
     }
 
-	@Override
-	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) 
-	{
-		return new TESpectralBlock();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
+    {
+        return new TESpectralBlock();
+    }
 }

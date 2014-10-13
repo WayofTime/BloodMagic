@@ -45,7 +45,7 @@ public class MeteorRegistry
         {
             ItemStack focusStack = paradigmList.get(i).focusStack;
 
-            if (focusStack != null && focusStack.getItem()== stack.getItem() && (focusStack.getItemDamage() == OreDictionary.WILDCARD_VALUE || focusStack.getItemDamage() == stack.getItemDamage()))
+            if (focusStack != null && focusStack.getItem() == stack.getItem() && (focusStack.getItemDamage() == OreDictionary.WILDCARD_VALUE || focusStack.getItemDamage() == stack.getItemDamage()))
             {
                 return i;
             }

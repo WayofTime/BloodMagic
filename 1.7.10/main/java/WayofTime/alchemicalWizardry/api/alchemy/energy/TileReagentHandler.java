@@ -4,8 +4,6 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileReagentHandler extends TileEntity implements IReagentHandler
 {
@@ -63,6 +61,6 @@ public class TileReagentHandler extends TileEntity implements IReagentHandler
     @Override
     public ReagentContainerInfo[] getContainerInfo(ForgeDirection from)
     {
-        return new ReagentContainerInfo[] {tank.getInfo()};
+        return new ReagentContainerInfo[]{tank.getInfo()};
     }
 }

@@ -1,24 +1,22 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectSummonMeteor extends RitualEffect
 {
@@ -64,35 +62,35 @@ public class RitualEffectSummonMeteor extends RitualEffect
                     int meteorID = MeteorRegistry.getParadigmIDForItem(entityItem.getEntityItem());
                     EntityMeteor meteor = new EntityMeteor(world, x + 0.5f, 257, z + 0.5f, meteorID);
                     meteor.motionY = -1.0f;
-                    
-                    if(this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, 1000, true))
+
+                    if (this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, 1000, true))
                     {
-                    	meteor.hasTerrae = true;
+                        meteor.hasTerrae = true;
                     }
-                    if(this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, 1000, true))
+                    if (this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, 1000, true))
                     {
-                    	meteor.hasOrbisTerrae = true;
+                        meteor.hasOrbisTerrae = true;
                     }
-                    if(this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, 1000, true))
+                    if (this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, 1000, true))
                     {
-                    	meteor.hasCrystallos = true;
+                        meteor.hasCrystallos = true;
                     }
-                    if(this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, 1000, true))
+                    if (this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, 1000, true))
                     {
-                    	meteor.hasIncendium = true;
+                        meteor.hasIncendium = true;
                     }
-                    if(this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, 1000, true))
+                    if (this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, 1000, true))
                     {
-                    	meteor.hasTennebrae = true;
+                        meteor.hasTennebrae = true;
                     }
-                    
+
                     entityItem.setDead();
                     world.spawnEntityInWorld(meteor);
                     ritualStone.setActive(false);
                     break;
                 }
             }
-            
+
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
         }
     }
@@ -104,9 +102,9 @@ public class RitualEffectSummonMeteor extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> meteorRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> meteorRitual = new ArrayList();
         meteorRitual.add(new RitualComponent(2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(0, 0, 2, RitualComponent.FIRE));
@@ -210,5 +208,5 @@ public class RitualEffectSummonMeteor extends RitualEffect
         meteorRitual.add(new RitualComponent(-3, 4, -2, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-3, 4, -3, RitualComponent.FIRE));
         return meteorRitual;
-	}
+    }
 }

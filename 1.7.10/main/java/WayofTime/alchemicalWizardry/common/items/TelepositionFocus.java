@@ -1,16 +1,16 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class TelepositionFocus extends EnergyItems
 {
@@ -28,7 +28,6 @@ public class TelepositionFocus extends EnergyItems
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        //TODO
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:TeleposerFocus");
     }
 
@@ -60,12 +59,6 @@ public class TelepositionFocus extends EnergyItems
         {
             return par1ItemStack;
         }
-
-//        if (!par2World.isRemote)
-//        {
-//            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
-//            par2World.spawnEntityInWorld(new FireProjectile(par2World, par3EntityPlayer, 10));
-//        }
         return par1ItemStack;
     }
 

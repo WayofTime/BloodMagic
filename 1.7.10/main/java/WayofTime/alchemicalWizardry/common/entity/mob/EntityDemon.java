@@ -1,15 +1,15 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityDemon extends EntityTameable implements IDemon
 {
@@ -51,11 +51,11 @@ public class EntityDemon extends EntityTameable implements IDemon
     {
         ItemStack drop = new ItemStack(ModItems.demonPlacer, 1, this.getDemonID());
 
-    	if((this.getOwner() instanceof EntityPlayer))
-    	{
-            DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer)this.getOwner()));
-    	}
-    	
+        if ((this.getOwner() instanceof EntityPlayer))
+        {
+            DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer) this.getOwner()));
+        }
+
         if (this.hasCustomNameTag())
         {
             drop.setStackDisplayName(this.getCustomNameTag());

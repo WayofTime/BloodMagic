@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderBoulderFist extends RenderLiving
 {
-    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/BoulderFist.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
+    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/BoulderFist.png");
 
     public RenderBoulderFist(ModelBase par1ModelBase, float par2)
     {

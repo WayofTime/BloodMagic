@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,20 +18,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Facing;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class DemonPlacer extends Item
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon theIcon;
-
     public DemonPlacer()
     {
         super();
@@ -40,15 +36,6 @@ public class DemonPlacer extends Item
 
     public String getItemDisplayName(ItemStack par1ItemStack)
     {
-//        String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-//        String s1 = EntityList.getStringFromID(par1ItemStack.getItemDamage());
-//
-//        if (s1 != null)
-//        {
-//            s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
-//        }
-//
-//        return s;
         return "Demon Crystal";
     }
 
@@ -163,76 +150,34 @@ public class DemonPlacer extends Item
      */
     public static Entity spawnCreature(World par0World, int par1, double par2, double par4, double par6, ItemStack itemStack)
     {
-//        if (!EntityList.entityEggs.containsKey(Integer.valueOf(par1)))
-//        {
-//            return null;
-//        }
-//        else
+        Entity entity = null;
+
+        for (int j = 0; j < 1; ++j)
         {
-            Entity entity = null;
+            entity = SummoningRegistry.getEntityWithID(par0World, par1);
 
-            for (int j = 0; j < 1; ++j)
+            if (entity != null && entity instanceof EntityLivingBase)
             {
-                entity = SummoningRegistry.getEntityWithID(par0World, par1);
-
-                if (entity != null && entity instanceof EntityLivingBase)
+                EntityLiving entityliving = (EntityLiving) entity;
+                entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
+                entityliving.rotationYawHead = entityliving.rotationYaw;
+                entityliving.renderYawOffset = entityliving.rotationYaw;
+                if (entityliving instanceof EntityDemon)
                 {
-                    EntityLiving entityliving = (EntityLiving) entity;
-                    entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
-                    entityliving.rotationYawHead = entityliving.rotationYaw;
-                    entityliving.renderYawOffset = entityliving.rotationYaw;
+                    ((EntityDemon) entityliving).func_152115_b(DemonPlacer.getOwnerName(itemStack));
 
-                    //entityliving.onSpawnWithEgg((EntityLivingData)null);
-                    if (entityliving instanceof EntityDemon)
+                    if (!DemonPlacer.getOwnerName(itemStack).equals(""))
                     {
-                        ((EntityDemon) entityliving).func_152115_b(DemonPlacer.getOwnerName(itemStack));
-
-                        if (!DemonPlacer.getOwnerName(itemStack).equals(""))
-                        {
-                            ((EntityDemon) entityliving).setTamed(true);
-                        }
+                        ((EntityDemon) entityliving).setTamed(true);
                     }
-
-                    par0World.spawnEntityInWorld(entity);
-                    entityliving.playLivingSound();
                 }
+
+                par0World.spawnEntityInWorld(entity);
+                entityliving.playLivingSound();
             }
-
-            return entity;
         }
+        return entity;
     }
-
-//    @SideOnly(Side.CLIENT)
-//    public boolean requiresMultipleRenderPasses()
-//    {
-//        return true;
-//    }
-
-//    @SideOnly(Side.CLIENT)
-//
-//    /**
-//     * Gets an icon index based on an item's damage value and the given render pass
-//     */
-//    public Icon getIconFromDamageForRenderPass(int par1, int par2)
-//    {
-//        return par2 > 0 ? this.theIcon : super.getIconFromDamageForRenderPass(par1, par2);
-//    }
-
-//    @SideOnly(Side.CLIENT)
-//
-//    /**
-//     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-//     */
-//    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
-//    {
-//        Iterator iterator = EntityList.entityEggs.values().iterator();
-//
-//        while (iterator.hasNext())
-//        {
-//            EntityEggInfo entityegginfo = (EntityEggInfo)iterator.next();
-//            par3List.add(new ItemStack(par1, 1, entityegginfo.spawnedID));
-//        }
-//    }
 
     public static void setOwnerName(ItemStack par1ItemStack, String ownerName)
     {

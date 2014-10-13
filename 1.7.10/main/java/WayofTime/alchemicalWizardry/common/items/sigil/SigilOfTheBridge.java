@@ -1,7 +1,12 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -11,13 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
 {
@@ -29,10 +29,8 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(100);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -96,23 +94,6 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
         }
     }
 
-//	@Override
-//	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-//	{
-//
-//		if(applyBonemeal(par1ItemStack,par3World,par4,par5,par6,par2EntityPlayer))
-//		{
-//			if (par3World.isRemote)
-//            {
-//                par3World.playAuxSFX(2005, par4, par5, par6, 0);
-//                EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
-//                return true;
-//            }
-//			return true;
-//		}
-//		return false;
-//	}
-
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -170,11 +151,6 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
                 EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, this.getLPUsed(par1ItemStack));
                 this.setLPUsed(par1ItemStack, 0);
             }
-
-//        	if(par2World.isRemote)
-//            {
-//        		return;
-//            }
             if (!par3EntityPlayer.onGround && !par3EntityPlayer.isSneaking())
             {
                 return;
@@ -202,31 +178,30 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
             {
                 for (int iz = posZ - range; iz <= posZ + range; iz++)
                 {
-                    //for(int iy=posY-verticalRange;iy<=posY+verticalRange;iy++)
                     {
                         Block block = par2World.getBlock(ix, posY + verticalOffset, iz);
-             
+
                         if (par2World.isAirBlock(ix, posY + verticalOffset, iz))
                         {
                             par2World.setBlock(ix, posY + verticalOffset, iz, ModBlocks.spectralBlock, 0, 3);
-                            
+
                             TileEntity tile = par2World.getTileEntity(ix, posY + verticalOffset, iz);
-                        	if(tile instanceof TESpectralBlock)
-                        	{
-                        		((TESpectralBlock) tile).setDuration(100);
-                        	}
+                            if (tile instanceof TESpectralBlock)
+                            {
+                                ((TESpectralBlock) tile).setDuration(100);
+                            }
 
                             if (par2World.rand.nextInt(2) == 0)
                             {
                                 incremented++;
                             }
-                        }else if(block == ModBlocks.spectralBlock)
+                        } else if (block == ModBlocks.spectralBlock)
                         {
-                        	TileEntity tile = par2World.getTileEntity(ix, posY + verticalOffset, iz);
-                        	if(tile instanceof TESpectralBlock)
-                        	{
-                        		((TESpectralBlock) tile).setDuration(100);
-                        	}
+                            TileEntity tile = par2World.getTileEntity(ix, posY + verticalOffset, iz);
+                            if (tile instanceof TESpectralBlock)
+                            {
+                                ((TESpectralBlock) tile).setDuration(100);
+                            }
                         }
                     }
                 }
@@ -287,33 +262,27 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
         int posX = (int) Math.round(player.posX - 0.5f);
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
-
-        //int incremented = 0;
-
         for (int ix = posX - range; ix <= posX + range; ix++)
         {
             for (int iz = posZ - range; iz <= posZ + range; iz++)
             {
-                //for(int iy=posY-verticalRange;iy<=posY+verticalRange;iy++)
+                Block block = world.getBlock(ix, posY + verticalOffset, iz);
+
+                if (world.isAirBlock(ix, posY + verticalOffset, iz))
                 {
-                	Block block = world.getBlock(ix, posY + verticalOffset, iz);
-                    
-                    if (world.isAirBlock(ix, posY + verticalOffset, iz))
+                    world.setBlock(ix, posY + verticalOffset, iz, ModBlocks.spectralBlock, 0, 3);
+
+                    TileEntity tile = world.getTileEntity(ix, posY + verticalOffset, iz);
+                    if (tile instanceof TESpectralBlock)
                     {
-                        world.setBlock(ix, posY + verticalOffset, iz, ModBlocks.spectralBlock, 0, 3);
-                        
-                        TileEntity tile = world.getTileEntity(ix, posY + verticalOffset, iz);
-                    	if(tile instanceof TESpectralBlock)
-                    	{
-                    		((TESpectralBlock) tile).setDuration(100);
-                    	}
-                    }else if(block == ModBlocks.spectralBlock)
+                        ((TESpectralBlock) tile).setDuration(100);
+                    }
+                } else if (block == ModBlocks.spectralBlock)
+                {
+                    TileEntity tile = world.getTileEntity(ix, posY + verticalOffset, iz);
+                    if (tile instanceof TESpectralBlock)
                     {
-                    	TileEntity tile = world.getTileEntity(ix, posY + verticalOffset, iz);
-                    	if(tile instanceof TESpectralBlock)
-                    	{
-                    		((TESpectralBlock) tile).setDuration(100);
-                    	}
+                        ((TESpectralBlock) tile).setDuration(100);
                     }
                 }
             }
@@ -323,14 +292,12 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 100;
     }
 }

@@ -1,58 +1,41 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Icon;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeavesBase;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeavesBase;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoundAxe extends ItemAxe implements IBindable
 {
-    /**
-     * Array of blocks the tool has extra effect against.
-     */
-    public static final Block[] blocksEffectiveAgainst = new Block[]{Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.chest, Blocks.stone_slab, Blocks.pumpkin, Blocks.lit_pumpkin};
-
     public float efficiencyOnProperMaterial = 12.0F;
-
-    /**
-     * Damage versus entities.
-     */
     public float damageVsEntity;
-
     private static IIcon activeIcon;
     private static IIcon passiveIcon;
-
     private int energyUsed;
 
     public BoundAxe()
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
         this.maxStackSize = 1;
-        //this.setMaxDamage(par3EnumToolMaterial.getMaxUses());
         this.efficiencyOnProperMaterial = 12.0F;
         this.damageVsEntity = 5;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -142,9 +125,9 @@ public class BoundAxe extends ItemAxe implements IBindable
         }
 
         Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
-        int posX = (int)(blockVec.xCoord);
-        int posY = (int)(blockVec.yCoord);
-        int posZ = (int)(blockVec.zCoord);
+        int posX = (int) (blockVec.xCoord);
+        int posY = (int) (blockVec.yCoord);
+        int posZ = (int) (blockVec.zCoord);
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
@@ -163,7 +146,6 @@ public class BoundAxe extends ItemAxe implements IBindable
 
                         if (str > 1.1f || block instanceof BlockLeavesBase && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k))
                         {
-                            //par1ItemStack.getEnchantmentTagList();
                             if (silkTouch)
                             {
                                 ItemStack droppedItem = new ItemStack(block, 1, meta);
@@ -187,7 +169,6 @@ public class BoundAxe extends ItemAxe implements IBindable
                                     }
                                 }
                             }
-
                             par2World.setBlockToAir(posX + i, posY + j, posZ + k);
                         }
                     }
@@ -213,12 +194,6 @@ public class BoundAxe extends ItemAxe implements IBindable
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
-
-//        if(par1ItemStack.stackTagCompound.getBoolean("isActive"))
-//        {
-//        	EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 1);
-//        }
-
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
@@ -280,8 +255,6 @@ public class BoundAxe extends ItemAxe implements IBindable
         {
             return false;
         }
-
-        //par1ItemStack.damageItem(2, par3EntityLivingBase);
         return true;
     }
 
@@ -289,7 +262,6 @@ public class BoundAxe extends ItemAxe implements IBindable
     {
         if ((double) par3.getBlockHardness(par2World, par4, par5, par6) != 0.0D)
         {
-            //par1ItemStack.damageItem(1, par7EntityLivingBase);
         }
 
         return true;
@@ -315,14 +287,6 @@ public class BoundAxe extends ItemAxe implements IBindable
     }
 
     /**
-     * Return whether this item is repairable in an anvil.
-     */
-//    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-//    {
-//        return true;
-//    }
-
-    /**
      * FORGE: Overridden to allow custom tool effectiveness
      */
     @Override
@@ -346,15 +310,15 @@ public class BoundAxe extends ItemAxe implements IBindable
     {
         return !getActivated(stack);
     }
-    
+
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-    	if("axe".equals(toolClass))
-    	{
-    		return 5;
-    	}
-    	
-    	return 0;
+        if ("axe".equals(toolClass))
+        {
+            return 5;
+        }
+
+        return 0;
     }
 }

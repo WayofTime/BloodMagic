@@ -1,13 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
+
+import java.util.List;
 
 public class AWBaseItems extends Item
 {

@@ -57,10 +57,10 @@ public class AltarUpgradeComponent
     {
         orbCapacitiveUpgrades++;
     }
-    
+
     public void addBetterCapacitiveUpgrade()
     {
-    	betterCapacitiveUpgrades++;
+        betterCapacitiveUpgrades++;
     }
 
     public int getSpeedUpgrades()
@@ -97,9 +97,9 @@ public class AltarUpgradeComponent
     {
         return this.orbCapacitiveUpgrades;
     }
-    
+
     public int getBetterCapacitiveUpgrades()
     {
-    	return this.betterCapacitiveUpgrades;
+        return this.betterCapacitiveUpgrades;
     }
 }

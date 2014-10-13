@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomSpellRegistry
 {

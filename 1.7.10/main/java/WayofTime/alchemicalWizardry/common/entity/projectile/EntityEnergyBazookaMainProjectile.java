@@ -68,7 +68,6 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
             this.setDead();
         } else
         {
-            //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
                 spawnSecondaryProjectiles();

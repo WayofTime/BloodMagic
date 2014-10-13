@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityIceDemon;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -7,9 +9,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityIceDemon;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class IceProjectile extends EnergyBlastProjectile
 {
@@ -57,22 +56,7 @@ public class IceProjectile extends EnergyBlastProjectile
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-//        	for(int i=-1;i<=1;i++)
-//        	{
-//        		for(int j=-1;j<=1;j++)
-//        		{
-//        			for(int k=-1;k<=1;k++)
-//        			{
-//        				if(worldObj.isAirBlock((int)this.posX+i, (int)this.posY+j, (int)this.posZ+k))
-//        	        	{
-//        	        		worldObj.setBlock( (int)this.posX+i, (int)this.posY+j, (int)this.posZ+k,Block.fire.blockID);
-//        	        	}
-//        			}
-//        		}
-//        	}
-            //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
-
         this.setDead();
     }
 
@@ -85,12 +69,8 @@ public class IceProjectile extends EnergyBlastProjectile
             this.setDead();
         } else
         {
-            //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
-                //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
-                //((EntityLivingBase)mop).setFire(50);
-                //((EntityLivingBase)mop).setRevengeTarget(shootingEntity);
                 if (((EntityLivingBase) mop).isImmuneToFire())
                 {
                     doDamage((int) (projectileDamage * 2), mop);
@@ -101,8 +81,6 @@ public class IceProjectile extends EnergyBlastProjectile
                     ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 1));
                 }
             }
-
-            //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
         if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))

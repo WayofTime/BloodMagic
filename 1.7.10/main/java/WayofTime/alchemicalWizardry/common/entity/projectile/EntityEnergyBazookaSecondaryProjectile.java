@@ -195,8 +195,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
             {
-                // this.groundImpact();
-                // this.setDead();
             }
         } else
         {
@@ -204,7 +202,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             if (ticksInAir > 1 && ticksInAir < 3)
             {
-                //worldObj.spawnParticle("flame", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0D, 0D, 0D);
                 for (int particles = 0; particles < 3; particles++)
                 {
                     this.doFiringParticles();
@@ -271,7 +268,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
             posZ += motionZ;
             MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
             this.setPosition(posX, posY, posZ);
-            //this.doBlockCollisions();
         }
     }
 

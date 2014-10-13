@@ -1,40 +1,32 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.BlockFurnace;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectItemSuction extends RitualEffect
 {
-	public static final int reductusDrain = 1;
-	
-	public static final int timeDelayMin = 60;
-	
+    public static final int reductusDrain = 1;
+
+    public static final int timeDelayMin = 60;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        
+
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
 
@@ -56,99 +48,63 @@ public class RitualEffectItemSuction extends RitualEffect
         {
             return;
         }
-        
-        if (currentEssence < this.getCostPerRefresh()*100)
+
+        if (currentEssence < this.getCostPerRefresh() * 100)
         {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x+0.5f, y+0.5f, z+0.5f, 10, 10);
-            
+            List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x + 0.5f, y + 0.5f, z + 0.5f, 10, 10);
+
             boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
             int count = 0;
-            
+
             if (itemDropList != null)
             {
                 int invSize = tileEntity.getSizeInventory();
 
                 for (EntityItem itemEntity : itemDropList)
                 {
-                	hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
-                	if(hasReductus && itemEntity.age < this.timeDelayMin)
-                	{
-                		continue;
-                	}
-                	ItemStack item = itemEntity.getEntityItem();
-                    ItemStack copyStack = itemEntity.getEntityItem().copy();
-                    
-                    int pastAmount = copyStack.stackSize;
-
-//                    for (int n = 0; n < invSize; n++)
-//                    {
-//                        if (tileEntity.isItemValidForSlot(n, copyStack) && copyStack.stackSize != 0)
-//                        {
-//                            ItemStack itemStack = tileEntity.getStackInSlot(n);
-//
-//                            if (itemStack == null)
-//                            {
-//                                tileEntity.setInventorySlotContents(n, item);
-//                                copyStack.stackSize = 0;
-//                            } else
-//                            {
-//                                if (itemStack.getItem().equals(copyStack.getItem()) && itemStack.getItemDamage() == copyStack.getItemDamage())
-//                                {
-//                                    int itemSize = itemStack.stackSize;
-//                                    int copySize = copyStack.stackSize;
-//                                    int maxSize = itemStack.getMaxStackSize();
-//
-//                                    if (copySize + itemSize < maxSize)
-//                                    {
-//                                        copyStack.stackSize = 0;
-//                                        itemStack.stackSize = itemSize + copySize;
-//                                        tileEntity.setInventorySlotContents(n, itemStack);
-//                                    } else
-//                                    {
-//                                        copyStack.stackSize = itemSize + copySize - maxSize;
-//                                        itemStack.stackSize = maxSize;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-
-                    //count++;
-                    
-                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
-                    
-                    if(newStack != null && newStack.stackSize < pastAmount)
+                    hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+                    if (hasReductus && itemEntity.age < this.timeDelayMin)
                     {
-                    	count++;
-                    	if(newStack.stackSize<=0)
+                        continue;
+                    }
+                    ItemStack item = itemEntity.getEntityItem();
+                    ItemStack copyStack = itemEntity.getEntityItem().copy();
+
+                    int pastAmount = copyStack.stackSize;
+                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
+
+                    if (newStack != null && newStack.stackSize < pastAmount)
+                    {
+                        count++;
+                        if (newStack.stackSize <= 0)
                         {
-                        	itemEntity.setDead();
-                        	itemEntity.getEntityItem().stackSize = newStack.stackSize;
+                            itemEntity.setDead();
+                            itemEntity.getEntityItem().stackSize = newStack.stackSize;
                         }
-                        
+
                         if (newStack.stackSize > 0)
                         {
                             itemEntity.getEntityItem().stackSize = newStack.stackSize;
                         }
-                        if(hasReductus)
+                        if (hasReductus)
                         {
-                        	BlockFurnace d;
-                        	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
-                        }  
-                    }   
+                            BlockFurnace d;
+                            this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+                        }
+                    }
                 }
             }
-            
-            if(count>0)
+
+            if (count > 0)
             {
-            	SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh()*Math.min(count, 100));
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * Math.min(count, 100));
                 return;
             }
-        }                
+        }
     }
 
     @Override
@@ -158,9 +114,9 @@ public class RitualEffectItemSuction extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> suctionRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> suctionRitual = new ArrayList();
         suctionRitual.add(new RitualComponent(2, 0, 0, RitualComponent.AIR));
         suctionRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.AIR));
         suctionRitual.add(new RitualComponent(0, 0, 2, RitualComponent.AIR));
@@ -174,5 +130,5 @@ public class RitualEffectItemSuction extends RitualEffect
         suctionRitual.add(new RitualComponent(0, -1, 1, RitualComponent.AIR));
         suctionRitual.add(new RitualComponent(0, -1, -1, RitualComponent.AIR));
         return suctionRitual;
-	}
+    }
 }

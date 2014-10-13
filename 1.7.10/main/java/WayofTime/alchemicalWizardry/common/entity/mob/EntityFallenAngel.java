@@ -1,21 +1,12 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import net.minecraft.block.BlockColored;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
+import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -29,11 +20,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
 {
@@ -50,20 +36,15 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
         this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);
-        //this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-        //this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
-        this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-        //this.tasks.addTask(6, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
-        //this.tasks.addTask(8, new EntityAIBeg(this, 8.0F));
-        this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(9, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+        this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(6, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(4, new EntityAITargetAggro(this, EntityPlayer.class, 0, false));
         this.setAggro(false);
-        //this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntitySheep.class, 200, false));
         this.setTamed(false);
 
         if (par1World != null && !par1World.isRemote)
@@ -89,8 +70,6 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
         }
-
-        //this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(10.0D);
     }
 
     /**
@@ -130,7 +109,6 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
         super.entityInit();
         this.dataWatcher.addObject(18, new Float(this.getHealth()));
         this.dataWatcher.addObject(19, new Byte((byte) 0));
-        //this.dataWatcher.addObject(20, new Byte((byte) BlockColored.getBlockFromDye(1)));
     }
 
     /**
@@ -309,7 +287,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
                 }
             }
 
-            if (this.getOwner() instanceof EntityPlayer && SpellHelper.getUsername(par1EntityPlayer).equalsIgnoreCase(SpellHelper.getUsername((EntityPlayer)this.getOwner())) && !this.isBreedingItem(itemstack))
+            if (this.getOwner() instanceof EntityPlayer && SpellHelper.getUsername(par1EntityPlayer).equalsIgnoreCase(SpellHelper.getUsername((EntityPlayer) this.getOwner())) && !this.isBreedingItem(itemstack))
             {
                 if (!this.worldObj.isRemote)
                 {

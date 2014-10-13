@@ -1,7 +1,15 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.Optional.Interface;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -22,26 +30,18 @@ import net.minecraftforge.common.util.Constants;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.nodes.IRevealer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-@Optional.InterfaceList(value = {@Interface(iface="thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IGoggles", modid = "Thaumcraft"), @Interface(iface="thaumcraft.api.IRunicArmor", modid = "Thaumcraft")})
-public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialArmor,IBindable ,IRevealer, IGoggles, IRunicArmor
+import java.util.List;
+
+@Optional.InterfaceList(value = {@Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface = "thaumcraft.api.IGoggles", modid = "Thaumcraft"), @Interface(iface = "thaumcraft.api.IRunicArmor", modid = "Thaumcraft")})
+public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialArmor, IBindable, IRevealer, IGoggles, IRunicArmor
 {
     private static int invSize = 9;
     private static IIcon helmetIcon;
     private static IIcon plateIcon;
     private static IIcon leggingsIcon;
     private static IIcon bootsIcon;
-    
+
     private static final boolean tryComplexRendering = true;
 
     public BoundArmour(int armorType)
@@ -54,70 +54,70 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     ModelBiped model1 = null;
     ModelBiped model2 = null;
     ModelBiped model = null;
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
     {
-    	if(tryComplexRendering)
-    	{
-    		int type = ((ItemArmor)itemStack.getItem()).armorType;
-    		if(this.model1 == null)
-    		{
-    			this.model1 = new ModelOmegaArmour(1.0f, true, true, false, true);
-    		}
-    		if(this.model2 == null)
-    		{
-    			this.model2 = new ModelOmegaArmour(0.5f, false, false, true, false);
-    		}
-    		
-    		if(type == 1 || type == 3 || type == 0)
-    		{
-    			this.model = model1;
-    		}else
-    		{
-    			this.model = model2;
-    		}
-    		
-    		if(this.model != null)
-    		{
-    			this.model.bipedHead.showModel = (type == 0);
-    		    this.model.bipedHeadwear.showModel = (type == 0);
-    		    this.model.bipedBody.showModel = ((type == 1) || (type == 2));
-    		    this.model.bipedLeftArm.showModel = (type == 1);
-    		    this.model.bipedRightArm.showModel = (type == 1);
-    		    this.model.bipedLeftLeg.showModel = (type == 2 || type == 3);
-    		    this.model.bipedRightLeg.showModel = (type == 2 || type == 3);
-    		    this.model.isSneak = entityLiving.isSneaking();
-    		    
-    		    this.model.isRiding = entityLiving.isRiding();
-    		    this.model.isChild = entityLiving.isChild();
-    		    
-    		    this.model.aimedBow = false;
-    		    this.model.heldItemRight = (entityLiving.getHeldItem() != null ? 1 : 0);
-    		    
-    		    if ((entityLiving instanceof EntityPlayer))
-    		    {
-    		        if (((EntityPlayer)entityLiving).getItemInUseDuration() > 0)
-    		        {
-    		        	EnumAction enumaction = ((EntityPlayer)entityLiving).getItemInUse().getItemUseAction();
-    		            if (enumaction == EnumAction.block) 
-    		            {
-    		            	this.model.heldItemRight = 3;
-    		            } else if (enumaction == EnumAction.bow) 
-    		            {
-    		            	this.model.aimedBow = true;
-    		            }
-    		        }
-    		    }
-    		}
-    		
-    		return model;
-    			
-    	}else
-    	{
-    		return super.getArmorModel(entityLiving, itemStack, armorSlot);
-    	}    	
+        if (tryComplexRendering)
+        {
+            int type = ((ItemArmor) itemStack.getItem()).armorType;
+            if (this.model1 == null)
+            {
+                this.model1 = new ModelOmegaArmour(1.0f, true, true, false, true);
+            }
+            if (this.model2 == null)
+            {
+                this.model2 = new ModelOmegaArmour(0.5f, false, false, true, false);
+            }
+
+            if (type == 1 || type == 3 || type == 0)
+            {
+                this.model = model1;
+            } else
+            {
+                this.model = model2;
+            }
+
+            if (this.model != null)
+            {
+                this.model.bipedHead.showModel = (type == 0);
+                this.model.bipedHeadwear.showModel = (type == 0);
+                this.model.bipedBody.showModel = ((type == 1) || (type == 2));
+                this.model.bipedLeftArm.showModel = (type == 1);
+                this.model.bipedRightArm.showModel = (type == 1);
+                this.model.bipedLeftLeg.showModel = (type == 2 || type == 3);
+                this.model.bipedRightLeg.showModel = (type == 2 || type == 3);
+                this.model.isSneak = entityLiving.isSneaking();
+
+                this.model.isRiding = entityLiving.isRiding();
+                this.model.isChild = entityLiving.isChild();
+
+                this.model.aimedBow = false;
+                this.model.heldItemRight = (entityLiving.getHeldItem() != null ? 1 : 0);
+
+                if ((entityLiving instanceof EntityPlayer))
+                {
+                    if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0)
+                    {
+                        EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
+                        if (enumaction == EnumAction.block)
+                        {
+                            this.model.heldItemRight = 3;
+                        } else if (enumaction == EnumAction.bow)
+                        {
+                            this.model.aimedBow = true;
+                        }
+                    }
+                }
+            }
+
+            return model;
+
+        } else
+        {
+            return super.getArmorModel(entityLiving, itemStack, armorSlot);
+        }
     }
 
     @Override
@@ -166,30 +166,30 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
     {
-    	double armourReduction = 0.0;
-    	
-    	if(player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+        double armourReduction = 0.0;
+
+        if (player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
         {
             int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
-            
-            armourReduction = (i+1)*0.1;
+
+            armourReduction = (i + 1) * 0.1;
         }
-  	
-    	double damageAmount = 0.25;
-    	
-    	if(player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
-    	{
-    		int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
-    		damageAmount /= Math.max((1 - i*0.1), 0.1);
-    	}else
-    	{
-    		damageAmount *= 0.9;
-    	}
-    	
-    	damageAmount *= (1.0-armourReduction);
-    	
-    	int maxAbsorption = 100000;
-    	
+
+        double damageAmount = 0.25;
+
+        if (player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
+        {
+            int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
+            damageAmount /= Math.max((1 - i * 0.1), 0.1);
+        } else
+        {
+            damageAmount *= 0.9;
+        }
+
+        damageAmount *= (1.0 - armourReduction);
+
+        int maxAbsorption = 100000;
+
         if (source.equals(DamageSource.drown))
         {
             return new ArmorProperties(-1, 0, 0);
@@ -266,8 +266,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
             {
                 return;
             }
-
-            //EnergyItems.syphonBatteries(stack, (EntityPlayer)entity, 200);
         }
 
         stack.setItemDamage(stack.getItemDamage() + damage);
@@ -305,16 +303,16 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
-    	if(this.tryComplexRendering)
-    	{
-    		return "alchemicalwizardry:models/armor/BloodArmour_WIP.png";
-    	}
+        if (this.tryComplexRendering)
+        {
+            return "alchemicalwizardry:models/armor/BloodArmour_WIP.png";
+        }
 
-    	if (entity instanceof EntityLivingBase)
+        if (entity instanceof EntityLivingBase)
         {
             if (this.getIsInvisible(stack))
             {
-                if (this== ModItems.boundHelmet || this == ModItems.boundPlate || this == ModItems.boundBoots)
+                if (this == ModItems.boundHelmet || this == ModItems.boundPlate || this == ModItems.boundBoots)
                 {
                     return "alchemicalwizardry:models/armor/boundArmour_invisible_layer_1.png";
                 }
@@ -368,7 +366,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
         {
             tickInternalInventory(itemStack, world, player, 0, false);
         }
-        
+
         this.setIsInvisible(itemStack, player.isPotionActive(Potion.invisibility.id));
 
         if (itemStack.getItemDamage() > 0)
@@ -395,8 +393,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
         }
 
         int blood = getMaxBloodShardLevel(par1ItemStack);
-
-        //int blood = 1;
         for (int i = 0; i < invSize; i++)
         {
             if (inv[i] == null)
@@ -633,7 +629,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
 
         return false;
     }
-    
+
     public float getUpgradeCostMultiplier(ItemStack itemStack)
     {
         ItemStack[] inv = getInternalInventory(itemStack);
@@ -683,29 +679,29 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
     {
         return 0;
     }
-    
+
     public boolean getIsInvisible(ItemStack armourStack)
     {
-    	NBTTagCompound tag = armourStack.getTagCompound();
-    	if(tag != null)
-    	{
-    		return tag.getBoolean("invisible");
-    	}
-    	
-    	return false;
+        NBTTagCompound tag = armourStack.getTagCompound();
+        if (tag != null)
+        {
+            return tag.getBoolean("invisible");
+        }
+
+        return false;
     }
-    
+
     public void setIsInvisible(ItemStack armourStack, boolean invisible)
     {
-    	NBTTagCompound tag = armourStack.getTagCompound();
-    	
-    	if(tag == null)
-    	{
-    		armourStack.setTagCompound(new NBTTagCompound());
-    		tag = armourStack.getTagCompound();
-    	}
-    	
-    	tag.setBoolean("invisible", invisible);
+        NBTTagCompound tag = armourStack.getTagCompound();
+
+        if (tag == null)
+        {
+            armourStack.setTagCompound(new NBTTagCompound());
+            tag = armourStack.getTagCompound();
+        }
+
+        tag.setBoolean("invisible", invisible);
     }
 
     @Override
@@ -722,66 +718,66 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
         return this.hasIGoggles(itemstack);
     }
 
-	@Override
-	@Optional.Method(modid = "Thaumcraft")
-	public int getRunicCharge(ItemStack itemstack) 
-	{
-		ItemStack[] inv = this.getInternalInventory(itemstack);
-		int shardLevel = this.getMaxBloodShardLevel(itemstack);
-		int count = 0;
-		int harden = 0;
-		
-		if(inv == null)
-		{
-			return 0;
-		}
-		
-		for(ItemStack stack : inv)
-		{
-			if(count >= shardLevel)
-			{
-				break;
-			}
-			
-			if(stack == null || !(stack.getItem() instanceof ArmourUpgrade))
-			{
-				continue;
-			}
-			
-			if(stack.getItem() instanceof ItemArmor && ((ItemArmor)stack.getItem()).armorType != this.armorType)
-			{
-				continue;
-			}
-			
-			if(stack.hasTagCompound())
-			{
-				NBTTagCompound tag = stack.getTagCompound();
-				
-				int enchLvl = tag.getByte("RS.HARDEN");
-				
-				if(stack.getItem() instanceof IRunicArmor)
-				{
-					enchLvl += ((IRunicArmor)stack.getItem()).getRunicCharge(stack);
-				}
-				
-				if(enchLvl > 0)
-				{
-					harden += enchLvl;
-					if(((ArmourUpgrade)stack.getItem()).isUpgrade())
-					{
-						count += 1;
-					}	
-				}
-			}
-		}
-		
-		return harden;
-	}
+    @Override
+    @Optional.Method(modid = "Thaumcraft")
+    public int getRunicCharge(ItemStack itemstack)
+    {
+        ItemStack[] inv = this.getInternalInventory(itemstack);
+        int shardLevel = this.getMaxBloodShardLevel(itemstack);
+        int count = 0;
+        int harden = 0;
 
-	@Override
-	public boolean showIngameHUD(World world, ItemStack stack, EntityPlayer player) 
-	{
-		ItemStack[] inv = getInternalInventory(stack);
+        if (inv == null)
+        {
+            return 0;
+        }
+
+        for (ItemStack stack : inv)
+        {
+            if (count >= shardLevel)
+            {
+                break;
+            }
+
+            if (stack == null || !(stack.getItem() instanceof ArmourUpgrade))
+            {
+                continue;
+            }
+
+            if (stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).armorType != this.armorType)
+            {
+                continue;
+            }
+
+            if (stack.hasTagCompound())
+            {
+                NBTTagCompound tag = stack.getTagCompound();
+
+                int enchLvl = tag.getByte("RS.HARDEN");
+
+                if (stack.getItem() instanceof IRunicArmor)
+                {
+                    enchLvl += ((IRunicArmor) stack.getItem()).getRunicCharge(stack);
+                }
+
+                if (enchLvl > 0)
+                {
+                    harden += enchLvl;
+                    if (((ArmourUpgrade) stack.getItem()).isUpgrade())
+                    {
+                        count += 1;
+                    }
+                }
+            }
+        }
+
+        return harden;
+    }
+
+    @Override
+    public boolean showIngameHUD(World world, ItemStack stack, EntityPlayer player)
+    {
+        ItemStack[] inv = getInternalInventory(stack);
 
         if (inv == null)
         {
@@ -802,5 +798,5 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles,ISpecialAr
         }
 
         return false;
-	}
+    }
 }

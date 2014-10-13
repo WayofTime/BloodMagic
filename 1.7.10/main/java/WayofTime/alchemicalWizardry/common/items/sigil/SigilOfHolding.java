@@ -1,8 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,12 +16,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SigilOfHolding extends EnergyItems
 {
@@ -30,7 +30,6 @@ public class SigilOfHolding extends EnergyItems
     {
         super();
         this.maxStackSize = 1;
-        //setEnergyUsed(100);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
@@ -72,7 +71,6 @@ public class SigilOfHolding extends EnergyItems
         if (!(par1ItemStack.stackTagCompound == null))
         {
             par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-//            par3List.add("Current slot: " + par1ItemStack.stackTagCompound.getInteger("selectedSlot"));
             ItemStack[] inv = getInternalInventory(par1ItemStack);
 
             if (inv == null)
@@ -101,8 +99,6 @@ public class SigilOfHolding extends EnergyItems
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         //TODO Might be a good idea to have this item need to be in the player's first slot
-        //for it to search and consume sigils on right click. Might avoid confusion? At least
-        //will avoid the need to add a button just for it...
         this.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
         if (par3EntityPlayer.isSneaking())
@@ -306,13 +302,13 @@ public class SigilOfHolding extends EnergyItems
             return false;
         }
 
-        if(addedItemStack.getItem() instanceof IHolding)
+        if (addedItemStack.getItem() instanceof IHolding)
         {
-        	inv[candidateSlot] = addedItemStack;
+            inv[candidateSlot] = addedItemStack;
             saveInternalInventory(sigilItemStack, inv);
             return true;
         }
-        
+
         for (ItemStack i : allowedSigils)
         {
             if (i != null && i.getItem() == item)
@@ -335,7 +331,6 @@ public class SigilOfHolding extends EnergyItems
             if (this.hasAddedToInventory(sigilItemStack, playerInventory[i]))
             {
                 player.inventory.consumeInventoryItem(playerInventory[i].getItem());
-                //playerInventory[i].stackSize--;
                 return true;
             }
         }

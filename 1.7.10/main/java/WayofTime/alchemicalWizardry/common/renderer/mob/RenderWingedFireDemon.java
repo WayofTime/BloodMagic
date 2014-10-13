@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderWingedFireDemon extends RenderLiving
 {
-    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/WingedFireDemon.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
+    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/WingedFireDemon.png");
 
     public RenderWingedFireDemon(ModelBase par1ModelBase, float par2)
     {

@@ -1,14 +1,12 @@
 package WayofTime.alchemicalWizardry.common.renderer.model;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
 import org.lwjgl.opengl.GL11;
-
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class ModelBloodAltar extends ModelBase
 {

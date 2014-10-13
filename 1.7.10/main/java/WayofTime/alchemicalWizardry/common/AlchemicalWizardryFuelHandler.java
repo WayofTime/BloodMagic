@@ -1,5 +1,9 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.common.IFuelHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,10 +11,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.common.IFuelHandler;
 
 public class AlchemicalWizardryFuelHandler implements IFuelHandler
 {
@@ -18,19 +18,15 @@ public class AlchemicalWizardryFuelHandler implements IFuelHandler
     public int getBurnTime(ItemStack fuel)
     {
         ItemStack itemStack = fuel;
-        if(itemStack == null)
+        if (itemStack == null)
         {
-        	return 0;
+            return 0;
         }
-        
+
         Item fuelItem = itemStack.getItem();
 
         if (fuelItem.equals(ModItems.lavaCrystal))
         {
-            /*ItemStack newItem = new ItemStack(AlchemicalWizardry.lavaCrystal);
-            newItem.getItem().setDamage(newItem, 50);
-            fuel.getItem().setContainerItem(((LavaCrystal)newItem.getItem()).change());
-            */
             LavaCrystal item = (LavaCrystal) fuel.getItem();
 
             if (item.hasEnoughEssence(fuel))
@@ -66,7 +62,7 @@ public class AlchemicalWizardryFuelHandler implements IFuelHandler
                 return 0;
             }
         }
-        
+
         return 0;
     }
 }

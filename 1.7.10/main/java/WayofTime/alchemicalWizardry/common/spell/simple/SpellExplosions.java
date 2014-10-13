@@ -16,7 +16,6 @@ public class SpellExplosions extends HomSpell
     {
         super();
         this.setEnergies(400, 500, 1900, 1500);
-        //this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @Override
@@ -38,7 +37,6 @@ public class SpellExplosions extends HomSpell
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             par2World.spawnEntityInWorld(new ExplosionProjectile(par2World, par3EntityPlayer, 6, true));
         }
 
@@ -83,8 +81,6 @@ public class SpellExplosions extends HomSpell
         }
 
         int distance = 4;
-//		double yaw = par3EntityPlayer.rotationYaw/180*Math.PI;
-//		double pitch = par3EntityPlayer.rotationPitch/180*Math.PI;
         par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight(), par3EntityPlayer.posZ, (float) (distance), false);
         return par1ItemStack;
     }

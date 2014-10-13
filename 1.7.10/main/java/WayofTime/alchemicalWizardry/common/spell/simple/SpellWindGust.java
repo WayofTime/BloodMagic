@@ -1,21 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import ibxm.Player;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class SpellWindGust extends HomSpell
 {
@@ -25,7 +22,6 @@ public class SpellWindGust extends HomSpell
     {
         super();
         this.setEnergies(300, 400, 300, 500);
-        //this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @Override
@@ -47,7 +43,6 @@ public class SpellWindGust extends HomSpell
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             par2World.spawnEntityInWorld(new WindGustProjectile(par2World, par3EntityPlayer, 8));
         }
 
@@ -77,7 +72,6 @@ public class SpellWindGust extends HomSpell
         double zCoord = par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance;
         float d0 = 0.5f;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance), par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance, par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance, par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1, par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5).expand(d0, d0, d0);
-        //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
@@ -92,24 +86,15 @@ public class SpellWindGust extends HomSpell
                     continue;
                 }
             }
-
-            //entityLiving.setFire(50);
-            //entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(par3EntityPlayer), 5*i);
-            //entityLiving.setVelocity(Math.sin(-yaw)*2, 2, Math.cos(yaw)*2);
             entityLiving.motionX = Math.sin(-yaw) * 2;
             entityLiving.motionY = 2;
             entityLiving.motionZ = Math.cos(yaw) * 2;
-            //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
         }
-
-        //par2World.createExplosion(par3EntityPlayer, xCoord, yCoord, zCoord, (float)(1), false);
-
         for (int i = 0; i < 5; i++)
         {
             SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
 
         }
-
         return par1ItemStack;
     }
 
@@ -139,11 +124,9 @@ public class SpellWindGust extends HomSpell
         par3EntityPlayer.motionX = vec.xCoord * wantedVelocity;
         par3EntityPlayer.motionY = vec.yCoord * wantedVelocity;
         par3EntityPlayer.motionZ = vec.zCoord * wantedVelocity;
-        //PacketDispatcher.sendPacketToPlayer(PacketHandler.getPlayerVelocitySettingPacket(xVel, yVel, zVel), (Player) par3EntityPlayer);
         SpellHelper.setPlayerSpeedFromServer(par3EntityPlayer, xVel, yVel, zVel);
         par2World.playSoundEffect((double) ((float) par3EntityPlayer.posX + 0.5F), (double) ((float) par3EntityPlayer.posY + 0.5F), (double) ((float) par3EntityPlayer.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (par2World.rand.nextFloat() - par2World.rand.nextFloat()) * 0.8F);
         par3EntityPlayer.fallDistance = 0;
-        //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
         double xCoord = par3EntityPlayer.posX;
         double yCoord = par3EntityPlayer.posY;
         double zCoord = par3EntityPlayer.posZ;
@@ -173,7 +156,6 @@ public class SpellWindGust extends HomSpell
 
         int d0 = 3;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
-        //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
         double xCoord = par3EntityPlayer.posX;
@@ -198,17 +180,10 @@ public class SpellWindGust extends HomSpell
             double posZDif = entityLiving.posZ - par3EntityPlayer.posZ;
             double distance2 = Math.pow(posXDif, 2) + Math.pow(posYDif, 2) + Math.pow(posZDif, 2);
             double distance = Math.sqrt(distance2);
-            //entityLiving.setVelocity(posXDif*wantedVel/distance, posYDif*wantedVel/distance, posZDif*wantedVel/distance);
             entityLiving.motionX = posXDif * wantedVel / distance;
             entityLiving.motionY = posYDif * wantedVel / distance;
             entityLiving.motionZ = posZDif * wantedVel / distance;
-            //entityLiving.setFire(50);
-            //entityLiving.attackEntityFrom(DamageSource.causePlayerDamage(par3EntityPlayer), 5*i);
-            //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
         }
-
-        //par2World.createExplosion(par3EntityPlayer, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (float)(2), false);
-
         for (int i = 0; i < 20; i++)
         {
             SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);

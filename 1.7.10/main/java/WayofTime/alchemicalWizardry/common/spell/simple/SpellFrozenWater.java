@@ -1,14 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import java.util.Random;
 
 public class SpellFrozenWater extends HomSpell
 {
@@ -18,7 +18,6 @@ public class SpellFrozenWater extends HomSpell
     {
         super();
         this.setEnergies(100, 200, 150, 100);
-        //this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @Override
@@ -40,7 +39,6 @@ public class SpellFrozenWater extends HomSpell
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             par2World.spawnEntityInWorld(new IceProjectile(par2World, par3EntityPlayer, 6));
         }
 
@@ -187,8 +185,6 @@ public class SpellFrozenWater extends HomSpell
                 for (int k = -radius; k <= radius; k++)
                 {
                     Block block = par2World.getBlock((int) par3EntityPlayer.posX + i - 1, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k);
-
-                    //Block block = Block.blocksList[blockID];
                     if (block == Blocks.water || block == Blocks.flowing_water)
                     {
                         par2World.setBlock((int) par3EntityPlayer.posX + i - 1, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Blocks.ice);
@@ -196,13 +192,6 @@ public class SpellFrozenWater extends HomSpell
                 }
             }
         }
-
-//		int blockID = par2World.getBlockId((int)par3EntityPlayer.posX+i, (int)par3EntityPlayer.posY+j, (int)par3EntityPlayer.posZ+k);
-//		//Block block = Block.blocksList[blockID];
-//		if(blockID==Block.waterMoving.blockID||blockID==Block.waterStill.blockID)
-//		{
-//			par2World.setBlock((int)par3EntityPlayer.posX+i, (int)par3EntityPlayer.posY+j, (int)par3EntityPlayer.posZ+k, Blocks.ice);
-//		}
         return par1ItemStack;
     }
 }

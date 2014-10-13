@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -13,32 +15,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.enchantment.EnchantmentHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoundPickaxe extends ItemPickaxe implements IBindable
 {
-    /**
-     * Array of blocks the tool has extra effect against.
-     */
-   // public static final Block[] blocksEffectiveAgainst = new Block[]{Blocks.cobblestone, Blocks.stoneDoubleSlab, Blocks.stoneSingleSlab, Block.stone, Block.sandStone, Block.cobblestoneMossy, Block.oreIron, Block.blockIron, Block.oreCoal, Block.blockGold, Block.oreGold, Block.oreDiamond, Block.blockDiamond, Block.ice, Block.netherrack, Block.oreLapis, Block.blockLapis, Block.oreRedstone, Block.oreRedstoneGlowing, Block.rail, Block.railDetector, Block.railPowered, Block.railActivator};
 
     public float efficiencyOnProperMaterial = 12.0F;
-
-    /**
-     * Damage versus entities.
-     */
     public float damageVsEntity;
-
     private static IIcon activeIcon;
     private static IIcon passiveIcon;
 
@@ -48,7 +37,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
         this.maxStackSize = 1;
-        //this.setMaxDamage(par3EnumToolMaterial.getMaxUses());
         this.efficiencyOnProperMaterial = 12.0F;
         this.damageVsEntity = 5;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -137,16 +125,16 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         {
             return par1ItemStack;
         }
-        
-        if(par2World.isRemote)
+
+        if (par2World.isRemote)
         {
-        	return par1ItemStack;
+            return par1ItemStack;
         }
-        
+
         Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
-        int posX = (int)(blockVec.xCoord);
-        int posY = (int)(blockVec.yCoord);
-        int posZ = (int)(blockVec.zCoord);
+        int posX = (int) (blockVec.xCoord);
+        int posY = (int) (blockVec.yCoord);
+        int posZ = (int) (blockVec.zCoord);
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
@@ -165,7 +153,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
 
                         if (str > 1.1f && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k))
                         {
-                            //par1ItemStack.getEnchantmentTagList();
                             if (silkTouch)
                             {
                                 ItemStack droppedItem = new ItemStack(block, 1, meta);
@@ -215,11 +202,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
-
-//        if(par1ItemStack.stackTagCompound.getBoolean("isActive"))
-//        {
-//        	EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 1);
-//        }
 
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
@@ -282,8 +264,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         {
             return false;
         }
-
-        //par1ItemStack.damageItem(2, par3EntityLivingBase);
         return true;
     }
 
@@ -295,9 +275,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         {
             EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par7EntityLivingBase, getEnergyUsed());
         }
-
-        //TODO Possibly add better functionality for the items?
-        //par7EntityLivingBase.getLookVec();
         return true;
     }
 
@@ -321,14 +298,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     }
 
     /**
-     * Return whether this item is repairable in an anvil.
-     */
-//    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-//    {
-//        return false;
-//    }
-
-    /**
      * FORGE: Overridden to allow custom tool effectiveness
      */
     @Override
@@ -347,30 +316,20 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         return func_150893_a(stack, block);
     }
 
-//    @Override
-//
-//    /**
-//     * Returns if the item (tool) can harvest results from the block type.
-//     */
-//    public boolean func_150897_b(Block par1Block) //canHarvestBlock
-//    {
-//        return par1Block == Blocks.obsidian ? true : (par1Block != Blocks.diamond_block && par1Block != Blocks.diamond_ore ? (par1Block != Blocks.emerald_ore && par1Block != Blocks.emerald_block ? (par1Block != Blocks.gold_block && par1Block != Blocks.gold_ore ? (par1Block != Blocks.iron_block && par1Block != Blocks.iron_ore ? (par1Block != Blocks.lapis_block && par1Block != Blocks.lapis_ore ? (par1Block != Blocks.redstone_ore && par1Block != Blocks.oreRedstoneGlowing ? (par1Block.getMaterial() == Material.rock ? true : (par1Block.blockMaterial == Material.iron ? true : par1Block.blockMaterial == Material.anvil)) : true) : true) : true) : true) : true) : true);
-//    }
-
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
         return !getActivated(stack);
     }
-    
+
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-    	if("pickaxe".equals(toolClass))
-    	{
-    		return 5;
-    	}
-    	
-    	return 0;
+        if ("pickaxe".equals(toolClass))
+        {
+            return 5;
+        }
+
+        return 0;
     }
 }

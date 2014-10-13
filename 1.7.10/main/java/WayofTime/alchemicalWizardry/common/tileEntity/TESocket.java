@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -7,17 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 
 public class TESocket extends TileEntity implements IInventory
 {
     private ItemStack[] inv;
     private int resultID;
     private int resultDamage;
-    
+
     public static final int sizeInv = 1;
 
     private boolean isActive;
@@ -34,7 +33,7 @@ public class TESocket extends TileEntity implements IInventory
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory",Constants.NBT.TAG_COMPOUND);
+        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -164,13 +163,11 @@ public class TESocket extends TileEntity implements IInventory
     @Override
     public void openInventory()
     {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void closeInventory()
     {
-        // TODO Auto-generated method stub
     }
 
     //Logic for the actual block is under here

@@ -5,9 +5,7 @@ import WayofTime.alchemicalWizardry.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockColored;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
@@ -15,7 +13,6 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemStack;
@@ -30,7 +27,6 @@ import java.util.List;
 
 public class EntityElemental extends EntityDemon
 {
-    //private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private static float maxTamedHealth = 100.0F;
@@ -41,15 +37,12 @@ public class EntityElemental extends EntityDemon
         super(par1World, demonID);
         this.setSize(0.5F, 1.0F);
         this.setAggro(false);
-        //this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntitySheep.class, 200, false));
         this.setTamed(false);
 
         if (par1World != null && !par1World.isRemote)
         {
             this.setCombatTask();
         }
-
-        //this.isImmuneToFire = true;
     }
 
     public int courseChangeCooldown;
@@ -68,11 +61,6 @@ public class EntityElemental extends EntityDemon
     /**
      * The explosion radius of spawned fireballs.
      */
-    //private int explosionStrength = 1;
-//
-//	private int heightOffsetUpdateTime;
-//	private float heightOffset = 0.5F;
-//	private int field_70846_g;
     protected void dropFewItems(boolean par1, int par2)
     {
         if (worldObj.rand.nextFloat() < (1 - Math.pow(0.6f, par2 + 1)))
@@ -174,12 +162,6 @@ public class EntityElemental extends EntityDemon
 
     protected void updateEntityActionState()
     {
-//        if (!this.worldObj.isRemote && this.worldObj.difficultySetting == 0)
-//        {
-//            this.setDead();
-//        }
-
-        //this.despawnEntity();
         if (this.getHealth() <= this.getMaxHealth() / 2.0f && worldObj.rand.nextInt(200) == 0)
         {
             this.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionReciprocation.id, 100, 1));
@@ -265,10 +247,6 @@ public class EntityElemental extends EntityDemon
             {
                 if (Math.sqrt(d5 * d5 + d6 * d6 + d7 * d7) < 4)
                 {
-//                	if (this.attackCounter == 10)
-//                    {
-//                        this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1007, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
-//                    }
                     ++this.attackCounter;
 
                     if (this.attackCounter >= 10)
@@ -369,8 +347,6 @@ public class EntityElemental extends EntityDemon
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
         }
-
-        //this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(10.0D);
     }
 
     /**
@@ -410,7 +386,6 @@ public class EntityElemental extends EntityDemon
         super.entityInit();
         this.dataWatcher.addObject(18, new Float(this.getHealth()));
         this.dataWatcher.addObject(19, new Byte((byte) 0));
-        //this.dataWatcher.addObject(20, new Byte((byte) BlockColored.getBlockFromDye(1)));
         this.dataWatcher.addObject(25, Byte.valueOf((byte) 0));
     }
 
@@ -546,7 +521,6 @@ public class EntityElemental extends EntityDemon
     public boolean isBreedingItem(ItemStack par1ItemStack)
     {
         return false;
-        //return par1ItemStack == null ? false : (!(Item.itemsList[par1ItemStack.itemID] instanceof ItemFood) ? false : ((ItemFood)Item.itemsList[par1ItemStack.itemID]).isWolfsFavoriteMeat());
     }
 
     /**
@@ -602,7 +576,6 @@ public class EntityElemental extends EntityDemon
      */
     protected boolean canDespawn()
     {
-        //return !this.isTamed() && this.ticksExisted > 2400;
         return false;
     }
 
@@ -622,7 +595,6 @@ public class EntityElemental extends EntityDemon
             }
 
             return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer) par2EntityLivingBase).canAttackPlayer((EntityPlayer) par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse) par1EntityLivingBase).isTame();
-            //return par1EntityLivingBase instanceof EntityPlayer && par2EntityLivingBase instanceof EntityPlayer && !((EntityPlayer)par2EntityLivingBase).func_96122_a((EntityPlayer)par1EntityLivingBase) ? false : !(par1EntityLivingBase instanceof EntityHorse) || !((EntityHorse)par1EntityLivingBase).func_110248_bS();
         } else
         {
             return false;
@@ -636,7 +608,6 @@ public class EntityElemental extends EntityDemon
     public void setCombatTask()
     {
         this.tasks.removeTask(this.aiAttackOnCollide);
-        //this.tasks.removeTask(this.aiArrowAttack);
         ItemStack itemstack = this.getHeldItem();
         this.tasks.addTask(4, this.aiAttackOnCollide);
     }
@@ -708,7 +679,7 @@ public class EntityElemental extends EntityDemon
     }
 
     @Override
-    public int getTotalArmorValue() //TODO
+    public int getTotalArmorValue()
     {
         return 10;
     }

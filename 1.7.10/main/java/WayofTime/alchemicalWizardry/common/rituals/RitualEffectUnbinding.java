@@ -1,16 +1,5 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -18,17 +7,26 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class RitualEffectUnbinding extends RitualEffect
 {
-	public static final int sanctusDrain = 1000;
-	
+    public static final int sanctusDrain = 1000;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -50,38 +48,35 @@ public class RitualEffectUnbinding extends RitualEffect
             List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityItem item;
-            
+
             boolean drain = false;
 
             while (iterator.hasNext())
             {
                 item = (EntityItem) iterator.next();
-//                double xDif = item.posX - (xCoord+0.5);
-//                double yDif = item.posY - (yCoord+1);
-//                double zDif = item.posZ - (zCoord+0.5);
                 ItemStack itemStack = item.getEntityItem();
 
                 if (itemStack == null)
                 {
                     continue;
                 }
-                
+
                 boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
-                if(hasSanctus)
+                if (hasSanctus)
                 {
-                	if(itemStack.getItem() instanceof IBindable && !EnergyItems.getOwnerName(itemStack).equals(""))
-                	{
-                		world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
+                    if (itemStack.getItem() instanceof IBindable && !EnergyItems.getOwnerName(itemStack).equals(""))
+                    {
+                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
                         world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
                         world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
-                        
-                		EnergyItems.setItemOwner(itemStack, "");
-                		this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
-                		drain = true;
-                		ritualStone.setActive(false);
-                		break;
-                	}
+
+                        EnergyItems.setItemOwner(itemStack, "");
+                        this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+                        drain = true;
+                        ritualStone.setActive(false);
+                        break;
+                    }
                 }
 
                 if (itemStack.getItem() == ModItems.boundHelmet)
@@ -157,16 +152,15 @@ public class RitualEffectUnbinding extends RitualEffect
                     break;
                 }
 
-                
-                
+
             }
 
-            if(drain)
+            if (drain)
             {
-            	SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
-            }   
+                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
+            }
         }
-        
+
         if (world.rand.nextInt(10) == 0)
         {
             SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
@@ -176,14 +170,13 @@ public class RitualEffectUnbinding extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> unbindingRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> unbindingRitual = new ArrayList();
         unbindingRitual.add(new RitualComponent(-2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(0, 0, 2, 4));
@@ -217,5 +210,5 @@ public class RitualEffectUnbinding extends RitualEffect
         unbindingRitual.add(new RitualComponent(0, 0, 5, 2));
         unbindingRitual.add(new RitualComponent(0, 0, -5, 2));
         return unbindingRitual;
-	}
+    }
 }

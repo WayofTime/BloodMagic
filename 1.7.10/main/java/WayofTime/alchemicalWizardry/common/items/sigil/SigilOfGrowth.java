@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,13 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
 {
@@ -32,10 +31,8 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(150);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -124,10 +121,10 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-        
-        if(par2World.isRemote)
+
+        if (par2World.isRemote)
         {
-        	return par1ItemStack;
+            return par1ItemStack;
         }
 
         if (par3EntityPlayer.isSneaking())
@@ -169,7 +166,6 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         }
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
-
         if (par1ItemStack.stackTagCompound == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
@@ -181,7 +177,6 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
             {
                 EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
             }
-
             int range = 5;
             int verticalRange = 2;
             int posX = (int) Math.round(par3Entity.posX - 0.5f);
@@ -195,7 +190,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                     for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                     {
                         Block block = par2World.getBlock(ix, iy, iz);
-                        
+
 
                         if (block instanceof IPlantable)
                         {
@@ -226,14 +221,14 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         {
             if (!p_150919_1_.isRemote)
             {
-                
+
             }
             return true;
         }
 
         if (block instanceof IGrowable)
         {
-            IGrowable igrowable = (IGrowable)block;
+            IGrowable igrowable = (IGrowable) block;
 
             if (igrowable.func_149851_a(p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_, p_150919_1_.isRemote))
             {
@@ -244,7 +239,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                         igrowable.func_149853_b(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_);
                     }
 
-                    
+
                 }
 
                 return true;
@@ -257,11 +252,11 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-    	if(world.isRemote)
+        if (world.isRemote)
         {
-        	return;
+            return;
         }
-    	
+
         int range = 5;
         int verticalRange = 2;
         int posX = (int) Math.round(player.posX - 0.5f);
@@ -274,8 +269,8 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
             {
                 for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                 {
-                	 Block block = world.getBlock(ix, iy, iz);
-                    
+                    Block block = world.getBlock(ix, iy, iz);
+
 
                     if (block instanceof IPlantable)
                     {
@@ -292,14 +287,12 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 50;
     }
 }

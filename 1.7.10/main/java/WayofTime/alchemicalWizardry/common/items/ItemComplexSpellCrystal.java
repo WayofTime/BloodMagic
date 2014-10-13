@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,10 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemComplexSpellCrystal extends EnergyItems
 {
@@ -61,7 +61,6 @@ public class ItemComplexSpellCrystal extends EnergyItems
 
         if (!par2World.isRemote)
         {
-            //World world = MinecraftServer.getServer().worldServers[getDimensionID(par1ItemStack)];
             World world = DimensionManager.getWorld(getDimensionID(par1ItemStack));
 
             if (world != null)
@@ -86,13 +85,7 @@ public class ItemComplexSpellCrystal extends EnergyItems
         {
             return par1ItemStack;
         }
-
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-//        if (!par2World.isRemote)
-//        {
-//            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
-//            par2World.spawnEntityInWorld(new FireProjectile(par2World, par3EntityPlayer, 10));
-//        }
         return par1ItemStack;
     }
 

@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,13 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemDiabloKey extends EnergyItems
 {
@@ -27,7 +26,6 @@ public class ItemDiabloKey extends EnergyItems
         super();
         DamageSource damageSource = DamageSource.generic;
         setMaxStackSize(1);
-        //setMaxDamage(damage);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setEnergyUsed(1000);
         this.hasSubtypes = true;
@@ -44,14 +42,10 @@ public class ItemDiabloKey extends EnergyItems
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add("Binds other items to the owner's network");
-
-        //par3List.add("LP: " + (this.getMaxDamage() - this.getDamage(par1ItemStack)));
         if (!(par1ItemStack.stackTagCompound == null))
         {
             par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
         }
-
-        //par3List.add("LP: " + par2EntityPlayer.getEntityData().getInteger("currentEssence"));
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)

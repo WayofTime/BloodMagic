@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,12 +22,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class LavaSigil extends ItemBucket implements ArmourUpgrade
 {
@@ -37,7 +37,6 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
     {
         super(Blocks.lava);
         this.maxStackSize = 1;
-        //setMaxDamage(2000);
         setEnergyUsed(1000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
@@ -86,7 +85,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
         double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double) f;
         double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double) f + 1.62D - (double) par3EntityPlayer.yOffset;
         double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double) f;
-       
+
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
         if (movingobjectposition == null)
@@ -104,78 +103,71 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
                 {
                     return par1ItemStack;
                 }
-                
+
                 TileEntity tile = par2World.getTileEntity(i, j, k);
-                if(tile instanceof IFluidHandler)
+                if (tile instanceof IFluidHandler)
                 {
-                	FluidStack fluid = new FluidStack(FluidRegistry.LAVA,1000);
-                	int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, false);
-                	
-                	if(amount>0)
-                	{
-                		((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, true);
-                		if (!par3EntityPlayer.capabilities.isCreativeMode)
-                        {
-                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                            {
-                            }
-                        }
-                	}
-                	
-                	return par1ItemStack;
-                }
+                    FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
+                    int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, false);
 
-                //if (this.isFull == 0)
-                {
-                    //Empty
-                } //else
-                {
-                    if (movingobjectposition.sideHit == 0)
+                    if (amount > 0)
                     {
-                        --j;
-                    }
-
-                    if (movingobjectposition.sideHit == 1)
-                    {
-                        ++j;
-                    }
-
-                    if (movingobjectposition.sideHit == 2)
-                    {
-                        --k;
-                    }
-
-                    if (movingobjectposition.sideHit == 3)
-                    {
-                        ++k;
-                    }
-
-                    if (movingobjectposition.sideHit == 4)
-                    {
-                        --i;
-                    }
-
-                    if (movingobjectposition.sideHit == 5)
-                    {
-                        ++i;
-                    }
-
-                    if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
-                    {
-                        return par1ItemStack;
-                    }
-
-                    if (this.tryPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && !par3EntityPlayer.capabilities.isCreativeMode)
-                    {
+                        ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, true);
                         if (!par3EntityPlayer.capabilities.isCreativeMode)
                         {
                             if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                             {
                             }
-                        } else
-                        {
-                            return par1ItemStack;
                         }
+                    }
+
+                    return par1ItemStack;
+                }
+                if (movingobjectposition.sideHit == 0)
+                {
+                    --j;
+                }
+
+                if (movingobjectposition.sideHit == 1)
+                {
+                    ++j;
+                }
+
+                if (movingobjectposition.sideHit == 2)
+                {
+                    --k;
+                }
+
+                if (movingobjectposition.sideHit == 3)
+                {
+                    ++k;
+                }
+
+                if (movingobjectposition.sideHit == 4)
+                {
+                    --i;
+                }
+
+                if (movingobjectposition.sideHit == 5)
+                {
+                    ++i;
+                }
+
+                if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
+                {
+                    return par1ItemStack;
+                }
+
+                if (this.tryPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && !par3EntityPlayer.capabilities.isCreativeMode)
+                {
+                    if (!par3EntityPlayer.capabilities.isCreativeMode)
+                    {
+                        if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                        {
+                        }
+                    } else
+                    {
+                        return par1ItemStack;
                     }
                 }
             }
@@ -189,10 +181,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
      */
     public boolean tryPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9, int par10)
     {
-        //if (this.isFull <= 0)
-        {
-            //return false;
-        }  if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
+        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
         {
             return false;
         } else if ((par1World.getBlock(par8, par9, par10) == Blocks.lava || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava) && par1World.getBlockMetadata(par8, par9, par10) == 0)
@@ -214,39 +203,7 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
     {
         return this.energyUsed;
     }
-    //Heals the player using the item. If the player is at full health, or if the durability cannot be used any more,
-    //the item is not used.
 
-    //    protected void damagePlayer(World world, EntityPlayer player, int damage)
-//    {
-//        if (world != null)
-//        {
-//            double posX = player.posX;
-//            double posY = player.posY;
-//            double posZ = player.posZ;
-//            world.playSoundEffect((double)((float)posX + 0.5F), (double)((float)posY + 0.5F), (double)((float)posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-//            float f = (float)1.0F;
-//            float f1 = f * 0.6F + 0.4F;
-//            float f2 = f * f * 0.7F - 0.5F;
-//            float f3 = f * f * 0.6F - 0.7F;
-//
-//            for (int l = 0; l < 8; ++l)
-//            {
-//                world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
-//            }
-//        }
-//
-//        for (int i = 0; i < damage; i++)
-//        {
-//            //player.setEntityHealth((player.getHealth()-1));
-//            player.setEntityHealth(player.func_110143_aJ() - 1);
-//
-//            if (player.func_110143_aJ() <= 0)
-//            {
-//                player.inventory.dropAllItems();
-//            }
-//        }
-//    }
     protected boolean syphonBatteries(ItemStack ist, EntityPlayer player, int damageToBeDone)
     {
         if (!player.capabilities.isCreativeMode)
@@ -262,7 +219,6 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
                 {
                     continue;
                 }
-
                 if (stack.getItem() instanceof EnergyBattery && !usedBattery)
                 {
                     if (stack.getItemDamage() <= stack.getMaxDamage() - damageToBeDone)
@@ -286,25 +242,21 @@ public class LavaSigil extends ItemBucket implements ArmourUpgrade
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player,
-                               ItemStack thisItemStack)
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        // TODO Auto-generated method stub
-        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 9,true));
+        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 9, true));
         player.extinguish();
     }
 
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 100;
     }
 }

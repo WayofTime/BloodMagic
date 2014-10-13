@@ -1,11 +1,14 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import com.google.common.collect.Multimap;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -15,33 +18,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
 
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoundShovel extends ItemSpade implements IBindable
 {
-    /**
-     * Array of blocks the tool has extra effect against.
-     */
-    //public static final Block[] blocksEffectiveAgainst = new Block[]{Block.grass, Block.dirt, Block.sand, Block.gravel, Block.snow, Block.blockSnow, Block.blockClay, Block.tilledField, Block.slowSand, Block.mycelium};
-
     public float efficiencyOnProperMaterial = 12.0F;
-
-    /**
-     * Damage versus entities.
-     */
     public float damageVsEntity;
 
     private static IIcon activeIcon;
@@ -53,7 +40,6 @@ public class BoundShovel extends ItemSpade implements IBindable
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
         this.maxStackSize = 1;
-        //this.setMaxDamage(par3EnumToolMaterial.getMaxUses());
         this.efficiencyOnProperMaterial = 12.0F;
         this.damageVsEntity = 5;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -143,10 +129,10 @@ public class BoundShovel extends ItemSpade implements IBindable
         }
 
         Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
-        int posX = (int)(blockVec.xCoord);
-        int posY = (int)(blockVec.yCoord);
-        int posZ = (int)(blockVec.zCoord);
-		boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
+        int posX = (int) (blockVec.xCoord);
+        int posY = (int) (blockVec.yCoord);
+        int posZ = (int) (blockVec.zCoord);
+        boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
         for (int i = -5; i <= 5; i++)
@@ -164,7 +150,6 @@ public class BoundShovel extends ItemSpade implements IBindable
 
                         if (str > 1.1f && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k))
                         {
-                            //par1ItemStack.getEnchantmentTagList();
                             if (silkTouch)
                             {
                                 ItemStack droppedItem = new ItemStack(block, 1, meta);
@@ -214,12 +199,6 @@ public class BoundShovel extends ItemSpade implements IBindable
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
-
-//        if(par1ItemStack.stackTagCompound.getBoolean("isActive"))
-//        {
-//        	EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 1);
-//        }
-
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
@@ -281,8 +260,6 @@ public class BoundShovel extends ItemSpade implements IBindable
         {
             return false;
         }
-
-        //par1ItemStack.damageItem(2, par3EntityLivingBase);
         return true;
     }
 
@@ -309,13 +286,6 @@ public class BoundShovel extends ItemSpade implements IBindable
         return 30;
     }
 
-    /**
-     * Return whether this item is repairable in an anvil.
-     */
-//    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-//    {
-//        return false;
-//    }
     @Override
     public Multimap getItemAttributeModifiers()
     {
@@ -342,26 +312,21 @@ public class BoundShovel extends ItemSpade implements IBindable
 
         return func_150893_a(stack, block);
     }
-//
-//    public boolean canHarvestBlock(Block par1Block)
-//    {
-//        return par1Block == Block.snow ? true : par1Block == Block.blockSnow;
-//    }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
         return !getActivated(stack);
     }
-    
+
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-    	if("shovel".equals(toolClass))
-    	{
-    		return 5;
-    	}
-    	
-    	return 0;
+        if ("shovel".equals(toolClass))
+        {
+            return 5;
+        }
+
+        return 0;
     }
 }

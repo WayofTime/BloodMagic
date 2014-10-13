@@ -1,9 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -11,8 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class SpellFireBurst extends HomSpell
 {
@@ -22,7 +22,6 @@ public class SpellFireBurst extends HomSpell
     {
         super();
         this.setEnergies(100, 300, 400, 100);
-        //this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @Override
@@ -44,8 +43,7 @@ public class SpellFireBurst extends HomSpell
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
-        	FireProjectile proj = new FireProjectile(par2World, par3EntityPlayer, 7);
+            FireProjectile proj = new FireProjectile(par2World, par3EntityPlayer, 7);
             par2World.spawnEntityInWorld(proj);
         }
 
@@ -101,7 +99,6 @@ public class SpellFireBurst extends HomSpell
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         int d0 = 2;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
-        //axisalignedbb.maxY = (double)this.worldObj.getHeight();
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
@@ -120,18 +117,6 @@ public class SpellFireBurst extends HomSpell
             entityLiving.setFire(100);
             entityLiving.attackEntityFrom(DamageSource.inFire, 2);
         }
-
-//        if (!par2World.isRemote)
-//        {
-//
-//        	for(int i=0;i<10;i++)
-//        	{
-//        		for(int j=0;j<5;j++)
-//        		{
-//        			par2World.spawnEntityInWorld(new FireProjectile(par2World, par3EntityPlayer, 10,5,par3EntityPlayer.posX,par3EntityPlayer.posY+par3EntityPlayer.getEyeHeight(),par3EntityPlayer.posZ, par3EntityPlayer.rotationYaw+i*36F,par3EntityPlayer.rotationPitch+j*72F));
-//        		}
-//        	}
-//        }
         return par1ItemStack;
     }
 

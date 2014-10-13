@@ -1,17 +1,13 @@
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 
 public class ReagentContainer implements IReagentContainer
 {
-	protected ReagentStack reagentStack;
-	protected int capacity;
+    protected ReagentStack reagentStack;
+    protected int capacity;
 
-	public ReagentContainer(int capacity)
+    public ReagentContainer(int capacity)
     {
         this(null, capacity);
     }
@@ -31,13 +27,13 @@ public class ReagentContainer implements IReagentContainer
     {
         ReagentStack reagent = ReagentStack.loadReagentStackFromNBT(nbt);
         int capacity = nbt.getInteger("capacity");
-        
+
         if (reagent != null)
         {
             return new ReagentContainer(reagent, capacity);
-        }else
+        } else
         {
-        	return new ReagentContainer(null, capacity);
+            return new ReagentContainer(null, capacity);
         }
     }
 
@@ -47,12 +43,12 @@ public class ReagentContainer implements IReagentContainer
         {
             reagentStack.writeToNBT(nbt);
         }
-        
+
         nbt.setInteger("capacity", capacity);
 
         return nbt;
     }
-	
+
     @Override
     public ReagentStack getReagent()
     {
@@ -115,8 +111,7 @@ public class ReagentContainer implements IReagentContainer
         {
             reagentStack.amount += resource.amount;
             filled = resource.amount;
-        }
-        else
+        } else
         {
             reagentStack.amount = capacity;
         }
@@ -150,9 +145,9 @@ public class ReagentContainer implements IReagentContainer
         return stack;
     }
 
-	@Override
-	public ReagentContainerInfo getInfo() 
-	{
-		return new ReagentContainerInfo(this);
-	}
+    @Override
+    public ReagentContainerInfo getInfo()
+    {
+        return new ReagentContainerInfo(this);
+    }
 }

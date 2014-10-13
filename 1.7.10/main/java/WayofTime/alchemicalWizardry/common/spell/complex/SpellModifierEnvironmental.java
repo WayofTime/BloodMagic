@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
-public class SpellModifierEnvironmental extends SpellModifier 
+public class SpellModifierEnvironmental extends SpellModifier
 {
-	public SpellModifierEnvironmental()
-	{
-		super(SpellModifier.ENVIRONMENTAL);
-	}
+    public SpellModifierEnvironmental()
+    {
+        super(SpellModifier.ENVIRONMENTAL);
+    }
 }

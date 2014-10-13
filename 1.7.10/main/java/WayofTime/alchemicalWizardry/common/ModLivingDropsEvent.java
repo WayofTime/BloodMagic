@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.ModItems;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import WayofTime.alchemicalWizardry.ModItems;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ModLivingDropsEvent
 {

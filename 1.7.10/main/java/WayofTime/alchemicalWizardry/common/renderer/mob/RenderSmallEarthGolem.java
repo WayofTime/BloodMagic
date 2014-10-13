@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderSmallEarthGolem extends RenderLiving
 {
-    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/SmallEarthGolem.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
+    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/SmallEarthGolem.png");
 
     public RenderSmallEarthGolem(ModelBase par1ModelBase, float par2)
     {

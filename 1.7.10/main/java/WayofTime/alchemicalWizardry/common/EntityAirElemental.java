@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common;
 
-import ibxm.Player;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityElemental;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityElemental;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityAirElemental extends EntityElemental implements IMob
 {
@@ -22,7 +21,7 @@ public class EntityAirElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityPlayer)
         {
-           	SpellHelper.setPlayerSpeedFromServer((EntityPlayer)target, target.motionX, target.motionY + 3, target.motionZ);
+            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) target, target.motionX, target.motionY + 3, target.motionZ);
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
         } else if (target instanceof EntityLivingBase)
         {

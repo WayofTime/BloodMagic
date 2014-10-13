@@ -1,5 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,11 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EnergyItems extends Item implements IBindable
 {
@@ -32,8 +32,6 @@ public class EnergyItems extends Item implements IBindable
     {
         return this.energyUsed;
     }
-    //Heals the player using the item. If the player is at full health, or if the durability cannot be used any more,
-    //the item is not used.
 
     protected void damagePlayer(World world, EntityPlayer player, int damage)
     {
@@ -47,16 +45,13 @@ public class EnergyItems extends Item implements IBindable
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
-
             for (int l = 0; l < 8; ++l)
             {
                 world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
             }
         }
-
         for (int i = 0; i < damage; i++)
         {
-            //player.setEntityHealth((player.getHealth()-1));
             player.setHealth((player.getHealth() - 1));
 
             if (player.getHealth() <= 0.0005)
@@ -75,22 +70,17 @@ public class EnergyItems extends Item implements IBindable
         } else
         {
             World world = player.worldObj;
-
             if (world != null)
             {
                 double posX = player.posX;
                 double posY = player.posY;
                 double posZ = player.posZ;
-                //if(particles)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
-                    world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-                }
+
+                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
+                world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
             }
         }
-
         return true;
-        //return syphonBatteriesWithoutParticles(ist, player, damageToBeDone, true);
     }
 
     public static boolean syphonWhileInContainer(ItemStack ist, int damageToBeDone)
@@ -119,16 +109,6 @@ public class EnergyItems extends Item implements IBindable
                 data.markDirty();
                 return true;
             }
-
-//        	EntityPlayer ownerEntity = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(ist.getTagCompound().getString("ownerName"));
-//            if(ownerEntity==null){return false;}
-//            NBTTagCompound tag = ownerEntity.getEntityData();
-//            int currentEssence = tag.getInteger("currentEssence");
-//            if(currentEssence>=damageToBeDone)
-//            {
-//            	tag.setInteger("currentEssence", currentEssence-damageToBeDone);
-//            	return true;
-//            }
         }
 
         return false;
@@ -155,15 +135,6 @@ public class EnergyItems extends Item implements IBindable
             }
 
             return data.currentEssence >= damageToBeDone;
-//        	EntityPlayer ownerEntity = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(ist.getTagCompound().getString("ownerName"));
-//            if(ownerEntity==null){return false;}
-//            NBTTagCompound tag = ownerEntity.getEntityData();
-//            int currentEssence = tag.getInteger("currentEssence");
-//            if(currentEssence>=damageToBeDone)
-//            {
-//            	tag.setInteger("currentEssence", currentEssence-damageToBeDone);
-//            	return true;
-//            }
         }
 
         return false;
@@ -175,13 +146,12 @@ public class EnergyItems extends Item implements IBindable
         {
             if (!user.capabilities.isCreativeMode)
             {
-                //player.setEntityHealth((player.getHealth()-1));
                 user.setHealth((user.getHealth() - 1));
 
                 if (user.getHealth() <= 0.0005f)
                 {
                     user.onDeath(DamageSource.generic);
-                    
+
                 }
             }
         } else if (energySyphoned >= 100)
@@ -190,7 +160,6 @@ public class EnergyItems extends Item implements IBindable
             {
                 for (int i = 0; i < ((energySyphoned + 99) / 100); i++)
                 {
-                    //player.setEntityHealth((player.getHealth()-1));
                     user.setHealth((user.getHealth() - 1));
 
                     if (user.getHealth() <= 0.0005f)
@@ -228,15 +197,15 @@ public class EnergyItems extends Item implements IBindable
 
         initializePlayer(player);
     }
-    
+
     public static void setItemOwner(ItemStack item, String ownerName)
     {
-    	if (item.stackTagCompound == null)
+        if (item.stackTagCompound == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-    	item.stackTagCompound.setString("ownerName", ownerName);   
+        item.stackTagCompound.setString("ownerName", ownerName);
     }
 
     public static void checkAndSetItemOwner(ItemStack item, String ownerName)
@@ -271,11 +240,11 @@ public class EnergyItems extends Item implements IBindable
 
         return item.stackTagCompound.getString("ownerName");
     }
-    
+
     public static void drainPlayerNetwork(EntityPlayer player, int damageToBeDone)
     {
-    	String ownerName = SpellHelper.getUsername(player);
-    	
+        String ownerName = SpellHelper.getUsername(player);
+
         if (MinecraftServer.getServer() == null)
         {
             return;
@@ -294,15 +263,15 @@ public class EnergyItems extends Item implements IBindable
         {
             data.currentEssence -= damageToBeDone;
             data.markDirty();
-        }else
+        } else
         {
-        	hurtPlayer(player, damageToBeDone);
+            hurtPlayer(player, damageToBeDone);
         }
     }
-    
+
     public static int getCurrentEssence(String ownerName)
     {
-    	if (MinecraftServer.getServer() == null)
+        if (MinecraftServer.getServer() == null)
         {
             return 0;
         }
@@ -318,10 +287,10 @@ public class EnergyItems extends Item implements IBindable
 
         return data.currentEssence;
     }
-    
+
     public static void setCurrentEssence(String ownerName, int amount)
     {
-    	if (MinecraftServer.getServer() == null)
+        if (MinecraftServer.getServer() == null)
         {
             return;
         }
@@ -338,10 +307,10 @@ public class EnergyItems extends Item implements IBindable
         data.currentEssence = amount;
         data.markDirty();
     }
-    
+
     public static void addEssenceToMaximum(String ownerName, int amount, int maximum)
     {
-    	if (MinecraftServer.getServer() == null)
+        if (MinecraftServer.getServer() == null)
         {
             return;
         }
@@ -355,11 +324,11 @@ public class EnergyItems extends Item implements IBindable
             world.setItemData(ownerName, data);
         }
 
-        if(data.currentEssence>=maximum)
+        if (data.currentEssence >= maximum)
         {
-        	return;
+            return;
         }
-        
+
         data.currentEssence = Math.min(maximum, data.currentEssence + amount);
         data.markDirty();
     }

@@ -1,31 +1,28 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectLeap extends RitualEffect
 {
-	public static final int aetherDrain = 10;
-	public static final int terraeDrain = 10;
-	public static final int reductusDrain = 10;
-	public static final int tenebraeDrain = 10;
-	public static final int sanctusDrain = 10;
-	
+    public static final int aetherDrain = 10;
+    public static final int terraeDrain = 10;
+    public static final int reductusDrain = 10;
+    public static final int tenebraeDrain = 10;
+    public static final int sanctusDrain = 10;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -38,43 +35,46 @@ public class RitualEffectLeap extends RitualEffect
         int z = ritualStone.getZCoord();
 
         double range = 2.0;
-        
-        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x+0.5, y+0.5, z+0.5, range, range);
-        
-        if(livingList == null){return;}
-        
+
+        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+
+        if (livingList == null)
+        {
+            return;
+        }
+
         if (currentEssence < this.getCostPerRefresh() * livingList.size())
         {
-        	SoulNetworkHandler.causeNauseaToPlayer(owner);
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-        	boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
+            boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
             boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
             boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
             boolean hasTenebrae = this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, false);
             boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
-            
-            int direction = ritualStone.getDirection();      
+
+            int direction = ritualStone.getDirection();
 
             int flag = 0;
 
-            for(EntityLivingBase livingEntity : livingList)
+            for (EntityLivingBase livingEntity : livingList)
             {
-            	if(livingEntity.isSneaking())
+                if (livingEntity.isSneaking())
                 {
-                	continue;
+                    continue;
                 }
-            	
-            	hasAether = hasAether && this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
+
+                hasAether = hasAether && this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
                 hasTerrae = hasTerrae && this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
                 hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
                 hasTenebrae = hasTenebrae && this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, false);
                 hasSanctus = hasSanctus && this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
-                
-            	double motionY = hasTerrae ? 0.6 : 1.2;
-            	double speed = hasAether ? 6.0 : 3.0;
 
-                if (!(hasTenebrae || hasSanctus)|| livingEntity instanceof EntityPlayer)
+                double motionY = hasTerrae ? 0.6 : 1.2;
+                double speed = hasAether ? 6.0 : 3.0;
+
+                if (!(hasTenebrae || hasSanctus) || livingEntity instanceof EntityPlayer)
                 {
                     livingEntity.motionY = motionY;
                     livingEntity.fallDistance = 0;
@@ -82,30 +82,30 @@ public class RitualEffectLeap extends RitualEffect
                     switch (direction)
                     {
                         case 1:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)livingEntity, 0, motionY, -speed);
+                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, 0, motionY, -speed);
                             break;
 
                         case 2:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)livingEntity, speed, motionY, 0);
+                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, speed, motionY, 0);
                             break;
 
                         case 3:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)livingEntity, 0, motionY, speed);
+                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, 0, motionY, speed);
                             break;
 
                         case 4:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer)livingEntity, -speed, motionY, 0);
+                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, -speed, motionY, 0);
                             break;
                     }
 
                     flag++;
                 } else
                 {
-                	if((hasSanctus && !livingEntity.isChild()) || (hasTenebrae && livingEntity.isChild()))
-                	{
-                		continue;
-                	}
-                	
+                    if ((hasSanctus && !livingEntity.isChild()) || (hasTenebrae && livingEntity.isChild()))
+                    {
+                        continue;
+                    }
+
                     livingEntity.motionY = motionY;
 
                     switch (direction)
@@ -131,36 +131,36 @@ public class RitualEffectLeap extends RitualEffect
                             break;
                     }
 
-                    if(hasTenebrae)
+                    if (hasTenebrae)
                     {
-                    	this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, true);
+                        this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tenebraeDrain, true);
                     }
-                    if(hasSanctus)
+                    if (hasSanctus)
                     {
-                    	this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
+                        this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
                     }
-                    
+
                     livingEntity.fallDistance = 0;
                     flag++;
                 }
-                
-                if(hasAether)
+
+                if (hasAether)
                 {
-                	this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
+                    this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
                 }
-                if(hasTerrae)
+                if (hasTerrae)
                 {
-                	this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
+                    this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
                 }
-                if(hasReductus)
+                if (hasReductus)
                 {
-                	if(!livingEntity.isPotionActive(AlchemicalWizardry.customPotionFeatherFall))
-                	{
-                		livingEntity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFeatherFall.id, 3*20, 0));
-                    	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
-                	}
+                    if (!livingEntity.isPotionActive(AlchemicalWizardry.customPotionFeatherFall))
+                    {
+                        livingEntity.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFeatherFall.id, 3 * 20, 0));
+                        this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+                    }
                 }
-                
+
             }
 
             if (flag > 0)
@@ -177,9 +177,9 @@ public class RitualEffectLeap extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> leapingRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> leapingRitual = new ArrayList();
         leapingRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
         leapingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.AIR));
         leapingRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.AIR));
@@ -190,5 +190,5 @@ public class RitualEffectLeap extends RitualEffect
             leapingRitual.add(new RitualComponent(-2, 0, i, RitualComponent.AIR));
         }
         return leapingRitual;
-	}
+    }
 }

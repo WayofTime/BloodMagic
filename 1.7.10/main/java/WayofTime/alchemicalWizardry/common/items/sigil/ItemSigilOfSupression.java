@@ -1,9 +1,12 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
-import javax.swing.Icon;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -14,13 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
 {
@@ -103,11 +101,11 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
-        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        if (SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
-        	return par1ItemStack;
+            return par1ItemStack;
         }
-        
+
         if (par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
@@ -145,10 +143,10 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
         {
             return;
         }
-        
-        if(SpellHelper.isFakePlayer(par2World, (EntityPlayer)par3Entity))
+
+        if (SpellHelper.isFakePlayer(par2World, (EntityPlayer) par3Entity))
         {
-        	return;
+            return;
         }
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
@@ -158,55 +156,53 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par1ItemStack.stackTagCompound.getBoolean("isActive")&&(!par2World.isRemote))
+        if (par1ItemStack.stackTagCompound.getBoolean("isActive") && (!par2World.isRemote))
         {
-        	Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
-        	int x = (int)blockVec.xCoord;
-        	int y = (int)blockVec.yCoord;
-        	int z = (int)blockVec.zCoord;
+            Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
+            int x = (int) blockVec.xCoord;
+            int y = (int) blockVec.yCoord;
+            int z = (int) blockVec.zCoord;
 
             for (int i = -radius; i <= radius; i++)
             {
                 for (int j = -radius; j <= radius; j++)
                 {
-                    for(int k = -radius; k <= radius; k++)
+                    for (int k = -radius; k <= radius; k++)
                     {
-                    	if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
+                        if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
                         {
                             continue;
                         }
-                    	
-                    	Block block = par2World.getBlock(x+i, y+j, z+k);
-                    	
-                    	
-                    	if(SpellHelper.isBlockFluid(block))
-                    	{
-                    		if(par2World.getTileEntity(x+i, y+j, z+k)!=null)
-                    		{
-                    			par2World.setBlockToAir(x+i, y+j, z+k);
-                    		}
-                    		TESpectralContainer.createSpectralBlockAtLocation(par2World, x+i, y+j, z+k, refresh);
-                    	}
-                    	else
-                    	{
-                    		TileEntity tile = par2World.getTileEntity(x+i, y+j, z+k);
-                    		if(tile instanceof TESpectralContainer)
-                    		{
-                    			((TESpectralContainer) tile).resetDuration(refresh);
-                    		}
-                    	}		
+
+                        Block block = par2World.getBlock(x + i, y + j, z + k);
+
+
+                        if (SpellHelper.isBlockFluid(block))
+                        {
+                            if (par2World.getTileEntity(x + i, y + j, z + k) != null)
+                            {
+                                par2World.setBlockToAir(x + i, y + j, z + k);
+                            }
+                            TESpectralContainer.createSpectralBlockAtLocation(par2World, x + i, y + j, z + k, refresh);
+                        } else
+                        {
+                            TileEntity tile = par2World.getTileEntity(x + i, y + j, z + k);
+                            if (tile instanceof TESpectralContainer)
+                            {
+                                ((TESpectralContainer) tile).resetDuration(refresh);
+                            }
+                        }
                     }
                 }
             }
         }
-        
+
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400,99));
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
-                
+
             }
         }
 
@@ -216,41 +212,40 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-    	Vec3 blockVec = SpellHelper.getEntityBlockVector(player);
-    	int x = (int)blockVec.xCoord;
-    	int y = (int)blockVec.yCoord;
-    	int z = (int)blockVec.zCoord;
+        Vec3 blockVec = SpellHelper.getEntityBlockVector(player);
+        int x = (int) blockVec.xCoord;
+        int y = (int) blockVec.yCoord;
+        int z = (int) blockVec.zCoord;
 
         for (int i = -radius; i <= radius; i++)
         {
             for (int j = -radius; j <= radius; j++)
             {
-                for(int k = -radius; k <= radius; k++)
+                for (int k = -radius; k <= radius; k++)
                 {
-                	if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
+                    if (i * i + j * j + k * k >= (radius + 0.50f) * (radius + 0.50f))
                     {
                         continue;
                     }
-                	
-                	Block block = world.getBlock(x+i, y+j, z+k);
-                	
-                	
-                	if(SpellHelper.isBlockFluid(block))
-                	{
-                		if(world.getTileEntity(x+i, y+j, z+k)!=null)
-                		{
-                			world.setBlockToAir(x+i, y+j, z+k);
-                		}
-                		TESpectralContainer.createSpectralBlockAtLocation(world, x+i, y+j, z+k, refresh);
-                	}
-                	else
-                	{
-                		TileEntity tile = world.getTileEntity(x+i, y+j, z+k);
-                		if(tile instanceof TESpectralContainer)
-                		{
-                			((TESpectralContainer) tile).resetDuration(refresh);
-                		}
-                	}		
+
+                    Block block = world.getBlock(x + i, y + j, z + k);
+
+
+                    if (SpellHelper.isBlockFluid(block))
+                    {
+                        if (world.getTileEntity(x + i, y + j, z + k) != null)
+                        {
+                            world.setBlockToAir(x + i, y + j, z + k);
+                        }
+                        TESpectralContainer.createSpectralBlockAtLocation(world, x + i, y + j, z + k, refresh);
+                    } else
+                    {
+                        TileEntity tile = world.getTileEntity(x + i, y + j, z + k);
+                        if (tile instanceof TESpectralContainer)
+                        {
+                            ((TESpectralContainer) tile).resetDuration(refresh);
+                        }
+                    }
                 }
             }
         }

@@ -21,19 +21,13 @@ public class RenderConduit extends TileEntitySpecialRenderer
             TEConduit tileConduit = (TEConduit) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_CULL_FACE);
-            /**
-             * Render the ghost item inside of the Altar, slowly spinning
-             */
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/Conduit.png");
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            //GL11.glRotatef(90F, 0.0F, 0.0F, 1.0F);
-            //A reference to your Model file. Again, very important.
             this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileConduit.getInputDirection(), tileConduit.getOutputDirection());
-            //Tell it to stop rendering for both the PushMatrix's
             GL11.glPopMatrix();
             GL11.glPopMatrix();
             GL11.glEnable(GL11.GL_CULL_FACE);

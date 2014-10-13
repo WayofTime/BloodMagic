@@ -1,5 +1,9 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.registry.IThrowableEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityCloudFX;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.Entity;
@@ -9,10 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 //Shamelessly ripped off from x3n0ph0b3
 public class EntityParticleBeam extends Entity implements IProjectile, IThrowableEntity
@@ -205,31 +205,29 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         posZ += motionZ;
         MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
         this.setPosition(posX, posY, posZ);
-        
+
         this.doFiringParticles();
-        
-        if(Math.pow(posX - xDest, 2) + Math.pow(posY - yDest, 2) + Math.pow(posZ - zDest, 2) <= 1)
+
+        if (Math.pow(posX - xDest, 2) + Math.pow(posY - yDest, 2) + Math.pow(posZ - zDest, 2) <= 1)
         {
-        	this.scheduledForDeath = true;
+            this.scheduledForDeath = true;
         }
-        
-        if(this.scheduledForDeath)
+
+        if (this.scheduledForDeath)
         {
-        	this.setDead();
+            this.setDead();
         }
     }
 
     public void doFiringParticles()
     {
-    	if(!worldObj.isRemote)
-    	{
-    		return;
-    	}
-        //worldObj.spawnParticle("mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
-    	EntityFX particle = new EntityCloudFX(worldObj, posX, posY, posZ, 0, 0, 0);
-    	particle.setRBGColorF(colourRed + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourGreen + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourBlue + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()));
-    	FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
-        //worldObj.spawnParticle("happyVillager", posX, posY, posZ, 0, 0, 0);
+        if (!worldObj.isRemote)
+        {
+            return;
+        }
+        EntityFX particle = new EntityCloudFX(worldObj, posX, posY, posZ, 0, 0, 0);
+        particle.setRBGColorF(colourRed + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourGreen + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourBlue + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()));
+        FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
     }
 
     /**
@@ -319,32 +317,32 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         return 0;
     }
 
-	@Override
-	public Entity getThrower() 
-	{
-		// TODO Auto-generated method stub
-		return this.shootingEntity;
-	}
+    @Override
+    public Entity getThrower()
+    {
+        // TODO Auto-generated method stub
+        return this.shootingEntity;
+    }
 
-	@Override
-	public void setThrower(Entity entity) 
-	{
-		if(entity instanceof EntityLivingBase)
-			this.shootingEntity = (EntityLivingBase)entity;
-		
-	}
-	
-	public void setColour(float red, float green, float blue)
-	{
-		this.colourRed = red;
-		this.colourGreen = green;
-		this.colourBlue = blue;
-	}
-	
-	public void setDestination(int xDest, int yDest, int zDest)
-	{
-		this.xDest = xDest;
-		this.yDest = yDest;
-		this.zDest = zDest;
-	}
+    @Override
+    public void setThrower(Entity entity)
+    {
+        if (entity instanceof EntityLivingBase)
+            this.shootingEntity = (EntityLivingBase) entity;
+
+    }
+
+    public void setColour(float red, float green, float blue)
+    {
+        this.colourRed = red;
+        this.colourGreen = green;
+        this.colourBlue = blue;
+    }
+
+    public void setDestination(int xDest, int yDest, int zDest)
+    {
+        this.xDest = xDest;
+        this.yDest = yDest;
+        this.zDest = zDest;
+    }
 }

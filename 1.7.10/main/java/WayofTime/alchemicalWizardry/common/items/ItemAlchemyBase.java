@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,17 +13,13 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class ItemAlchemyBase extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{"Offensa","Praesidium","OrbisTerrae","StrengthenedCatalyst","ConcentratedCatalyst","FracturedBone","Virtus","Reductus","Potentia"};
+    private static final String[] ITEM_NAMES = new String[]{"Offensa", "Praesidium", "OrbisTerrae", "StrengthenedCatalyst", "ConcentratedCatalyst", "FracturedBone", "Virtus", "Reductus", "Potentia"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -45,7 +43,7 @@ public class ItemAlchemyBase extends Item
             icons[i] = iconRegister.registerIcon("AlchemicalWizardry:" + "baseAlchemyItem" + ITEM_NAMES[i]);
         }
     }
-    
+
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
@@ -82,7 +80,6 @@ public class ItemAlchemyBase extends Item
     @Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
-        //This is what will do all the localisation things on the alchemy components so you dont have to set it :D
         int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ITEM_NAMES.length - 1);
         return ("" + "item.bloodMagicAlchemyItem." + ITEM_NAMES[meta]);
     }

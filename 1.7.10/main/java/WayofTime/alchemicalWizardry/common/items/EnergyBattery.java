@@ -1,15 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
@@ -18,6 +8,16 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBloodOrb
 {
@@ -29,9 +29,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
         super();
         DamageSource damageSource = DamageSource.generic;
         setMaxStackSize(1);
-        //setMaxDamage(damage);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setFull3D();
         maxEssence = damage;
         orbLevel = 1;
     }
@@ -47,32 +45,16 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add("Stores raw Life Essence");
-
-        //par3List.add("LP: " + (this.getMaxDamage() - this.getDamage(par1ItemStack)));
         if (!(par1ItemStack.stackTagCompound == null))
         {
             par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-//        	EntityPlayer owner = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1ItemStack.stackTagCompound.getString("ownerName"));
-//        	if(owner!=null)
-//        	{
-//        		NBTTagCompound tag = owner.getEntityData();
-//        		par3List.add("LP: " + tag.getInteger("currentEssence"));
-//        	}
         }
-
-        //par3List.add("LP: " + par2EntityPlayer.getEntityData().getInteger("currentEssence"));
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         World world = par3EntityPlayer.worldObj;
-
-//        if (par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
-//        {
-//            return par1ItemStack;
-//        }
-
         if (world != null)
         {
             double posX = par3EntityPlayer.posX;
@@ -81,41 +63,20 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
             SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
         }
-
-//        if (!(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
-//        {
-//            return par1ItemStack;
-//        }
-        
-        
-
-//        if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
-//        {
-//            return par1ItemStack;
-//        }
         NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {
             return par1ItemStack;
         }
-        
-        if(world.isRemote)
+
+        if (world.isRemote)
         {
-        	return par1ItemStack;
+            return par1ItemStack;
         }
 
         EnergyItems.addEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
         EnergyItems.hurtPlayer(par3EntityPlayer, 200);
-        //PacketDispatcher.sendPacketToPlayer(PacketHandler.getPacket(itemTag.getString("ownerName")), (Player)par3EntityPlayer);
-//    	EntityPlayer owner = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(itemTag.getString("ownerName"));
-//    	if(owner==null){return par1ItemStack;}
-//    	NBTTagCompound ownerTag = owner.getEntityData();
-//    	if(ownerTag.getInteger("currentEssence")<=this.maxEssence)
-//    	{
-//			damagePlayer(par2World, par3EntityPlayer,2);
-//    		ownerTag.setInteger("currentEssence", Math.min(this.maxEssence, ownerTag.getInteger("currentEssence")+200/2));
-//    	}
         return par1ItemStack;
     }
 
@@ -158,7 +119,6 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             for (int i = 0; i < damage; i++)
             {
                 player.setHealth((player.getHealth() - 1));
-                //player.setEntityHealth(player.func_110143_aJ() - 1);
             }
         }
 
@@ -198,14 +158,6 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        //if(!syphonBatteries(itemStack, null, 10))
-        {
-            //syphonWhileInContainer(itemStack, this.getEnergyUsed());
-//            ItemStack copiedStack = itemStack.copy();
-//            copiedStack.setItemDamage(copiedStack.getItemDamage());
-//            copiedStack.stackSize = 1;
-//            return copiedStack;
-        }
         return itemStack;
     }
 

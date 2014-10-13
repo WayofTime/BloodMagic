@@ -1,25 +1,19 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectWellOfSuffering extends RitualEffect
 {
@@ -30,7 +24,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        
+
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
@@ -77,14 +71,14 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            for(EntityLivingBase livingEntity : list)
+            for (EntityLivingBase livingEntity : list)
             {
                 if (livingEntity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass()))
                 {
                     continue;
                 }
 
-                if(livingEntity.attackEntityFrom(DamageSource.outOfWorld, 1))
+                if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, 1))
                 {
                     entityCount++;
                     tileAltar.sacrificialDaggerCall(this.amount, true);
@@ -102,9 +96,9 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList();
         wellOfSufferingRitual.add(new RitualComponent(1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.FIRE));
@@ -142,5 +136,5 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         wellOfSufferingRitual.add(new RitualComponent(-4, 1, 0, RitualComponent.AIR));
         wellOfSufferingRitual.add(new RitualComponent(0, 1, -4, RitualComponent.AIR));
         return wellOfSufferingRitual;
-	}
+    }
 }

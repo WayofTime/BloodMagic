@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 
 public class RuneOfSacrifice extends BloodRune
 {

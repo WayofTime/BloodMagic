@@ -1,46 +1,9 @@
 package WayofTime.alchemicalWizardry;
 
-import net.minecraft.block.Block;
-import WayofTime.alchemicalWizardry.common.block.ArmourForge;
-import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
-import WayofTime.alchemicalWizardry.common.block.BlockAltar;
-import WayofTime.alchemicalWizardry.common.block.BlockBelljar;
-import WayofTime.alchemicalWizardry.common.block.BlockBloodLightSource;
-import WayofTime.alchemicalWizardry.common.block.BlockConduit;
-import WayofTime.alchemicalWizardry.common.block.BlockDemonPortal;
-import WayofTime.alchemicalWizardry.common.block.BlockHomHeart;
-import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
-import WayofTime.alchemicalWizardry.common.block.BlockPedestal;
-import WayofTime.alchemicalWizardry.common.block.BlockPlinth;
-import WayofTime.alchemicalWizardry.common.block.BlockReagentConduit;
-import WayofTime.alchemicalWizardry.common.block.BlockSchematicSaver;
-import WayofTime.alchemicalWizardry.common.block.BlockSocket;
-import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
-import WayofTime.alchemicalWizardry.common.block.BlockSpellEffect;
-import WayofTime.alchemicalWizardry.common.block.BlockSpellEnhancement;
-import WayofTime.alchemicalWizardry.common.block.BlockSpellModifier;
-import WayofTime.alchemicalWizardry.common.block.BlockSpellParadigm;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.block.BlockWritingTable;
-import WayofTime.alchemicalWizardry.common.block.BloodRune;
-import WayofTime.alchemicalWizardry.common.block.BloodStoneBrick;
-import WayofTime.alchemicalWizardry.common.block.EfficiencyRune;
-import WayofTime.alchemicalWizardry.common.block.EmptySocket;
-import WayofTime.alchemicalWizardry.common.block.ImperfectRitualStone;
-import WayofTime.alchemicalWizardry.common.block.LargeBloodStoneBrick;
-import WayofTime.alchemicalWizardry.common.block.LifeEssenceBlock;
-import WayofTime.alchemicalWizardry.common.block.RitualStone;
-import WayofTime.alchemicalWizardry.common.block.RuneOfSacrifice;
-import WayofTime.alchemicalWizardry.common.block.RuneOfSelfSacrifice;
-import WayofTime.alchemicalWizardry.common.block.SpectralBlock;
-import WayofTime.alchemicalWizardry.common.block.SpeedRune;
-import WayofTime.alchemicalWizardry.common.items.ItemBlockCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
-import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
+import WayofTime.alchemicalWizardry.common.block.*;
+import WayofTime.alchemicalWizardry.common.items.*;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,8 +17,6 @@ public class ModBlocks
     public static Block testingBlock;
     public static Block bloodStoneBrick;
     public static Block largeBloodStoneBrick;
-    //    public static Block lifeEssenceStill;
-//    public static Block lifeEssenceFlowing;
     public static BlockAltar blockAltar;
     public static BloodRune bloodRune;
     public static SpeedRune speedRune;
@@ -96,7 +57,6 @@ public class ModBlocks
         efficiencyRune = new EfficiencyRune();
         runeOfSacrifice = new RuneOfSacrifice();
         runeOfSelfSacrifice = new RuneOfSelfSacrifice();
-        
         blockTeleposer = new BlockTeleposer();
         spectralBlock = new SpectralBlock();
         ritualStone = new RitualStone();
@@ -123,14 +83,14 @@ public class ModBlocks
         blockReagentConduit = new BlockReagentConduit();
         blockAlchemicCalcinator = new BlockAlchemicCalcinator();
         blockCrystalBelljar = new BlockBelljar();
-        
+
         blockLifeEssence = new LifeEssenceBlock();
     }
-    
+
     public static void registerBlocksInPre()
     {
-    	GameRegistry.registerBlock(ModBlocks.blockAltar, "Altar");
-    	GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
+        GameRegistry.registerBlock(ModBlocks.blockAltar, "Altar");
+        GameRegistry.registerBlock(ModBlocks.bloodRune, ItemBloodRuneBlock.class, "AlchemicalWizardry" + (ModBlocks.bloodRune.getUnlocalizedName().substring(5)));
         GameRegistry.registerBlock(ModBlocks.blockLifeEssence, "lifeEssence");
         GameRegistry.registerBlock(ModBlocks.speedRune, "speedRune");
         GameRegistry.registerBlock(ModBlocks.efficiencyRune, "efficiencyRune");
@@ -139,9 +99,9 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.ritualStone, "ritualStone");
         GameRegistry.registerBlock(ModBlocks.blockMasterStone, "masterStone");
         GameRegistry.registerBlock(ModBlocks.bloodSocket, "bloodSocket");
-        GameRegistry.registerBlock(ModBlocks.imperfectRitualStone, "imperfectRitualStone");        
-    	
-    	GameRegistry.registerBlock(ModBlocks.armourForge, "armourForge");
+        GameRegistry.registerBlock(ModBlocks.imperfectRitualStone, "imperfectRitualStone");
+
+        GameRegistry.registerBlock(ModBlocks.armourForge, "armourForge");
         GameRegistry.registerBlock(ModBlocks.emptySocket, "emptySocket");
         GameRegistry.registerBlock(ModBlocks.bloodStoneBrick, "bloodStoneBrick");
         GameRegistry.registerBlock(ModBlocks.largeBloodStoneBrick, "largeBloodStoneBrick");
@@ -152,23 +112,22 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockTeleposer, "blockTeleposer");
         GameRegistry.registerBlock(ModBlocks.spectralBlock, "spectralBlock");
         GameRegistry.registerBlock(ModBlocks.blockBloodLight, "bloodLight");
-        
-        GameRegistry.registerBlock(ModBlocks.blockConduit,"blockConduit");
+
+        GameRegistry.registerBlock(ModBlocks.blockConduit, "blockConduit");
         GameRegistry.registerBlock(ModBlocks.blockSpellParadigm, ItemSpellParadigmBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellParadigm.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellModifier, ItemSpellModifierBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
-        GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class,"AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
-        
+        GameRegistry.registerBlock(ModBlocks.blockSpellEnhancement, ItemSpellEnhancementBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellEnhancement.getUnlocalizedName()));
+        GameRegistry.registerBlock(ModBlocks.blockSpellModifier, ItemSpellModifierBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellModifier.getUnlocalizedName()));
+        GameRegistry.registerBlock(ModBlocks.blockSpellEffect, ItemSpellEffectBlock.class, "AlchemicalWizardry" + (ModBlocks.blockSpellEffect.getUnlocalizedName()));
+
         GameRegistry.registerBlock(ModBlocks.blockSpectralContainer, "spectralContainer");
         GameRegistry.registerBlock(ModBlocks.blockDemonPortal, "demonPortalMain");
         GameRegistry.registerBlock(ModBlocks.blockBuildingSchematicSaver, "blockSchemSaver");
-        GameRegistry.registerBlock(ModBlocks.blockReagentConduit, "blockReagentConduit"); 
+        GameRegistry.registerBlock(ModBlocks.blockReagentConduit, "blockReagentConduit");
         GameRegistry.registerBlock(ModBlocks.blockAlchemicCalcinator, "blockAlchemicCalcinator");
         GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, ItemBlockCrystalBelljar.class, "blockCrystalBelljar");
     }
-    
+
     public static void registerBlocksInInit()
     {
-        //GameRegistry.registerBlock(ModBlocks.blockLifeEssence, "lifeEssence");
     }
 }

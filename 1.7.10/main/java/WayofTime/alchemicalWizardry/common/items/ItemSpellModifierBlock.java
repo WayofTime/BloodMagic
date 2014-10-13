@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -12,8 +11,6 @@ public class ItemSpellModifierBlock extends ItemBlock
     {
         super(par1);
         setHasSubtypes(true);
-//        this.setUnlocalizedName("itemSpellModifierBlock");
-//        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 
     }
 
@@ -39,7 +36,7 @@ public class ItemSpellModifierBlock extends ItemBlock
             case 2:
                 name = "defensive";
                 break;
-                
+
             case 3:
                 name = "environmental";
                 break;

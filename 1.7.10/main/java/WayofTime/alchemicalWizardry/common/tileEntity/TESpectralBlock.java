@@ -1,18 +1,12 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fluids.IFluidBlock;
-import WayofTime.alchemicalWizardry.ModBlocks;
 
 public class TESpectralBlock extends TileEntity
-{  
+{
     private int ticksRemaining;
 
     public TESpectralBlock()
@@ -33,58 +27,54 @@ public class TESpectralBlock extends TileEntity
     {
         super.writeToNBT(par1NBTTagCompound);
 
-        par1NBTTagCompound.setInteger("ticksRemaining", ticksRemaining); 
+        par1NBTTagCompound.setInteger("ticksRemaining", ticksRemaining);
     }
-    
+
     @Override
     public void updateEntity()
     {
         super.updateEntity();
-        
-        if(worldObj.isRemote)
+
+        if (worldObj.isRemote)
         {
-        	return;
+            return;
         }
-        
+
         this.ticksRemaining--;
-        
-        if(this.ticksRemaining<=0)
+
+        if (this.ticksRemaining <= 0)
         {
-        	worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
         }
-    }   
-    
+    }
+
     public static boolean createSpectralBlockAtLocation(World world, int x, int y, int z, int duration)
     {
-    	if(!world.isAirBlock(x, y, z))
-    	{
-    		return false;
-    	}
-    	
-    	//if(world.getTileEntity(x, y, z)==null)
-    	{    		
-    		world.setBlock(x, y, z, ModBlocks.spectralBlock);
-    		TileEntity tile = world.getTileEntity(x, y, z);
-    		if(tile instanceof TESpectralBlock)
-    		{
-    			((TESpectralBlock) tile).setDuration(duration);
-    			return true;
-    		}
-    	}
-    	
-    	return false;
+        if (!world.isAirBlock(x, y, z))
+        {
+            return false;
+        }
+        world.setBlock(x, y, z, ModBlocks.spectralBlock);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof TESpectralBlock)
+        {
+            ((TESpectralBlock) tile).setDuration(duration);
+            return true;
+        }
+
+        return false;
     }
-    
+
     public void setDuration(int dur)
     {
-    	this.ticksRemaining = dur;
+        this.ticksRemaining = dur;
     }
-    
+
     public void resetDuration(int dur)
     {
-    	if(this.ticksRemaining<dur)
-    	{
-    		this.ticksRemaining = dur;
-    	}
+        if (this.ticksRemaining < dur)
+        {
+            this.ticksRemaining = dur;
+        }
     }
 }

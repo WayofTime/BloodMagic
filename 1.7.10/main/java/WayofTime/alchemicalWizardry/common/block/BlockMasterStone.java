@@ -1,5 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -8,11 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMasterStone extends BlockContainer
 {
@@ -23,7 +23,6 @@ public class BlockMasterStone extends BlockContainer
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("blockMasterStone");
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -32,17 +31,17 @@ public class BlockMasterStone extends BlockContainer
     {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:MasterStone");
     }
-    
+
     @Override
     public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
     {
-    	TileEntity tile = world.getTileEntity(x, y, z);
-    	if(tile instanceof TEMasterStone)
-    	{
-    		((TEMasterStone) tile).useOnRitualBroken();
-    	}
-    	
-    	super.onBlockHarvested(world, x, y, z, meta, player);
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof TEMasterStone)
+        {
+            ((TEMasterStone) tile).useOnRitualBroken();
+        }
+
+        super.onBlockHarvested(world, x, y, z, meta, player);
     }
 
     @Override

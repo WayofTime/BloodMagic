@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import java.util.Iterator;
-import java.util.List;
-
+import cpw.mods.fml.common.registry.IThrowableEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,15 +11,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Iterator;
+import java.util.List;
 
 //Shamelessly ripped off from x3n0ph0b3
 public class EnergyBlastProjectile extends Entity implements IProjectile, IThrowableEntity
@@ -252,8 +248,6 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
 
             if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
             {
-                // this.groundImpact();
-                // this.setDead();
             }
         } else
         {
@@ -261,7 +255,6 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
 
             if (ticksInAir > 1 && ticksInAir < 3)
             {
-                //worldObj.spawnParticle("flame", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0D, 0D, 0D);
                 for (int particles = 0; particles < 3; particles++)
                 {
                     this.doFiringParticles();
@@ -328,7 +321,6 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
             posZ += motionZ;
             MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
             this.setPosition(posX, posY, posZ);
-            //this.doBlockCollisions();
         }
     }
 
@@ -457,12 +449,10 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
             this.setDead();
         } else
         {
-            //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
                 ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60, 2));
             }
-
             doDamage(projectileDamage, mop);
             worldObj.createExplosion(shootingEntity, this.posX, this.posY, this.posZ, (float) (0.1), true);
         }
@@ -509,18 +499,18 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
         return 0;
     }
 
-	@Override
-	public Entity getThrower() 
-	{
-		// TODO Auto-generated method stub
-		return this.shootingEntity;
-	}
+    @Override
+    public Entity getThrower()
+    {
+        // TODO Auto-generated method stub
+        return this.shootingEntity;
+    }
 
-	@Override
-	public void setThrower(Entity entity) 
-	{
-		if(entity instanceof EntityLivingBase)
-			this.shootingEntity = (EntityLivingBase)entity;
-		
-	}
+    @Override
+    public void setThrower(Entity entity)
+    {
+        if (entity instanceof EntityLivingBase)
+            this.shootingEntity = (EntityLivingBase) entity;
+
+    }
 }

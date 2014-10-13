@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,11 +17,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockSocket extends BlockContainer
 {
@@ -59,14 +59,8 @@ public class BlockSocket extends BlockContainer
         {
             case 0:
                 return bottomIcon;
-
             case 1:
                 return topIcon;
-
-            //case 2: return sideIcon1;
-            //case 3: return sideIcon1;
-            //case 4: return sideIcon2;
-            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -83,7 +77,6 @@ public class BlockSocket extends BlockContainer
         }
 
         ItemStack playerItem = player.getCurrentEquippedItem();
-
         if (tileEntity.getStackInSlot(0) == null && playerItem != null)
         {
             if (playerItem.getItem() instanceof ArmourUpgrade)
@@ -95,18 +88,11 @@ public class BlockSocket extends BlockContainer
             }
         } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
-            /**stub method
-             * Add the item that is in the slot to the player's inventory, and
-             * then set the slot to null.
-             */
             player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
             tileEntity.setInventorySlotContents(0, null);
             tileEntity.setActive();
         }
-
         world.markBlockForUpdate(x, y, z);
-        //player.openGui(AlchemicalWizardry.instance, 0, world, x, y, z);
-        //PacketDispatcher.sendPacketToServer(tileEntity.getDescriptionPacket());
         return true;
     }
 

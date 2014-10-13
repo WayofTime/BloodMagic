@@ -53,6 +53,7 @@ tile.blockSpellEffect.earth.name=Earth Former
 tile.alchemicCalcinator.name=Alchemic Calcinator
 tile.crystalBelljar.name=Crystal Belljar
 tile.blockReagentConduit.name=Alchemy Relay
+tile.lifeEssenceFluidBlock.name=Life Essence
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb

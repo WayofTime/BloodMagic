@@ -1,9 +1,7 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class TEConduit extends TESpellBlock
 {
@@ -26,9 +24,9 @@ public class TEConduit extends TESpellBlock
 
     }
 
-	@Override
-	protected void applySpellChange(SpellParadigm parad) 
-	{
-		return;		
-	}
+    @Override
+    protected void applySpellChange(SpellParadigm parad)
+    {
+        return;
+    }
 }

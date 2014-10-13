@@ -13,7 +13,6 @@ public class GuiWritingTable extends GuiContainer
 {
     public GuiWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable tileEntity)
     {
-        //the container is instanciated and passed to the superclass for handling
         super(new ContainerWritingTable(inventoryPlayer, tileEntity));
         xSize = 176;
         ySize = 222;
@@ -33,7 +32,6 @@ public class GuiWritingTable extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
         //draw your Gui here, only thing you need to change is the path
-        //ResourceLocation texture = mc.renderEngine.getTexture("/gui/trap.png");
         ResourceLocation test = new ResourceLocation("alchemicalwizardry", "gui/WritingTable.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(test);

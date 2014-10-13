@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
-public class SpellModifierOffensive extends SpellModifier 
+public class SpellModifierOffensive extends SpellModifier
 {
-	public SpellModifierOffensive()
-	{
-		super(SpellModifier.OFFENSIVE);
-	}
+    public SpellModifierOffensive()
+    {
+        super(SpellModifier.OFFENSIVE);
+    }
 }

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL12;
 public class RenderMeteor extends Render
 {
     public ModelBase model = new ModelMeteor();
-    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/Meteor.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
+    private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/Meteor.png");
     private float scale = 1.0f;
 
     @Override
@@ -25,7 +25,6 @@ public class RenderMeteor extends Render
         GL11.glRotatef(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * f1, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(180.0f - entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * f1, 1.0F, 0.0F, 0.0f);
         model.render(entity, 0, (float) d0, (float) d1, (float) d2, f, f1);
-        //GL11.glRotatef(entity.getRotationYawHead(), 0.0F, 1.0F, 0.0F);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }
@@ -33,7 +32,6 @@ public class RenderMeteor extends Render
     @Override
     protected ResourceLocation getEntityTexture(Entity entity)
     {
-        // TODO Auto-generated method stub
         return field_110833_a;
     }
 }

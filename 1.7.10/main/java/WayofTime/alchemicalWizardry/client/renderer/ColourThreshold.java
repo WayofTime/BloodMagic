@@ -1,13 +1,14 @@
 package WayofTime.alchemicalWizardry.client.renderer;
 
 import java.util.List;
+
 /**
  * This class is a utility class that was created by bspkrs.
  * https://github.com/bspkrs/bspkrsCore/blob/master/src/main/java/bspkrs/client/util/ColorThreshold.java
  */
 public class ColourThreshold implements Comparable<ColourThreshold>
 {
-    public int    threshold;
+    public int threshold;
     public String colorCode;
 
     public ColourThreshold(int t, String c)

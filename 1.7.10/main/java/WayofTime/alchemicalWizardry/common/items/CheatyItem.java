@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,30 +15,17 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class CheatyItem extends Item implements IBindable
 {
-    // private int maxEssence;
-    //protected int orbLevel;
-
     public CheatyItem()
     {
         super();
         DamageSource damageSource = DamageSource.generic;
         setMaxStackSize(1);
-        //setMaxDamage(damage);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        //setFull3D();
-        //maxEssence = damage;
-        //orbLevel = 1;
     }
 
     @Override
@@ -51,19 +42,10 @@ public class CheatyItem extends Item implements IBindable
         par3List.add("Right-click to fill network,");
         par3List.add("shift-right to empty.");
 
-        //par3List.add("LP: " + (this.getMaxDamage() - this.getDamage(par1ItemStack)));
         if (!(par1ItemStack.stackTagCompound == null))
         {
             par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-//        	EntityPlayer owner = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1ItemStack.stackTagCompound.getString("ownerName"));
-//        	if(owner!=null)
-//        	{
-//        		NBTTagCompound tag = owner.getEntityData();
-//        		par3List.add("LP: " + tag.getInteger("currentEssence"));
-//        	}
         }
-
-        //par3List.add("LP: " + par2EntityPlayer.getEntityData().getInteger("currentEssence"));
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -104,16 +86,6 @@ public class CheatyItem extends Item implements IBindable
         {
             EnergyItems.addEssenceToMaximum(itemTag.getString("ownerName"), 1000000, Integer.MAX_VALUE);
         }
-
-        //PacketDispatcher.sendPacketToPlayer(PacketHandler.getPacket(itemTag.getString("ownerName")), (Player)par3EntityPlayer);
-//    	EntityPlayer owner = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(itemTag.getString("ownerName"));
-//    	if(owner==null){return par1ItemStack;}
-//    	NBTTagCompound ownerTag = owner.getEntityData();
-//    	if(ownerTag.getInteger("currentEssence")<=this.maxEssence)
-//    	{
-//			damagePlayer(par2World, par3EntityPlayer,2);
-//    		ownerTag.setInteger("currentEssence", Math.min(this.maxEssence, ownerTag.getInteger("currentEssence")+200/2));
-//    	}
         return par1ItemStack;
     }
 
@@ -156,7 +128,6 @@ public class CheatyItem extends Item implements IBindable
             for (int i = 0; i < damage; i++)
             {
                 player.setHealth((player.getHealth() - 1));
-                //player.setEntityHealth(player.func_110143_aJ() - 1);
             }
         }
 
@@ -166,48 +137,9 @@ public class CheatyItem extends Item implements IBindable
         }
     }
 
-//    public int getMaxEssence()
-//    {
-//        return this.maxEssence;
-//    }
-//
-//    public int getOrbLevel()
-//    {
-//    	return orbLevel;
-//    }
-//
-//	@Override
-//	public void onArmourUpdate(World world, EntityPlayer player,
-//			ItemStack thisItemStack) {
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public boolean isUpgrade()
-//	{
-//		// TODO Auto-generated method stub
-//		return false;
-//	}
-//
-//	@Override
-//	public int getEnergyForTenSeconds()
-//	{
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        //if(!syphonBatteries(itemStack, null, 10))
-        {
-            //syphonWhileInContainer(itemStack, this.getEnergyUsed());
-//            ItemStack copiedStack = itemStack.copy();
-//            copiedStack.setItemDamage(copiedStack.getItemDamage());
-//            copiedStack.stackSize = 1;
-//            return copiedStack;
-        }
         return itemStack;
     }
 
@@ -217,7 +149,6 @@ public class CheatyItem extends Item implements IBindable
         return true;
     }
 
-    //@SideOnly(Side.SERVER)
     public int getCurrentEssence(ItemStack par1ItemStack)
     {
         if (par1ItemStack == null)

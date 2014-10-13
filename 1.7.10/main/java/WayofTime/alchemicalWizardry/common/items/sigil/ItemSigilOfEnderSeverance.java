@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -11,12 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemSigilOfEnderSeverance extends EnergyItems implements IHolding
 {
@@ -148,18 +148,16 @@ public class ItemSigilOfEnderSeverance extends EnergyItems implements IHolding
         if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
             List<Entity> list = SpellHelper.getEntitiesInRange(par2World, par3Entity.posX, par3Entity.posY, par3Entity.posZ, 4.5, 4.5);
-            for(Entity entity : list)
+            for (Entity entity : list)
             {
-            	if(!entity.equals(par3Entity)&&entity instanceof EntityLiving)	
-            	{
-            		((EntityLiving)entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionPlanarBinding.id,5,0));
-            	}
+                if (!entity.equals(par3Entity) && entity instanceof EntityLiving)
+                {
+                    ((EntityLiving) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionPlanarBinding.id, 5, 0));
+                }
             }
         }
-
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400,99));
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());

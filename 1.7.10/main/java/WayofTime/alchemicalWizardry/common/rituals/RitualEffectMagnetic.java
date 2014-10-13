@@ -1,37 +1,30 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectMagnetic extends RitualEffect
 {
-	private static final int potentiaDrain = 10;
-	private static final int terraeDrain = 10;
-	private static final int orbisTerraeDrain = 10;
-	
+    private static final int potentiaDrain = 10;
+    private static final int terraeDrain = 10;
+    private static final int orbisTerraeDrain = 10;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
-        
+
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorld();
         int x = ritualStone.getXCoord();
@@ -39,20 +32,20 @@ public class RitualEffectMagnetic extends RitualEffect
         int z = ritualStone.getZCoord();
 
         boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
-        
-        if(world.getWorldTime() % (hasPotentia ? 10 : 40) != 0)
+
+        if (world.getWorldTime() % (hasPotentia ? 10 : 40) != 0)
         {
-        	return;
+            return;
         }
 
         boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
         boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
 
         int radius = this.getRadiusForReagents(hasTerrae, hasOrbisTerrae);
-        
+
         if (currentEssence < this.getCostPerRefresh())
         {
-        	SoulNetworkHandler.causeNauseaToPlayer(owner);
+            SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
             int xRep = 0;
@@ -79,7 +72,6 @@ public class RitualEffectMagnetic extends RitualEffect
 
             if (replace)
             {
-                //boolean hasReplaced = false;
                 for (int j = y - 1; j >= 0; j--)
                 {
                     for (int i = -radius; i <= radius; i++)
@@ -103,26 +95,25 @@ public class RitualEffectMagnetic extends RitualEffect
 
                                 if (oreName.contains("ore"))
                                 {
-                                    //TODO
                                     //Allow swapping code. This means the searched block is an ore.
                                     BlockTeleposer.swapBlocks(world, world, x + i, j, z + k, xRep, yRep, zRep);
                                     SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
-                                    
-                                    if(hasPotentia)
+
+                                    if (hasPotentia)
                                     {
                                         this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                                     }
-                                    
-                                    if(hasTerrae)
+
+                                    if (hasTerrae)
                                     {
                                         this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
                                     }
-                                    
-                                    if(hasOrbisTerrae)
+
+                                    if (hasOrbisTerrae)
                                     {
                                         this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
                                     }
-                                    
+
                                     return;
                                 }
                             }
@@ -140,9 +131,9 @@ public class RitualEffectMagnetic extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> magneticRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> magneticRitual = new ArrayList();
         magneticRitual.add(new RitualComponent(1, 0, 1, RitualComponent.EARTH));
         magneticRitual.add(new RitualComponent(1, 0, -1, RitualComponent.EARTH));
         magneticRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.EARTH));
@@ -160,28 +151,28 @@ public class RitualEffectMagnetic extends RitualEffect
         magneticRitual.add(new RitualComponent(-2, 2, 0, RitualComponent.FIRE));
         magneticRitual.add(new RitualComponent(0, 2, -2, RitualComponent.FIRE));
         return magneticRitual;
-	}
-    
+    }
+
     public int getRadiusForReagents(boolean hasTerrae, boolean hasOrbisTerrae)
-	{
-    	if(hasTerrae)
-    	{
-    		if(hasOrbisTerrae)
-    		{
-    			return 31;
-    		}else
-    		{
-    			return 7;
-    		}
-    	}else
-    	{
-    		if(hasOrbisTerrae)
-    		{
-    			return 12;
-    		}else
-    		{
-    			return 3;
-    		}
-    	}
-	}
+    {
+        if (hasTerrae)
+        {
+            if (hasOrbisTerrae)
+            {
+                return 31;
+            } else
+            {
+                return 7;
+            }
+        } else
+        {
+            if (hasOrbisTerrae)
+            {
+                return 12;
+            } else
+            {
+                return 3;
+            }
+        }
+    }
 }

@@ -2,9 +2,9 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.t
 
 import net.minecraft.entity.Entity;
 
-public interface ISpecialDamageEffect 
+public interface ISpecialDamageEffect
 {
-	public float getDamageForEntity(Entity entity);
-	
-	public String getKey();
+    public float getDamageForEntity(Entity entity);
+
+    public String getKey();
 }

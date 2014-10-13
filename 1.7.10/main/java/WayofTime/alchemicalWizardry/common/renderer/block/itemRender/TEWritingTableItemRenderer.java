@@ -10,24 +10,22 @@ import org.lwjgl.opengl.GL11;
 
 public class TEWritingTableItemRenderer implements IItemRenderer
 {
-    private ModelWritingTable modelBloodAltar;
+    private ModelWritingTable model;
 
     public TEWritingTableItemRenderer()
     {
-        modelBloodAltar = new ModelWritingTable();
+        model = new ModelWritingTable();
     }
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
@@ -35,8 +33,6 @@ public class TEWritingTableItemRenderer implements IItemRenderer
     public void renderItem(ItemRenderType type, ItemStack item, Object... data)
     {
         float scale = 0.08f;
-
-        // TODO Auto-generated method stub
         switch (type)
         {
             case ENTITY:
@@ -70,11 +66,9 @@ public class TEWritingTableItemRenderer implements IItemRenderer
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(180f, 0f, 1f, 0f);
-        //FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/OBJTutorial/textures/models/TutBox.png");
         ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/WritingTable.png");
-        //FMLClientHandler.instance().getClient().renderEngine.bindTexture("/mods/alchemicalwizardry/textures/models/altar.png");
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
-        modelBloodAltar.render((Entity) null, 0, 0, 0, 0, 0, 0);
+        model.render((Entity) null, 0, 0, 0, 0, 0, 0);
         // Re-enable Lighting Calculations
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glPopMatrix();
