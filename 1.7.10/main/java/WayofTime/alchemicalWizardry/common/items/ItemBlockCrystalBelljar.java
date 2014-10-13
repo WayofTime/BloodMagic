@@ -59,7 +59,7 @@ public class ItemBlockCrystalBelljar extends ItemBlock
         
         if(tanks == null)
         {
-        	list.add("Empty");
+        	list.add("- Empty");
         }else
         {
         	list.add("Current Contents:");

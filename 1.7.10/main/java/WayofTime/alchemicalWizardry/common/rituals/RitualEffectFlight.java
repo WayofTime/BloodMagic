@@ -22,7 +22,7 @@ public class RitualEffectFlight extends RitualEffect
 {
 	public static final int aetherDrain = 10;
 	public static final int reductusDrain = 5;
-	public static final int reagentCooldown = 5;
+	public static final int reagentCooldown = 50;
 	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)

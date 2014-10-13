@@ -306,32 +306,6 @@ public class BlockAltar extends BlockContainer
 //        return true;
 //    }
 
-    @Override
-    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
-    {
-        TileEntity tile = par1IBlockAccess.getTileEntity(par2, par3, par4);
-
-        if (tile instanceof TEAltar)
-        {
-//    		if(tile.worldObj.isRemote)
-//    		{
-//    			return 0;
-//    		}
-            ItemStack stack = ((TEAltar) tile).getStackInSlot(0);
-
-            if (stack != null && stack.getItem() instanceof EnergyBattery)
-            {
-                EnergyBattery bloodOrb = (EnergyBattery) stack.getItem();
-                int maxEssence = bloodOrb.getMaxEssence();
-                int currentEssence = bloodOrb.getCurrentEssence(stack);
-                int level = currentEssence * 15 / maxEssence;
-                return ((int) (Math.min(15, level))) % 16;
-            }
-        }
-
-        return 0;
-    }
-
 	@Override
 	public TileEntity createNewTileEntity(World var1, int var2)
 	{
