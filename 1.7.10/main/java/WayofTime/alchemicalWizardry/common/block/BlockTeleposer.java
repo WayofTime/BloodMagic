@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
@@ -16,11 +19,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockTeleposer extends BlockContainer
 {
@@ -40,7 +40,6 @@ public class BlockTeleposer extends BlockContainer
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("bloodTeleposer");
-        //func_111022_d("AlchemicalWizardry:blocks");
     }
 
     @Override
@@ -61,14 +60,8 @@ public class BlockTeleposer extends BlockContainer
         {
             case 0:
                 return bottomIcon;
-
             case 1:
                 return topIcon;
-
-            //case 2: return sideIcon1;
-            //case 3: return sideIcon1;
-            //case 4: return sideIcon2;
-            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -97,13 +90,7 @@ public class BlockTeleposer extends BlockContainer
                 return true;
             }
         }
-
         player.openGui(AlchemicalWizardry.instance, 1, world, x, y, z);
-//        this.swapBlocks(world, x, y+1, z, x, y+2, z);
-//
-//        world.markBlockForUpdate(x, y, z);
-        //player.openGui(AlchemicalWizardry.instance, 0, world, x, y, z);
-        //PacketDispatcher.sendPacketToServer(tileEntity.getDescriptionPacket());
         return true;
     }
 
@@ -216,11 +203,6 @@ public class BlockTeleposer extends BlockContainer
         }
 
         //TILES CLEARED
-//    	worldF.destroyBlock(xf, yf, zf, false);
-//    	worldI.destroyBlock(xi, yi, zi, false);
-//    	worldI.setBlockToAir(xi, yi, zi);
-//    	worldF.setBlockToAir(xf, yf, zf);
-        
         worldF.setBlock(xf, yf, zf, initialBlock, metaI, 3);
 
         if (tileEntityI != null)
@@ -230,12 +212,6 @@ public class BlockTeleposer extends BlockContainer
             newTileEntityI.xCoord = xf;
             newTileEntityI.yCoord = yf;
             newTileEntityI.zCoord = zf;
-            
-//            TileEntity tile = worldI.getTileEntity(xf, yf, zf);
-//            if(tile instanceof TileMultipart)
-//            {
-//            	TileMultipart.createFromNBT(nbttag1);
-//            }
         }
 
         worldI.setBlock(xi, yi, zi, finalBlock, metaF, 3);
@@ -247,12 +223,6 @@ public class BlockTeleposer extends BlockContainer
             newTileEntityF.xCoord = xi;
             newTileEntityF.yCoord = yi;
             newTileEntityF.zCoord = zi;
-            
-            TileEntity tile = worldI.getTileEntity(xi, yi, zi);
-//            if(tile instanceof TileMultipart)
-//            {
-//            	TileMultipart.createFromNBT(nbttag2);
-//            }
         }
 
         return true;

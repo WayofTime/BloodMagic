@@ -1,40 +1,38 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSpellParadigm extends BlockOrientable 
+import java.util.List;
+
+public class BlockSpellParadigm extends BlockOrientable
 {
-	public static final float minPos = (3f/16f);
-	public static final float maxPos = (13f/16f);
-	
-	public BlockSpellParadigm() 
-	{
-		super();
-		this.setBlockName("blockSpellParadigm");
-	}
-	
-	@Override
+    public static final float minPos = (3f / 16f);
+    public static final float maxPos = (13f / 16f);
+
+    public BlockSpellParadigm()
+    {
+        super();
+        this.setBlockName("blockSpellParadigm");
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return new TESpellParadigmBlock();
     }
-	
-	@SideOnly(Side.CLIENT)
+
+    @SideOnly(Side.CLIENT)
 
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
@@ -52,14 +50,14 @@ public class BlockSpellParadigm extends BlockOrientable
             super.getSubBlocks(par1, par2CreativeTabs, par3List);
         }
     }
-	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
-	{
-		ItemStack stack = player.getCurrentEquippedItem();
-		
-		if(stack != null && stack.getItem() instanceof ItemComplexSpellCrystal)
-		{
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
+    {
+        ItemStack stack = player.getCurrentEquippedItem();
+
+        if (stack != null && stack.getItem() instanceof ItemComplexSpellCrystal)
+        {
             if (stack.stackTagCompound == null)
             {
                 stack.setTagCompound(new NBTTagCompound());
@@ -71,26 +69,26 @@ public class BlockSpellParadigm extends BlockOrientable
             itemTag.setInteger("zCoord", z);
             itemTag.setInteger("dimensionId", world.provider.dimensionId);
             return true;
-		}
-		
-		return super.onBlockActivated(world, x, y, z, player, side, what, these, are);
-	}
-	
-	@Override
-	public boolean isOpaqueCube() 
-	{
-		return false;
-	}
-	
-	@Override
-	public boolean renderAsNormalBlock()
-	{
-		return false;
-	}
-	
-	@Override
-	public int getRenderType()
-	{
-		return -1;
-	}
+        }
+
+        return super.onBlockActivated(world, x, y, z, player, side, what, these, are);
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
 }

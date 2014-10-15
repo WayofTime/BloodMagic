@@ -1,8 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryComponent;
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.PlinthComponent;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -12,16 +15,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryComponent;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.PlinthComponent;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TEPlinth extends TileEntity implements IInventory
 {
@@ -33,7 +32,7 @@ public class TEPlinth extends TileEntity implements IInventory
     private ItemStack[] ring1Inv;
     private ItemStack[] ring2Inv;
     private ItemStack[] ring3Inv;
-    
+
     public static final int sizeInv = 1;
 
     private int progressInterval;
@@ -56,7 +55,7 @@ public class TEPlinth extends TileEntity implements IInventory
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory",Constants.NBT.TAG_COMPOUND);
+        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -69,7 +68,7 @@ public class TEPlinth extends TileEntity implements IInventory
             }
         }
 
-        NBTTagList ring1TagList = par1NBTTagCompound.getTagList("ring1Inv",Constants.NBT.TAG_COMPOUND);
+        NBTTagList ring1TagList = par1NBTTagCompound.getTagList("ring1Inv", Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < ring1TagList.tagCount(); i++)
         {
@@ -82,7 +81,7 @@ public class TEPlinth extends TileEntity implements IInventory
             }
         }
 
-        NBTTagList ring2TagList = par1NBTTagCompound.getTagList("ring2Inv",Constants.NBT.TAG_COMPOUND);
+        NBTTagList ring2TagList = par1NBTTagCompound.getTagList("ring2Inv", Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < ring2TagList.tagCount(); i++)
         {
@@ -95,7 +94,7 @@ public class TEPlinth extends TileEntity implements IInventory
             }
         }
 
-        NBTTagList ring3TagList = par1NBTTagCompound.getTagList("ring3Inv",Constants.NBT.TAG_COMPOUND);
+        NBTTagList ring3TagList = par1NBTTagCompound.getTagList("ring3Inv", Constants.NBT.TAG_COMPOUND);
 
         for (int i = 0; i < ring3TagList.tagCount(); i++)
         {
@@ -273,13 +272,11 @@ public class TEPlinth extends TileEntity implements IInventory
     @Override
     public void openInventory()
     {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void closeInventory()
     {
-        // TODO Auto-generated method stub
     }
 
     //Logic for the actual block is under here
@@ -370,11 +367,9 @@ public class TEPlinth extends TileEntity implements IInventory
                 {
                     int bloodOrbLevel = ((EnergyBattery) getStackInSlot(0).getItem()).getOrbLevel();
                     EntityLivingBase entity = SummoningRegistry.getEntity(worldObj, bloodOrbLevel, ring1Inv, ring2Inv, ring3Inv);
-                    //EntityLivingBase entity = new EntityFallenAngel(worldObj);
 
                     if (entity != null)
                     {
-                        //entity.worldObj = worldObj;
                         entity.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
                         worldObj.spawnEntityInWorld(entity);
 
@@ -481,12 +476,12 @@ public class TEPlinth extends TileEntity implements IInventory
 
                         if (test)
                         {
-                            if (itemStack.getItem()== possibleItem.getItem() && (itemStack.getItemDamage() == possibleItem.getItemDamage() || itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
+                            if (itemStack.getItem() == possibleItem.getItem() && (itemStack.getItemDamage() == possibleItem.getItemDamage() || itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE))
                             {
                                 ((TEPedestal) tileEntity).decrStackSize(0, 1);
-                                if(((TEPedestal) tileEntity).getStackInSlot(0) !=null && ((TEPedestal) tileEntity).getStackInSlot(0).stackSize==0)
+                                if (((TEPedestal) tileEntity).getStackInSlot(0) != null && ((TEPedestal) tileEntity).getStackInSlot(0).stackSize == 0)
                                 {
-                                	((TEPedestal) tileEntity).setInventorySlotContents(0, null);
+                                    ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
                                 }
                                 ((TEPedestal) tileEntity).onItemDeletion();
                                 worldObj.markBlockForUpdate(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
@@ -537,7 +532,6 @@ public class TEPlinth extends TileEntity implements IInventory
                             {
                                 ((TEPedestal) tileEntity).decrStackSize(0, 1);
                                 ((TEPedestal) tileEntity).onItemDeletion();
-                                //worldObj.markBlockForUpdate(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
                                 worldObj.markBlockForUpdate(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
                                 return true;
                             }

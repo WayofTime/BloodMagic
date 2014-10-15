@@ -1,19 +1,19 @@
 package WayofTime.alchemicalWizardry;
 
-import java.io.File;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.common.config.Configuration;
+
+import java.io.File;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,8 +23,8 @@ import cpw.mods.fml.relauncher.Side;
  */
 public class BloodMagicConfiguration
 {
-	private static final String       DEFAULT_COLOR_LIST          = "100,f; 80,7; 60,e; 40,6; 25,c; 10,4";
-	public static final List<ColourThreshold> colorList                   = new ArrayList<ColourThreshold>();
+    private static final String DEFAULT_COLOR_LIST = "100,f; 80,7; 60,e; 40,6; 25,c; 10,4";
+    public static final List<ColourThreshold> colorList = new ArrayList<ColourThreshold>();
 
     public static Configuration config;
     public static final String CATEGORY_GAMEPLAY = "gameplay";
@@ -32,13 +32,13 @@ public class BloodMagicConfiguration
 
     public static void init(File configFile)
     {
-    	for (String s : DEFAULT_COLOR_LIST.split(";")) 
-    	{ 
-    	    String[] ct = s.split(","); 
-    	    colorList.add(new ColourThreshold(Integer.valueOf(ct[0].trim()), ct[1].trim())); 
-    	} 
+        for (String s : DEFAULT_COLOR_LIST.split(";"))
+        {
+            String[] ct = s.split(",");
+            colorList.add(new ColourThreshold(Integer.valueOf(ct[0].trim()), ct[1].trim()));
+        }
 
-    	
+
         config = new Configuration(configFile);
 
         try
@@ -59,16 +59,16 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.customPotionInhibitID = config.get("Potion ID", "Inhibit", 103).getInt();
             AlchemicalWizardry.customPotionFlightID = config.get("Potion ID", "Flight", 104).getInt();
             AlchemicalWizardry.customPotionReciprocationID = config.get("Potion ID", "Reciprocation", 105).getInt();
-            AlchemicalWizardry.customPotionFlameCloakID = config.get("Potion ID","FlameCloak",106).getInt();
-            AlchemicalWizardry.customPotionIceCloakID = config.get("Potion ID","IceCloak",107).getInt();
-            AlchemicalWizardry.customPotionHeavyHeartID = config.get("Potion ID","HeavyHeart",108).getInt();
-            AlchemicalWizardry.customPotionFireFuseID = config.get("Potion ID","FireFuse",109).getInt();
-            AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID","PlanarBinding",110).getInt();
-            AlchemicalWizardry.customPotionSoulFrayID = config.get("Potion ID","SoulFray",111).getInt();
+            AlchemicalWizardry.customPotionFlameCloakID = config.get("Potion ID", "FlameCloak", 106).getInt();
+            AlchemicalWizardry.customPotionIceCloakID = config.get("Potion ID", "IceCloak", 107).getInt();
+            AlchemicalWizardry.customPotionHeavyHeartID = config.get("Potion ID", "HeavyHeart", 108).getInt();
+            AlchemicalWizardry.customPotionFireFuseID = config.get("Potion ID", "FireFuse", 109).getInt();
+            AlchemicalWizardry.customPotionPlanarBindingID = config.get("Potion ID", "PlanarBinding", 110).getInt();
+            AlchemicalWizardry.customPotionSoulFrayID = config.get("Potion ID", "SoulFray", 111).getInt();
             AlchemicalWizardry.customPotionSoulHardenID = config.get("Potion ID", "SoulHarden", 112).getInt();
             AlchemicalWizardry.customPotionDeafID = config.get("Potion ID", "Deaf", 113).getInt();
             AlchemicalWizardry.customPotionFeatherFallID = config.get("Potion ID", "FeatherFall", 114).getInt();
-            
+
             MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
             AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);
             AlchemicalWizardry.diamondMeteorArray = config.get("meteor", "diamondMeteor", new String[]{"oreDiamond", "100", "oreEmerald", "75", "oreCinnabar", "200", "oreAmber", "200"}).getStringList();
@@ -80,27 +80,27 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.netherStarMeteorArray = config.get("meteor", "netherStarMeteor", new String[]{"oreDiamond", "150", "oreEmerald", "100", "oreQuartz", "250", "oreSunstone", "5", "oreMoonstone", "50", "oreIridium", "5", "oreCertusQuartz", "150"}).getStringList();
             AlchemicalWizardry.netherStarMeteorRadius = config.get("meteor", "netherStarMeteorRadius", 3).getInt();
 
-            AlchemicalWizardry.allowedCrushedOresArray = config.get("oreCrushing", "allowedOres", new String[]{"iron","gold","copper","tin","lead","silver","osmium"}).getStringList();
-            
-            AlchemicalWizardry.wimpySettings = config.get("WimpySettings","IDontLikeFun",false).getBoolean(false);
+            AlchemicalWizardry.allowedCrushedOresArray = config.get("oreCrushing", "allowedOres", new String[]{"iron", "gold", "copper", "tin", "lead", "silver", "osmium"}).getStringList();
+
+            AlchemicalWizardry.wimpySettings = config.get("WimpySettings", "IDontLikeFun", false).getBoolean(false);
             AlchemicalWizardry.respawnWithDebuff = config.get("WimpySettings", "RespawnWithDebuff", true).getBoolean();
             AlchemicalWizardry.causeHungerWithRegen = config.get("WimpySettings", "causeHungerWithRegen", true).getBoolean();
 //            AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
             AlchemicalWizardry.lockdownAltar = false;
-            
+
             Side side = FMLCommonHandler.instance().getSide();
-            if(side == Side.CLIENT)
+            if (side == Side.CLIENT)
             {
                 RenderHelper.xOffset = config.get("ClientSettings", "AlchemyHUDxOffset", 50).getInt();
                 RenderHelper.yOffset = config.get("ClientSettings", "AlchemyHUDyOffset", 2).getInt();
             }
 
-            
+
         } catch (Exception e)
         {
 
-            //TODO Log 
-        	//FMLLog.log(Level.SEVERE, e, "Blood Magic" + " has had a problem loading its configuration, go ask on the forums :p");
+            //TODO Log
+            //FMLLog.log(Level.SEVERE, e, "Blood Magic" + " has had a problem loading its configuration, go ask on the forums :p");
 
         } finally
         {
@@ -123,25 +123,25 @@ public class BloodMagicConfiguration
 
 
     }
-    
-    public static void loadBlacklist() 
-    { 
-         AlchemicalWizardry.wellBlacklist=new ArrayList<Class>(); 
-         for( Object o : EntityList.stringToClassMapping.entrySet()) 
-         { 
-         	Entry entry=(Entry) o; 
-         	Class curClass=(Class)entry.getValue(); 
-         	boolean valid=EntityLivingBase.class.isAssignableFrom(curClass) && !Modifier.isAbstract(curClass.getModifiers()); 
-         	if(valid) 
-         	{ 
-         		boolean blacklisted=config.get("wellOfSufferingBlackList", entry.getKey().toString(), false).getBoolean(); 
-         		if(blacklisted) 
-        			AlchemicalWizardry.wellBlacklist.add(curClass); 
-        	} 
-        
-         } 
-         config.save(); 
-    } 
+
+    public static void loadBlacklist()
+    {
+        AlchemicalWizardry.wellBlacklist = new ArrayList<Class>();
+        for (Object o : EntityList.stringToClassMapping.entrySet())
+        {
+            Entry entry = (Entry) o;
+            Class curClass = (Class) entry.getValue();
+            boolean valid = EntityLivingBase.class.isAssignableFrom(curClass) && !Modifier.isAbstract(curClass.getModifiers());
+            if (valid)
+            {
+                boolean blacklisted = config.get("wellOfSufferingBlackList", entry.getKey().toString(), false).getBoolean();
+                if (blacklisted)
+                    AlchemicalWizardry.wellBlacklist.add(curClass);
+            }
+
+        }
+        config.save();
+    }
 
 
 }

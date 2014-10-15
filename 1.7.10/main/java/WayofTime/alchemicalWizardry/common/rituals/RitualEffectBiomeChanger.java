@@ -1,8 +1,12 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,19 +17,13 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectBiomeChanger extends RitualEffect
 {
@@ -52,8 +50,8 @@ public class RitualEffectBiomeChanger extends RitualEffect
         }
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        
-        
+
+
         int range = 10;
 
         if (currentEssence < this.getCostPerRefresh())
@@ -171,7 +169,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                         {
                             if (itemTest instanceof ItemBlock)
                             {
-                            	Block item = ((ItemBlock)itemTest).field_150939_a;
+                                Block item = ((ItemBlock) itemTest).field_150939_a;
                                 if (item == (Blocks.sand))
                                 {
                                     humidity -= 0.1f;
@@ -258,11 +256,8 @@ public class RitualEffectBiomeChanger extends RitualEffect
 
                 if (Math.abs(rainfall - humidity) < acceptableRange && Math.abs(temperature - temp) < acceptableRange)
                 {
-                    //if(biome.getEnableSnow()==wantsSnow)
-                    {
-                        biomeID = iteration;
-                        break;
-                    }
+                    biomeID = iteration;
+                    break;
                 }
 
                 iteration++;
@@ -272,7 +267,6 @@ public class RitualEffectBiomeChanger extends RitualEffect
             {
                 for (int j = 0; j < 2 * range + 1; j++)
                 {
-                    //Testing of traversal of boolean matrix
                     if (boolList[i][j])
                     {
                         Chunk chunk = world.getChunkFromBlockCoords(x - range + i, z - range + j);
@@ -292,7 +286,6 @@ public class RitualEffectBiomeChanger extends RitualEffect
 
                         byteArray[moduZ * 16 + moduX] = (byte) biomeID;
                         chunk.setBiomeArray(byteArray);
-                        //world.setBlock(x-range+i, y+1, z-range+j, Block.blockClay);
                     }
                 }
             }
@@ -305,7 +298,6 @@ public class RitualEffectBiomeChanger extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -316,9 +308,9 @@ public class RitualEffectBiomeChanger extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> biomeChangerRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> biomeChangerRitual = new ArrayList();
         biomeChangerRitual.add(new RitualComponent(1, 0, -2, RitualComponent.AIR));
         biomeChangerRitual.add(new RitualComponent(1, 0, -3, RitualComponent.AIR));
         biomeChangerRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
@@ -436,5 +428,5 @@ public class RitualEffectBiomeChanger extends RitualEffect
         biomeChangerRitual.add(new RitualComponent(-4, 0, -8, RitualComponent.WATER));
         biomeChangerRitual.add(new RitualComponent(-4, 0, -9, RitualComponent.WATER));
         return biomeChangerRitual;
-	}
+    }
 }

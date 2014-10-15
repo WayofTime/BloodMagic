@@ -6,6 +6,5 @@ public class TEImperfectRitualStone extends TileEntity
 {
     public TEImperfectRitualStone()
     {
-        // TODO Auto-generated constructor stub
     }
 }

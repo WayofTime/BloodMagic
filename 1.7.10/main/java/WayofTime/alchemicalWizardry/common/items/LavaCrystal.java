@@ -1,23 +1,22 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class LavaCrystal extends EnergyItems
 {
     public LavaCrystal()
     {
         super();
-        //setMaxDamage(1000);
         setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setUnlocalizedName("lavaCrystal");
@@ -37,7 +36,6 @@ public class LavaCrystal extends EnergyItems
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        //if(!syphonBatteries(itemStack, null, 10))
         {
             syphonWhileInContainer(itemStack, this.getEnergyUsed());
             ItemStack copiedStack = itemStack.copy();
@@ -45,7 +43,6 @@ public class LavaCrystal extends EnergyItems
             copiedStack.stackSize = 1;
             return copiedStack;
         }
-        //return itemStack;
     }
 
     @Override
@@ -97,18 +94,7 @@ public class LavaCrystal extends EnergyItems
             {
                 return true;
             }
-
-//        	EntityPlayer ownerEntity = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(ist.getTagCompound().getString("ownerName"));
-//            if(ownerEntity==null){return false;}
-//            NBTTagCompound tag = ownerEntity.getEntityData();
-//            int currentEssence = tag.getInteger("currentEssence");
-//            if(currentEssence>=damageToBeDone)
-//            {
-//            	tag.setInteger("currentEssence", currentEssence-damageToBeDone);
-//            	return true;
-//            }
         }
-
         return false;
     }
 }

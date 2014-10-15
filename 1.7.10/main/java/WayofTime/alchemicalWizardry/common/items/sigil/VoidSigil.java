@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
-import net.minecraft.block.Block;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,15 +16,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class VoidSigil extends ItemBucket implements ArmourUpgrade
 {
@@ -34,7 +30,6 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
     {
         super(null);
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(50);
         isFull = 0;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
@@ -116,24 +111,24 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
                 {
                     return par1ItemStack;
                 }
-                
+
                 TileEntity tile = par2World.getTileEntity(i, j, k);
-                if(tile instanceof IFluidHandler)
+                if (tile instanceof IFluidHandler)
                 {
-                	FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, false);
-                	
-                	if(amount != null && amount.amount > 0)
-                	{
-                		((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, true);
-                		if (!par3EntityPlayer.capabilities.isCreativeMode)
+                    FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, false);
+
+                    if (amount != null && amount.amount > 0)
+                    {
+                        ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, true);
+                        if (!par3EntityPlayer.capabilities.isCreativeMode)
                         {
                             if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                             {
                             }
                         }
-                	}
-                	
-                	return par1ItemStack;
+                    }
+
+                    return par1ItemStack;
                 }
 
                 if (this.isFull == 0)
@@ -173,23 +168,19 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player,
-                               ItemStack thisItemStack)
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 25;
     }
 }

@@ -1,18 +1,18 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectApiaryOverclock extends RitualEffect
 {
@@ -35,7 +35,7 @@ public class RitualEffectApiaryOverclock extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        
+
         if (currentEssence < this.getCostPerRefresh())
         {
             EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
@@ -46,55 +46,27 @@ public class RitualEffectApiaryOverclock extends RitualEffect
             }
 
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
-        } else
-        {
-//            TileEntity tile = world.getTileEntity(x, y+1, z);
-//            
-//            try{
-//            	if(tile instanceof IBeeHousing && tile.getClass().getName().contains("Apiary"))
-//                {
-//                	for (int i = 0; i < 10; i++)
-//                    {
-//                        PacketDispatcher.sendPacketToAllPlayers(TEAltar.getParticlePacket(x, y+1, z, (short) 3));
-//                    }
-//                	
-//                	for(int i=0; i<9; i++)
-//                	{
-//                		tile.updateEntity();
-//                	}
-//                	
-//                	data.currentEssence = currentEssence - this.getCostPerRefresh();
-//                    data.markDirty();
-//                }
-//            }catch (Exception e)
-//            {
-//            	
-//            }
-        
-            
         }
-        
     }
 
     @Override
     public int getCostPerRefresh()
     {
-        // TODO Auto-generated method stub
         return 10;
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> apiaryRitual = new ArrayList();
-        apiaryRitual.add(new RitualComponent(1,0,0, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(1,0,1, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(1,0,-1, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(-1,0,-1, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(-1,0,1, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(-1,0,0, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(0,0,-1, RitualComponent.DUSK));
-        apiaryRitual.add(new RitualComponent(0,0,1, RitualComponent.DUSK));
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> apiaryRitual = new ArrayList();
+        apiaryRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(1, 0, 1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(1, 0, -1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(0, 0, -1, RitualComponent.DUSK));
+        apiaryRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));
         return apiaryRitual;
-	}
+    }
 }

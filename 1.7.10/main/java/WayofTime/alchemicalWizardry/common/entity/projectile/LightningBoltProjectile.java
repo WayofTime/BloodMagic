@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -7,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class LightningBoltProjectile extends EnergyBlastProjectile
 {
@@ -68,23 +68,11 @@ public class LightningBoltProjectile extends EnergyBlastProjectile
     {
         if (mop == shootingEntity && ticksInAir > 3)
         {
-            //shootingEntity.attackEntityFrom(DamageSource.causePlayerDamage(shootingEntity), 1);
             this.setDead();
         } else
         {
-            //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
-                //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
-                //((EntityLivingBase)mop).setFire(50);
-                //((EntityLivingBase)mop).setRevengeTarget(shootingEntity);
-//        		if(((EntityLivingBase)mop).isEntityUndead())
-//        		{
-//        			doDamage((int)(projectileDamage*2),mop);
-//        		}else
-//        		{
-//        			doDamage(projectileDamage, mop);
-//        		}
                 if (causeLightning)
                 {
                     this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, ((EntityLivingBase) mop).posX, ((EntityLivingBase) mop).posY, ((EntityLivingBase) mop).posZ));
@@ -92,11 +80,7 @@ public class LightningBoltProjectile extends EnergyBlastProjectile
                 {
                     doDamage(projectileDamage, mop);
                 }
-
-                //((EntityLivingBase)mop).setVelocity(this.motionX*2, ((EntityLivingBase)mop).motionY+1.5, this.motionZ*2);
             }
-
-            //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
         spawnHitParticles("magicCrit", 8);

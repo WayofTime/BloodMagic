@@ -10,7 +10,6 @@ public class SummoningFallenAngel extends SummoningHelper
     public SummoningFallenAngel(int id)
     {
         super(id);
-        // TODO Auto-generated constructor stub
     }
 
     public EntityLivingBase getEntity(World worldObj)

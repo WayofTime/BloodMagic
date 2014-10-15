@@ -1,16 +1,16 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 
 public class EntityMeteor extends EnergyBlastProjectile
 {
     private int meteorID;
-    
+
     public boolean hasTerrae;
     public boolean hasOrbisTerrae;
     public boolean hasCrystallos;
@@ -28,12 +28,12 @@ public class EntityMeteor extends EnergyBlastProjectile
         super(par1World, par2, par4, par6);
         this.meteorID = meteorID;
     }
-    
+
     @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
-        
+
         par1NBTTagCompound.setInteger("meteorID", meteorID);
         par1NBTTagCompound.setBoolean("hasTerrae", hasTerrae);
         par1NBTTagCompound.setBoolean("hasOrbisTerrae", hasOrbisTerrae);
@@ -46,7 +46,7 @@ public class EntityMeteor extends EnergyBlastProjectile
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
-        
+
         meteorID = par1NBTTagCompound.getInteger("meteorID");
         hasTerrae = par1NBTTagCompound.getBoolean("hasTerrae");
         hasOrbisTerrae = par1NBTTagCompound.getBoolean("hasOrbisTerrae");
@@ -83,7 +83,7 @@ public class EntityMeteor extends EnergyBlastProjectile
     @Override
     public void onImpact(Entity mop)
     {
-    	MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
+        MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
 
         this.setDead();
     }

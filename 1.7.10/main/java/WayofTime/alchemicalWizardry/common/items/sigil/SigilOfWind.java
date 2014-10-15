@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,11 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SigilOfWind extends EnergyItems implements ArmourUpgrade
 {
@@ -27,7 +27,6 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(100);
         setEnergyUsed(250);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
@@ -115,10 +114,6 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 2, 1));
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 2, 2));
-
-            //Test with added health boost
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, 2400,99));
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
@@ -155,9 +150,6 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade
 
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionBoost.id, 205, 1));
-
-            //par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 205, 2));
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
@@ -183,14 +175,12 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 150;
     }
 }

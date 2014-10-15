@@ -1,32 +1,26 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fall damage in the area of effect
 {
-	public static final int terraeDrain = 1;
-	public static final int orbisTerraeDrain = 1;
-	public static final int aetherDrain = 1;
-	
-	public static final int costCooldown = 10;
-	
+    public static final int terraeDrain = 1;
+    public static final int orbisTerraeDrain = 1;
+    public static final int aetherDrain = 1;
+
+    public static final int costCooldown = 10;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -48,9 +42,9 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         }
 
         boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
-    	boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
-    	boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
-        
+        boolean hasOrbisTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, false);
+        boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
+
         int range = this.getHorizontalRangeForReagent(hasTerrae, hasOrbisTerrae);
         int verticalRange = hasAether ? 60 : 30;
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range));
@@ -74,21 +68,21 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
             }
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
-            
-            if(flag && world.getWorldTime() % costCooldown == 0)
+
+            if (flag && world.getWorldTime() % costCooldown == 0)
             {
-            	if(hasTerrae)
-            	{
-            		this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
-            	}
-            	if(hasOrbisTerrae)
-            	{
-            		this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
-            	}
-            	if(hasAether)
-            	{
-            		this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
-            	}
+                if (hasTerrae)
+                {
+                    this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
+                }
+                if (hasOrbisTerrae)
+                {
+                    this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+                }
+                if (hasAether)
+                {
+                    this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, true);
+                }
             }
         }
     }
@@ -106,9 +100,9 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> featheredEarthRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> featheredEarthRitual = new ArrayList();
         featheredEarthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         featheredEarthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
         featheredEarthRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));
@@ -150,28 +144,28 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         featheredEarthRitual.add(new RitualComponent(-5, 5, -4, RitualComponent.AIR));
         featheredEarthRitual.add(new RitualComponent(-3, 5, -4, RitualComponent.AIR));
         return featheredEarthRitual;
-	}
-    
+    }
+
     public int getHorizontalRangeForReagent(boolean hasTerrae, boolean hasOrbisTerrae)
     {
-    	if(hasOrbisTerrae)
-    	{
-    		if(hasTerrae)
-    		{
-    			return 64;
-    		}else
-    		{
-    			return 45;
-    		}
-    	}else
-    	{
-    		if(hasTerrae)
-    		{
-    			return 30;
-    		}else
-    		{
-    			return 20;
-    		}
-    	}    	
+        if (hasOrbisTerrae)
+        {
+            if (hasTerrae)
+            {
+                return 64;
+            } else
+            {
+                return 45;
+            }
+        } else
+        {
+            if (hasTerrae)
+            {
+                return 30;
+            } else
+            {
+                return 20;
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -8,11 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TEPedestal extends TileEntity implements IInventory
 {
@@ -165,13 +164,11 @@ public class TEPedestal extends TileEntity implements IInventory
     @Override
     public void openInventory()
     {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void closeInventory()
     {
-        // TODO Auto-generated method stub
     }
 
     //Logic for the actual block is under here
@@ -256,7 +253,6 @@ public class TEPedestal extends TileEntity implements IInventory
 
     public void onItemDeletion()
     {
-        //worldObj.createExplosion(null, xCoord+0.5, yCoord+0.5, zCoord+0.5, 1, false);
         worldObj.addWeatherEffect(new EntityLightningBolt(worldObj, xCoord, yCoord, zCoord));
 
         for (int i = 0; i < 16; i++)

@@ -14,16 +14,7 @@ public class ContainerTeleposer extends Container
     public ContainerTeleposer(InventoryPlayer inventoryPlayer, TETeleposer te)
     {
         tileEntity = te;
-        //the Slot constructor takes the IInventory and the slot number in that it binds to
-        //and the x-y coordinates it resides on-screen
-//            addSlotToContainer(new Slot(tileEntity, 0, 152, 110));
-//            addSlotToContainer(new Slot(tileEntity, 1, 80, 18));
-//            addSlotToContainer(new Slot(tileEntity, 2, 33, 52));
-//            addSlotToContainer(new Slot(tileEntity, 3, 51, 110));
-//            addSlotToContainer(new Slot(tileEntity, 4, 109, 110));
-//            addSlotToContainer(new Slot(tileEntity, 5, 127, 52));
         addSlotToContainer(new Slot(tileEntity, 0, 80, 67));
-        //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
     }
 
@@ -54,8 +45,6 @@ public class ContainerTeleposer extends Container
     {
         ItemStack stack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
-
-        //null checks and checks if the item can be stacked (maxStackSize > 1)
         if (slotObject != null && slotObject.getHasStack())
         {
             ItemStack stackInSlot = slotObject.getStack();
@@ -70,8 +59,6 @@ public class ContainerTeleposer extends Container
 
                 slotObject.onSlotChange(stackInSlot, stack);
             }
-
-            //merges the item into player inventory since its in the tileEntity
             if (slot < 1)
             {
                 if (!this.mergeItemStack(stackInSlot, 7, 35, true))
@@ -79,7 +66,6 @@ public class ContainerTeleposer extends Container
                     return null;
                 }
             }
-            //places it into the tileEntity is possible since its in the player inventory
             else if (!this.mergeItemStack(stackInSlot, 0, 0, false))
             {
                 return null;

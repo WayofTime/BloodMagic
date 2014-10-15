@@ -1,13 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
@@ -15,6 +7,14 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightPro
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemBloodLightSigil extends EnergyItems implements IHolding
 {
@@ -24,10 +24,8 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(10);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

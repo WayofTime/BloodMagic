@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -10,14 +11,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class BloodboundSword extends EnergyItems
 {
     private float weaponDamage;
-    //private int maxMode = 3;
     private NBTTagCompound data;
 
     public BloodboundSword(int id)
@@ -45,19 +44,11 @@ public class BloodboundSword extends EnergyItems
 
             if (!this.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
             {
-                //this.damagePlayer(null, (EntityPlayer)par3EntityLivingBase, (this.getEnergyUsed() + 99) / 100);
             }
         }
 
         return true;
     }
-
-    /*
-    public int getDamageVsEntity(Entity par1Entity)
-    {
-        return this.weaponDamage;
-    }
-    */
 
     public float func_82803_g()
     {
@@ -93,11 +84,4 @@ public class BloodboundSword extends EnergyItems
     {
         return false;
     }
-
-//    public Multimap func_111205_h()
-//    {
-//        Multimap multimap = super.func_111205_h();
-//        multimap.put(SharedMonsterAttributes.field_111264_e.func_111108_a(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.weaponDamage, 0));
-//        return multimap;
-//    }
 }

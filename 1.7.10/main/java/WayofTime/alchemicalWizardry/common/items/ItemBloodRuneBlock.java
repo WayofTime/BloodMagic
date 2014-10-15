@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -12,8 +11,6 @@ public class ItemBloodRuneBlock extends ItemBlock
     {
         super(block);
         setHasSubtypes(true);
-//        this.setUnlocalizedName("itemBloodRuneBlock");
-//        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 
     }
 
@@ -47,9 +44,9 @@ public class ItemBloodRuneBlock extends ItemBlock
             case 4:
                 name = "betterCapacity";
                 break;
-                
+
             default:
-            	name = "broken";
+                name = "broken";
         }
 
         return getUnlocalizedName() + "." + name;

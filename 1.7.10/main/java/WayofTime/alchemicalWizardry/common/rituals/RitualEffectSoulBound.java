@@ -1,26 +1,23 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class RitualEffectSoulBound extends RitualEffect
 {
@@ -58,9 +55,6 @@ public class RitualEffectSoulBound extends RitualEffect
                 while (iterator.hasNext())
                 {
                     item = (EntityItem) iterator.next();
-//                double xDif = item.posX - (xCoord+0.5);
-//                double yDif = item.posY - (yCoord+1);
-//                double zDif = item.posZ - (zCoord+0.5);
                     ItemStack itemStack = item.getEntityItem();
 
                     if (itemStack == null)
@@ -69,13 +63,13 @@ public class RitualEffectSoulBound extends RitualEffect
                     }
 
 
-                    if(BindingRegistry.isRequiredItemValid(itemStack))
+                    if (BindingRegistry.isRequiredItemValid(itemStack))
                     {
-                    	ritualStone.setVar1(BindingRegistry.getIndexForItem(itemStack)+1);
-                    	world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
+                        ritualStone.setVar1(BindingRegistry.getIndexForItem(itemStack) + 1);
+                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                    	item.setDead();
-                    	break;
+                        item.setDead();
+                        break;
                     }
 
                     if (world.rand.nextInt(10) == 0)
@@ -131,8 +125,8 @@ public class RitualEffectSoulBound extends RitualEffect
 
                 if (ritualStone.getCooldown() <= 0)
                 {
-                	
-                    ItemStack spawnedItem = BindingRegistry.getOutputForIndex(ritualStone.getVar1()-1);
+
+                    ItemStack spawnedItem = BindingRegistry.getOutputForIndex(ritualStone.getVar1() - 1);
 
                     if (spawnedItem != null)
                     {
@@ -159,9 +153,9 @@ public class RitualEffectSoulBound extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> boundSoulRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> boundSoulRitual = new ArrayList();
         boundSoulRitual.add(new RitualComponent(3, 0, 0, 2));
         boundSoulRitual.add(new RitualComponent(-3, 0, 0, 2));
         boundSoulRitual.add(new RitualComponent(0, 0, 3, 2));
@@ -187,5 +181,5 @@ public class RitualEffectSoulBound extends RitualEffect
         boundSoulRitual.add(new RitualComponent(-3, 1, 3, 0));
         boundSoulRitual.add(new RitualComponent(-3, 1, -3, 0));
         return boundSoulRitual;
-	}
+    }
 }

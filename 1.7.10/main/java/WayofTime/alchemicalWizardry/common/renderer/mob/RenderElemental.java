@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderElemental extends RenderLiving
 {
-    private static final ResourceLocation airBeacon = new ResourceLocation("alchemicalwizardry", "textures/models/AirFloatingBeacon.png"); //refers to:YourMod/modelsTextureFile/optionalFile/yourTexture.png
+    private static final ResourceLocation airBeacon = new ResourceLocation("alchemicalwizardry", "textures/models/AirFloatingBeacon.png");
     private static final ResourceLocation waterBeacon = new ResourceLocation("alchemicalwizardry", "textures/models/WaterFloatingBeacon.png");
     private static final ResourceLocation earthBeacon = new ResourceLocation("alchemicalwizardry", "textures/models/EarthFloatingBeacon.png");
     private static final ResourceLocation fireBeacon = new ResourceLocation("alchemicalwizardry", "textures/models/FireFloatingBeacon.png");

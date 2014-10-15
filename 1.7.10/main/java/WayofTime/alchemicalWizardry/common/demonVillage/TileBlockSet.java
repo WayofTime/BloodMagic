@@ -4,5 +4,5 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileBlockSet extends BlockSet
 {
-	public NBTTagCompound tag;
+    public NBTTagCompound tag;
 }

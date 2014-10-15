@@ -1,19 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemSeerSigil extends Item implements IHolding, ArmourUpgrade
 {
@@ -60,29 +60,24 @@ public class ItemSeerSigil extends Item implements IHolding, ArmourUpgrade
         }
 
         String ownerName = itemTag.getString("ownerName");
-        
+
         return par1ItemStack;
     }
 
-	@Override
-	public void onArmourUpdate(World world, EntityPlayer player,
-			ItemStack thisItemStack) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
+    {
+    }
 
-	@Override
-	public boolean isUpgrade() 
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isUpgrade()
+    {
+        return false;
+    }
 
-	@Override
-	public int getEnergyForTenSeconds() 
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int getEnergyForTenSeconds()
+    {
+        return 0;
+    }
 }

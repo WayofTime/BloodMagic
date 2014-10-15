@@ -1,14 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class LifeEssenceBlock extends BlockFluidClassic
 {
@@ -16,8 +16,6 @@ public class LifeEssenceBlock extends BlockFluidClassic
     {
         super(AlchemicalWizardry.lifeEssenceFluid, Material.water);
         AlchemicalWizardry.lifeEssenceFluid.setBlock(this);
-        
-        //setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("lifeEssenceFluidBlock");
     }
 
@@ -35,7 +33,6 @@ public class LifeEssenceBlock extends BlockFluidClassic
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:lifeEssenceStill");
         AlchemicalWizardry.lifeEssenceFluid.setFlowingIcon(blockIcon);
         AlchemicalWizardry.lifeEssenceFluid.setStillIcon(blockIcon);
-        //this.getFluid().setIcons(blockIcon);
     }
 
     @Override

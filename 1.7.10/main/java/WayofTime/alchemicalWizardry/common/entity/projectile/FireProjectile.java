@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -68,8 +67,6 @@ public class FireProjectile extends EnergyBlastProjectile
                     }
                 }
             }
-
-            //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
         this.setDead();
@@ -84,10 +81,8 @@ public class FireProjectile extends EnergyBlastProjectile
             this.setDead();
         } else
         {
-            //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
-                //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
                 ((EntityLivingBase) mop).setFire(50);
                 ((EntityLivingBase) mop).setRevengeTarget(shootingEntity);
 
@@ -100,8 +95,6 @@ public class FireProjectile extends EnergyBlastProjectile
                     ((EntityLivingBase) mop).hurtResistantTime = 0;
                 }
             }
-
-            //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
         if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))

@@ -1,21 +1,20 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SacrificialDagger extends Item
 {
@@ -31,25 +30,25 @@ public class SacrificialDagger extends Item
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-    	if(AlchemicalWizardry.wimpySettings)
-    	{
-    		this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-    	}else
-    	{
-    		this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SacrificialDagger");
-    	}  
+        if (AlchemicalWizardry.wimpySettings)
+        {
+            this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
+        } else
+        {
+            this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SacrificialDagger");
+        }
     }
 
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	if(AlchemicalWizardry.wimpySettings)
-    	{
-    		par3List.add("A slight draining feeling tickles your fingers");
-    	}else
-    	{
-    		par3List.add("Just a prick of the");
+        if (AlchemicalWizardry.wimpySettings)
+        {
+            par3List.add("A slight draining feeling tickles your fingers");
+        } else
+        {
+            par3List.add("Just a prick of the");
             par3List.add("finger will suffice...");
-    	}
+        }
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -78,23 +77,21 @@ public class SacrificialDagger extends Item
             par2World.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
         }
 
-        if(!par2World.isRemote && SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
-        //if (!(par3EntityPlayer.getClass().equals(EntityPlayerMP.class)))
+        if (!par2World.isRemote && SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
             return par1ItemStack;
         }
 
-        if(par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+        if (par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
         {
             findAndFillAltar(par2World, par3EntityPlayer, 20);
-        }else
+        } else
         {
             findAndFillAltar(par2World, par3EntityPlayer, 200);
         }
 
         if (par3EntityPlayer.getHealth() <= 0.001f)
         {
-            //par3EntityPlayer.inventory.dropAllItems();
             par3EntityPlayer.onDeath(DamageSource.generic);
         }
 
@@ -154,14 +151,14 @@ public class SacrificialDagger extends Item
 
         return null;
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack par1ItemStack)
     {
-    	if(AlchemicalWizardry.wimpySettings)
-    	{
-    		return "Sacrificial Orb";
-    	}
-    	return super.getItemStackDisplayName(par1ItemStack);
+        if (AlchemicalWizardry.wimpySettings)
+        {
+            return "Sacrificial Orb";
+        }
+        return super.getItemStackDisplayName(par1ItemStack);
     }
 }

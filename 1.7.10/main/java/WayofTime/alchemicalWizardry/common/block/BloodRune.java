@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-
-import javax.swing.Icon;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,10 +11,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class BloodRune extends Block
 {
@@ -59,9 +57,9 @@ public class BloodRune extends Block
 
             case 3: //Orb Capacity rune
                 return 7;
-                
+
             case 4: //Better Capacity rune
-            	return 8; 
+                return 8;
         }
 
         return 0;
@@ -104,9 +102,9 @@ public class BloodRune extends Block
 
             case 3:
                 return this.orbCapacityRuneIcon;
-                
+
             case 4:
-            	return this.betterCapacityRuneIcon;
+                return this.betterCapacityRuneIcon;
 
             default:
                 return blockIcon;

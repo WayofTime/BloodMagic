@@ -1,12 +1,12 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.container;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 
 public class ContainerWritingTable extends Container
 {
@@ -15,8 +15,6 @@ public class ContainerWritingTable extends Container
     public ContainerWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable te)
     {
         tileEntity = te;
-        //the Slot constructor takes the IInventory and the slot number in that it binds to
-        //and the x-y coordinates it resides on-screen
         addSlotToContainer(new Slot(tileEntity, 0, 152, 110));
         addSlotToContainer(new Slot(tileEntity, 1, 80, 18));
         addSlotToContainer(new Slot(tileEntity, 2, 33, 52));
@@ -24,7 +22,6 @@ public class ContainerWritingTable extends Container
         addSlotToContainer(new Slot(tileEntity, 4, 109, 110));
         addSlotToContainer(new Slot(tileEntity, 5, 127, 52));
         addSlotToContainer(new Slot(tileEntity, 6, 80, 67));
-        //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
     }
 
@@ -55,30 +52,23 @@ public class ContainerWritingTable extends Container
     {
         ItemStack stack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
-
-        //null checks and checks if the item can be stacked (maxStackSize > 1)
         if (slotObject != null && slotObject.getHasStack())
         {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
-
-            //merges the item into player inventory since its in the tileEntity
             if (slot <= 6)
             {
                 if (!this.mergeItemStack(stackInSlot, 7, 43, true))
                 {
                     return null;
                 }
-            }
-            else if(stack.getItem() instanceof IBloodOrb)
+            } else if (stack.getItem() instanceof IBloodOrb)
             {
-            	if (!this.mergeItemStack(stackInSlot, 0, 1, false))
+                if (!this.mergeItemStack(stackInSlot, 0, 1, false))
                 {
                     return null;
                 }
-            }
-            //places it into the tileEntity is possible since its in the player inventory
-            else if (!this.mergeItemStack(stackInSlot, 1, 6, false))
+            } else if (!this.mergeItemStack(stackInSlot, 1, 6, false))
             {
                 return null;
             }

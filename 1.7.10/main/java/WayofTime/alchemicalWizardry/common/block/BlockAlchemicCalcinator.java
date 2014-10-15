@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -12,29 +14,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+
+import java.util.Random;
 
 public class BlockAlchemicCalcinator extends BlockContainer
 {
-	public BlockAlchemicCalcinator() 
-	{
-		super(Material.rock);
-		setHardness(2.0F);
+    public BlockAlchemicCalcinator()
+    {
+        super(Material.rock);
+        setHardness(2.0F);
         setResistance(5.0F);
-		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-		this.setBlockName("alchemicCalcinator");
-	}	
-	
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) 
-	{
-		return new TEAlchemicCalcinator();
-	}
-	
-	@Override
+        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("alchemicCalcinator");
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
+        return new TEAlchemicCalcinator();
+    }
+
+    @Override
     public boolean renderAsNormalBlock()
     {
         return false;
@@ -57,13 +57,13 @@ public class BlockAlchemicCalcinator extends BlockContainer
     {
         return true;
     }
-    
+
     @Override
     public boolean canProvidePower()
     {
         return true;
     }
-    
+
     @Override
     public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
     {
@@ -110,11 +110,11 @@ public class BlockAlchemicCalcinator extends BlockContainer
             }
         }
     }
-	
-	@Override
+
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-		TEAlchemicCalcinator tileEntity = (TEAlchemicCalcinator) world.getTileEntity(x, y, z);
+        TEAlchemicCalcinator tileEntity = (TEAlchemicCalcinator) world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -122,45 +122,44 @@ public class BlockAlchemicCalcinator extends BlockContainer
         }
 
         ItemStack playerItem = player.getCurrentEquippedItem();
-        
+
         if (playerItem != null)
         {
-        	if(playerItem.getItem() instanceof IReagentManipulator)
-        	{
-        		return false;
-        	}
-        	
-        	if(playerItem.getItem() instanceof IBloodOrb)
-        	{
-        		if(tileEntity.getStackInSlot(0) == null)
-            	{
-            		ItemStack newItem = playerItem.copy();
+            if (playerItem.getItem() instanceof IReagentManipulator)
+            {
+                return false;
+            }
+
+            if (playerItem.getItem() instanceof IBloodOrb)
+            {
+                if (tileEntity.getStackInSlot(0) == null)
+                {
+                    ItemStack newItem = playerItem.copy();
                     newItem.stackSize = 1;
                     --playerItem.stackSize;
                     tileEntity.setInventorySlotContents(0, newItem);
-            	}
-        	}
-        	else if(tileEntity.getStackInSlot(1) == null)
-        	{
-        		ItemStack newItem = playerItem.copy();
+                }
+            } else if (tileEntity.getStackInSlot(1) == null)
+            {
+                ItemStack newItem = playerItem.copy();
                 newItem.stackSize = 1;
                 --playerItem.stackSize;
                 tileEntity.setInventorySlotContents(1, newItem);
-        	}
+            }
 
         } else if (playerItem == null)
         {
-        	if(tileEntity.getStackInSlot(1) != null)
-        	{
+            if (tileEntity.getStackInSlot(1) != null)
+            {
                 player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(1));
                 tileEntity.setInventorySlotContents(1, null);
-        	}else if(tileEntity.getStackInSlot(0) != null)
-        	{
-        		player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
+            } else if (tileEntity.getStackInSlot(0) != null)
+            {
+                player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
                 tileEntity.setInventorySlotContents(0, null);
-        	}            
+            }
         }
-        
+
         tileEntity.getWorldObj().markBlockForUpdate(x, y, z);
 
         return true;

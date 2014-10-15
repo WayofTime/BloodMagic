@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.block.BloodRune;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.block.BloodRune;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpgradedAltars
 {
@@ -189,10 +188,10 @@ public class UpgradedAltars
                             case 7:
                                 upgrades.addorbCapacitiveUpgrade();
                                 break;
-                                
+
                             case 8:
-                            	upgrades.addBetterCapacitiveUpgrade();
-                            	break;
+                                upgrades.addBetterCapacitiveUpgrade();
+                                break;
                         }
                     }
                 }

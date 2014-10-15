@@ -1,27 +1,13 @@
 package WayofTime.alchemicalWizardry.common;
 
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaSecondaryProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
-import WayofTime.alchemicalWizardry.common.entity.projectile.ExplosionProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.entity.projectile.*;
 import WayofTime.alchemicalWizardry.common.spell.complex.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.world.World;
 
 public class CommonProxy
 {
@@ -49,7 +35,6 @@ public class CommonProxy
 
     public void registerEvents()
     {
-    	
     }
 
     public void registerSoundHandler()

@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.entity.projectile.LightningBoltProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import java.util.Random;
 
 public class SpellLightningBolt extends HomSpell
 {
@@ -19,7 +18,6 @@ public class SpellLightningBolt extends HomSpell
     {
         super();
         this.setEnergies(75, 200, 700, 700);
-        //this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @Override
@@ -41,7 +39,6 @@ public class SpellLightningBolt extends HomSpell
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             par2World.spawnEntityInWorld(new LightningBoltProjectile(par2World, par3EntityPlayer, 8, false));
         }
 
@@ -68,7 +65,6 @@ public class SpellLightningBolt extends HomSpell
         double yCoord = par3EntityPlayer.posY;
         double zCoord = par3EntityPlayer.posZ;
         par2World.getWorldInfo().setRaining(true);
-        //par2World.setRainStrength(1.0F);
         par2World.setRainStrength(1.0f);
         par2World.setThunderStrength(1.0f);
         par2World.getWorldInfo().setThunderTime(0);
@@ -76,7 +72,6 @@ public class SpellLightningBolt extends HomSpell
 
         for (int i = 0; i < 5; i++)
         {
-            //PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, PacketHandler.getCustomParticlePacket("mobSpell", xCoord + itemRand.nextFloat() - itemRand.nextFloat(), yCoord + itemRand.nextFloat() - itemRand.nextFloat(), zCoord + itemRand.nextFloat() - itemRand.nextFloat(), 1.0F, 1.0F, 1.0F));
             SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + itemRand.nextFloat() - itemRand.nextFloat(), yCoord + itemRand.nextFloat() - itemRand.nextFloat(), zCoord + itemRand.nextFloat() - itemRand.nextFloat(), 1.0F, 1.0F, 1.0F);
         }
 
@@ -132,7 +127,6 @@ public class SpellLightningBolt extends HomSpell
 
         if (!par2World.isRemote)
         {
-            //par2World.spawnEntityInWorld(new EnergyBlastProjectile(par2World, par3EntityPlayer, damage));
             par2World.spawnEntityInWorld(new LightningBoltProjectile(par2World, par3EntityPlayer, 8, true));
         }
 

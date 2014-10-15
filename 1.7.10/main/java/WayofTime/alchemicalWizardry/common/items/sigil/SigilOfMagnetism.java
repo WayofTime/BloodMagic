@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -11,11 +14,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
 {
@@ -27,17 +27,14 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(50);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add("I have a very magnetic personality!");
-//        par3List.add("you have a green slate?");
 
         if (!(par1ItemStack.stackTagCompound == null))
         {
@@ -93,23 +90,6 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
             return this.passiveIcon;
         }
     }
-
-//	@Override
-//	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-//	{
-//		EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
-//		if(applyBonemeal(par1ItemStack,par3World,par4,par5,par6,par2EntityPlayer))
-//		{
-//			if (par3World.isRemote)
-//            {
-//                par3World.playAuxSFX(2005, par4, par5, par6, 0);
-//                EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
-//                return true;
-//            }
-//			return true;
-//		}
-//		return false;
-//	}
 
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -209,14 +189,12 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 25;
     }
 }

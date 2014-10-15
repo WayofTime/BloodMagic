@@ -1,33 +1,30 @@
 package WayofTime.alchemicalWizardry.common.items.thaumcraft;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ISpecialArmor;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IRepairable;
 import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.IVisDiscountGear;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGoggles, IVisDiscountGear, IRevealer, IRunicArmor, IRepairable
 {
-	private static IIcon helmetIcon;
+    private static IIcon helmetIcon;
     private static IIcon plateIcon;
     private static IIcon leggingsIcon;
     private static IIcon bootsIcon;
@@ -49,7 +46,7 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
         this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundLeggings");
         this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundBoots");
     }
-    
+
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1)
     {
@@ -83,7 +80,7 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
         {
             return "alchemicalwizardry:models/armor/sanguineArmour_layer_1.png";
         }
-        
+
         if (this == ModItems.sanguineRobe || this == ModItems.sanguineBoots)
         {
             return "alchemicalwizardry:models/armor/sanguineArmour_layer_1.png";
@@ -101,37 +98,37 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	int discount = 0;
-    	
-    	switch(this.armorType)
-		{
-		case 0: 
-			discount = 6;
-			break;
-		case 1: 
-			discount = 3;
-			break;
-		case 2: 
-			discount = 3;
-			break;
-		case 3: 
-			discount = 2;
-			break;
-		}
-    	
-    	switch(this.armorType)
-		{
-		case 0: 
-	        par3List.add("A pair of goggles imbued with power");
-			break;
-		case 1: 
+        int discount = 0;
 
-		case 2: 
+        switch (this.armorType)
+        {
+            case 0:
+                discount = 6;
+                break;
+            case 1:
+                discount = 3;
+                break;
+            case 2:
+                discount = 3;
+                break;
+            case 3:
+                discount = 2;
+                break;
+        }
 
-		case 3: 
-	        par3List.add("Robes imbued with forbidden power");
-		}
-    	
+        switch (this.armorType)
+        {
+            case 0:
+                par3List.add("A pair of goggles imbued with power");
+                break;
+            case 1:
+
+            case 2:
+
+            case 3:
+                par3List.add("Robes imbued with forbidden power");
+        }
+
         par3List.add("Vis discount: " + discount + "%");
     }
 
@@ -153,34 +150,38 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
         return 0;
     }
 
-	@Override
-	public boolean showNodes(ItemStack itemstack, EntityLivingBase player) 
-	{
-		return true;
-	}
+    @Override
+    public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
+    {
+        return true;
+    }
 
-	@Override
-	public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect) 
-	{
-		switch(this.armorType)
-		{
-		case 0: return 7;
-		case 1: return 3;
-		case 2: return 2;
-		case 3: return 2;
-		}
-		return 0;
-	}
+    @Override
+    public int getVisDiscount(ItemStack stack, EntityPlayer player, Aspect aspect)
+    {
+        switch (this.armorType)
+        {
+            case 0:
+                return 7;
+            case 1:
+                return 3;
+            case 2:
+                return 2;
+            case 3:
+                return 2;
+        }
+        return 0;
+    }
 
-	@Override
-	public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player) 
-	{
-		return true;
-	}
+    @Override
+    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
+    {
+        return true;
+    }
 
-	@Override
-	public int getRunicCharge(ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int getRunicCharge(ItemStack itemstack)
+    {
+        return 0;
+    }
 }

@@ -50,22 +50,8 @@ public class ExplosionProjectile extends EnergyBlastProjectile
             }
 
             worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) (2), causesEnvDamage);
-            //this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-//        	for(int i=-1;i<=1;i++)
-//        	{
-//        		for(int j=-1;j<=1;j++)
-//        		{
-//        			for(int k=-1;k<=1;k++)
-//        			{
-//        				if(worldObj.isAirBlock((int)this.posX+i, (int)this.posY+j, (int)this.posZ+k))
-//        	        	{
-//        	        		worldObj.setBlock( (int)this.posX+i, (int)this.posY+j, (int)this.posZ+k,Block.fire.blockID);
-//        	        	}
-//        			}
-//        		}
-//        	}
             worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) (2), causesEnvDamage);
         }
 
@@ -81,12 +67,8 @@ public class ExplosionProjectile extends EnergyBlastProjectile
             this.setDead();
         } else
         {
-            //doDamage(8 + d6(), mop);
             if (mop instanceof EntityLivingBase)
             {
-                //((EntityLivingBase)mop).addPotionEffect(new PotionEffect(Potion.weakness.id, 60,2));
-                //((EntityLivingBase)mop).setFire(50);
-                //((EntityLivingBase)mop).setRevengeTarget(shootingEntity);
                 if (((EntityLivingBase) mop).isImmuneToFire())
                 {
                     doDamage((int) (projectileDamage), mop);
@@ -95,13 +77,10 @@ public class ExplosionProjectile extends EnergyBlastProjectile
                     doDamage(projectileDamage, mop);
                 }
             }
-
-            //worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)(0.1), true);
         }
 
         if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
         {
-            //worldObj.setBlock((int)this.posX, (int)this.posY, (int)this.posZ,Block.fire.blockID);
         }
 
         spawnHitParticles("magicCrit", 8);

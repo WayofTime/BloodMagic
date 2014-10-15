@@ -1,8 +1,9 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -17,10 +18,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockWritingTable extends BlockContainer
 {
@@ -60,14 +60,8 @@ public class BlockWritingTable extends BlockContainer
         {
             case 0:
                 return bottomIcon;
-
             case 1:
                 return topIcon;
-
-            //case 2: return sideIcon1;
-            //case 3: return sideIcon1;
-            //case 4: return sideIcon2;
-            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }

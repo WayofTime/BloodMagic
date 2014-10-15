@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,19 +17,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class EnergySword extends ItemSword
 {
-    //private float weaponDamaged;
-    //private int maxMode = 3;
     private NBTTagCompound data;
-
     private static IIcon activeIcon;
     private static IIcon passiveIcon;
-
     private int energyUsed;
 
     public EnergySword()
@@ -39,7 +35,6 @@ public class EnergySword extends ItemSword
         setEnergyUsed(50);
         setFull3D();
         setMaxDamage(100);
-        //weaponDamaged = 12.0F;
     }
 
     public void setEnergyUsed(int i)
@@ -95,7 +90,6 @@ public class EnergySword extends ItemSword
 
             if (!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
             {
-                //this.damagePlayer(null, (EntityPlayer)par3EntityLivingBase, (this.getEnergyUsed() + 99) / 100);
             }
         }
 
@@ -144,11 +138,6 @@ public class EnergySword extends ItemSword
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-//        if(par1ItemStack.stackTagCompound.getBoolean("isActive"))
-//        {
-//        	EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 1);
-//        }
-
         if (par2World.getWorldTime() % 100 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
@@ -184,11 +173,6 @@ public class EnergySword extends ItemSword
 
         return itemTag.getBoolean("isActive");
     }
-
-//    public int getDamageVsEntity(Entity par1Entity)
-//    {
-//        return (int) this.weaponDamage;
-//    }
 
     public float func_82803_g()
     {
@@ -230,9 +214,4 @@ public class EnergySword extends ItemSword
             return material != Material.plants && material != Material.vine && material != Material.coral && material != Material.leaves && material != Material.gourd ? 1.0F : 1.5F;
         }
     }
-
-//    public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)
-//    {
-//        return false;
-//    }
 }

@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -16,10 +18,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockPedestal extends BlockContainer
 {
@@ -39,7 +39,6 @@ public class BlockPedestal extends BlockContainer
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("bloodPedestal");
-        //func_111022_d("AlchemicalWizardry:blocks");
     }
 
     @Override
@@ -60,14 +59,8 @@ public class BlockPedestal extends BlockContainer
         {
             case 0:
                 return bottomIcon;
-
             case 1:
                 return topIcon;
-
-            //case 2: return sideIcon1;
-            //case 3: return sideIcon1;
-            //case 4: return sideIcon2;
-            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
@@ -93,18 +86,11 @@ public class BlockPedestal extends BlockContainer
             tileEntity.setInventorySlotContents(0, newItem);
         } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
-            /**stub method
-             * Add the item that is in the slot to the player's inventory, and
-             * then set the slot to null.
-             */
             player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
             tileEntity.setInventorySlotContents(0, null);
             tileEntity.setActive();
         }
-
         world.markBlockForUpdate(x, y, z);
-        //player.openGui(AlchemicalWizardry.instance, 0, world, x, y, z);
-        //PacketDispatcher.sendPacketToServer(tileEntity.getDescriptionPacket());
         return true;
     }
 

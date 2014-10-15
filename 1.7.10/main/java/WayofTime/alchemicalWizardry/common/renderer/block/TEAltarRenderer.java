@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -8,11 +10,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-
 import org.lwjgl.opengl.GL11;
-
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
 public class TEAltarRenderer extends TileEntitySpecialRenderer
 {
@@ -42,10 +40,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
         {
             TEAltar tileAltar = (TEAltar) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
-//            GL11.glDisable(GL11.GL_CULL_FACE);
-            /**
-             * Render the ghost item inside of the Altar, slowly spinning
-             */
             GL11.glPushMatrix();
 
             if (tileAltar.getStackInSlot(0) != null)
@@ -55,7 +49,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
-                //translateGhostItemByOrientation(ghostEntityItem.getEntityItem(), d0, d1, d2, ForgeDirection.DOWN);
                 float displacement = 0.2F;
 
                 if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
@@ -65,8 +58,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
                 {
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.6F, (float) d2 + 0.5F);
                 }
-
-                //GL11.glTranslatef((float) tileAltar.xCoord + 0.5F, (float) tileAltar.yCoord + 2.7F, (float) tileAltar.zCoord + 0.5F);
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
                 GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F);
                 customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
@@ -86,7 +77,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
         {
             if (itemStack.getItem() instanceof ItemBlock)
             {
-                switch (customRenderItem.getMiniBlockCount(itemStack,(byte)1))
+                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
                 {
                     case 1:
                         return 0.90F;
@@ -108,7 +99,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
                 }
             } else
             {
-                switch (customRenderItem.getMiniItemCount(itemStack,(byte)1))
+                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
                 {
                     case 1:
                         return 0.65F;

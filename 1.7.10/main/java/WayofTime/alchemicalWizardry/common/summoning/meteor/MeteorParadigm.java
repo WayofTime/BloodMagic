@@ -1,15 +1,15 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MeteorParadigm
 {
@@ -17,7 +17,7 @@ public class MeteorParadigm
     public ItemStack focusStack;
     public int radius;
     public static int maxChance = 1000;
-    
+
     public static Random rand = new Random();
 
     public MeteorParadigm(ItemStack focusStack, int radius)
@@ -44,37 +44,37 @@ public class MeteorParadigm
         boolean hasCrystallos = false;
         boolean hasIncendium = false;
         boolean hasTennebrae = false;
-        
-        if(flags != null && flags.length >= 5)
-        {
-        	hasTerrae = flags[0];
-        	hasOrbisTerrae = flags[1];
-        	hasCrystallos = flags[2];
-        	hasIncendium = flags[3];
-        	hasTennebrae = flags[4];
-        }
-        
-        int newRadius = radius;
-    	int chance = maxChance;
 
-    	if(hasOrbisTerrae)
-    	{
-    		newRadius += 2;
-    		chance += 200;
-    	}else if(hasTerrae)
-    	{
-    		newRadius += 1;
-    		chance += 100;
-    	}
-    	
+        if (flags != null && flags.length >= 5)
+        {
+            hasTerrae = flags[0];
+            hasOrbisTerrae = flags[1];
+            hasCrystallos = flags[2];
+            hasIncendium = flags[3];
+            hasTennebrae = flags[4];
+        }
+
+        int newRadius = radius;
+        int chance = maxChance;
+
+        if (hasOrbisTerrae)
+        {
+            newRadius += 2;
+            chance += 200;
+        } else if (hasTerrae)
+        {
+            newRadius += 1;
+            chance += 100;
+        }
+
         world.createExplosion(null, x, y, z, newRadius * 4, AlchemicalWizardry.doMeteorsDestroyBlocks);
 
         float iceChance = hasCrystallos ? 1 : 0;
-    	float soulChance = hasIncendium ? 1 : 0;
-    	float obsidChance = hasTennebrae ? 1 : 0;
-    	
-    	float totalChance = iceChance + soulChance + obsidChance;
-        
+        float soulChance = hasIncendium ? 1 : 0;
+        float obsidChance = hasTennebrae ? 1 : 0;
+
+        float totalChance = iceChance + soulChance + obsidChance;
+
         for (int i = -newRadius; i <= newRadius; i++)
         {
             for (int j = -newRadius; j <= newRadius; j++)
@@ -114,44 +114,44 @@ public class MeteorParadigm
 
                     if (!hasPlacedBlock)
                     {
-                    	float randChance = rand.nextFloat() * totalChance;
-                    	
-                    	if(randChance < iceChance)
-                    	{
-                    		world.setBlock(x + i, y + j, z + k, Blocks.ice, 0, 3);
-                    	}else
-                    	{
-                    		randChance-=iceChance;
-                    		
-                    		if(randChance < soulChance)
-                        	{
-                        		switch(rand.nextInt(3))
-                        		{
-                        		case 0:
-                            		world.setBlock(x + i, y + j, z + k, Blocks.soul_sand, 0, 3);
-                        			break;
-                        		case 1:
-                            		world.setBlock(x + i, y + j, z + k, Blocks.glowstone, 0, 3);
-                        			break;
-                        		case 2:
-                            		world.setBlock(x + i, y + j, z + k, Blocks.netherrack, 0, 3);
-                        			break;
-                        		}
-                        	}else
-                        	{
-                        		randChance-=soulChance;
-                        		
-                        		if(randChance < obsidChance)
-                            	{
-                            		world.setBlock(x + i, y + j, z + k, Blocks.obsidian, 0, 3);
-                            	}else
-                            	{
-                            		randChance-=obsidChance;
-                            		
+                        float randChance = rand.nextFloat() * totalChance;
+
+                        if (randChance < iceChance)
+                        {
+                            world.setBlock(x + i, y + j, z + k, Blocks.ice, 0, 3);
+                        } else
+                        {
+                            randChance -= iceChance;
+
+                            if (randChance < soulChance)
+                            {
+                                switch (rand.nextInt(3))
+                                {
+                                    case 0:
+                                        world.setBlock(x + i, y + j, z + k, Blocks.soul_sand, 0, 3);
+                                        break;
+                                    case 1:
+                                        world.setBlock(x + i, y + j, z + k, Blocks.glowstone, 0, 3);
+                                        break;
+                                    case 2:
+                                        world.setBlock(x + i, y + j, z + k, Blocks.netherrack, 0, 3);
+                                        break;
+                                }
+                            } else
+                            {
+                                randChance -= soulChance;
+
+                                if (randChance < obsidChance)
+                                {
+                                    world.setBlock(x + i, y + j, z + k, Blocks.obsidian, 0, 3);
+                                } else
+                                {
+                                    randChance -= obsidChance;
+
                                     world.setBlock(x + i, y + j, z + k, Blocks.stone, 0, 3);
-                            	}
-                        	}
-                    	}
+                                }
+                            }
+                        }
                     }
                 }
             }

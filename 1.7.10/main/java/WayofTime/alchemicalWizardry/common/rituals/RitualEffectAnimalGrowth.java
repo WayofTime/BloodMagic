@@ -1,34 +1,27 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectAnimalGrowth extends RitualEffect
 {
-	public static final int breedingCost = 50;
-	public static final int reductusDrain = 1;
-	public static final int virtusDrain = 10;
-	
+    public static final int breedingCost = 50;
+    public static final int reductusDrain = 1;
+    public static final int virtusDrain = 10;
+
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -46,7 +39,7 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         }
 
         double range = 2;
-        
+
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 3), (double) (z + 1)).expand(range, 0, range);
         List<EntityAgeable> list = world.getEntitiesWithinAABB(EntityAgeable.class, axisalignedbb);
 
@@ -60,74 +53,74 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         {
             boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
-            for(EntityAgeable entity : list)
+            for (EntityAgeable entity : list)
             {
                 if (entity.getGrowingAge() < 0)
                 {
                     entity.addGrowth(5);
                     entityCount++;
-                }else 
+                } else
                 {
-                	hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
-                	if(hasReductus && entity instanceof EntityAnimal && entity.getGrowingAge() > 0)
-                	{
-                		EntityAnimal animal = (EntityAnimal)entity;
-                    	entity.setGrowingAge(Math.max(0, animal.getGrowingAge() - 20*2));
-                    	this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
-                    	entityCount++;
-                	}
-                }	
+                    hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+                    if (hasReductus && entity instanceof EntityAnimal && entity.getGrowingAge() > 0)
+                    {
+                        EntityAnimal animal = (EntityAnimal) entity;
+                        entity.setGrowingAge(Math.max(0, animal.getGrowingAge() - 20 * 2));
+                        this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
+                        entityCount++;
+                    }
+                }
             }
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
         }
-        
+
         boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
-        
-        if(hasVirtus && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, breedingCost))
+
+        if (hasVirtus && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, breedingCost))
         {
-        	List<EntityAnimal> animalList = world.getEntitiesWithinAABB(EntityAnimal.class, axisalignedbb);
-        	TileEntity tile = world.getTileEntity(x, y+1, z);
-        	IInventory inventory = null;
-        	if(tile instanceof IInventory)
-        	{
-        		inventory = (IInventory)tile;
-        	}else
-        	{
-        		tile = world.getTileEntity(x, y-1, z);
-        		if(tile instanceof IInventory)
-            	{
-            		inventory = (IInventory)tile;
-            	}
-        	}
-        	
-        	if(inventory != null)
-        	{
-        		for(EntityAnimal entityAnimal : animalList)
-            	{
-        			if(entityAnimal.isInLove() || entityAnimal.isChild() || entityAnimal.getGrowingAge() > 0)
-        			{
-        				continue;
-        			}
-        			
-        			hasVirtus = hasVirtus && this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
-        			boolean hasLP = SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, breedingCost);
-        			
-        			for(int i=0; i<inventory.getSizeInventory(); i++)
-        			{
-        				ItemStack stack = inventory.getStackInSlot(i);
-                		
-                		if(stack != null && entityAnimal.isBreedingItem(stack))
-                		{
-                			inventory.decrStackSize(i, 1);
-                			entityAnimal.func_146082_f(null);
-                			this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
-                			SoulNetworkHandler.syphonFromNetwork(owner, breedingCost);
-                			break;
-                		}
-        			}
-            	}
-        	}
+            List<EntityAnimal> animalList = world.getEntitiesWithinAABB(EntityAnimal.class, axisalignedbb);
+            TileEntity tile = world.getTileEntity(x, y + 1, z);
+            IInventory inventory = null;
+            if (tile instanceof IInventory)
+            {
+                inventory = (IInventory) tile;
+            } else
+            {
+                tile = world.getTileEntity(x, y - 1, z);
+                if (tile instanceof IInventory)
+                {
+                    inventory = (IInventory) tile;
+                }
+            }
+
+            if (inventory != null)
+            {
+                for (EntityAnimal entityAnimal : animalList)
+                {
+                    if (entityAnimal.isInLove() || entityAnimal.isChild() || entityAnimal.getGrowingAge() > 0)
+                    {
+                        continue;
+                    }
+
+                    hasVirtus = hasVirtus && this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+                    boolean hasLP = SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, breedingCost);
+
+                    for (int i = 0; i < inventory.getSizeInventory(); i++)
+                    {
+                        ItemStack stack = inventory.getStackInSlot(i);
+
+                        if (stack != null && entityAnimal.isBreedingItem(stack))
+                        {
+                            inventory.decrStackSize(i, 1);
+                            entityAnimal.func_146082_f(null);
+                            this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
+                            SoulNetworkHandler.syphonFromNetwork(owner, breedingCost);
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -139,9 +132,9 @@ public class RitualEffectAnimalGrowth extends RitualEffect
     }
 
     @Override
-	public List<RitualComponent> getRitualComponentList() 
-	{
-		ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
+    public List<RitualComponent> getRitualComponentList()
+    {
+        ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
         animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.DUSK));
         animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.DUSK));
         animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
@@ -159,5 +152,5 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         animalGrowthRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
         animalGrowthRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
         return animalGrowthRitual;
-	}
+    }
 }

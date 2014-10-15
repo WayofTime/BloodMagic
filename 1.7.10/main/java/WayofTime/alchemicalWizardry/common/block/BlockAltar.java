@@ -1,9 +1,12 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.Random;
-
-import javax.swing.Icon;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -15,17 +18,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.PacketHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockAltar extends BlockContainer
 {
@@ -45,8 +40,6 @@ public class BlockAltar extends BlockContainer
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("bloodAltar");
-        //setUnlocalizedName("blockAltar");
-        //func_111022_d("AlchemicalWizardry:blocks");
     }
 
     @Override
@@ -67,29 +60,23 @@ public class BlockAltar extends BlockContainer
         {
             case 0:
                 return bottomIcon;
-
             case 1:
                 return topIcon;
-
-            //case 2: return sideIcon1;
-            //case 3: return sideIcon1;
-            //case 4: return sideIcon2;
-            //case 5: return sideIcon2;
             default:
                 return sideIcon2;
         }
     }
-    
+
     @Override
     public boolean hasComparatorInputOverride()
     {
-    	return true;
+        return true;
     }
 
     @Override
     public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
     {
-    	TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(x, y, z);
 
         if (tile instanceof TEAltar)
         {
@@ -113,8 +100,6 @@ public class BlockAltar extends BlockContainer
     {
         TEAltar tileEntity = (TEAltar) world.getTileEntity(x, y, z);
 
-//        world.scheduleBlockUpdate(x, y, z, this.blockID, 0);
-
         if (tileEntity == null || player.isSneaking())
         {
             return false;
@@ -129,26 +114,24 @@ public class BlockAltar extends BlockContainer
                 if (player.worldObj.isRemote)
                 {
                     world.markBlockForUpdate(x, y, z);
-                }else
+                } else
                 {
-                	tileEntity.sendChatInfoToPlayer(player);
+                    tileEntity.sendChatInfoToPlayer(player);
                 }
 
                 return true;
-            }
-            else if(playerItem.getItem().equals(ModItems.itemSeerSigil))
+            } else if (playerItem.getItem().equals(ModItems.itemSeerSigil))
             {
-            	if (player.worldObj.isRemote)
+                if (player.worldObj.isRemote)
                 {
-                	world.markBlockForUpdate(x, y, z);
-                }else
+                    world.markBlockForUpdate(x, y, z);
+                } else
                 {
-                	tileEntity.sendMoreChatInfoToPlayer(player);
+                    tileEntity.sendMoreChatInfoToPlayer(player);
                 }
-                
+
                 return true;
-            }
-            else if (playerItem.getItem().equals(ModItems.sigilOfHolding))
+            } else if (playerItem.getItem().equals(ModItems.sigilOfHolding))
             {
                 ItemStack item = ((SigilOfHolding) playerItem.getItem()).getCurrentItem(playerItem);
 
@@ -156,24 +139,23 @@ public class BlockAltar extends BlockContainer
                 {
                     if (player.worldObj.isRemote)
                     {
-                    	world.markBlockForUpdate(x, y, z);
-                    }else
+                        world.markBlockForUpdate(x, y, z);
+                    } else
                     {
-                    	tileEntity.sendChatInfoToPlayer(player);
+                        tileEntity.sendChatInfoToPlayer(player);
                     }
-                    
+
                     return true;
-                }
-                else if(item !=null && item.getItem().equals(ModItems.itemSeerSigil))
+                } else if (item != null && item.getItem().equals(ModItems.itemSeerSigil))
                 {
-                	if (player.worldObj.isRemote)
+                    if (player.worldObj.isRemote)
                     {
-                    	world.markBlockForUpdate(x, y, z);
-                    }else
+                        world.markBlockForUpdate(x, y, z);
+                    } else
                     {
-                    	tileEntity.sendMoreChatInfoToPlayer(player);
+                        tileEntity.sendMoreChatInfoToPlayer(player);
                     }
-                    
+
                     return true;
                 }
             }
@@ -183,27 +165,16 @@ public class BlockAltar extends BlockContainer
         {
             ItemStack newItem = playerItem.copy();
             newItem.stackSize = 1;
-//            if(newItem.getMaxDamage()==0)
-//            {
-//            	newItem.setItemDamage(0);
-//            }
             --playerItem.stackSize;
             tileEntity.setInventorySlotContents(0, newItem);
             tileEntity.startCycle();
         } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
-            /**stub method
-             * Add the item that is in the slot to the player's inventory, and
-             * then set the slot to null.
-             */
             player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
             tileEntity.setInventorySlotContents(0, null);
             tileEntity.setActive();
         }
-
         world.markBlockForUpdate(x, y, z);
-        //player.openGui(AlchemicalWizardry.instance, 0, world, x, y, z);
-        //PacketDispatcher.sendPacketToServer(tileEntity.getDescriptionPacket());
         return true;
     }
 
@@ -294,21 +265,9 @@ public class BlockAltar extends BlockContainer
         }
     }
 
-//    @Override
-//    public int isProvidingStrongPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
-//    {
-//        return 1;
-//    }
-
-//    @Override
-//    public boolean canProvidePower()
-//    {
-//        return true;
-//    }
-
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2)
-	{
-		return new TEAltar();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2)
+    {
+        return new TEAltar();
+    }
 }

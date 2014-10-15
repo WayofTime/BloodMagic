@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,18 +11,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockSpectralContainer extends BlockContainer
 {
     public BlockSpectralContainer()
     {
         super(Material.cloth);
-        //setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("blockSpectralContainer");
-        this.setBlockBounds(0,0,0,0,0,0);
+        this.setBlockBounds(0, 0, 0, 0, 0, 0);
     }
 
     @Override
@@ -54,22 +53,22 @@ public class BlockSpectralContainer extends BlockContainer
     {
         return 0;
     }
-	
-	@Override
-	public boolean isReplaceable(IBlockAccess world, int x, int y, int z)
-	{
-		return true;
-	}
-	
-	@Override
-	public boolean isAir(IBlockAccess world, int x, int y, int z)
-	{
-		return true;
-	}
 
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) 
-	{
-		return new TESpectralContainer();
-	}
+    @Override
+    public boolean isReplaceable(IBlockAccess world, int x, int y, int z)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isAir(IBlockAccess world, int x, int y, int z)
+    {
+        return true;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2)
+    {
+        return new TESpectralContainer();
+    }
 }

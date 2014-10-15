@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 
 public class EmptySocket extends Block
 {
@@ -16,7 +16,6 @@ public class EmptySocket extends Block
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("emptySocket");
-        // TODO Auto-generated constructor stub
     }
 
     @Override

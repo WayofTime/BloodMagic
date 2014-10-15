@@ -1,9 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
-import javax.swing.Icon;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,9 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ArmourInhibitor extends EnergyItems
 {
@@ -26,7 +24,6 @@ public class ArmourInhibitor extends EnergyItems
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(0);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
@@ -92,23 +89,6 @@ public class ArmourInhibitor extends EnergyItems
         }
     }
 
-//	@Override
-//	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-//	{
-//
-//		if(applyBonemeal(par1ItemStack,par3World,par4,par5,par6,par2EntityPlayer))
-//		{
-//			if (par3World.isRemote)
-//            {
-//                par3World.playAuxSFX(2005, par4, par5, par6, 0);
-//                EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
-//                return true;
-//            }
-//			return true;
-//		}
-//		return false;
-//	}
-
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -134,7 +114,6 @@ public class ArmourInhibitor extends EnergyItems
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                //EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
             }
         } else
         {
@@ -163,7 +142,6 @@ public class ArmourInhibitor extends EnergyItems
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
             {
-                //EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer)par3Entity, getEnergyUsed());
             }
 
             //TODO Do stuff
@@ -172,44 +150,4 @@ public class ArmourInhibitor extends EnergyItems
 
         return;
     }
-
-//	@Override
-//	public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {
-//
-//		int range = 5;
-//    	int verticalRange = 2;
-//    	int posX = (int)Math.round(player.posX-0.5f);
-//       	int posY = (int)player.posY;
-//       	int posZ = (int)Math.round(player.posZ-0.5f);
-//
-//       	for(int ix=posX-range;ix<=posX+range;ix++)
-//       	{
-//       		for(int iz=posZ-range;iz<=posZ+range;iz++)
-//       		{
-//       			for(int iy=posY-verticalRange;iy<=posY+verticalRange;iy++)
-//       			{
-//       				int id = world.getBlockId(ix, iy, iz);
-//       				Block block = Block.blocksList[id];
-//       				if(block instanceof IPlantable)
-//       				{
-//       					if(world.rand.nextInt(10)==0)
-//       						block.updateTick(world, ix, iy, iz, world.rand);
-//       				}
-//       			}
-//       		}
-//       	}
-//
-//	}
-
-//	@Override
-//	public boolean isUpgrade() {
-//		// TODO Auto-generated method stub
-//		return true;
-//	}
-//
-//	@Override
-//	public int getEnergyForTenSeconds() {
-//		// TODO Auto-generated method stub
-//		return 50;
-//	}
 }

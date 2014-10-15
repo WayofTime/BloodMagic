@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.Random;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+
+import java.util.Random;
 
 public class EnhancedFillingAgent extends WeakFillingAgent
 {
@@ -19,13 +19,10 @@ public class EnhancedFillingAgent extends WeakFillingAgent
     public int getFilledAmountForPotionNumber(int potionEffects)
     {
         Random rand = new Random();
-
         if (potionEffects == 0)
         {
             return 8;
         }
-
-        //if(potionEffects >=1 && potionEffects<=5)
         {
             switch (potionEffects)
             {

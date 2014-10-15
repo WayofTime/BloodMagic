@@ -1,7 +1,15 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,16 +22,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class DivinationSigil extends Item implements ArmourUpgrade, IReagentManipulator, IBindable
 {
@@ -31,7 +31,6 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
     {
         super();
         this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
@@ -72,9 +71,8 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
         }
 
         String ownerName = itemTag.getString("ownerName");
-        //PacketDispatcher.sendPacketToServer(PacketHandler.getPacket(ownerName));
         int currentEssence = EnergyItems.getCurrentEssence(ownerName);
-                
+
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
         if (movingobjectposition == null)
@@ -84,58 +82,55 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
             return par1ItemStack;
         } else
         {
-        	if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
                 int x = movingobjectposition.blockX;
                 int y = movingobjectposition.blockY;
                 int z = movingobjectposition.blockZ;
-                
+
                 TileEntity tile = par2World.getTileEntity(x, y, z);
-                
-                if(!(tile instanceof IReagentHandler))
+
+                if (!(tile instanceof IReagentHandler))
                 {
-                	par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
-                	
-                	return par1ItemStack;
+                    par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+
+                    return par1ItemStack;
                 }
-                
-                IReagentHandler relay = (IReagentHandler)tile;
+
+                IReagentHandler relay = (IReagentHandler) tile;
 
                 ReagentContainerInfo[] infoList = relay.getContainerInfo(ForgeDirection.UNKNOWN);
-                if(infoList != null)
+                if (infoList != null)
                 {
-                	for(ReagentContainerInfo info : infoList)
-                	{
-                		if(info != null && info.reagent != null && info.reagent.reagent != null)
-                		{
-                    		par3EntityPlayer.addChatComponentMessage(new ChatComponentText("Reagent: " + ReagentRegistry.getKeyForReagent(info.reagent.reagent) + ", Amount: " + info.reagent.amount));
-                		}
-                	}
+                    for (ReagentContainerInfo info : infoList)
+                    {
+                        if (info != null && info.reagent != null && info.reagent.reagent != null)
+                        {
+                            par3EntityPlayer.addChatComponentMessage(new ChatComponentText("Reagent: " + ReagentRegistry.getKeyForReagent(info.reagent.reagent) + ", Amount: " + info.reagent.amount));
+                        }
+                    }
                 }
             }
         }
-        
+
         return par1ItemStack;
     }
 
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        // TODO Auto-generated method stub
         player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9, true));
     }
 
     @Override
     public boolean isUpgrade()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public int getEnergyForTenSeconds()
     {
-        // TODO Auto-generated method stub
         return 25;
     }
 }

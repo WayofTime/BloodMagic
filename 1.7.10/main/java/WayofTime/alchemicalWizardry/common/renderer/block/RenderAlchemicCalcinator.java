@@ -1,5 +1,11 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -12,21 +18,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
-
 import org.lwjgl.opengl.GL11;
-
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 {
     private final RenderItem customRenderItem;
     private ModelAlchemicalCalcinator modelConduit = new ModelAlchemicalCalcinator();
-    
+
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
     public RenderAlchemicCalcinator()
@@ -50,25 +48,17 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
             TEAlchemicCalcinator tileAltar = (TEAlchemicCalcinator) tileEntity;
 
             GL11.glDisable(GL11.GL_LIGHTING);
-//            GL11.glDisable(GL11.GL_CULL_FACE);
-            /**
-             * Render the ghost item inside of the Altar, slowly spinning
-             */
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/AlchemicalCalcinator.png");
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            //GL11.glRotatef(90F, 0.0F, 0.0F, 1.0F);
-            //A reference to your Model file. Again, very important.
             this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-            //Tell it to stop rendering for both the PushMatrix's
             GL11.glPopMatrix();
             GL11.glPopMatrix();
-//            GL11.glEnable(GL11.GL_CULL_FACE);
             GL11.glEnable(GL11.GL_LIGHTING);
-            
+
             GL11.glPushMatrix();
 
             if (tileAltar.getStackInSlot(1) != null)
@@ -77,7 +67,6 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(1));
-                //translateGhostItemByOrientation(ghostEntityItem.getEntityItem(), d0, d1, d2, ForgeDirection.DOWN);
                 float displacement = 0.2F;
 
                 if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
@@ -85,10 +74,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
                 } else
                 {
-                    GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.0625f*2f);
+                    GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.0625f * 2f);
                 }
-
-                //GL11.glTranslatef((float) tileAltar.xCoord + 0.5F, (float) tileAltar.yCoord + 2.7F, (float) tileAltar.zCoord + 0.5F);
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
 
                 if (!(ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock))
@@ -98,7 +85,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
                 customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
             }
-            
+
 
             GL11.glPopMatrix();
             GL11.glPushMatrix();
@@ -109,7 +96,6 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
-                //translateGhostItemByOrientation(ghostEntityItem.getEntityItem(), d0, d1, d2, ForgeDirection.DOWN);
                 float displacement = -0.5F;
 
                 if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
@@ -117,10 +103,8 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                     GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 0.7F, (float) d2 + 0.5F);
                 } else
                 {
-                    GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.0625f*2f);
+                    GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + displacement + 10.4f / 16.0f, (float) d2 + 0.5F - 0.0625f * 2f);
                 }
-
-                //GL11.glTranslatef((float) tileAltar.xCoord + 0.5F, (float) tileAltar.yCoord + 2.7F, (float) tileAltar.zCoord + 0.5F);
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
 
                 if (!(ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock))
@@ -130,57 +114,21 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
                 customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
             }
-            
+
             GL11.glPopMatrix();
 
-            
-            ReagentContainerInfo[] info = tileAltar.getContainerInfo(ForgeDirection.UNKNOWN);
-            if(info.length >= 1 && info[0] != null)
-            {
-            	ReagentStack reagentStack = info[0].reagent;
-            	int capacity = info[0].capacity;
-            	if(reagentStack != null && reagentStack.reagent != null)
-            	{
-            		Reagent reagent = reagentStack.reagent;
-                    this.renderTankContents(d0, d1, d2, reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 200 * reagentStack.amount / capacity);
-            	}
-            }
-            
-            
-            
-//            for (int i = 0; i <= 1; i++)
-//            {
-//                GL11.glPushMatrix();
-//
-//                if (tileAltar.getStackInSlot(i) != null)
-//                {
-//                    float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(i));
-//                    float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
-//                    EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
-//                    ghostEntityItem.hoverStart = 0.0F;
-//                    ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(i));
-//                    //translateGhostItemByOrientation(ghostEntityItem.getEntityItem(), d0, d1, d2, ForgeDirection.DOWN);
-//                    float displacementX = getXDisplacementForSlot(i);
-//                    float displacementY = getYDisplacementForSlot(i);
-//                    float displacementZ = getZDisplacementForSlot(i);
-//
-//                    if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
-//                    {
-//                        GL11.glTranslatef((float) d0 + 0.5F + displacementX, (float) d1 + displacementY + 0.7F, (float) d2 + 0.5F + displacementZ);
-//                    } else
-//                    {
-//                        GL11.glTranslatef((float) d0 + 0.5F + displacementX, (float) d1 + displacementY + 0.6F, (float) d2 + 0.5F + displacementZ);
-//                    }
-//
-//                    //GL11.glTranslatef((float) tileAltar.xCoord + 0.5F, (float) tileAltar.yCoord + 2.7F, (float) tileAltar.zCoord + 0.5F);
-//                    GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
-//                    GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F);
-//                    customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
-//                }
-//
-//                GL11.glPopMatrix();
-//            }
 
+            ReagentContainerInfo[] info = tileAltar.getContainerInfo(ForgeDirection.UNKNOWN);
+            if (info.length >= 1 && info[0] != null)
+            {
+                ReagentStack reagentStack = info[0].reagent;
+                int capacity = info[0].capacity;
+                if (reagentStack != null && reagentStack.reagent != null)
+                {
+                    Reagent reagent = reagentStack.reagent;
+                    this.renderTankContents(d0, d1, d2, reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 200 * reagentStack.amount / capacity);
+                }
+            }
             GL11.glEnable(GL11.GL_CULL_FACE);
             GL11.glEnable(GL11.GL_LIGHTING);
         }
@@ -188,68 +136,64 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
     private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity)
     {
-    	GL11.glPushMatrix();
-		float f1 = 1.0f;
-		Tessellator tessellator = Tessellator.instance;
-		this.bindTexture(resourceLocation);
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
-		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		float f2 = 0;
-		float f3 = -f2 * 0.2F - (float)MathHelper.floor_float(-f2 * 0.1F);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		
-		GL11.glDepthMask(false);
+        GL11.glPushMatrix();
+        float f1 = 1.0f;
+        Tessellator tessellator = Tessellator.instance;
+        this.bindTexture(resourceLocation);
+        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
+        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_CULL_FACE);
+        float f2 = 0;
+        float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		tessellator.startDrawingQuads();
-		tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
-			
-		GL11.glTranslated(x+0.5, y+0.5, z+0.5);
-		//GL11.glRotatef(30F, 0F, 0F, 1F); //Rotate vertical axis
-		//GL11.glRotatef(tileAltar.getWorldObj().getWorldTime()*2f, 1F, 0F, 0F); //Rotate cylindrically
-		
-		tessellator.setBrightness(240);
-		
-		double x1 = -7d/16d;
-		double x2 = 7d/16d;
-		double y1 = 1d/16d;
-		double y2 = 5d/16d;
-		double z1 = -7d/16d;
-		double z2 = 7d/16d;
-		
-		double resx1 = 0.0d;
-		double resx2 = 0.0d;
-		double resy1 = 1.0d;
-		double resy2 = 1.0d;
-		
-		tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
-		tessellator.addVertexWithUV(x2, y1, z1, resx2, resy1);
-		tessellator.addVertexWithUV(x2, y2, z1, resx2, resy2);
-		tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
-		tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
-		tessellator.addVertexWithUV(x1, y1, z2, resx2, resy1);
-		tessellator.addVertexWithUV(x1, y2, z2, resx2, resy2);
-		tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
-		tessellator.addVertexWithUV(x1, y1, z2, resx1, resy1);
-		tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
-		tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-		tessellator.addVertexWithUV(x1, y2, z2, resx1, resy2);
-		tessellator.addVertexWithUV(x2, y1, z1, resx1, resy1);
-		tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
-		tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-		tessellator.addVertexWithUV(x2, y2, z1, resx1, resy2);
-		tessellator.draw();
+        GL11.glDepthMask(false);
 
-		GL11.glDepthMask(true);
+        tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
+        GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
+        tessellator.setBrightness(240);
 
-		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-		GL11.glPopMatrix();
+        double x1 = -7d / 16d;
+        double x2 = 7d / 16d;
+        double y1 = 1d / 16d;
+        double y2 = 5d / 16d;
+        double z1 = -7d / 16d;
+        double z2 = 7d / 16d;
+
+        double resx1 = 0.0d;
+        double resx2 = 0.0d;
+        double resy1 = 1.0d;
+        double resy2 = 1.0d;
+
+        tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
+        tessellator.addVertexWithUV(x2, y1, z1, resx2, resy1);
+        tessellator.addVertexWithUV(x2, y2, z1, resx2, resy2);
+        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
+        tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
+        tessellator.addVertexWithUV(x1, y1, z2, resx2, resy1);
+        tessellator.addVertexWithUV(x1, y2, z2, resx2, resy2);
+        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
+        tessellator.addVertexWithUV(x1, y1, z2, resx1, resy1);
+        tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
+        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        tessellator.addVertexWithUV(x1, y2, z2, resx1, resy2);
+        tessellator.addVertexWithUV(x2, y1, z1, resx1, resy1);
+        tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
+        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        tessellator.addVertexWithUV(x2, y2, z1, resx1, resy2);
+        tessellator.draw();
+
+        GL11.glDepthMask(true);
+
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+        GL11.glPopMatrix();
     }
-    
+
     private float getGhostItemScaleFactor(ItemStack itemStack)
     {
         float scaleFactor = 1.5F;
@@ -258,7 +202,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
         {
             if (itemStack.getItem() instanceof ItemBlock)
             {
-                switch (customRenderItem.getMiniBlockCount(itemStack,(byte)1))
+                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
                 {
                     case 1:
                         return 0.90F * scaleFactor;
@@ -280,7 +224,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 }
             } else
             {
-                switch (customRenderItem.getMiniItemCount(itemStack,(byte)1))
+                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
                 {
                     case 1:
                         return 0.65F * scaleFactor;

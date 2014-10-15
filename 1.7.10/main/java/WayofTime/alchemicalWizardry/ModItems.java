@@ -1,82 +1,16 @@
 package WayofTime.alchemicalWizardry;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import WayofTime.alchemicalWizardry.common.items.AWBaseItems;
-import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
-import WayofTime.alchemicalWizardry.common.items.AirScribeTool;
-import WayofTime.alchemicalWizardry.common.items.ApprenticeBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.ArchmageBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.ArmourInhibitor;
-import WayofTime.alchemicalWizardry.common.items.BlankSpell;
-import WayofTime.alchemicalWizardry.common.items.BloodShard;
-import WayofTime.alchemicalWizardry.common.items.BoundArmour;
-import WayofTime.alchemicalWizardry.common.items.BoundAxe;
-import WayofTime.alchemicalWizardry.common.items.BoundPickaxe;
-import WayofTime.alchemicalWizardry.common.items.BoundShovel;
-import WayofTime.alchemicalWizardry.common.items.CheatyItem;
-import WayofTime.alchemicalWizardry.common.items.DaggerOfSacrifice;
-import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
-import WayofTime.alchemicalWizardry.common.items.DemonicTelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.DuskScribeTool;
-import WayofTime.alchemicalWizardry.common.items.EarthScribeTool;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyBazooka;
-import WayofTime.alchemicalWizardry.common.items.EnergyBlast;
-import WayofTime.alchemicalWizardry.common.items.EnergySword;
-import WayofTime.alchemicalWizardry.common.items.EnhancedTelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
-import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
-import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
-import WayofTime.alchemicalWizardry.common.items.ItemComponents;
-import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
-import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
-import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
-import WayofTime.alchemicalWizardry.common.items.LifeBucket;
-import WayofTime.alchemicalWizardry.common.items.MagicianBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.MasterBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
+import WayofTime.alchemicalWizardry.common.items.*;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemAttunedCrystal;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemDestinationClearer;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemTankSegmenter;
-import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
-import WayofTime.alchemicalWizardry.common.items.potion.AlchemyReagent;
-import WayofTime.alchemicalWizardry.common.items.potion.AverageLengtheningCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.AveragePowerCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.CombinationalCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.EnhancedFillingAgent;
-import WayofTime.alchemicalWizardry.common.items.potion.GreaterLengtheningCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.GreaterPowerCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.MundaneLengtheningCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.MundanePowerCatalyst;
-import WayofTime.alchemicalWizardry.common.items.potion.StandardBindingAgent;
-import WayofTime.alchemicalWizardry.common.items.potion.StandardFillingAgent;
-import WayofTime.alchemicalWizardry.common.items.potion.WeakBindingAgent;
-import WayofTime.alchemicalWizardry.common.items.potion.WeakFillingAgent;
-import WayofTime.alchemicalWizardry.common.items.sigil.AirSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.ItemBloodLightSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.ItemFluidSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.ItemSeerSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfEnderSeverance;
-import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfSupression;
-import WayofTime.alchemicalWizardry.common.items.sigil.LavaSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfElementalAffinity;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfGrowth;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHaste;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfMagnetism;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheBridge;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
-import WayofTime.alchemicalWizardry.common.items.sigil.VoidSigil;
-import WayofTime.alchemicalWizardry.common.items.sigil.WaterSigil;
+import WayofTime.alchemicalWizardry.common.items.potion.*;
+import WayofTime.alchemicalWizardry.common.items.sigil.*;
 import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 
 /**
  * Created with IntelliJ IDEA.
@@ -153,7 +87,7 @@ public class ModItems
     public static Item armourInhibitor;
     public static Item creativeFiller;
     public static Item demonPlacer;
-    
+
     public static Item baseItems;
     public static Item baseAlchemyItems;
 
@@ -174,19 +108,19 @@ public class ModItems
     public static Item itemBloodLightSigil;
     public static Item itemComplexSpellCrystal;
     public static Item itemBloodFrame;
-    
+
     public static Item itemSigilOfEnderSeverance;
     public static Item itemSigilOfSupression;
     public static Item itemFluidSigil;
     public static Item itemSeerSigil;
     public static Item itemCombinationalCatalyst;
-    
+
     public static Item customTool;
-    
+
     public static Item itemAttunedCrystal;
     public static Item itemTankSegmenter;
     public static Item itemDestinationClearer;
-    
+
     public static Item bucketLife;
 
     public static void init()
@@ -281,15 +215,15 @@ public class ModItems
         itemTankSegmenter = new ItemTankSegmenter().setUnlocalizedName("itemTankSegmenter");
         itemDestinationClearer = new ItemDestinationClearer().setUnlocalizedName("destinationClearer");
     }
-    
+
     public static void registerItems()
     {
-    	GameRegistry.registerItem(ModItems.weakBloodOrb, "weakBloodOrb");
-    	GameRegistry.registerItem(ModItems.apprenticeBloodOrb, "apprenticeBloodOrb");
-    	GameRegistry.registerItem(ModItems.magicianBloodOrb, "magicianBloodOrb");
-    	GameRegistry.registerItem(ModItems.energyBlaster, "energyBlaster");
+        GameRegistry.registerItem(ModItems.weakBloodOrb, "weakBloodOrb");
+        GameRegistry.registerItem(ModItems.apprenticeBloodOrb, "apprenticeBloodOrb");
+        GameRegistry.registerItem(ModItems.magicianBloodOrb, "magicianBloodOrb");
+        GameRegistry.registerItem(ModItems.energyBlaster, "energyBlaster");
 
-    	GameRegistry.registerItem(ModItems.energySword, "energySword");
+        GameRegistry.registerItem(ModItems.energySword, "energySword");
         GameRegistry.registerItem(ModItems.lavaCrystal, "lavaCrystal");
         GameRegistry.registerItem(ModItems.waterSigil, "waterSigil");
         GameRegistry.registerItem(ModItems.lavaSigil, "lavaSigil");
@@ -367,16 +301,16 @@ public class ModItems
         GameRegistry.registerItem(ModItems.itemSigilOfEnderSeverance, "sigilOfEnderSeverance");
         GameRegistry.registerItem(ModItems.itemFluidSigil, "fluidSigil");
         GameRegistry.registerItem(ModItems.itemSeerSigil, "seerSigil");
-        
+
         GameRegistry.registerItem(ModItems.customTool, "customTool");
-        
+
         GameRegistry.registerItem(ModItems.bucketLife, "bucketLife");
         GameRegistry.registerItem(ModItems.itemCombinationalCatalyst, "itemCombinationalCatalyst");
-        
+
         GameRegistry.registerItem(ModItems.itemAttunedCrystal, "itemAttunedCrystal");
         GameRegistry.registerItem(ModItems.itemTankSegmenter, "itemTankSegmenter");
         GameRegistry.registerItem(ModItems.itemDestinationClearer, "itemDestinationClearer");
-        
+
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
         GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");

@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
+import com.google.common.collect.HashMultimap;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -24,13 +23,12 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
 
-import com.google.common.collect.HashMultimap;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class AlchemyFlask extends Item
 {
@@ -42,7 +40,6 @@ public class AlchemyFlask extends Item
         this.setMaxDamage(8);
         this.setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -64,7 +61,6 @@ public class AlchemyFlask extends Item
                 NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.getCompoundTagAt(i);
                 arraylist.add(AlchemyPotionHelper.readEffectFromNBT(nbttagcompound));
             }
-
             return arraylist;
         } else
         {
@@ -166,11 +162,6 @@ public class AlchemyFlask extends Item
      */
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-//    	if(par3EntityPlayer.isSneaking())
-//    	{
-//    		this.setIsPotionThrowable(true, par1ItemStack);
-//    		return par1ItemStack;
-//    	}
         if (par1ItemStack.getItemDamage() < par1ItemStack.getMaxDamage())
         {
             if (this.isPotionThrowable(par1ItemStack))
@@ -195,14 +186,12 @@ public class AlchemyFlask extends Item
 
             par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         }
-
         return par1ItemStack;
     }
 
     public void setConcentrationOfPotion(ItemStack par1ItemStack, int potionID, int concentration)
     {
         ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
-
         if (list != null)
         {
             for (AlchemyPotionHelper aph : list)
@@ -213,7 +202,6 @@ public class AlchemyFlask extends Item
                     break;
                 }
             }
-
             this.setEffects(par1ItemStack, list);
         }
     }
@@ -221,7 +209,6 @@ public class AlchemyFlask extends Item
     public void setDurationFactorOfPotion(ItemStack par1ItemStack, int potionID, int durationFactor)
     {
         ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
-
         if (list != null)
         {
             for (AlchemyPotionHelper aph : list)
@@ -232,7 +219,6 @@ public class AlchemyFlask extends Item
                     break;
                 }
             }
-
             this.setEffects(par1ItemStack, list);
         }
     }
@@ -257,7 +243,6 @@ public class AlchemyFlask extends Item
     {
         int i = 0;
         ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
-
         if (list != null)
         {
             for (AlchemyPotionHelper aph : list)
@@ -269,13 +254,9 @@ public class AlchemyFlask extends Item
 
                 i++;
             }
-
-            //if(i<this.maxPotionAmount)
-            {
-                list.add(new AlchemyPotionHelper(potionID, tickDuration, 0, 0));
-                this.setEffects(par1ItemStack, list);
-                return true;
-            }
+            list.add(new AlchemyPotionHelper(potionID, tickDuration, 0, 0));
+            this.setEffects(par1ItemStack, list);
+            return true;
         } else
         {
             list = new ArrayList();
@@ -318,7 +299,7 @@ public class AlchemyFlask extends Item
                         Entry entry = (Entry) iterator1.next();
                         AttributeModifier attributemodifier = (AttributeModifier) entry.getValue();
                         AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), potion.func_111183_a(potioneffect.getAmplifier(), attributemodifier), attributemodifier.getOperation());
-                        hashmultimap.put(((IAttribute)entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
+                        hashmultimap.put(((IAttribute) entry.getKey()).getAttributeUnlocalizedName(), attributemodifier1);
                     }
                 }
 
@@ -388,8 +369,6 @@ public class AlchemyFlask extends Item
         {
             return false;
         }
-
-        //return false;
     }
 
     public void setIsPotionThrowable(boolean flag, ItemStack par1ItemStack)
@@ -412,22 +391,16 @@ public class AlchemyFlask extends Item
         {
             return null;
         }
-
         NBTTagList nbttaglist = new NBTTagList();
-
         for (PotionEffect pe : potionList)
         {
             NBTTagCompound d = new NBTTagCompound();
             d.setByte("Id", (byte) pe.getPotionID());
             d.setByte("Amplifier", (byte) pe.getAmplifier());
-            //byte b1 = par0NBTTagCompound.getByte("Amplifier");
             d.setInteger("Duration", pe.getDuration());
-            //int i = par0NBTTagCompound.getInteger("Duration");
             d.setBoolean("Ambient", pe.getIsAmbient());
-            // boolean flag = par0NBTTagCompound.getBoolean("Ambient");
             nbttaglist.appendTag(d);
         }
-
         potionStack.stackTagCompound.setTag("CustomPotionEffects", nbttaglist);
         EntityPotion entityPotion = new EntityPotion(worldObj, entityLivingBase, potionStack);
         return entityPotion;

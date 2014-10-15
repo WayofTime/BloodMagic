@@ -1,7 +1,11 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import com.google.common.collect.Multimap;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,20 +20,13 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class DaggerOfSacrifice extends EnergyItems
 {
@@ -61,14 +58,13 @@ public class DaggerOfSacrifice extends EnergyItems
             return false;
         }
 
-        //EntityWither d;
         if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityWither || par2EntityLivingBase instanceof EntityDragon || par2EntityLivingBase instanceof EntityPlayer || par2EntityLivingBase instanceof IBossDisplayData)
         {
             return false;
         }
-        
+
         World world = par2EntityLivingBase.worldObj;
-        
+
         if (par2EntityLivingBase.isDead || par2EntityLivingBase.getHealth() < 0.5f)
         {
             return false;
@@ -82,8 +78,7 @@ public class DaggerOfSacrifice extends EnergyItems
                 double posY = par2EntityLivingBase.posY;
                 double posZ = par2EntityLivingBase.posZ;
 
-                
-                
+
                 for (int i = 0; i < 8; i++)
                 {
                     SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
