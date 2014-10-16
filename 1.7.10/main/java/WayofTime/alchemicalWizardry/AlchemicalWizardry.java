@@ -28,6 +28,7 @@ import WayofTime.alchemicalWizardry.common.summoning.SummoningHelperAW;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.*;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
+import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -846,6 +847,11 @@ public class AlchemicalWizardry
         {
             PamHarvestCompatRegistry.registerPamHandlers();
             System.out.println("Loaded Harvestcraft Handlers!");
+        }
+        
+        if(Loader.isModLoaded("MineTweaker3")) {
+            MineTweakerIntegration.register();
+            System.out.println("Loaded MineTweaker 3 Integration");
         }
 
         BloodMagicConfiguration.loadBlacklist();
