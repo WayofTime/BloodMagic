@@ -51,7 +51,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
 	
 	@Override
     public void loadCraftingRecipes(String outputId, Object... results) {
-        if (outputId.equals("orbCrafting") && getClass() == NEIBloodOrbShapelessHandler.class) {
+        if (outputId.equals("crafting") && getClass() == NEIBloodOrbShapelessHandler.class) {
             List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
             for (IRecipe irecipe : allrecipes) {
             	CachedBloodOrbRecipe recipe = null;
@@ -115,12 +115,12 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
 	
 	@Override
     public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "orbCrafting"));
+        transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "crafting"));
     }
 
 	@Override
 	public String getOverlayIdentifier() {
-		return "orbCrafting";
+		return "crafting";
 	}
 
 	@Override

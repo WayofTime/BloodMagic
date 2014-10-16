@@ -2,10 +2,12 @@ package joshie.alchemicalWizardy.nei;
 
 import static joshie.alchemicalWizardy.nei.NEIConfig.bloodOrbs;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +15,7 @@ import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiWritingTable;
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
@@ -90,6 +93,32 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 		
         return super.newInstance();
     }
+	
+	@Override
+	public String getOverlayIdentifier() {
+		return "alchemicalwizardry.alchemy";
+	}
+	
+	@Override
+	public void loadTransferRects() {
+		transferRects.add(new RecipeTransferRect(new Rectangle(134, 22, 16, 24), "alchemicalwizardry.alchemy"));
+	}
+	
+	@Override
+	public Class<? extends GuiContainer> getGuiClass() {
+		return GuiWritingTable.class;
+	}
+	
+	@Override
+	public void loadCraftingRecipes(String outputId, Object... results) {
+		if (outputId.equals("alchemicalwizardry.alchemy") && getClass() == NEIAlchemyRecipeHandler.class) {
+			for(AlchemyRecipe recipe: AlchemyRecipeRegistry.recipes) {
+				if(recipe.getResult() != null) arecipes.add(new CachedAlchemyRecipe(recipe));
+			}
+		} else {
+			super.loadCraftingRecipes(outputId, results);
+		}
+	}
 	
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
