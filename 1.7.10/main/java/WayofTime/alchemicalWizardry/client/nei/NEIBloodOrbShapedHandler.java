@@ -1,21 +1,23 @@
-package joshie.alchemicalWizardy.nei;
+package WayofTime.alchemicalWizardry.client.nei;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import joshie.alchemicalWizardy.ShapedBloodOrbRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.StatCollector;
+import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.ShapedRecipeHandler;
 
-/** Extended from the default recipe handler **/
+/**
+ * NEI Blood Orb Shaped Recipe Handler by joshie *
+ */
 public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 	public class CachedBloodOrbRecipe extends CachedShapedRecipe {
 		public CachedBloodOrbRecipe(int width, int height, Object[] items, ItemStack out) {
@@ -53,7 +55,7 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
-		if (outputId.equals("orbCrafting") && getClass() == NEIBloodOrbShapedHandler.class) {
+		if (outputId.equals("crafting") && getClass() == NEIBloodOrbShapedHandler.class) {
 			for (IRecipe irecipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
 				if (irecipe instanceof ShapedBloodOrbRecipe) {
 					CachedBloodOrbRecipe recipe = forgeShapedRecipe((ShapedBloodOrbRecipe) irecipe);
@@ -124,12 +126,12 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 	
 	@Override
     public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "orbCrafting"));
+        transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "crafting"));
     }
 
 	@Override
 	public String getOverlayIdentifier() {
-		return "orbCrafting";
+		return "crafting";
 	}
 
 	@Override
