@@ -1,4 +1,4 @@
-package joshie.alchemicalWizardy.nei;
+package WayofTime.alchemicalWizardry.client.nei;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,6 @@ public class NEIConfig implements IConfigureNEI {
 
 	@Override
 	public String getVersion() {
-		return "1.2";
+		return "1.3";
 	}
 }

@@ -6,6 +6,8 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
+import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
+import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.*;
@@ -28,6 +30,7 @@ import WayofTime.alchemicalWizardry.common.summoning.SummoningHelperAW;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.*;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
+import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -40,8 +43,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import joshie.alchemicalWizardy.ShapedBloodOrbRecipe;
-import joshie.alchemicalWizardy.ShapelessBloodOrbRecipe;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -846,6 +847,11 @@ public class AlchemicalWizardry
         {
             PamHarvestCompatRegistry.registerPamHandlers();
             System.out.println("Loaded Harvestcraft Handlers!");
+        }
+        
+        if(Loader.isModLoaded("MineTweaker3")) {
+            MineTweakerIntegration.register();
+            System.out.println("Loaded MineTweaker 3 Integration");
         }
 
         BloodMagicConfiguration.loadBlacklist();

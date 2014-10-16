@@ -1,4 +1,4 @@
-package joshie.alchemicalWizardy.nei;
+package WayofTime.alchemicalWizardry.client.nei;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -21,6 +21,9 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 
+/**
+ * NEI Altar Recipe Handler by joshie *
+ */
 public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	public class CachedAltarRecipe extends CachedRecipe {
 		PositionedStack input;
@@ -49,9 +52,9 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
-		if (outputId.equals("altarrecipes") && getClass() == NEIAltarRecipeHandler.class) {
+		if (outputId.equals("alchemicalwizardry.altar") && getClass() == NEIAltarRecipeHandler.class) {
 			for(AltarRecipe recipe: AltarRecipeRegistry.altarRecipes) {
-				if(recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
+				if(recipe != null && recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
 			}
 		} else {
 			super.loadCraftingRecipes(outputId, results);
@@ -62,7 +65,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	public void loadCraftingRecipes(ItemStack result) {
 		for(AltarRecipe recipe: AltarRecipeRegistry.altarRecipes) {
 			if(NEIServerUtils.areStacksSameTypeCrafting(recipe.result, result)) {
-				if(recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
+				if(recipe != null && recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
 			}
 		}
 	}
@@ -71,7 +74,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
     public void loadUsageRecipes(ItemStack ingredient)  {
 		for(AltarRecipe recipe: AltarRecipeRegistry.altarRecipes) {
 			if(NEIServerUtils.areStacksSameTypeCrafting(recipe.requiredItem, ingredient)) {
-				if(recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
+				if(recipe != null && recipe.result != null) arecipes.add(new CachedAltarRecipe(recipe));
 			}
 		}
     }
@@ -150,7 +153,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	
 	@Override
 	public void loadTransferRects() {
-		transferRects.add(new RecipeTransferRect(new Rectangle(90, 32, 22, 16), "altarrecipes"));
+		transferRects.add(new RecipeTransferRect(new Rectangle(90, 32, 22, 16), "alchemicalwizardry.altar"));
 	}
 	
 	@Override
