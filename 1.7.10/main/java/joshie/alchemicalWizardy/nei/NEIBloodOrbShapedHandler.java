@@ -128,11 +128,6 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
     }
 
 	@Override
-	public String getOverlayIdentifier() {
-		return "orbCrafting";
-	}
-
-	@Override
 	public String getRecipeName() {
 		return StatCollector.translateToLocal("bm.string.crafting.orb.shaped");
 	}
