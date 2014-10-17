@@ -1,13 +1,11 @@
 package WayofTime.alchemicalWizardry.common;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -28,8 +26,15 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
-
-import java.util.*;
+import vazkii.botania.api.internal.IManaBurst;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -317,7 +322,7 @@ public class AlchemicalWizardryEventHooks
                     continue;
                 }
 
-                if (!(projectile instanceof IProjectile))
+                if (!(projectile instanceof IProjectile) || (projectile instanceof IManaBurst))
                 {
                     continue;
                 }
