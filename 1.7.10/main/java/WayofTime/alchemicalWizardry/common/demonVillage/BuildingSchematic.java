@@ -177,4 +177,9 @@ public class BuildingSchematic
         }
         return max;
     }
+    
+    public String getName()
+    {
+    	return this.name;
+    }
 }

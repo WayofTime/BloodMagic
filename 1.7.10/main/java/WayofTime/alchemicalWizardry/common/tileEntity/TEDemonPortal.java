@@ -1,10 +1,17 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.Int3;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.demonVillage.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -13,19 +20,27 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonBuilding;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
+import WayofTime.alchemicalWizardry.common.demonVillage.GridSpace;
+import WayofTime.alchemicalWizardry.common.demonVillage.GridSpaceHolder;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class TEDemonPortal extends TileEntity
 {
+	boolean printDebug = false;
+	
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
 
-    public static int[] tierCostList = new int[]{1000, 50000};
+    public static int[] tierCostList = new int[]{1000, 50000, 55000};
 
     public static List<DemonBuilding> buildingList = new ArrayList();
     public Random rand = new Random();
@@ -42,9 +57,11 @@ public class TEDemonPortal extends TileEntity
     public int roadCooldown;
     public int tier; //Tier of the demon portal - Should select buildings 2 below to this
     public int totalPoints;
-
-    public int yLevelDestination;
-    public boolean hasLocationChanged;
+    
+    public String nextDemonPortalName = "";
+    public ForgeDirection nextDemonPortalDirection = ForgeDirection.DOWN;
+    
+    public int buildingStage = -1;
 
     public TEDemonPortal()
     {
@@ -74,9 +91,45 @@ public class TEDemonPortal extends TileEntity
         this.houseCooldown = 0;
         this.roadCooldown = 0;
         this.tier = 0;
+    }
+    
+    public void decreaseRandomCooldown(int amount)
+    {
+    	float totalChance = 0;
 
-        this.yLevelDestination = 0;
-        this.hasLocationChanged = false;
+    	Map<String, Float> map = new HashMap();
+    	map.put("roadChance", 0.3f);
+    	map.put("houseChance", 0.6f);
+    	
+    	String action = "";
+    	
+    	for(Entry<String, Float> entry : map.entrySet())
+    	{
+    		totalChance += entry.getValue();
+    	}
+    	
+    	float pointer = rand.nextFloat() * totalChance;
+    	
+    	for(Entry<String, Float> entry : map.entrySet())
+    	{
+    		float value = entry.getValue();
+    		if(pointer <= value)
+    		{
+    			action = entry.getKey();
+    			break;
+    		}else
+    		{
+    			pointer -= value;
+    		}
+    	}
+    	
+    	if(action.equals("roadChance"))
+    	{
+    		roadCooldown -= amount;
+    	}else if(action.equals("houseChance"))
+    	{
+    		houseCooldown -= amount;
+    	}	
     }
 
     public void initialize()
@@ -116,17 +169,31 @@ public class TEDemonPortal extends TileEntity
         {
             return;
         }
+        
+        System.out.println("Roads: " + roadCooldown + " Buildings: " + houseCooldown);
 
-        if (this.hasLocationChanged)
+        if(buildingStage >= 0 && buildingStage <=2)
         {
-            if (this.changePortalLocation())
-            {
-                return;
-            } else
-            {
-                this.hasLocationChanged = false;
-            }
+        	System.out.println("BuildingStage = " + buildingStage);
+        	this.createPortalBuilding(buildingStage, nextDemonPortalName, tier);
+        	buildingStage++;
+        	return;
         }
+        
+//        if (this.hasLocationChanged)
+//        {
+//            if (this.changePortalLocation())
+//            {
+//            	if(printDebug)
+//            	System.out.println("Changed portal location.");
+//                return;
+//            } else
+//            {
+//            	if(printDebug)
+//            	System.out.println("Going back to normal, have a nice day!");
+//                this.hasLocationChanged = false;
+//            }
+//        }
 
         if (this.roadCooldown <= 0)
         {
@@ -138,7 +205,7 @@ public class TEDemonPortal extends TileEntity
             }
         } else if (this.houseCooldown <= 0)
         {
-            int gridsUsed = this.createRandomBuilding(0, 0);
+            int gridsUsed = this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, tier);
             if (gridsUsed > 0)
             {
                 this.houseCooldown = TEDemonPortal.buildingGridDelay * gridsUsed;
@@ -150,8 +217,9 @@ public class TEDemonPortal extends TileEntity
         {
             this.tier++;
 
-            if (this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, tier + 1) >= 1)
+            if (this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, tier) >= 1)
             {
+            	this.buildingStage = 0;
             }
         }
 
@@ -191,8 +259,10 @@ public class TEDemonPortal extends TileEntity
 
         this.tier = par1NBTTagCompound.getInteger("tier");
         this.totalPoints = par1NBTTagCompound.getInteger("totalPoints");
-        this.yLevelDestination = par1NBTTagCompound.getInteger("yLevelDestination");
-        this.hasLocationChanged = par1NBTTagCompound.getBoolean("hasLocationChanged");
+        
+        this.nextDemonPortalName = par1NBTTagCompound.getString("nextDemonPortalName");
+        this.buildingStage = par1NBTTagCompound.getInteger("buildingStage");
+        this.nextDemonPortalDirection = ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("nextDemonPortalDirection"));
     }
 
     @Override
@@ -234,8 +304,11 @@ public class TEDemonPortal extends TileEntity
         par1NBTTagCompound.setBoolean("init", this.isInitialized);
         par1NBTTagCompound.setInteger("tier", this.tier);
         par1NBTTagCompound.setInteger("totalPoints", this.totalPoints);
-        par1NBTTagCompound.setInteger("yLevelDestination", this.yLevelDestination);
-        par1NBTTagCompound.setBoolean("hasLocationChanged", this.hasLocationChanged);
+        
+        par1NBTTagCompound.setString("nextDemonPortalName", nextDemonPortalName);
+        par1NBTTagCompound.setInteger("buildingStage", buildingStage);
+        
+        par1NBTTagCompound.setInteger("nextDemonPortalDirection", this.nextDemonPortalDirection.ordinal());
     }
 
     public int createRandomRoad() //Return the number of road spaces
@@ -269,6 +342,7 @@ public class TEDemonPortal extends TileEntity
         int yLevel = road.yCoord;
         int z = road.zCoord;
 
+        if(printDebug)
         System.out.println("X: " + x + " Z: " + z + " Direction: " + dir.toString());
 
         List<ForgeDirection> directions = this.findValidExtentionDirection(x, z);
@@ -300,7 +374,9 @@ public class TEDemonPortal extends TileEntity
         {
             return 0;
         }
+        if(printDebug)
         System.out.println("I got here!");
+        if(printDebug)
         System.out.println("Distance: " + distance + " Direction: " + dominantDirection.toString() + " yLevel: " + yLevel);
 
         this.createGriddedRoad(x, yLevel, z, dominantDirection, distance + 1, true);
@@ -380,6 +456,7 @@ public class TEDemonPortal extends TileEntity
         int index = 0;
         if (dir == ForgeDirection.NORTH)
         {
+        	if(printDebug)
             System.out.print("NORTH!");
             for (int i = 0; i <= negZRadius + posZRadius; i++)
             {
@@ -457,6 +534,7 @@ public class TEDemonPortal extends TileEntity
         int index = 0;
         if (dir == ForgeDirection.NORTH)
         {
+        	if(printDebug)
             System.out.print("NORTH!");
             for (int i = 0; i <= negZRadius + posZRadius; i++)
             {
@@ -554,6 +632,7 @@ public class TEDemonPortal extends TileEntity
         int index = 0;
         if (dir == ForgeDirection.NORTH)
         {
+        	if(printDebug)
             System.out.print("NORTH!");
             for (int i = 0; i <= negZRadius + posZRadius; i++)
             {
@@ -659,6 +738,7 @@ public class TEDemonPortal extends TileEntity
             if (next != null)
             {
                 initY = next.yCoord;
+                if(printDebug)
                 System.out.println("" + initY);
             }
 
@@ -717,6 +797,7 @@ public class TEDemonPortal extends TileEntity
     {
         GridSpace[][] newGrid = new GridSpace[negXRadius + posXRadius + 1][negZRadius + posZRadius + 2];
 
+        if(printDebug)
         System.out.println("x " + newGrid.length + "z " + newGrid[0].length);
 
         for (int i = 0; i <= negXRadius + posXRadius; i++)
@@ -830,8 +911,9 @@ public class TEDemonPortal extends TileEntity
         return 0;
     }
 
-    public int createPortalBuilding(int buildingTier)
+    public int createPortalBuilding(int buildingTier) //TODO Telepose block next time, then build the new building.
     {
+    	System.out.println("Hello, I am here!");
         int x = 0;
         int z = 0;
 
@@ -881,16 +963,80 @@ public class TEDemonPortal extends TileEntity
 
         ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
         DemonBuilding build = schemMap.get(chosenDirection).get(new Random().nextInt(schemMap.get(chosenDirection).size()));
-
-        build.destroyAllInField(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
-
         Int3 portalSpace = build.getDoorSpace(chosenDirection);
-        int yOffset = portalSpace.yCoord;
-        build.buildAll(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
-        build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
-        this.loadGSH(grid);
+
+        
+        this.nextDemonPortalDirection = chosenDirection;
+        this.nextDemonPortalName = build.getName();
+
+//        build.destroyAllInField(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+//        
+//        int yOffset = portalSpace.yCoord;
+//        build.buildAll(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+//        build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
+//        this.loadGSH(grid);
 
         return build.getNumberOfGridSpaces();
+    }
+    
+    /**
+     * The Stage is at what point the portal is in reacting to the creation of the Demon Portal. 
+     * Stage == 0 means just the saving
+     * Stage == 1 means to telepose the portal
+     * Stage == 2 means the teleposition is complete and that the building may be constructed
+     */
+    public void createPortalBuilding(int stage, String name, int tier)
+    {
+    	for(DemonBuilding build : TEDemonPortal.buildingList)
+    	{
+    		if(build.buildingType != DemonBuilding.BUILDING_PORTAL || build.buildingTier != tier)
+    		{
+    			continue;
+    		}
+    		
+    		if(build.getName().equals(this.nextDemonPortalName))
+    		{
+    			int x = 0;
+    	        int z = 0;
+
+    	        GridSpace home = this.getGridSpace(x, z);
+    	        int yLevel = home.getYLevel();
+
+    	        GridSpaceHolder grid = this.createGSH();
+    	        
+    	        ForgeDirection chosenDirection = this.nextDemonPortalDirection;
+				Int3 portalSpace = build.getDoorSpace(chosenDirection);
+				int yOffset = portalSpace.yCoord;
+    	        
+    			switch(stage)
+    			{
+    			case 0:
+    				
+    				break;
+    				
+    			case 1:
+    				int yDestination = yLevel + yOffset;
+    				if(yCoord != yDestination)
+    				{
+    					BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, yCoord, zCoord, xCoord, yDestination, zCoord);
+    				}else
+    				{
+    					//Nuthin - just as a reminder that we can now increment properly
+    				}
+    				break;
+    				
+    			case 2:
+    				build.destroyAllInField(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+    		        
+    		        build.buildAll(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+    		        build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
+    		        this.loadGSH(grid);
+    				break;
+    			}
+    			
+    			return;
+    		}
+    	}
     }
 
     public int createRandomHouse(int buildingTier)
@@ -926,6 +1072,7 @@ public class TEDemonPortal extends TileEntity
             int z = space.zCoord;
             int yLevel = space.yCoord;
 
+            if(printDebug)
             System.out.println("Road space - x: " + x + " z: " + z);
 
             GridSpaceHolder grid = this.createGSH();
@@ -1193,26 +1340,5 @@ public class TEDemonPortal extends TileEntity
     public void addToPoints(int addition)
     {
         this.totalPoints += addition;
-    }
-
-    public void setPortalDestination(int yLevel)
-    {
-        if (yLevel != this.yCoord)
-        {
-            this.hasLocationChanged = true;
-            this.yLevelDestination = yLevel;
-        }
-    }
-
-    public boolean changePortalLocation()
-    {
-        if (yLevelDestination == yCoord)
-        {
-            return false;
-        }
-
-        BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, yCoord, zCoord, xCoord, yLevelDestination, zCoord);
-
-        return true;
     }
 }

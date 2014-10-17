@@ -26,7 +26,7 @@ public class DemonBuilding
 
     public String getName()
     {
-        return schematic.name;
+        return schematic.getName();
     }
 
     public boolean isValid(GridSpaceHolder master, int gridX, int gridZ, ForgeDirection dir)

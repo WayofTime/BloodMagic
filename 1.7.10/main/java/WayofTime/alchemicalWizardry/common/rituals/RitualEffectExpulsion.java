@@ -70,13 +70,19 @@ public class RitualEffectExpulsion extends RitualEffect
                 {
                     if (inventoryTile != null)
                     {
+                    	boolean test = false;
                         for (int i = 0; i < inventoryTile.getSizeInventory(); i++)
                         {
                             ItemStack stack = inventoryTile.getStackInSlot(i);
                             if (stack != null && stack.getItem() instanceof IBindable && EnergyItems.getOwnerName(stack).equals(playerString))
                             {
-                                continue;
+                                test = true;
                             }
+                        }
+                        
+                        if(test)
+                        {
+                        	continue;
                         }
                     }
                     flag = teleportRandomly(entityplayer, teleportDistance) || flag;
