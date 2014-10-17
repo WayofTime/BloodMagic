@@ -35,6 +35,7 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import cpw.mods.fml.common.Optional;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -322,7 +323,7 @@ public class AlchemicalWizardryEventHooks
                     continue;
                 }
 
-                if (!(projectile instanceof IProjectile) || (projectile instanceof IManaBurst))
+                if (!(projectile instanceof IProjectile) || (AlchemicalWizardry.isBotaniaLoaded && isManaBurst(projectile)))
                 {
                     continue;
                 }
@@ -473,5 +474,11 @@ public class AlchemicalWizardryEventHooks
                 entityLiving.worldObj.createExplosion(null, x, y, z, radius, false);
             }
         }
+    }
+    
+    @Optional.Method(modid = "Botania")
+    private boolean isManaBurst(Entity projectile)
+    {
+        return projectile instanceof IManaBurst;
     }
 }
