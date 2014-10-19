@@ -71,7 +71,6 @@ public class RitualEffectFullStomach extends RitualEffect
                 for (EntityPlayer player : playerList)
                 {
                     FoodStats foodStats = player.getFoodStats();
-                    float satLevel = foodStats.getSaturationLevel();
 
                     for (int i = 0; i < inventory.getSizeInventory(); i++)
                     {
@@ -86,7 +85,7 @@ public class RitualEffectFullStomach extends RitualEffect
 
                             if (saturatedHeal + satLevel <= 20)
                             {
-                                foodStats.setFoodSaturationLevel(saturatedHeal + satLevel);
+                                foodStats.addStats(0, saturatedHeal);
                                 inventory.decrStackSize(i, 1);
                                 count++;
                                 break;
