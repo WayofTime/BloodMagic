@@ -1,20 +1,21 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.FoodStats;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.FoodStats;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectFullStomach extends RitualEffect
 {
@@ -86,7 +87,11 @@ public class RitualEffectFullStomach extends RitualEffect
 
                             if (saturatedHeal + satLevel <= 20)
                             {
-                                foodStats.setFoodSaturationLevel(saturatedHeal + satLevel);
+                            	NBTTagCompound nbt = new NBTTagCompound();
+                            	foodStats.writeNBT(nbt);
+                            	nbt.setFloat("foodSaturationLevel", saturatedHeal + satLevel);
+                            	foodStats.readNBT(nbt);
+
                                 inventory.decrStackSize(i, 1);
                                 count++;
                                 break;

@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.tileEntity;
+package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,8 +39,9 @@ public class TEDemonPortal extends TileEntity
 	
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
+    public static int demonHoardDelay = 10;
 
-    public static int[] tierCostList = new int[]{1000, 50000, 55000};
+    public static int[] tierCostList = new int[]{1000, 5000, 10000};
 
     public static List<DemonBuilding> buildingList = new ArrayList();
     public Random rand = new Random();
@@ -56,7 +57,10 @@ public class TEDemonPortal extends TileEntity
     public int houseCooldown;
     public int roadCooldown;
     public int tier; //Tier of the demon portal - Should select buildings 2 below to this
-    public int totalPoints;
+    public int demonHouseCooldown;
+    public int demonHoardCooldown;
+    
+    public float pointPool;
     
     public String nextDemonPortalName = "";
     public ForgeDirection nextDemonPortalDirection = ForgeDirection.DOWN;
@@ -93,13 +97,14 @@ public class TEDemonPortal extends TileEntity
         this.tier = 0;
     }
     
-    public void decreaseRandomCooldown(int amount)
+    public boolean decreaseRandomCooldown(int amount)
     {
     	float totalChance = 0;
 
     	Map<String, Float> map = new HashMap();
-    	map.put("roadChance", 0.3f);
-    	map.put("houseChance", 0.6f);
+    	map.put("roadChance", 0.6f);
+    	map.put("houseChance", 0.3f);
+    	map.put("demonPortalChance", 0.5f);
     	
     	String action = "";
     	
@@ -125,11 +130,28 @@ public class TEDemonPortal extends TileEntity
     	
     	if(action.equals("roadChance"))
     	{
-    		roadCooldown -= amount;
+    		if(roadCooldown > 0)
+    		{
+        		roadCooldown -= amount;
+    		}else
+    		{
+    			return false;
+    		}
     	}else if(action.equals("houseChance"))
     	{
-    		houseCooldown -= amount;
-    	}	
+    		if(houseCooldown > 0)
+    		{
+        		houseCooldown -= amount;
+    		}else
+    		{
+    			return false;
+    		}
+    	}else if(action.equals("demonPortalChance"))
+    	{
+    		demonHouseCooldown += amount;
+    	}
+    	
+    	return true;
     }
 
     public void initialize()
@@ -158,10 +180,14 @@ public class TEDemonPortal extends TileEntity
 
         this.houseCooldown = TEDemonPortal.buildingGridDelay;
         this.roadCooldown = TEDemonPortal.roadGridDelay;
+        this.demonHoardCooldown = TEDemonPortal.demonHoardDelay;
 
         isInitialized = true;
     }
 
+    /**
+     * Randomly increase one of the cooldowns such that a road, house, or a demon portal tier is caused. Demons are also randomly spawned via this mechanic.
+     */
     @Override
     public void updateEntity()
     {
@@ -169,6 +195,9 @@ public class TEDemonPortal extends TileEntity
         {
             return;
         }
+        
+        this.incrementPoints();
+        this.assignPoints();
         
         System.out.println("Roads: " + roadCooldown + " Buildings: " + houseCooldown);
 
@@ -179,41 +208,37 @@ public class TEDemonPortal extends TileEntity
         	buildingStage++;
         	return;
         }
-        
-//        if (this.hasLocationChanged)
-//        {
-//            if (this.changePortalLocation())
-//            {
-//            	if(printDebug)
-//            	System.out.println("Changed portal location.");
-//                return;
-//            } else
-//            {
-//            	if(printDebug)
-//            	System.out.println("Going back to normal, have a nice day!");
-//                this.hasLocationChanged = false;
-//            }
-//        }
 
-        if (this.roadCooldown <= 0)
+        if(this.roadCooldown <= 0)
         {
             int roadsMade = this.createRandomRoad();
             if (roadsMade > 0)
             {
                 this.roadCooldown = TEDemonPortal.roadGridDelay * roadsMade;
-                this.totalPoints += this.roadCooldown;
+                //this.demonHouseCooldown += this.roadCooldown;
             }
-        } else if (this.houseCooldown <= 0)
+        }
+        
+        if(this.houseCooldown <= 0)
         {
             int gridsUsed = this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, tier);
             if (gridsUsed > 0)
             {
                 this.houseCooldown = TEDemonPortal.buildingGridDelay * gridsUsed;
-                this.totalPoints += this.houseCooldown;
+                //this.demonHouseCooldown += this.houseCooldown;
             }
         }
+        
+        if(this.demonHoardCooldown <= 0)
+        {
+        	int complexityCost = this.createRandomDemonHoard(tier);
+        	if(complexityCost > 0)
+        	{
+        		this.demonHoardCooldown = TEDemonPortal.demonHoardDelay * complexityCost;
+        	}
+        }
 
-        if (this.tier < this.tierCostList.length && this.totalPoints > this.tierCostList[this.tier])
+        if(this.tier < this.tierCostList.length && this.demonHouseCooldown > this.tierCostList[this.tier])
         {
             this.tier++;
 
@@ -223,8 +248,25 @@ public class TEDemonPortal extends TileEntity
             }
         }
 
-        this.houseCooldown = Math.max(0, this.houseCooldown - 1); //Current dummy implementation of the increasing costs
-        this.roadCooldown = Math.max(0, this.roadCooldown - 1);
+        
+//        this.houseCooldown = Math.max(0, this.houseCooldown - 1); //Current dummy implementation of the increasing costs
+//        this.roadCooldown = Math.max(0, this.roadCooldown - 1);
+    }
+    
+    public void assignPoints()
+    {
+    	if((int)this.pointPool > 0)
+    	{
+    		if(this.decreaseRandomCooldown((int)this.pointPool))
+    		{
+        		this.pointPool -= (int)this.pointPool;
+    		}
+    	}
+    }
+    
+    public void incrementPoints()
+    {
+    	this.pointPool += 1f;
     }
 
     @Override
@@ -237,6 +279,7 @@ public class TEDemonPortal extends TileEntity
         this.posZRadius = par1NBTTagCompound.getInteger("posZRadius");
         this.houseCooldown = par1NBTTagCompound.getInteger("houseCooldown");
         this.roadCooldown = par1NBTTagCompound.getInteger("roadCooldown");
+        this.demonHoardCooldown = par1NBTTagCompound.getInteger("demonHoardCooldown");
 
         area = new GridSpace[negXRadius + posXRadius + 1][negZRadius + posZRadius + 1];
 
@@ -258,11 +301,13 @@ public class TEDemonPortal extends TileEntity
         this.isInitialized = par1NBTTagCompound.getBoolean("init");
 
         this.tier = par1NBTTagCompound.getInteger("tier");
-        this.totalPoints = par1NBTTagCompound.getInteger("totalPoints");
+        this.demonHouseCooldown = par1NBTTagCompound.getInteger("demonHouseCooldown");
         
         this.nextDemonPortalName = par1NBTTagCompound.getString("nextDemonPortalName");
         this.buildingStage = par1NBTTagCompound.getInteger("buildingStage");
         this.nextDemonPortalDirection = ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("nextDemonPortalDirection"));
+        
+        this.pointPool = par1NBTTagCompound.getFloat("pointPool");
     }
 
     @Override
@@ -275,6 +320,7 @@ public class TEDemonPortal extends TileEntity
         par1NBTTagCompound.setInteger("posZRadius", posZRadius);
         par1NBTTagCompound.setInteger("houseCooldown", houseCooldown);
         par1NBTTagCompound.setInteger("roadCooldown", roadCooldown);
+        par1NBTTagCompound.setInteger("demonHoardCooldown", demonHoardCooldown);
 
         NBTTagList gridList = new NBTTagList();
 
@@ -303,14 +349,22 @@ public class TEDemonPortal extends TileEntity
 
         par1NBTTagCompound.setBoolean("init", this.isInitialized);
         par1NBTTagCompound.setInteger("tier", this.tier);
-        par1NBTTagCompound.setInteger("totalPoints", this.totalPoints);
+        par1NBTTagCompound.setInteger("demonHouseCooldown", this.demonHouseCooldown);
         
         par1NBTTagCompound.setString("nextDemonPortalName", nextDemonPortalName);
         par1NBTTagCompound.setInteger("buildingStage", buildingStage);
         
         par1NBTTagCompound.setInteger("nextDemonPortalDirection", this.nextDemonPortalDirection.ordinal());
+        par1NBTTagCompound.setFloat("pointPool", pointPool);
     }
 
+    public int createRandomDemonHoard(int tier)
+    {
+    	
+    	
+    	return 10;
+    }
+    
     public int createRandomRoad() //Return the number of road spaces
     {
         int next = rand.nextInt(4);
@@ -1062,159 +1116,87 @@ public class TEDemonPortal extends TileEntity
                 dir = ForgeDirection.NORTH;
         }
 
-        boolean newProtocol = true;
+        Int3 space = this.findRoadSpaceFromDirection(dir, 1 * (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
 
-        if (newProtocol)
+        int x = space.xCoord;
+        int z = space.zCoord;
+        int yLevel = space.yCoord;
+
+        if(printDebug)
+        System.out.println("Road space - x: " + x + " z: " + z);
+
+        GridSpaceHolder grid = this.createGSH();
+
+        if (!this.getGridSpace(x, z).isRoadSegment())
         {
-            Int3 space = this.findRoadSpaceFromDirection(dir, 1 * (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
+            return 0;
+        }
 
-            int x = space.xCoord;
-            int z = space.zCoord;
-            int yLevel = space.yCoord;
+        List<ForgeDirection> directions = new ArrayList();
 
-            if(printDebug)
-            System.out.println("Road space - x: " + x + " z: " + z);
-
-            GridSpaceHolder grid = this.createGSH();
-
-            if (!this.getGridSpace(x, z).isRoadSegment())
-            {
-                return 0;
-            }
-
-            List<ForgeDirection> directions = new ArrayList();
-
-            for (int i = 2; i < 6; i++)
-            {
-                ForgeDirection testDir = ForgeDirection.getOrientation(i);
-                if (this.getGridSpace(x + testDir.offsetX, z + testDir.offsetZ).isEmpty())
-                {
-                    directions.add(testDir);
-                }
-            }
-
-            if (directions.isEmpty())
-            {
-                return 0;
-            }
-
-            HashMap<ForgeDirection, List<DemonBuilding>> schemMap = new HashMap();
-
-            for (ForgeDirection nextDir : directions)
-            {
-                for (DemonBuilding build : TEDemonPortal.buildingList)
-                {
-                    if (build.buildingTier != buildingTier || build.buildingType != DemonBuilding.BUILDING_HOUSE)
-                    {
-                        continue;
-                    }
-                    Int3 offsetSpace = build.getGridOffsetFromRoad(nextDir, yLevel);
-                    int xOff = offsetSpace.xCoord;
-                    int zOff = offsetSpace.zCoord;
-
-                    if (build.isValid(grid, x + xOff, z + zOff, nextDir.getOpposite()))
-                    {
-                        if (schemMap.containsKey(nextDir))
-                        {
-                            schemMap.get(nextDir).add(build);
-                        } else
-                        {
-                            schemMap.put(nextDir, new ArrayList());
-                            schemMap.get(nextDir).add(build);
-                        }
-                    } else
-                    {
-                        System.out.println("This ISN'T valid!");
-                    }
-                }
-            }
-
-            if (schemMap.keySet().isEmpty())
-            {
-                return 0;
-            }
-
-            ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
-            DemonBuilding build = schemMap.get(chosenDirection).get(new Random().nextInt(schemMap.get(chosenDirection).size()));
-
-            Int3 offsetSpace = build.getGridOffsetFromRoad(chosenDirection, yLevel);
-            int xOff = offsetSpace.xCoord;
-            int zOff = offsetSpace.zCoord;
-
-            build.destroyAllInField(worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
-            build.buildAll(worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
-            build.setAllGridSpaces(x + xOff, z + zOff, yLevel, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
-            this.loadGSH(grid);
-
-            return build.getNumberOfGridSpaces();
-        } else
+        for (int i = 2; i < 6; i++)
         {
-            Int3 space = findEmptySpaceNearRoad(dir, 3 * (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1, 2);
-
-            int x = space.xCoord;
-            int z = space.zCoord;
-            int yLevel = space.yCoord;
-
-            GridSpace newSpace = this.getGridSpace(x, z);
-            if (!newSpace.isEmpty())
+            ForgeDirection testDir = ForgeDirection.getOrientation(i);
+            if (this.getGridSpace(x + testDir.offsetX, z + testDir.offsetZ).isEmpty())
             {
-                return 0;
+                directions.add(testDir);
             }
+        }
 
-            if (yLevel == -1)
-            {
-                return 0;
-            }
+        if (directions.isEmpty())
+        {
+            return 0;
+        }
 
-            GridSpaceHolder grid = this.createGSH();
+        HashMap<ForgeDirection, List<DemonBuilding>> schemMap = new HashMap();
 
-            ForgeDirection chosenDirection = ForgeDirection.NORTH;
-
-            HashMap<ForgeDirection, List<DemonBuilding>> bigList = new HashMap();
-
+        for (ForgeDirection nextDir : directions)
+        {
             for (DemonBuilding build : TEDemonPortal.buildingList)
             {
-                for (int i = 2; i < 6; i++)
+                if (build.buildingTier != buildingTier || build.buildingType != DemonBuilding.BUILDING_HOUSE)
                 {
-                    chosenDirection = ForgeDirection.getOrientation(i);
-                    System.out.println("" + chosenDirection.toString());
-                    if (build.isValid(grid, x, z, chosenDirection))
+                    continue;
+                }
+                Int3 offsetSpace = build.getGridOffsetFromRoad(nextDir, yLevel);
+                int xOff = offsetSpace.xCoord;
+                int zOff = offsetSpace.zCoord;
+
+                if (build.isValid(grid, x + xOff, z + zOff, nextDir.getOpposite()))
+                {
+                    if (schemMap.containsKey(nextDir))
                     {
-                        System.out.println("Valid!");
-                        if (bigList.containsKey(chosenDirection))
-                        {
-                            bigList.get(chosenDirection).add(build);
-                        } else
-                        {
-                            bigList.put(chosenDirection, new ArrayList());
-                            bigList.get(chosenDirection).add(build);
-                        }
+                        schemMap.get(nextDir).add(build);
+                    } else
+                    {
+                        schemMap.put(nextDir, new ArrayList());
+                        schemMap.get(nextDir).add(build);
                     }
+                } else
+                {
+                    System.out.println("This ISN'T valid!");
                 }
             }
-
-            chosenDirection = ForgeDirection.getOrientation(new Random().nextInt(4) + 2); //Change to favour a direction with a road nearby
-
-            List<DemonBuilding> buildingList = bigList.get(chosenDirection);
-            DemonBuilding build;
-
-            if (buildingList != null && buildingList.size() > 0)
-            {
-                build = buildingList.get(new Random().nextInt(buildingList.size()));
-            } else
-            {
-                return 0;
-            }
-            //TODO: Finish the selection algorythm
-            //TODO: Should favour those directions that have a road right next to them.
-
-            build.buildAll(worldObj, xCoord + x * 5, yLevel, zCoord + z * 5, chosenDirection);
-            build.setAllGridSpaces(x, z, yLevel, chosenDirection, GridSpace.HOUSE, grid);
-            this.loadGSH(grid);
-
-            return build.getNumberOfGridSpaces();
-//			System.out.println("X: " + x + " Z: " + z + " Direction: " + chosenDirection.toString());
         }
+
+        if (schemMap.keySet().isEmpty())
+        {
+            return 0;
+        }
+
+        ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
+        DemonBuilding build = schemMap.get(chosenDirection).get(new Random().nextInt(schemMap.get(chosenDirection).size()));
+
+        Int3 offsetSpace = build.getGridOffsetFromRoad(chosenDirection, yLevel);
+        int xOff = offsetSpace.xCoord;
+        int zOff = offsetSpace.zCoord;
+
+        build.destroyAllInField(worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
+        build.buildAll(worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
+        build.setAllGridSpaces(x + xOff, z + zOff, yLevel, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
+        this.loadGSH(grid);
+
+        return build.getNumberOfGridSpaces();
     }
 
     public int findNearestRoadYLevel(int xCoord, int zCoord, int maxDistance)
@@ -1332,13 +1314,8 @@ public class TEDemonPortal extends TileEntity
         }
     }
 
-    public int getTotalPoints()
-    {
-        return this.totalPoints;
-    }
-
     public void addToPoints(int addition)
     {
-        this.totalPoints += addition;
+        this.demonHouseCooldown += addition;
     }
 }

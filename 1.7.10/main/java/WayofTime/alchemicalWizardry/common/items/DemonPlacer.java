@@ -68,7 +68,8 @@ public class DemonPlacer extends Item
                 d0 = 0.5D;
             }
 
-            Entity entity = spawnCreature(par3World, par1ItemStack.getItemDamage(), (double) par4 + 0.5D, (double) par5 + d0, (double) par6 + 0.5D, par1ItemStack);
+        	String demonName = DemonPlacer.getDemonString(par1ItemStack);
+            Entity entity = spawnCreature(par3World, demonName, (double) par4 + 0.5D, (double) par5 + d0, (double) par6 + 0.5D, par1ItemStack);
 
             if (entity != null)
             {
@@ -122,7 +123,8 @@ public class DemonPlacer extends Item
 
                     if (par2World.getBlock(i, j, k).getMaterial() == Material.water)
                     {
-                        Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), (double) i, (double) j, (double) k, par1ItemStack);
+                    	String demonName = DemonPlacer.getDemonString(par1ItemStack);
+                        Entity entity = spawnCreature(par2World, demonName, (double) i, (double) j, (double) k, par1ItemStack);
 
                         if (entity != null)
                         {
@@ -148,7 +150,7 @@ public class DemonPlacer extends Item
      * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
      * Parameters: world, entityID, x, y, z.
      */
-    public static Entity spawnCreature(World par0World, int par1, double par2, double par4, double par6, ItemStack itemStack)
+    public static Entity spawnCreature(World par0World, String par1, double par2, double par4, double par6, ItemStack itemStack)
     {
         Entity entity = null;
 
@@ -197,6 +199,26 @@ public class DemonPlacer extends Item
         }
 
         return par1ItemStack.stackTagCompound.getString("ownerName");
+    }
+    
+    public static void setDemonString(ItemStack itemStack, String demonName)
+    {
+    	if (itemStack.stackTagCompound == null)
+        {
+            itemStack.setTagCompound(new NBTTagCompound());
+        }
+
+        itemStack.stackTagCompound.setString("demonName", demonName);
+    }
+    
+    public static String getDemonString(ItemStack itemStack)
+    {
+    	if (itemStack.stackTagCompound == null)
+        {
+            itemStack.setTagCompound(new NBTTagCompound());
+        }
+
+        return itemStack.stackTagCompound.getString("demonName");
     }
 
     @Override

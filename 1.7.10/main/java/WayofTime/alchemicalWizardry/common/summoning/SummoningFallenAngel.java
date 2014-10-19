@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class SummoningFallenAngel extends SummoningHelper
 {
-    public SummoningFallenAngel(int id)
+    public SummoningFallenAngel(String id)
     {
         super(id);
     }

@@ -32,9 +32,9 @@ public class EntityElemental extends EntityDemon
     private static float maxTamedHealth = 100.0F;
     private static float maxUntamedHealth = 100.0F;
 
-    public EntityElemental(World par1World, int demonID)
+    public EntityElemental(World par1World, String entityAirElementalID)
     {
-        super(par1World, demonID);
+        super(par1World, entityAirElementalID);
         this.setSize(0.5F, 1.0F);
         this.setAggro(false);
         this.setTamed(false);

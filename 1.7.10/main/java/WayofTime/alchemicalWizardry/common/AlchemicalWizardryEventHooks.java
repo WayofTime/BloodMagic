@@ -21,6 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
@@ -29,13 +30,15 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AlchemicalWizardryEventHooks
 {
@@ -46,6 +49,16 @@ public class AlchemicalWizardryEventHooks
     public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
     public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
 
+    
+    @SubscribeEvent
+    public void onAnvilUpdateEvent(AnvilUpdateEvent event)
+    {
+    	if(event.isCancelable() && event.left != null && event.left.getItem() instanceof BoundArmour && event.right != null)
+    	{
+    		event.setCanceled(true);
+    	}
+    }
+    
     @SubscribeEvent
     public void onPlayerDamageEvent(LivingAttackEvent event)
     {
@@ -108,6 +121,7 @@ public class AlchemicalWizardryEventHooks
 
         if (event.entityLiving instanceof EntityCreeper)
         {
+        	GameRegistry d;
             return;
         }
 

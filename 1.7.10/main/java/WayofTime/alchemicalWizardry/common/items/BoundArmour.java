@@ -677,7 +677,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
     public int getItemEnchantability()
     {
-        return 0;
+        return Integer.MIN_VALUE;
     }
 
     public boolean getIsInvisible(ItemStack armourStack)

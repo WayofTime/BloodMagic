@@ -224,7 +224,7 @@ public class SummoningRegistryComponent
         }
     }
 
-    public int getSummoningHelperID()
+    public String getSummoningHelperID()
     {
         return this.summoningHelper.getSummoningHelperID();
     }

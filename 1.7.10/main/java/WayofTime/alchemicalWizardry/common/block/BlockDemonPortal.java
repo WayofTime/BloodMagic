@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEDemonPortal;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;

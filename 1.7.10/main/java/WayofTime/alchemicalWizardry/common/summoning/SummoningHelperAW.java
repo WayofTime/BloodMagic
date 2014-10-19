@@ -10,79 +10,79 @@ import net.minecraft.world.World;
 
 public class SummoningHelperAW extends SummoningHelper
 {
-    public SummoningHelperAW(int id)
+    public SummoningHelperAW(String id)
     {
         super(id);
     }
 
     public EntityLivingBase getEntity(World worldObj)
     {
-        if (this.id == AlchemicalWizardry.entityFallenAngelID)
+        if (this.id.equals(AlchemicalWizardry.entityFallenAngelID))
         {
             return new EntityFallenAngel(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityLowerGuardianID)
+        if (this.id.equals(AlchemicalWizardry.entityLowerGuardianID))
         {
             return new EntityLowerGuardian(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityBileDemonID)
+        if (this.id.equals(AlchemicalWizardry.entityBileDemonID))
         {
             return new EntityBileDemon(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityWingedFireDemonID)
+        if (this.id.equals(AlchemicalWizardry.entityWingedFireDemonID))
         {
             return new EntityWingedFireDemon(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entitySmallEarthGolemID)
+        if (this.id.equals(AlchemicalWizardry.entitySmallEarthGolemID))
         {
             return new EntitySmallEarthGolem(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityIceDemonID)
+        if (this.id.equals(AlchemicalWizardry.entityIceDemonID))
         {
             return new EntityIceDemon(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityBoulderFistID)
+        if (this.id.equals(AlchemicalWizardry.entityBoulderFistID))
         {
             return new EntityBoulderFist(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityShadeID)
+        if (this.id.equals(AlchemicalWizardry.entityShadeID))
         {
             return new EntityShade(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityAirElementalID)
+        if (this.id.equals(AlchemicalWizardry.entityAirElementalID))
         {
             return new EntityAirElemental(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityWaterElementalID)
+        if (this.id.equals(AlchemicalWizardry.entityWaterElementalID))
         {
             return new EntityWaterElemental(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityEarthElementalID)
+        if (this.id.equals(AlchemicalWizardry.entityEarthElementalID))
         {
             return new EntityEarthElemental(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityFireElementalID)
+        if (this.id.equals(AlchemicalWizardry.entityFireElementalID))
         {
             return new EntityFireElemental(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityShadeElementalID)
+        if (this.id.equals(AlchemicalWizardry.entityShadeElementalID))
         {
             return new EntityShadeElemental(worldObj);
         }
 
-        if (this.id == AlchemicalWizardry.entityHolyElementalID)
+        if (this.id.equals(AlchemicalWizardry.entityHolyElementalID))
         {
             return new EntityHolyElemental(worldObj);
         }
@@ -90,7 +90,7 @@ public class SummoningHelperAW extends SummoningHelper
         return new EntityPig(worldObj);
     }
 
-    public int getSummoningHelperID()
+    public String getSummoningHelperID()
     {
         return id;
     }

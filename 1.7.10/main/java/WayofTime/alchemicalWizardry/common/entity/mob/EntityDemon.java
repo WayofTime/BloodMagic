@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 public class EntityDemon extends EntityTameable implements IDemon
 {
     private boolean isAggro;
-    private int demonID;
+    private String demonID;
 
-    public EntityDemon(World par1World, int demonID)
+    public EntityDemon(World par1World, String demonID)
     {
         super(par1World);
         this.demonID = demonID;
@@ -49,7 +49,9 @@ public class EntityDemon extends EntityTameable implements IDemon
 
     protected void dropFewItems(boolean par1, int par2)
     {
-        ItemStack drop = new ItemStack(ModItems.demonPlacer, 1, this.getDemonID());
+        ItemStack drop = new ItemStack(ModItems.demonPlacer);
+        
+        DemonPlacer.setDemonString(drop, this.getDemonID());
 
         if ((this.getOwner() instanceof EntityPlayer))
         {
@@ -92,7 +94,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         }
     }
 
-    public int getDemonID()
+    public String getDemonID()
     {
         return this.demonID;
     }

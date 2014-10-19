@@ -14,6 +14,7 @@ import WayofTime.alchemicalWizardry.common.*;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.*;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
@@ -163,20 +164,20 @@ public class AlchemicalWizardry
     public static int greaterLengtheningCatalystDungeonChance;
 
     //Mob IDs
-    public static int entityFallenAngelID = 20;
-    public static int entityLowerGuardianID = 21;
-    public static int entityBileDemonID = 22;
-    public static int entityWingedFireDemonID = 23;
-    public static int entitySmallEarthGolemID = 24;
-    public static int entityIceDemonID = 25;
-    public static int entityBoulderFistID = 26;
-    public static int entityShadeID = 27;
-    public static int entityAirElementalID = 28;
-    public static int entityWaterElementalID = 29;
-    public static int entityEarthElementalID = 30;
-    public static int entityFireElementalID = 31;
-    public static int entityShadeElementalID = 32;
-    public static int entityHolyElementalID = 33;
+    public static String entityFallenAngelID = "AW001FallenAngel";
+    public static String entityLowerGuardianID = "AW001";
+    public static String entityBileDemonID = "AW001";
+    public static String entityWingedFireDemonID = "AW001";
+    public static String entitySmallEarthGolemID = "AW001";
+    public static String entityIceDemonID = "AW001";
+    public static String entityBoulderFistID = "AW001";
+    public static String entityShadeID = "AW001";
+    public static String entityAirElementalID = "AW001";
+    public static String entityWaterElementalID = "AW001";
+    public static String entityEarthElementalID = "AW001";
+    public static String entityFireElementalID = "AW001";
+    public static String entityShadeElementalID = "AW001";
+    public static String entityHolyElementalID = "AW001";
 
 
     public static Fluid lifeEssenceFluid;
@@ -606,20 +607,20 @@ public class AlchemicalWizardry
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
 
         //Custom mobs
-        EntityRegistry.registerModEntity(EntityFallenAngel.class, "FallenAngel", this.entityFallenAngelID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityLowerGuardian.class, "LowerGuardian", this.entityLowerGuardianID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityBileDemon.class, "BileDemon", this.entityBileDemonID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityWingedFireDemon.class, "WingedFireDemon", this.entityWingedFireDemonID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntitySmallEarthGolem.class, "SmallEarthGolem", this.entitySmallEarthGolemID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityIceDemon.class, "IceDemon", this.entityIceDemonID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityBoulderFist.class, "BoulderFist", this.entityBoulderFistID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityShade.class, "Shade", this.entityShadeID, this, 80, 3, true);
-        EntityRegistry.registerModEntity(EntityAirElemental.class, "AirElemental", this.entityAirElementalID, this, 120, 3, true);
-        EntityRegistry.registerModEntity(EntityWaterElemental.class, "WaterElemental", this.entityWaterElementalID, this, 120, 3, true);
-        EntityRegistry.registerModEntity(EntityEarthElemental.class, "EarthElemental", this.entityEarthElementalID, this, 120, 3, true);
-        EntityRegistry.registerModEntity(EntityFireElemental.class, "FireElemental", this.entityFireElementalID, this, 120, 3, true);
-        EntityRegistry.registerModEntity(EntityShadeElemental.class, "ShadeElemental", this.entityShadeElementalID, this, 120, 3, true);
-        EntityRegistry.registerModEntity(EntityHolyElemental.class, "HolyElemental", this.entityHolyElementalID, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityFallenAngel.class, "FallenAngel", 20, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityLowerGuardian.class, "LowerGuardian", 21, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityBileDemon.class, "BileDemon", 22, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityWingedFireDemon.class, "WingedFireDemon", 23, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntitySmallEarthGolem.class, "SmallEarthGolem", 24, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityIceDemon.class, "IceDemon", 25, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityBoulderFist.class, "BoulderFist", 26, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityShade.class, "Shade", 27, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityAirElemental.class, "AirElemental", 28, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityWaterElemental.class, "WaterElemental", 29, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityEarthElemental.class, "EarthElemental", 30, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityFireElemental.class, "FireElemental", 31, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityShadeElemental.class, "ShadeElemental", 32, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityHolyElemental.class, "HolyElemental", 33, this, 120, 3, true);
 
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.standardBindingAgent), 1, 3, this.standardBindingAgentDungeonChance));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.mundanePowerCatalyst), 1, 1, this.mundanePowerCatalystDungeonChance));
