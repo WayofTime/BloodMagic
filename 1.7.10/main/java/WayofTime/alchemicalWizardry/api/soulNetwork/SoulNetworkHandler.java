@@ -86,6 +86,20 @@ public class SoulNetworkHandler
 
         return true;
     }
+    
+    public static boolean syphonAndDamageFromNetwork(String ownerName, EntityPlayer player, int damageToBeDone)
+    {
+        if (player.worldObj.isRemote)
+        {
+            return false;
+        }
+
+        int amount = SoulNetworkHandler.syphonFromNetwork(ownerName, damageToBeDone);
+
+        hurtPlayer(player, damageToBeDone - amount);
+
+        return true;
+    }
 
     public static boolean canSyphonFromOnlyNetwork(ItemStack ist, int damageToBeDone)
     {
