@@ -3,7 +3,7 @@
 # Directories
 /.gradle/
 /build/
-/eclipse/
+/eclipse
 /run/
 /out/
 /asm/
@@ -11,6 +11,7 @@
 /.idea/
 /.metadata/
 /.settings/
+/libs/
 
 # File Extensions
 *.psd
@@ -23,3 +24,4 @@
 
 # Specific files
 Thumbs.db
+
