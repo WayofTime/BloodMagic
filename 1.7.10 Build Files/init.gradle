@@ -1,0 +1,7 @@
+allprojects {
+	configurations {
+		project.ext.maven_url = 'url'
+		project.ext.maven_username = 'username'
+		project.ext.maven_password = 'password'
+	}
+}

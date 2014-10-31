@@ -30,9 +30,10 @@ repositories {
 
 
 apply plugin: 'forge'
+apply plugin: 'maven'
 
 version = "v1.2.0Beta22(1.7.10)"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "WayofTime.alchemicalWizardry" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Blood Magic"
 
 // Define properties file
@@ -81,5 +82,60 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("maven_url")) {
+                logger.info('Publishing to maven repo')
+                repository(url: project.maven_url) {
+                    authentication(userName: project.maven_username, password: project.maven_password)
+                }
+            }
+
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+            }
+
+            pom.project {
+                name project.archivesBaseName
+                packaging 'jar'
+                description 'Blood Magic'
+                url 'https://github.com/WayofTime/BloodMagic'
+
+                scm {
+                    url 'https://github.com/WayofTime/BloodMagic'
+                    connection 'scm:git:git@github.com:WayofTime/BloodMagic.git'
+                    developerConnection 'scm:git:git@github.com:WayofTime/BloodMagic.git'
+                }
+
+                issueManagement {
+                    system 'github'
+                    url 'https://github.com/WayofTime/BloodMagic/issues'
+                }
+
+                licenses {
+                    license {
+                        name 'Creative Commons Attribution 4.0 International'
+                        url 'http://creativecommons.org/licenses/by/4.0/legalcode'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'WayofTime'
+                        name 'WayofTime'
+                        roles {
+                            role 'developer'
+                        }
+                    }
+                }
+            }
+        }
     }
 }
