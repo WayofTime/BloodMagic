@@ -1,0 +1,76 @@
+---- Minecraft Crash Report ----
+// I just don't know what went wrong :(
+
+Time: 27/08/14 6:21 PM
+Description: There was a severe problem during mod loading that has caused the game to fail
+
+cpw.mods.fml.common.LoaderException: java.lang.NoSuchMethodError: scala.Predef$.ArrowAssoc(Ljava/lang/Object;)Ljava/lang/Object;
+	at cpw.mods.fml.common.LoadController.transition(LoadController.java:162)
+	at cpw.mods.fml.common.Loader.preinitializeMods(Loader.java:515)
+	at cpw.mods.fml.client.FMLClientHandler.beginMinecraftLoading(FMLClientHandler.java:239)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:532)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:941)
+	at net.minecraft.client.main.Main.main(Main.java:164)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:134)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+Caused by: java.lang.NoSuchMethodError: scala.Predef$.ArrowAssoc(Ljava/lang/Object;)Ljava/lang/Object;
+	at codechicken.multipart.MultipartGenerator$.registerTrait(MultipartGenerator.scala:165)
+	at codechicken.multipart.MultipartGenerator$.registerTrait(MultipartGenerator.scala:150)
+	at codechicken.multipart.handler.MultipartProxy_serverImpl.preInit(proxies.scala:35)
+	at codechicken.multipart.handler.MultipartMod$.preInit(MultipartMod.scala:16)
+	at codechicken.multipart.handler.MultipartMod.preInit(MultipartMod.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at cpw.mods.fml.common.FMLModContainer.handleModStateEvent(FMLModContainer.java:513)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.google.common.eventbus.EventSubscriber.handleEvent(EventSubscriber.java:74)
+	at com.google.common.eventbus.SynchronizedEventSubscriber.handleEvent(SynchronizedEventSubscriber.java:47)
+	at com.google.common.eventbus.EventBus.dispatch(EventBus.java:322)
+	at com.google.common.eventbus.EventBus.dispatchQueuedEvents(EventBus.java:304)
+	at com.google.common.eventbus.EventBus.post(EventBus.java:275)
+	at cpw.mods.fml.common.LoadController.sendEventToModContainer(LoadController.java:208)
+	at cpw.mods.fml.common.LoadController.propogateStateMessage(LoadController.java:187)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.google.common.eventbus.EventSubscriber.handleEvent(EventSubscriber.java:74)
+	at com.google.common.eventbus.SynchronizedEventSubscriber.handleEvent(SynchronizedEventSubscriber.java:47)
+	at com.google.common.eventbus.EventBus.dispatch(EventBus.java:322)
+	at com.google.common.eventbus.EventBus.dispatchQueuedEvents(EventBus.java:304)
+	at com.google.common.eventbus.EventBus.post(EventBus.java:275)
+	at cpw.mods.fml.common.LoadController.distributeStateMessage(LoadController.java:118)
+	at cpw.mods.fml.common.Loader.preinitializeMods(Loader.java:513)
+	... 10 more
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 7 (amd64) version 6.1
+	Java Version: 1.7.0_17, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 777765520 bytes (741 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: MCP v9.05 FML v7.10.1.1152 Minecraft Forge 10.13.0.1152 7 mods loaded, 7 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized
+	FML{7.10.1.1152} [Forge Mod Loader] (forgeSrc-1.7.10-10.13.0.1152.jar) Unloaded->Constructed->Pre-initialized
+	Forge{10.13.0.1152} [Minecraft Forge] (forgeSrc-1.7.10-10.13.0.1152.jar) Unloaded->Constructed->Pre-initialized
+	AWWayofTime{v1.2.0Beta15} [Blood Magic: Alchemical Wizardry] (bin) Unloaded->Constructed->Pre-initialized
+	ForgeMultipart{1.1.0.300} [Forge Multipart] (ForgeMultipart-1.7.10-1.1.0.300-dev.jar) Unloaded->Constructed->Errored
+	McMultipart{1.1.0.300} [Minecraft Multipart Plugin] (ForgeMultipart-1.7.10-1.1.0.300-dev.jar) Unloaded->Constructed->Pre-initialized
+	ForgeMicroblock{1.1.0.300} [Forge Microblocks] (ForgeMultipart-1.7.10-1.1.0.300-dev.jar) Unloaded->Constructed->Errored

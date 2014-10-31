@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<book>
+    <page type="intro">
+        <text>The Architect
+
+My name is Tiberius. I was a kid when the demons came for my village during The Wars. They ransacked the houses and turned the shacks into splinters, wielding fire and water to blast the land asunder. I woke up to some travelling merchants that were passing by, equipping the warriors who were futily trying to drive off the demons that still clawed the village. 
+
+I was brought to a village nearby, where a magician named Magus helped tend to my wounds. The magic that he used was something that I had never seen before – it wasn’t Thaumaturgy, nor Alchemy, and it was definitely not Botany. He winked at me once he saw that my eyes were open, holding his finger to his lips.
+        </text>
+    </page>
+    
+    <page type="text">
+        <text>Fast-forward several years, and I have learned almost everything from Master Magus, being his third student ever to master his arts. Against his wishes, I have recorded my research and put several wards and spells on this book. So welcome, apprentice. I am known as The Architect, and I am a Blood Mage.
+
+It took several years of pestering before I managed to convince Magus to teach me. He kept on telling me that, “Magic that uses the life essence of living beings requires patience and preparation in order to master it. One false move, go a little past your natural endurance, and you may find yourself taking a nice vacation in Tartarus.” The thing was, I wanted to go there – I had some unfinished business with the demons.
+        </text>
+    </page>
+    
+    <page type="text">
+        <text>The process that Magus originally constructed required powerful artifacts that he constructed himself, but were rather lacking where teaching was concerned. After studying a bit of alchemy and the process of “Equivalent Exchange,” I managed to construct myself an altar that would transmute items inside of its basin into new powerful forms. The only issue was that it needed a worthy catalyst, and so with a prick of the finger I set the Blood Altar alight! 
+        </text>
+    </page>
+    
+    <page type="text">
+        <text>The Blood Altar
+        
+To start any form of transmutation involving blood, you would need to construct a blood altar and a sacrificial knife, as well as have a solitary diamond in your possession. After placing the blood altar down, Magus advised me to be careful as I filled it slowly with my blood, and said that I would need to be really close to the altar (about a metre) for the knife to work. With about 2 buckets of blood in the altar, which Master Magus reminds me is about 10 hearts worth, I placed the diamond inside of the altar by activating it with the diamond in hand. 
+
+The blood dissipated in a cloud of red swirls as I waited for the atoms of the diamond to shift and reform. There were a few         
+        </text>
+    </page>
+    
+    <page type="text">
+        <text>moments where the particles turned gray, which meant that the altar was empty and I had to hurry to fill it. After the diamond burst in a shower of red particles, what finally sat in the altar was a Weak Blood Orb.     
+
+        </text>
+    </page>
+    
+    <page type="crafting">
+    <text>Blood Altar</text>
+        <recipe>
+            <name>bloodAltar</name>
+            <size>three</size>
+        </recipe>
+    </page>
+    
+    <page type="crafting">
+    <text>Sacrificial Knife</text>
+        <recipe>
+            <name>sacrificialKnife</name>
+            <size>three</size>
+        </recipe>
+    </page>
+    
+    <page type="text">
+        <text>The Soul Network
+        
+One thing that I initially didn’t understand was the overarching connection between the blood orb and myself. When I initially met Magus, I could see many sparkling strands branching off of him, flowing throughout his house and linking with intricate stones and runic drawings. I asked Magus about the strands, but he had no clue what I was talking about. It took three years of thorough research to finally find the answer, and when I brought my notes to him he was really impressed with what I have found.
+
+When you send power into the orb, the energy is transmitted from the strand connecting the orb and into the very soul of the person the orb is bound to. Similarly, and Magus 
+
+        </text>
+    </page>
+    
+    <page type="text">
+        <text>managed to show this effect with several of his rituals, when you use something that drains energy it will drain the energy directly from the soul. The thing is that if you use an item whose owner has no energy left, the item will instead grab the requisite energy from the user of the item. Directly. From his or her life force. As such, the unit of measurement is called “Life Points,” or LP. I experimented with this, and one heart equals 200 LP.
+
+I have christened this system to be the “Soul Network,” and is used in all branches of Blood Magic indirectly. 
+
+        </text>
+    </page>
+
+    <page type="text">
+        <text>Sigils
+        
+Magus is a master at rituals. His power in the intricate layering of stones and inks is unmatched. The problem is that these rituals are rather… static in nature. Sure, being able to summon a meteor is all fine and dandy, but won’t exactly protect you when you are on fire. To this end, I decided to link my soul network to powerful items that I have created. To start, I decided to transmute a piece of smooth stone in the Blood Altar with just 1kLP to create a blank slate.
+
+The first thing I did was to arrange the blank slate with some reflective glass and my weak blood orb. Pouring my power into the configuration created a Divination Sigil, which I could link to my network and see
+
+        </text>
+    </page>
+    
+    <page type="text">
+        <text>how much power that my soul network holds. What is more, holding the sigil to the Blood Altar flooded my mind with information, giving me the knowledge about its current tier, capacity, and even how much it was holding. 
+ 
+ Happy with the sigil, I brought a fresh unbound one to Master Magus for him to use. When I took the divination sigil back in my hands and tried to use it to view his network, for some reason I could not gleam any information from him. I don’t really see why this is, considering that I used this same method for other people and I saw that they had no power at all, but to gleam actually … nothing from Magus is strange.
+        </text>
+    </page>
+    
+    <page type="crafting">
+    <text>Divination Sigil</text>
+        <recipe>
+            <name>divinationSigil</name>
+            <size>three</size>
+        </recipe>
+    </page>
+    
+    <page type="text">
+        <text>
+
+        </text>
+    </page>
+
+
+</book>

@@ -1,0 +1,59 @@
+---- Minecraft Crash Report ----
+// I'm sorry, Dave.
+
+Time: 27/08/14 9:25 PM
+Description: Exception in server tick loop
+
+java.lang.NoClassDefFoundError: net/minecraft/client/entity/EntityClientPlayerMP
+	at WayofTime.alchemicalWizardry.common.block.BlockReagentConduit.createNewTileEntity(BlockReagentConduit.java:35)
+	at net.minecraft.block.Block.createTileEntity(Block.java:1778)
+	at net.minecraft.world.chunk.Chunk.func_150806_e(Chunk.java:939)
+	at net.minecraft.world.World.getTileEntity(World.java:2762)
+	at net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(ForgeHooks.java:399)
+	at net.minecraft.server.management.ItemInWorldManager.tryHarvestBlock(ItemInWorldManager.java:285)
+	at net.minecraft.server.management.ItemInWorldManager.onBlockClicked(ItemInWorldManager.java:168)
+	at net.minecraft.network.NetHandlerPlayServer.processPlayerDigging(NetHandlerPlayServer.java:523)
+	at net.minecraft.network.play.client.C07PacketPlayerDigging.processPacket(C07PacketPlayerDigging.java:61)
+	at net.minecraft.network.play.client.C07PacketPlayerDigging.processPacket(C07PacketPlayerDigging.java:94)
+	at net.minecraft.network.NetworkManager.processReceivedPackets(NetworkManager.java:247)
+	at net.minecraft.network.NetworkSystem.networkTick(NetworkSystem.java:182)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:736)
+	at net.minecraft.server.dedicated.DedicatedServer.updateTimeLightAndEntities(DedicatedServer.java:350)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:624)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:495)
+	at net.minecraft.server.MinecraftServer$2.run(MinecraftServer.java:762)
+Caused by: java.lang.ClassNotFoundException: net.minecraft.client.entity.EntityClientPlayerMP
+	at net.minecraft.launchwrapper.LaunchClassLoader.findClass(LaunchClassLoader.java:188)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	... 17 more
+Caused by: java.lang.RuntimeException: Attempted to load class net/minecraft/client/entity/EntityClientPlayerMP for invalid side SERVER
+	at cpw.mods.fml.common.asm.transformers.SideTransformer.transform(SideTransformer.java:50)
+	at net.minecraft.launchwrapper.LaunchClassLoader.runTransformers(LaunchClassLoader.java:276)
+	at net.minecraft.launchwrapper.LaunchClassLoader.findClass(LaunchClassLoader.java:174)
+	... 19 more
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 7 (amd64) version 6.1
+	Java Version: 1.7.0_17, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 916496976 bytes (874 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 15, tcache: 0, allocated: 13, tallocated: 95
+	FML: MCP v9.05 FML v7.10.1.1152 Minecraft Forge 10.13.0.1152 4 mods loaded, 4 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	FML{7.10.1.1152} [Forge Mod Loader] (forgeSrc-1.7.10-10.13.0.1152.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Forge{10.13.0.1152} [Minecraft Forge] (forgeSrc-1.7.10-10.13.0.1152.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	AWWayofTime{v1.2.0Beta15} [Blood Magic: Alchemical Wizardry] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Profiler Position: N/A (disabled)
+	Vec3 Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	Player Count: 1 / 20; [EntityPlayerMP['WayofFlowingTime'/575, l='world', x=-35.61, y=81.00, z=492.41]]
+	Is Modded: Definitely; Server brand changed to 'fml,forge'
+	Type: Dedicated Server (map_server.txt)

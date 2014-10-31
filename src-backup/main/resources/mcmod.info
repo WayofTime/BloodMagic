@@ -1,0 +1,16 @@
+[
+{
+  "modid": "AWWayofTime",
+  "name": "Blood Magic: Alchemical Wizardry",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["WayofTime"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
