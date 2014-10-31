@@ -5,9 +5,11 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,16 +20,24 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.S07PacketRespawn;
+import net.minecraft.network.play.server.S1DPacketEntityEffect;
+import net.minecraft.network.play.server.S1FPacketSetExperience;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -528,5 +538,67 @@ public class SpellHelper
         }
 
         return false;
+    }
+
+    //Adapated from Enhanced Portals 3 code
+    public static Entity teleportEntityToDim(World oldWorld, World newWorld, int x, int y, int z, Entity entity)
+    {
+        if (entity != null)
+        {
+            WorldServer oldWorldServer = (WorldServer) oldWorld;
+            WorldServer newWorldServer = (WorldServer) newWorld;
+            if (entity instanceof EntityPlayer)
+            {
+                EntityPlayerMP player = (EntityPlayerMP) entity;
+                if (!player.worldObj.isRemote)
+                {
+                    player.worldObj.theProfiler.startSection("portal");
+                    player.worldObj.theProfiler.startSection("changeDimension");
+                    ServerConfigurationManager config = player.mcServer.getConfigurationManager();
+                    player.closeScreen();
+                    player.dimension = newWorldServer.provider.dimensionId;
+                    player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.difficultySetting, newWorldServer.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
+                    oldWorldServer.removeEntity(player);
+                    player.isDead = false;
+                    player.setLocationAndAngles(x, y, z, player.rotationYaw, player.rotationPitch);
+                    newWorldServer.spawnEntityInWorld(player);
+                    player.setWorld(newWorldServer);
+                    config.func_72375_a(player, oldWorldServer);
+                    player.playerNetServerHandler.setPlayerLocation(x, y, z, entity.rotationYaw, entity.rotationPitch);
+                    player.theItemInWorldManager.setWorld(newWorldServer);
+                    config.updateTimeAndWeatherForPlayer(player, newWorldServer);
+                    config.syncPlayerInventory(player);
+                    player.worldObj.theProfiler.endSection();
+                    oldWorldServer.resetUpdateEntityTick();
+                    newWorldServer.resetUpdateEntityTick();
+                    player.worldObj.theProfiler.endSection();
+                    for (Iterator<PotionEffect> potion = player.getActivePotionEffects().iterator(); potion.hasNext(); )
+                    {
+                        player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), (PotionEffect) potion.next()));
+                    }
+                    player.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
+                    FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldWorldServer.provider.dimensionId, player.dimension);
+                }
+                player.worldObj.theProfiler.endSection();
+                return player;
+            }
+            else
+            {
+                NBTTagCompound tag = new NBTTagCompound();
+                entity.writeToNBTOptional(tag);
+                entity.setDead();
+                Entity teleportedEntity = EntityList.createEntityFromNBT(tag, newWorldServer);
+                if (teleportedEntity != null) {
+                    teleportedEntity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+                    teleportedEntity.forceSpawn = true;
+                    newWorldServer.spawnEntityInWorld(teleportedEntity);
+                    teleportedEntity.setWorld(newWorldServer);
+                }
+                oldWorldServer.resetUpdateEntityTick();
+                oldWorldServer.resetUpdateEntityTick();
+                return teleportedEntity;
+            }
+        }
+        return null;
     }
 }
