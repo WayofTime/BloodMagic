@@ -1,5 +1,0 @@
-commands.forge.usage=Použij /forge <podpříkaz>. Podpříkazy jsou tps, track
-commands.forge.usage.tracking=Použij /forge track <typ> <trvání>. Správné typy jsou te (Tile Entity). Doba trvání je < 60. 
-commands.forge.tps.summary=%s : Průměrný čas tiku: %d ms. Průměrné TPS: %d
-
-commands.forge.tracking.te.enabled=Sledování entit povoleno na %d sekund.
