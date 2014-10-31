@@ -1,12 +1,11 @@
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import net.minecraft.item.ItemStack;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import net.minecraft.item.ItemStack;
 
 public class ReagentRegistry
 {
@@ -79,22 +78,6 @@ public class ReagentRegistry
         registerReagent("virtus", virtusReagent);
         registerReagent("reductus", reductusReagent);
         registerReagent("potentia", potentiaReagent);
-
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.sanctus), new ReagentStack(sanctusReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.incendium), new ReagentStack(incendiumReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.aquasalus), new ReagentStack(aquasalusReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.magicales), new ReagentStack(magicalesReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.aether), new ReagentStack(aetherReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.crepitous), new ReagentStack(crepitousReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.crystallos), new ReagentStack(crystallosReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.terrae), new ReagentStack(terraeReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.tennebrae), new ReagentStack(tenebraeReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 0), new ReagentStack(offensaReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 1), new ReagentStack(praesidiumReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 2), new ReagentStack(orbisTerraeReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 6), new ReagentStack(virtusReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 7), new ReagentStack(reductusReagent, 1000));
-        ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 8), new ReagentStack(potentiaReagent, 1000));
     }
 
     public static boolean registerReagent(String key, Reagent reagent)

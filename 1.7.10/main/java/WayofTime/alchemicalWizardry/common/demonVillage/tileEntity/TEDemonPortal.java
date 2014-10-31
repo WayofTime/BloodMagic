@@ -6,13 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +32,9 @@ import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.GridSpace;
 import WayofTime.alchemicalWizardry.common.demonVillage.GridSpaceHolder;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonType;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +48,8 @@ public class TEDemonPortal extends TileEntity
     public static int demonHoardDelay = 10;
 
     public static int[] tierCostList = new int[]{1000, 5000, 10000};
+    
+    public static Set<IHoardDemon> hoardList = new HashSet();
 
     public static List<DemonBuilding> buildingList = new ArrayList();
     public Random rand = new Random();
@@ -105,6 +113,7 @@ public class TEDemonPortal extends TileEntity
     	map.put("roadChance", 0.6f);
     	map.put("houseChance", 0.3f);
     	map.put("demonPortalChance", 0.5f);
+    	map.put("demonHoardChance", 1.0f);
     	
     	String action = "";
     	
@@ -149,9 +158,41 @@ public class TEDemonPortal extends TileEntity
     	}else if(action.equals("demonPortalChance"))
     	{
     		demonHouseCooldown += amount;
+    	}else if(action.equals("demonHoardChance"))
+    	{
+    		if(demonHoardCooldown > 0)
+    		{
+        		demonHoardCooldown -= amount;
+    		}else
+    		{
+    			return false;
+    		}
     	}
     	
     	return true;
+    }
+    
+    public void notifyDemons(EntityLivingBase demon, EntityLivingBase target) //TODO
+    {
+//    	if (this.taskOwner != entitycreature && entitycreature.getAttackTarget() == null && !entitycreature.isOnSameTeam(this.taskOwner.getAITarget()))
+    	for(IHoardDemon thrallDemon : this.hoardList)
+    	{
+    		if(thrallDemon instanceof EntityCreature)
+    		{
+    			if(thrallDemon != demon && ((EntityCreature) thrallDemon).getAttackTarget() == null && !((EntityCreature) thrallDemon).isOnSameTeam(target))
+    			{
+    				
+    			}
+    		}
+    	}
+    }
+    
+    public void enthrallDemon(EntityLivingBase demon)
+    {
+    	if(demon instanceof IHoardDemon)
+    	{
+    		this.hoardList.add((IHoardDemon)demon);
+    	}
     }
 
     public void initialize()
@@ -231,7 +272,7 @@ public class TEDemonPortal extends TileEntity
         
         if(this.demonHoardCooldown <= 0)
         {
-        	int complexityCost = this.createRandomDemonHoard(tier);
+        	int complexityCost = this.createRandomDemonHoard(tier, DemonType.FIRE);
         	if(complexityCost > 0)
         	{
         		this.demonHoardCooldown = TEDemonPortal.demonHoardDelay * complexityCost;
@@ -358,11 +399,36 @@ public class TEDemonPortal extends TileEntity
         par1NBTTagCompound.setFloat("pointPool", pointPool);
     }
 
-    public int createRandomDemonHoard(int tier)
+    public int createRandomDemonHoard(int tier, DemonType type)
     {
-    	
-    	
-    	return 10;
+    	int next = rand.nextInt(4);
+        ForgeDirection dir;
+
+        switch (next)
+        {
+            case 0:
+                dir = ForgeDirection.NORTH;
+                break;
+            case 1:
+                dir = ForgeDirection.SOUTH;
+                break;
+            case 2:
+                dir = ForgeDirection.EAST;
+                break;
+            case 3:
+                dir = ForgeDirection.WEST;
+                break;
+            default:
+                dir = ForgeDirection.NORTH;
+        }
+
+        Int3 road = findRoadSpaceFromDirection(dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
+        if(road == null)
+        {
+        	return 0;
+        }
+        
+    	return DemonPacketRegistry.spawnDemons(worldObj, xCoord + road.xCoord * 5, yCoord + road.yCoord, zCoord + road.zCoord * 5, type, tier);
     }
     
     public int createRandomRoad() //Return the number of road spaces
