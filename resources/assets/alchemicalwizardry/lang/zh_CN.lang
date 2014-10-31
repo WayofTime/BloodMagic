@@ -53,6 +53,7 @@ tile.blockSpellEffect.earth.name=尘土效应器
 tile.alchemicCalcinator.name=元素煅烧炉
 tile.crystalBelljar.name=玻璃钟罩
 tile.blockReagentConduit.name=元素中续器
+tile.lifeEssenceFluidBlock.name=生命本质
 
 #Item Localization
 item.weakBloodOrb.name=虚弱气血宝珠
@@ -192,3 +193,19 @@ bm.string.drain=消耗
 bm.string.tier=层数
 bm.string.crafting.orb.shaped=特定血宝珠合成
 bm.string.crafting.orb.shapeless=不定血宝珠合成
+
+#Entities
+entity.AWWayofTime.EarthElemental.name=土之元素精灵
+entity.AWWayofTime.FireElemental.name=火之元素精灵
+entity.AWWayofTime.HolyElemental.name=神圣元素精灵
+entity.AWWayofTime.ShadeElemental.name=暗黑元素精灵
+entity.AWWayofTime.WaterElemental.name=水之元素精灵
+entity.AWWayofTime.AirElemental.name=风之元素精灵
+entity.AWWayofTime.Shade.name=影魔
+entity.AWWayofTime.BoulderFist.name=石猿
+entity.AWWayofTime.IceDemon.name=冰霜恶魔
+entity.AWWayofTime.SmallEarthGolem.name=小型土傀儡
+entity.AWWayofTime.WingedFireDemon.name=火翼恶魔
+entity.AWWayofTime.BileDemon.name=胆汁恶魔
+entity.AWWayofTime.LowerGuardian.name=低等守护者
+entity.AWWayofTime.FallenAngel.name=堕天使
