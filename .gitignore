@@ -20,7 +20,6 @@
 *.iws
 *.classpath
 *.project
-*.class
 
 # Specific files
 Thumbs.db
