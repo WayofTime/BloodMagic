@@ -474,6 +474,11 @@ public class AlchemicalWizardryEventHooks
             {
                 entityLiving.motionY -= decrease;
             }
+            
+            if(entityLiving instanceof EntityPlayer)
+            {
+            	SpellHelper.setPlayerSpeedFromServer((EntityPlayer)entityLiving, entityLiving.motionX, entityLiving.motionY - decrease, entityLiving.motionZ);
+            }
         }
 
         if (entityLiving.isPotionActive(AlchemicalWizardry.customPotionFireFuse))
