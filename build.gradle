@@ -1,21 +1,26 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
+        maven { url = "http://files.minecraftforge.net/maven" }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
+apply plugin: 'forge'
 
+ext.configFile = file "build.properties"
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = config.mc_version + "-" + config.mod_version + "-" + config.build_number
+group= config.package_group
+archivesBaseName = config.mod_name
 
 repositories {
     maven {
@@ -25,69 +30,82 @@ repositories {
     maven {
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
-    }  
+    }
+	ivy {
+		name "MineTweaker3"
+        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
+    }	
 }
-
-
-apply plugin: 'forge'
-
-version = "v1.2.0b(1.7.10)"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Blood Magic"
-
-// Define properties file
-ext.configFile = file "build.properties"
-
-
-configFile.withReader {
-    // Load config.  It shall from now be referenced as simply config or project.config
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
-}
-configurations {
-    deployerJars
-}
-
-
 
 dependencies {
-    compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
-    compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
-    compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
-    compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
-    compile files("libs/MineTweaker3-Dev-1.7.10-3.0.9.jar")
+    compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":dev"
+    compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
+	compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
 }
-
 
 minecraft {
-    version = "1.7.10-10.13.0.1152"
-    assetDir = "eclipse/assets"
+    version = config.mc_version + "-" + config.forge_version
+    runDir = "run"
 }
 
-
-task deobfJar(type: Jar) { 
-from sourceSets.main.output 
-classifier = 'deobf' 
-} 
-
-
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
+processResources {
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        include '**/*.info'
+        include '**/*.properties'
+
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude '**/*.info'
+        exclude '**/*.properties'
+		exclude '**/*.db'
     }
 }
+
+jar {
+    dependsOn "incrementBuildNumber"
+	classifier = ''
+}
+
+// add a source jar
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+// add a javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+// because the normal output has been made to be obfuscated
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+tasks.build.dependsOn sourceJar, javadocJar, deobfJar
+
+tasks.withType(JavaCompile) { task ->
+    task.options.encoding = 'UTF-8'
+}
+
+task("incrementBuildNumber") {
+	// increment build number
+	doFirst {
+		// increment
+		config.build_number = (config.build_number.toString().toInteger()) + 1
+
+		// write back to the file
+		configFile.withWriter {
+			config.toProperties().store(it, "")
+		}
+	}
+}
+
+// Uncomment this line if you want to auto-upload to CurseForge when you build. This requires you to setup curse.gradle yourself.
+// fileTree('gradle').include('curse.gradle').collect().sort().each { apply from: it }
