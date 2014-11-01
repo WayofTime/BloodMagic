@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ExtrapolatedMeleeEntityEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ExtrapolatedMeleeEntityEffect;
 
 public class MeleeOffensiveFire extends ExtrapolatedMeleeEntityEffect
 {
@@ -21,9 +22,9 @@ public class MeleeOffensiveFire extends ExtrapolatedMeleeEntityEffect
     @Override
     protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer)
     {
-        if (entity instanceof EntityLiving)
+        if (entity instanceof EntityLivingBase)
         {
-            ((EntityLiving) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFireFuse.id, 20 * (7 - this.powerUpgrades), this.potencyUpgrades));
+            ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionFireFuse.id, 20 * (7 - this.powerUpgrades), this.potencyUpgrades));
             return true;
         }
 

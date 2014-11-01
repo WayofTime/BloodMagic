@@ -49,7 +49,6 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
                         hit++;
                     }
                 }
-
             }
         }
     }

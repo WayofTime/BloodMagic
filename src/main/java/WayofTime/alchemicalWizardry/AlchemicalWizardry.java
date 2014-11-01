@@ -84,7 +84,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0b")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0b (Beta1)")
 
 public class AlchemicalWizardry
 {
