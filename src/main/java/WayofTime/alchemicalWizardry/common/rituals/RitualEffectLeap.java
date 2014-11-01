@@ -79,24 +79,54 @@ public class RitualEffectLeap extends RitualEffect
                     livingEntity.motionY = motionY;
                     livingEntity.fallDistance = 0;
 
-                    switch (direction)
+                    if(livingEntity instanceof EntityPlayer)
                     {
-                        case 1:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, 0, motionY, -speed);
-                            break;
+                    	switch (direction)
+                        {
+                            case 1:
+                                SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, 0, motionY, -speed);
+                                break;
 
-                        case 2:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, speed, motionY, 0);
-                            break;
+                            case 2:
+                                SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, speed, motionY, 0);
+                                break;
 
-                        case 3:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, 0, motionY, speed);
-                            break;
+                            case 3:
+                                SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, 0, motionY, speed);
+                                break;
 
-                        case 4:
-                            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, -speed, motionY, 0);
-                            break;
+                            case 4:
+                                SpellHelper.setPlayerSpeedFromServer((EntityPlayer) livingEntity, -speed, motionY, 0);
+                                break;
+                        }
+                    }else
+                    {
+                    	livingEntity.motionY = motionY;
+
+                        switch (direction)
+                        {
+                            case 1:
+                                livingEntity.motionX = 0.0;
+                                livingEntity.motionZ = -speed;
+                                break;
+
+                            case 2:
+                                livingEntity.motionX = speed;
+                                livingEntity.motionZ = 0.0;
+                                break;
+
+                            case 3:
+                                livingEntity.motionX = 0.0;
+                                livingEntity.motionZ = -speed;
+                                break;
+
+                            case 4:
+                                livingEntity.motionX = -speed;
+                                livingEntity.motionZ = 0.0;
+                                break;
+                        }
                     }
+                    
 
                     flag++;
                 } else
