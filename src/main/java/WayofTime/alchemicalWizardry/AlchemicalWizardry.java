@@ -58,10 +58,7 @@ import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketAn
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.*;
-import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
-import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
-import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
-import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
+import WayofTime.alchemicalWizardry.common.harvest.*;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
