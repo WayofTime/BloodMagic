@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+		classpath 'org.ajoberstar:gradle-git:0.10.1'
     }
 }
 
@@ -21,6 +22,14 @@ configFile.withReader {
 version = config.mc_version + "-" + config.mod_version + "-" + config.build_number
 group= config.package_group
 archivesBaseName = config.mod_name
+
+import org.ajoberstar.grgit.Grgit
+
+def gitHash = 'unknown'
+if (new File(projectDir, '.git').exists()) {
+    def repo = Grgit.open(project.file('.'))
+    gitHash = repo.log().find().abbreviatedId
+}
 
 repositories {
     maven {
@@ -68,6 +77,13 @@ processResources {
 jar {
     dependsOn "incrementBuildNumber"
 	classifier = ''
+	 manifest.mainAttributes(
+            "Built-By": System.getProperty('user.name'),
+            "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version,
+            "Git-Hash": gitHash
+    )
 }
 
 // add a source jar
