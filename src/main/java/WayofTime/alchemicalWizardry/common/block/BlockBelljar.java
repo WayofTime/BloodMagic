@@ -1,17 +1,27 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBelljar extends BlockContainer
 {
@@ -24,6 +34,44 @@ public class BlockBelljar extends BlockContainer
         this.setBlockName("crystalBelljar");
     }
 
+    
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
+    {
+        if (this.equals(ModBlocks.blockCrystalBelljar))
+        {
+        	par3List.add(new ItemStack(par1, 1, 0));
+        	
+        	for(Reagent reagent : ReagentRegistry.reagentList.values())
+        	{
+	        	ItemStack stack = new ItemStack(par1, 1, 0);
+	            NBTTagCompound tag = new NBTTagCompound();
+	            
+	            ReagentContainer[] tanks = new ReagentContainer[1];
+	            tanks[0] = new ReagentContainer(reagent, 16000, 16000);
+	            
+	            NBTTagList tagList = new NBTTagList();
+       
+	            NBTTagCompound savedTag = new NBTTagCompound();
+	            if (tanks[0] != null)
+	            {
+	                tanks[0].writeToNBT(savedTag);
+	            }
+	            tagList.appendTag(savedTag);
+	            
+	
+	            tag.setTag("reagentTanks", tagList);
+	            
+	            stack.setTagCompound(tag);
+	            
+	            par3List.add(stack);
+        	}
+        } else
+        {
+            super.getSubBlocks(par1, par2CreativeTabs, par3List);
+        }
+    }
+    
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack stack)
     {

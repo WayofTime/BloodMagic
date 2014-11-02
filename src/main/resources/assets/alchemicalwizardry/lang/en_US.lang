@@ -184,6 +184,7 @@ item.itemAttunedCrystal.name=Alchemic Router
 item.itemTankSegmenter.name=Alchemic Segmenter
 item.destinationClearer.name=Alchemic Cleanser
 item.demonPlacer.name=Demon Crystal
+item.creativeDagger.name=Creative Sacrificial Knife
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 
