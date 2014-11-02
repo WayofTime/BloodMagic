@@ -87,6 +87,7 @@ public class ModItems
     public static Item armourInhibitor;
     public static Item creativeFiller;
     public static Item demonPlacer;
+    public static Item creativeDagger;
 
     public static Item baseItems;
     public static Item baseAlchemyItems;
@@ -192,6 +193,7 @@ public class ModItems
         armourInhibitor = new ArmourInhibitor().setUnlocalizedName("armourInhibitor");
         creativeFiller = new CheatyItem().setUnlocalizedName("cheatyItem");
         demonPlacer = new DemonPlacer().setUnlocalizedName("demonPlacer");
+        creativeDagger = new CreativeDagger().setUnlocalizedName("creativeDagger");
         weakFillingAgent = new WeakFillingAgent().setUnlocalizedName("weakFillingAgent");
         standardFillingAgent = new StandardFillingAgent().setUnlocalizedName("standardFillingAgent");
         enhancedFillingAgent = new EnhancedFillingAgent().setUnlocalizedName("enhancedFillingAgent");
@@ -286,6 +288,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.armourInhibitor, "armourInhibitor");
         GameRegistry.registerItem(ModItems.creativeFiller, "creativeFiller");
         GameRegistry.registerItem(ModItems.demonPlacer, "demonPlacer");
+        GameRegistry.registerItem(ModItems.creativeDagger, "creativeDagger");
 
         GameRegistry.registerItem(ModItems.weakFillingAgent, "weakFillingAgent");
         GameRegistry.registerItem(ModItems.standardFillingAgent, "standardFillingAgent");
