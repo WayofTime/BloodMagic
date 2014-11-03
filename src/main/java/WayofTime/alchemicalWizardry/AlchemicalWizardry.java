@@ -218,6 +218,21 @@ public class AlchemicalWizardry
     public static int customPotionSoulHardenID;
     public static int customPotionDeafID;
     public static int customPotionFeatherFallID;
+    
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledLava;
+    public static boolean ritualDisabledGreenGrove;
+    public static boolean ritualDisabledInterdiction;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;
+    public static boolean ritualDisabledWater;public static boolean ritualDisabledWater;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
