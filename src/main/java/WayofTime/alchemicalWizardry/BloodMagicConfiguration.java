@@ -143,5 +143,47 @@ public class BloodMagicConfiguration
         config.save();
     }
 
-
+    public static void blacklistRituals()
+    {
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+        if (AlchemicalWizardry.ritualDisabled)
+        {
+            
+        }
+    }
 }
