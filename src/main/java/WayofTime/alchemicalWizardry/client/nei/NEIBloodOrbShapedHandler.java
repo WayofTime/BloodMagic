@@ -129,10 +129,6 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
         transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "crafting"));
     }
 
-	@Override
-	public String getOverlayIdentifier() {
-		return "crafting";
-	}
 
 	@Override
 	public String getRecipeName() {

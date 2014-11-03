@@ -1,0 +1,2 @@
+-Create effect for the light ritual block.
+-Create effect for the fire ritual block.
