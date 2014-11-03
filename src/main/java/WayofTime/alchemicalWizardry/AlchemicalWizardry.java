@@ -234,6 +234,7 @@ public class AlchemicalWizardry
     public static boolean ritualDisabledSuffering;
     public static boolean ritualDisabledRegen;
     public static boolean ritualDisabledFeatheredKnife;
+    public static boolean ritualDisabledFeatheredEarth;
     public static boolean ritualDisabledGaia;
     public static boolean ritualDisabledCondor;
     public static boolean ritualDisabledFallingTower;
