@@ -131,6 +131,37 @@ public class AlchemicalWizardry
     public static int customPotionDeafID;
     public static int customPotionFeatherFallID;
 
+	public static boolean ritualDisabledWater;
+	public static boolean ritualDisabledLava;
+	public static boolean ritualDisabledGreenGrove;
+	public static boolean ritualDisabledInterdiction;
+	public static boolean ritualDisabledContainment;
+	public static boolean ritualDisabledBinding;
+	public static boolean ritualDisabledUnbinding;
+	public static boolean ritualDisabledHighJump;
+	public static boolean ritualDisabledMagnetism;
+	public static boolean ritualDisabledCrusher;
+	public static boolean ritualDisabledSpeed;
+	public static boolean ritualDisabledAnimalGrowth;
+	public static boolean ritualDisabledSuffering;
+	public static boolean ritualDisabledRegen;
+	public static boolean ritualDisabledFeatheredKnife;
+	public static boolean ritualDisabledFeatheredEarth;
+	public static boolean ritualDisabledGaia;
+	public static boolean ritualDisabledCondor;
+	public static boolean ritualDisabledFallingTower;
+	public static boolean ritualDisabledBalladOfAlchemy;
+	public static boolean ritualDisabledExpulsion;
+	public static boolean ritualDisabledSuppression;
+	public static boolean ritualDisabledZephyr;
+	public static boolean ritualDisabledHarvest;
+	public static boolean ritualDisabledConduit;
+	public static boolean ritualDisabledEllipsoid;
+	public static boolean ritualDisabledEvaporation;
+	public static boolean ritualDisabledSpawnWard;
+	public static boolean ritualDisabledVeilOfEvil;
+	public static boolean ritualDisabledFullStomach;
+
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     public static boolean isBotaniaLoaded;
@@ -872,6 +903,7 @@ public class AlchemicalWizardry
         this.isBotaniaLoaded = Loader.isModLoaded("Botania");
 
         BloodMagicConfiguration.loadBlacklist();
+	    BloodMagicConfiguration.blacklistRituals();
     }
 
     public static void initAlchemyPotionRecipes()

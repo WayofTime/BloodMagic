@@ -29,6 +29,7 @@ public class ConfigGui extends GuiConfig {
 		list.add(new ConfigElement<ConfigCategory>(config.getCategory("potion id".toLowerCase())));
 		list.add(new ConfigElement<ConfigCategory>(config.getCategory("wellofsufferingblacklist".toLowerCase())));
 		list.add(new ConfigElement<ConfigCategory>(config.getCategory("wimpysettings".toLowerCase())));
+		list.add(new ConfigElement<ConfigCategory>(config.getCategory("ritual blacklist".toLowerCase())));
 
 		return list;
 	}
