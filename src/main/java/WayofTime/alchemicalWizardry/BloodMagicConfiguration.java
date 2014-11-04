@@ -3,6 +3,8 @@ package WayofTime.alchemicalWizardry;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.EntityList;
@@ -87,6 +89,37 @@ public class BloodMagicConfiguration
             AlchemicalWizardry.causeHungerWithRegen = config.get("WimpySettings", "causeHungerWithRegen", true).getBoolean();
 //            AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
             AlchemicalWizardry.lockdownAltar = false;
+            
+            AlchemicalWizardry.ritualDisabledWater = config.get("Ritual Blacklist", "Ritual of the Full Spring", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledLava = config.get("Ritual Blacklist", "Serenade of the Nether", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledGreenGrove = config.get("Ritual Blacklist", "Ritual of the Green Grove", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledInterdiction = config.get("Ritual Blacklist", "Interdiction Ritual", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledContainment = config.get("Ritual Blacklist", "Ritual of Containment", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledBinding = config.get("Ritual Blacklist", "Ritual of Binding", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledUnbinding = config.get("Ritual Blacklist", "Ritual of Unbinding", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledHighJump = config.get("Ritual Blacklist", "Ritual of the High Jump", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledMagnetism = config.get("Ritual Blacklist", "Ritual of Magnetism", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledCrusher = config.get("Ritual Blacklist", "Ritual of the Crusher", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledSpeed = config.get("Ritual Blacklist", "Ritual of Speed", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledAnimalGrowth = config.get("Ritual Blacklist", "Ritual of the Shepherd", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledSuffering = config.get("Ritual Blacklist", "Well of Suffering", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledRegen = config.get("Ritual Blacklist", "Ritual of Regeneration", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledFeatheredKnife = config.get("Ritual Blacklist", "Ritual of the Feathered Knife", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledFeatheredEarth = config.get("Ritual Blacklist", "Ritual of the Feathered Earth", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledGaia = config.get("Ritual Blacklist", "Ritual of Gaia's Transformation", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledCondor = config.get("Ritual Blacklist", "Reverence of the Condor", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledFallingTower = config.get("Ritual Blacklist", "Mark of the Falling Tower", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledBalladOfAlchemy = config.get("Ritual Blacklist", "Ballad of Alchemy", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledExpulsion = config.get("Ritual Blacklist", "Aura of Expulsion", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledSuppression = config.get("Ritual Blacklist", "Dome of Supression", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledZephyr = config.get("Ritual Blacklist", "Call of the Zephyr", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledHarvest = config.get("Ritual Blacklist", "Reap of the Harvest Moon", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledConduit = config.get("Ritual Blacklist", "Cry of the Eternal Soul", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledEllipsoid = config.get("Ritual Blacklist", "Focus of the Ellipsoid", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledEvaporation = config.get("Ritual Blacklist", "Song of Evaporation", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledSpawnWard = config.get("Ritual Blacklist", "Ward of Sacrosanctity", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledVeilOfEvil = config.get("Ritual Blacklist", "Veil of Evil", false).getBoolean(false);
+            AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
 
             Side side = FMLCommonHandler.instance().getSide();
             if (side == Side.CLIENT)
@@ -143,5 +176,157 @@ public class BloodMagicConfiguration
         config.save();
     }
 
-
+    public static void blacklistRituals()
+    {
+        if (AlchemicalWizardry.ritualDisabledWater)
+        {
+            Rituals.ritualMap.remove("AW001Water");
+            Rituals.keyList.remove("AW001Water");
+        }
+        if (AlchemicalWizardry.ritualDisabledLava)
+        {
+            Rituals.ritualMap.remove("AW002Lava");
+            Rituals.keyList.remove("AW002Lava");
+        }
+        if (AlchemicalWizardry.ritualDisabledGreenGrove)
+        {
+            Rituals.ritualMap.remove("AW003GreenGrove");
+            Rituals.keyList.remove("AW003GreenGrove");
+        }
+        if (AlchemicalWizardry.ritualDisabledInterdiction)
+        {
+            Rituals.ritualMap.remove("AW004Interdiction");
+            Rituals.keyList.remove("AW004Interdiction");
+        }
+        if (AlchemicalWizardry.ritualDisabledContainment)
+        {
+            Rituals.ritualMap.remove("AW005Containment");
+            Rituals.keyList.remove("AW005Containment");
+        }
+        if (AlchemicalWizardry.ritualDisabledBinding)
+        {
+            Rituals.ritualMap.remove("AW006Binding");
+            Rituals.keyList.remove("AW006Binding");
+        }
+        if (AlchemicalWizardry.ritualDisabledUnbinding)
+        {
+            Rituals.ritualMap.remove("AW007Unbinding");//007 reporting for duty
+            Rituals.keyList.remove("AW007Unbinding");
+        }
+        if (AlchemicalWizardry.ritualDisabledHighJump)
+        {
+            Rituals.ritualMap.remove("AW008HighJump");
+            Rituals.keyList.remove("AW008HighJump");
+        }
+        if (AlchemicalWizardry.ritualDisabledMagnetism)
+        {
+            Rituals.ritualMap.remove("AW009Magnetism");
+            Rituals.keyList.remove("AW009Magnetism");
+        }
+        if (AlchemicalWizardry.ritualDisabledCrusher)
+        {
+            Rituals.ritualMap.remove("AW010Crusher");
+            Rituals.keyList.remove("AW010Crusher");
+        }
+        if (AlchemicalWizardry.ritualDisabledSpeed)
+        {
+            Rituals.ritualMap.remove("AW011Speed");
+            Rituals.keyList.remove("AW011Speed");
+        }
+        if (AlchemicalWizardry.ritualDisabledAnimalGrowth)
+        {
+            Rituals.ritualMap.remove("AW012AnimalGrowth");
+            Rituals.keyList.remove("AW012AnimalGrowth");
+        }
+        if (AlchemicalWizardry.ritualDisabledSuffering)
+        {
+            Rituals.ritualMap.remove("AW013Suffering");
+            Rituals.keyList.remove("AW013Suffering");
+        }
+        if (AlchemicalWizardry.ritualDisabledRegen)
+        {
+            Rituals.ritualMap.remove("AW014Regen");
+            Rituals.keyList.remove("AW014Regen");
+        }
+        if (AlchemicalWizardry.ritualDisabledFeatheredKnife)
+        {
+            Rituals.ritualMap.remove("AW015FeatheredKnife");
+            Rituals.keyList.remove("AW015FeatheredKnife");
+        }
+        if (AlchemicalWizardry.ritualDisabledFeatheredEarth)
+        {
+            Rituals.ritualMap.remove("AW016FeatheredEarth");
+            Rituals.keyList.remove("AW016FeatheredEarth");
+        }
+        if (AlchemicalWizardry.ritualDisabledGaia)
+        {
+            Rituals.ritualMap.remove("AW017Gaia");
+            Rituals.keyList.remove("AW017Gaia");
+        }
+        if (AlchemicalWizardry.ritualDisabledCondor)
+        {
+            Rituals.ritualMap.remove("AW018Condor");
+            Rituals.keyList.remove("AW018Condor");
+        }
+        if (AlchemicalWizardry.ritualDisabledFallingTower)
+        {
+            Rituals.ritualMap.remove("AW019FallingTower");
+            Rituals.keyList.remove("AW019FallingTower");
+        }
+        if (AlchemicalWizardry.ritualDisabledBalladOfAlchemy)
+        {
+            Rituals.ritualMap.remove("AW020BalladOfAlchemy");
+            Rituals.keyList.remove("AW020BalladOfAlchemy");
+        }
+        if (AlchemicalWizardry.ritualDisabledExpulsion)
+        {
+            Rituals.ritualMap.remove("AW021Expulsion");
+            Rituals.keyList.remove("AW021Expulsion");
+        }
+        if (AlchemicalWizardry.ritualDisabledSuppression)
+        {
+            Rituals.ritualMap.remove("AW022Suppression");
+            Rituals.keyList.remove("AW022Suppression");
+        }
+        if (AlchemicalWizardry.ritualDisabledZephyr)
+        {
+            Rituals.ritualMap.remove("AW023Zephyr");
+            Rituals.keyList.remove("AW023Zephyr");
+        }
+        if (AlchemicalWizardry.ritualDisabledHarvest)
+        {
+            Rituals.ritualMap.remove("AW024Harvest");
+            Rituals.keyList.remove("AW024Harvest");
+        }
+        if (AlchemicalWizardry.ritualDisabledConduit)
+        {
+            Rituals.ritualMap.remove("AW025Conduit");
+            Rituals.keyList.remove("AW025Conduit");
+        }
+        if (AlchemicalWizardry.ritualDisabledEllipsoid)
+        {
+            Rituals.ritualMap.remove("AW026Ellipsoid");
+            Rituals.keyList.remove("AW026Ellipsoid");
+        }
+        if (AlchemicalWizardry.ritualDisabledEvaporation)
+        {
+            Rituals.ritualMap.remove("AW027Evaporation");
+            Rituals.keyList.remove("AW027Evaporation");
+        }
+        if (AlchemicalWizardry.ritualDisabledSpawnWard)
+        {
+            Rituals.ritualMap.remove("AW028SpawnWard");
+            Rituals.keyList.remove("AW028SpawnWard");
+        }
+        if (AlchemicalWizardry.ritualDisabledVeilOfEvil)
+        {
+            Rituals.ritualMap.remove("AW029VeilOfEvil");
+            Rituals.keyList.remove("AW029VeilOfEvil");
+        }
+        if (AlchemicalWizardry.ritualDisabledFullStomach)
+        {
+            Rituals.ritualMap.remove("AW030FullStomach");
+            Rituals.keyList.remove("AW030FullStomach");
+        }
+    }
 }
