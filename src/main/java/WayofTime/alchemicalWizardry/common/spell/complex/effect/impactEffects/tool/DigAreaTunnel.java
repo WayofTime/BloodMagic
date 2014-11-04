@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,7 @@ public class DigAreaTunnel extends DigAreaEffect
         ForgeDirection sidehit = ForgeDirection.getOrientation(blockPos.sideHit);
         ForgeDirection opposite = sidehit.getOpposite();
 
-        System.out.println(opposite.toString());
+        AlchemicalWizardry.logger.info(opposite.toString());
 
         double initialLength = this.getRandomVectorLength();
 
@@ -149,7 +150,7 @@ public class DigAreaTunnel extends DigAreaEffect
     public void travelVector(Vec3 vector, World world, double x, double y, double z)
     {
         double vecLength = vector.lengthVector();
-        System.out.println(vecLength);
+        AlchemicalWizardry.logger.info(vecLength);
         Vec3 normVec = Vec3.createVectorHelper(vector.xCoord, vector.yCoord, vector.zCoord);
         normVec = normVec.normalize();
 
@@ -158,7 +159,7 @@ public class DigAreaTunnel extends DigAreaEffect
 
         while (distanceTravelled < vecLength)
         {
-            System.out.println(distanceTravelled);
+            AlchemicalWizardry.logger.info(distanceTravelled);
             double stepLength = this.getRandomStepLength();
 
             prevVec = prevVec.addVector(stepLength * normVec.xCoord, stepLength * normVec.yCoord, normVec.zCoord);

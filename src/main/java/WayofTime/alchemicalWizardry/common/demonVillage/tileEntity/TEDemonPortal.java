@@ -1,19 +1,14 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.demonVillage.*;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonType;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,20 +19,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.Int3;
-import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonBuilding;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonCrosspath;
-import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
-import WayofTime.alchemicalWizardry.common.demonVillage.GridSpace;
-import WayofTime.alchemicalWizardry.common.demonVillage.GridSpaceHolder;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonType;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class TEDemonPortal extends TileEntity
 {
@@ -240,11 +228,11 @@ public class TEDemonPortal extends TileEntity
         this.incrementPoints();
         this.assignPoints();
         
-        System.out.println("Roads: " + roadCooldown + " Buildings: " + houseCooldown);
+        AlchemicalWizardry.logger.info("Roads: " + roadCooldown + " Buildings: " + houseCooldown);
 
         if(buildingStage >= 0 && buildingStage <=2)
         {
-        	System.out.println("BuildingStage = " + buildingStage);
+        	AlchemicalWizardry.logger.info("BuildingStage = " + buildingStage);
         	this.createPortalBuilding(buildingStage, nextDemonPortalName, tier);
         	buildingStage++;
         	return;
@@ -463,7 +451,7 @@ public class TEDemonPortal extends TileEntity
         int z = road.zCoord;
 
         if(printDebug)
-        System.out.println("X: " + x + " Z: " + z + " Direction: " + dir.toString());
+        AlchemicalWizardry.logger.info("X: " + x + " Z: " + z + " Direction: " + dir.toString());
 
         List<ForgeDirection> directions = this.findValidExtentionDirection(x, z);
 
@@ -495,9 +483,9 @@ public class TEDemonPortal extends TileEntity
             return 0;
         }
         if(printDebug)
-        System.out.println("I got here!");
+        AlchemicalWizardry.logger.info("I got here!");
         if(printDebug)
-        System.out.println("Distance: " + distance + " Direction: " + dominantDirection.toString() + " yLevel: " + yLevel);
+        AlchemicalWizardry.logger.info("Distance: " + distance + " Direction: " + dominantDirection.toString() + " yLevel: " + yLevel);
 
         this.createGriddedRoad(x, yLevel, z, dominantDirection, distance + 1, true);
 
@@ -859,7 +847,7 @@ public class TEDemonPortal extends TileEntity
             {
                 initY = next.yCoord;
                 if(printDebug)
-                System.out.println("" + initY);
+                AlchemicalWizardry.logger.info("" + initY);
             }
 
             initGridX += dir.offsetX;
@@ -918,7 +906,7 @@ public class TEDemonPortal extends TileEntity
         GridSpace[][] newGrid = new GridSpace[negXRadius + posXRadius + 1][negZRadius + posZRadius + 2];
 
         if(printDebug)
-        System.out.println("x " + newGrid.length + "z " + newGrid[0].length);
+        AlchemicalWizardry.logger.info("x " + newGrid.length + "z " + newGrid[0].length);
 
         for (int i = 0; i <= negXRadius + posXRadius; i++)
         {
@@ -1033,7 +1021,7 @@ public class TEDemonPortal extends TileEntity
 
     public int createPortalBuilding(int buildingTier) //TODO Telepose block next time, then build the new building.
     {
-    	System.out.println("Hello, I am here!");
+    	AlchemicalWizardry.logger.info("Hello, I am here!");
         int x = 0;
         int z = 0;
 
@@ -1189,7 +1177,7 @@ public class TEDemonPortal extends TileEntity
         int yLevel = space.yCoord;
 
         if(printDebug)
-        System.out.println("Road space - x: " + x + " z: " + z);
+        AlchemicalWizardry.logger.info("Road space - x: " + x + " z: " + z);
 
         GridSpaceHolder grid = this.createGSH();
 
@@ -1240,7 +1228,7 @@ public class TEDemonPortal extends TileEntity
                     }
                 } else
                 {
-                    System.out.println("This ISN'T valid!");
+                    AlchemicalWizardry.logger.info("This ISN'T valid!");
                 }
             }
         }
