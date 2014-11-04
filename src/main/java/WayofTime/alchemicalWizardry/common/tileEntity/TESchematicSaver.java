@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
 import com.google.gson.Gson;
@@ -45,13 +46,13 @@ public class TESchematicSaver extends TileEntity
                 }
             }
 
-            System.out.println("" + i);
+            AlchemicalWizardry.logger.info("" + i);
         }
 
-        System.out.println("I got here!");
+        AlchemicalWizardry.logger.info("I got here!");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(schematic);
-        System.out.println("Here, too!");
+        AlchemicalWizardry.logger.info("Here, too!");
         Writer writer;
         try
         {
