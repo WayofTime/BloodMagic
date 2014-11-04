@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
@@ -63,8 +64,6 @@ public class GridSpaceHolder
     public void expandAreaInNegZ()
     {
         GridSpace[][] newGrid = new GridSpace[negXRadius + posXRadius + 1][negZRadius + posZRadius + 2];
-
-        System.out.println("x " + newGrid.length + "z " + newGrid[0].length);
 
         for (int i = 0; i <= negXRadius + posXRadius; i++)
         {
@@ -147,7 +146,7 @@ public class GridSpaceHolder
     {
         if (master != null)
         {
-            System.out.println("negXRadius: " + negXRadius + " posXRadius: " + posXRadius + " negZRadius: " + negZRadius + " posZRadius: " + posZRadius);
+            AlchemicalWizardry.logger.info("negXRadius: " + negXRadius + " posXRadius: " + posXRadius + " negZRadius: " + negZRadius + " posZRadius: " + posZRadius);
             for (int i = -negXRadius; i <= posXRadius; i++)
             {
                 for (int j = -negZRadius; j <= posZRadius; j++)
@@ -158,7 +157,7 @@ public class GridSpaceHolder
                         continue;
                     }
 
-                    System.out.println("x: " + i + " z: " + j);
+                    AlchemicalWizardry.logger.info("x: " + i + " z: " + j);
 
                     int xOff = 0;
                     int zOff = 0;
@@ -195,7 +194,7 @@ public class GridSpaceHolder
 
     public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master)
     {
-        System.out.println("Grid space selected: (" + xInit + "," + zInit + ")");
+        AlchemicalWizardry.logger.info("Grid space selected: (" + xInit + "," + zInit + ")");
         if (master != null)
         {
             for (int i = -negXRadius; i <= posXRadius; i++)
@@ -231,7 +230,7 @@ public class GridSpaceHolder
                             break;
                     }
 
-                    System.out.println("Grid space (" + (xInit + xOff) + "," + (zInit + zOff) + ")");
+                    AlchemicalWizardry.logger.info("Grid space (" + (xInit + xOff) + "," + (zInit + zOff) + ")");
 
                     master.setGridSpace(xInit + xOff, zInit + zOff, new GridSpace(type, yLevel));
                 }
