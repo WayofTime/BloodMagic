@@ -9,6 +9,10 @@ import net.minecraftforge.common.util.FakePlayer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
 
 public class CreativeDagger extends Item
 {
@@ -19,6 +23,33 @@ public class CreativeDagger extends Item
         setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setFull3D();
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        if (AlchemicalWizardry.wimpySettings)
+        {
+            this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
+        } else
+        {
+            this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SacrificialDagger");
+        }
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+        if (AlchemicalWizardry.wimpySettings)
+        {
+            par3List.add("And you are feeling nothing");
+        } else
+        {
+            par3List.add("You can now harness");
+            par3List.add("the life essence of the ancient archmages...");
+        }
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
