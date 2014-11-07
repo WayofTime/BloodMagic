@@ -140,15 +140,10 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         NBTTagCompound tag = par1ItemStack.stackTagCompound;
         tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
 
-        if (tag.getBoolean("isActive"))
+        if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
-
-            if (!par3EntityPlayer.capabilities.isCreativeMode)
-            {
-                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
-            }
         } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
@@ -175,7 +170,10 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
+                if(!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
+                {
+                	par1ItemStack.stackTagCompound.setBoolean("isActive", false);
+                }
             }
             int range = 5;
             int verticalRange = 2;

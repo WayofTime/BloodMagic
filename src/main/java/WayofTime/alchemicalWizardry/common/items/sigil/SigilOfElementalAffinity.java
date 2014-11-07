@@ -110,18 +110,12 @@ public class SigilOfElementalAffinity extends EnergyItems
         NBTTagCompound tag = par1ItemStack.stackTagCompound;
         tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
 
-        if (tag.getBoolean("isActive"))
+        if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 0, true));
             par3EntityPlayer.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 0, true));
-            if (!par3EntityPlayer.capabilities.isCreativeMode)
-            {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                {
-                }
-            }
         } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
@@ -158,6 +152,7 @@ public class SigilOfElementalAffinity extends EnergyItems
             {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
+                	par1ItemStack.stackTagCompound.setBoolean("isActive", false);
                 }
             }
         }
