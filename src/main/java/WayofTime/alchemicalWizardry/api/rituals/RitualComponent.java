@@ -35,6 +35,16 @@ public class RitualComponent
     {
         return this.z;
     }
+    
+    public int getX(int direction)
+    {
+        return this.x;
+    }
+    
+    public int getZ(int direction)
+    {
+        return this.z;
+    }
 
     public int getStoneType()
     {

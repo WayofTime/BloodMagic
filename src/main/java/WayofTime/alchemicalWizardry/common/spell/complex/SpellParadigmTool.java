@@ -100,8 +100,11 @@ public class SpellParadigmTool extends SpellParadigm
         }
 
         int cost = this.getTotalCost();
-
-        EnergyItems.syphonBatteries(crystal, entityPlayer, cost);
+        
+        if(!EnergyItems.syphonBatteries(crystal, entityPlayer, cost))
+        {
+        	return;
+        }
 
         ItemStack toolStack = this.prepareTool(crystal, world);
 

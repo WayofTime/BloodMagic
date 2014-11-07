@@ -117,15 +117,9 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
                 {
                     FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, false);
 
-                    if (amount != null && amount.amount > 0)
+                    if (amount != null && amount.amount > 0 && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                     {
                         ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, true);
-                        if (!par3EntityPlayer.capabilities.isCreativeMode)
-                        {
-                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                            {
-                            }
-                        }
                     }
 
                     return par1ItemStack;
@@ -138,19 +132,9 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
                         return par1ItemStack;
                     }
 
-                    if (par2World.getBlock(i, j, k).getMaterial() instanceof MaterialLiquid)
+                    if (par2World.getBlock(i, j, k).getMaterial() instanceof MaterialLiquid && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                     {
                         par2World.setBlockToAir(i, j, k);
-
-                        if (!par3EntityPlayer.capabilities.isCreativeMode)
-                        {
-                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                            {
-                            }
-                        } else
-                        {
-                            return par1ItemStack;
-                        }
                     }
                 }
             }

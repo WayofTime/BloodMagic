@@ -50,7 +50,10 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
-        EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
+        if(!EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
+        {
+        	return true;
+        }
 
         if (par3World.isRemote)
         {
@@ -105,7 +108,10 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed() * 5);
+        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed() * 5))
+        {
+        	return par1ItemStack;
+        }
 
         if (!par2World.isRemote)
         {
@@ -113,31 +119,5 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
         }
 
         return par1ItemStack;
-    }
-
-    @Override
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
-    {
-        if (!(par3Entity instanceof EntityPlayer))
-        {
-            return;
-        }
-
-        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
-
-        if (par1ItemStack.stackTagCompound == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
-        {
-            if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
-            {
-                EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed());
-            }
-        }
-
-        return;
     }
 }

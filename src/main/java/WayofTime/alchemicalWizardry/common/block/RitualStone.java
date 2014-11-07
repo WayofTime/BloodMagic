@@ -118,4 +118,10 @@ public class RitualStone extends Block implements IRitualStone
                 return blankIcon;
         }
     }
+
+	@Override
+	public int getRuneType(World world, int x, int y, int z, int meta) 
+	{
+		return meta;
+	}
 }

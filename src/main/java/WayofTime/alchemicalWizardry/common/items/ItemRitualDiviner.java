@@ -135,6 +135,8 @@ public class ItemRitualDiviner extends EnergyItems
     @Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
+    	int direction = 1;
+    	
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
         ItemStack[] playerInventory = par2EntityPlayer.inventory.mainInventory;
         TileEntity tileEntity = par3World.getTileEntity(par4, par5, par6);
@@ -166,7 +168,7 @@ public class ItemRitualDiviner extends EnergyItems
 
             for (RitualComponent rc : ritualList)
             {
-                if (par3World.isAirBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ()))
+                if (par3World.isAirBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction)))
                 {
                     if (playerInvRitualStoneLocation >= 0)
                     {
@@ -181,36 +183,41 @@ public class ItemRitualDiviner extends EnergyItems
                             par2EntityPlayer.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
                         }
 
-                        par3World.setBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ(), ModBlocks.ritualStone, rc.getStoneType(), 3);
-
-                        if (par3World.isRemote)
+                        if(EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
                         {
-                            par3World.playAuxSFX(2005, par4, par5 + 1, par6, 0);
-                            EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
-                            return true;
+                        	par3World.setBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction), ModBlocks.ritualStone, rc.getStoneType(), 3);
+
+                            if (par3World.isRemote)
+                            {
+                                par3World.playAuxSFX(2005, par4, par5 + 1, par6, 0);
+                                
+                                return true;
+                            }
                         }
 
                         return true;
                     }
                 } else
                 {
-                    Block block = par3World.getBlock(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ());
+                    Block block = par3World.getBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction));
 
                     if (block == ModBlocks.ritualStone)
                     {
-                        int metadata = par3World.getBlockMetadata(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ());
+                        int metadata = par3World.getBlockMetadata(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction));
 
                         if (metadata != rc.getStoneType())
                         {
-                            if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(par1ItemStack))
-                            {
-                                par3World.playAuxSFX(200, par4, par5 + 1, par6, 0);
-                                return true;
-                            }
-
-                            par3World.setBlockMetadataWithNotify(par4 + rc.getX(), par5 + rc.getY(), par6 + rc.getZ(), rc.getStoneType(), 3);
-                            EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
-                            return true;
+                        	if(EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
+                        	{
+	                            if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(par1ItemStack))
+	                            {
+	                                par3World.playAuxSFX(200, par4, par5 + 1, par6, 0);
+	                                return true;
+	                            }
+	
+	                            par3World.setBlockMetadataWithNotify(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction), rc.getStoneType(), 3);
+	                            return true;
+                        	}
                         }
                     } else
                     {

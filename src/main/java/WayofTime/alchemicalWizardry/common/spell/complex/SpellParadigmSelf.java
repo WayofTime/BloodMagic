@@ -29,15 +29,18 @@ public class SpellParadigmSelf extends SpellParadigm
     public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)
     {
         this.applyAllSpellEffects();
+        
+        int cost = this.getTotalCost();
+        
+        if(!EnergyItems.syphonBatteries(itemStack, entityPlayer, cost))
+        {
+        	return;
+        }
 
         for (ISelfSpellEffect eff : selfSpellEffectList)
         {
             eff.onSelfUse(world, entityPlayer);
         }
-
-        int cost = this.getTotalCost();
-
-        EnergyItems.syphonBatteries(itemStack, entityPlayer, cost);
     }
 
     public void addSelfSpellEffect(ISelfSpellEffect eff)

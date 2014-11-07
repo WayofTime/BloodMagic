@@ -113,15 +113,9 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
                     FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
                     int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, false);
 
-                    if (amount > 0)
+                    if (amount > 0 && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                     {
                         ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, true);
-                        if (!par3EntityPlayer.capabilities.isCreativeMode)
-                        {
-                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                            {
-                            }
-                        }
                     }
 
                     return par1ItemStack;
@@ -163,17 +157,9 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
                         return par1ItemStack;
                     }
 
-                    if (this.tryPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && !par3EntityPlayer.capabilities.isCreativeMode)
+                    if(this.canPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && !EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                     {
-                        if (!par3EntityPlayer.capabilities.isCreativeMode)
-                        {
-                            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                            {
-                            }
-                        } else
-                        {
-                            return par1ItemStack;
-                        }
+                    	this.tryPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k);
                     }
                 }
             }
@@ -208,6 +194,20 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
                 par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
             }
 
+            return true;
+        }
+    }
+    
+    public boolean canPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9, int par10)
+    {
+        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
+        {
+            return false;
+        } else if ((par1World.getBlock(par8, par9, par10) == Blocks.water || par1World.getBlock(par8, par9, par10) == Blocks.flowing_water) && par1World.getBlockMetadata(par8, par9, par10) == 0)
+        {
+            return false;
+        } else
+        {
             return true;
         }
     }

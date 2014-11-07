@@ -31,6 +31,13 @@ public class SpellParadigmMelee extends SpellParadigm
     @Override
     public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)
     {
+    	int cost = this.getTotalCost();
+        
+        if(!EnergyItems.syphonBatteries(itemStack, entityPlayer, cost))
+        {
+        	return;
+        }
+        
         for (IMeleeSpellEntityEffect effect : entityEffectList)
         {
             effect.onEntityImpact(world, entityPlayer);
@@ -40,10 +47,6 @@ public class SpellParadigmMelee extends SpellParadigm
         {
             effect.onWorldEffect(world, entityPlayer);
         }
-
-        int cost = this.getTotalCost();
-
-        EnergyItems.syphonBatteries(itemStack, entityPlayer, cost);
     }
 
     public void addEntityEffect(IMeleeSpellEntityEffect eff)

@@ -185,17 +185,7 @@ public class EnergyItems extends Item implements IBindable
     //Global static methods
     public static void checkAndSetItemOwner(ItemStack item, EntityPlayer player)
     {
-        if (item.stackTagCompound == null)
-        {
-            item.setTagCompound(new NBTTagCompound());
-        }
-
-        if (item.stackTagCompound.getString("ownerName").equals(""))
-        {
-            item.stackTagCompound.setString("ownerName", SoulNetworkHandler.getUsername(player));
-        }
-
-        initializePlayer(player);
+        SoulNetworkHandler.checkAndSetItemOwner(item, player);
     }
 
     public static void setItemOwner(ItemStack item, String ownerName)
@@ -218,16 +208,6 @@ public class EnergyItems extends Item implements IBindable
         if (item.stackTagCompound.getString("ownerName").equals(""))
         {
             item.stackTagCompound.setString("ownerName", ownerName);
-        }
-    }
-
-    public static void initializePlayer(EntityPlayer player)
-    {
-        NBTTagCompound tag = player.getEntityData();
-
-        if (tag.getInteger("currentEssence") == 0)
-        {
-            tag.setInteger("currentEssence", 0);
         }
     }
 

@@ -90,6 +90,7 @@ public class EnergySword extends ItemSword
 
             if (!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
             {
+            	return false;
             }
         }
 
@@ -142,7 +143,10 @@ public class EnergySword extends ItemSword
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50);
+                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50))
+                {
+                	this.setActivated(par1ItemStack, false);
+                }
             }
         }
 

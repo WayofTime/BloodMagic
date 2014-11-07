@@ -45,12 +45,16 @@ public class SpellParadigmProjectile extends SpellParadigm
     @Override
     public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)
     {
+    	int cost = this.getTotalCost();
+        
+        if(!EnergyItems.syphonBatteries(itemStack, entityPlayer, cost))
+        {
+        	return;
+        }
+        
         EntitySpellProjectile proj = new EntitySpellProjectile(world, entityPlayer);
         this.prepareProjectile(proj);
         world.spawnEntityInWorld(proj);
-        int cost = this.getTotalCost();
-
-        EnergyItems.syphonBatteries(itemStack, entityPlayer, cost);
     }
 
     public static SpellParadigmProjectile getParadigmForEffectArray(List<SpellEffect> effectList)

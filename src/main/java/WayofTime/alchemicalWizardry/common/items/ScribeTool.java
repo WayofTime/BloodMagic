@@ -40,7 +40,6 @@ public class ScribeTool extends EnergyItems
         if (par1ItemStack.getItemDamage() > 0)
         {
             par1ItemStack.setItemDamage(par1ItemStack.getItemDamage() - 1);
-            syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed());
         }
 
         return par1ItemStack;

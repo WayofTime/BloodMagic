@@ -22,8 +22,6 @@ public abstract class HomSpell implements ISimpleSpell
     @Override
     public abstract ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
 
-    ;
-
     @Override
     public abstract ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer);
 

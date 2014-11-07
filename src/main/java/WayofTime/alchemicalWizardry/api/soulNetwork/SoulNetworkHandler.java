@@ -11,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
 import com.mojang.authlib.GameProfile;
@@ -286,7 +287,12 @@ public class SoulNetworkHandler
 
         if (item.stackTagCompound.getString("ownerName").equals(""))
         {
-            item.stackTagCompound.setString("ownerName", SoulNetworkHandler.getUsername(player));
+        	ItemBindEvent event = new ItemBindEvent(player, SoulNetworkHandler.getUsername(player), item);
+        	
+        	if(!MinecraftForge.EVENT_BUS.post(event))
+        	{
+                item.stackTagCompound.setString("ownerName", event.key);
+        	}
         }
     }
 

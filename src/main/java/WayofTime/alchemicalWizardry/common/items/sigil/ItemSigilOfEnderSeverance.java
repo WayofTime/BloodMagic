@@ -120,6 +120,7 @@ public class ItemSigilOfEnderSeverance extends EnergyItems implements IHolding
             {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
+                	tag.setBoolean("isActive", false);
                 }
             }
         } else
@@ -160,7 +161,10 @@ public class ItemSigilOfEnderSeverance extends EnergyItems implements IHolding
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
+                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                {
+                	par1ItemStack.stackTagCompound.setBoolean("isActive", false);
+                }
             }
         }
 

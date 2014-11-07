@@ -16,6 +16,31 @@ public class TEHomHeart extends TileEntity
     {
         return true;
     }
+    
+    public int getCostForSpell()
+    {
+    	HomSpell spell = getSpell();
+
+        if (spell != null)
+        {
+            switch (getModifiedParadigm())
+            {
+                case 0:
+                    return spell.getOffensiveRangedEnergy();
+
+                case 1:
+                    return spell.getOffensiveMeleeEnergy();
+                    
+                case 2:
+                    return spell.getDefensiveEnergy();
+
+                case 3:
+                    return spell.getEnvironmentalEnergy();
+            }
+        }
+
+        return 0;
+    }
 
     public int castSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
@@ -27,19 +52,19 @@ public class TEHomHeart extends TileEntity
             {
                 case 0:
                     spell.onOffensiveRangedRightClick(par1ItemStack, par2World, par3EntityPlayer);
-                    break;
+                    return spell.getOffensiveRangedEnergy();
 
                 case 1:
                     spell.onOffensiveMeleeRightClick(par1ItemStack, par2World, par3EntityPlayer);
-                    break;
-
+                    return spell.getOffensiveMeleeEnergy();
+                    
                 case 2:
                     spell.onDefensiveRightClick(par1ItemStack, par2World, par3EntityPlayer);
-                    break;
+                    return spell.getDefensiveEnergy();
 
                 case 3:
                     spell.onEnvironmentalRightClick(par1ItemStack, par2World, par3EntityPlayer);
-                    break;
+                    return spell.getEnvironmentalEnergy();
             }
         }
 
@@ -122,21 +147,6 @@ public class TEHomHeart extends TileEntity
     public int getModifiedParadigm()
     {
         //TODO change so that it works with a Tile Entity for a custom head or whatnot
-        Block block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-
-        if (block == Blocks.glowstone)
-        {
-            return 0;
-        } else if (block == Blocks.redstone_block)
-        {
-            return 1;
-        } else if (block == Blocks.anvil)
-        {
-            return 2;
-        } else if (block == Blocks.glass)
-        {
-            return 3;
-        }
 
         TileEntity tileEntity = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
 

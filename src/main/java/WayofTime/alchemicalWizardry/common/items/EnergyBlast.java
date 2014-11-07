@@ -85,7 +85,10 @@ public class EnergyBlast extends EnergyItems
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            this.syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed());
+            if(!this.syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed()))
+            {
+            	return par1ItemStack;
+            }
         }
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -123,7 +126,10 @@ public class EnergyBlast extends EnergyItems
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50);
+                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50))
+                {
+                	this.setActivated(par1ItemStack, false);
+                }
             }
         }
 

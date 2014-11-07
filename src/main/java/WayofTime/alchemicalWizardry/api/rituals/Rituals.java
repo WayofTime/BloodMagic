@@ -158,7 +158,7 @@ public class Rituals
                         return false;
                     }
 
-                    if (world.getBlockMetadata(x + rc.getX(), y + rc.getY(), z + rc.getZ()) != rc.getStoneType())
+                    if (((IRitualStone)test).getRuneType(world, x, y, z, world.getBlockMetadata(x + rc.getX(), y + rc.getY(), z + rc.getZ())) != rc.getStoneType())
                     {
                         return false;
                     }
@@ -176,7 +176,7 @@ public class Rituals
                         return false;
                     }
 
-                    if (world.getBlockMetadata(x - rc.getZ(), y + rc.getY(), z + rc.getX()) != rc.getStoneType())
+                    if (((IRitualStone)test).getRuneType(world, x, y, z, world.getBlockMetadata(x - rc.getZ(), y + rc.getY(), z + rc.getX())) != rc.getStoneType())
                     {
                         return false;
                     }
@@ -194,7 +194,7 @@ public class Rituals
                         return false;
                     }
 
-                    if (world.getBlockMetadata(x - rc.getX(), y + rc.getY(), z - rc.getZ()) != rc.getStoneType())
+                    if (((IRitualStone)test).getRuneType(world, x, y, z, world.getBlockMetadata(x - rc.getX(), y + rc.getY(), z - rc.getZ())) != rc.getStoneType())
                     {
                         return false;
                     }
@@ -212,7 +212,7 @@ public class Rituals
                         return false;
                     }
 
-                    if (world.getBlockMetadata(x + rc.getZ(), y + rc.getY(), z - rc.getX()) != rc.getStoneType())
+                    if (((IRitualStone)test).getRuneType(world, x, y, z, world.getBlockMetadata(x + rc.getZ(), y + rc.getY(), z - rc.getX())) != rc.getStoneType())
                     {
                         return false;
                     }

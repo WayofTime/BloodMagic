@@ -74,7 +74,10 @@ public class BlankSpell extends EnergyItems
 
                     if (homHeart.canCastSpell(par1ItemStack, par2World, par3EntityPlayer))
                     {
-                        EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, homHeart.castSpell(par1ItemStack, par2World, par3EntityPlayer));
+                    	if(EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, homHeart.getCostForSpell()))
+                    	{
+                            EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, homHeart.castSpell(par1ItemStack, par2World, par3EntityPlayer));
+                    	}
                     } else
                     {
                         return par1ItemStack;
