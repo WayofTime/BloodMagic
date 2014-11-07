@@ -39,6 +39,8 @@ public class BlockPedestal extends BlockContainer
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("bloodPedestal");
+        float f = 0.3125F;
+        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.6F, 0.5F + f);
     }
 
     @Override
@@ -168,12 +170,5 @@ public class BlockPedestal extends BlockContainer
     {
         return true;
     }
-
-    @Override
-    public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3)
-    {
-        float f = 0.3125F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.6F, 0.5F + f);
-        return super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3);
-    }
+    
 }

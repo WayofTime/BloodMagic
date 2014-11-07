@@ -39,6 +39,8 @@ public class BlockPlinth extends BlockContainer
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("bloodPlinth");
+        float f = 0.0625F;
+        this.setBlockBounds(f, 0.0F, f, 1.0f - f, 0.875f, 1.0f - f);
     }
 
     @Override
@@ -169,11 +171,4 @@ public class BlockPlinth extends BlockContainer
         return true;
     }
 
-    @Override
-    public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3)
-    {
-        float f = 0.0625F;
-        this.setBlockBounds(f, 0.0F, f, 1.0f - f, 0.875f, 1.0f - f);
-        return super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3);
-    }
 }
