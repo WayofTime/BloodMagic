@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
@@ -684,38 +685,18 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                 {
                     return;
                 }
-                World world = MinecraftServer.getServer().worldServers[0];
-                LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
-
-                if (data == null)
-                {
-                    data = new LifeEssenceNetwork(ownerName);
-                    world.setItemData(ownerName, data);
-                }
-
-                int currentEssence = data.currentEssence;
 
                 if (fluid != null && fluid.amount >= 1)
                 {
                     int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                    if (liquidDrained > (item.getMaxEssence() * this.orbCapacityMultiplier - currentEssence))
-                    {
-                        liquidDrained = (int) (item.getMaxEssence() * this.orbCapacityMultiplier - currentEssence);
-                    }
+                    int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
 
-                    if (liquidDrained <= 0)
-                    {
-                        return;
-                    }
-
-                    fluid.amount = fluid.amount - liquidDrained;
-                    data.currentEssence = liquidDrained + data.currentEssence;
-                    data.markDirty();
+                    fluid.amount = fluid.amount - drain;
 
                     if (worldTime % 4 == 0)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
                     }
                 }
             }
