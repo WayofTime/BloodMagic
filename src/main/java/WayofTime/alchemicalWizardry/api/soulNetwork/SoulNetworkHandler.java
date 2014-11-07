@@ -11,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import WayofTime.alchemicalWizardry.api.event.AddToNetworkEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
@@ -207,29 +208,39 @@ public class SoulNetworkHandler
      */
     public static int addCurrentEssenceToMaximum(String ownerName, int addedEssence, int maximum)
     {
+    	AddToNetworkEvent event = new AddToNetworkEvent(ownerName, addedEssence, maximum);
+    	
+    	if(MinecraftForge.EVENT_BUS.post(event))
+    	{
+    		return 0;
+    	}
+    	
         if (MinecraftServer.getServer() == null)
         {
             return 0;
         }
 
         World world = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, event.ownerNetwork);
 
         if (data == null)
         {
-            data = new LifeEssenceNetwork(ownerName);
-            world.setItemData(ownerName, data);
+            data = new LifeEssenceNetwork(event.ownerNetwork);
+            world.setItemData(event.ownerNetwork, data);
         }
 
         int currEss = data.currentEssence;
 
-        if (currEss >= maximum)
+        if (currEss >= event.maximum)
         {
             return 0;
         }
 
-        int newEss = Math.min(maximum, currEss + addedEssence);
-        data.currentEssence = newEss;
+        int newEss = Math.min(event.maximum, currEss + event.addedAmount);
+        if(event.getResult() != Event.Result.DENY)
+        {
+            data.currentEssence = newEss;
+        }
 
         return newEss - currEss;
     }
