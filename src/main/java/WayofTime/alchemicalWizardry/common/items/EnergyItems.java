@@ -66,7 +66,7 @@ public class EnergyItems extends Item implements IBindable
     {
         if (!player.worldObj.isRemote)
         {
-            return syphonAndDamageWhileInContainer(ist, player, damageToBeDone);
+            return SoulNetworkHandler.syphonAndDamageFromNetwork(ist, player, damageToBeDone);
         } else
         {
             World world = player.worldObj;

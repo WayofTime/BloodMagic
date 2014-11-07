@@ -123,6 +123,11 @@ public class BoundAxe extends ItemAxe implements IBindable
         {
             return par1ItemStack;
         }
+        
+        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 10000))
+        {
+        	return par1ItemStack;
+        }
 
         Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
         int posX = (int) (blockVec.xCoord);
@@ -176,7 +181,7 @@ public class BoundAxe extends ItemAxe implements IBindable
             }
         }
 
-        EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 10000);
+        
         return par1ItemStack;
     }
 
@@ -198,7 +203,10 @@ public class BoundAxe extends ItemAxe implements IBindable
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20);
+                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20))
+                {
+                	this.setActivated(par1ItemStack, false);
+                }
             }
         }
 

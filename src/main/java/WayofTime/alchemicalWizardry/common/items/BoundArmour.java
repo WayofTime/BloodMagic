@@ -375,8 +375,8 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
             if (!player.capabilities.isCreativeMode)
             {
-                EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75);
-                itemStack.setItemDamage(0);
+                if( EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
+            	   itemStack.setItemDamage(0);
             }
         }
 

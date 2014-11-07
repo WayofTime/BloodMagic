@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.soulNetwork;
 
-import com.mojang.authlib.GameProfile;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,8 +10,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
-import java.util.UUID;
+import com.mojang.authlib.GameProfile;
+
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class SoulNetworkHandler
 {
@@ -71,18 +76,38 @@ public class SoulNetworkHandler
      * @param ist            Owned itemStack
      * @param player         Player using the item
      * @param damageToBeDone
-     * @return True if server-sided, false if client-sided
+     * @return True if the action should be executed and false if it should not. Always returns false if client-sided.
      */
-    public static boolean syphonAndDamageFromNetwork(ItemStack ist, EntityPlayer player, int damageToBeDone)
+    public static boolean syphonAndDamageFromNetwork(ItemStack ist, EntityPlayer player, int drain)
     {
-        if (player.worldObj.isRemote)
+        if (player.worldObj.isRemote) 
         {
             return false;
         }
+        
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))
+        {
+            String ownerName = ist.getTagCompound().getString("ownerName");
+            
+            ItemDrainNetworkEvent event = new ItemDrainNetworkEvent(player, ownerName, ist, drain);
+            
+            if(MinecraftForge.EVENT_BUS.post(event))
+            {
+            	return false;
+            }
+            
+            int drainAmount = syphonFromNetwork(event.ownerNetwork, event.drainAmount);
+            if(drainAmount == 0 || event.shouldDamage)
+            {
+            	hurtPlayer(player, event.damageAmount);
+            }
+            
+            return (event.getResult() != Event.Result.DENY); //The event has been told to prevent the action but allow all repercussions of using the item.
+        }
 
-        int amount = SoulNetworkHandler.syphonFromNetwork(ist, damageToBeDone);
+        int amount = SoulNetworkHandler.syphonFromNetwork(ist, drain);
 
-        hurtPlayer(player, damageToBeDone - amount);
+        hurtPlayer(player, drain - amount);
 
         return true;
     }
@@ -236,6 +261,19 @@ public class SoulNetworkHandler
                     }
                 }
             }
+        }
+    }
+    
+    public static void hurtPlayer(EntityPlayer user, float damage)
+    {
+        if (!user.capabilities.isCreativeMode)
+        {
+	        user.setHealth((user.getHealth() - damage));
+	
+	        if (user.getHealth() <= 0.0005f)
+	        {
+	            user.onDeath(DamageSource.generic);
+	        }
         }
     }
 

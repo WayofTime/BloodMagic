@@ -109,6 +109,10 @@ public class RitualEffectCrushing extends RitualEffect
                     {
                         Block block = world.getBlock(x + i, y + j, z + k);
                         int meta = world.getBlockMetadata(x + i, y + j, z + k);
+                        if(block.getBlockHardness(world, x + i, y + j, z + k) == -1)
+                        {
+                        	continue;
+                        }
 
                         if (block != null && !world.isAirBlock(x + i, y + j, z + k))
                         {

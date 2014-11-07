@@ -10,6 +10,7 @@ import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.soulNetwork.ComplexNetworkHandler;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.*;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
@@ -67,8 +68,10 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -274,6 +277,8 @@ public class AlchemicalWizardry
 
         TEDemonPortal.loadBuildingList();
 
+        ComplexNetworkHandler.load();
+        
         MinecraftForge.EVENT_BUS.register(new LifeBucketHandler());
         BloodMagicConfiguration.init(new File(event.getModConfigurationDirectory(), "AWWayofTime.cfg"));
 
