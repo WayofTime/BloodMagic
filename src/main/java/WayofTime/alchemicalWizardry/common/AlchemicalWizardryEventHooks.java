@@ -498,7 +498,6 @@ public class AlchemicalWizardryEventHooks
 		if (event.modID.equals("AWWayofTime")) {
 			BloodMagicConfiguration.syncConfig();
 			AlchemicalWizardry.logger.info("Refreshing configuration file.");
-			BloodMagicConfiguration.syncConfig();
 		}
 	}
 
