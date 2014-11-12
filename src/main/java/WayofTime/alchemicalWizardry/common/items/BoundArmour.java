@@ -199,7 +199,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         {
             if (isImmuneToVoid(armor))
             {
-                return new ArmorProperties(-1, damageAmount, maxAbsorption);
+                return new ArmorProperties(-1, damageAmount * 1000 , maxAbsorption);
             } else
             {
                 return new ArmorProperties(-1, 0, 0);

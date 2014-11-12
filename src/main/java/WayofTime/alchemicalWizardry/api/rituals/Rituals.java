@@ -324,16 +324,18 @@ public class Rituals
         return false;
     }
 
-    public static void onRitualBroken(IMasterRitualStone ritualStone, String ritualID)
+    public static void onRitualBroken(IMasterRitualStone ritualStone, String ritualID, RitualBreakMethod method)
     {
         if (ritualMap.containsKey(ritualID))
         {
             Rituals ritual = ritualMap.get(ritualID);
             if (ritual != null && ritual.effect != null)
             {
-                ritual.effect.onRitualBroken(ritualStone);
+                ritual.effect.onRitualBroken(ritualStone, method);
             }
         }
+        
+        System.out.println(method);
     }
 
     public static int getNumberOfRituals()

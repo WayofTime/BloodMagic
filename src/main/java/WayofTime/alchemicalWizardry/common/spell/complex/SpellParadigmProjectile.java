@@ -1,7 +1,8 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
+import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileImpactEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;

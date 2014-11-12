@@ -11,6 +11,7 @@ import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.ComplexNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.SpellEffectRegistry;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.*;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
@@ -31,6 +32,74 @@ import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.potion.*;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
 import WayofTime.alchemicalWizardry.common.rituals.*;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmTool;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeDefensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeOffensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEProjectileDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEProjectileDefensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEProjectileEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEProjectileOffensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSESelfDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSESelfDefensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSESelfEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSESelfOffensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEToolDefaultEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEToolDefensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEToolEnvironmentalEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEToolOffensiveEarth;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEMeleeDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEMeleeDefensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEMeleeEnvironmentalFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEMeleeOffensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEProjectileDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEProjectileDefensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEProjectileEnvironmentalFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEProjectileOffensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSESelfDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSESelfDefensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSESelfEnvironmentalFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSESelfOffensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEToolDefaultFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEToolDefensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEToolEnvironmentalFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.fire.CSEToolOffensiveFire;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEMeleeDefaultIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEMeleeDefensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEMeleeEnvironmentalIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEMeleeOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEProjectileDefaultIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEProjectileDefensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEProjectileEnvironmentalIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEProjectileOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSESelfDefaultIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSESelfDefensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSESelfEnvironmentalIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSESelfOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEToolDefaultIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEToolDefensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEToolEnvironmentalIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.ice.CSEToolOffensiveIce;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEMeleeDefaultWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEMeleeDefensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEMeleeEnvironmentalWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEMeleeOffensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEProjectileDefaultWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEProjectileDefensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEProjectileEnvironmentalWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEProjectileOffensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSESelfDefaultWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSESelfDefensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSESelfEnvironmentalWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSESelfOffensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEToolDefaultWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEToolDefensiveWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEToolEnvironmentalWind;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.wind.CSEToolOffensiveWind;
 import WayofTime.alchemicalWizardry.common.spell.simple.*;
 import WayofTime.alchemicalWizardry.common.summoning.SummoningHelperAW;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
@@ -571,6 +640,7 @@ public class AlchemicalWizardry
         this.initReagentRegistries();
         
         this.initDemonPacketRegistiry();
+        this.initiateRegistry();
 
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
         proxy.InitRendering();
@@ -1053,5 +1123,79 @@ public class AlchemicalWizardry
     public static void initDemonPacketRegistiry()
     {
     	DemonPacketRegistry.registerDemonPacket("angel", new DemonPacketAngel());
+    }
+    
+    public static void initiateRegistry()
+    {
+    	SpellEffectRegistry.initiateRegistry();
+    	
+		
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefaultFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileOffensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileEnvironmentalFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefaultFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfOffensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfEnvironmentalFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefaultFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeOffensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeEnvironmentalFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefaultFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolOffensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefensiveFire());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolEnvironmentalFire());
+		
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefaultIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileOffensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileEnvironmentalIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefaultIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfOffensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfEnvironmentalIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefaultIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeOffensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeEnvironmentalIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefaultIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolOffensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefensiveIce());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolEnvironmentalIce());
+
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefaultWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileOffensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileEnvironmentalWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefaultWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfOffensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfEnvironmentalWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefaultWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeOffensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeEnvironmentalWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefaultWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolOffensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefensiveWind());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolEnvironmentalWind());
+		
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefaultEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileOffensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileDefensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmProjectile.class, new CSEProjectileEnvironmentalEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefaultEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfOffensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfDefensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmSelf.class, new CSESelfEnvironmentalEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefaultEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeOffensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeDefensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmMelee.class, new CSEMeleeEnvironmentalEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefaultEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolOffensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolDefensiveEarth());
+		SpellEffectRegistry.registerSpellEffect(SpellParadigmTool.class, new CSEToolEnvironmentalEarth());
     }
 }

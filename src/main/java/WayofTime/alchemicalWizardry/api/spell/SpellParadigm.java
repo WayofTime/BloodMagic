@@ -1,37 +1,31 @@
-package WayofTime.alchemicalWizardry.common.spell.complex;
-
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+package WayofTime.alchemicalWizardry.api.spell;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
+
 public abstract class SpellParadigm
 {
     protected List<SpellEffect> bufferedEffectList = new LinkedList();
-    public List<String> effectList = new LinkedList();
 
     public void addBufferedEffect(SpellEffect effect)
     {
         if (effect != null)
         {
             this.bufferedEffectList.add(effect);
-
-            effectList.add(effect.getClass().getName());
         }
     }
 
-    public void modifyBufferedEffect(SpellModifier modifier)
+    public void modifyBufferedEffect(ComplexSpellModifier modifier)
     {
         SpellEffect effect = this.getBufferedEffect();
         if (effect != null)
         {
             effect.modifyEffect(modifier);
-
-            effectList.add(modifier.getClass().getName());
         }
     }
 
@@ -50,8 +44,6 @@ public abstract class SpellParadigm
                     effect.enhanceEffect(enh);
                 }
             }
-
-            effectList.add(enh.getClass().getName());
         }
 
     }
@@ -89,31 +81,10 @@ public abstract class SpellParadigm
         int cost = 0;
         if (this.bufferedEffectList != null && !this.bufferedEffectList.isEmpty())
         {
-            if (this instanceof SpellParadigmProjectile)
-            {
-                for (SpellEffect effect : bufferedEffectList)
-                {
-                    cost += effect.getCostForProjectile();
-                }
-            } else if (this instanceof SpellParadigmSelf)
-            {
-                for (SpellEffect effect : bufferedEffectList)
-                {
-                    cost += effect.getCostForSelf();
-                }
-            } else if (this instanceof SpellParadigmMelee)
-            {
-                for (SpellEffect effect : bufferedEffectList)
-                {
-                    cost += effect.getCostForMelee();
-                }
-            } else if (this instanceof SpellParadigmTool)
-            {
-                for (SpellEffect effect : bufferedEffectList)
-                {
-                    cost += effect.getCostForTool();
-                }
-            }
+        	for(SpellEffect effect : bufferedEffectList)
+        	{
+        		cost += effect.getCostOfEffect(this);
+        	}
 
             return (int) (cost * Math.sqrt(this.bufferedEffectList.size()));
         }

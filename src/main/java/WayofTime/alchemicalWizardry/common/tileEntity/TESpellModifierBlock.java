@@ -1,6 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.*;
+import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefault;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefensive;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierEnvironmental;
+import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierOffensive;
 
 public class TESpellModifierBlock extends TESpellBlock
 {
@@ -10,21 +15,21 @@ public class TESpellModifierBlock extends TESpellBlock
         parad.modifyBufferedEffect(this.getSpellModifier());
     }
 
-    public SpellModifier getSpellModifier()
+    public ComplexSpellModifier getSpellModifier()
     {
         int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         switch (meta)
         {
             case 0:
-                return new SpellModifierDefault();
+                return ComplexSpellModifier.DEFAULT;
             case 1:
-                return new SpellModifierOffensive();
+                return ComplexSpellModifier.OFFENSIVE;
             case 2:
-                return new SpellModifierDefensive();
+                return ComplexSpellModifier.DEFENSIVE;
             case 3:
-                return new SpellModifierEnvironmental();
+                return ComplexSpellModifier.ENVIRONMENTAL;
         }
-        return new SpellModifierDefault();
+        return ComplexSpellModifier.DEFAULT;
     }
 
     @Override

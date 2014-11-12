@@ -2,8 +2,10 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -199,16 +201,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
             return;
         }
 
-        World worldSave = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
-
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(owner);
-            worldSave.setItemData(owner, data);
-        }
-
-        int currentEssence = data.currentEssence;
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
 
         if (currentEssence < Rituals.getCostForActivation(testRitual))
         {
@@ -226,18 +219,29 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                 return;
             } else
             {
-                data.currentEssence = currentEssence - Rituals.getCostForActivation(testRitual);
-                data.markDirty();
-
-                player.addChatMessage(new ChatComponentText("A rush of energy flows through the ritual!"));
-
-                for (int i = 0; i < 12; i++)
+                int drain = SoulNetworkHandler.syphonFromNetwork(owner, Rituals.getCostForActivation(testRitual));
+                
+                if(drain > 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                	player.addChatMessage(new ChatComponentText("A rush of energy flows through the ritual!"));
+
+                    for (int i = 0; i < 12; i++)
+                    {
+                        SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    }
+                }else
+                {
+                	player.addChatMessage(new ChatComponentText("Something stopped you in your tracks..."));
+                	
+                	return;
                 }
             }
         }
 
+        if(!this.currentRitualString.equals(""))
+        {
+            Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.ACTIVATE);
+        }
         cooldown = Rituals.getInitialCooldown(testRitual);
         var1 = 0;
         currentRitualString = testRitual;
@@ -254,7 +258,12 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
     public void useOnRitualBroken()
     {
-        Rituals.onRitualBroken(this, this.currentRitualString);
+        Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.BREAK_MRS);
+    }
+    
+    public void useOnRitualBrokenExplosion()
+    {
+        Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.EXPLOSION);
     }
 
     @Override
@@ -287,7 +296,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
             if (!testRunes)
             {
-                Rituals.onRitualBroken(this, currentRitualString);
+                Rituals.onRitualBroken(this, currentRitualString, RitualBreakMethod.BREAK_STONE);
                 isActive = false;
                 currentRitualString = "";
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -299,9 +308,11 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         {
             if (isRunning)
             {
+            	Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.REDSTONE);
                 isRunning = false;
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
+            
             return;
         } else
         {
@@ -347,6 +358,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
     public void setActive(boolean active)
     {
+    	Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.DEACTIVATE);
         this.isActive = active;
         this.isRunning = active;
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);

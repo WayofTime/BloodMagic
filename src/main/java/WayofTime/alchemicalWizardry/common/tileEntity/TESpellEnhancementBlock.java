@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementCost;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementPotency;

@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileImpactEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IProjectileUpdateEffect;
 import cpw.mods.fml.relauncher.Side;

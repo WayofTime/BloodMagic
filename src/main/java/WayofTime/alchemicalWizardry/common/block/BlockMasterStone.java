@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class BlockMasterStone extends BlockContainer
@@ -42,6 +43,17 @@ public class BlockMasterStone extends BlockContainer
         }
 
         super.onBlockHarvested(world, x, y, z, meta, player);
+    }
+    
+    @Override
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
+    {
+    	super.onBlockDestroyedByExplosion(world, x, y, z, explosion);
+    	TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof TEMasterStone)
+        {
+            ((TEMasterStone) tile).useOnRitualBrokenExplosion();
+        }
     }
 
     @Override

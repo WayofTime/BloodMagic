@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 

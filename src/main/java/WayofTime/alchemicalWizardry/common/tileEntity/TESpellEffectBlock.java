@@ -1,6 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigm;
+import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
+import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.*;
 
 public class TESpellEffectBlock extends TESpellBlock
@@ -17,15 +19,15 @@ public class TESpellEffectBlock extends TESpellBlock
         switch (meta)
         {
             case 0:
-                return new SpellEffectFire();
+                return new SpellEffect(ComplexSpellType.FIRE);
             case 1:
-                return new SpellEffectIce();
+                return new SpellEffect(ComplexSpellType.ICE);
             case 2:
-                return new SpellEffectWind();
+                return new SpellEffect(ComplexSpellType.WIND);
             case 3:
-                return new SpellEffectEarth();
+                return new SpellEffect(ComplexSpellType.EARTH);
         }
-        return new SpellEffectFire();
+        return new SpellEffect(ComplexSpellType.FIRE);
     }
 
     @Override

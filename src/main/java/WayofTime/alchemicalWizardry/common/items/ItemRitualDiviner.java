@@ -56,63 +56,74 @@ public class ItemRitualDiviner extends EnergyItems
         {
             par3List.add("Can not place Dusk runes");
         }
+        
+        par3List.add("Ritual tuned to face: " + this.getNameForDirection(this.getDirection(par1ItemStack)));
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        boolean sneaking = true;
+        
+        if(sneaking)
         {
-            String ritualID = this.getCurrentRitual(par1ItemStack);
-            //TODO
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
-            par3List.add("RitualID: " + ritualID);
-            List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
-            if (ritualList == null)
+        	if (!(par1ItemStack.stackTagCompound == null))
             {
-                return;
-            }
-
-            int blankStones = 0;
-            int airStones = 0;
-            int waterStones = 0;
-            int fireStones = 0;
-            int earthStones = 0;
-            int duskStones = 0;
-
-            for (RitualComponent rc : ritualList)
-            {
-                switch (rc.getStoneType())
+                String ritualID = this.getCurrentRitual(par1ItemStack);
+                //TODO
+                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("RitualID: " + ritualID);
+                List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
+                if (ritualList == null)
                 {
-                    case RitualComponent.BLANK:
-                        blankStones++;
-                        break;
-
-                    case RitualComponent.AIR:
-                        airStones++;
-                        break;
-
-                    case RitualComponent.WATER:
-                        waterStones++;
-                        break;
-
-                    case RitualComponent.FIRE:
-                        fireStones++;
-                        break;
-
-                    case RitualComponent.EARTH:
-                        earthStones++;
-                        break;
-
-                    case RitualComponent.DUSK:
-                        duskStones++;
-                        break;
+                    return;
                 }
-            }
 
-            par3List.add("Blank stones: " + blankStones);
-            par3List.add(EnumChatFormatting.AQUA + "Air stones: " + airStones);
-            par3List.add(EnumChatFormatting.BLUE + "Water stones: " + waterStones);
-            par3List.add(EnumChatFormatting.RED + "Fire stones: " + fireStones);
-            par3List.add(EnumChatFormatting.DARK_GREEN + "Earth stones: " + earthStones);
-            par3List.add(EnumChatFormatting.BOLD + "Dusk stones: " + duskStones);
+                int blankStones = 0;
+                int airStones = 0;
+                int waterStones = 0;
+                int fireStones = 0;
+                int earthStones = 0;
+                int duskStones = 0;
+
+                for (RitualComponent rc : ritualList)
+                {
+                    switch (rc.getStoneType())
+                    {
+                        case RitualComponent.BLANK:
+                            blankStones++;
+                            break;
+
+                        case RitualComponent.AIR:
+                            airStones++;
+                            break;
+
+                        case RitualComponent.WATER:
+                            waterStones++;
+                            break;
+
+                        case RitualComponent.FIRE:
+                            fireStones++;
+                            break;
+
+                        case RitualComponent.EARTH:
+                            earthStones++;
+                            break;
+
+                        case RitualComponent.DUSK:
+                            duskStones++;
+                            break;
+                    }
+                }
+
+                par3List.add("Blank stones: " + blankStones);
+                par3List.add(EnumChatFormatting.AQUA + "Air stones: " + airStones);
+                par3List.add(EnumChatFormatting.BLUE + "Water stones: " + waterStones);
+                par3List.add(EnumChatFormatting.RED + "Fire stones: " + fireStones);
+                par3List.add(EnumChatFormatting.DARK_GREEN + "Earth stones: " + earthStones);
+                par3List.add(EnumChatFormatting.BOLD + "Dusk stones: " + duskStones);
+            }
+        }else
+        {
+        	par3List.add(EnumChatFormatting.AQUA + "-Press shift for extended information-");
         }
+        
     }
 
     @Override
@@ -135,7 +146,7 @@ public class ItemRitualDiviner extends EnergyItems
     @Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
-    	int direction = 1;
+    	int direction = this.getDirection(par1ItemStack);
     	
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
         ItemStack[] playerInventory = par2EntityPlayer.inventory.mainInventory;
@@ -248,6 +259,9 @@ public class ItemRitualDiviner extends EnergyItems
                 IChatComponent chatmessagecomponent = new ChatComponentText("Current Ritual: " + Rituals.getNameOfRitual(this.getCurrentRitual(par1ItemStack)));
                 par3EntityPlayer.addChatComponentMessage(chatmessagecomponent);
             }
+        }else if(!par3EntityPlayer.isSwingInProgress)
+        {
+        	this.cycleDirection(par1ItemStack);
         }
 
         return par1ItemStack;
@@ -326,5 +340,62 @@ public class ItemRitualDiviner extends EnergyItems
         ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
         ((ItemRitualDiviner) duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
         list.add(duskRitualDivinerStack);
+    }
+    
+    public int getDirection(ItemStack itemStack)
+    {
+    	if(itemStack.stackTagCompound == null)
+    	{
+    		itemStack.setTagCompound(new NBTTagCompound());
+    	}
+    	
+    	return itemStack.stackTagCompound.getInteger("direction");
+    }
+    
+    public void setDirection(ItemStack itemStack, int direction)
+    {
+    	if(itemStack.stackTagCompound == null)
+    	{
+    		itemStack.setTagCompound(new NBTTagCompound());
+    	}
+    	
+    	itemStack.stackTagCompound.setInteger("direction", direction);
+    }
+    
+    public void cycleDirection(ItemStack itemStack)
+    {
+    	int direction = this.getDirection(itemStack);
+    	
+    	if(direction < 4)
+    	{
+    		direction = Math.max(1, direction + 1);
+    	}else
+    	{
+    		direction = 1;
+    	}
+    	
+    	this.setDirection(itemStack, direction);
+    }
+    
+    public String getNameForDirection(int direction)
+    {
+    	String dir = "";
+    	switch(direction)
+    	{
+    	case 0:
+    	case 1:
+    		dir = "NORTH";
+    		break;
+    	case 2:
+    		dir = "EAST";
+    		break;
+    	case 3:
+    		dir = "SOUTH";
+    		break;
+    	case 4:
+    		dir = "WEST";
+    	}
+    	
+    	return dir;
     }
 }

@@ -1,9 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.*;
 import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;

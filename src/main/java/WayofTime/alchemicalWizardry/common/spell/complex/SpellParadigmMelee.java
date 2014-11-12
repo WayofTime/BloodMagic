@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex;
 
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IMeleeSpellEntityEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.IMeleeSpellWorldEffect;
@@ -37,7 +38,7 @@ public class SpellParadigmMelee extends SpellParadigm
         {
         	return;
         }
-        
+                
         for (IMeleeSpellEntityEffect effect : entityEffectList)
         {
             effect.onEntityImpact(world, entityPlayer);

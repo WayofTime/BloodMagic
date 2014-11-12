@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 
 public abstract class RitualEffect
 {
@@ -16,7 +16,7 @@ public abstract class RitualEffect
         return true;
     }
 
-    public void onRitualBroken(IMasterRitualStone ritualStone)
+    public void onRitualBroken(IMasterRitualStone ritualStone, RitualBreakMethod method)
     {
 
     }

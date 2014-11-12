@@ -38,12 +38,30 @@ public class RitualComponent
     
     public int getX(int direction)
     {
-        return this.x;
+    	switch(direction)
+    	{
+    	case 2:
+    		return -this.getZ();
+    	case 3:
+    		return -this.getX();
+    	case 4:
+    		return this.getZ();
+    	default: return this.getX();
+    	}
     }
     
     public int getZ(int direction)
     {
-        return this.z;
+        switch(direction)
+        {
+        case 2:
+        	return this.getX();
+        case 3:
+        	return -this.getZ();
+        case 4:
+        	return -this.getX();
+        default: return this.getZ();
+        }
     }
 
     public int getStoneType()
