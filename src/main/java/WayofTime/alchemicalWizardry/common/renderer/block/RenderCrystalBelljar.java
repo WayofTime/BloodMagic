@@ -28,7 +28,6 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
         if (tileEntity instanceof TEBellJar)
         {
             TEBellJar tileAltar = (TEBellJar) tileEntity;
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
@@ -38,8 +37,6 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
             this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
-            GL11.glEnable(GL11.GL_LIGHTING);
-
 
             ReagentContainerInfo[] info = tileAltar.getContainerInfo(ForgeDirection.UNKNOWN);
             if (info.length >= 1 && info[0] != null)
@@ -52,8 +49,6 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
                     this.renderTankContents(d0, d1, d2, reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 200 * reagentStack.amount / capacity);
                 }
             }
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
         }
     }
 

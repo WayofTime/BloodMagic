@@ -39,7 +39,6 @@ public class RenderPedestal extends TileEntitySpecialRenderer
         if (tileEntity instanceof TEPedestal)
         {
             TEPedestal tileAltar = (TEPedestal) tileEntity;
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/Pedestal.png");
@@ -73,24 +72,16 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             }
 
             GL11.glPopMatrix();
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
 
 
             GL11.glPushMatrix();
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
 
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
             GL11.glPopMatrix();
-
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
-
-
         }
     }
 

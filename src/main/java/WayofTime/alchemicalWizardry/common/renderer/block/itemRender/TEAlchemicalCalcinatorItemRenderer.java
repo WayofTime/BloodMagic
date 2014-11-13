@@ -1,16 +1,15 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
-import cpw.mods.fml.client.FMLClientHandler;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer
 {
@@ -18,11 +17,6 @@ public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer
 
     private void renderConduitItem(RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ)
     {
-        Tessellator tessellator = Tessellator.instance;
-        Block block = ModBlocks.blockAlchemicCalcinator;
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glPushMatrix();
         GL11.glTranslatef((float) translateX + 0.5F, (float) translateY + 1.5F, (float) translateZ + 0.5F);
         ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/AlchemicalCalcinator.png");
@@ -32,9 +26,6 @@ public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer
         this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
-
-        GL11.glDisable(GL11.GL_CULL_FACE);
-        GL11.glDisable(GL11.GL_BLEND);
     }
 
 
