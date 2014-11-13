@@ -1,9 +1,11 @@
 package WayofTime.alchemicalWizardry.common.renderer;
 
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 public class AlchemyCircleRenderer extends MRSRenderer

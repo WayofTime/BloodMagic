@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.renderer;
+package WayofTime.alchemicalWizardry.api.renderer;
 
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.client.renderer.texture.TextureManager;

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.renderer.MRSRenderer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

@@ -346,9 +346,9 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         performRitual(worldObj, xCoord, yCoord, zCoord, currentRitualString);
     }
 
-    public void performRitual(World world, int x, int y, int z, String currentRitualString2)
+    public void performRitual(World world, int x, int y, int z, String currentRitualString)
     {
-        Rituals.performEffect(this, currentRitualString2);
+        Rituals.performEffect(this, currentRitualString);
     }
 
     public String getOwner()

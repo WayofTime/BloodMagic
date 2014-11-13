@@ -1,14 +1,18 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import WayofTime.alchemicalWizardry.common.renderer.MRSRenderer;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
+import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class Rituals
 {
@@ -300,9 +304,18 @@ public class Rituals
 
     public static void performEffect(IMasterRitualStone ritualStone, String ritualID)
     {
-        if (ritualMap.containsKey(ritualID))
+    	String ownerName = ritualStone.getOwner();
+    	
+    	RitualRunEvent event = new RitualRunEvent(ritualStone, ownerName, ritualID);
+    	
+    	if(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+    	{
+    		return;
+    	}
+    	
+        if (ritualMap.containsKey(event.ritualKey))
         {
-            Rituals ritual = ritualMap.get(ritualID);
+            Rituals ritual = ritualMap.get(event.ritualKey);
             if (ritual != null && ritual.effect != null)
             {
                 ritual.effect.performEffect(ritualStone);
@@ -326,6 +339,10 @@ public class Rituals
 
     public static void onRitualBroken(IMasterRitualStone ritualStone, String ritualID, RitualBreakMethod method)
     {
+    	String ownerName = ritualStone.getOwner();
+    	RitualStopEvent event = new RitualStopEvent(ritualStone, ownerName, ritualID, method);
+    	MinecraftForge.EVENT_BUS.post(event);
+    	
         if (ritualMap.containsKey(ritualID))
         {
             Rituals ritual = ritualMap.get(ritualID);
