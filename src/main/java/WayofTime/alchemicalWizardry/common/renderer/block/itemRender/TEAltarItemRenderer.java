@@ -55,8 +55,6 @@ public class TEAltarItemRenderer implements IItemRenderer
 
     private void renderBloodAltar(RenderBlocks render, ItemStack item, float x, float y, float z, float scale)
     {
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glPushMatrix();
         GL11.glTranslatef(x, y, z);
         GL11.glScalef(scale, scale, scale);
@@ -65,8 +63,5 @@ public class TEAltarItemRenderer implements IItemRenderer
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
         modelBloodAltar.renderBloodAltar();
         GL11.glPopMatrix();
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glEnable(GL11.GL_LIGHTING);
-
     }
 }

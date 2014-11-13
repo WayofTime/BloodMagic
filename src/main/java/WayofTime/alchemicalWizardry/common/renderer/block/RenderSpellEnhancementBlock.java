@@ -19,7 +19,6 @@ public class RenderSpellEnhancementBlock extends TileEntitySpecialRenderer
         if (tileEntity instanceof TESpellEnhancementBlock)
         {
             TESpellEnhancementBlock tileSpellBlock = (TESpellEnhancementBlock) tileEntity;
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/BlockSpellEnhancementPower1.png");
@@ -33,8 +32,6 @@ public class RenderSpellEnhancementBlock extends TileEntitySpecialRenderer
             this.modelSpellEnhancementBlock.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileSpellBlock.getInputDirection(), tileSpellBlock.getOutputDirection());
             GL11.glPopMatrix();
             GL11.glPopMatrix();
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
         }
     }
 }

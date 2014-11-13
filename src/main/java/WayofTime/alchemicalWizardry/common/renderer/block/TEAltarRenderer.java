@@ -39,7 +39,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
         if (tileEntity instanceof TEAltar)
         {
             TEAltar tileAltar = (TEAltar) tileEntity;
-            GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPushMatrix();
 
             if (tileAltar.getStackInSlot(0) != null)
@@ -64,8 +63,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
             }
 
             GL11.glPopMatrix();
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
         }
     }
 

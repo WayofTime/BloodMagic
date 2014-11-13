@@ -53,7 +53,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
             for (int i = 1; i <= 6; i++)
             {
                 GL11.glPushMatrix();
-
+                GL11.glEnable(GL11.GL_LIGHTING);
                 if (tileAltar.getStackInSlot(i) != null)
                 {
                     float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(i));
@@ -79,9 +79,6 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
 
                 GL11.glPopMatrix();
             }
-
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
         }
     }
 
