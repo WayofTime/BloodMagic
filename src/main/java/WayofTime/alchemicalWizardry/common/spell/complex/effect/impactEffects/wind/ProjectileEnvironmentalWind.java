@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ProjectileUpdateEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

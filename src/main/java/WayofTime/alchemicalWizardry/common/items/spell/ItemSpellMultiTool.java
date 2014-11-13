@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items.spell;
 
 import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

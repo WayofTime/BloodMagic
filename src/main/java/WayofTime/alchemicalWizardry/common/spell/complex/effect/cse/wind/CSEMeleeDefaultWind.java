@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.api.spell.ComplexSpellEffect;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmMelee;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.MeleeDefaultWind;
 
 public class CSEMeleeDefaultWind extends ComplexSpellEffect

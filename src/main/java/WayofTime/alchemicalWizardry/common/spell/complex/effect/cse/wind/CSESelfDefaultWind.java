@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.api.spell.ComplexSpellEffect;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmSelf;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind.SelfDefaultWind;
 
 public class CSESelfDefaultWind extends ComplexSpellEffect

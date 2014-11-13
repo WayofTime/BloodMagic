@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

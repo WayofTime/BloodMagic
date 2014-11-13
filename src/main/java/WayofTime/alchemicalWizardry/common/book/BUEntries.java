@@ -4,17 +4,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
-import bloodutils.api.compact.Category;
-import bloodutils.api.compact.Entry;
-import bloodutils.api.entries.EntryAltarRecipe;
-import bloodutils.api.entries.EntryCraftingRecipe;
-import bloodutils.api.entries.EntryImage;
-import bloodutils.api.entries.EntryItemText;
-import bloodutils.api.entries.EntryRitualInfo;
-import bloodutils.api.entries.EntryText;
-import bloodutils.api.entries.IEntry;
-import bloodutils.api.enums.EnumType;
-import bloodutils.api.registries.EntryRegistry;
+import WayofTime.alchemicalWizardry.book.compact.Category;
+import WayofTime.alchemicalWizardry.book.compact.Entry;
+import WayofTime.alchemicalWizardry.book.entries.EntryAltarRecipe;
+import WayofTime.alchemicalWizardry.book.entries.EntryCraftingRecipe;
+import WayofTime.alchemicalWizardry.book.entries.EntryImage;
+import WayofTime.alchemicalWizardry.book.entries.EntryItemText;
+import WayofTime.alchemicalWizardry.book.entries.EntryRitualInfo;
+import WayofTime.alchemicalWizardry.book.entries.EntryText;
+import WayofTime.alchemicalWizardry.book.entries.IEntry;
+import WayofTime.alchemicalWizardry.book.enums.EnumType;
+import WayofTime.alchemicalWizardry.book.registries.EntryRegistry;
 
 public class BUEntries
 {

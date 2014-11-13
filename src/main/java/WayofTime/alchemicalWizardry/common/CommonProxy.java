@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.*;
-import WayofTime.alchemicalWizardry.common.spell.complex.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.common.registry.EntityRegistry;

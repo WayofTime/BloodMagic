@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import WayofTime.alchemicalWizardry.api.spell.SpellEnhancement;
+import WayofTime.alchemicalWizardry.api.spell.SpellEnhancementCost;
+import WayofTime.alchemicalWizardry.api.spell.SpellEnhancementPotency;
+import WayofTime.alchemicalWizardry.api.spell.SpellEnhancementPower;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancement;
-import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementCost;
-import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementPotency;
-import WayofTime.alchemicalWizardry.common.spell.complex.enhancement.SpellEnhancementPower;
 
 public class TESpellEnhancementBlock extends TESpellBlock
 {

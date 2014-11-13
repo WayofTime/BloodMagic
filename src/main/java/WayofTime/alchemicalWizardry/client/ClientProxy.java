@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.client;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.*;
@@ -15,7 +16,6 @@ import WayofTime.alchemicalWizardry.common.renderer.model.*;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBazookaMainProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
-import WayofTime.alchemicalWizardry.common.spell.complex.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.tileEntity.*;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;

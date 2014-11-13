@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ProjectileUpdateEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;
 

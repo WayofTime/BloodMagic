@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.api.spell.ComplexSpellEffect;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellParadigmProjectile;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth.ProjectileDefensiveEarth;
 
 public class CSEProjectileDefensiveEarth extends ComplexSpellEffect

@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ExtrapolatedMeleeEntityEffect;
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 
 public class MeleeOffensiveFire extends ExtrapolatedMeleeEntityEffect
 {

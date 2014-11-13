@@ -4,15 +4,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.book.classes.guide.GuiCategories;
+import WayofTime.alchemicalWizardry.book.classes.guide.GuiEntry;
+import WayofTime.alchemicalWizardry.book.classes.guide.GuiIndex;
+import WayofTime.alchemicalWizardry.book.compact.Category;
+import WayofTime.alchemicalWizardry.book.registries.EntryRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
-import bloodutils.api.classes.guide.GuiCategories;
-import bloodutils.api.classes.guide.GuiEntry;
-import bloodutils.api.classes.guide.GuiIndex;
-import bloodutils.api.compact.Category;
-import bloodutils.api.registries.EntryRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler

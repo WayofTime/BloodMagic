@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.SelfSpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
