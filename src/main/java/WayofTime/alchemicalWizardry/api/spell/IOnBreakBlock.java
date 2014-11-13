@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
+package WayofTime.alchemicalWizardry.api.spell;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

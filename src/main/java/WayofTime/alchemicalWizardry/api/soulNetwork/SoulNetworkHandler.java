@@ -121,6 +121,16 @@ public class SoulNetworkHandler
             return false;
         }
 
+        World world = player.worldObj;
+        if (world != null)
+        {
+            double posX = player.posX;
+            double posY = player.posY;
+            double posZ = player.posZ;
+
+            world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        }
+        
         int amount = SoulNetworkHandler.syphonFromNetwork(ownerName, damageToBeDone);
 
         hurtPlayer(player, damageToBeDone - amount);
@@ -354,5 +364,15 @@ public class SoulNetworkHandler
         }
 
         entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+    }
+    
+    public static String getOwnerName(ItemStack item)
+    {
+        if (item.stackTagCompound == null)
+        {
+            item.setTagCompound(new NBTTagCompound());
+        }
+
+        return item.stackTagCompound.getString("ownerName");
     }
 }

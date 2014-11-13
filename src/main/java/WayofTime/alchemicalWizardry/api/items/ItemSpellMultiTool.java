@@ -1,9 +1,11 @@
-package WayofTime.alchemicalWizardry.common.items.spell;
+package WayofTime.alchemicalWizardry.api.items;
 
-import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
-import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -21,8 +23,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.*;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 
 public class ItemSpellMultiTool extends Item
 {
@@ -107,7 +111,7 @@ public class ItemSpellMultiTool extends Item
         int hlvl = -1;
         float blockHardness = block.getBlockHardness(world, x, y, z);
 
-        MovingObjectPosition mop = SpellHelper.raytraceFromEntity(world, player, true, 5.0D);
+        MovingObjectPosition mop = APISpellHelper.raytraceFromEntity(world, player, true, 5.0D);
 
         Block localBlock = world.getBlock(x, y, z);
         int localMeta = world.getBlockMetadata(x, y, z);
@@ -153,14 +157,14 @@ public class ItemSpellMultiTool extends Item
                             if (blockHardness > 0f)
                                 onBlockDestroyed(stack, world, localBlock, x, y, z, player);
 
-                            List<ItemStack> items = SpellHelper.getItemsFromBlock(world, localBlock, x, y, z, localMeta, this.getSilkTouch(stack), this.getFortuneLevel(stack));
+                            List<ItemStack> items = APISpellHelper.getItemsFromBlock(world, localBlock, x, y, z, localMeta, this.getSilkTouch(stack), this.getFortuneLevel(stack));
 
                             SpellParadigmTool parad = this.loadParadigmFromStack(stack);
                             List<ItemStack> newItems = parad.handleItemList(stack, items);
 
                             if (!world.isRemote)
                             {
-                                SpellHelper.spawnItemListInWorld(newItems, world, x + 0.5f, y + 0.5f, z + 0.5f);
+                                APISpellHelper.spawnItemListInWorld(newItems, world, x + 0.5f, y + 0.5f, z + 0.5f);
                             }
 
                             world.func_147479_m(x, y, z);
@@ -173,7 +177,7 @@ public class ItemSpellMultiTool extends Item
 
                             if (cost > 0)
                             {
-                                EnergyItems.syphonAndDamageWhileInContainer(stack, player, cost);
+                            	SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, cost);
                             }
                         } else
                         {
@@ -340,14 +344,14 @@ public class ItemSpellMultiTool extends Item
         int cost = parad.onUpdate(toolStack, world, par3Entity, par4, par5);
 
         if (par3Entity instanceof EntityPlayer && cost > 0)
-            EnergyItems.syphonAndDamageWhileInContainer(toolStack, (EntityPlayer) par3Entity, cost);
+            SoulNetworkHandler.syphonAndDamageFromNetwork(toolStack, (EntityPlayer) par3Entity, cost);
 
         int duration = Math.max(this.getDuration(toolStack, world), 0);
 
         if (duration <= 0 && par3Entity instanceof EntityPlayer)
         {
             int banishCost = parad.onBanishTool(toolStack, world, par3Entity, par4, par5);
-            EnergyItems.syphonAndDamageWhileInContainer(toolStack, (EntityPlayer) par3Entity, banishCost);
+            SoulNetworkHandler.syphonAndDamageFromNetwork(toolStack, (EntityPlayer) par3Entity, banishCost);
             ((EntityPlayer) par3Entity).inventory.mainInventory[par4] = this.getContainedCrystal(toolStack);
         }
     }
@@ -377,7 +381,7 @@ public class ItemSpellMultiTool extends Item
 
         if (cost > 0)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, cost);
+        	SoulNetworkHandler.syphonAndDamageFromNetwork(par1ItemStack, par3EntityPlayer, cost);
         }
 
         return par1ItemStack;

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;

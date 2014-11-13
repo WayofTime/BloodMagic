@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.api.spell.IRightClickEffect;
+
 public abstract class RightClickEffect implements IRightClickEffect
 {
     protected int powerUpgrades;

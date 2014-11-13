@@ -4,6 +4,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.spell.IItemManipulator;
+
 public abstract class ItemManipulator implements IItemManipulator
 {
     protected int powerUpgrades;

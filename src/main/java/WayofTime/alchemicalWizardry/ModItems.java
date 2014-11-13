@@ -3,6 +3,8 @@ package WayofTime.alchemicalWizardry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.book.ItemBMBook;
 import WayofTime.alchemicalWizardry.common.items.AWBaseItems;
 import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
@@ -77,7 +79,6 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
 import WayofTime.alchemicalWizardry.common.items.sigil.VoidSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.WaterSigil;
-import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -282,6 +283,9 @@ public class ModItems
         itemFluidSigil = new ItemFluidSigil().setUnlocalizedName("itemFluidSigil");
         itemSeerSigil = new ItemSeerSigil().setUnlocalizedName("itemSeerSigil");
         customTool = new ItemSpellMultiTool().setUnlocalizedName("multiTool");
+        
+        SpellParadigmTool.customTool = customTool;
+        
         itemCombinationalCatalyst = new CombinationalCatalyst().setUnlocalizedName("itemCombinationalCatalyst");
         itemAttunedCrystal = new ItemAttunedCrystal().setUnlocalizedName("itemAttunedCrystal");
         itemTankSegmenter = new ItemTankSegmenter().setUnlocalizedName("itemTankSegmenter");

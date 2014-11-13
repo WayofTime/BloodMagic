@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.api.spell.IOnBreakBlock;
+
 public abstract class OnBreakBlockEffect implements IOnBreakBlock
 {
     protected int powerUpgrades;

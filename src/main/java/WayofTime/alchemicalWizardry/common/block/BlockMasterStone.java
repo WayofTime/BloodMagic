@@ -81,8 +81,8 @@ public class BlockMasterStone extends BlockContainer
         }
 
         ActivationCrystal acItem = (ActivationCrystal) item;
-        tileEntity.setOwner(acItem.getOwnerName(playerItem));
-        tileEntity.activateRitual(world, acItem.getCrystalLevel(playerItem), player);
+//        tileEntity.setOwner(acItem.getOwnerName(playerItem));
+        tileEntity.activateRitual(world, acItem.getCrystalLevel(playerItem), playerItem, player, acItem.getOwnerName(playerItem));
         world.markBlockForUpdate(x, y, z);
         return true;
     }

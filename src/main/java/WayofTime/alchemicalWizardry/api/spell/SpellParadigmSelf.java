@@ -1,12 +1,12 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class SpellParadigmSelf extends SpellParadigm
 {
@@ -30,7 +30,7 @@ public class SpellParadigmSelf extends SpellParadigm
         
         int cost = this.getTotalCost();
         
-        if(!EnergyItems.syphonBatteries(itemStack, entityPlayer, cost))
+        if(!SoulNetworkHandler.syphonAndDamageFromNetwork(itemStack, entityPlayer, cost))
         {
         	return;
         }

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
+import WayofTime.alchemicalWizardry.api.spell.ILeftClickEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 

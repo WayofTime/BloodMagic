@@ -1,24 +1,22 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.*;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class SpellParadigmTool extends SpellParadigm
 {
@@ -45,6 +43,8 @@ public class SpellParadigmTool extends SpellParadigm
     private boolean silkTouch;
 
     private int duration;
+    
+    public static Item customTool;
 
     public SpellParadigmTool()
     {
@@ -99,7 +99,7 @@ public class SpellParadigmTool extends SpellParadigm
 
         int cost = this.getTotalCost();
         
-        if(!EnergyItems.syphonBatteries(crystal, entityPlayer, cost))
+        if(!SoulNetworkHandler.syphonAndDamageFromNetwork(crystal, entityPlayer, cost))
         {
         	return;
         }
@@ -117,9 +117,9 @@ public class SpellParadigmTool extends SpellParadigm
      */
     public ItemStack prepareTool(ItemStack crystalStack, World world)
     {
-        ItemStack toolStack = new ItemStack(ModItems.customTool, 1);
+        ItemStack toolStack = new ItemStack(customTool, 1);
 
-        ItemSpellMultiTool itemTool = (ItemSpellMultiTool) ModItems.customTool;
+        ItemSpellMultiTool itemTool = (ItemSpellMultiTool) customTool;
 
         itemTool.setItemAttack(toolStack, this.composeMaxDamageFromHash());
 
@@ -148,12 +148,12 @@ public class SpellParadigmTool extends SpellParadigm
 
         if (this.getSilkTouch())
         {
-            this.addToolString("SilkTouch", "Silk Touch" + " " + SpellHelper.getNumeralForInt(1));
+            this.addToolString("SilkTouch", "Silk Touch" + " " + APISpellHelper.getNumeralForInt(1));
         }
 
         if (this.getFortuneLevel() > 0)
         {
-            this.addToolString("Fortune", "Fortune" + " " + SpellHelper.getNumeralForInt(this.getFortuneLevel()));
+            this.addToolString("Fortune", "Fortune" + " " + APISpellHelper.getNumeralForInt(this.getFortuneLevel()));
         }
 
         itemTool.setCritChance(toolStack, this.getCritChance() / 100f);
@@ -175,7 +175,7 @@ public class SpellParadigmTool extends SpellParadigm
         itemTool.setDuration(toolStack, world, this.duration);
         itemTool.loadParadigmIntoStack(toolStack, this.bufferedEffectList);
 
-        EnergyItems.checkAndSetItemOwner(toolStack, EnergyItems.getOwnerName(crystalStack));
+        SoulNetworkHandler.checkAndSetItemOwner(toolStack, SoulNetworkHandler.getOwnerName(crystalStack));
 
         itemTool.setContainedCrystal(toolStack, crystalStack);
 

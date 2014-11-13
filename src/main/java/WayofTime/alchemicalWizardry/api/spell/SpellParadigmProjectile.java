@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -43,7 +44,7 @@ public class SpellParadigmProjectile extends SpellParadigm
     {
     	int cost = this.getTotalCost();
         
-        if(!EnergyItems.syphonBatteries(itemStack, entityPlayer, cost))
+        if(!SoulNetworkHandler.syphonAndDamageFromNetwork(itemStack, entityPlayer, cost))
         {
         	return;
         }

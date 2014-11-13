@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.common.items.spell.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.DigAreaEffect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

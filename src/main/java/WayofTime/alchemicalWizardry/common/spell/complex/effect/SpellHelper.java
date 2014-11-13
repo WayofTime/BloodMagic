@@ -4,6 +4,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.block.Block;
@@ -364,56 +365,17 @@ public class SpellHelper
 
     public static List<ItemStack> getItemsFromBlock(World world, Block block, int x, int y, int z, int meta, boolean silkTouch, int fortune)
     {
-        boolean canSilk = block.canSilkHarvest(world, null, x, y, z, meta);
-
-        if (canSilk && silkTouch)
-        {
-            ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-            ItemStack item = new ItemStack(block, 1, meta);
-
-            items.add(item);
-
-            return items;
-        } else
-        {
-            return block.getDrops(world, x, y, z, meta, fortune);
-        }
+        return APISpellHelper.getItemsFromBlock(world, block, x, y, z, meta, silkTouch, fortune);
     }
 
     public static void spawnItemListInWorld(List<ItemStack> items, World world, float x, float y, float z)
     {
-        for (ItemStack stack : items)
-        {
-            EntityItem itemEntity = new EntityItem(world, x, y, z, stack);
-            itemEntity.delayBeforeCanPickup = 10;
-            world.spawnEntityInWorld(itemEntity);
-        }
+        APISpellHelper.spawnItemListInWorld(items, world, x, y, z);
     }
 
     public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
     {
-        float f = 1.0F;
-        float f1 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f;
-        float f2 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f;
-        if (!world.isRemote && player instanceof EntityPlayer)
-            d1 += 1.62D;
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
-        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
-        float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
-        float f4 = MathHelper.sin(-f2 * 0.017453292F - (float) Math.PI);
-        float f5 = -MathHelper.cos(-f1 * 0.017453292F);
-        float f6 = MathHelper.sin(-f1 * 0.017453292F);
-        float f7 = f4 * f5;
-        float f8 = f3 * f5;
-        double d3 = range;
-        if (player instanceof EntityPlayerMP)
-        {
-            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
-        }
-        Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
-        return world.func_147447_a(vec3, vec31, par3, !par3, par3);
+        return APISpellHelper.raytraceFromEntity(world, player, par3, range);
     }
 
     public static String getNumeralForInt(int num)

@@ -1,29 +1,35 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.event.RitualActivatedEvent;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TEMasterStone extends TileEntity implements IMasterRitualStone
 {
@@ -177,7 +183,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         tag.setTag("customRitualTag", customRitualTag);
     }
 
-    public void activateRitual(World world, int crystalLevel, EntityPlayer player)
+    public void activateRitual(World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player, String crystalOwner)
     {
         if (world.isRemote)
         {
@@ -192,7 +198,20 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
             return;
         }
 
-        boolean testLevel = Rituals.canCrystalActivate(testRitual, crystalLevel);
+        //TODO
+        RitualActivatedEvent event = new RitualActivatedEvent(this, crystalOwner, testRitual, player, activationCrystal, crystalLevel);
+        if(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+        {
+        	player.addChatMessage(new ChatComponentText("Something stopped you in your tracks..."));
+
+        	return;
+        }
+        
+        int eventCrystalTier = event.crystalTier;
+        String eventRitualKey = event.ritualKey;
+        String eventOwnerKey = event.ownerKey;
+        
+        boolean testLevel = Rituals.canCrystalActivate(eventRitualKey, eventCrystalTier);
 
         if (!testLevel)
         {
@@ -201,7 +220,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
             return;
         }
 
-        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(eventOwnerKey);
 
         if (currentEssence < Rituals.getCostForActivation(testRitual))
         {
@@ -219,7 +238,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                 return;
             } else
             {
-                int drain = SoulNetworkHandler.syphonFromNetwork(owner, Rituals.getCostForActivation(testRitual));
+                int drain = SoulNetworkHandler.syphonFromNetwork(eventOwnerKey, Rituals.getCostForActivation(testRitual));
                 
                 if(drain > 0)
                 {
@@ -242,6 +261,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         {
             Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.ACTIVATE);
         }
+        this.setOwner(eventOwnerKey);
         cooldown = Rituals.getInitialCooldown(testRitual);
         var1 = 0;
         currentRitualString = testRitual;

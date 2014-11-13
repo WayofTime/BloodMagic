@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
+package WayofTime.alchemicalWizardry.api.spell;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
