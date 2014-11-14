@@ -13,6 +13,11 @@ public class AltarRecipeRegistry
     {
         altarRecipes.add(new AltarRecipe(result, requiredItem, minTier, liquidRequired, consumptionRate, drainRate, canBeFilled));
     }
+    
+    public static void registerNBTAltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate, int drainRate, boolean canBeFilled)
+    {
+    	altarRecipes.add(new AltarRecipe(result, requiredItem, minTier, liquidRequired, consumptionRate, drainRate, canBeFilled, true));
+    }
 
     public static void registerAltarOrbRecipe(ItemStack orbStack, int minTier, int consumptionRate)
     {

@@ -5,6 +5,7 @@ import java.util.Set;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class AltarRecipe
 {
@@ -66,22 +67,42 @@ public class AltarRecipe
         	
         	NBTTagCompound comparedTag = comparedStack.getTagCompound();
         	
-        	Set set = tag.func_150296_c();
-        	
-        	for(Object obj : set)
-        	{
-        		if(obj instanceof String)
-        		{
-        			String str = (String)obj;
-        			
-        			NBTBase baseTag = comparedTag.getTag(str);
-        			
-        			if(baseTag != null && !baseTag.equals(comparedTag.getTag(str)))
+        	return this.areTagsEqual(tag, comparedTag);
+    	}
+    	
+    	return true;
+    }
+    
+    protected boolean areTagsEqual(NBTTagCompound tag, NBTTagCompound comparedTag)
+    {
+    	Set set = tag.func_150296_c();
+    	
+    	for(Object obj : set)
+    	{
+    		if(obj instanceof String)
+    		{
+    			String str = (String)obj;
+    			
+    			NBTBase baseTag = comparedTag.getTag(str);
+    			
+    			if(baseTag instanceof NBTTagCompound)
+    			{
+    				NBTBase comparedBaseTag = comparedTag.getTag(str);
+    				if(comparedBaseTag instanceof NBTTagCompound)
+    				{
+    					if(!this.areTagsEqual((NBTTagCompound) tag, comparedTag))
+    					{
+    						return false;
+    					}
+    				}
+    			}else
+    			{
+    				if(baseTag != null && !baseTag.equals(comparedTag.getTag(str)))
         			{
         				return false;
         			}
-        		}
-        	}
+    			}	
+    		}
     	}
     	
     	return true;
