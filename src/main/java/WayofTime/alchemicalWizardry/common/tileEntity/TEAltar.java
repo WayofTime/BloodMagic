@@ -84,6 +84,18 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         progress = 0;
         this.lockdownDuration = 0;
     }
+    
+    /**
+     * 
+     * @return	Amount filled
+     */
+    public int fillMainTank(int amount) //TODO
+    {
+        int filledAmount = Math.min(capacity - fluid.amount, amount);
+        fluid.amount += filledAmount;
+
+    	return filledAmount;
+    }
 
     public int getRSPowerOutput()
     {

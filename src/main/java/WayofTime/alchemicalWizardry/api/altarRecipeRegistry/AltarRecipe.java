@@ -1,6 +1,10 @@
 package WayofTime.alchemicalWizardry.api.altarRecipeRegistry;
 
+import java.util.Set;
+
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class AltarRecipe
 {
@@ -11,16 +15,23 @@ public class AltarRecipe
     public int drainRate;
     public ItemStack requiredItem;
     public ItemStack result;
+    public boolean useTag;
 
     public AltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate, int drainRate, boolean canBeFilled)
     {
-        this.result = result;
+        this(result, requiredItem, minTier, liquidRequired, consumptionRate, drainRate, canBeFilled, false);
+    }
+    
+    public AltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate, int drainRate, boolean canBeFilled, boolean useTag)
+    {
+    	this.result = result;
         this.requiredItem = requiredItem;
         this.minTier = minTier;
         this.liquidRequired = liquidRequired;
         this.consumptionRate = consumptionRate;
         this.drainRate = drainRate;
         this.canBeFilled = canBeFilled;
+        this.useTag = useTag;
     }
 
     public ItemStack getResult()
@@ -40,7 +51,40 @@ public class AltarRecipe
             return false;
         }
 
-        return tierCheck >= minTier && this.requiredItem.isItemEqual(comparedStack);
+        return tierCheck >= minTier && this.requiredItem.isItemEqual(comparedStack) && this.useTag ? this.areRequiredTagsEqual(comparedStack) : true;
+    }
+    
+    public boolean areRequiredTagsEqual(ItemStack comparedStack)
+    {
+    	if(requiredItem.hasTagCompound())
+    	{
+        	NBTTagCompound tag = requiredItem.getTagCompound();
+        	if(!comparedStack.hasTagCompound())
+        	{
+        		return false;
+        	}
+        	
+        	NBTTagCompound comparedTag = comparedStack.getTagCompound();
+        	
+        	Set set = tag.func_150296_c();
+        	
+        	for(Object obj : set)
+        	{
+        		if(obj instanceof String)
+        		{
+        			String str = (String)obj;
+        			
+        			NBTBase baseTag = comparedTag.getTag(str);
+        			
+        			if(baseTag != null && !baseTag.equals(comparedTag.getTag(str)))
+        			{
+        				return false;
+        			}
+        		}
+        	}
+    	}
+    	
+    	return true;
     }
 
     public int getMinTier()

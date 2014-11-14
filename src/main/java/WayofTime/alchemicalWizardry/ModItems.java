@@ -79,6 +79,7 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
 import WayofTime.alchemicalWizardry.common.items.sigil.VoidSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.WaterSigil;
+import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemBloodLetterPack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -194,6 +195,8 @@ public class ModItems
     public static Item itemBloodMagicBook;
 
     public static Item bucketLife;
+    
+    public static Item itemBloodPack;
 
     public static void init()
     {
@@ -291,6 +294,8 @@ public class ModItems
         itemTankSegmenter = new ItemTankSegmenter().setUnlocalizedName("itemTankSegmenter");
         itemDestinationClearer = new ItemDestinationClearer().setUnlocalizedName("destinationClearer");
         itemBloodMagicBook = new ItemBMBook().setUnlocalizedName("bmBook");
+        
+        itemBloodPack = new ItemBloodLetterPack().setUnlocalizedName("itemBloodPack");
     }
 
     public static void registerItems()
@@ -393,6 +398,8 @@ public class ModItems
         
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
         GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");
+        
+        GameRegistry.registerItem(ModItems.itemBloodPack, "itemBloodPack");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }
