@@ -185,6 +185,7 @@ item.itemTankSegmenter.name=Alchemic Segmenter
 item.destinationClearer.name=Alchemic Cleanser
 item.demonPlacer.name=Demon Crystal
 item.creativeDagger.name=Creative Sacrificial Knife
+item.itemBloodPack.name=Blood Letter's Pack
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 

@@ -155,7 +155,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.0b (Beta1)", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.2.1", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
@@ -557,6 +557,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.energyBazooka), "Ocd", "cb ", "d w", 'O', archmageBloodOrbStack, 'c', crepitousStack, 'b', new ItemStack(ModItems.energyBlaster), 'd', diamondStack, 'w', new ItemStack(ModItems.weakBloodShard)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemBloodLightSigil), "btb", "sss", "bob", 'o', magicianBloodOrbStack, 'b', glowstoneBlockStack, 't', new ItemStack(Blocks.torch), 's', imbuedSlateStack));
         GameRegistry.addRecipe(new ItemStack(ModItems.itemKeyOfDiablo), " gw", "gdg", "wg ", 'w', weakBloodShardStack, 'g', goldIngotStack, 'd', diamondStack);
+        GameRegistry.addRecipe(new ItemStack(ModItems.itemBloodPack), "gbg","flf","gsg",'s', blankSlateStack,'g', glassStack,'f',new ItemStack(Items.flint,1,craftingConstant),'b', emptyBucketStack, 'l', new ItemStack(Items.leather_chestplate));
         customPotionDrowning = (new PotionDrowning(customPotionDrowningID, true, 0)).setIconIndex(0, 0).setPotionName("Drowning");
         customPotionBoost = (new PotionBoost(customPotionBoostID, false, 0)).setIconIndex(0, 0).setPotionName("Boost");
         customPotionProjProt = (new PotionProjectileProtect(customPotionProjProtID, false, 0)).setIconIndex(0, 0).setPotionName("Whirlwind");

@@ -13,21 +13,21 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade
+public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAltarManipulator
 {
-    private static IIcon helmetIcon;
     private static IIcon plateIcon;
-    private static IIcon leggingsIcon;
-    private static IIcon bootsIcon;
     
     public static int conversionRate = 100; //LP / half heart
     public static float activationPoint = 0.5f;
     public static int tickRate = 20;
+    public static int maxStored = 10000;
 
     public ItemBloodLetterPack()
     {
@@ -39,17 +39,13 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-        this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:SanguineHelmet");
         this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundPlate");
-        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundLeggings");
-        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundBoots");
     }
 
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Crystal of unimaginable power");
+        par3List.add("This pack really chaffes...");
 
         if (!(par1ItemStack.stackTagCompound == null))
         {
@@ -62,7 +58,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1)
     {
-        return this.itemIcon;
+        return this.plateIcon;
     }
 
     @Override
@@ -109,6 +105,8 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade
                 		int filledAmount = altar.fillMainTank(amount);
                 		amount -= filledAmount;
                 		this.setStoredLP(itemStack, amount);
+                		
+                		world.markBlockForUpdate(x, y, z);
                 	}
                 }
             }
@@ -140,11 +138,31 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade
     	
     	return tag.getInteger("storedLP");
     }
+    
+    @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
+    {
+    	//This is where I need to do the updating
+    	if(world.isRemote)
+    	{
+    		return;
+    	}
+    	
+    	if(world.getWorldTime() % tickRate == 0)
+    	{
+    		boolean shouldExecute = player.getHealth() / player.getMaxHealth() > activationPoint && this.getStoredLP(itemStack) < maxStored;
+    		
+    		if(shouldExecute)
+    		{
+    			SoulNetworkHandler.hurtPlayer(player, 1.0f);
+    			this.setStoredLP(itemStack, Math.min(this.getStoredLP(itemStack) + conversionRate, maxStored));
+    		}
+    	}
+    }
 
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-    	//This is where I need to do the updating
         return;
     }
 

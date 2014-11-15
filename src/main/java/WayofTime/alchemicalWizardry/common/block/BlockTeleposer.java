@@ -1,10 +1,8 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
+
+import codechicken.multipart.TileMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
@@ -19,8 +17,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import java.util.Random;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTeleposer extends BlockContainer
 {
@@ -77,6 +79,8 @@ public class BlockTeleposer extends BlockContainer
         {
             if (playerItem.getItem() instanceof TelepositionFocus)
             {
+            	SoulNetworkHandler.checkAndSetItemOwner(playerItem, player);
+            	
                 if (playerItem.stackTagCompound == null)
                 {
                     playerItem.setTagCompound(new NBTTagCompound());
@@ -172,6 +176,11 @@ public class BlockTeleposer extends BlockContainer
         if (blockI.equals(Blocks.air) && blockF.equals(Blocks.air))
         {
             return false;
+        }
+        
+        if(tileEntityF instanceof TileMultipart)
+        {
+        	((TileMultipart)tileEntityF).createAndLoadEntity(nbttag1);
         }
 
         if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner)

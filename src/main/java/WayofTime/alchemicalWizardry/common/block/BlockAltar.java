@@ -1,12 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -19,8 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import java.util.Random;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAltar extends BlockContainer
 {
@@ -131,7 +132,11 @@ public class BlockAltar extends BlockContainer
                 }
 
                 return true;
-            } else if (playerItem.getItem().equals(ModItems.sigilOfHolding))
+            }else if(playerItem.getItem() instanceof IAltarManipulator)
+            {
+            	return false;
+            }
+            else if (playerItem.getItem().equals(ModItems.sigilOfHolding))
             {
                 ItemStack item = ((SigilOfHolding) playerItem.getItem()).getCurrentItem(playerItem);
 

@@ -52,7 +52,7 @@ public class AltarRecipe
             return false;
         }
 
-        return tierCheck >= minTier && this.requiredItem.isItemEqual(comparedStack) && this.useTag ? this.areRequiredTagsEqual(comparedStack) : true;
+        return tierCheck >= minTier && this.requiredItem.isItemEqual(comparedStack) && (this.useTag ? this.areRequiredTagsEqual(comparedStack) : true);
     }
     
     public boolean areRequiredTagsEqual(ItemStack comparedStack)
