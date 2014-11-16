@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tweaker;
 
-import stanhebben.zenscript.annotations.ZenClass;
 import minetweaker.MineTweakerAPI;
 
 /**

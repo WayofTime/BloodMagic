@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import WayofTime.alchemicalWizardry.book.compact.Category;
 import WayofTime.alchemicalWizardry.book.compact.Entry;
-import WayofTime.alchemicalWizardry.book.entries.IEntry;
 
 public class EntryRegistry {
 	public static void registerCategories(Category category){

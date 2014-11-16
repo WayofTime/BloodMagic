@@ -1,12 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
@@ -28,7 +26,6 @@ import net.minecraft.network.play.server.S1FPacketSetExperience;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -36,11 +33,13 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 public class SpellHelper
 {

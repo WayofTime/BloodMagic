@@ -5,7 +5,6 @@ import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice.ProjectileOffensiveIce;
 
 public class CSEProjectileOffensiveIce extends ComplexSpellEffect

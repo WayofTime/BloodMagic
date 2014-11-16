@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class SpellParadigmProjectile extends SpellParadigm
 {

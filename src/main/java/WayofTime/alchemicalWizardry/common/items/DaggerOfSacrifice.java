@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import com.google.common.collect.Multimap;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,8 +21,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
-import java.util.List;
+import com.google.common.collect.Multimap;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class DaggerOfSacrifice extends EnergyItems
 {

@@ -8,10 +8,17 @@
 /out/
 /asm/
 /bin/
+/build/
+/config/
+crash-reports/
 /.idea/
 /.metadata/
 /.settings/
 /libs/
+/saves/
+/resourcepacks/
+/logs/
+/mods/
 
 # File Extensions
 *.psd
@@ -23,4 +30,6 @@
 
 # Specific files
 Thumbs.db
+usernamechase.json
+options.txt
 

@@ -1,16 +1,7 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
-import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
-import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -21,15 +12,28 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.*;
-
-import java.util.List;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.IFluidTank;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeComponent;
+import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar
 {

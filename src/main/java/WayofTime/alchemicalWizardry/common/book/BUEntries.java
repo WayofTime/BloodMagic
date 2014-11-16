@@ -6,8 +6,6 @@ import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.book.compact.Category;
 import WayofTime.alchemicalWizardry.book.compact.Entry;
-import WayofTime.alchemicalWizardry.book.entries.EntryAltarRecipe;
-import WayofTime.alchemicalWizardry.book.entries.EntryCraftingRecipe;
 import WayofTime.alchemicalWizardry.book.entries.EntryImage;
 import WayofTime.alchemicalWizardry.book.entries.EntryItemText;
 import WayofTime.alchemicalWizardry.book.entries.EntryRitualInfo;

@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.api.spell;
 
-import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class ComplexSpellEffect
 {

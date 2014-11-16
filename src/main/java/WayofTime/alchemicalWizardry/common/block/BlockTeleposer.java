@@ -2,7 +2,6 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import java.util.Random;
 
-import codechicken.multipart.TileMultipart;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
@@ -21,6 +20,8 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+import codechicken.multipart.MultipartHelper;
+import codechicken.multipart.TileMultipart;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -178,10 +179,10 @@ public class BlockTeleposer extends BlockContainer
             return false;
         }
         
-        if(tileEntityF instanceof TileMultipart)
-        {
-        	((TileMultipart)tileEntityF).createAndLoadEntity(nbttag1);
-        }
+//        if(tileEntityF instanceof TileMultipart)
+//        {
+//        	((TileMultipart)tileEntityF).createAndLoadEntity(nbttag1);
+//        }
 
         if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner)
         {
@@ -192,6 +193,9 @@ public class BlockTeleposer extends BlockContainer
         int metaF = worldF.getBlockMetadata(xf, yf, zf);
         worldI.playSoundEffect(xi, yi, zi, "mob.endermen.portal", 1.0F, 1.0F);
         worldF.playSoundEffect(xf, yf, zf, "mob.endermen.portal", 1.0F, 1.0F);
+        
+        
+        
         //CLEAR TILES
         Block finalBlock = blockF;
 
@@ -217,21 +221,58 @@ public class BlockTeleposer extends BlockContainer
         if (tileEntityI != null)
         {
             TileEntity newTileEntityI = TileEntity.createAndLoadEntity(nbttag1);
+            
+            if(tileEntityI instanceof TileMultipart)
+        	{
+        		newTileEntityI = MultipartHelper.createTileFromNBT(worldF, nbttag1);
+        	}
+            
             worldF.setTileEntity(xf, yf, zf, newTileEntityI);
+            
             newTileEntityI.xCoord = xf;
             newTileEntityI.yCoord = yf;
             newTileEntityI.zCoord = zf;
+            
+            if(tileEntityI instanceof TileMultipart)
+        	{
+        		MultipartHelper.sendDescPacket(worldF, (TileMultipart)newTileEntityI);
+        	}
+            
+            //worldF.markBlockForUpdate(xf, yf, zf);
+//            if(newTileEntityI instanceof TileMultipart)
+//            {
+//            	MultipartHelper.createTileFromNBT(worldF, nbttag1);
+//            }  
         }
 
         worldI.setBlock(xi, yi, zi, finalBlock, metaF, 3);
 
         if (tileEntityF != null)
-        {
+        {        	
             TileEntity newTileEntityF = TileEntity.createAndLoadEntity(nbttag2);
+            if(tileEntityF instanceof TileMultipart)
+        	{
+        		newTileEntityF = MultipartHelper.createTileFromNBT(worldI, nbttag2);
+        	}
+            
             worldI.setTileEntity(xi, yi, zi, newTileEntityF);
+            
             newTileEntityF.xCoord = xi;
             newTileEntityF.yCoord = yi;
             newTileEntityF.zCoord = zi;
+            
+            if(tileEntityF instanceof TileMultipart)
+        	{
+        		MultipartHelper.sendDescPacket(worldI, (TileMultipart)newTileEntityF);
+        	}
+            
+            //worldI.markBlockForUpdate(xi, yi, zi);
+//            if(newTileEntityF instanceof TileMultipart)
+//            {
+//            	System.out.println("I am a multipart!");
+//
+//            	MultipartHelper.createTileFromNBT(worldI, nbttag2);
+//            }  
         }
 
         return true;

@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellType;
 import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.*;
 
 public class TESpellEffectBlock extends TESpellBlock
 {

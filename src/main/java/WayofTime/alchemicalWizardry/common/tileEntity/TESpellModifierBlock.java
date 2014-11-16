@@ -2,10 +2,6 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import WayofTime.alchemicalWizardry.api.spell.ComplexSpellModifier;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefault;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierDefensive;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierEnvironmental;
-import WayofTime.alchemicalWizardry.common.spell.complex.SpellModifierOffensive;
 
 public class TESpellModifierBlock extends TESpellBlock
 {

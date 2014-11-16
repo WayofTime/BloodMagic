@@ -4,7 +4,6 @@ import static minetweaker.api.minecraft.MineTweakerMC.getItemStack;
 
 import java.util.ArrayList;
 
-import stanhebben.zenscript.annotations.ZenClass;
 import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.oredict.IOreDictEntry;
