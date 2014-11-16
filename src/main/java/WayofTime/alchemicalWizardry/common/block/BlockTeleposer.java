@@ -22,6 +22,7 @@ import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import codechicken.multipart.MultipartHelper;
 import codechicken.multipart.TileMultipart;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -178,11 +179,6 @@ public class BlockTeleposer extends BlockContainer
         {
             return false;
         }
-        
-//        if(tileEntityF instanceof TileMultipart)
-//        {
-//        	((TileMultipart)tileEntityF).createAndLoadEntity(nbttag1);
-//        }
 
         if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner)
         {
@@ -222,27 +218,21 @@ public class BlockTeleposer extends BlockContainer
         {
             TileEntity newTileEntityI = TileEntity.createAndLoadEntity(nbttag1);
             
-            if(tileEntityI instanceof TileMultipart)
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
         	{
-        		newTileEntityI = MultipartHelper.createTileFromNBT(worldF, nbttag1);
+        		newTileEntityI = createMultipartFromNBT(worldF, nbttag1);
         	}
-            
+                        
             worldF.setTileEntity(xf, yf, zf, newTileEntityI);
             
             newTileEntityI.xCoord = xf;
             newTileEntityI.yCoord = yf;
             newTileEntityI.zCoord = zf;
             
-            if(tileEntityI instanceof TileMultipart)
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
         	{
-        		MultipartHelper.sendDescPacket(worldF, (TileMultipart)newTileEntityI);
-        	}
-            
-            //worldF.markBlockForUpdate(xf, yf, zf);
-//            if(newTileEntityI instanceof TileMultipart)
-//            {
-//            	MultipartHelper.createTileFromNBT(worldF, nbttag1);
-//            }  
+            	sendDescriptorOfTile(worldF, newTileEntityI);
+        	} 
         }
 
         worldI.setBlock(xi, yi, zi, finalBlock, metaF, 3);
@@ -250,9 +240,9 @@ public class BlockTeleposer extends BlockContainer
         if (tileEntityF != null)
         {        	
             TileEntity newTileEntityF = TileEntity.createAndLoadEntity(nbttag2);
-            if(tileEntityF instanceof TileMultipart)
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
         	{
-        		newTileEntityF = MultipartHelper.createTileFromNBT(worldI, nbttag2);
+        		newTileEntityF = createMultipartFromNBT(worldI, nbttag2);
         	}
             
             worldI.setTileEntity(xi, yi, zi, newTileEntityF);
@@ -261,20 +251,30 @@ public class BlockTeleposer extends BlockContainer
             newTileEntityF.yCoord = yi;
             newTileEntityF.zCoord = zi;
             
-            if(tileEntityF instanceof TileMultipart)
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
         	{
-        		MultipartHelper.sendDescPacket(worldI, (TileMultipart)newTileEntityF);
-        	}
-            
-            //worldI.markBlockForUpdate(xi, yi, zi);
-//            if(newTileEntityF instanceof TileMultipart)
-//            {
-//            	System.out.println("I am a multipart!");
-//
-//            	MultipartHelper.createTileFromNBT(worldI, nbttag2);
-//            }  
+            	sendDescriptorOfTile(worldI, newTileEntityF);
+        	} 
         }
 
         return true;
+    }
+    
+    @Optional.Method(modid = "ForgeMultipart")
+    public static boolean isMultipart(TileEntity tile)
+    {
+    	return tile instanceof TileMultipart;
+    }
+    
+    @Optional.Method(modid = "ForgeMultipart")
+    public static TileEntity createMultipartFromNBT(World world, NBTTagCompound tag)
+    {
+    	return MultipartHelper.createTileFromNBT(world, tag);
+    }
+    
+    @Optional.Method(modid = "ForgeMultipart")
+    public static void sendDescriptorOfTile(World world, TileEntity tile)
+    {
+    	MultipartHelper.sendDescPacket(world, (TileMultipart)tile);
     }
 }
