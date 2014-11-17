@@ -42,9 +42,9 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
     {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
         this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:SanguineHelmet");
-        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundPlate");
-        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundLeggings");
-        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundBoots");
+        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:SanguinePlate");
+        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:SanguineLeggings");
+        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:SanguineBoots");
     }
 
     @SideOnly(Side.CLIENT)

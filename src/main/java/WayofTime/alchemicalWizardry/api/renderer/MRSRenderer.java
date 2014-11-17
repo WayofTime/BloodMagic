@@ -1,13 +1,13 @@
 package WayofTime.alchemicalWizardry.api.renderer;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 
 public abstract class MRSRenderer
 {
-    public abstract void renderAt(TEMasterStone tile, double x, double y, double z);
+    public abstract void renderAt(IMasterRitualStone tile, double x, double y, double z);
 
     protected void bindTexture(ResourceLocation p_147499_1_)
     {

@@ -32,6 +32,7 @@ import WayofTime.alchemicalWizardry.common.items.EnergySword;
 import WayofTime.alchemicalWizardry.common.items.EnhancedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
 import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
+import WayofTime.alchemicalWizardry.common.items.ItemBloodLetterPack;
 import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
 import WayofTime.alchemicalWizardry.common.items.ItemComponents;
 import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
@@ -79,7 +80,6 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
 import WayofTime.alchemicalWizardry.common.items.sigil.VoidSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.WaterSigil;
-import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemBloodLetterPack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**

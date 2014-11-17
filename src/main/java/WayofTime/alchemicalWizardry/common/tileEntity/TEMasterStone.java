@@ -656,4 +656,10 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     {
         this.customRitualTag = tag;
     }
+    
+    @Override
+    public int getRunningTime()
+    {
+    	return this.runningTime;
+    }
 }

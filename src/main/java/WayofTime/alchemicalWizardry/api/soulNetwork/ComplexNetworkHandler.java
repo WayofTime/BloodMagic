@@ -13,7 +13,6 @@ import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -77,7 +76,6 @@ public class ComplexNetworkHandler
     	
     	Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(keyMap);
-        AlchemicalWizardry.logger.info("Here, too!");
         Writer writer;
         try
         {

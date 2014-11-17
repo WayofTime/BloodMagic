@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.renderer;
 
-import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 
 public class AlchemyCircleRenderer extends MRSRenderer
 {
@@ -38,7 +39,7 @@ public class AlchemyCircleRenderer extends MRSRenderer
     }
 
     @Override
-    public void renderAt(TEMasterStone tile, double x, double y, double z)
+    public void renderAt(IMasterRitualStone tile, double x, double y, double z)
     {
         if (tile.areTanksEmpty() && !renderWithoutReagents)
         {
@@ -63,14 +64,14 @@ public class AlchemyCircleRenderer extends MRSRenderer
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
 
-        GL11.glTranslated(x + 0.5 + xOffset, y + 0.5 + (yOffset - initialY) * (tile.runningTime / 100d) + initialY, z + 0.5 + zOffset);
+        GL11.glTranslated(x + 0.5 + xOffset, y + 0.5 + (yOffset - initialY) * (tile.getRunningTime() / 100d) + initialY, z + 0.5 + zOffset);
 
         float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
         GL11.glRotatef(rotationAngle, 0F, 1F, 0F); //Rotate on planar axis
         tessellator.setBrightness(240);
 
-        double finalRadius = (radius) * (tile.runningTime / 100d);
+        double finalRadius = (radius) * (tile.getRunningTime() / 100d);
 
         tessellator.addVertexWithUV(-finalRadius, 0, -finalRadius, 0.0d, 0.0d);
         tessellator.addVertexWithUV(finalRadius, 0, -finalRadius, 1.0d, 0.0d);

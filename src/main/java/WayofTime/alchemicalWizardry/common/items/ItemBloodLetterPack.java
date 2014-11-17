@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.items.thaumcraft;
+package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundPlate");
+        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodPack");
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
-        return "alchemicalwizardry:models/armor/sanguineArmour_layer_1.png";
+        return "alchemicalwizardry:models/armor/bloodPack_layer_1.png";
     }
     
     @Override
