@@ -9,8 +9,9 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmSelf;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
+import WayofTime.alchemicalWizardry.api.tile.ISpellParadigmTile;
 
-public class TESpellParadigmBlock extends TESpellBlock
+public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigmTile
 {
     public SpellParadigm getSpellParadigm()
     {
@@ -40,6 +41,7 @@ public class TESpellParadigmBlock extends TESpellBlock
         return false;
     }
 
+    @Override
     public void castSpell(World world, EntityPlayer entity, ItemStack spellCasterStack)
     {
         SpellParadigm parad = this.getSpellParadigm();
