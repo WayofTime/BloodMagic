@@ -56,6 +56,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     private float capacityMultiplier;
     private float orbCapacityMultiplier;
     private float dislocationMultiplier;
+    private int accelerationUpgrades;
     private boolean isUpgraded;
     private boolean isResultBlock;
     private int bufferCapacity;
@@ -169,6 +170,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         progress = par1NBTTagCompound.getInteger("progress");
         isResultBlock = par1NBTTagCompound.getBoolean("isResultBlock");
         lockdownDuration = par1NBTTagCompound.getInteger("lockdownDuration");
+        accelerationUpgrades = par1NBTTagCompound.getInteger("accelerationUpgrades");
     }
 
     public void setMainFluid(FluidStack fluid)
@@ -246,6 +248,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         par1NBTTagCompound.setInteger("progress", progress);
         par1NBTTagCompound.setInteger("bufferCapacity", bufferCapacity);
         par1NBTTagCompound.setInteger("lockdownDuration", lockdownDuration);
+        par1NBTTagCompound.setInteger("accelerationUpgrades", this.accelerationUpgrades);
     }
 
     @Override
@@ -567,18 +570,6 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                 block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block);
             }
 
-            int syphonMax = (int) (20 * this.dislocationMultiplier);
-            int fluidInputted = 0;
-            int fluidOutputted = 0;
-            fluidInputted = Math.min(syphonMax, -this.fluid.amount + capacity);
-            fluidInputted = Math.min(this.fluidInput.amount, fluidInputted);
-            this.fluid.amount += fluidInputted;
-            this.fluidInput.amount -= fluidInputted;
-            fluidOutputted = Math.min(syphonMax, this.bufferCapacity - this.fluidOutput.amount);
-            fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
-            this.fluidOutput.amount += fluidOutputted;
-            this.fluid.amount -= fluidOutputted;
-
             if (AlchemicalWizardry.lockdownAltar)
             {
                 List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
@@ -605,6 +596,21 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                     }
                 }
             }
+        }
+        
+        if(worldObj.getWorldTime() % Math.max(20 - this.accelerationUpgrades, 1) == 0)
+        {
+        	int syphonMax = (int) (20 * this.dislocationMultiplier);
+            int fluidInputted = 0;
+            int fluidOutputted = 0;
+            fluidInputted = Math.min(syphonMax, -this.fluid.amount + capacity);
+            fluidInputted = Math.min(this.fluidInput.amount, fluidInputted);
+            this.fluid.amount += fluidInputted;
+            this.fluidInput.amount -= fluidInputted;
+            fluidOutputted = Math.min(syphonMax, this.bufferCapacity - this.fluidOutput.amount);
+            fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
+            this.fluidOutput.amount += fluidOutputted;
+            this.fluid.amount -= fluidOutputted;
         }
 
         if (worldObj.getWorldTime() % 100 == 0)
@@ -861,6 +867,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             this.capacityMultiplier = 1;
             this.orbCapacityMultiplier = 1;
             this.dislocationMultiplier = 1;
+            this.accelerationUpgrades = 0;
             return;
         }
 
@@ -878,6 +885,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             this.orbCapacityMultiplier = 1;
             this.dislocationMultiplier = 1;
             this.upgradeLevel = upgradeState;
+            this.accelerationUpgrades = 0;
             return;
         }
 
@@ -888,11 +896,11 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrades.getSacrificeUpgrades());
         this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrades.getSelfSacrificeUpgrades());
         this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrades.getBetterCapacitiveUpgrades()) + 0.20 * upgrades.getAltarCapacitiveUpgrades()));
-        //TODO finalize values
         this.dislocationMultiplier = (float) (Math.pow(1.2, upgrades.getDisplacementUpgrades()));
         this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrades.getOrbCapacitiveUpgrades());
         this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
         this.bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
+        this.accelerationUpgrades = upgrades.getAccelerationUpgrades();
 
         if (this.fluid.amount > this.capacity)
         {

@@ -192,6 +192,10 @@ public class UpgradedAltars
                             case 8:
                                 upgrades.addBetterCapacitiveUpgrade();
                                 break;
+                                
+                            case 9:
+                            	upgrades.addAccelerationUpgrade();
+                            	break;
                         }
                     }
                 }

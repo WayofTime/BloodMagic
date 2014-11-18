@@ -44,6 +44,10 @@ public class ItemBloodRuneBlock extends ItemBlock
             case 4:
                 name = "betterCapacity";
                 break;
+                
+            case 5:
+            	name = "acceleration";
+            	break;
 
             default:
                 name = "broken";

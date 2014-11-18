@@ -5,6 +5,7 @@ tile.bloodRune.fill.name=Rune of Augmented Capacity
 tile.bloodRune.empty.name=Rune of Dislocation
 tile.bloodRune.orb.name=Rune of the Orb
 tile.bloodRune.betterCapacity.name=Rune of Superior Capacity
+tile.bloodRune.acceleration.name=Rune of Acceleration
 tile.speedRune.name=Speed Rune
 tile.efficiencyRune.name=Efficiency Rune
 tile.runeOfSacrifice.name=Rune of Sacrifice
