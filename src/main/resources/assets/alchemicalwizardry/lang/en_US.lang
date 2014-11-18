@@ -163,6 +163,7 @@ item.bloodMagicBaseItem.PowerCore.name=Power Core
 item.bloodMagicBaseItem.CostCore.name=Reduction Core
 item.bloodMagicBaseItem.PotencyCore.name=Potency Core
 item.bloodMagicBaseItem.ObsidianBrace.name=Obsidian Brace
+item.bloodMagicBaseItem.EtherealSlate.name=Ethereal Slate
 item.bloodMagicAlchemyItem.Offensa.name=Offensa
 item.bloodMagicAlchemyItem.Praesidium.name=Praesidium
 item.bloodMagicAlchemyItem.OrbisTerrae.name=Orbis Terrae
@@ -186,6 +187,7 @@ item.destinationClearer.name=Alchemic Cleanser
 item.demonPlacer.name=Demon Crystal
 item.creativeDagger.name=Creative Sacrificial Knife
 item.itemBloodPack.name=Blood Letter's Pack
+item.itemHarvestSigil.name=Harvest Goddess Sigil
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 

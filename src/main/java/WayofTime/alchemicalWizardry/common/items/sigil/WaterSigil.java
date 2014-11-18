@@ -157,7 +157,7 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
                         return par1ItemStack;
                     }
 
-                    if(this.canPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && !EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                    if(this.canPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                     {
                     	this.tryPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k);
                     }

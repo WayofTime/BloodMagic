@@ -155,7 +155,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     @Override
     public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        if (!(par3Entity instanceof EntityPlayer))
+        if (!(par3Entity instanceof EntityPlayer) || par2World.isRemote)
         {
             return;
         }
@@ -175,7 +175,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                 	par1ItemStack.stackTagCompound.setBoolean("isActive", false);
                 }
             }
-            int range = 5;
+            int range = 3;
             int verticalRange = 2;
             int posX = (int) Math.round(par3Entity.posX - 0.5f);
             int posY = (int) par3Entity.posY;
