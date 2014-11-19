@@ -192,7 +192,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
 
                         if (block instanceof IPlantable)
                         {
-                            if (par2World.rand.nextInt(20) == 0)
+                            if (par2World.rand.nextInt(50) == 0)
                             {
                                 block.updateTick(par2World, ix, iy, iz, par2World.rand);
                             }
@@ -272,7 +272,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
 
                     if (block instanceof IPlantable)
                     {
-                        if (world.rand.nextInt(10) == 0)
+                        if (world.rand.nextInt(100) == 0)
                         {
                             block.updateTick(world, ix, iy, iz, world.rand);
                         }

@@ -1,13 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,7 +16,17 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 
-import java.util.List;
+import org.lwjgl.input.Keyboard;
+
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.rituals.IRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemRitualDiviner extends EnergyItems
 {
@@ -59,7 +63,7 @@ public class ItemRitualDiviner extends EnergyItems
         
         par3List.add("Ritual tuned to face: " + this.getNameForDirection(this.getDirection(par1ItemStack)));
 
-        boolean sneaking = true;
+        boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
         
         if(sneaking)
         {
@@ -237,6 +241,14 @@ public class ItemRitualDiviner extends EnergyItems
                     }
                 }
             }
+        }else if(!(par3World.getBlock(par4, par5, par6) instanceof IRitualStone))
+        {
+        	if(par3World.isRemote)
+        	{
+        		return false;
+        	}
+        	this.cycleDirection(par1ItemStack);
+        	par2EntityPlayer.addChatComponentMessage(new ChatComponentText("Ritual tuned to face: " + this.getNameForDirection(this.getDirection(par1ItemStack))));
         }
 
         return false;
@@ -259,9 +271,6 @@ public class ItemRitualDiviner extends EnergyItems
                 IChatComponent chatmessagecomponent = new ChatComponentText("Current Ritual: " + Rituals.getNameOfRitual(this.getCurrentRitual(par1ItemStack)));
                 par3EntityPlayer.addChatComponentMessage(chatmessagecomponent);
             }
-        }else if(!par3EntityPlayer.isSwingInProgress)
-        {
-        	this.cycleDirection(par1ItemStack);
         }
 
         return par1ItemStack;
@@ -362,7 +371,7 @@ public class ItemRitualDiviner extends EnergyItems
     	itemStack.stackTagCompound.setInteger("direction", direction);
     }
     
-    public void cycleDirection(ItemStack itemStack)
+    public int cycleDirection(ItemStack itemStack)
     {
     	int direction = this.getDirection(itemStack);
     	
@@ -375,6 +384,8 @@ public class ItemRitualDiviner extends EnergyItems
     	}
     	
     	this.setDirection(itemStack, direction);
+    	
+    	return direction;
     }
     
     public String getNameForDirection(int direction)
