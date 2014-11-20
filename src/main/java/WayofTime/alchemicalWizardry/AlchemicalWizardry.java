@@ -919,6 +919,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemHarvestSigil), "mgm", "gsg", "mom", 's', etherealSlateStack, 'o', archmageBloodOrbStack, 'g', new ItemStack(Items.golden_hoe), 'm', new ItemStack(Blocks.dirt)));
         AltarRecipeRegistry.registerAltarRecipe(etherealSlateStack, demonSlateStack, 5, 30000, 40, 100, false);
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 5), "bsb", "grg", "bob", 's', etherealSlateStack, 'o', archmageBloodOrbStack, 'r', speedRuneStack, 'b', emptyBucketStack, 'g', goldIngotStack));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemCompressionSigil), "pop", "csc", "obo", 'b', masterBloodOrbStack, 'p', new ItemStack(Blocks.piston), 'c', new ItemStack(Blocks.crafting_table), 's', demonSlateStack, 'o', obsidianStack));
         
         AlchemyRecipeRegistry.registerRecipe(crackedRunicPlateStackCrafted, 10, new ItemStack[]{imbuedSlateStack, imbuedSlateStack, concentratedCatalystStack}, 4);
         AlchemyRecipeRegistry.registerRecipe(runicPlateStack, 30, new ItemStack[]{crackedRunicPlateStack, terraeStack}, 5);
@@ -1071,7 +1072,8 @@ public class AlchemicalWizardry
             AlchemicalWizardry.logger.info("Loaded Harvestcraft Handlers!");
         }
         
-        if(Loader.isModLoaded("MineTweaker3")) {
+        if(Loader.isModLoaded("MineTweaker3")) 
+        {
             MineTweakerIntegration.register();
             AlchemicalWizardry.logger.info("Loaded MineTweaker 3 Integration");
         }

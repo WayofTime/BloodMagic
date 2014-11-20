@@ -1,20 +1,21 @@
 package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
-import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
-import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.common.config.Configuration;
-
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraftforge.common.config.Configuration;
+import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
+import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
+import WayofTime.alchemicalWizardry.common.items.BoundArmour;
+import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * Created with IntelliJ IDEA.
@@ -131,6 +132,8 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledSpawnWard = config.get("Ritual Blacklist", "Ward of Sacrosanctity", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledVeilOfEvil = config.get("Ritual Blacklist", "Veil of Evil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
+		
+		BoundArmour.tryComplexRendering = config.get("WimpySettings", "UseFancyBoundArmour", true).getBoolean(true);
 
 		Side side = FMLCommonHandler.instance().getSide();
 		if (side == Side.CLIENT)

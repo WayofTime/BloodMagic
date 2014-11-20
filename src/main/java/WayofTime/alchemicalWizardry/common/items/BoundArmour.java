@@ -42,7 +42,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     private static IIcon leggingsIcon;
     private static IIcon bootsIcon;
 
-    private static final boolean tryComplexRendering = true;
+    public static boolean tryComplexRendering = true;
 
     public BoundArmour(int armorType)
     {

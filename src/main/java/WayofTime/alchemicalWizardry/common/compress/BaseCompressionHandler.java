@@ -83,7 +83,7 @@ public class BaseCompressionHandler extends CompressionHandler
 					int remainingFromStack = Math.max(stackSize - used - needed, 0);
 					if(doDrain)
 					{
-						invStack.stackSize = remainingFromStack;
+						invStack.stackSize = remainingFromStack + used;
 						if(invStack.stackSize <= 0)
 						{
 							inv[i] = null;

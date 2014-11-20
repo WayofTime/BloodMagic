@@ -11,12 +11,7 @@ import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class AdvancedCompressionHandler extends CompressionHandler
-{	
-	public AdvancedCompressionHandler()
-	{
-		super();
-	}
-
+{
 	@Override
 	public ItemStack compressInventory(ItemStack[] inv, World world) 
 	{		
@@ -81,15 +76,16 @@ public class AdvancedCompressionHandler extends CompressionHandler
 				if(kept <= 0 && needed > 0)
 				{
 					int remainingFromStack = Math.max(stackSize - used - needed, 0);
-					needed -= (stackSize - used - remainingFromStack);
 					if(doDrain)
 					{
-						invStack.stackSize = remainingFromStack;
+						invStack.stackSize = remainingFromStack + used;
 						if(invStack.stackSize <= 0)
 						{
 							inv[i] = null;
 						}
 					}
+					
+					needed -= (stackSize - used - remainingFromStack);
 				}
 				
 				if(needed <= 0)
