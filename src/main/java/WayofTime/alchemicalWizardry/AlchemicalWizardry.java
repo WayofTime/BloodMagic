@@ -785,6 +785,7 @@ public class AlchemicalWizardry
         ItemStack costCoreStack = new ItemStack(ModItems.baseItems, 1, 23);
         ItemStack potencyCoreStack = new ItemStack(ModItems.baseItems, 1, 24);
         ItemStack obsidianBraceStack = new ItemStack(ModItems.baseItems, 1, 25);
+        ItemStack etherealSlateStack = new ItemStack(ModItems.baseItems, 1, 27);
 
         ItemStack magicalesCraftedCableStack = new ItemStack(ModItems.baseItems, 5, 2);
         ItemStack crackedRunicPlateStackCrafted = new ItemStack(ModItems.baseItems, 2, 15);
@@ -821,6 +822,10 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(costCoreStack, "msm", "geg", "mom", 'm', reductusStack, 'e', emptyCoreStack, 'o', masterBloodOrbStack, 's', weakBloodShardStack, 'g', goldIngotStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(potencyCoreStack, "msm", "geg", "mom", 'm', potentiaStack, 'e', emptyCoreStack, 'o', masterBloodOrbStack, 's', weakBloodShardStack, 'g', goldIngotStack));
 
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemHarvestSigil), "mgm", "gsg", "mom", 's', etherealSlateStack, 'o', archmageBloodOrbStack, 'g', new ItemStack(Items.golden_hoe), 'm', new ItemStack(Blocks.dirt)));
+        AltarRecipeRegistry.registerAltarRecipe(etherealSlateStack, demonSlateStack, 5, 30000, 40, 100, false);
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 5), "bsb", "grg", "bob", 's', etherealSlateStack, 'o', archmageBloodOrbStack, 'r', speedRuneStack, 'b', emptyBucketStack, 'g', goldIngotStack));
+        
         AlchemyRecipeRegistry.registerRecipe(crackedRunicPlateStackCrafted, 10, new ItemStack[]{imbuedSlateStack, imbuedSlateStack, concentratedCatalystStack}, 4);
         AlchemyRecipeRegistry.registerRecipe(runicPlateStack, 30, new ItemStack[]{crackedRunicPlateStack, terraeStack}, 5);
         AlchemyRecipeRegistry.registerRecipe(imbuedRunicPlateStack, 100, new ItemStack[]{magicalesStack, incendiumStack, runicPlateStack, runicPlateStack, aquasalusStack}, 5);
@@ -1001,7 +1006,6 @@ public class AlchemicalWizardry
         AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.clay_ball), Potion.moveSlowdown.id, 450);
         AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.redstone), Potion.digSpeed.id, 2 * 60 * 20);
         AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.potionitem, 1, 0), AlchemicalWizardry.customPotionDrowning.id, 450);
-        //AlchemicalPotionCreationHandler.addPotion(new ItemStack(Item.goldenCarrot),Potion.nightVision.id,2*60*20);
         AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.glass_bottle), Potion.invisibility.id, 2 * 60 * 20);
         AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.diamond), Potion.resistance.id, 2 * 60 * 20);
         AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.poisonous_potato), Potion.field_76443_y.id, 2); //saturation
