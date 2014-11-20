@@ -1303,7 +1303,9 @@ public class AlchemicalWizardry
     
     public void initCompressionHandlers()
     {
-    	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 0));
+    	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 64));
     	CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
+    	
+    	CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.cobblestone), 64);
     }
 }

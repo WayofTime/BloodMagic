@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
+import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class AdvancedCompressionHandler extends CompressionHandler
 {	
@@ -30,13 +32,15 @@ public class AdvancedCompressionHandler extends CompressionHandler
 				continue;
 			}
 			
+			int threshold = CompressionRegistry.getItemThreshold(invStack);
+			
 			for(int i=2; i<=3; i++)
 			{
 				ItemStack stacky = getRecipe(invStack, world, i);
 				if(isResultStackReversible(stacky, i, world))
 				{
 					int needed = i*i;
-					int neededLeft = iterateThroughInventory(invStack, 0, inv, needed, false);
+					int neededLeft = iterateThroughInventory(invStack, threshold, inv, needed, false);
 					if(neededLeft <= 0)
 					{
 						iterateThroughInventory(invStack, 0, inv, needed, true);
@@ -132,7 +136,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 			return false;
 		}else
 		{
-			return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? compressedStack.getTagCompound() == null : stack.getTagCompound().equals(compressedStack.getTagCompound()));
+			return SpellHelper.areItemStacksEqual(stack, compressedStack);
 		}
 	}
 	

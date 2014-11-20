@@ -189,6 +189,7 @@ item.demonPlacer.name=Demon Crystal
 item.creativeDagger.name=Creative Sacrificial Knife
 item.itemBloodPack.name=Blood Letter's Pack
 item.itemHarvestSigil.name=Harvest Goddess Sigil
+item.itemCompressionSigil.name=Sigil of Compression
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 

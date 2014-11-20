@@ -562,4 +562,9 @@ public class SpellHelper
         }
         return null;
     }
+    
+    public static boolean areItemStacksEqual(ItemStack stack, ItemStack compressedStack)
+    {
+    	return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? compressedStack.getTagCompound() == null : stack.getTagCompound().equals(compressedStack.getTagCompound()));
+    }
 }

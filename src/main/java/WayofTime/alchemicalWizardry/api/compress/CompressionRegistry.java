@@ -1,8 +1,12 @@
 package WayofTime.alchemicalWizardry.api.compress;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -13,10 +17,21 @@ import net.minecraft.world.World;
 public class CompressionRegistry 
 {
 	public static List<CompressionHandler> compressionRegistry = new ArrayList();
+	public static Map<ItemStack, Integer> thresholdMap = new HashMap();
 	
 	public static void registerHandler(CompressionHandler handler)
 	{
 		compressionRegistry.add(handler);
+	}
+	
+	/**
+	 * Registers an item so that it only compresses while above this threshold
+	 * @param stack
+	 * @param threshold
+	 */
+	public static void registerItemThreshold(ItemStack stack, int threshold)
+	{
+		thresholdMap.put(stack, new Integer(threshold));
 	}
 	
 	public static ItemStack compressInventory(ItemStack[] inv, World world)
@@ -31,5 +46,18 @@ public class CompressionRegistry
 		}
 		
 		return null;
+	}
+	
+	public static int getItemThreshold(ItemStack stack)
+	{
+		for(Entry<ItemStack, Integer> entry : thresholdMap.entrySet())
+		{
+			if(SpellHelper.areItemStacksEqual(entry.getKey(), stack))
+			{
+				return entry.getValue();
+			}
+		}
+		
+		return 0;
 	}
 }
