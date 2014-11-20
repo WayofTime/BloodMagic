@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.compress;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
 
 public class BaseCompressionHandler extends CompressionHandler
@@ -17,20 +18,18 @@ public class BaseCompressionHandler extends CompressionHandler
 		this.leftover = leftover;
 	}
 	
-	@Override
 	public ItemStack getResultStack() 
 	{
 		return this.result.copy();
 	}
 
-	@Override
 	public ItemStack getRequiredStack() 
 	{
 		return this.required.copy();
 	}
 
 	@Override
-	public ItemStack compressInventory(ItemStack[] inv) 
+	public ItemStack compressInventory(ItemStack[] inv, World world) 
 	{
 		int remaining = this.getRemainingNeeded(inv);
 		if(remaining <= 0)

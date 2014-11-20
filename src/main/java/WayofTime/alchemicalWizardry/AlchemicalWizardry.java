@@ -66,6 +66,7 @@ import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.book.BUEntries;
+import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketAngel;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
@@ -1302,6 +1303,7 @@ public class AlchemicalWizardry
     
     public void initCompressionHandlers()
     {
-    	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust), new ItemStack(Blocks.glowstone), 0));
+    	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 0));
+    	CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
     }
 }

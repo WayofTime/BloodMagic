@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 /**
  * A registry aimed to help compress items in an inventory into its compressible form.
@@ -18,11 +19,11 @@ public class CompressionRegistry
 		compressionRegistry.add(handler);
 	}
 	
-	public static ItemStack compressInventory(ItemStack[] inv)
+	public static ItemStack compressInventory(ItemStack[] inv, World world)
 	{
 		for(CompressionHandler handler : compressionRegistry)
 		{
-			ItemStack stack = handler.compressInventory(inv);
+			ItemStack stack = handler.compressInventory(inv, world);
 			if(stack != null)
 			{
 				return stack;

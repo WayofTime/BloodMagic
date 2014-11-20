@@ -12,9 +12,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
-import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,14 +30,14 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(500);
+        setEnergyUsed(200);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("You sow what you reap");
+        par3List.add("Hands of Diamonds");
 
         if (!(par1ItemStack.stackTagCompound == null))
         {
@@ -57,9 +57,9 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_deactivated");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:CompressionSigil_deactivated");
+        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:CompressionSigil_activated");
+        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:CompressionSigil_deactivated");
     }
 
     @Override
@@ -149,8 +149,12 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
 
         if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
-        	ItemStack stack = CompressionRegistry.compressInventory(par3EntityPlayer.inventory.mainInventory);
-        	EntityItem entityItem = new EntityItem(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, stack);
+        	ItemStack stack = CompressionRegistry.compressInventory(par3EntityPlayer.inventory.mainInventory, par2World);
+        	if(stack != null)
+        	{
+            	EntityItem entityItem = new EntityItem(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, stack);
+            	par2World.spawnEntityInWorld(entityItem);
+        	}
         }
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
@@ -169,23 +173,12 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
 	@Override
 	public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) 
 	{
-		int range = 3;
-        int verticalRange = 1;
-        int posX = (int) Math.round(player.posX - 0.5f);
-        int posY = (int) player.posY;
-        int posZ = (int) Math.round(player.posZ - 0.5f);
-
-        for (int ix = posX - range; ix <= posX + range; ix++)
-        {
-            for (int iz = posZ - range; iz <= posZ + range; iz++)
-            {
-                for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
-                {
-                    HarvestRegistry.harvestBlock(world, ix, iy, iz);
-                }
-            }
-        }
-		
+		ItemStack stack = CompressionRegistry.compressInventory(player.inventory.mainInventory, world);
+    	if(stack != null)
+    	{
+        	EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, stack);
+        	world.spawnEntityInWorld(entityItem);
+    	}	
 	}
 
 	@Override
@@ -197,6 +190,6 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
 	@Override
 	public int getEnergyForTenSeconds() 
 	{
-		return 500;
+		return 200;
 	}
 }

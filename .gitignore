@@ -19,6 +19,7 @@ crash-reports/
 /resourcepacks/
 /logs/
 /mods/
+/screenshots/
 
 # File Extensions
 *.psd
