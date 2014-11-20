@@ -147,9 +147,9 @@ public class SpellEffectRegistry
 	public static void initiateRegistry()
 	{
 		SpellEffectRegistry.registerSpellType("FIRE", ComplexSpellType.FIRE);
-		SpellEffectRegistry.registerSpellType("WATER", ComplexSpellType.ICE);
+		SpellEffectRegistry.registerSpellType("ICE", ComplexSpellType.ICE);
 		SpellEffectRegistry.registerSpellType("EARTH", ComplexSpellType.EARTH);
-		SpellEffectRegistry.registerSpellType("AIR", ComplexSpellType.WIND);
+		SpellEffectRegistry.registerSpellType("WIND", ComplexSpellType.WIND);
 
 		SpellEffectRegistry.registerSpellModifier("DEFAULT", ComplexSpellModifier.DEFAULT);
 		SpellEffectRegistry.registerSpellModifier("OFFENSIVE", ComplexSpellModifier.OFFENSIVE);

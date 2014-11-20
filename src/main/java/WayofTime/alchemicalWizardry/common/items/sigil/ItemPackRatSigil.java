@@ -4,12 +4,14 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
@@ -147,22 +149,8 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
 
         if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
-        	int range = 3;
-            int verticalRange = 1;
-            int posX = (int) Math.round(par3Entity.posX - 0.5f);
-            int posY = (int) par3Entity.posY;
-            int posZ = (int) Math.round(par3Entity.posZ - 0.5f);
-
-            for (int ix = posX - range; ix <= posX + range; ix++)
-            {
-                for (int iz = posZ - range; iz <= posZ + range; iz++)
-                {
-                    for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
-                    {
-                        HarvestRegistry.harvestBlock(par2World, ix, iy, iz);
-                    }
-                }
-            }
+        	ItemStack stack = CompressionRegistry.compressInventory(par3EntityPlayer.inventory.mainInventory);
+        	EntityItem entityItem = new EntityItem(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, stack);
         }
         if (par2World.getWorldTime() % 200 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
         {
