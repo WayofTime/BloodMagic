@@ -120,8 +120,8 @@ public class RitualStone extends Block implements IRitualStone
     }
 
 	@Override
-	public int getRuneType(World world, int x, int y, int z, int meta) 
+	public boolean isRuneType(World world, int x, int y, int z, int meta, int runeType) 
 	{
-		return meta;
+		return meta == runeType;
 	}
 }
