@@ -152,70 +152,19 @@ public class Rituals
         Block test = null;
         TileEntity te = null;
 
-        switch (direction)
+        for (RitualComponent rc : ritual)
         {
-            case 1:
-                for (RitualComponent rc : ritual)
-                {
-                    test = world.getBlock(x + rc.getX(), y + rc.getY(), z + rc.getZ());
-                    te = world.getTileEntity(x + rc.getX(), y + rc.getY(), z + rc.getZ());
+            test = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
+            te = world.getTileEntity(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
-                    if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x, y, z, world.getBlockMetadata(x + rc.getX(), y + rc.getY(), z + rc.getZ()), rc.getStoneType()))
-                            && !(test instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            case 2:
-                for (RitualComponent rc : ritual)
-                {
-                    test = world.getBlock(x - rc.getZ(), y + rc.getY(), z + rc.getX());
-                    te = world.getTileEntity(x - rc.getZ(), y + rc.getY(), z + rc.getX());
-
-                    if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x, y, z, world.getBlockMetadata(x - rc.getZ(), y + rc.getY(), z + rc.getX()), rc.getStoneType()))
-                            && !(test instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            case 3:
-                for (RitualComponent rc : ritual)
-                {
-                    test = world.getBlock(x - rc.getX(), y + rc.getY(), z - rc.getZ());
-                    te = world.getTileEntity(x - rc.getX(), y + rc.getY(), z - rc.getZ());
-
-                    if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x, y, z, world.getBlockMetadata(x - rc.getX(), y + rc.getY(), z - rc.getZ()), rc.getStoneType()))
-                            && !(test instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-
-            case 4:
-                for (RitualComponent rc : ritual)
-                {
-                    test = world.getBlock(x + rc.getZ(), y + rc.getY(), z - rc.getX());
-                    te = world.getTileEntity(x + rc.getZ(), y + rc.getY(), z - rc.getX());
-
-                    if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x, y, z, world.getBlockMetadata(x + rc.getZ(), y + rc.getY(), z - rc.getX()), rc.getStoneType()))
-                            && !(test instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
+            if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x + rc.getX(direction), y, z+ rc.getZ(direction), world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)), rc.getStoneType()))
+                    && !(test instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
+            {
+                return false;
+            }
         }
 
-        return false;
+        return true;
     }
 
     public static int getDirectionOfRitual(World world, int x, int y, int z, String ritualID)

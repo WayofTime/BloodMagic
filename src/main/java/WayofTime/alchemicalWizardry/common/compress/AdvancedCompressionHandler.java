@@ -100,6 +100,10 @@ public class AdvancedCompressionHandler extends CompressionHandler
 	
 	public boolean isResultStackReversible(ItemStack stack, int gridSize, World world)
 	{
+		if(stack == null)
+		{
+			return false;
+		}
 		InventoryCrafting inventory = new InventoryCrafting(new Container()
 	    {
 	        public boolean canInteractWith(EntityPlayer player)
