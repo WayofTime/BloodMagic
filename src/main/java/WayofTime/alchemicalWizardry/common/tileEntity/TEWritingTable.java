@@ -1,5 +1,17 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
@@ -14,18 +26,8 @@ import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.oredict.OreDictionary;
 
-public class TEWritingTable extends TileEntity implements IInventory
+public class TEWritingTable extends TileEntity implements IInventory, ISidedInventory
 {
     private ItemStack[] inv;
     private int progress;
@@ -878,4 +880,30 @@ public class TEWritingTable extends TileEntity implements IInventory
     {
         this.accelerationTime = accelerationTime;
     }
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int p_94128_1_) 
+	{
+		ForgeDirection dir = ForgeDirection.getOrientation(p_94128_1_);
+		switch(dir)
+		{
+		case DOWN:
+			return new int[]{6};
+		default:
+			return new int[]{0, 1, 2, 3, 4, 5};
+		}
+	}
+
+	@Override
+	public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) 
+	{
+		return true;
+	}
+
+	@Override
+	public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) 
+	{
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

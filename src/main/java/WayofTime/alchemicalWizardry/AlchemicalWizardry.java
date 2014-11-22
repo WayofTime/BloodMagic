@@ -917,7 +917,6 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(potencyCoreStack, "msm", "geg", "mom", 'm', potentiaStack, 'e', emptyCoreStack, 'o', masterBloodOrbStack, 's', weakBloodShardStack, 'g', goldIngotStack));
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemHarvestSigil), "mgm", "gsg", "mom", 's', etherealSlateStack, 'o', archmageBloodOrbStack, 'g', new ItemStack(Items.golden_hoe), 'm', new ItemStack(Blocks.dirt)));
-        AltarRecipeRegistry.registerAltarRecipe(etherealSlateStack, demonSlateStack, 5, 30000, 40, 100, false);
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 5), "bsb", "grg", "bob", 's', etherealSlateStack, 'o', archmageBloodOrbStack, 'r', speedRuneStack, 'b', emptyBucketStack, 'g', goldIngotStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemCompressionSigil), "pop", "csc", "obo", 'b', masterBloodOrbStack, 'p', new ItemStack(Blocks.piston), 'c', new ItemStack(Blocks.crafting_table), 's', demonSlateStack, 'o', obsidianStack));
         
@@ -1133,6 +1132,7 @@ public class AlchemicalWizardry
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.telepositionFocus), new ItemStack(Items.ender_pearl), 4, 2000, 10, 10, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.enhancedTelepositionFocus), new ItemStack(ModItems.telepositionFocus), 4, 10000, 25, 15, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.demonicSlate), new ItemStack(ModItems.imbuedSlate), 4, 15000, 20, 20, false);
+        AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.baseItems, 1, 27), new ItemStack(ModItems.demonicSlate), 5, 30000, 40, 100, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.duskScribeTool), new ItemStack(Blocks.coal_block), 4, 2000, 20, 10, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModBlocks.bloodSocket), new ItemStack(ModBlocks.emptySocket), 3, 30000, 40, 10, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.earthScribeTool), new ItemStack(Blocks.obsidian), 3, 1000, 5, 5, false);
