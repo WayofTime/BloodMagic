@@ -63,8 +63,6 @@ public class SpellEffectRegistry
 	
 	public static ComplexSpellEffect getSpellEffect(Class<? extends SpellParadigm> paraClass, ComplexSpellType type, ComplexSpellModifier mod, int power, int potency, int cost)
 	{
-		System.out.println("Debuging");
-
 		if(paraClass == null || type == null || mod == null)
 		{
 			return null;

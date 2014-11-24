@@ -40,7 +40,7 @@ public class EntityDemonAIHurtByTarget extends EntityAIHurtByTarget
         	TileEntity portal = this.taskOwner.worldObj.getTileEntity(portalPosition.xCoord, portalPosition.yCoord, portalPosition.zCoord);
         	if(portal instanceof TEDemonPortal)
         	{
-        		((TEDemonPortal) portal).notifyDemons(taskOwner, this.taskOwner.getAITarget());
+        		((TEDemonPortal) portal).notifyDemons(taskOwner, this.taskOwner.getAITarget(), 25);
         	}
         	
             double d0 = this.getTargetDistance();

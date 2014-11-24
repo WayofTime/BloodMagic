@@ -62,6 +62,8 @@ public class TEDemonPortal extends TileEntity
     public ForgeDirection nextDemonPortalDirection = ForgeDirection.DOWN;
     
     public int buildingStage = -1;
+    
+    public int lockdownTimer;
 
     public TEDemonPortal()
     {
@@ -91,6 +93,44 @@ public class TEDemonPortal extends TileEntity
         this.houseCooldown = 0;
         this.roadCooldown = 0;
         this.tier = 0;
+        this.lockdownTimer = 0;
+    }
+    
+    public boolean isLockedDown()
+    {
+    	return this.lockdownTimer > 0;
+    }
+    
+    public float getRoadChance()
+    {
+    	if(isLockedDown())
+    	{
+    		return 0;
+    	}
+    	return 0.6f;
+    }
+    
+    public float getHouseChance()
+    {
+    	if(isLockedDown())
+    	{
+    		return 0;
+    	}
+    	return 0.3f;
+    }
+    
+    public float getDemonPortalChance()
+    {
+    	if(isLockedDown())
+    	{
+    		return 0;
+    	}
+    	return 0.5f;
+    }
+    
+    public float getDemonHoardChance()
+    {
+    	return 1.0f;
     }
     
     public boolean decreaseRandomCooldown(int amount)
@@ -98,10 +138,10 @@ public class TEDemonPortal extends TileEntity
     	float totalChance = 0;
 
     	Map<String, Float> map = new HashMap();
-    	map.put("roadChance", 0.6f);
-    	map.put("houseChance", 0.3f);
-    	map.put("demonPortalChance", 0.5f);
-    	map.put("demonHoardChance", 1.0f);
+    	map.put("roadChance", this.getRoadChance());
+    	map.put("houseChance", this.getHouseChance());
+    	map.put("demonPortalChance", this.getDemonPortalChance());
+    	map.put("demonHoardChance", this.getDemonHoardChance());
     	
     	String action = "";
     	
@@ -160,7 +200,7 @@ public class TEDemonPortal extends TileEntity
     	return true;
     }
     
-    public void notifyDemons(EntityLivingBase demon, EntityLivingBase target) //TODO
+    public void notifyDemons(EntityLivingBase demon, EntityLivingBase target, double radius) //TODO
     {
 //    	if (this.taskOwner != entitycreature && entitycreature.getAttackTarget() == null && !entitycreature.isOnSameTeam(this.taskOwner.getAITarget()))
     	for(IHoardDemon thrallDemon : this.hoardList)
@@ -169,7 +209,18 @@ public class TEDemonPortal extends TileEntity
     		{
     			if(thrallDemon != demon && ((EntityCreature) thrallDemon).getAttackTarget() == null && !((EntityCreature) thrallDemon).isOnSameTeam(target))
     			{
+    				double xf = demon.posX;
+    				double yf = demon.posY;
+    				double zf = demon.posZ;
     				
+    				double xi = ((EntityCreature) thrallDemon).posX;
+    				double yi = ((EntityCreature) thrallDemon).posY;
+    				double zi = ((EntityCreature) thrallDemon).posZ;
+
+    				if((xi-xf)*(xi-xf) + (yi-yf)*(yi-yf) + (zi-zf)*(zi-zf) <= radius*radius)
+    				{
+        				((EntityCreature) thrallDemon).setAttackTarget(target);
+    				}
     			}
     		}
     	}
@@ -225,6 +276,7 @@ public class TEDemonPortal extends TileEntity
             return;
         }
         
+        Math.max(0, this.lockdownTimer - 1);
         this.incrementPoints();
         this.assignPoints();
         
@@ -260,7 +312,7 @@ public class TEDemonPortal extends TileEntity
         
         if(this.demonHoardCooldown <= 0)
         {
-        	int complexityCost = this.createRandomDemonHoard(tier, DemonType.FIRE);
+        	int complexityCost = this.createRandomDemonHoard(tier, DemonType.FIRE, this.isLockedDown());
         	if(complexityCost > 0)
         	{
         		this.demonHoardCooldown = TEDemonPortal.demonHoardDelay * complexityCost;
@@ -337,6 +389,7 @@ public class TEDemonPortal extends TileEntity
         this.nextDemonPortalDirection = ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("nextDemonPortalDirection"));
         
         this.pointPool = par1NBTTagCompound.getFloat("pointPool");
+        this.lockdownTimer = par1NBTTagCompound.getInteger("lockdownTimer");
     }
 
     @Override
@@ -385,9 +438,10 @@ public class TEDemonPortal extends TileEntity
         
         par1NBTTagCompound.setInteger("nextDemonPortalDirection", this.nextDemonPortalDirection.ordinal());
         par1NBTTagCompound.setFloat("pointPool", pointPool);
+        par1NBTTagCompound.setInteger("lockdownTimer", this.lockdownTimer);
     }
 
-    public int createRandomDemonHoard(int tier, DemonType type)
+    public int createRandomDemonHoard(int tier, DemonType type, boolean spawnGuardian)
     {
     	int next = rand.nextInt(4);
         ForgeDirection dir;
@@ -416,7 +470,7 @@ public class TEDemonPortal extends TileEntity
         	return 0;
         }
         
-    	return DemonPacketRegistry.spawnDemons(worldObj, xCoord + road.xCoord * 5, yCoord + road.yCoord, zCoord + road.zCoord * 5, type, tier);
+    	return DemonPacketRegistry.spawnDemons(worldObj, xCoord + road.xCoord * 5, yCoord + road.yCoord, zCoord + road.zCoord * 5, type, tier, spawnGuardian);
     }
     
     public int createRandomRoad() //Return the number of road spaces

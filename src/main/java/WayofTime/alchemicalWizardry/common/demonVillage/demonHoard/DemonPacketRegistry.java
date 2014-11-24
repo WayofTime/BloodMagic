@@ -22,7 +22,7 @@ public class DemonPacketRegistry
 		return false;
 	}
 	
-	public static String getDemonPacketName(DemonType type, int tier)
+	public static String getDemonPacketName(DemonType type, int tier, boolean spawnGuardian)
 	{ 
 		float totalChance = 0;
 		
@@ -35,7 +35,7 @@ public class DemonPacketRegistry
 				continue;
 			}
 			
-			totalChance += packet.getRelativeChance(type, tier);
+			totalChance += packet.getRelativeChance(type, tier, spawnGuardian);
 		}
 		
 		for(Entry<String, DemonHoardPacket> entry : packetMap.entrySet())
@@ -47,7 +47,7 @@ public class DemonPacketRegistry
 				continue;
 			}
 			
-			float relativeChance = packet.getRelativeChance(type, tier);
+			float relativeChance = packet.getRelativeChance(type, tier, spawnGuardian);
 			
 			if(relativeChance >= totalChance)
 			{
@@ -61,18 +61,18 @@ public class DemonPacketRegistry
 		return "";
 	}
 	
-	public static int spawnDemons(World world, int x, int y, int z, DemonType type, int tier)
+	public static int spawnDemons(World world, int x, int y, int z, DemonType type, int tier, boolean spawnGuardian)
 	{
-		return spawnDemons(world, x, y, z, getDemonPacketName(type, tier), type, tier);
+		return spawnDemons(world, x, y, z, getDemonPacketName(type, tier, spawnGuardian), type, tier, spawnGuardian);
 	}
 	
-	public static int spawnDemons(World world, int x, int y, int z, String name, DemonType type, int tier)
+	public static int spawnDemons(World world, int x, int y, int z, String name, DemonType type, int tier, boolean spawnGuardian)
 	{
 		DemonHoardPacket packet = packetMap.get(name);
 		
 		if(packet != null)
 		{
-			return packet.summonDemons(world, x, y, z, type, tier);
+			return packet.summonDemons(world, x, y, z, type, tier, spawnGuardian);
 		}
 		
 		return 0;

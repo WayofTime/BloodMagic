@@ -13,13 +13,13 @@ public class DemonPacketAngel extends DemonHoardPacket
 	}
 
 	@Override
-	public float getRelativeChance(DemonType type, int tier) 
+	public float getRelativeChance(DemonType type, int tier, boolean spawnGuardian) 
 	{
 		return 1.0f;
 	}
 
 	@Override
-	public int summonDemons(World world, int x, int y, int z, DemonType type, int tier) 
+	public int summonDemons(World world, int x, int y, int z, DemonType type, int tier, boolean spawnGuardian) 
 	{
 		Entity entity = new EntityFallenAngel(world);
 		entity.setPosition(x, y, z);

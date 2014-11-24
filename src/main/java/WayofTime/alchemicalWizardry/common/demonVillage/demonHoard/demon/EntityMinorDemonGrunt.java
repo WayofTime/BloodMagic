@@ -70,6 +70,11 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
         //this.isImmuneToFire = true;
     }
 
+    public boolean isTameable()
+    {
+    	return false;
+    }
+    
     @Override
     protected void applyEntityAttributes()
     {
@@ -77,7 +82,6 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
         //This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
 
-        //My guess is that this will alter the max health
         if (this.isTamed())
         {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
@@ -126,6 +130,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
     /**
      * main AI tick function, replaces updateEntityActionState
      */
+    @Override
     protected void updateAITick()
     {
         this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
@@ -134,6 +139,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
+    @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
@@ -145,6 +151,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
@@ -220,11 +227,13 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
      * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
      * use in wolves.
      */
+    @Override
     public int getVerticalFaceSpeed()
     {
         return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
     }
 
+    @Override
     public void setTamed(boolean par1)
     {
         super.setTamed(par1);
@@ -286,7 +295,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
             }
-        } else if (itemstack != null && itemstack.getItem().equals(ModItems.weakBloodOrb) && !this.isAngry())
+        } else if (this.isTameable() && itemstack != null && itemstack.getItem().equals(ModItems.weakBloodOrb) && !this.isAngry())
         {
             if (!par1EntityPlayer.capabilities.isCreativeMode)
             {
