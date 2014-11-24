@@ -882,9 +882,9 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
     }
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int p_94128_1_) 
+	public int[] getAccessibleSlotsFromSide(int side) 
 	{
-		ForgeDirection dir = ForgeDirection.getOrientation(p_94128_1_);
+		ForgeDirection dir = ForgeDirection.getOrientation(side);
 		switch(dir)
 		{
 		case DOWN:
@@ -895,15 +895,14 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
 	}
 
 	@Override
-	public boolean canInsertItem(int p_102007_1_, ItemStack p_102007_2_, int p_102007_3_) 
+	public boolean canInsertItem(int slot, ItemStack stack, int side) 
 	{
-		return true;
+		return slot != 6;
 	}
 
 	@Override
-	public boolean canExtractItem(int p_102008_1_, ItemStack p_102008_2_, int p_102008_3_) 
+	public boolean canExtractItem(int slot, ItemStack stack, int side) 
 	{
-		// TODO Auto-generated method stub
 		return true;
 	}
 }
