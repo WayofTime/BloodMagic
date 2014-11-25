@@ -1,12 +1,25 @@
 package WayofTime.alchemicalWizardry.common.summoning;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
-import WayofTime.alchemicalWizardry.common.EntityAirElemental;
-import WayofTime.alchemicalWizardry.common.entity.mob.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
+import WayofTime.alchemicalWizardry.common.EntityAirElemental;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityEarthElemental;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityFallenAngel;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityFireElemental;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityHolyElemental;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityIceDemon;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityLowerGuardian;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityShade;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 
 public class SummoningHelperAW extends SummoningHelper
 {
@@ -87,6 +100,11 @@ public class SummoningHelperAW extends SummoningHelper
             return new EntityHolyElemental(worldObj);
         }
 
+        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntID))
+        {
+        	return new EntityMinorDemonGrunt(worldObj);
+        }
+        
         return new EntityPig(worldObj);
     }
 

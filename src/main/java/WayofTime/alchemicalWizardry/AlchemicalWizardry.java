@@ -70,6 +70,7 @@ import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketAngel;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
@@ -382,6 +383,7 @@ public class AlchemicalWizardry
     public static String entityFireElementalID = "AW012";
     public static String entityShadeElementalID = "AW013";
     public static String entityHolyElementalID = "AW014";
+    public static String entityMinorDemonGruntID = "AW015";
 
 
     public static Fluid lifeEssenceFluid;
@@ -818,7 +820,8 @@ public class AlchemicalWizardry
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityFireElementalID), new ItemStack[]{incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityShadeElementalID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-
+        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityMinorDemonGruntID), new ItemStack[]{incendiumStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        
         //Custom mobs
         EntityRegistry.registerModEntity(EntityFallenAngel.class, "FallenAngel", 20, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityLowerGuardian.class, "LowerGuardian", 21, this, 80, 3, true);
@@ -834,6 +837,7 @@ public class AlchemicalWizardry
         EntityRegistry.registerModEntity(EntityFireElemental.class, "FireElemental", 31, this, 120, 3, true);
         EntityRegistry.registerModEntity(EntityShadeElemental.class, "ShadeElemental", 32, this, 120, 3, true);
         EntityRegistry.registerModEntity(EntityHolyElemental.class, "HolyElemental", 33, this, 120, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGrunt.class, "MinorDemonGrunt", 34, this, 80, 3, true);
 
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.standardBindingAgent), 1, 3, this.standardBindingAgentDungeonChance));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.mundanePowerCatalyst), 1, 1, this.mundanePowerCatalystDungeonChance));

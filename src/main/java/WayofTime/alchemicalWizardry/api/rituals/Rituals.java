@@ -158,7 +158,7 @@ public class Rituals
             te = world.getTileEntity(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
             if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x + rc.getX(direction), y, z+ rc.getZ(direction), world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)), rc.getStoneType()))
-                    && !(test instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
+                    && !(te instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
             {
                 return false;
             }

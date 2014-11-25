@@ -2,9 +2,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -23,17 +21,20 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
 import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAttackMob;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackMob, IHoardDemon
+public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRangedAttackMob, IHoardDemon
 {
-    private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
+    private EntityAIOccasionalRangedAttack aiArrowAttack = new EntityAIOccasionalRangedAttack(this, 1.0D, 40, 40, 15.0F, 5);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private boolean isAngry = false;
@@ -130,11 +131,11 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
     /**
      * main AI tick function, replaces updateEntityActionState
      */
-    @Override
-    protected void updateAITick()
-    {
-        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
-    }
+//    @Override
+//    protected void updateAITick()
+//    {
+//        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
+//    }
 
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
@@ -400,6 +401,13 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
         }
     }
 
+    @Override
+    public boolean attackEntityAsMob(Entity par1Entity)
+    {
+        int i = this.isTamed() ? 6 : 7;
+        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
+    }
+    
     /**
      * Attack the specified entity using a ranged attack.
      */
@@ -421,5 +429,12 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IRangedAttackM
         this.tasks.removeTask(this.aiAttackOnCollide);
         this.tasks.removeTask(this.aiArrowAttack);
         this.tasks.addTask(4, this.aiArrowAttack);
+        this.tasks.addTask(5, this.aiAttackOnCollide);
     }
+
+	@Override
+	public boolean shouldUseRangedAttack() 
+	{
+		return true;
+	}
 }
