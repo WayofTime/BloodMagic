@@ -254,6 +254,7 @@ public class TEPedestal extends TileEntity implements IInventory
     public void onItemDeletion()
     {
         worldObj.addWeatherEffect(new EntityLightningBolt(worldObj, xCoord, yCoord, zCoord));
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 
         for (int i = 0; i < 16; i++)
         {

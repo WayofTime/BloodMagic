@@ -379,7 +379,7 @@ public class TEPlinth extends TileEntity implements IInventory
                         }
 
                         worldObj.createExplosion(entity, entity.posX, entity.posY, entity.posZ, 3, false);
-                        deleteItemsInRing(1);
+                        //deleteItemsInRing(1);
                         isActive = false;
                         progress = 0;
 

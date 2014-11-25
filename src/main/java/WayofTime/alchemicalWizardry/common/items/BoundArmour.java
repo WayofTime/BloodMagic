@@ -168,25 +168,24 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     {
         double armourReduction = 0.0;
 
+        int f = 0;
+        int h = 0;
+        
         if (player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
         {
-            int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
-
-            armourReduction = (i + 1) * 0.1;
+            f = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier() + 1;
         }
 
         double damageAmount = 0.25;
 
         if (player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
         {
-            int i = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
-            damageAmount /= Math.max((1 - i * 0.1), 0.1);
-        } else
-        {
-            damageAmount *= 0.9;
+            h = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
         }
+        
+        armourReduction = 1 - 0.1 * Math.pow(1.0/3.0, Math.max(0, h - f)) - 0.1 * Math.max(0, f-h);
 
-        damageAmount *= (1.0 - armourReduction);
+        damageAmount *= (armourReduction);
 
         int maxAbsorption = 100000;
 
