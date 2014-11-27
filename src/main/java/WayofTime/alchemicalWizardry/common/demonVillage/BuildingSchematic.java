@@ -1,13 +1,14 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.Int3;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
 public class BuildingSchematic
 {
@@ -51,11 +52,11 @@ public class BuildingSchematic
         blockList.add(set);
     }
 
-    public void buildAll(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, boolean populateInventories)
     {
         for (BlockSet set : blockList)
         {
-            set.buildAll(world, xCoord, yCoord, zCoord, dir);
+            set.buildAll(teDemonPortal, world, xCoord, yCoord, zCoord, dir, populateInventories, this.buildingTier);
         }
     }
 

@@ -1,16 +1,23 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.common.Int3;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IBlockPortalNode;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.ITilePortalNode;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BlockSet
 {
@@ -80,6 +87,28 @@ public class BlockSet
                     metadata = southUpSet;
                     break;
             }
+        }else if(block instanceof BlockLadder)
+        {
+        	int[] northSet = new int[]{2, 3, 0, 1};
+            int[] eastSet = new int[]{1, 0, 2, 3};
+            int[] southSet = new int[]{3, 2, 1, 0};
+            int[] westSet = new int[]{0, 1, 3, 2};
+            
+            switch (meta)
+            {
+                case 0:
+                    metadata = westSet;
+                    break;
+                case 1:
+                    metadata = eastSet;
+                    break;
+                case 2:
+                    metadata = northSet;
+                    break;
+                case 3:
+                    metadata = southSet;
+                    break;
+            }
         }
     }
 
@@ -141,7 +170,7 @@ public class BlockSet
         }
     }
 
-    public void buildAtIndex(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, int index)
+    public void buildAtIndex(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, int index, boolean populateInventories, int tier)
     {
         Block block = this.getBlock();
         if (index >= positions.size() || block == null)
@@ -177,13 +206,34 @@ public class BlockSet
         }
 
         world.setBlock(xCoord + xOff, yCoord + yOff, zCoord + zOff, block, meta, 3);
+        if(populateInventories)
+        {
+        	this.populateIfIInventory(world, xCoord + xOff, yCoord + yOff, zCoord + zOff, tier);
+        }
+        if(block instanceof IBlockPortalNode)
+        {
+        	TileEntity tile = world.getTileEntity(xCoord + xOff, yCoord + yOff, zCoord + zOff);
+        	if(tile instanceof ITilePortalNode)
+        	{
+        		((ITilePortalNode) tile).setPortalLocation(teDemonPortal); 
+        	}
+        }
+    }
+    
+    public void populateIfIInventory(World world, int x, int y, int z, int tier)
+    {
+    	TileEntity tile = world.getTileEntity(x, y, z);
+    	if(tile instanceof IInventory)
+    	{
+    		DemonVillageLootRegistry.populateChest((IInventory)tile, tier);
+    	}
     }
 
-    public void buildAll(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, boolean populateInventories, int tier)
     {
         for (int i = 0; i < positions.size(); i++)
         {
-            this.buildAtIndex(world, xCoord, yCoord, zCoord, dir, i);
+            this.buildAtIndex(teDemonPortal, world, xCoord, yCoord, zCoord, dir, i, populateInventories, tier);
         }
     }
 

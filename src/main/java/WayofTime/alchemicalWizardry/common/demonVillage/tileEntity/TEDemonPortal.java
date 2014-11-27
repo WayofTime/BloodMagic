@@ -33,7 +33,7 @@ public class TEDemonPortal extends TileEntity
 	
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
-    public static int demonHoardDelay = 10;
+    public static int demonHoardDelay = 40;
 
     public static int[] tierCostList = new int[]{1000, 5000, 10000};
     
@@ -202,7 +202,6 @@ public class TEDemonPortal extends TileEntity
     
     public void notifyDemons(EntityLivingBase demon, EntityLivingBase target, double radius) //TODO
     {
-//    	if (this.taskOwner != entitycreature && entitycreature.getAttackTarget() == null && !entitycreature.isOnSameTeam(this.taskOwner.getAITarget()))
     	for(IHoardDemon thrallDemon : this.hoardList)
     	{
     		if(thrallDemon instanceof EntityCreature)
@@ -220,6 +219,30 @@ public class TEDemonPortal extends TileEntity
     				if((xi-xf)*(xi-xf) + (yi-yf)*(yi-yf) + (zi-zf)*(zi-zf) <= radius*radius)
     				{
         				((EntityCreature) thrallDemon).setAttackTarget(target);
+    				}else
+    				{
+    					((EntityCreature) thrallDemon).getNavigator().tryMoveToEntityLiving(target, 2);
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    public void notifyDemons(int xf, int yf, int zf, double radius)
+    {
+    	for(IHoardDemon thrallDemon : this.hoardList)
+    	{
+    		if(thrallDemon instanceof EntityCreature)
+    		{
+    			if(((EntityCreature) thrallDemon).getAttackTarget() == null)
+    			{    				
+    				double xi = ((EntityCreature) thrallDemon).posX;
+    				double yi = ((EntityCreature) thrallDemon).posY;
+    				double zi = ((EntityCreature) thrallDemon).posZ;
+
+    				if((xi-xf)*(xi-xf) + (yi-yf)*(yi-yf) + (zi-zf)*(zi-zf) <= radius*radius)
+    				{
+    					((EntityCreature) thrallDemon).getNavigator().tryMoveToXYZ(xf, yf, zf, 2);
     				}
     			}
     		}
@@ -230,7 +253,11 @@ public class TEDemonPortal extends TileEntity
     {
     	if(demon instanceof IHoardDemon)
     	{
-    		this.hoardList.add((IHoardDemon)demon);
+    		boolean enthrall = ((IHoardDemon) demon).thrallDemon(this);
+    		if(enthrall)
+    		{
+        		this.hoardList.add((IHoardDemon)demon);
+    		}
     	}
     }
 
@@ -312,7 +339,7 @@ public class TEDemonPortal extends TileEntity
         
         if(this.demonHoardCooldown <= 0)
         {
-        	int complexityCost = this.createRandomDemonHoard(tier, DemonType.FIRE, this.isLockedDown());
+        	int complexityCost = this.createRandomDemonHoard(this, tier, DemonType.FIRE, this.isLockedDown());
         	if(complexityCost > 0)
         	{
         		this.demonHoardCooldown = TEDemonPortal.demonHoardDelay * complexityCost;
@@ -441,7 +468,7 @@ public class TEDemonPortal extends TileEntity
         par1NBTTagCompound.setInteger("lockdownTimer", this.lockdownTimer);
     }
 
-    public int createRandomDemonHoard(int tier, DemonType type, boolean spawnGuardian)
+    public int createRandomDemonHoard(TEDemonPortal teDemonPortal, int tier, DemonType type, boolean spawnGuardian)
     {
     	int next = rand.nextInt(4);
         ForgeDirection dir;
@@ -470,7 +497,7 @@ public class TEDemonPortal extends TileEntity
         	return 0;
         }
         
-    	return DemonPacketRegistry.spawnDemons(worldObj, xCoord + road.xCoord * 5, yCoord + road.yCoord, zCoord + road.zCoord * 5, type, tier, spawnGuardian);
+    	return DemonPacketRegistry.spawnDemons(teDemonPortal, worldObj, xCoord + road.xCoord * 5, road.yCoord + 1, zCoord + road.zCoord * 5, type, tier, spawnGuardian);
     }
     
     public int createRandomRoad() //Return the number of road spaces
@@ -1190,7 +1217,7 @@ public class TEDemonPortal extends TileEntity
     			case 2:
     				build.destroyAllInField(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
     		        
-    		        build.buildAll(worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite());
+    		        build.buildAll(this, worldObj, xCoord + (x) * 5, yLevel, zCoord + (z) * 5, chosenDirection.getOpposite(), true);
     		        build.setAllGridSpaces(x, z, yLevel, chosenDirection.getOpposite(), GridSpace.MAIN_PORTAL, grid);
     		        this.loadGSH(grid);
     				break;
@@ -1300,7 +1327,7 @@ public class TEDemonPortal extends TileEntity
         int zOff = offsetSpace.zCoord;
 
         build.destroyAllInField(worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
-        build.buildAll(worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite());
+        build.buildAll(this, worldObj, xCoord + (x + xOff) * 5, yLevel, zCoord + (z + zOff) * 5, chosenDirection.getOpposite(), true);
         build.setAllGridSpaces(x + xOff, z + zOff, yLevel, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
         this.loadGSH(grid);
 

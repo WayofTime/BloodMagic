@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
@@ -21,13 +20,16 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
 import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
+import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityDemonAIHurtByTarget;
 import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAttackMob;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -37,11 +39,13 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     private EntityAIOccasionalRangedAttack aiArrowAttack = new EntityAIOccasionalRangedAttack(this, 1.0D, 40, 40, 15.0F, 5);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
-    private boolean isAngry = false;
+    private boolean isAngry = true;
     private Int3 demonPortal;
     
-    private static float maxTamedHealth = 50.0F;
-    private static float maxUntamedHealth = 50.0F;
+    private static float maxTamedHealth = 200.0F;
+    private static float maxUntamedHealth = 200.0F;
+    
+    private boolean enthralled = false;
 
     public EntityMinorDemonGrunt(World par1World)
     {
@@ -56,7 +60,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         this.tasks.addTask(6, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(3, new EntityDemonAIHurtByTarget(this, true));
         this.targetTasks.addTask(4, new EntityAITargetAggro(this, EntityPlayer.class, 0, false));
         this.setAggro(false);
         this.setTamed(false);
@@ -215,6 +219,15 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     @Override
     public void onUpdate()
     {
+    	if(!this.enthralled)
+    	{
+            TileEntity tile = this.worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
+            if(tile instanceof TEDemonPortal)
+            {
+            	((TEDemonPortal) tile).enthrallDemon(this);
+            	this.enthralled = true;
+            }
+    	}
         super.onUpdate();
     }
 
@@ -435,6 +448,13 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 	@Override
 	public boolean shouldUseRangedAttack() 
 	{
+		return true;
+	}
+
+	@Override
+	public boolean thrallDemon(TEDemonPortal teDemonPortal) 
+	{
+		this.setPortalLocation(new Int3(teDemonPortal.xCoord, teDemonPortal.yCoord, teDemonPortal.zCoord));
 		return true;
 	}
 }

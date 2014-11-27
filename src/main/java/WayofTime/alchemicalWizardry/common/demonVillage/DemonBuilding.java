@@ -1,8 +1,9 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.common.Int3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
 public class DemonBuilding
 {
@@ -34,9 +35,9 @@ public class DemonBuilding
         return area.doesContainAll(master, gridX, gridZ, dir);
     }
 
-    public void buildAll(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, boolean populateInventories)
     {
-        schematic.buildAll(world, xCoord, yCoord, zCoord, dir);
+        schematic.buildAll(teDemonPortal, world, xCoord, yCoord, zCoord, dir, populateInventories);
     }
 
     public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master)

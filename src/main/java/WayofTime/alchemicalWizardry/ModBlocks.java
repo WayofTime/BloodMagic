@@ -1,9 +1,47 @@
 package WayofTime.alchemicalWizardry;
 
-import WayofTime.alchemicalWizardry.common.block.*;
-import WayofTime.alchemicalWizardry.common.items.*;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import WayofTime.alchemicalWizardry.common.block.ArmourForge;
+import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
+import WayofTime.alchemicalWizardry.common.block.BlockAltar;
+import WayofTime.alchemicalWizardry.common.block.BlockBelljar;
+import WayofTime.alchemicalWizardry.common.block.BlockBloodLightSource;
+import WayofTime.alchemicalWizardry.common.block.BlockConduit;
+import WayofTime.alchemicalWizardry.common.block.BlockDemonPortal;
+import WayofTime.alchemicalWizardry.common.block.BlockHomHeart;
+import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
+import WayofTime.alchemicalWizardry.common.block.BlockPedestal;
+import WayofTime.alchemicalWizardry.common.block.BlockPlinth;
+import WayofTime.alchemicalWizardry.common.block.BlockReagentConduit;
+import WayofTime.alchemicalWizardry.common.block.BlockSchematicSaver;
+import WayofTime.alchemicalWizardry.common.block.BlockSocket;
+import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
+import WayofTime.alchemicalWizardry.common.block.BlockSpellEffect;
+import WayofTime.alchemicalWizardry.common.block.BlockSpellEnhancement;
+import WayofTime.alchemicalWizardry.common.block.BlockSpellModifier;
+import WayofTime.alchemicalWizardry.common.block.BlockSpellParadigm;
+import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
+import WayofTime.alchemicalWizardry.common.block.BlockWritingTable;
+import WayofTime.alchemicalWizardry.common.block.BloodRune;
+import WayofTime.alchemicalWizardry.common.block.BloodStoneBrick;
+import WayofTime.alchemicalWizardry.common.block.EfficiencyRune;
+import WayofTime.alchemicalWizardry.common.block.EmptySocket;
+import WayofTime.alchemicalWizardry.common.block.ImperfectRitualStone;
+import WayofTime.alchemicalWizardry.common.block.LargeBloodStoneBrick;
+import WayofTime.alchemicalWizardry.common.block.LifeEssenceBlock;
+import WayofTime.alchemicalWizardry.common.block.RitualStone;
+import WayofTime.alchemicalWizardry.common.block.RuneOfSacrifice;
+import WayofTime.alchemicalWizardry.common.block.RuneOfSelfSacrifice;
+import WayofTime.alchemicalWizardry.common.block.SpectralBlock;
+import WayofTime.alchemicalWizardry.common.block.SpeedRune;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.BlockDemonChest;
+import WayofTime.alchemicalWizardry.common.items.ItemBlockCrystalBelljar;
+import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,6 +86,7 @@ public class ModBlocks
     public static Block blockReagentConduit;
     public static Block blockAlchemicCalcinator;
     public static Block blockCrystalBelljar;
+    public static Block blockDemonChest;
 
     public static void init()
     {
@@ -83,7 +122,8 @@ public class ModBlocks
         blockReagentConduit = new BlockReagentConduit();
         blockAlchemicCalcinator = new BlockAlchemicCalcinator();
         blockCrystalBelljar = new BlockBelljar();
-
+        blockDemonChest = new BlockDemonChest();
+        
         blockLifeEssence = new LifeEssenceBlock();
     }
 
@@ -125,6 +165,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockReagentConduit, "blockReagentConduit");
         GameRegistry.registerBlock(ModBlocks.blockAlchemicCalcinator, "blockAlchemicCalcinator");
         GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, ItemBlockCrystalBelljar.class, "blockCrystalBelljar");
+        GameRegistry.registerBlock(ModBlocks.blockDemonChest, "blockDemonChest");
     }
 
     public static void registerBlocksInInit()

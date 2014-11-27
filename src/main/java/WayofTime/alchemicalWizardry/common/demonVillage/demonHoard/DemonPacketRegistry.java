@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import net.minecraft.world.World;
 
 public class DemonPacketRegistry 
@@ -61,18 +62,18 @@ public class DemonPacketRegistry
 		return "";
 	}
 	
-	public static int spawnDemons(World world, int x, int y, int z, DemonType type, int tier, boolean spawnGuardian)
+	public static int spawnDemons(TEDemonPortal teDemonPortal, World world, int x, int y, int z, DemonType type, int tier, boolean spawnGuardian)
 	{
-		return spawnDemons(world, x, y, z, getDemonPacketName(type, tier, spawnGuardian), type, tier, spawnGuardian);
+		return spawnDemons(teDemonPortal, world, x, y, z, getDemonPacketName(type, tier, spawnGuardian), type, tier, spawnGuardian);
 	}
 	
-	public static int spawnDemons(World world, int x, int y, int z, String name, DemonType type, int tier, boolean spawnGuardian)
+	public static int spawnDemons(TEDemonPortal teDemonPortal, World world, int x, int y, int z, String name, DemonType type, int tier, boolean spawnGuardian)
 	{
 		DemonHoardPacket packet = packetMap.get(name);
 		
 		if(packet != null)
 		{
-			return packet.summonDemons(world, x, y, z, type, tier, spawnGuardian);
+			return packet.summonDemons(teDemonPortal, world, x, y, z, type, tier, spawnGuardian);
 		}
 		
 		return 0;
