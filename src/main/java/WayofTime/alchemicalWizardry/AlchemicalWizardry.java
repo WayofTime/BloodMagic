@@ -71,6 +71,7 @@ import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketAngel;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonChest;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
@@ -698,6 +699,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TEReagentConduit.class, "containerReagentConduit");
         GameRegistry.registerTileEntity(TEBellJar.class, "containerBellJar");
         GameRegistry.registerTileEntity(TEAlchemicCalcinator.class, "containerAlchemicCalcinator");
+        GameRegistry.registerTileEntity(TEDemonChest.class, "containerDemonChest");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.efficiencyRune.setHarvestLevel("pickaxe", 2);

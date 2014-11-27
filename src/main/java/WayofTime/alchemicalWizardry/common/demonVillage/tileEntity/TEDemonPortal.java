@@ -116,7 +116,7 @@ public class TEDemonPortal extends TileEntity
     	{
     		return 0;
     	}
-    	return 0.3f;
+    	return 0.6f;
     }
     
     public float getDemonPortalChance()
@@ -922,7 +922,7 @@ public class TEDemonPortal extends TileEntity
         {
             DemonVillagePath path = new DemonVillagePath(xCoord + initGridX * 5, initY, zCoord + initGridZ * 5, dir, 6);
 
-            Int3 next = path.constructFullPath(worldObj, this.getRoadStepClearance(), this.getRoadBlock(), this.getRoadMeta());
+            Int3 next = path.constructFullPath(this, worldObj, this.getRoadStepClearance());
 
             if (next != null)
             {
@@ -1372,7 +1372,7 @@ public class TEDemonPortal extends TileEntity
 
         DemonVillagePath path = new DemonVillagePath(xi, yi, zi, dir, length);
 
-        path.constructFullPath(worldObj, this.getRoadStepClearance(), this.getRoadBlock(), this.getRoadMeta());
+        path.constructFullPath(this, worldObj, this.getRoadStepClearance());
     }
 
     public int placeMaterialOnNextAvailable()
@@ -1387,7 +1387,13 @@ public class TEDemonPortal extends TileEntity
 
     public Block getRoadBlock()
     {
-        return Blocks.nether_brick;
+    	switch(this.tier)
+    	{
+    	case 0:
+    		return rand.nextFloat() < 0.6 ? Blocks.cobblestone : Blocks.mossy_cobblestone;
+    	default:
+    		return Blocks.nether_brick;
+    	}
     }
 
     public int getRoadMeta()

@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockRedstoneComparator;
+import net.minecraft.block.BlockRedstoneRepeater;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockTorch;
+import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -87,29 +92,153 @@ public class BlockSet
                     metadata = southUpSet;
                     break;
             }
-        }else if(block instanceof BlockLadder)
+        }
+        else if(block instanceof BlockLadder)
         {
-        	int[] northSet = new int[]{2, 3, 0, 1};
-            int[] eastSet = new int[]{1, 0, 2, 3};
-            int[] southSet = new int[]{3, 2, 1, 0};
-            int[] westSet = new int[]{0, 1, 3, 2};
+        	int[] northSet = new int[]{3, 2, 5, 4};
+            int[] eastSet = new int[]{4, 5, 3, 2};
+            int[] southSet = new int[]{2, 3, 4, 5};
+            int[] westSet = new int[]{5, 4, 2, 3};
             
             switch (meta)
             {
-                case 0:
+                case 3:
+                    metadata = northSet;
+                    break;
+                case 4:
+                    metadata = eastSet;
+                    break;
+                case 2:
+                    metadata = southSet;
+                    break;
+                case 5:
                     metadata = westSet;
+                    break;
+            }
+        }else if(block instanceof BlockTrapDoor)
+        {
+        	int div = meta / 4;
+        	int mod = meta % 4;
+        	int[] northSet = new int[]{1 + div*4, 0 + div*4, 3 + div*4, 2 + div*4};
+            int[] eastSet = new int[]{2 + div*4, 3 + div*4, 1 + div*4, 0 + div*4};
+            int[] southSet = new int[]{0 + div*4, 1 + div*4, 2 + div*4, 3 + div*4};
+            int[] westSet = new int[]{3 + div*4, 2 + div*4, 0 + div*4, 1 + div*4};
+
+
+            switch (mod)
+            {
+                case 0:
+                    metadata = southSet;
+                    break;
+                case 1:
+                    metadata = northSet;
+                    break;
+                case 2:
+                    metadata = eastSet;
+                    break;
+                case 3:
+                    metadata = westSet;
+                    break;
+            }
+        }else if(block instanceof BlockTorch)
+        {
+        	int[] northSet = new int[]{3, 4, 1, 2};
+            int[] eastSet = new int[]{2, 1, 3, 4};
+            int[] southSet = new int[]{4, 3, 2, 1};
+            int[] westSet = new int[]{1, 2, 4, 3};
+
+
+            switch (meta)
+            {
+                case 1:
+                    metadata = westSet;
+                    break;
+                case 2:
+                    metadata = eastSet;
+                    break;
+                case 3:
+                    metadata = northSet;
+                    break;
+                case 4:
+                    metadata = southSet;
+                    break;
+            }
+        }else if(block instanceof BlockDoor)
+        {
+        	int[] northSet = new int[]{3, 1, 2, 0};
+            int[] eastSet = new int[]{0, 2, 3, 1};
+            int[] southSet = new int[]{1, 3, 0, 2};
+            int[] westSet = new int[]{2, 0, 1, 3};
+
+
+            switch (meta)
+            {
+                case 0:
+                    metadata = eastSet;
+                    break;
+                case 1:
+                    metadata = southSet;
+                    break;
+                case 2:
+                    metadata = westSet;
+                    break;
+                case 3:
+                    metadata = northSet;
+                    break;
+            }
+        }else if(block instanceof BlockRedstoneComparator)
+        {
+        	int div = meta / 4;
+        	int mod = meta % 4;
+        	int[] northSet = new int[]{0 + div*4, 2 + div*4, 3 + div*4, 1 + div*4};
+            int[] eastSet = new int[]{1 + div*4, 3 + div*4, 0 + div*4, 2 + div*4};
+            int[] southSet = new int[]{2 + div*4, 0 + div*4, 1 + div*4, 3 + div*4};
+            int[] westSet = new int[]{3 + div*4, 1 + div*4, 2 + div*4, 0 + div*4};
+
+
+            switch (mod)
+            {
+                case 0:
+                    metadata = northSet;
                     break;
                 case 1:
                     metadata = eastSet;
                     break;
                 case 2:
-                    metadata = northSet;
+                    metadata = southSet;
                     break;
                 case 3:
+                    metadata = westSet;
+                    break;
+            }
+        }else if(block instanceof BlockRedstoneRepeater)
+        {
+        	int div = meta / 4;
+        	int mod = meta % 4;
+        	int[] northSet = new int[]{0 + div*4, 2 + div*4, 3 + div*4, 1 + div*4};
+            int[] eastSet = new int[]{1 + div*4, 3 + div*4, 0 + div*4, 2 + div*4};
+            int[] southSet = new int[]{2 + div*4, 0 + div*4, 1 + div*4, 3 + div*4};
+            int[] westSet = new int[]{3 + div*4, 1 + div*4, 2 + div*4, 0 + div*4};
+
+
+            switch (mod)
+            {
+                case 0:
+                    metadata = northSet;
+                    break;
+                case 1:
+                    metadata = eastSet;
+                    break;
+                case 2:
                     metadata = southSet;
+                    break;
+                case 3:
+                    metadata = westSet;
                     break;
             }
         }
+        
+        
     }
 
     public List<Int3> getPositions()

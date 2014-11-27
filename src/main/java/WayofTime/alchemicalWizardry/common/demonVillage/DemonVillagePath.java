@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.Int3;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
 public class DemonVillagePath
 {
@@ -24,7 +25,7 @@ public class DemonVillagePath
         this.length = length;
     }
 
-    public Int3 constructFullPath(World world, int clearance, Block block, int meta)
+    public Int3 constructFullPath(TEDemonPortal portal, World world, int clearance)
     {
         int xPos = this.xi;
         int yPos = this.yi;
@@ -33,13 +34,13 @@ public class DemonVillagePath
 
         for (int i = -rad; i <= rad; i++)
         {
-            this.constructPartialPath(world, clearance, block, meta, xPos - rad * dir.offsetX + i * dir.offsetZ, yPos, zPos - rad * dir.offsetZ + i * dir.offsetX, dir, length + 2 * rad);
+            this.constructPartialPath(portal, world, clearance, xPos - rad * dir.offsetX + i * dir.offsetZ, yPos, zPos - rad * dir.offsetZ + i * dir.offsetX, dir, length + 2 * rad);
         }
 
         return this.getFinalLocation(world, clearance);
     }
 
-    public void constructPartialPath(World world, int clearance, Block roadBlock, int meta, int xi, int yi, int zi, ForgeDirection dir, int length)
+    public void constructPartialPath(TEDemonPortal portal, World world, int clearance, int xi, int yi, int zi, ForgeDirection dir, int length)
     {
         int xPos = xi;
         int yPos = yi;
@@ -59,7 +60,7 @@ public class DemonVillagePath
 
                 if (!block1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
                 {
-                    world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, roadBlock, meta, 3);
+                    world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
                     yPos += sign * yOffset;
                     break;
                 } else
@@ -70,7 +71,7 @@ public class DemonVillagePath
 
                     if (!block2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
                     {
-                        world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, roadBlock, meta, 3);
+                        world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
                         yPos += sign * yOffset;
                         break;
                     }
