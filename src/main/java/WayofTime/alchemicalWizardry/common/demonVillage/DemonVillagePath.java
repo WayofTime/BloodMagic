@@ -15,6 +15,10 @@ public class DemonVillagePath
     public int zi;
     public ForgeDirection dir;
     public int length;
+    
+    public boolean canGoDown = true;
+    public boolean tunnelIfObstructed = true;
+    public boolean createBridgeInAirIfObstructed = false;
 
     public DemonVillagePath(int xi, int yi, int zi, ForgeDirection dir, int length)
     {
@@ -25,22 +29,54 @@ public class DemonVillagePath
         this.length = length;
     }
 
-    public Int3 constructFullPath(TEDemonPortal portal, World world, int clearance)
+    public Int3AndBool constructFullPath(TEDemonPortal portal, World world, int clearance)
     {
         int xPos = this.xi;
         int yPos = this.yi;
         int zPos = this.zi;
         int rad = this.getRoadRadius();
+        int value = 0;
+        
+        int finalYPos = this.constructPartialPath(portal, world, clearance, xPos - rad * dir.offsetX, yPos, zPos - rad * dir.offsetZ, dir, length + rad, false);
 
         for (int i = -rad; i <= rad; i++)
         {
-            this.constructPartialPath(portal, world, clearance, xPos - rad * dir.offsetX + i * dir.offsetZ, yPos, zPos - rad * dir.offsetZ + i * dir.offsetX, dir, length + 2 * rad);
+            value = Math.max(this.constructPartialPath(portal, world, clearance, xPos - rad * dir.offsetX + i * dir.offsetZ, yPos, zPos - rad * dir.offsetZ + i * dir.offsetX, dir, length + 2 * rad, true), value);
+            System.out.println("" + (length + 2 * rad) + ", " + value + "");
         }
+        
+        Int3 position = new Int3(xPos, finalYPos, zPos);
 
-        return this.getFinalLocation(world, clearance);
+        boolean bool = value >= length + 2 * rad;
+
+        return new Int3AndBool(position, bool);
+    }
+    
+    public class Int3AndBool
+    {
+    	public Int3 coords;
+    	public boolean bool;
+    	public Int3AndBool(Int3 int3, boolean bool)
+    	{
+    		this.coords = int3;
+    		this.bool = bool;
+    	}
     }
 
-    public void constructPartialPath(TEDemonPortal portal, World world, int clearance, int xi, int yi, int zi, ForgeDirection dir, int length)
+    /**
+     * 
+     * @param portal
+     * @param world
+     * @param clearance
+     * @param xi
+     * @param yi
+     * @param zi
+     * @param dir
+     * @param length
+     * @param doConstruct
+     * @return				length if doConstruct, yPos if !doConstruct
+     */
+    public int constructPartialPath(TEDemonPortal portal, World world, int clearance, int xi, int yi, int zi, ForgeDirection dir, int length, boolean doConstruct)
     {
         int xPos = xi;
         int yPos = yi;
@@ -51,6 +87,8 @@ public class DemonVillagePath
             int xOffset = i * dir.offsetX;
             int zOffset = i * dir.offsetZ;
 
+            boolean completed = false;
+            
             for (int yOffset = 0; yOffset <= clearance; yOffset++)
             {
                 int sign = 1;
@@ -60,10 +98,14 @@ public class DemonVillagePath
 
                 if (!block1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
                 {
-                    world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                	if(doConstruct)
+                    {
+                		world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                    }
                     yPos += sign * yOffset;
+                    completed = true;
                     break;
-                } else
+                } else if(canGoDown)
                 {
                     sign = -1;
                     Block block2 = world.getBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset);
@@ -71,13 +113,66 @@ public class DemonVillagePath
 
                     if (!block2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
                     {
-                        world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                        if(doConstruct)
+                        {
+                        	world.setBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                        }
                         yPos += sign * yOffset;
+                        completed = true;
                         break;
                     }
                 }
             }
+            
+            if(!completed)
+            {
+            	boolean returnAmount = true;
+            	if(createBridgeInAirIfObstructed)
+            	{
+            		Block block1 = world.getBlock(xPos + xOffset, yPos, zPos + zOffset);
+                    
+                    if (block1.isReplaceable(world, xPos + xOffset, yPos, zPos + zOffset) || !this.isBlockReplaceable(block1))
+                    {
+                		returnAmount = false;
+
+                    	if(doConstruct)
+                        {
+                			world.setBlock(xPos + xOffset, yPos, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                        }
+                    }else
+                    {
+                    	returnAmount = true;
+                    }
+            		
+            	}else if(this.tunnelIfObstructed)
+            	{
+            		Block block1 = world.getBlock(xPos + xOffset, yPos, zPos + zOffset);
+
+            		if (!block1.isReplaceable(world, xPos + xOffset, yPos, zPos + zOffset) || this.isBlockReplaceable(block1))
+                    {
+                		returnAmount = false;
+
+                    	if(doConstruct)
+                        {
+                			world.setBlock(xPos + xOffset, yPos, zPos + zOffset, portal.getRoadBlock(), portal.getRoadMeta(), 3);
+                			world.setBlockToAir(xPos + xOffset, yPos + 1, zPos + zOffset);
+                			world.setBlockToAir(xPos + xOffset, yPos + 2, zPos + zOffset);
+                			world.setBlockToAir(xPos + xOffset, yPos + 3, zPos + zOffset);
+                        }
+                    }else
+                    {
+                    	returnAmount = true;
+                    }
+            	}
+            	
+            	if(returnAmount)
+        		{
+                	return doConstruct ? i : yPos;
+        		}
+            }
         }
+        
+        return doConstruct ? length : yPos;
     }
 
     public Int3 getFinalLocation(World world, int clearance)
