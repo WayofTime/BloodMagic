@@ -12,6 +12,8 @@ import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
+import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -133,6 +135,20 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledVeilOfEvil = config.get("Ritual Blacklist", "Veil of Evil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
 		
+		String tempDemonConfigs = "Temp Demon Configs";
+		TEDemonPortal.buildingGridDelay = config.get(tempDemonConfigs, "Building Grid Delay", 25).getInt();
+		TEDemonPortal.roadGridDelay = config.get(tempDemonConfigs, "Road Grid Delay", 10).getInt();
+		TEDemonPortal.demonHoardDelay = config.get(tempDemonConfigs, "Demon Hoard Delay", 40).getInt();
+		TEDemonPortal.demonRoadChance = (float)(config.get(tempDemonConfigs, "Demon Road Chance", 0.6f).getDouble());
+		TEDemonPortal.demonHouseChance = (float)(config.get(tempDemonConfigs, "Demon House Chance", 0.6f).getDouble());
+		TEDemonPortal.demonPortalChance = (float)(config.get(tempDemonConfigs, "Demon Portal Chance", 0.5f).getDouble());
+		TEDemonPortal.demonHoardChance = (float)(config.get(tempDemonConfigs, "Demon Hoard Chance", 1.0f).getDouble());
+		TEDemonPortal.portalTickRate = (float)(config.get(tempDemonConfigs, "Portal Tick Rate", 0.1f).getDouble());
+		
+		DemonVillagePath.canGoDown = config.get(tempDemonConfigs, "canRoadGoDown", true).getBoolean();
+		DemonVillagePath.tunnelIfObstructed = config.get(tempDemonConfigs, "tunnelIfObstructed", false).getBoolean();
+		DemonVillagePath.createBridgeInAirIfObstructed = config.get(tempDemonConfigs, "createBridgeInAirIfObstructed", false).getBoolean();
+
 		BoundArmour.tryComplexRendering = config.get("WimpySettings", "UseFancyBoundArmour", true).getBoolean(true);
 
 		Side side = FMLCommonHandler.instance().getSide();

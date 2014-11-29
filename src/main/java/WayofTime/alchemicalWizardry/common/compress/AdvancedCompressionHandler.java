@@ -26,14 +26,14 @@ public class AdvancedCompressionHandler extends CompressionHandler
 			{
 				continue;
 			}
-			
-			int threshold = CompressionRegistry.getItemThreshold(invStack);
-			
+						
 			for(int i=2; i<=3; i++)
 			{
 				ItemStack stacky = getRecipe(invStack, world, i);
 				if(isResultStackReversible(stacky, i, world))
 				{
+					int threshold = CompressionRegistry.getItemThreshold(invStack);
+
 					int needed = i*i;
 					int neededLeft = iterateThroughInventory(invStack, threshold, inv, needed, false);
 					if(neededLeft <= 0)

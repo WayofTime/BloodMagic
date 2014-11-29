@@ -32,6 +32,13 @@ public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 	}
 	
 	@Override
+	public void openInventory()
+	{
+		super.openInventory();
+		this.notifyPortalOfInteraction();
+	}
+	
+	@Override
 	public void checkForAdjacentChests()
 	{
 		return;
@@ -64,6 +71,6 @@ public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 			return;
 		}
 		
-		portal.notifyDemons(xCoord, yCoord, zCoord, 25);
+		portal.notifyDemons(xCoord, yCoord, zCoord, 50);
 	}
 }

@@ -16,9 +16,9 @@ public class DemonVillagePath
     public ForgeDirection dir;
     public int length;
     
-    public boolean canGoDown = true;
-    public boolean tunnelIfObstructed = true;
-    public boolean createBridgeInAirIfObstructed = false;
+    public static boolean canGoDown = true;
+    public static boolean tunnelIfObstructed = true;
+    public static boolean createBridgeInAirIfObstructed = false;
 
     public DemonVillagePath(int xi, int yi, int zi, ForgeDirection dir, int length)
     {

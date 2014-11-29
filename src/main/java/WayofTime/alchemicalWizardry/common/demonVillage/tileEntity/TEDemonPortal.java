@@ -48,6 +48,11 @@ public class TEDemonPortal extends TileEntity
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
     public static int demonHoardDelay = 40;
+    public static float demonRoadChance = 0.6f;
+    public static float demonHouseChance = 0.6f;
+    public static float demonPortalChance = 0.5f;
+    public static float demonHoardChance = 1.0f;
+    public static float portalTickRate = 0.1f;
 
     public static int[] tierCostList = new int[]{1000, 5000, 10000};
     
@@ -121,7 +126,7 @@ public class TEDemonPortal extends TileEntity
     	{
     		return 0;
     	}
-    	return 0.6f;
+    	return demonRoadChance;
     }
     
     public float getHouseChance()
@@ -130,7 +135,7 @@ public class TEDemonPortal extends TileEntity
     	{
     		return 0;
     	}
-    	return 0.6f;
+    	return demonHouseChance;
     }
     
     public float getDemonPortalChance()
@@ -139,12 +144,12 @@ public class TEDemonPortal extends TileEntity
     	{
     		return 0;
     	}
-    	return 0.5f;
+    	return demonPortalChance;
     }
     
     public float getDemonHoardChance()
     {
-    	return 1.0f;
+    	return demonHoardChance;
     }
     
     public boolean decreaseRandomCooldown(int amount)
@@ -257,7 +262,7 @@ public class TEDemonPortal extends TileEntity
 
     				if((xi-xf)*(xi-xf) + (yi-yf)*(yi-yf) + (zi-zf)*(zi-zf) <= radius*radius)
     				{
-    					((EntityCreature) thrallDemon).getNavigator().tryMoveToXYZ(xf, yf, zf, 2);
+    					((EntityCreature) thrallDemon).getNavigator().tryMoveToXYZ(xf, yf, zf, 1);
     				}
     			}
     		}
@@ -397,7 +402,7 @@ public class TEDemonPortal extends TileEntity
     
     public void incrementPoints()
     {
-    	this.pointPool += 1f;
+    	this.pointPool += portalTickRate;
     }
 
     @Override

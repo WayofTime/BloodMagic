@@ -8,4 +8,5 @@ public interface IHoardDemon
 	public void setPortalLocation(Int3 position);
     public Int3 getPortalLocation();
     public boolean thrallDemon(TEDemonPortal teDemonPortal);
+    public boolean isSamePortal(IHoardDemon demon);
 }

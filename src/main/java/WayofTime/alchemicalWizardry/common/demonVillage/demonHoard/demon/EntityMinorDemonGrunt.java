@@ -23,6 +23,7 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
 import WayofTime.alchemicalWizardry.common.Int3;
@@ -49,7 +50,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 
     public EntityMinorDemonGrunt(World par1World)
     {
-        super(par1World, "GruntString");
+        super(par1World, AlchemicalWizardry.entityMinorDemonGruntID);
         this.setSize(0.7F, 1.8F);
         this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAISwimming(this));
@@ -62,7 +63,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
         this.targetTasks.addTask(3, new EntityDemonAIHurtByTarget(this, true));
         this.targetTasks.addTask(4, new EntityAITargetAggro(this, EntityPlayer.class, 0, false));
-        this.setAggro(false);
+        this.setAggro(true);
         this.setTamed(false);
         
         demonPortal = new Int3(0,0,0);
@@ -417,7 +418,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     @Override
     public boolean attackEntityAsMob(Entity par1Entity)
     {
-        int i = this.isTamed() ? 6 : 7;
+        int i = this.isTamed() ? 20 : 20;
         return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
     
@@ -430,7 +431,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         double xCoord;
         double yCoord;
         double zCoord;
-        HolyProjectile hol = new HolyProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 5, 600);
+        HolyProjectile hol = new HolyProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 15, 600);
         this.worldObj.spawnEntityInWorld(hol);
     }
 
@@ -456,5 +457,14 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 	{
 		this.setPortalLocation(new Int3(teDemonPortal.xCoord, teDemonPortal.yCoord, teDemonPortal.zCoord));
 		return true;
+	}
+
+	@Override
+	public boolean isSamePortal(IHoardDemon demon) 
+	{
+		Int3 position = demon.getPortalLocation();
+		TileEntity portal = worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
+		
+		return portal instanceof TEDemonPortal ? portal == worldObj.getTileEntity(position.xCoord, position.yCoord, position.zCoord) : false;
 	}
 }
