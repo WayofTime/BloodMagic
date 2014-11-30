@@ -151,7 +151,11 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
             return;
         }
 
-        SoulNetworkHandler.syphonFromNetwork(orbStack, lpPerTick);
+        if(!SoulNetworkHandler.syphonFromNetworkWhileInContainer(orbStack, lpPerTick))
+        {
+        	return;
+        }
+        
         progress++;
 
         if (worldObj.getWorldTime() % 4 == 0)

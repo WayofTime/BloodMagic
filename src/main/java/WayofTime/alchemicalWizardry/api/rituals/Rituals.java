@@ -17,12 +17,12 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class Rituals
 {
-    private int crystalLevel;
-    private int actCost;
-    private RitualEffect effect;
-    private String name;
+	public final int crystalLevel;
+    public final int actCost;
+    public final RitualEffect effect;
+    public final String name;
 
-    private MRSRenderer customRenderer;
+    public final MRSRenderer customRenderer;
 
     public static Map<String, Rituals> ritualMap = new HashMap();
     public static List<String> keyList = new LinkedList();

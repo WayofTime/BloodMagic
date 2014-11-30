@@ -43,7 +43,7 @@ import com.google.gson.GsonBuilder;
 
 public class TEDemonPortal extends TileEntity
 {
-	boolean printDebug = false;
+	public static boolean printDebug = false;
 	
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
@@ -334,11 +334,14 @@ public class TEDemonPortal extends TileEntity
         this.incrementPoints();
         this.assignPoints();
         
+        if(printDebug)
         AlchemicalWizardry.logger.info("Roads: " + roadCooldown + " Buildings: " + houseCooldown);
 
         if(buildingStage >= 0 && buildingStage <=2)
         {
+        	if(printDebug)
         	AlchemicalWizardry.logger.info("BuildingStage = " + buildingStage);
+        	if(printDebug)
         	AlchemicalWizardry.logger.info("Tier = " + this.tier);
         	this.createPortalBuilding(buildingStage, nextDemonPortalName, tier);
         	buildingStage++;
@@ -1138,6 +1141,7 @@ public class TEDemonPortal extends TileEntity
 
     public int createPortalBuilding(int buildingTier) //TODO Telepose block next time, then build the new building.
     {
+    	if(printDebug)
     	AlchemicalWizardry.logger.info("Hello, I am here!");
         int x = 0;
         int z = 0;
@@ -1345,6 +1349,7 @@ public class TEDemonPortal extends TileEntity
                     }
                 } else
                 {
+                	if(printDebug)
                     AlchemicalWizardry.logger.info("This ISN'T valid!");
                 }
             }

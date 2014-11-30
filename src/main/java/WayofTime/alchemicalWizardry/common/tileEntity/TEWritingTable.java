@@ -17,13 +17,13 @@ import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.IBindingAgent;
 import WayofTime.alchemicalWizardry.common.ICatalyst;
 import WayofTime.alchemicalWizardry.common.IFillingAgent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
@@ -737,7 +737,7 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
 
             if (getStackInSlot(6) == null)
             {
-                if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed * acceleration))
+                if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(getStackInSlot(0), amountUsed * acceleration))
                 {
                     return;
                 }
@@ -775,7 +775,7 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
                     SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
                 }
 
-                if (!EnergyItems.syphonWhileInContainer(getStackInSlot(0), amountUsed * acceleration))
+                if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(getStackInSlot(0), amountUsed * acceleration))
                 {
                     return;
                 }

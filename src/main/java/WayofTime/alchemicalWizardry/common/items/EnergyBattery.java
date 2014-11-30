@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -75,7 +76,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             return par1ItemStack;
         }
 
-        EnergyItems.addEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
+        SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
         EnergyItems.hurtPlayer(par3EntityPlayer, 200);
         return par1ItemStack;
     }

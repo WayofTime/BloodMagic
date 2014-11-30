@@ -13,11 +13,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import WayofTime.alchemicalWizardry.api.event.AddToNetworkEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
+import WayofTime.alchemicalWizardry.api.event.ItemDrainInContainerEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
 import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class SoulNetworkHandler
 {
@@ -32,6 +34,24 @@ public class SoulNetworkHandler
         GameProfile gameProfile;
         gameProfile = server.func_152358_ax().func_152652_a(uuid);
         return null;
+    }
+    
+    public static boolean syphonFromNetworkWhileInContainer(ItemStack ist, int damageToBeDone)
+    {
+    	String ownerName = "";
+    	if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))
+        {
+            ownerName = ist.getTagCompound().getString("ownerName");
+        }
+    	
+    	ItemDrainInContainerEvent event = new ItemDrainInContainerEvent(ist, ownerName, damageToBeDone);
+    	
+    	if(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Result.DENY)
+    	{
+    		return false;
+    	}
+    	
+    	return syphonFromNetwork(event.ownerNetwork, event.drainAmount) >= damageToBeDone;
     }
 
     public static int syphonFromNetwork(ItemStack ist, int damageToBeDone)

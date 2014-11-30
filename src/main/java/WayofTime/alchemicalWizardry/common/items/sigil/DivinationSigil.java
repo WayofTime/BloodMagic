@@ -62,6 +62,11 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
         {
             return par1ItemStack;
         }
+        
+        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 0))
+        {
+        	return par1ItemStack;
+        }
 
         NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 

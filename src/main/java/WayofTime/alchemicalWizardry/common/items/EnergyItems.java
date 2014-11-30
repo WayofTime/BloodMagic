@@ -83,6 +83,7 @@ public class EnergyItems extends Item implements IBindable
         return true;
     }
 
+    @Deprecated
     public static boolean syphonWhileInContainer(ItemStack ist, int damageToBeDone)
     {
         if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))

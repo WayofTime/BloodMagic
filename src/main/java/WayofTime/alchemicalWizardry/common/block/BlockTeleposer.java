@@ -187,6 +187,9 @@ public class BlockTeleposer extends BlockContainer
 
         int metaI = worldI.getBlockMetadata(xi, yi, zi);
         int metaF = worldF.getBlockMetadata(xf, yf, zf);
+        
+        //TODO Teleposer event
+        
         worldI.playSoundEffect(xi, yi, zi, "mob.endermen.portal", 1.0F, 1.0F);
         worldF.playSoundEffect(xf, yf, zf, "mob.endermen.portal", 1.0F, 1.0F);
         
