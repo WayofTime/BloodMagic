@@ -38,6 +38,11 @@ public class BUEntries
 	}
 	
 	public void initEntries(){
+		rIntro = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText()}, "Introduction", 1);
+		rWeakRituals = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText(), new EntryText()}, "Weak Rituals", 1);
+		rRituals = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText(), new EntryText()}, "Rituals", 1);
+
+		
 		theAltar = new Entry(new IEntry[]{new EntryItemText(new ItemStack(ModBlocks.blockAltar), "Blood Altar")}, EnumChatFormatting.BLUE + "Blood Altar", 1);
 		runes = new Entry(new IEntry[]{new EntryItemText(new ItemStack(ModBlocks.runeOfSelfSacrifice)), new EntryItemText(new ItemStack(ModBlocks.runeOfSacrifice)), new EntryItemText(new ItemStack(ModBlocks.speedRune))}, "Runes", 1);
 		
@@ -55,7 +60,7 @@ public class BUEntries
 		ritualRegeneration = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText()}, "Regeneration", 1);
 		ritualFeatheredKnife = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText(), new EntryText()}, "Feathered Knife", 1);
 		ritualMoon = new Entry(new IEntry[]{new EntryText()}, "Harvest Moon", 1);
-		ritualSoul = new Entry(new IEntry[]{new EntryText(), new EntryText()}, "Eternal Soul", 1);
+		ritualSoul = new Entry(new IEntry[]{new EntryText(), new EntryText()}, "Eternal Soul", 2);
 		
 		ritualCure = new Entry(new IEntry[]{new EntryText(), new EntryRitualInfo(500)}, "Curing", 1);
 //		blockDivination = new Entry(new IEntry[]{new EntryItemText(new ItemStack(BUBlocks.altarProgress)), new EntryCraftingRecipe(BURecipes.altarProgress)}, "Divination Block", 1);
@@ -68,6 +73,10 @@ public class BUEntries
 		debug = new Entry(new IEntry[]{new EntryText("Debug"), new EntryImage("bloodutils:textures/misc/screenshots/t1.png", 854, 480, "Debug")}, EnumChatFormatting.AQUA + "De" + EnumChatFormatting.RED + "bug", 1);
 		registerEntries();
 	}
+	public static Entry rIntro;
+	public static Entry rWeakRituals;
+	public static Entry rRituals;	
+	
 	public static Entry theAltar;
 	public static Entry runes;
 	
@@ -96,8 +105,15 @@ public class BUEntries
 	public static Entry debug;
 	
 	public void registerEntries(){
+		
 		EntryRegistry.registerEntry(BUEntries.categoryBasics, EntryRegistry.basics, BUEntries.theAltar);
 		EntryRegistry.registerEntry(BUEntries.categoryBasics, EntryRegistry.basics, BUEntries.runes);
+		
+		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rIntro);
+		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rWeakRituals);
+		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rRituals);
+
+		
 		
 		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualWater);
 		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualLava);

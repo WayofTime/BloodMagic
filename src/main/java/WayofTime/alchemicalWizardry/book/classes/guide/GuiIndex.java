@@ -79,8 +79,9 @@ public class GuiIndex extends GuiScreen{
 		
 		if(entries != null && !entries.isEmpty()){
 			int j = 0;
-			for(int i = 0; i < entries.size(); i++){
-				Entry entry = (Entry)entries.values().toArray()[i];
+			Entry[] entryList = EntryRegistry.getEntriesInOrderForCategory(category);
+			for(int i = 0; i < entryList.length; i++){
+				Entry entry = entryList[i];
 				if(entry != null && entry.indexPage == this.currPage){
 					x = this.left + gwidth / 2 - 75;
 					y = (top + 15) + (10*j);
@@ -125,11 +126,13 @@ public class GuiIndex extends GuiScreen{
 	}
 	
 	public void registerButtons(){
-		HashMap<String, Entry> entries = EntryRegistry.entries.get(this.category);		
+		HashMap<String, Entry> entries = EntryRegistry.entries.get(this.category);	
+		
 		if(entries != null && !entries.isEmpty()){
+			Entry[] entryList = EntryRegistry.getEntriesInOrderForCategory(category);
 			int j = 0;
-			for(int i = 0; i < entries.size(); i++){
-				Entry entry = (Entry)entries.values().toArray()[i];
+			for(int i = 0; i < entryList.length; i++){
+				Entry entry = entryList[i];
 
 				if(entry != null && entry.indexPage == this.currPage){
 					String title = entry.name;
