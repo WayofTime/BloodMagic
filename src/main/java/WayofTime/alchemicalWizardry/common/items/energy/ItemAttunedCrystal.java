@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ItemAttunedCrystal extends Item implements IReagentManipulator
 {
-    public static final int maxDistance = 5;
+    public static final int maxDistance = 6;
 
     public IIcon crystalBody;
     public IIcon crystalLabel;

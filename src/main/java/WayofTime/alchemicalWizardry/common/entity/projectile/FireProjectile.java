@@ -83,7 +83,7 @@ public class FireProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                ((EntityLivingBase) mop).setFire(50);
+                ((EntityLivingBase) mop).setFire(10 * this.projectileDamage);
                 ((EntityLivingBase) mop).setRevengeTarget(shootingEntity);
 
                 if (((EntityLivingBase) mop).isPotionActive(Potion.fireResistance) || ((EntityLivingBase) mop).isImmuneToFire())

@@ -66,6 +66,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     private int hasChanged = 0;
 
     private int lockdownDuration;
+    private int demonBloodDuration;
 
     public TEAltar()
     {
@@ -88,6 +89,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         isResultBlock = false;
         progress = 0;
         this.lockdownDuration = 0;
+        this.demonBloodDuration = 0;
     }
     
     /**
@@ -105,6 +107,21 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     public int getRSPowerOutput()
     {
         return 5;
+    }
+    
+    public void addToDemonBloodDuration(int dur)
+    {
+    	this.demonBloodDuration++;
+    }
+    
+    public boolean hasDemonBlood()
+    {
+    	return this.demonBloodDuration > 0;
+    }
+    
+    public void decrementDemonBlood()
+    {
+    	this.demonBloodDuration = Math.max(0, this.demonBloodDuration - 1);
     }
 
     @Override
@@ -171,6 +188,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         isResultBlock = par1NBTTagCompound.getBoolean("isResultBlock");
         lockdownDuration = par1NBTTagCompound.getInteger("lockdownDuration");
         accelerationUpgrades = par1NBTTagCompound.getInteger("accelerationUpgrades");
+        demonBloodDuration = par1NBTTagCompound.getInteger("demonBloodDuration");
     }
 
     public void setMainFluid(FluidStack fluid)
@@ -249,6 +267,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         par1NBTTagCompound.setInteger("bufferCapacity", bufferCapacity);
         par1NBTTagCompound.setInteger("lockdownDuration", lockdownDuration);
         par1NBTTagCompound.setInteger("accelerationUpgrades", this.accelerationUpgrades);
+        par1NBTTagCompound.setInteger("demonBloodDuration", demonBloodDuration);
     }
 
     @Override
@@ -548,6 +567,13 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     @Override
     public void updateEntity()
     {
+    	this.decrementDemonBlood();
+    	
+    	if(this.hasDemonBlood() && !worldObj.isRemote)
+    	{
+    		SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+    	}
+    	
         if (this.lockdownDuration > 0)
         {
             this.lockdownDuration--;

@@ -15,11 +15,25 @@ public class EntityDemon extends EntityTameable implements IDemon
 {
     private boolean isAggro;
     private String demonID;
+    
+    protected boolean dropCrystal = true;
 
     public EntityDemon(World par1World, String demonID)
     {
         super(par1World);
         this.demonID = demonID;
+    }
+    
+    @Override
+    public boolean getDoesDropCrystal()
+    {
+    	return dropCrystal;
+    }
+    
+    @Override
+    public void setDropCrystal(boolean crystal)
+    {
+    	this.dropCrystal = crystal;
     }
 
     @Override
@@ -49,21 +63,24 @@ public class EntityDemon extends EntityTameable implements IDemon
 
     protected void dropFewItems(boolean par1, int par2)
     {
-        ItemStack drop = new ItemStack(ModItems.demonPlacer);
-        
-        DemonPlacer.setDemonString(drop, this.getDemonID());
+    	if(this.getDoesDropCrystal())
+    	{
+    		ItemStack drop = new ItemStack(ModItems.demonPlacer);
+            
+            DemonPlacer.setDemonString(drop, this.getDemonID());
 
-        if ((this.getOwner() instanceof EntityPlayer))
-        {
-            DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer) this.getOwner()));
-        }
+            if ((this.getOwner() instanceof EntityPlayer))
+            {
+                DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer) this.getOwner()));
+            }
 
-        if (this.hasCustomNameTag())
-        {
-            drop.setStackDisplayName(this.getCustomNameTag());
-        }
+            if (this.hasCustomNameTag())
+            {
+                drop.setStackDisplayName(this.getCustomNameTag());
+            }
 
-        this.entityDropItem(drop, 0.0f);
+            this.entityDropItem(drop, 0.0f);
+    	} 
     }
 
     public void onLivingUpdate()
@@ -97,5 +114,10 @@ public class EntityDemon extends EntityTameable implements IDemon
     public String getDemonID()
     {
         return this.demonID;
+    }
+    
+    protected void setDemonID(String id)
+    {
+    	this.demonID = id;
     }
 }

@@ -28,6 +28,11 @@ public class WindGustProjectile extends EnergyBlastProjectile
     {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
+    
+    public WindGustProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir)
+    {
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
+    }
 
     @Override
     public DamageSource getDamageSource()
@@ -63,9 +68,9 @@ public class WindGustProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                ((EntityLivingBase) mop).motionX = this.motionX * 2;
+                ((EntityLivingBase) mop).motionX = this.motionX * 0.25*this.projectileDamage;
                 ((EntityLivingBase) mop).motionY = 1.5;
-                ((EntityLivingBase) mop).motionZ = this.motionZ * 2;
+                ((EntityLivingBase) mop).motionZ = this.motionZ * 0.25*this.projectileDamage;
             }
         }
 

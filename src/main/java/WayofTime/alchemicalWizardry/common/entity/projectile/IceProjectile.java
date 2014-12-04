@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityIceDemon;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
@@ -9,6 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class IceProjectile extends EnergyBlastProjectile
 {
@@ -31,10 +30,10 @@ public class IceProjectile extends EnergyBlastProjectile
     {
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
     }
-
-    public IceProjectile(World worldObj, EntityIceDemon entityIceDemon, EntityLivingBase par1EntityLivingBase, float f, float g, int i, int j)
+    
+    public IceProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir)
     {
-        super(worldObj, entityIceDemon, par1EntityLivingBase, f, g, i, j);
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
     }
 
     @Override

@@ -7,4 +7,8 @@ public interface IDemon
     public boolean isAggro();
 
     public void setAggro(boolean aggro);
+    
+    public boolean getDoesDropCrystal();
+    
+    public void setDropCrystal(boolean crystal);
 }

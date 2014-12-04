@@ -289,9 +289,7 @@ public class Rituals
             {
                 ritual.effect.onRitualBroken(ritualStone, method);
             }
-        }
-        
-        System.out.println(method);
+        }    
     }
 
     public static int getNumberOfRituals()

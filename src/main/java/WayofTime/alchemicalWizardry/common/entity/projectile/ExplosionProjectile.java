@@ -32,6 +32,12 @@ public class ExplosionProjectile extends EnergyBlastProjectile
         super(par1World, par2EntityPlayer, damage, maxTicksInAir, posX, posY, posZ, rotationYaw, rotationPitch);
         causesEnvDamage = flag;
     }
+    
+    public ExplosionProjectile(World par1World, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase, float par4, float par5, int damage, int maxTicksInAir, boolean flag)
+    {
+        super(par1World, par2EntityLivingBase, par3EntityLivingBase, par4, par5, damage, maxTicksInAir);
+        causesEnvDamage = flag;
+    }
 
     @Override
     public DamageSource getDamageSource()
@@ -48,6 +54,8 @@ public class ExplosionProjectile extends EnergyBlastProjectile
             {
                 return;
             }
+            
+            this.onImpact(mop.entityHit);
 
             worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float) (2), causesEnvDamage);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
@@ -69,18 +77,8 @@ public class ExplosionProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                if (((EntityLivingBase) mop).isImmuneToFire())
-                {
-                    doDamage((int) (projectileDamage), mop);
-                } else
-                {
-                    doDamage(projectileDamage, mop);
-                }
+                doDamage(projectileDamage, mop);
             }
-        }
-
-        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
-        {
         }
 
         spawnHitParticles("magicCrit", 8);

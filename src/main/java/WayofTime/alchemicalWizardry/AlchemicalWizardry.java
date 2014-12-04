@@ -75,9 +75,13 @@ import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.book.BUEntries;
 import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketAngel;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketMinorGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntIce;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntWind;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonChest;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
@@ -102,6 +106,7 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.potion.PotionBoost;
 import WayofTime.alchemicalWizardry.common.potion.PotionDeaf;
+import WayofTime.alchemicalWizardry.common.potion.PotionDemonCloak;
 import WayofTime.alchemicalWizardry.common.potion.PotionDrowning;
 import WayofTime.alchemicalWizardry.common.potion.PotionFeatherFall;
 import WayofTime.alchemicalWizardry.common.potion.PotionFireFuse;
@@ -121,6 +126,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectDemonPortal;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEllipsoid;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEvaporation;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectExpulsion;
@@ -290,6 +296,7 @@ public class AlchemicalWizardry
     public static Potion customPotionSoulHarden;
     public static Potion customPotionDeaf;
     public static Potion customPotionFeatherFall;
+    public static Potion customPotionDemonCloak;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -306,6 +313,7 @@ public class AlchemicalWizardry
     public static int customPotionSoulHardenID;
     public static int customPotionDeafID;
     public static int customPotionFeatherFallID;
+    public static int customPotionDemonCloakID;
 
 	public static boolean ritualDisabledWater;
 	public static boolean ritualDisabledLava;
@@ -394,6 +402,10 @@ public class AlchemicalWizardry
     public static String entityShadeElementalID = "AW013";
     public static String entityHolyElementalID = "AW014";
     public static String entityMinorDemonGruntID = "AW015";
+    public static String entityMinorDemonGruntFireID = "AW016";
+    public static String entityMinorDemonGruntWindID = "AW017";
+    public static String entityMinorDemonGruntIceID = "AW018";
+    public static String entityMinorDemonGruntEarthID = "AW019";
 
 
     public static Fluid lifeEssenceFluid;
@@ -681,6 +693,7 @@ public class AlchemicalWizardry
         customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID, false, 0).setIconIndex(0, 0).setPotionName("Soul Harden"));
         customPotionDeaf = (new PotionDeaf(customPotionDeafID, true, 0).setIconIndex(0, 0).setPotionName("Deafness"));
         customPotionFeatherFall = (new PotionFeatherFall(customPotionFeatherFallID, false, 0).setIconIndex(0, 0).setPotionName("Feather Fall"));
+        customPotionDemonCloak = (new PotionDemonCloak(customPotionDemonCloakID, false, 0).setIconIndex(0, 0).setPotionName("Demo Cloaking"));
 
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
 
@@ -741,13 +754,14 @@ public class AlchemicalWizardry
 
         this.initAlchemyPotionRecipes();
         this.initAltarRecipes();
-        this.initRituals();
+        
         this.initBindingRecipes();
         this.initHarvestRegistry();
         this.initCombinedAlchemyPotionRecipes();
         
         ReagentRegistry.initReagents();
         this.initReagentRegistries();
+        this.initRituals();
         
         this.initDemonPacketRegistiry();
         this.initiateRegistry();
@@ -851,6 +865,11 @@ public class AlchemicalWizardry
         EntityRegistry.registerModEntity(EntityShadeElemental.class, "ShadeElemental", 32, this, 120, 3, true);
         EntityRegistry.registerModEntity(EntityHolyElemental.class, "HolyElemental", 33, this, 120, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGrunt.class, "MinorDemonGrunt", 34, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntFire.class, "MinorDemonGruntFire", 35, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntWind.class, "MinorDemonGruntWind", 36, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntIce.class, "MinorDemonGruntIce", 37, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntEarth.class, "MinorDemonGruntEarth", 38, this, 80, 3, true);
+
 
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.standardBindingAgent), 1, 3, this.standardBindingAgentDungeonChance));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.mundanePowerCatalyst), 1, 1, this.mundanePowerCatalystDungeonChance));
@@ -1201,6 +1220,7 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW028SpawnWard", 1, 150000, new RitualEffectSpawnWard(), "Ward of Sacrosanctity", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
+        Rituals.registerRitual("AW031DemonPortal", 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
@@ -1246,7 +1266,7 @@ public class AlchemicalWizardry
     
     public static void initDemonPacketRegistiry()
     {
-    	DemonPacketRegistry.registerDemonPacket("angel", new DemonPacketAngel());
+    	DemonPacketRegistry.registerDemonPacket("angel", new DemonPacketMinorGrunt());
     }
     
     public static void initiateRegistry()

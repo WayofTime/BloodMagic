@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
 public class BlockDemonPortal extends BlockContainer
 {
@@ -18,6 +19,17 @@ public class BlockDemonPortal extends BlockContainer
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("demonPortal");
     }
+    
+    @Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+	{
+		TileEntity tile = world.getTileEntity(x, y, z);
+		if(tile instanceof TEDemonPortal)
+		{
+			((TEDemonPortal) tile).notifyPortalOfBreak();
+		}
+		super.breakBlock(world, x, y, z, block, meta);
+	}
 
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
