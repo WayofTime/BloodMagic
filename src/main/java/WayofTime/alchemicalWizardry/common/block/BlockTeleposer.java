@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
+import net.minecraft.block.BlockPortal;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
@@ -180,7 +181,7 @@ public class BlockTeleposer extends BlockContainer
             return false;
         }
 
-        if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner)
+        if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner || blockI instanceof BlockPortal || blockF instanceof BlockPortal)
         {
             return false;
         }

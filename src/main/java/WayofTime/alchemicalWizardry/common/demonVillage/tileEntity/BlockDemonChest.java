@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
-public class BlockDemonChest extends BlockChest implements IBlockPortalNode
+public class BlockDemonChest extends BlockChest implements IBlockPortalNode, IRoadWard
 {
 	public BlockDemonChest() 
 	{
@@ -40,9 +40,9 @@ public class BlockDemonChest extends BlockChest implements IBlockPortalNode
 		super.breakBlock(world, x, y, z, block, meta);
 	}
 	
-//	@Override
-//	public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
-//	{
-//		return true;
-//	}
+	@Override
+	public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+	{
+		return true;
+	}
 }

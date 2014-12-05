@@ -372,12 +372,12 @@ public class TEDemonPortal extends TileEntity
             return;
         }
         
-        Math.max(0, this.lockdownTimer - 1);
+        lockdownTimer = Math.max(0, this.lockdownTimer - 1);
         this.incrementPoints();
         this.assignPoints();
         
         if(printDebug)
-        AlchemicalWizardry.logger.info("Roads: " + roadCooldown + " Buildings: " + houseCooldown);
+        AlchemicalWizardry.logger.info("Roads: " + roadCooldown + " Buildings: " + houseCooldown + " Lockdown: " + lockdownTimer);
 
         if(buildingStage >= 0 && buildingStage <=2)
         {

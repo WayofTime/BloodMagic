@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,15 +20,16 @@ public class BlockDemonPortal extends BlockContainer
     }
     
     @Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
-	{
-		TileEntity tile = world.getTileEntity(x, y, z);
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
+    {
+    	TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile instanceof TEDemonPortal)
 		{
 			((TEDemonPortal) tile).notifyPortalOfBreak();
 		}
-		super.breakBlock(world, x, y, z, block, meta);
-	}
+		
+    	super.onBlockHarvested(world, x, y, z, meta, player);
+    }
 
     @Override
     public TileEntity createNewTileEntity(World var1, int var2)
