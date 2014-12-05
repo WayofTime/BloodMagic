@@ -98,6 +98,34 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     }
     
     @Override
+    protected void dropFewItems(boolean par1, int par2)
+    {
+    	if(!this.getDoesDropCrystal())
+    	{
+    		ItemStack lifeShardStack = new ItemStack(ModItems.baseItems, 1, 28);
+            ItemStack soulShardStack = new ItemStack(ModItems.baseItems, 1, 29);
+            
+            int dropAmount = 0;
+            
+            for(int i=0; i<=par2; i++)
+            {
+            	dropAmount += this.worldObj.rand.nextFloat() < 0.6f ? 1 : 0;
+            }
+            
+            ItemStack drop = this.worldObj.rand.nextBoolean() ? lifeShardStack : soulShardStack;
+            drop.stackSize = dropAmount;
+
+            if(dropAmount > 0)
+            {
+                this.entityDropItem(drop, 0.0f);
+            }
+    	}else
+    	{
+    		super.dropFewItems(par1, par2);
+    	}
+    }
+    
+    @Override
     public void setPortalLocation(Int3 position)
     {
     	this.demonPortal = position;

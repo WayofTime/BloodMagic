@@ -44,6 +44,7 @@ import WayofTime.alchemicalWizardry.common.items.MasterBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.items.TranscendentBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemAttunedCrystal;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemDestinationClearer;
@@ -201,6 +202,8 @@ public class ModItems
     public static Item bucketLife;
     
     public static Item itemBloodPack;
+    
+    public static Item transcendentBloodOrb;
 
     public static void init()
     {
@@ -209,6 +212,7 @@ public class ModItems
         magicianBloodOrb = new MagicianBloodOrb(150000).setUnlocalizedName("magicianBloodOrb");
         masterBloodOrb = new MasterBloodOrb(1000000).setUnlocalizedName("masterBloodOrb");
         archmageBloodOrb = new ArchmageBloodOrb(10000000).setUnlocalizedName("archmageBloodOrb");
+        transcendentBloodOrb = new TranscendentBloodOrb(30000000).setUnlocalizedName("transcendentBloodOrb");
         energyBlaster = new EnergyBlast().setUnlocalizedName("energyBlast");
         energySword = new EnergySword().setUnlocalizedName("energySword");
         lavaCrystal = new LavaCrystal().setUnlocalizedName("lavaCrystal");
@@ -362,6 +366,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.tennebrae, "tennebrae");
         GameRegistry.registerItem(ModItems.demonBloodShard, "demonBloodShard");
         GameRegistry.registerItem(ModItems.archmageBloodOrb, "archmageBloodOrb");
+        GameRegistry.registerItem(ModItems.transcendentBloodOrb, "transcendentBloodOrb");
         GameRegistry.registerItem(ModItems.sigilOfWind, "sigilOfWind");
         GameRegistry.registerItem(ModItems.telepositionFocus, "telepositionFocus");
         GameRegistry.registerItem(ModItems.enhancedTelepositionFocus, "enhancedTelepositionFocus");

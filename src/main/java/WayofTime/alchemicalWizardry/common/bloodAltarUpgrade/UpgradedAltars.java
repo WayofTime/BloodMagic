@@ -15,7 +15,8 @@ public class UpgradedAltars
     public static List<AltarComponent> thirdTierAltar = new ArrayList();
     public static List<AltarComponent> fourthTierAltar = new ArrayList();
     public static List<AltarComponent> fifthTierAltar = new ArrayList();
-    public static int highestAltar = 5;
+    public static List<AltarComponent> sixthTierAltar = new ArrayList();
+    public static int highestAltar = 6;
 
     public static int isAltarValid(World world, int x, int y, int z)
     {
@@ -114,6 +115,31 @@ public class UpgradedAltars
 
             case 5:
                 for (AltarComponent ac : fifthTierAltar)
+                {
+                    if (ac.isBloodRune())
+                    {
+                        Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+
+                        if (!(testBlock instanceof BloodRune))
+                        {
+                            return false;
+                        }
+                    } else
+                    {
+                        Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                        int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+
+                        if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+                
+            case 6:
+                for (AltarComponent ac : sixthTierAltar)
                 {
                     if (ac.isBloodRune())
                     {
@@ -279,6 +305,29 @@ public class UpgradedAltars
             fifthTierAltar.add(new AltarComponent(i, -4, 8, ModBlocks.bloodRune, 0, true, true));
             fifthTierAltar.add(new AltarComponent(i, -4, -8, ModBlocks.bloodRune, 0, true, true));
         }
+        
+        sixthTierAltar.addAll(fifthTierAltar);
+        
+        for(int i = -4; i <= 2; i++)
+        {
+        	sixthTierAltar.add(new AltarComponent(11, i, 11, Blocks.stonebrick, 0, false, false));
+        	sixthTierAltar.add(new AltarComponent(-11, i, -11, Blocks.stonebrick, 0, false, false));
+        	sixthTierAltar.add(new AltarComponent(11, i, -11, Blocks.stonebrick, 0, false, false));
+        	sixthTierAltar.add(new AltarComponent(-11, i, 11, Blocks.stonebrick, 0, false, false));
+        }
+        
+        sixthTierAltar.add(new AltarComponent(11, 3, 11, ModBlocks.blockCrystal, 0, false, false));
+    	sixthTierAltar.add(new AltarComponent(-11, 3, -11, ModBlocks.blockCrystal, 0, false, false));
+    	sixthTierAltar.add(new AltarComponent(11, 3, -11, ModBlocks.blockCrystal, 0, false, false));
+    	sixthTierAltar.add(new AltarComponent(-11, 3, 11, ModBlocks.blockCrystal, 0, false, false));
+        
+        for (int i = -9; i <= 9; i++)
+        {
+            sixthTierAltar.add(new AltarComponent(11, -5, i, ModBlocks.bloodRune, 0, true, true));
+            sixthTierAltar.add(new AltarComponent(-11, -5, i, ModBlocks.bloodRune, 0, true, true));
+            sixthTierAltar.add(new AltarComponent(i, -5, 11, ModBlocks.bloodRune, 0, true, true));
+            sixthTierAltar.add(new AltarComponent(i, -5, -11, ModBlocks.bloodRune, 0, true, true));
+        }
     }
 
     public static List<AltarComponent> getAltarUpgradeListForTier(int tier)
@@ -296,6 +345,9 @@ public class UpgradedAltars
 
             case 5:
                 return fifthTierAltar;
+                
+            case 6:
+            	return sixthTierAltar;
         }
 
         return null;

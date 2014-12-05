@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ItemComponents extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore", "MeleeCore", "ParadigmBackPlate", "OutputCable", "FlameCore", "IcyCore", "GustCore", "EarthenCore", "InputCable", "CrackedRunicPlate", "RunicPlate", "ScribedRunicPlate", "DefaultCore", "OffensiveCore", "DefensiveCore", "EnvironmentalCore", "PowerCore", "CostCore", "PotencyCore", "ObsidianBrace", "ToolCore", "EtherealSlate"};
+    private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore", "MeleeCore", "ParadigmBackPlate", "OutputCable", "FlameCore", "IcyCore", "GustCore", "EarthenCore", "InputCable", "CrackedRunicPlate", "RunicPlate", "ScribedRunicPlate", "DefaultCore", "OffensiveCore", "DefensiveCore", "EnvironmentalCore", "PowerCore", "CostCore", "PotencyCore", "ObsidianBrace", "ToolCore", "EtherealSlate", "LifeShard", "SoulShard", "SoulRunicPlate", "LifeBrace"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;

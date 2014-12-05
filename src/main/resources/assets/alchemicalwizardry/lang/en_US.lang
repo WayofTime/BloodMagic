@@ -55,6 +55,8 @@ tile.alchemicCalcinator.name=Alchemic Calcinator
 tile.crystalBelljar.name=Crystal Belljar
 tile.blockReagentConduit.name=Alchemy Relay
 tile.lifeEssenceFluidBlock.name=Life Essence
+tile.crystalBlock.fullCrystal.name=Crystal Cluster
+tile.crystalBlock.crystalBrick.name=Crystal Cluster Brick
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb
@@ -165,6 +167,8 @@ item.bloodMagicBaseItem.CostCore.name=Reduction Core
 item.bloodMagicBaseItem.PotencyCore.name=Potency Core
 item.bloodMagicBaseItem.ObsidianBrace.name=Obsidian Brace
 item.bloodMagicBaseItem.EtherealSlate.name=Ethereal Slate
+item.bloodMagicBaseItem.LifeShard.name=Life Shard
+item.bloodMagicBaseItem.SoulShard.name=Soul Shard
 item.bloodMagicAlchemyItem.Offensa.name=Offensa
 item.bloodMagicAlchemyItem.Praesidium.name=Praesidium
 item.bloodMagicAlchemyItem.OrbisTerrae.name=Orbis Terrae
@@ -190,6 +194,7 @@ item.creativeDagger.name=Creative Sacrificial Knife
 item.itemBloodPack.name=Blood Letter's Pack
 item.itemHarvestSigil.name=Harvest Goddess Sigil
 item.itemCompressionSigil.name=Sigil of Compression
+item.transcendentBloodOrb.name=Transcendent Blood Orb
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 

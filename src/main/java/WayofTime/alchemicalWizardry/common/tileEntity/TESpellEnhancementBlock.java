@@ -144,18 +144,24 @@ public class TESpellEnhancementBlock extends TESpellBlock
                 return "alchemicalwizardry:textures/models/SpellEnhancementPower2.png";
             case 2:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPower3.png";
+            case 3:
+            	return "alchemicalwizardry:textures/models/SpellEnhancementPower4.png";
             case 5:
                 return "alchemicalwizardry:textures/models/SpellEnhancementCost1.png";
             case 6:
                 return "alchemicalwizardry:textures/models/SpellEnhancementCost2.png";
             case 7:
-                return "alchemicalwizardry:textures/models/SpellEnhancementCost3.png";
+            	return "alchemicalwizardry:textures/models/SpellEnhancementCost3.png";
+            case 8:
+                return "alchemicalwizardry:textures/models/SpellEnhancementCost4.png";
             case 10:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPotency1.png";
             case 11:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPotency2.png";
             case 12:
                 return "alchemicalwizardry:textures/models/SpellEnhancementPotency3.png";
+            case 13:
+                return "alchemicalwizardry:textures/models/SpellEnhancementPotency4.png";
 
         }
         return "alchemicalwizardry:textures/models/SpellEnhancementPower1.png";

@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.common.block.BlockAltar;
 import WayofTime.alchemicalWizardry.common.block.BlockBelljar;
 import WayofTime.alchemicalWizardry.common.block.BlockBloodLightSource;
 import WayofTime.alchemicalWizardry.common.block.BlockConduit;
+import WayofTime.alchemicalWizardry.common.block.BlockCrystal;
 import WayofTime.alchemicalWizardry.common.block.BlockDemonPortal;
 import WayofTime.alchemicalWizardry.common.block.BlockHomHeart;
 import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
@@ -37,6 +38,7 @@ import WayofTime.alchemicalWizardry.common.block.SpeedRune;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.BlockDemonChest;
 import WayofTime.alchemicalWizardry.common.items.ItemBlockCrystalBelljar;
 import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemCrystalBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
@@ -87,6 +89,7 @@ public class ModBlocks
     public static Block blockAlchemicCalcinator;
     public static Block blockCrystalBelljar;
     public static Block blockDemonChest;
+    public static Block blockCrystal;
 
     public static void init()
     {
@@ -123,6 +126,7 @@ public class ModBlocks
         blockAlchemicCalcinator = new BlockAlchemicCalcinator();
         blockCrystalBelljar = new BlockBelljar();
         blockDemonChest = new BlockDemonChest();
+        blockCrystal = new BlockCrystal();
         
         blockLifeEssence = new LifeEssenceBlock();
     }
@@ -166,6 +170,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockAlchemicCalcinator, "blockAlchemicCalcinator");
         GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, ItemBlockCrystalBelljar.class, "blockCrystalBelljar");
         GameRegistry.registerBlock(ModBlocks.blockDemonChest, "blockDemonChest");
+        GameRegistry.registerBlock(ModBlocks.blockCrystal, ItemCrystalBlock.class, "blockCrystal");
     }
 
     public static void registerBlocksInInit()

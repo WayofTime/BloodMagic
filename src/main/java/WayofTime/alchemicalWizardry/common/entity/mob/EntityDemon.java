@@ -61,6 +61,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return null;
     }
 
+    @Override
     protected void dropFewItems(boolean par1, int par2)
     {
     	if(this.getDoesDropCrystal())
