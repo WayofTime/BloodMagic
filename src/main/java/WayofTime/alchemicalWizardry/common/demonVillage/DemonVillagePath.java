@@ -43,6 +43,7 @@ public class DemonVillagePath
         for (int i = -rad; i <= rad; i++)
         {
             value = Math.max(this.constructPartialPath(portal, world, clearance, xPos - rad * dir.offsetX + i * dir.offsetZ, yPos, zPos - rad * dir.offsetZ + i * dir.offsetX, dir, length + 2 * rad, true), value);
+            if(TEDemonPortal.printDebug)
             System.out.println("" + (length + 2 * rad) + ", " + value + "");
         }
         

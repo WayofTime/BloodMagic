@@ -13,6 +13,7 @@ public class EntityMinorDemonGruntFire extends EntityMinorDemonGrunt
 	{
 		super(par1World);
 		this.setDemonID(AlchemicalWizardry.entityMinorDemonGruntFireID);
+		this.isImmuneToFire = true;
 	}
 	
 	@Override

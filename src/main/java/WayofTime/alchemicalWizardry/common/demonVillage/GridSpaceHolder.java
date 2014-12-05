@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -146,6 +147,7 @@ public class GridSpaceHolder
     {
         if (master != null)
         {
+        	if(TEDemonPortal.printDebug)
             AlchemicalWizardry.logger.info("negXRadius: " + negXRadius + " posXRadius: " + posXRadius + " negZRadius: " + negZRadius + " posZRadius: " + posZRadius);
             for (int i = -negXRadius; i <= posXRadius; i++)
             {
@@ -157,6 +159,7 @@ public class GridSpaceHolder
                         continue;
                     }
 
+                    if(TEDemonPortal.printDebug)
                     AlchemicalWizardry.logger.info("x: " + i + " z: " + j);
 
                     int xOff = 0;
@@ -194,6 +197,7 @@ public class GridSpaceHolder
 
     public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master)
     {
+    	if(TEDemonPortal.printDebug)
         AlchemicalWizardry.logger.info("Grid space selected: (" + xInit + "," + zInit + ")");
         if (master != null)
         {
@@ -230,6 +234,7 @@ public class GridSpaceHolder
                             break;
                     }
 
+                    if(TEDemonPortal.printDebug)
                     AlchemicalWizardry.logger.info("Grid space (" + (xInit + xOff) + "," + (zInit + zOff) + ")");
 
                     master.setGridSpace(xInit + xOff, zInit + zOff, new GridSpace(type, yLevel));

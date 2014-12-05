@@ -1,7 +1,6 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry.common.entity.mob;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityElemental;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

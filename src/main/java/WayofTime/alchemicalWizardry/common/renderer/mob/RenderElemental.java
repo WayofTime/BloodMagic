@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.renderer.mob;
 
-import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.*;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;

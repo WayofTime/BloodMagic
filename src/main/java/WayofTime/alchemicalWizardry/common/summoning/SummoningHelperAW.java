@@ -5,8 +5,12 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningHelper;
-import WayofTime.alchemicalWizardry.common.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntIce;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntWind;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityAirElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBileDemon;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityEarthElemental;
@@ -103,6 +107,26 @@ public class SummoningHelperAW extends SummoningHelper
         if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntID))
         {
         	return new EntityMinorDemonGrunt(worldObj);
+        }
+        
+        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntFireID))
+        {
+        	return new EntityMinorDemonGruntFire(worldObj);
+        }
+        
+        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntEarthID))
+        {
+        	return new EntityMinorDemonGruntEarth(worldObj);
+        }
+        
+        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntWindID))
+        {
+        	return new EntityMinorDemonGruntWind(worldObj);
+        }
+        
+        if(this.id.equals(AlchemicalWizardry.entityMinorDemonGruntIceID))
+        {
+        	return new EntityMinorDemonGruntIce(worldObj);
         }
         
         return new EntityPig(worldObj);

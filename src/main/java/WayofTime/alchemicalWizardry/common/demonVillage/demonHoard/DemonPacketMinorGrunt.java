@@ -56,6 +56,6 @@ public class DemonPacketMinorGrunt extends DemonHoardPacket
 		entity.setAggro(true);
 		entity.setDropCrystal(false);
 		
-		return 1;
+		return spawnGuardian ? 3 : 1;
 	}
 }

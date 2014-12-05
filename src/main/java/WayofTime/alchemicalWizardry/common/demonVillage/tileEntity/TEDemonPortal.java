@@ -46,7 +46,9 @@ public class TEDemonPortal extends TileEntity
 {
 	public DemonType type = DemonType.FIRE;
 	
-	public static boolean printDebug = true;
+	public static boolean printDebug = false;
+	
+	public static int limit = 100;
 	
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
@@ -54,7 +56,7 @@ public class TEDemonPortal extends TileEntity
     public static float demonRoadChance = 0.3f;
     public static float demonHouseChance = 0.6f;
     public static float demonPortalChance = 0.5f;
-    public static float demonHoardChance = 1.0f;
+    public static float demonHoardChance = 0.8f;
     public static float portalTickRate = 1f;
 
     public static int[] tierCostList = new int[]{1000, 5000, 10000};
@@ -717,16 +719,16 @@ public class TEDemonPortal extends TileEntity
         return maxLength;
     }
 
-    public Int3 findRoadSpaceFromDirection(ForgeDirection dir, int amount)
+    public Int3 findRoadSpaceFromDirection(ForgeDirection dir, int amount) //TODO
     {
         int index = 0;
         if (dir == ForgeDirection.NORTH)
         {
         	if(printDebug)
             System.out.print("NORTH!");
-            for (int i = 0; i <= negZRadius + posZRadius; i++)
+            for (int i = Math.max(0, -limit + negZRadius); i <= negZRadius + Math.min(posZRadius, limit); i++)
             {
-                for (int j = 0; j <= negXRadius + posXRadius; j++)
+                for (int j = Math.max(0, -limit + negXRadius); j <= negXRadius + Math.min(posXRadius, limit); j++)
                 {
                     GridSpace space = area[j][i];
                     if (space.isRoadSegment())
@@ -741,9 +743,9 @@ public class TEDemonPortal extends TileEntity
             }
         } else if (dir == ForgeDirection.SOUTH)
         {
-            for (int i = negZRadius + posZRadius; i >= 0; i--)
+            for (int i = negZRadius + Math.min(posZRadius, limit); i >= Math.max(0, -limit + negZRadius); i--)
             {
-                for (int j = 0; j <= negXRadius + posXRadius; j++)
+                for (int j = Math.max(0, -limit + negXRadius); j <= negXRadius + Math.min(posXRadius, limit); j++)
                 {
                     GridSpace space = area[j][i];
                     if (space.isRoadSegment())
@@ -758,9 +760,9 @@ public class TEDemonPortal extends TileEntity
             }
         } else if (dir == ForgeDirection.EAST)
         {
-            for (int i = negXRadius + posXRadius; i >= 0; i--)
+            for (int i = negXRadius + Math.min(posXRadius, limit); i >= Math.max(0, -limit + negXRadius); i--)
             {
-                for (int j = 0; j <= negZRadius + posZRadius; j++)
+                for (int j = Math.max(0, -limit + negZRadius); j <= negZRadius + Math.min(posZRadius, limit); j++)
                 {
                     GridSpace space = area[i][j];
                     if (space.isRoadSegment())
@@ -775,9 +777,9 @@ public class TEDemonPortal extends TileEntity
             }
         } else if (dir == ForgeDirection.WEST)
         {
-            for (int i = 0; i <= negXRadius + posXRadius; i++)
+            for (int i = Math.max(0, -limit + negXRadius); i <= negXRadius + Math.min(posXRadius, limit); i++)
             {
-                for (int j = 0; j <= negZRadius + posZRadius; j++)
+                for (int j = Math.max(0, -limit + negZRadius); j <= negZRadius + Math.min(posZRadius, limit); j++)
                 {
                     GridSpace space = area[i][j];
                     if (space.isRoadSegment())

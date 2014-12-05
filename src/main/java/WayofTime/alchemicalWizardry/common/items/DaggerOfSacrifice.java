@@ -23,6 +23,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
@@ -60,6 +61,11 @@ public class DaggerOfSacrifice extends EnergyItems
         {
             return false;
         }
+        
+        if(par2EntityLivingBase instanceof IHoardDemon)
+        {
+        	return false;
+        }
 
         if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityWither || par2EntityLivingBase instanceof EntityDragon || par2EntityLivingBase instanceof EntityPlayer || par2EntityLivingBase instanceof IBossDisplayData)
         {
@@ -75,7 +81,6 @@ public class DaggerOfSacrifice extends EnergyItems
 
         if(par2EntityLivingBase instanceof IDemon)
         {
-        	System.out.println("Demon");
         	((IDemon)par2EntityLivingBase).setDropCrystal(false);
         	this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
         }

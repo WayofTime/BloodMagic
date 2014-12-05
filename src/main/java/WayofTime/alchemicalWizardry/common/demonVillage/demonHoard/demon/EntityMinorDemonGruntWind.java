@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityMinorDemonGruntWind extends EntityMinorDemonGrunt
 {
@@ -24,8 +26,22 @@ public class EntityMinorDemonGruntWind extends EntityMinorDemonGrunt
         	return false;
         }
         
+        if (par1Entity instanceof EntityPlayer)
+        {
+            SpellHelper.setPlayerSpeedFromServer((EntityPlayer) par1Entity, par1Entity.motionX, par1Entity.motionY + 3, par1Entity.motionZ);
+        } else if (par1Entity instanceof EntityLivingBase)
+        {
+            ((EntityLivingBase) par1Entity).motionY += 3.0D;
+        }
+        
         return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
+	
+	@Override
+	public void onLivingUpdate()
+	{
+		this.fallDistance = 0;
+	}
 
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
