@@ -46,7 +46,7 @@ public class TEDemonPortal extends TileEntity
 {
 	public DemonType type = DemonType.FIRE;
 	
-	public static boolean printDebug = false;
+	public static boolean printDebug = true;
 	
 	public static int limit = 100;
 	
@@ -575,6 +575,9 @@ public class TEDemonPortal extends TileEntity
         {
         	return 0;
         }
+        
+        if(TEDemonPortal.printDebug)
+        System.out.println("Spawning Demons");
         
     	return DemonPacketRegistry.spawnDemons(teDemonPortal, worldObj, xCoord + road.xCoord * 5, road.yCoord + 1, zCoord + road.zCoord * 5, type, tier, spawnGuardian);
     }

@@ -72,6 +72,11 @@ import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRe
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntGuardian;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntGuardianEarth;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntGuardianFire;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntGuardianIce;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntGuardianWind;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntIce;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntWind;
 import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
@@ -400,7 +405,11 @@ public class AlchemicalWizardry
     public static String entityMinorDemonGruntWindID = "AW017";
     public static String entityMinorDemonGruntIceID = "AW018";
     public static String entityMinorDemonGruntEarthID = "AW019";
-
+	public static String entityMinorDemonGruntGuardianID = "AW020";
+	public static String entityMinorDemonGruntGuardianFireID = "AW021";
+	public static String entityMinorDemonGruntGuardianWindID = "AW022";
+	public static String entityMinorDemonGruntGuardianIceID = "AW023";
+	public static String entityMinorDemonGruntGuardianEarthID = "AW024";
 
     public static Fluid lifeEssenceFluid;
 
@@ -411,6 +420,7 @@ public class AlchemicalWizardry
     // Says where the client and server 'proxy' code is loaded.
     @SidedProxy(clientSide = "WayofTime.alchemicalWizardry.client.ClientProxy", serverSide = "WayofTime.alchemicalWizardry.common.CommonProxy")
     public static CommonProxy proxy;
+
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -863,6 +873,12 @@ public class AlchemicalWizardry
         EntityRegistry.registerModEntity(EntityMinorDemonGruntWind.class, "MinorDemonGruntWind", 36, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGruntIce.class, "MinorDemonGruntIce", 37, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGruntEarth.class, "MinorDemonGruntEarth", 38, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardian.class, "MinorDemonGruntGuardian", 39, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianFire.class, "MinorDemonGruntGuardianFire", 40, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianWind.class, "MinorDemonGruntGuardianWind", 41, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianIce.class, "MinorDemonGruntGuardianIce", 42, this, 80, 3, true);
+        EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianEarth.class, "MinorDemonGruntGuardianEarth", 43, this, 80, 3, true);
+
 
 
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.standardBindingAgent), 1, 3, this.standardBindingAgentDungeonChance / 5));

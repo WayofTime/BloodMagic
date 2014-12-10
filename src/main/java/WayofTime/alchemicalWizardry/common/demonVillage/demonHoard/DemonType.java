@@ -4,7 +4,7 @@ public enum DemonType
 {
 	NORMAL,
 	FIRE,
-	WATER,
+	EARTH,
 	ICE,
 	WIND
 }

@@ -137,14 +137,14 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
 		
 		String tempDemonConfigs = "Temp Demon Configs [2]";
-		TEDemonPortal.buildingGridDelay = config.get(tempDemonConfigs, "Building Grid Delay", 25).getInt();
-		TEDemonPortal.roadGridDelay = config.get(tempDemonConfigs, "Road Grid Delay", 10).getInt();
-		TEDemonPortal.demonHoardDelay = config.get(tempDemonConfigs, "Demon Hoard Delay", 40).getInt();
-		TEDemonPortal.demonRoadChance = (float)(config.get(tempDemonConfigs, "Demon Road Chance", 0.3f).getDouble());
-		TEDemonPortal.demonHouseChance = (float)(config.get(tempDemonConfigs, "Demon House Chance", 0.6f).getDouble());
-		TEDemonPortal.demonPortalChance = (float)(config.get(tempDemonConfigs, "Demon Portal Chance", 0.5f).getDouble());
-		TEDemonPortal.demonHoardChance = (float)(config.get(tempDemonConfigs, "Demon Hoard Chance", 0.8f).getDouble());
-		TEDemonPortal.portalTickRate = (float)(config.get(tempDemonConfigs, "Portal Tick Rate", 0.1f).getDouble());
+//		TEDemonPortal.buildingGridDelay = config.get(tempDemonConfigs, "Building Grid Delay", 25).getInt();
+//		TEDemonPortal.roadGridDelay = config.get(tempDemonConfigs, "Road Grid Delay", 10).getInt();
+//		TEDemonPortal.demonHoardDelay = config.get(tempDemonConfigs, "Demon Hoard Delay", 40).getInt();
+//		TEDemonPortal.demonRoadChance = (float)(config.get(tempDemonConfigs, "Demon Road Chance", 0.3f).getDouble());
+//		TEDemonPortal.demonHouseChance = (float)(config.get(tempDemonConfigs, "Demon House Chance", 0.6f).getDouble());
+//		TEDemonPortal.demonPortalChance = (float)(config.get(tempDemonConfigs, "Demon Portal Chance", 0.5f).getDouble());
+//		TEDemonPortal.demonHoardChance = (float)(config.get(tempDemonConfigs, "Demon Hoard Chance", 0.8f).getDouble());
+//		TEDemonPortal.portalTickRate = (float)(config.get(tempDemonConfigs, "Portal Tick Rate", 0.1f).getDouble());
 		
 		DemonVillagePath.canGoDown = config.get(tempDemonConfigs, "canRoadGoDown", true).getBoolean();
 		DemonVillagePath.tunnelIfObstructed = config.get(tempDemonConfigs, "tunnelIfObstructed", false).getBoolean();

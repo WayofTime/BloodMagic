@@ -22,6 +22,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RenderHelper
@@ -61,10 +62,16 @@ public class RenderHelper
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
                 scaledResolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
                 displayArmorStatus(mc);
-                renderTestHUD(mc);
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             }
-
+            
+            ReagentStack reagentStack = new ReagentStack(ReagentRegistry.sanctusReagent, 1000);
+            int maxAmount = 3000;
+            
+            if(reagentStack != null && reagentStack.amount > 0)
+            {
+                renderTestHUD(mc, reagentStack, maxAmount);
+            }
         }
 
         return true;
@@ -164,22 +171,24 @@ public class RenderHelper
         tessellator.draw();
     }
     
-    private static void renderTestHUD(Minecraft mc)
+    private static void renderTestHUD(Minecraft mc, ReagentStack reagentStack, int maxAmount)
     {
-    	Reagent reagent = ReagentRegistry.incendiumReagent;
+    	Reagent reagent = reagentStack.reagent;
     	int xSize = 32;
     	int ySize = 32;
     	
-    	int x = (10 - xSize) / 2 * 8;
+    	int amount = 256 * (maxAmount - reagentStack.amount) / maxAmount;
+    	
+    	int x = (16 - xSize) / 2 * 8;
         int y = (150 - ySize) / 2 * 8;
         
         ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
-        GL11.glColor4f(reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 0.5F);
+        GL11.glColor4f(reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 1.0F);
         mc.getTextureManager().bindTexture(test2);
         
         GL11.glScalef(1f/8f, 1f/8f, 1f/8f);
         
-        drawTexturedModalRect(x, y, 0, 0, 256, 256);
+        drawTexturedModalRect(x, y + amount, 0, amount, 256, 256 - amount);
         
         ResourceLocation test = new ResourceLocation("alchemicalwizardry", "textures/gui/container.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
