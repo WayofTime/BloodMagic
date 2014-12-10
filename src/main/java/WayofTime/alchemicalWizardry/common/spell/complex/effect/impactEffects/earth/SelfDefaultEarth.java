@@ -40,7 +40,7 @@ public class SelfDefaultEarth extends SelfSpellEffect
                 {
                     if (!world.isAirBlock(posX + i, posY + j, posZ + k) && !SpellHelper.isBlockFluid(world.getBlock(posX + i, posY + j, posZ + k)))
                     {
-                        BlockTeleposer.swapBlocks(world, world, posX + i, posY, posZ + k, posX + i, posY + j, posZ + k);
+                        BlockTeleposer.swapBlocks(this, world, world, posX + i, posY, posZ + k, posX + i, posY + j, posZ + k);
 
                         break;
                     }

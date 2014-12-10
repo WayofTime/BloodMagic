@@ -96,7 +96,7 @@ public class RitualEffectMagnetic extends RitualEffect
                                 if (oreName.contains("ore"))
                                 {
                                     //Allow swapping code. This means the searched block is an ore.
-                                    BlockTeleposer.swapBlocks(world, world, x + i, j, z + k, xRep, yRep, zRep);
+                                    BlockTeleposer.swapBlocks(this, world, world, x + i, j, z + k, xRep, yRep, zRep);
                                     SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
 
                                     if (hasPotentia)

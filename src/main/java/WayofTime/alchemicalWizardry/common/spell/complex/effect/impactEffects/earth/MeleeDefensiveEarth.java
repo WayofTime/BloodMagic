@@ -30,7 +30,7 @@ public class MeleeDefensiveEarth extends MeleeSpellCenteredWorldEffect
         {
             for (int j = 0; j < vertRadius; j++)
             {
-                BlockTeleposer.swapBlocks(world, world, posX + i * zOff, posY + j, posZ + i * xOff, posX + i * zOff, posY + j - vertRadius, posZ + i * xOff);
+                BlockTeleposer.swapBlocks(this, world, world, posX + i * zOff, posY + j, posZ + i * xOff, posX + i * zOff, posY + j - vertRadius, posZ + i * xOff);
             }
         }
     }

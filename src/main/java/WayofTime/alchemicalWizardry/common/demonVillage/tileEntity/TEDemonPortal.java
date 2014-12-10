@@ -1296,7 +1296,7 @@ public class TEDemonPortal extends TileEntity
     				int yDestination = yLevel + yOffset;
     				if(yCoord != yDestination)
     				{
-    					BlockTeleposer.swapBlocks(worldObj, worldObj, xCoord, yCoord, zCoord, xCoord, yDestination, zCoord);
+    					BlockTeleposer.swapBlocks(this, worldObj, worldObj, xCoord, yCoord, zCoord, xCoord, yDestination, zCoord);
     				}else
     				{
     					//Nuthin - just as a reminder that we can now increment properly

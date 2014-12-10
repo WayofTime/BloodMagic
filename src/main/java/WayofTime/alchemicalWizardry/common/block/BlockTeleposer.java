@@ -19,6 +19,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import codechicken.multipart.MultipartHelper;
@@ -152,7 +153,7 @@ public class BlockTeleposer extends BlockContainer
         return new TETeleposer();
     }
 
-    public static boolean swapBlocks(World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
+    public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
     {
         TileEntity tileEntityI = worldI.getTileEntity(xi, yi, zi);
         TileEntity tileEntityF = worldF.getTileEntity(xf, yf, zf);
@@ -181,7 +182,7 @@ public class BlockTeleposer extends BlockContainer
             return false;
         }
 
-        if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner || blockI instanceof BlockPortal || blockF instanceof BlockPortal)
+        if (blockI instanceof BlockMobSpawner || blockF instanceof BlockMobSpawner || caller instanceof TEDemonPortal ? false : blockI instanceof BlockPortal || blockF instanceof BlockPortal)
         {
             return false;
         }

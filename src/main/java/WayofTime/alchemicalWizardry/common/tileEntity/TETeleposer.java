@@ -248,7 +248,7 @@ public class TETeleposer extends TileEntity implements IInventory
                                 for (int j = -(focusLevel - 1); j <= (focusLevel - 1); j++)
                                 {
                                     {
-                                        if (BlockTeleposer.swapBlocks(worldObj, worldF, xCoord + i, yCoord + 1 + k, zCoord + j, xf + i, yf + 1 + k, zf + j))
+                                        if (BlockTeleposer.swapBlocks(this, worldObj, worldF, xCoord + i, yCoord + 1 + k, zCoord + j, xf + i, yf + 1 + k, zf + j))
                                         {
                                             transportCount++;
                                         }

@@ -40,6 +40,7 @@ public class EntityMinorDemonGruntWind extends EntityMinorDemonGrunt
 	@Override
 	public void onLivingUpdate()
 	{
+		super.onLivingUpdate();
 		this.fallDistance = 0;
 	}
 
