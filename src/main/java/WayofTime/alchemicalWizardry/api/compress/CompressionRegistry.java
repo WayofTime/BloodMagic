@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -52,7 +51,7 @@ public class CompressionRegistry
 	{
 		for(Entry<ItemStack, Integer> entry : thresholdMap.entrySet())
 		{
-			if(SpellHelper.areItemStacksEqual(entry.getKey(), stack))
+			if(areItemStacksEqual(entry.getKey(), stack))
 			{
 				return entry.getValue();
 			}
@@ -60,4 +59,9 @@ public class CompressionRegistry
 		
 		return 0;
 	}
+	
+	public static boolean areItemStacksEqual(ItemStack stack, ItemStack compressedStack)
+    {
+    	return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? compressedStack.getTagCompound() == null : stack.getTagCompound().equals(compressedStack.getTagCompound()));
+    }
 }

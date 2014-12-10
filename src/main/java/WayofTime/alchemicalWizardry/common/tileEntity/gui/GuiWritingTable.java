@@ -1,13 +1,14 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
-import net.minecraft.client.gui.inventory.GuiBrewingStand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 
 public class GuiWritingTable extends GuiContainer
 {
@@ -38,6 +39,5 @@ public class GuiWritingTable extends GuiContainer
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        GuiBrewingStand d;
     }
 }

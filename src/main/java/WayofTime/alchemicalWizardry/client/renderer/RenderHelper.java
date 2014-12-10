@@ -6,10 +6,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -21,8 +18,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -154,55 +151,44 @@ public class RenderHelper
         return r;
     }
     
+    public static void drawTexturedModalRect(int p_73729_1_, int p_73729_2_, int p_73729_3_, int p_73729_4_, double p_73729_5_, double p_73729_6_)
+    {
+        float f = 0.00390625F;
+        float f1 = 0.00390625F;
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double)(p_73729_1_ + 0), (double)(p_73729_2_ + p_73729_6_), (double)zLevel, (double)((float)(p_73729_3_ + 0) * f), (double)((float)(p_73729_4_ + p_73729_6_) * f1));
+        tessellator.addVertexWithUV((double)(p_73729_1_ + p_73729_5_), (double)(p_73729_2_ + p_73729_6_), (double)zLevel, (double)((float)(p_73729_3_ + p_73729_5_) * f), (double)((float)(p_73729_4_ + p_73729_6_) * f1));
+        tessellator.addVertexWithUV((double)(p_73729_1_ + p_73729_5_), (double)(p_73729_2_ + 0), (double)zLevel, (double)((float)(p_73729_3_ + p_73729_5_) * f), (double)((float)(p_73729_4_ + 0) * f1));
+        tessellator.addVertexWithUV((double)(p_73729_1_ + 0), (double)(p_73729_2_ + 0), (double)zLevel, (double)((float)(p_73729_3_ + 0) * f), (double)((float)(p_73729_4_ + 0) * f1));
+        tessellator.draw();
+    }
+    
     private static void renderTestHUD(Minecraft mc)
     {
-    	int x = 0;
-    	int y = 0;
-    	int l;
-        float f;
-        float f3;
-        float f4;
-    	TextureManager p_77015_2_ = mc.getTextureManager();
-    	ItemStack p_77015_3_ = new ItemStack(ModItems.activationCrystal);
+    	Reagent reagent = ReagentRegistry.incendiumReagent;
+    	int xSize = 32;
+    	int ySize = 32;
     	
-        Object object = p_77015_3_.getIconIndex();
+    	int x = (10 - xSize) / 2 * 8;
+        int y = (150 - ySize) / 2 * 8;
+        
+        ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
+        GL11.glColor4f(reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 0.5F);
+        mc.getTextureManager().bindTexture(test2);
+        
+        GL11.glScalef(1f/8f, 1f/8f, 1f/8f);
+        
+        drawTexturedModalRect(x, y, 0, 0, 256, 256);
+        
+        ResourceLocation test = new ResourceLocation("alchemicalwizardry", "textures/gui/container.png");
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        mc.getTextureManager().bindTexture(test);
+        
 
-    	GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_BLEND);
-        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-        ResourceLocation resourcelocation = p_77015_2_.getResourceLocation(p_77015_3_.getItemSpriteNumber());
-        p_77015_2_.bindTexture(resourcelocation);
-
-        if (object == null)
-        {
-            object = ((TextureMap)Minecraft.getMinecraft().getTextureManager().getTexture(resourcelocation)).getAtlasSprite("missingno");
-        }
-
-        l = p_77015_3_.getItem().getColorFromItemStack(p_77015_3_, 0);
-        f3 = (float)(l >> 16 & 255) / 255.0F;
-        f4 = (float)(l >> 8 & 255) / 255.0F;
-        f = (float)(l & 255) / 255.0F;
-
-//        if (this.renderWithColor)
-//        {
-//            GL11.glColor4f(f3, f4, f, 1.0F);
-//        }
-
-        GL11.glDisable(GL11.GL_LIGHTING); //Forge: Make sure that render states are reset, a renderEffect can derp them up.
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
-
-        renderIcon(x, y, (IIcon)object, 16, 16);
-
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glDisable(GL11.GL_BLEND);
-
-//        if (renderEffect && p_77015_3_.hasEffect(0))
-//        {
-//            renderEffect(p_77015_2_, x, y);
-//        }
-        GL11.glEnable(GL11.GL_LIGHTING);
+        drawTexturedModalRect(x, y, 0, 0, 256, 256);
+        
+        
     }
     
     public static void renderIcon(int p_94149_1_, int p_94149_2_, IIcon p_94149_3_, int p_94149_4_, int p_94149_5_)
