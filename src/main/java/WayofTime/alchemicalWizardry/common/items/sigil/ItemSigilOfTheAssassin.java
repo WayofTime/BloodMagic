@@ -21,6 +21,7 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -87,7 +88,7 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
 
         float f = 10.0F;
 
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false, f);
+        MovingObjectPosition movingobjectposition = SpellHelper.raytraceFromEntity(par2World, par3EntityPlayer, false, f);
 
         if (movingobjectposition == null)
         {
@@ -95,7 +96,7 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
             return par1ItemStack;
         } else
         {
-        	AlchemicalWizardry.logger.info("Got something!");
+        	AlchemicalWizardry.logger.info("Got something! Type of hit: " + movingobjectposition.typeOfHit);
 
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
             {
@@ -206,11 +207,64 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
         double d3 = 500.0D;
         if (p_77621_2_ instanceof EntityPlayerMP)
         {
-            d3 = ((EntityPlayerMP)p_77621_2_).theItemInWorldManager.getBlockReachDistance();
+//            d3 = ((EntityPlayerMP)p_77621_2_).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
         return p_77621_1_.func_147447_a(vec3, vec31, p_77621_3_, !p_77621_3_, false);
     }
+    
+//    public MovingObjectPosition movingObjectPositiongdsa(WOrld worldObj, int posX, int posY, int posZ)
+//    {
+//    	Vec3 var17 = Vec3.createVectorHelper(posX, posY, posZ);
+//        Vec3 var3 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
+//        MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
+//        var17 = Vec3.createVectorHelper(posX, posY, posZ);
+//        var3 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
+//
+//        if (var4 != null)
+//        {
+//            var3 = Vec3.createVectorHelper(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
+//        }
+//
+//        Entity var5 = null;
+//        List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+//        double var7 = 0.0D;
+//        Iterator var9 = var6.iterator();
+//        float var11;
+//
+//        while (var9.hasNext())
+//        {
+//            Entity var10 = (Entity) var9.next();
+//
+//            if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
+//            {
+//                var11 = 0.3F;
+//                AxisAlignedBB var12 = var10.boundingBox.expand(var11, var11, var11);
+//                MovingObjectPosition var13 = var12.calculateIntercept(var17, var3);
+//
+//                if (var13 != null)
+//                {
+//                    double var14 = var17.distanceTo(var13.hitVec);
+//
+//                    if (var14 < var7 || var7 == 0.0D)
+//                    {
+//                        var5 = var10;
+//                        var7 = var14;
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (var5 != null)
+//        {
+//            var4 = new MovingObjectPosition(var5);
+//        }
+//
+//        if (var4 != null)
+//        {
+//            this.onImpact(var4);
+//        }
+//    }
 
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)

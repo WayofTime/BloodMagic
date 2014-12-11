@@ -23,6 +23,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RenderHelper
@@ -56,6 +57,7 @@ public class RenderHelper
                 && !mc.gameSettings.showDebugInfo)
         {
             EntityPlayer player = mc.thePlayer;
+            player.getEntityData();
             World world = mc.theWorld;
             if (SpellHelper.canPlayerSeeAlchemy(player))
             {
@@ -72,9 +74,40 @@ public class RenderHelper
             {
                 renderTestHUD(mc, reagentStack, maxAmount);
             }
+            
+            renderLPHUD(mc, APISpellHelper.getPlayerLPTag(player), 10000000);
         }
 
         return true;
+    }
+    
+    private static void renderLPHUD(Minecraft mc, int lpAmount, int maxAmount)
+    {
+    	GL11.glPushMatrix();
+    	int xSize = 32;
+    	int ySize = 32;
+    	
+    	int amount = (int) (256 *  ((double)(maxAmount - lpAmount) / maxAmount));
+    	
+    	int x = (16 + 32 - xSize) / 2 * 8;
+        int y = (150 - ySize) / 2 * 8;
+        
+        ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
+        GL11.glColor4f(1, 0, 0, 1.0F);
+        mc.getTextureManager().bindTexture(test2);
+        
+        GL11.glScalef(1f/8f, 1f/8f, 1f/8f);
+        
+        drawTexturedModalRect(x, y + amount, 0, amount, 256, 256 - amount);
+        
+        ResourceLocation test = new ResourceLocation("alchemicalwizardry", "textures/gui/lpVial.png");
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        mc.getTextureManager().bindTexture(test);
+        
+
+        drawTexturedModalRect(x, y, 0, 0, 256, 256);
+        
+        GL11.glPopMatrix();
     }
 
     private static List<HUDElement> getHUDElements(Minecraft mc)
@@ -173,6 +206,7 @@ public class RenderHelper
     
     private static void renderTestHUD(Minecraft mc, ReagentStack reagentStack, int maxAmount)
     {
+    	GL11.glPushMatrix();
     	Reagent reagent = reagentStack.reagent;
     	int xSize = 32;
     	int ySize = 32;
@@ -197,7 +231,7 @@ public class RenderHelper
 
         drawTexturedModalRect(x, y, 0, 0, 256, 256);
         
-        
+        GL11.glPopMatrix();
     }
     
     public static void renderIcon(int p_94149_1_, int p_94149_2_, IIcon p_94149_3_, int p_94149_4_, int p_94149_5_)

@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -33,6 +34,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -267,6 +269,17 @@ public class AlchemicalWizardryEventHooks
 
 		if (entityLiving instanceof EntityPlayer)
 		{
+			if(!entityLiving.worldObj.isRemote)
+			{
+//				APISpellHelper.setPlayerLPTag((EntityPlayer)entityLiving, SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getUsername((EntityPlayer)entityLiving)));
+//				((EntityPlayer) entityLiving).sendPlayerAbilities();
+				
+				if(entityLiving instanceof EntityPlayerMP)
+				{
+//					System.out.println("Sending Packet");
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getLPPacket(SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getUsername((EntityPlayer)entityLiving)), 1000), (EntityPlayerMP)entityLiving);
+				}
+			}
 			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer) event.entityLiving).capabilities, Float.valueOf(0.1f), new String[]{"walkSpeed", "g", "field_75097_g"});
 		}
 
@@ -304,6 +317,8 @@ public class AlchemicalWizardryEventHooks
 			}
 		}
 
+//		event.entityLiving.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeAllModifiers();
+		
 		if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionBoost))
 		{
 			int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionBoost).getAmplifier();
@@ -311,7 +326,11 @@ public class AlchemicalWizardryEventHooks
 			//if(!entity.isSneaking())
 			{
 				float percentIncrease = (i + 1) * 0.05f;
-
+				
+//				AttributeModifier speedModifier = new AttributeModifier(new UUID(213241, 3), "Potion Boost", percentIncrease, 0);
+//				
+//				event.entityLiving.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(speedModifier);
+				
 				if (event.entityLiving instanceof EntityPlayer)
 				{
 					EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;

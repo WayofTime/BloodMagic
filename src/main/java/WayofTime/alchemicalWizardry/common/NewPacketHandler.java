@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.*;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
@@ -71,6 +72,7 @@ public enum NewPacketHandler
         clientChannel.pipeline().addAfter(tileAltarCodec, "VelocityHandler", new VelocityMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "TEMasterStoneHandler", new TEMasterStoneMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "TEReagentConduitHandler", new TEReagentConduitMessageHandler());
+        clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentLPMessageHandler", new CurrentLPMessageHandler());
     }
 
 
@@ -253,6 +255,18 @@ public enum NewPacketHandler
             }
         }
     }
+    
+    private static class CurrentLPMessageHandler extends SimpleChannelInboundHandler<CurrentLPMessage>
+    {
+        @Override
+        protected void channelRead0(ChannelHandlerContext ctx, CurrentLPMessage msg) throws Exception
+        {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            
+            System.out.println("" + msg.currentLP + ", " + msg.maxLP);
+            APISpellHelper.setPlayerLPTag(player, msg.currentLP);
+        }
+    }
 
     public static class BMMessage
     {
@@ -363,6 +377,12 @@ public enum NewPacketHandler
 
         List<ColourAndCoords> destinationList;
     }
+    
+    public static class CurrentLPMessage extends BMMessage
+    {
+    	int currentLP;
+    	int maxLP;
+    }
 
     private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
     {
@@ -379,6 +399,7 @@ public enum NewPacketHandler
             addDiscriminator(8, VelocityMessage.class);
             addDiscriminator(9, TEMasterStoneMessage.class);
             addDiscriminator(10, TEReagentConduitMessage.class);
+            addDiscriminator(11, CurrentLPMessage.class);
         }
 
         @Override
@@ -580,6 +601,12 @@ public enum NewPacketHandler
                     }
 
                     break;
+                    
+                case 11:
+                	target.writeInt(((CurrentLPMessage) msg).currentLP);
+                	target.writeInt(((CurrentLPMessage) msg).maxLP);
+                	
+                	break;
             }
         }
 
@@ -787,6 +814,12 @@ public enum NewPacketHandler
                     ((TEReagentConduitMessage) msg).destinationList = list;
 
                     break;
+                    
+                case 11:
+                	((CurrentLPMessage) msg).currentLP = dat.readInt();
+                	((CurrentLPMessage) msg).maxLP = dat.readInt();
+
+                	break;
             }
         }
     }
@@ -928,6 +961,16 @@ public enum NewPacketHandler
         msg.z = tile.zCoord;
 
         msg.destinationList = tile.destinationList;
+
+        return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+    }
+    
+    public static Packet getLPPacket(int curLP, int maxLP)
+    {
+    	CurrentLPMessage msg = new CurrentLPMessage();
+        msg.index = 11;
+        msg.currentLP = curLP;
+        msg.maxLP = maxLP;
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }

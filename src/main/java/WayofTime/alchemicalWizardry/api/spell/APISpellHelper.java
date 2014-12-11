@@ -9,6 +9,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -16,6 +17,23 @@ import net.minecraft.world.World;
 
 public class APISpellHelper 
 {
+	public static int getPlayerLPTag(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:StoredLP"))
+		{
+			return data.getInteger("BM:StoredLP");
+		}
+		
+		return 0;
+	}
+	
+	public static void setPlayerLPTag(EntityPlayer player, int amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setInteger("BM:StoredLP", amount);
+	}
+	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
     {
         float f = 1.0F;
@@ -36,7 +54,7 @@ public class APISpellHelper
         double d3 = range;
         if (player instanceof EntityPlayerMP)
         {
-            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
+//            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
