@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -98,7 +100,7 @@ public class DemonVillagePath
                 Block block1 = world.getBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset);
                 Block highBlock1 = world.getBlock(xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset);
 
-                if (!block1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
+                if ((this.forceReplaceBlock(block1))||(!block1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) ) && (this.forceCanTunnelUnder(highBlock1) || highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset)))
                 {
                 	if(doConstruct)
                     {
@@ -113,7 +115,7 @@ public class DemonVillagePath
                     Block block2 = world.getBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset);
                     Block highBlock2 = world.getBlock(xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset);
 
-                    if (!block2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
+                    if ((this.forceReplaceBlock(block2))||(!block2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block2)) && (this.forceCanTunnelUnder(highBlock2) || highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset)))
                     {
                         if(doConstruct)
                         {
@@ -133,7 +135,7 @@ public class DemonVillagePath
             	{
             		Block block1 = world.getBlock(xPos + xOffset, yPos, zPos + zOffset);
                     
-                    if (block1.isReplaceable(world, xPos + xOffset, yPos, zPos + zOffset) || !this.isBlockReplaceable(block1))
+                    if (block1.isReplaceable(world, xPos + xOffset, yPos, zPos + zOffset) || !this.isBlockReplaceable(block1) || !this.forceReplaceBlock(block1))
                     {
                 		returnAmount = false;
 
@@ -150,7 +152,7 @@ public class DemonVillagePath
             	{
             		Block block1 = world.getBlock(xPos + xOffset, yPos, zPos + zOffset);
 
-            		if (!block1.isReplaceable(world, xPos + xOffset, yPos, zPos + zOffset) || this.isBlockReplaceable(block1))
+            		if (!block1.isReplaceable(world, xPos + xOffset, yPos, zPos + zOffset) || this.isBlockReplaceable(block1) || !this.forceReplaceBlock(block1))
                     {
                 		returnAmount = false;
 
@@ -195,7 +197,7 @@ public class DemonVillagePath
                 Block block1 = world.getBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset);
                 Block highBlock1 = world.getBlock(xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset);
 
-                if (!block1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
+                if ((this.forceReplaceBlock(block1))||(!block1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) ) && (this.forceCanTunnelUnder(highBlock1) || highBlock1.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset)))
                 {
                     yPos += sign * yOffset;
                     break;
@@ -205,7 +207,7 @@ public class DemonVillagePath
                     Block block2 = world.getBlock(xPos + xOffset, yPos + sign * yOffset, zPos + zOffset);
                     Block highBlock2 = world.getBlock(xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset);
 
-                    if (!block2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block1) && highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset))
+                    if ((this.forceReplaceBlock(block2))||(!block2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset, zPos + zOffset) && this.isBlockReplaceable(block2) ) && (this.forceCanTunnelUnder(highBlock2) || highBlock2.isReplaceable(world, xPos + xOffset, yPos + sign * yOffset + 1, zPos + zOffset)))
                     {
                         yPos += sign * yOffset;
                         break;
@@ -229,5 +231,26 @@ public class DemonVillagePath
             return false;
         }
         return !block.equals(ModBlocks.blockDemonPortal);
+    }
+    
+    public boolean forceReplaceBlock(Block block)
+    {
+    	if(block.getMaterial().isLiquid())
+    	{
+    		return true;
+    	}else
+    	{
+    		return false;
+    	}
+    }
+    
+    public boolean forceCanTunnelUnder(Block block)
+    {
+    	if(block instanceof BlockFlower || block == Blocks.double_plant)
+    	{
+    		return true;
+    	}
+    	
+    	return false;
     }
 }

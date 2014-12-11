@@ -72,6 +72,7 @@ import WayofTime.alchemicalWizardry.common.items.sigil.ItemPackRatSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemSeerSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfEnderSeverance;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfSupression;
+import WayofTime.alchemicalWizardry.common.items.sigil.ItemSigilOfTheAssassin;
 import WayofTime.alchemicalWizardry.common.items.sigil.LavaSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfElementalAffinity;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfGrowth;
@@ -204,6 +205,7 @@ public class ModItems
     public static Item itemBloodPack;
     
     public static Item transcendentBloodOrb;
+    public static Item itemAssassinSigil;
 
     public static void init()
     {
@@ -306,6 +308,7 @@ public class ModItems
         itemBloodPack = new ItemBloodLetterPack().setUnlocalizedName("itemBloodPack");
         itemHarvestSigil = new ItemHarvestSigil().setUnlocalizedName("itemHarvestSigil");
         itemCompressionSigil = new ItemPackRatSigil().setUnlocalizedName("itemCompressionSigil");
+        itemAssassinSigil = new ItemSigilOfTheAssassin().setUnlocalizedName("itemAssassinSigil");
     }
 
     public static void registerItems()
@@ -413,6 +416,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.itemBloodPack, "itemBloodPack");
         GameRegistry.registerItem(ModItems.itemHarvestSigil, "itemHarvestSigil");
         GameRegistry.registerItem(ModItems.itemCompressionSigil, "itemCompressionSigil");
+        GameRegistry.registerItem(ModItems.itemAssassinSigil, "itemAssassinSigil");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }

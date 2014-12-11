@@ -1,17 +1,18 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
+import java.util.List;
+
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-
-import java.util.List;
 
 public class AirSigil extends EnergyItems implements ArmourUpgrade
 {
@@ -54,6 +55,11 @@ public class AirSigil extends EnergyItems implements ArmourUpgrade
             return par1ItemStack;
         }
 
+        if(par2World.isRemote && this.isItemUnusable(par1ItemStack))
+        {
+        	return par1ItemStack;
+        }
+        
         Vec3 vec = par3EntityPlayer.getLookVec();
         double wantedVelocity = 1.7;
 
@@ -73,6 +79,16 @@ public class AirSigil extends EnergyItems implements ArmourUpgrade
         {
             if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
             {
+            	if(!par2World.isRemote)
+            	{
+            		this.setIsItemUnusable(par1ItemStack, true);
+            	}
+            }else
+            {
+            	if(!par2World.isRemote)
+            	{
+            		this.setIsItemUnusable(par1ItemStack, false);
+            	}
             }
         } else
         {
@@ -80,6 +96,30 @@ public class AirSigil extends EnergyItems implements ArmourUpgrade
         }
 
         return par1ItemStack;
+    }
+    
+    public boolean isItemUnusable(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	return tag.getBoolean("unusable");
+    }
+    
+    public void setIsItemUnusable(ItemStack stack, boolean bool)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	tag.setBoolean("unusable", bool);
     }
 
     @Override
