@@ -21,7 +21,7 @@ Blood Magic is an arcane art that is practiced by mages who attempt to gather a 
 Please include the following:
 
 * Minecraft version
-* Tinkers' Construct version
+* Blood Magic version
 * Forge version/build
 * Versions of any mods potentially related to the issue
 * Any relevant screenshots are greatly appreciated.
