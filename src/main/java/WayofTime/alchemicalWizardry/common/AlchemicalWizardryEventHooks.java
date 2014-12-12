@@ -25,6 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -239,11 +240,11 @@ public class AlchemicalWizardryEventHooks
 		}
 	}
 
-	//	@ForgeSubscribe
-	//	public void onFOVUpdate(FOVUpdateEvent event)
-	//	{
-	//		event.setResult(Result.DEFAULT);
-	//	}
+		@SubscribeEvent
+		public void onFOVUpdate(FOVUpdateEvent event)
+		{
+			event.setResult(Result.DENY);
+		}
 
 	//    @SubscribeEvent
 	//    public void onPlayerTickEnd(PlayerTickEvent event)
@@ -269,15 +270,12 @@ public class AlchemicalWizardryEventHooks
 
 		if (entityLiving instanceof EntityPlayer)
 		{
-			if(!entityLiving.worldObj.isRemote)
-			{
-//				APISpellHelper.setPlayerLPTag((EntityPlayer)entityLiving, SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getUsername((EntityPlayer)entityLiving)));
-//				((EntityPlayer) entityLiving).sendPlayerAbilities();
-				
+			if(!entityLiving.worldObj.isRemote && entityLiving.worldObj.getTotalWorldTime() % 20 == 0)
+			{				
 				if(entityLiving instanceof EntityPlayerMP)
 				{
-//					System.out.println("Sending Packet");
-					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getLPPacket(SoulNetworkHandler.getCurrentEssence(SoulNetworkHandler.getUsername((EntityPlayer)entityLiving)), 1000), (EntityPlayerMP)entityLiving);
+					String ownerName = SoulNetworkHandler.getUsername((EntityPlayer)entityLiving);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getLPPacket(SoulNetworkHandler.getCurrentEssence(ownerName), SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(ownerName))), (EntityPlayerMP)entityLiving);
 				}
 			}
 			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer) event.entityLiving).capabilities, Float.valueOf(0.1f), new String[]{"walkSpeed", "g", "field_75097_g"});

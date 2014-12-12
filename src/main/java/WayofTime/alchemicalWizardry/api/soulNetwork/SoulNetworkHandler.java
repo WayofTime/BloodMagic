@@ -53,6 +53,66 @@ public class SoulNetworkHandler
     	
     	return syphonFromNetwork(event.ownerNetwork, event.drainAmount) >= damageToBeDone;
     }
+    
+    public static int getCurrentMaxOrb(String ownerName)
+    {
+    	if (MinecraftServer.getServer() == null)
+        {
+            return 0;
+        }
+
+        World world = MinecraftServer.getServer().worldServers[0];
+        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+
+        if (data == null)
+        {
+            data = new LifeEssenceNetwork(ownerName);
+            world.setItemData(ownerName, data);
+        }
+
+        return data.maxOrb;
+    }
+    
+    public static void setMaxOrbToMax(String ownerName, int maxOrb)
+    {
+    	if (MinecraftServer.getServer() == null)
+        {
+            return;
+        }
+
+        World world = MinecraftServer.getServer().worldServers[0];
+        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+
+        if (data == null)
+        {
+            data = new LifeEssenceNetwork(ownerName);
+            world.setItemData(ownerName, data);
+        }
+        
+        data.maxOrb = Math.max(maxOrb, data.maxOrb);
+        data.markDirty();
+    }
+    
+    public static int getMaximumForOrbTier(int maxOrb)
+    {
+    	switch(maxOrb)
+    	{
+    	case 1:
+    		return 5000;
+    	case 2:
+    		return 25000;
+    	case 3:
+    		return 150000;
+    	case 4:
+    		return 1000000;
+    	case 5:
+    		return 10000000;
+    	case 6:
+    		return 30000000;
+    	default: 
+    		return 1;
+    	}
+    }
 
     public static int syphonFromNetwork(ItemStack ist, int damageToBeDone)
     {

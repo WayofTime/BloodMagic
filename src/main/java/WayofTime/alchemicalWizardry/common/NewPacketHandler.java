@@ -263,8 +263,8 @@ public enum NewPacketHandler
         {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             
-            System.out.println("" + msg.currentLP + ", " + msg.maxLP);
             APISpellHelper.setPlayerLPTag(player, msg.currentLP);
+            APISpellHelper.setPlayerMaxLPTag(player, msg.maxLP);
         }
     }
 

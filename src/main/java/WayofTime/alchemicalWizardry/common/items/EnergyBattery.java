@@ -75,6 +75,11 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
         {
             return par1ItemStack;
         }
+        
+        if(itemTag.getString("ownerName").equals(SpellHelper.getUsername(par3EntityPlayer)))
+        {
+        	SoulNetworkHandler.setMaxOrbToMax(itemTag.getString("ownerName"), this.orbLevel);
+        }
 
         SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
         EnergyItems.hurtPlayer(par3EntityPlayer, 200);

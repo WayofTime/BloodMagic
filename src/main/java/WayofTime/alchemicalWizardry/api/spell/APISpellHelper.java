@@ -34,6 +34,23 @@ public class APISpellHelper
 		data.setInteger("BM:StoredLP", amount);
 	}
 	
+	public static int getPlayerMaxLPTag(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:MaxStoredLP"))
+		{
+			return data.getInteger("BM:MaxStoredLP");
+		}
+		
+		return 0;
+	}
+	
+	public static void setPlayerMaxLPTag(EntityPlayer player, int amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setInteger("BM:MaxStoredLP", amount);
+	}
+	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
     {
         float f = 1.0F;

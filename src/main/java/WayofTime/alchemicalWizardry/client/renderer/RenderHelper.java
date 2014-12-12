@@ -33,6 +33,9 @@ public class RenderHelper
     public static boolean enabled = true;
     public static boolean showInChat = true;
     
+    public static int lpBarX = 12;
+    public static int lpBarY = 75;
+    
     public static int zLevel = 0;
 
     private static int xOffsetDefault = +50;
@@ -72,10 +75,15 @@ public class RenderHelper
             
             if(reagentStack != null && reagentStack.amount > 0)
             {
-                renderTestHUD(mc, reagentStack, maxAmount);
+//                renderTestHUD(mc, reagentStack, maxAmount);
             }
             
-            renderLPHUD(mc, APISpellHelper.getPlayerLPTag(player), 10000000);
+            int max = APISpellHelper.getPlayerMaxLPTag(player);
+            
+            if(max > 1)
+            {
+                renderLPHUD(mc, APISpellHelper.getPlayerLPTag(player), max);
+            }
         }
 
         return true;
@@ -87,10 +95,10 @@ public class RenderHelper
     	int xSize = 32;
     	int ySize = 32;
     	
-    	int amount = (int) (256 *  ((double)(maxAmount - lpAmount) / maxAmount));
+    	int amount = Math.max((int) (256 *  ((double)(maxAmount - lpAmount) / maxAmount)), 0);
     	
-    	int x = (16 + 32 - xSize) / 2 * 8;
-        int y = (150 - ySize) / 2 * 8;
+    	int x = (lpBarX - xSize / 2) * 8;
+        int y = (lpBarY - ySize / 2) * 8;
         
         ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
         GL11.glColor4f(1, 0, 0, 1.0F);
@@ -211,7 +219,7 @@ public class RenderHelper
     	int xSize = 32;
     	int ySize = 32;
     	
-    	int amount = 256 * (maxAmount - reagentStack.amount) / maxAmount;
+    	int amount = Math.max((int) (256 *  ((double)(maxAmount - reagentStack.amount) / maxAmount)), 0);
     	
     	int x = (16 - xSize) / 2 * 8;
         int y = (150 - ySize) / 2 * 8;
