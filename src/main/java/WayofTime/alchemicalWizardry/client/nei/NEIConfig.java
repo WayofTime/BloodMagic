@@ -19,6 +19,8 @@ public class NEIConfig implements IConfigureNEI {
 		API.registerUsageHandler(new NEIBloodOrbShapedHandler());
 		API.registerRecipeHandler(new NEIBloodOrbShapelessHandler());
 		API.registerUsageHandler(new NEIBloodOrbShapelessHandler());
+		API.registerRecipeHandler(new NEIBindingRitualHandler());
+		API.registerUsageHandler(new NEIBindingRitualHandler());
 	}
 
 	@Override
