@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +22,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -185,7 +181,7 @@ public class AlchemicalWizardryEventHooks
 	@SubscribeEvent
 	public void onLivingJumpEvent(LivingJumpEvent event)
 	{
-		event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(new AttributeModifier(new UUID(493295, 1), "HealthModifier", 2, 0));
+//		event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(new AttributeModifier(new UUID(493295, 1), "HealthModifier", 2, 0));
 		//event.entityLiving.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier(new UUID(493295, 1), "HealthModifier", 2, 0));
 
 		if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionBoost))
@@ -240,12 +236,12 @@ public class AlchemicalWizardryEventHooks
 		}
 	}
 
-		@SubscribeEvent
-		public void onFOVUpdate(FOVUpdateEvent event)
-		{
-			event.setResult(Result.DENY);
-		}
-
+		
+//	@SubscribeEvent
+//	public void onFOVUpdate(FOVUpdateEvent event)
+//	{
+//		event.setResult(Result.DENY);
+//	}
 	//    @SubscribeEvent
 	//    public void onPlayerTickEnd(PlayerTickEvent event)
 	//    {

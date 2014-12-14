@@ -41,6 +41,8 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.items.ILPGauge;
+import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class SpellHelper
@@ -88,6 +90,35 @@ public class SpellHelper
 
             ItemStack heldStack = player.getHeldItem();
             if (heldStack != null && heldStack.getItem() instanceof IReagentManipulator)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    public static boolean canPlayerSeeLPBar(EntityPlayer player)
+    {
+    	if (player != null)
+        {
+    		for(int i=0; i<4; i++)
+    		{
+    			ItemStack stack = player.getCurrentArmor(i);
+                if (stack != null)
+                {
+                    Item item = stack.getItem();
+                    if (item instanceof ILPGauge && ((ILPGauge) item).canSeeLPBar(stack))
+                    {
+                        return true;
+                    }
+                }
+
+    		}
+            
+            ItemStack heldStack = player.getHeldItem();
+    		
+            if (heldStack != null && heldStack.getItem() instanceof DivinationSigil)
             {
                 return true;
             }

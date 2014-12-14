@@ -1,14 +1,21 @@
 package WayofTime.alchemicalWizardry;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -261,6 +268,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0Beta", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
@@ -1146,6 +1155,8 @@ public class AlchemicalWizardry
 	    
 //	    if(parseTextFiles)
 //	    	this.parseTextFile();
+	    
+	    this.createItemTextureFiles();
     }
 
     public static void initAlchemyPotionRecipes()
@@ -1377,164 +1388,233 @@ public class AlchemicalWizardry
     	CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.cobblestone), 64);
     }
     
-//    @SideOnly(Side.CLIENT)
-//    public void parseTextFile()
-//    {
-//    	File textFiles = new File("config/BloodMagic/bookDocs");
-//    	//if(textFiles.exists())
-//    	{
-//    		try {
-//    			System.out.println("I am in an island of files!");
-//    			
-//                InputStream input = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardryBooks/books/book.txt");
-//
-//        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(true);
-//                
-//                if(input != null)
-//                {
-//                	DataInputStream in = new DataInputStream(input);
-//                	BufferedReader br = new BufferedReader(new InputStreamReader(in));
-//        			String strLine;
-//        			//Read File Line By Line
-//        			
-//        			int maxWidth = 25;
-//        			int maxLines = 16;
-//        			
-//        			int currentPage = 0;
-//        			
-//        			int pageIndex = 1;
-//        			
-//        			String currentTitle = "aw.entry.Magnus";
-//        			
-//        			String[] strings = new String[1];
-//        			strings[0] = "";
-//        			
-//        			while ((strLine = br.readLine()) != null)   
-//        			{
-//        				if(strLine.trim().isEmpty())
-//        				{
-//        					continue;
-//        				}
-//        				
-//        				if(strLine.startsWith("//TITLE "))
-//        				{
-//        					String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
-//    						for(int i=0; i<strings.length; i++)
-//    						{
-//    							newStrings[i] = strings[i];
-//    						}
-//    						
-//    						currentPage++;
-//    						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
-//    						newStrings[currentPage] = "";
-//    						strings = newStrings;
-//    						
-//    						pageIndex = 1;
-//    						
-//    						String title = strLine.replaceFirst("//TITLE ", " ").trim();
-//    						currentTitle = "aw.entry." + title;
-//    						
-//        					continue;
-//        				}
-//        				
-//        				strLine = strLine.replace('”', '"').replace('“','"');
-//        				
-//        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
-//        				{
-//        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
-//            				if(list != null)
-//            				{
-//                				System.out.println("Number of lines: " + list.size());
-//            				}
-//        				}
-//	        				
-//        				String[] cutStrings = strLine.split(" ");
-//
-//        				for(String word : cutStrings)
-//        				{
-//        					boolean changePage = false;
-//        					int length = word.length();
-//        					word = word.replace('\t', ' ');
-//        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
-//
-////        					if(currentWidth != 0 && currentWidth + length + 1 > maxWidth)
-////        					{
-////        						currentLine++;
-////        						currentWidth = 0;
-////        					}
-//        					//if(currentLine > maxLines)
-//        					if(list.size() > maxLines)
+    public void createItemTextureFiles()
+    {
+    	File textFiles = new File("config/BloodMagic/itemJsonFiles");
+    	
+    	File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryJsonFiles");
+        if(!bmDirectory.exists())
+        {
+        	bmDirectory.mkdirs();
+        }
+
+        String[] itemStrings = new String[]{"apple", "apple"};
+        
+        String prefix = "alchemicalwizardry:items/";
+        
+        try
+        {
+        	for(int i=0; i<itemStrings.length; i+=2)
+        	{
+        		if(i+1 < itemStrings.length)
+        		{
+        			File file = new File(bmDirectory, itemStrings[i] + ".json");
+                    {
+                    	String[] strings = getGeneratedStrings(prefix + itemStrings[i + 1]);
+                    	PrintWriter writer = new PrintWriter(file);
+            			for(String stri : strings)
+            			{
+            				writer.println(stri);
+            			}
+            			writer.close();
+                    }
+        		}
+        		
+        	}
+        	
+        } catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+    	
+    }
+    
+    public String[] getGeneratedStrings(String itemName)
+    {
+    	String[] strings = new String[18];
+    	
+    	strings[0] = "{";
+    	strings[1] = "    \"parent\": \"builtin/generated\",";
+    	strings[2] = "    \"textures\": {";
+    	strings[3] = "        \"layer0\": \"" + itemName + "\"";
+    	strings[4] = "    },";
+    	strings[5] = "    \"display\": {";
+    	strings[6] = "        \"thirdperson\": {";
+    	strings[7] = "            \"rotation\": [ -90, 0, 0 ],";
+    	strings[8] = "            \"translation\": [ 0, 1, -3 ],";
+    	strings[9] = "            \"scale\": [ 0.55, 0.55, 0.55 ]";
+    	strings[10] = "        },";
+    	strings[11] = "        \"firstperson\": {";
+    	strings[12] = "            \"rotation\": [ 0, -135, 25 ],";
+    	strings[13] = "            \"translation\": [ 0, 4, 2 ],";
+    	strings[14] = "            \"scale\": [ 1.7, 1.7, 1.7 ]";
+    	strings[15] = "        }";
+    	strings[16] = "    }";
+    	strings[17] = "}";
+    	
+    	return strings;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void parseTextFile()
+    {
+    	File textFiles = new File("config/BloodMagic/bookDocs");
+    	//if(textFiles.exists())
+    	{
+    		try {
+    			System.out.println("I am in an island of files!");
+    			
+                InputStream input = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardryBooks/books/book.txt");
+
+        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(true);
+                
+                if(input != null)
+                {
+                	DataInputStream in = new DataInputStream(input);
+                	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        			String strLine;
+        			//Read File Line By Line
+        			
+        			int maxWidth = 25;
+        			int maxLines = 16;
+        			
+        			int currentPage = 0;
+        			
+        			int pageIndex = 1;
+        			
+        			String currentTitle = "aw.entry.Magnus";
+        			
+        			String[] strings = new String[1];
+        			strings[0] = "";
+        			
+        			while ((strLine = br.readLine()) != null)   
+        			{
+        				if(strLine.trim().isEmpty())
+        				{
+        					continue;
+        				}
+        				
+        				if(strLine.startsWith("//TITLE "))
+        				{
+        					String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
+    						for(int i=0; i<strings.length; i++)
+    						{
+    							newStrings[i] = strings[i];
+    						}
+    						
+    						currentPage++;
+    						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
+    						newStrings[currentPage] = "";
+    						strings = newStrings;
+    						
+    						pageIndex = 1;
+    						
+    						String title = strLine.replaceFirst("//TITLE ", " ").trim();
+    						currentTitle = "aw.entry." + title;
+    						
+        					continue;
+        				}
+        				
+        				strLine = strLine.replace('”', '"').replace('“','"');
+        				
+        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
+        				{
+        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
+            				if(list != null)
+            				{
+                				System.out.println("Number of lines: " + list.size());
+            				}
+        				}
+	        				
+        				String[] cutStrings = strLine.split(" ");
+
+        				for(String word : cutStrings)
+        				{
+        					boolean changePage = false;
+        					int length = word.length();
+        					word = word.replace('\t', ' ');
+        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
+
+//        					if(currentWidth != 0 && currentWidth + length + 1 > maxWidth)
 //        					{
-//        						changePage = true;
+//        						currentLine++;
+//        						currentWidth = 0;
 //        					}
-//        					if(changePage)
-//        					{
-//        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
-//        						for(int i=0; i<strings.length; i++)
-//        						{
-//        							newStrings[i] = strings[i];
-//        						}
-//        						
-//        						currentPage++;
-//
-//        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
-//        						newStrings[currentPage] = word;
-//        						strings = newStrings;
-//        						
-//        						pageIndex++;
-//
-//        						changePage = false;
-//        					}else
-//        					{
-//        						strings[currentPage] = strings[currentPage] + " " + word;
-//        					}
-//        				}
-//        				
-//        				int currentLines = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage], 110).size();
-//        				while(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " ", 110).size() <= currentLines)
-//        				{
-//        					{
-//            					strings[currentPage] = strings[currentPage] + " ";
-//        					}
-//        				}
-//        				
-//    					System.out.println("" + strLine);
-//    				}
-//        			
-//        			strings[currentPage] = currentTitle + "." + pageIndex + "=" + strings[currentPage];
-//        			
-//        	        File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryBooks");
-//        	        if(!bmDirectory.exists())
-//        	        {
-//        	        	bmDirectory.mkdirs();
-//        	        }
-//
-//        	        File file = new File(bmDirectory, "books.txt");
-////                    if (file.exists() && file.length() > 3L)
-////                    {
-////                        
-////                    }else
+        					//if(currentLine > maxLines)
+        					if(list.size() > maxLines)
+        					{
+        						changePage = true;
+        					}
+        					if(changePage)
+        					{
+        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
+        						for(int i=0; i<strings.length; i++)
+        						{
+        							newStrings[i] = strings[i];
+        						}
+        						
+        						currentPage++;
+
+        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
+        						newStrings[currentPage] = word;
+        						strings = newStrings;
+        						
+        						pageIndex++;
+
+        						changePage = false;
+        					}else
+        					{
+        						strings[currentPage] = strings[currentPage] + " " + word;
+        					}
+        				}
+        				
+        				int currentLines = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage], 110).size();
+        				while(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " ", 110).size() <= currentLines)
+        				{
+        					{
+            					strings[currentPage] = strings[currentPage] + " ";
+        					}
+        				}
+        				
+    					System.out.println("" + strLine);
+    				}
+        			
+        			strings[currentPage] = currentTitle + "." + pageIndex + "=" + strings[currentPage];
+        			
+        	        File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryBooks");
+        	        if(!bmDirectory.exists())
+        	        {
+        	        	bmDirectory.mkdirs();
+        	        }
+
+        	        File file = new File(bmDirectory, "books.txt");
+//                    if (file.exists() && file.length() > 3L)
 //                    {
-//                    	PrintWriter writer = new PrintWriter(file);
-//            			for(String stri : strings)
-//            			{
-//            				writer.println(stri);
-//            			}
-//            			writer.close();
-//                    }
+//                        
+//                    }else
+                    {
+                    	PrintWriter writer = new PrintWriter(file);
+            			for(String stri : strings)
+            			{
+            				writer.println(stri);
+            			}
+            			writer.close();
+                    }
+        			
 //        			
-////        			
-//                }
-//                
-//        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(false);
-//
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//    	}
-//    }
+                }
+                
+        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(false);
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
 }

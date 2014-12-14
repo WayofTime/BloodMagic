@@ -78,11 +78,14 @@ public class RenderHelper
 //                renderTestHUD(mc, reagentStack, maxAmount);
             }
             
-            int max = APISpellHelper.getPlayerMaxLPTag(player);
-            
-            if(max > 1)
+            if(SpellHelper.canPlayerSeeLPBar(player))
             {
-                renderLPHUD(mc, APISpellHelper.getPlayerLPTag(player), max);
+                int max = APISpellHelper.getPlayerMaxLPTag(player);
+                
+                if(max > 1)
+                {
+                    renderLPHUD(mc, APISpellHelper.getPlayerLPTag(player), max);
+                }
             }
         }
 
@@ -99,7 +102,7 @@ public class RenderHelper
     	
     	int x = (lpBarX - xSize / 2) * 8;
         int y = (lpBarY - ySize / 2) * 8;
-        
+                
         ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
         GL11.glColor4f(1, 0, 0, 1.0F);
         mc.getTextureManager().bindTexture(test2);

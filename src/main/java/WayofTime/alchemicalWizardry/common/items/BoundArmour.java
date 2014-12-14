@@ -1,15 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -30,11 +22,20 @@ import net.minecraftforge.common.util.Constants;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IRunicArmor;
 import thaumcraft.api.nodes.IRevealer;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.Optional.Interface;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.InterfaceList(value = {@Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface = "thaumcraft.api.IGoggles", modid = "Thaumcraft"), @Interface(iface = "thaumcraft.api.IRunicArmor", modid = "Thaumcraft")})
-public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialArmor, IBindable, IRevealer, IGoggles, IRunicArmor
+public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialArmor, IBindable, IRevealer, IGoggles, IRunicArmor, ILPGauge
 {
     private static int invSize = 9;
     private static IIcon helmetIcon;
@@ -614,6 +615,8 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         {
             return false;
         }
+        
+        int blood = getMaxBloodShardLevel(itemStack);
 
         for (ItemStack item : inv)
         {
@@ -621,11 +624,53 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             {
                 continue;
             }
-
-            if (item.getItem() instanceof IGoggles)
+            if (item.getItem() instanceof ArmourUpgrade && blood > 0)
             {
-                return true;
+            	if (item.getItem() instanceof IGoggles)
+                {
+                    return true;
+                }
+            	
+            	if(((ArmourUpgrade)item.getItem()).isUpgrade())
+            	{
+            		blood--;
+            	}
+            }    
+        }
+
+        return false;
+    }
+    
+    @Override
+    public boolean canSeeLPBar(ItemStack itemStack)
+    {
+        ItemStack[] inv = getInternalInventory(itemStack);
+
+        if (inv == null)
+        {
+            return false;
+        }
+        
+        int blood = getMaxBloodShardLevel(itemStack);
+
+        for (ItemStack item : inv)
+        {
+            if (item == null)
+            {
+                continue;
             }
+            if (item.getItem() instanceof ArmourUpgrade && blood > 0)
+            {
+            	if (item.getItem() instanceof DivinationSigil)
+                {
+                    return true;
+                }
+            	
+            	if(((ArmourUpgrade)item.getItem()).isUpgrade())
+            	{
+            		blood--;
+            	}
+            }    
         }
 
         return false;
