@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.List;
 
@@ -54,35 +55,38 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-        World world = par3EntityPlayer.worldObj;
-        if (world != null)
+        if (!(par3EntityPlayer instanceof FakePlayer))
         {
-            double posX = par3EntityPlayer.posX;
-            double posY = par3EntityPlayer.posY;
-            double posZ = par3EntityPlayer.posZ;
-            world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
-        }
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+            EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+            World world = par3EntityPlayer.worldObj;
+            if (world != null)
+            {
+                double posX = par3EntityPlayer.posX;
+                double posY = par3EntityPlayer.posY;
+                double posZ = par3EntityPlayer.posZ;
+                world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
+            }
+            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 
-        if (itemTag == null || itemTag.getString("ownerName").equals(""))
-        {
-            return par1ItemStack;
-        }
+            if (itemTag == null || itemTag.getString("ownerName").equals(""))
+            {
+                return par1ItemStack;
+            }
 
-        if (world.isRemote)
-        {
-            return par1ItemStack;
-        }
-        
-        if(itemTag.getString("ownerName").equals(SpellHelper.getUsername(par3EntityPlayer)))
-        {
-        	SoulNetworkHandler.setMaxOrbToMax(itemTag.getString("ownerName"), this.orbLevel);
-        }
+            if (world.isRemote)
+            {
+                return par1ItemStack;
+            }
 
-        SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
-        EnergyItems.hurtPlayer(par3EntityPlayer, 200);
+            if (itemTag.getString("ownerName").equals(SpellHelper.getUsername(par3EntityPlayer)))
+            {
+                SoulNetworkHandler.setMaxOrbToMax(itemTag.getString("ownerName"), this.orbLevel);
+            }
+
+            SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
+            EnergyItems.hurtPlayer(par3EntityPlayer, 200);
+        }
         return par1ItemStack;
     }
 
