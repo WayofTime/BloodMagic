@@ -56,6 +56,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         World world = par3EntityPlayer.worldObj;
+        
         if (world != null)
         {
             double posX = par3EntityPlayer.posX;
@@ -66,6 +67,11 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
         }
         NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
 
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        {
+        	return par1ItemStack;
+        }
+        
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {
             return par1ItemStack;

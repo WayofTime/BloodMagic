@@ -87,6 +87,7 @@ item.airScribeTool.name=Elemental Inscription Tool: Air
 item.duskScribeTool.name=Elemental Inscription Tool: Dusk
 item.activationCrystalWeak.name=Weak Activation Crystal
 item.activationCrystalAwakened.name=Awakened Activation Crystal
+item.activationCrystalCreative.name=Creative Activation Crystal
 item.boundPickaxe.name=Bound Pickaxe
 item.boundAxe.name=Bound Axe
 item.boundShovel.name=Bound Shovel

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ActivationCrystal extends EnergyItems
 {
-    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"Weak", "Awakened"};
+    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"Weak", "Awakened", "Creative"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -83,6 +83,13 @@ public class ActivationCrystal extends EnergyItems
 
                 break;
             }
+            
+            case 2:
+            {
+                par3List.add("Creative only - activates any ritual");
+
+                break;
+            }
         }
 
         if (!(par1ItemStack.stackTagCompound == null))
@@ -100,7 +107,7 @@ public class ActivationCrystal extends EnergyItems
 
     public int getCrystalLevel(ItemStack itemStack)
     {
-        return itemStack.getItemDamage() + 1;
+        return itemStack.getItemDamage() > 1 ? Integer.MAX_VALUE : itemStack.getItemDamage() + 1;
     }
 
     @Override
