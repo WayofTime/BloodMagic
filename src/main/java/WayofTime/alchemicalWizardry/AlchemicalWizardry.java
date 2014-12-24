@@ -353,6 +353,11 @@ public class AlchemicalWizardry
 	public static boolean ritualDisabledSpawnWard;
 	public static boolean ritualDisabledVeilOfEvil;
 	public static boolean ritualDisabledFullStomach;
+	
+	public static boolean weakritualDisabledThunderstorm;
+	public static boolean weakritualDisabledZombie;
+	public static boolean weakritualDisabledNight;
+	public static boolean weakritualDisabledResistance;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;

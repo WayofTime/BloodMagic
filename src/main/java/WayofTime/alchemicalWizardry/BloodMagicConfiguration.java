@@ -136,6 +136,11 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledVeilOfEvil = config.get("Ritual Blacklist", "Veil of Evil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
 		
+		AlchemicalWizardry.weakritualDisabledThunderstorm = config.get("Weak Ritual Blacklist", "Thunderstorm", false).getBoolean(false);
+		AlchemicalWizardry.weakritualDisabledZombie = config.get("Weak Ritual Blacklist", "Zombie", false).getBoolean(false);
+		AlchemicalWizardry.weakritualDisabledNight = config.get("Weak Ritual Blacklist", "Night", false).getBoolean(false);
+		AlchemicalWizardry.weakritualDisabledResistance = config.get("Weak Ritual Blacklist", "Resistance", false).getBoolean(false);
+		
 		String tempDemonConfigs = "Temp Demon Configs [2]";
 		TEDemonPortal.buildingGridDelay = config.get(tempDemonConfigs, "Building Grid Delay", 25).getInt();
 		TEDemonPortal.roadGridDelay = config.get(tempDemonConfigs, "Road Grid Delay", 10).getInt();
