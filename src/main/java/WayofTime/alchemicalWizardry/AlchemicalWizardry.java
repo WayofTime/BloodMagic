@@ -271,7 +271,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0a", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
