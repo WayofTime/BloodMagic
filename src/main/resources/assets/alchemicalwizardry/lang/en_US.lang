@@ -57,6 +57,7 @@ tile.blockReagentConduit.name=Alchemy Relay
 tile.lifeEssenceFluidBlock.name=Life Essence
 tile.crystalBlock.fullCrystal.name=Crystal Cluster
 tile.crystalBlock.crystalBrick.name=Crystal Cluster Brick
+tile.demonPortal.name=Demon Portal
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb

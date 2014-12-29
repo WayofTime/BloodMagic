@@ -46,7 +46,7 @@ public class TEDemonPortal extends TileEntity
 {
 	public DemonType type = DemonType.FIRE;
 	
-	public static boolean printDebug = true;
+	public static boolean printDebug = false;
 	
 	public static int limit = 100;
 	
@@ -1158,23 +1158,23 @@ public class TEDemonPortal extends TileEntity
 
     public void rightClickBlock(EntityPlayer player, int side)
     {
-        if (worldObj.isRemote)
-        {
-            return;
-        }
-
-        this.initialize();
-
-        if (ForgeDirection.getOrientation(side) == ForgeDirection.UP)
-        {
-            this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, 0);
-        } else if (ForgeDirection.getOrientation(side) == ForgeDirection.DOWN)
-        {
-            this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, 0);
-        } else
-        {
-            this.createRandomRoad();
-        }
+//        if (worldObj.isRemote)
+//        {
+//            return;
+//        }
+//
+//        this.initialize();
+//
+//        if (ForgeDirection.getOrientation(side) == ForgeDirection.UP)
+//        {
+//            this.createRandomBuilding(DemonBuilding.BUILDING_HOUSE, 0);
+//        } else if (ForgeDirection.getOrientation(side) == ForgeDirection.DOWN)
+//        {
+//            this.createRandomBuilding(DemonBuilding.BUILDING_PORTAL, 0);
+//        } else
+//        {
+//            this.createRandomRoad();
+//        }
     }
 
     public int createRandomBuilding(int type, int tier)

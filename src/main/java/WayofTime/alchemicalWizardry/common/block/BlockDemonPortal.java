@@ -1,7 +1,10 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -13,10 +16,17 @@ public class BlockDemonPortal extends BlockContainer
     public BlockDemonPortal()
     {
         super(Material.rock);
-        setHardness(2.0F);
-        setResistance(5.0F);
+        setHardness(1000);
+        setResistance(10000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("demonPortal");
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
+    {
+        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonPortal");
     }
     
     @Override

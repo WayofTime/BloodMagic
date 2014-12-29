@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
-public class BlockDemonChest extends BlockChest implements IBlockPortalNode, IRoadWard
+public class BlockDemonChest extends BlockChest implements IBlockPortalNode
 {
 	public BlockDemonChest() 
 	{

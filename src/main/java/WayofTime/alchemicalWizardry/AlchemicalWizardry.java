@@ -271,7 +271,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0Beta", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
@@ -862,7 +862,7 @@ public class AlchemicalWizardry
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityFireElementalID), new ItemStack[]{incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityShadeElementalID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityMinorDemonGruntID), new ItemStack[]{incendiumStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+//        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityMinorDemonGruntID), new ItemStack[]{incendiumStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         
         //Custom mobs
         EntityRegistry.registerModEntity(EntityFallenAngel.class, "FallenAngel", 20, this, 80, 3, true);
@@ -1158,7 +1158,7 @@ public class AlchemicalWizardry
 //	    if(parseTextFiles)
 //	    	this.parseTextFile();
 	    
-	    this.createItemTextureFiles();
+//	    this.createItemTextureFiles();
     }
 
     public static void initAlchemyPotionRecipes()
@@ -1390,48 +1390,48 @@ public class AlchemicalWizardry
     	CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.cobblestone), 64);
     }
     
-    public void createItemTextureFiles()
-    {
-    	File textFiles = new File("config/BloodMagic/itemJsonFiles");
-    	
-    	File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryJsonFiles");
-        if(!bmDirectory.exists())
-        {
-        	bmDirectory.mkdirs();
-        }
-
-        String[] itemStrings = new String[]{"apple", "apple"};
-        
-        String prefix = "alchemicalwizardry:items/";
-        
-        try
-        {
-        	for(int i=0; i<itemStrings.length; i+=2)
-        	{
-        		if(i+1 < itemStrings.length)
-        		{
-        			File file = new File(bmDirectory, itemStrings[i] + ".json");
-                    {
-                    	String[] strings = getGeneratedStrings(prefix + itemStrings[i + 1]);
-                    	PrintWriter writer = new PrintWriter(file);
-            			for(String stri : strings)
-            			{
-            				writer.println(stri);
-            			}
-            			writer.close();
-                    }
-        		}
-        		
-        	}
-        	
-        } catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        
-    	
-    }
+//    public void createItemTextureFiles()
+//    {
+//    	File textFiles = new File("config/BloodMagic/itemJsonFiles");
+//    	
+//    	File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryJsonFiles");
+//        if(!bmDirectory.exists())
+//        {
+//        	bmDirectory.mkdirs();
+//        }
+//
+//        String[] itemStrings = new String[]{"apple", "apple"};
+//        
+//        String prefix = "alchemicalwizardry:items/";
+//        
+//        try
+//        {
+//        	for(int i=0; i<itemStrings.length; i+=2)
+//        	{
+//        		if(i+1 < itemStrings.length)
+//        		{
+//        			File file = new File(bmDirectory, itemStrings[i] + ".json");
+//                    {
+//                    	String[] strings = getGeneratedStrings(prefix + itemStrings[i + 1]);
+//                    	PrintWriter writer = new PrintWriter(file);
+//            			for(String stri : strings)
+//            			{
+//            				writer.println(stri);
+//            			}
+//            			writer.close();
+//                    }
+//        		}
+//        		
+//        	}
+//        	
+//        } catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        
+//        
+//    	
+//    }
     
     public String[] getGeneratedStrings(String itemName)
     {

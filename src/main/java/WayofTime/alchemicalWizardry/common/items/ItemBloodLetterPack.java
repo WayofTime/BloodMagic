@@ -143,7 +143,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
     	//This is where I need to do the updating
-    	if(world.isRemote)
+    	if(!world.isRemote)
     	{
     		return;
     	}
