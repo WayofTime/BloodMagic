@@ -111,7 +111,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     
     public void addToDemonBloodDuration(int dur)
     {
-    	this.demonBloodDuration++;
+    	this.demonBloodDuration += dur;
     }
     
     public boolean hasDemonBlood()
