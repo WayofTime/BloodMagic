@@ -1,4 +1,4 @@
-package com.arc.bloodarsenal.commands;
+package WayofTime.alchemicalWizardry.common.commands;
 
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.command.CommandBase;
@@ -11,10 +11,7 @@ import java.util.List;
 
 public class CommandSN extends CommandBase
 {
-    public CommandSN()
-    {
-
-    }
+    public CommandSN() {}
 
     public String getCommandName()
     {
