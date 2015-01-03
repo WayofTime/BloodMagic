@@ -255,6 +255,9 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
+import WayofTime.alchemicalWizardry.common.commands.CommandBind;
+import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
+import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -265,6 +268,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -1519,7 +1523,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				strLine = strLine.replace('”', '"').replace('“','"');
+        				strLine = strLine.replace('Â”', '"').replace('Â“','"');
         				
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{
@@ -1618,5 +1622,13 @@ public class AlchemicalWizardry
 				e.printStackTrace();
 			}
     	}
+    }
+    
+    @Mod.EventHandler
+    public void initCommands(FMLServerStartingEvent event)
+    {
+        event.registerServerCommand(new CommandBind());
+        event.registerServerCommand(new CommandUnbind());
+        event.registerServerCommand(new CommandSN());
     }
 }
