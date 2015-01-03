@@ -1,4 +1,4 @@
-package com.arc.bloodarsenal.commands;
+package WayofTime.alchemicalWizardry.common.commands;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
