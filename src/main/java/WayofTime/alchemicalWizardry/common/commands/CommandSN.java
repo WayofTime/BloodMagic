@@ -30,7 +30,7 @@ public class CommandSN extends CommandBase
 
     public void processCommand(ICommandSender icommandsender, String[] astring)
     {
-        EntityPlayerMP targetPlayer = getPlayer(icommandsender, astring[1]);
+        EntityPlayerMP targetPlayer = getPlayer(icommandsender, astring[0]);
         String owner = targetPlayer.getDisplayName();
 
         if (astring.length >= 2 && astring.length <= 3)
@@ -48,7 +48,8 @@ public class CommandSN extends CommandBase
 
                 if (amount > SoulNetworkHandler.getCurrentEssence(owner))
                 {
-                    SoulNetworkHandler.syphonFromNetwork(owner, SoulNetworkHandler.getCurrentEssence(owner));
+                    int lp = SoulNetworkHandler.getCurrentEssence(owner);
+                    SoulNetworkHandler.syphonFromNetwork(owner, lp);
                     func_152373_a(icommandsender, this, "commands.soulnetwork.subtract.success", new Object[] {SoulNetworkHandler.getCurrentEssence(owner), owner});
                 }
                 else
@@ -59,13 +60,23 @@ public class CommandSN extends CommandBase
             }
             else if ("fill".equalsIgnoreCase(astring[1]))
             {
-                SoulNetworkHandler.addCurrentEssenceToMaximum(owner, Integer.MAX_VALUE, Integer.MAX_VALUE);
+                int amount = Integer.MAX_VALUE - SoulNetworkHandler.getCurrentEssence(owner);
+                SoulNetworkHandler.addCurrentEssenceToMaximum(owner, amount, Integer.MAX_VALUE);
                 func_152373_a(icommandsender, this, "commands.soulnetwork.fill.success", new Object[] {owner});
             }
             else if ("empty".equalsIgnoreCase(astring[1]))
             {
                 SoulNetworkHandler.syphonFromNetwork(owner, SoulNetworkHandler.getCurrentEssence(owner));
                 func_152373_a(icommandsender, this, "commands.soulnetwork.empty.success", new Object[] {owner});
+            }
+            else if ("get".equalsIgnoreCase(astring[1]))
+            {
+                int amount = SoulNetworkHandler.getCurrentEssence(owner);
+                func_152373_a(icommandsender, this, "commands.soulnetwork.get.success", new Object[] {amount, owner});
+            }
+            else
+            {
+                throw new CommandException("commands.soulnetwork.notACommand", new Object[0]);
             }
         }
         else if (astring.length == 0)
