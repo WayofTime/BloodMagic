@@ -234,3 +234,23 @@ entity.AWWayofTime.MinorDemonGruntFire.name=Fire Demon Grunt
 entity.AWWayofTime.MinorDemonGruntIce.name=Ice Demon Grunt
 entity.AWWayofTime.MinorDemonGruntEarth.name=Earth Demon Grunt
 entity.AWWayofTime.MinorDemonGrunt.name=Demon Grunt
+
+#Commands
+commands.soulnetwork.usage=/soulnetwork <player>
+commands.bind.usage=/bind <player>
+commands.bind.success=Item successfully bound!
+commands.bind.failed.noPlayer=There is no player specified
+commands.bind.failed.alreadyBound=Item is already bound; use /unbind to unbind it
+commands.bind.failed.notBindable=Item cannot be bound
+commands.unbind.usage=/unbind
+commands.unbind.success=Item successfully unbound!
+commands.unbind.failed.notBindable=Item cannot be unbound
+commands.soulnetwork.usage=/soulnetwork <player> <add|subtract|fill|empty|get> [amount]
+commands.soulnetwork.add.success=Successfully added %dLP to %s's Soul Network!
+commands.soulnetwork.subtract.success=Successfully subtracted %dLP from %s's Soul Network!
+commands.soulnetwork.fill.success=Successfully filled %s's Soul Network!
+commands.soulnetwork.empty.success=Successfully emptied %s's Soul Network!
+commands.soulnetwork.get.success=There is %dLP in %s's Soul Network!
+commands.soulnetwork.noPlayer=There is no player specified
+commands.soulnetwork.noCommand=There is no command specified
+commands.soulnetwork.notACommand=That is not a valid command
