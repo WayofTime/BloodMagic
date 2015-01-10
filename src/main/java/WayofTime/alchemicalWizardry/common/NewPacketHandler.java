@@ -1,19 +1,13 @@
 package WayofTime.alchemicalWizardry.common;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.ColourAndCoords;
-import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.*;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
-import cpw.mods.fml.common.network.FMLOutboundHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,10 +15,27 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.EnumMap;
-import java.util.LinkedList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.FMLEmbeddedChannel;
+import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
+import cpw.mods.fml.common.network.FMLOutboundHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * Handles the packet wrangling for IronChest
@@ -73,6 +84,8 @@ public enum NewPacketHandler
         clientChannel.pipeline().addAfter(tileAltarCodec, "TEMasterStoneHandler", new TEMasterStoneMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "TEReagentConduitHandler", new TEReagentConduitMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentLPMessageHandler", new CurrentLPMessageHandler());
+        clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentReagentBarMessageHandler", new CurrentReagentBarMessageHandler());
+        clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentAddedHPMessageHandler", new CurrentAddedHPMessageHandler());
     }
 
 
@@ -267,6 +280,30 @@ public enum NewPacketHandler
             APISpellHelper.setPlayerMaxLPTag(player, msg.maxLP);
         }
     }
+    
+    private static class CurrentReagentBarMessageHandler extends SimpleChannelInboundHandler<CurrentReagentBarMessage>
+    {
+        @Override
+        protected void channelRead0(ChannelHandlerContext ctx, CurrentReagentBarMessage msg) throws Exception
+        {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            
+            APISpellHelper.setPlayerCurrentReagentAmount(player, msg.currentAR);
+            APISpellHelper.setPlayerMaxReagentAmount(player, msg.maxAR);
+        }
+    }
+    
+    private static class CurrentAddedHPMessageHandler extends SimpleChannelInboundHandler<CurrentAddedHPMessage>
+    {
+        @Override
+        protected void channelRead0(ChannelHandlerContext ctx, CurrentAddedHPMessage msg) throws Exception
+        {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            
+            APISpellHelper.setCurrentAdditionalHP(player, msg.currentHP);
+            APISpellHelper.setCurrentAdditionalMaxHP(player, msg.maxHP);
+        }
+    }
 
     public static class BMMessage
     {
@@ -383,6 +420,19 @@ public enum NewPacketHandler
     	int currentLP;
     	int maxLP;
     }
+    
+    public static class CurrentReagentBarMessage extends BMMessage
+    {
+    	String reagent;
+    	float currentAR;
+    	float maxAR;
+    }
+    
+    public static class CurrentAddedHPMessage extends BMMessage
+    {
+    	int currentHP;
+    	int maxHP;
+    }
 
     private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
     {
@@ -400,6 +450,8 @@ public enum NewPacketHandler
             addDiscriminator(9, TEMasterStoneMessage.class);
             addDiscriminator(10, TEReagentConduitMessage.class);
             addDiscriminator(11, CurrentLPMessage.class);
+            addDiscriminator(12, CurrentReagentBarMessage.class);
+            addDiscriminator(13, CurrentAddedHPMessage.class);
         }
 
         @Override
@@ -605,6 +657,24 @@ public enum NewPacketHandler
                 case 11:
                 	target.writeInt(((CurrentLPMessage) msg).currentLP);
                 	target.writeInt(((CurrentLPMessage) msg).maxLP);
+                	
+                	break;
+                	
+                case 12:
+                	char[] charSet = ((CurrentReagentBarMessage)msg).reagent.toCharArray();
+                	target.writeInt(charSet.length);
+                	for(char cha : charSet)
+                	{
+                		target.writeChar(cha);
+                	}
+                	target.writeFloat(((CurrentReagentBarMessage)msg).currentAR);
+                	target.writeFloat(((CurrentReagentBarMessage)msg).maxAR);
+                	
+                	break;
+                	
+                case 13:
+                	target.writeInt(((CurrentAddedHPMessage) msg).currentHP);
+                	target.writeInt(((CurrentAddedHPMessage) msg).maxHP);
                 	
                 	break;
             }
@@ -820,6 +890,26 @@ public enum NewPacketHandler
                 	((CurrentLPMessage) msg).maxLP = dat.readInt();
 
                 	break;
+                	
+                case 12:
+                	int size1 = dat.readInt();
+                	String str1 = "";
+                	for(int i=0; i<size1; i++)
+                	{
+                		str1 = str1 + dat.readChar();
+                	}
+                	
+                	((CurrentReagentBarMessage) msg).reagent = str1;
+                	((CurrentReagentBarMessage) msg).currentAR = dat.readFloat();
+                	((CurrentReagentBarMessage) msg).maxAR = dat.readFloat();
+                	
+                	break;
+                	
+                case 13:
+                	((CurrentAddedHPMessage) msg).currentHP = dat.readInt();
+                	((CurrentAddedHPMessage) msg).maxHP = dat.readInt();
+
+                	break;
             }
         }
     }
@@ -971,6 +1061,27 @@ public enum NewPacketHandler
         msg.index = 11;
         msg.currentLP = curLP;
         msg.maxLP = maxLP;
+
+        return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+    }
+    
+    public static Packet getReagentBarPacket(Reagent reagent, float curAR, float maxAR)
+    {
+    	CurrentReagentBarMessage msg = new CurrentReagentBarMessage();
+    	msg.index = 12;
+    	msg.reagent = ReagentRegistry.getKeyForReagent(reagent);
+    	msg.currentAR = curAR;
+    	msg.maxAR = maxAR;
+    	
+    	return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
+    }
+    
+    public static Packet getAddedHPPacket(int curHP, int maxHP)
+    {
+    	CurrentAddedHPMessage msg = new CurrentAddedHPMessage();
+        msg.index = 13;
+        msg.currentHP = curHP;
+        msg.maxHP = maxHP;
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }

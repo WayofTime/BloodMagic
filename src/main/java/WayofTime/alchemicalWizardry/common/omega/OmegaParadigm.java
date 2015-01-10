@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.omega;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 
 public class OmegaParadigm 
@@ -12,7 +13,7 @@ public class OmegaParadigm
 	public OmegaArmour leggings;
 	public OmegaArmour boots;
 	
-	public OmegaParadigm(OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots)
+	public OmegaParadigm(Reagent reagent, OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots)
 	{
 		this.helmet = helmet;
 		this.chestPiece = chestPiece;
@@ -23,6 +24,10 @@ public class OmegaParadigm
 		this.chestPiece.setParadigm(this);
 		this.leggings.setParadigm(this);
 		this.boots.setParadigm(this);
+		this.helmet.setReagent(reagent);
+		this.chestPiece.setReagent(reagent);
+		this.leggings.setReagent(reagent);
+		this.boots.setReagent(reagent);
 	}
 	
 	public void convertPlayerArmour(EntityPlayer player)

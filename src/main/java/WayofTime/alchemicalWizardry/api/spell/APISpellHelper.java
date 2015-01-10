@@ -14,6 +14,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 
 public class APISpellHelper 
 {
@@ -49,6 +51,96 @@ public class APISpellHelper
 	{
 		NBTTagCompound data = player.getEntityData();
 		data.setInteger("BM:MaxStoredLP", amount);
+	}
+	
+	public static float getPlayerCurrentReagentAmount(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:StoredReagentAmount"))
+		{
+			return data.getFloat("BM:StoredReagentAmount");
+		}
+		
+		return 0;
+	}
+	
+	public static void setPlayerCurrentReagentAmount(EntityPlayer player, float amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setFloat("BM:StoredReagentAmount", amount);
+	}
+	
+	public static float getPlayerMaxReagentAmount(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:MaxReagentAmount"))
+		{
+			return data.getFloat("BM:MaxReagentAmount");
+		}
+		
+		return 0;
+	}
+	
+	public static void setPlayerMaxReagentAmount(EntityPlayer player, float amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setFloat("BM:MaxReagentAmount", amount);
+	}
+	
+	public static Reagent getPlayerReagentType(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:ReagentType"))
+		{
+			return ReagentRegistry.getReagentForKey(data.getString("BM:ReagentType"));
+		}
+		
+		return null;
+	}
+	
+	public static void setPlayerReagentType(EntityPlayer player, String str)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setString("BM:ReagentType", str);
+	}
+	
+	public static void setPlayerReagentType(EntityPlayer player, Reagent reagent)
+	{
+		setPlayerReagentType(player, ReagentRegistry.getKeyForReagent(reagent));
+	}
+	
+	public static int getCurrentAdditionalHP(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:CurrentAddedHP"))
+		{
+			return data.getInteger("BM:CurrentAddedHP");
+		}
+		
+		return 0;
+	}
+	
+	public static void setCurrentAdditionalHP(EntityPlayer player, int amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setInteger("BM:CurrentAddedHP", amount);
+	}
+	
+	public static int getCurrentAdditionalMaxHP(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:MaxAddedHP"))
+		{
+			return data.getInteger("BM:MaxAddedHP");
+		}
+		
+		return 0;
+	}
+	
+	public static void setCurrentAdditionalMaxHP(EntityPlayer player, int amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setInteger("BM:MaxAddedHP", amount);	
 	}
 	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)

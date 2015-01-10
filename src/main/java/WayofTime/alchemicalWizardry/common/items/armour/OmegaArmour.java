@@ -9,6 +9,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 import cpw.mods.fml.relauncher.Side;
@@ -17,6 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class OmegaArmour extends BoundArmour
 {
 	public OmegaParadigm paradigm;
+	public Reagent reagent;
 	
 	public OmegaArmour(int armorType) 
 	{
@@ -26,6 +28,11 @@ public abstract class OmegaArmour extends BoundArmour
 	public void setParadigm(OmegaParadigm paradigm)
 	{
 		this.paradigm = paradigm;
+	}
+	
+	public void setReagent(Reagent reagent)
+	{
+		this.reagent = reagent;
 	}
 	
 	@Override

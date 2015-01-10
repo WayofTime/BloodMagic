@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -37,7 +38,7 @@ public class RitualEffectOmegaTest extends RitualEffect
         
         for(EntityPlayer player : playerList)
         {
-        	OmegaParadigm waterParadigm = new OmegaParadigm(ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater);
+        	OmegaParadigm waterParadigm = new OmegaParadigm(ReagentRegistry.aquasalusReagent, ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater);
         	waterParadigm.convertPlayerArmour(player);
         }
     }
