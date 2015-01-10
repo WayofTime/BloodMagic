@@ -24,6 +24,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RenderHelper
@@ -70,12 +71,18 @@ public class RenderHelper
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             }
             
-            ReagentStack reagentStack = new ReagentStack(ReagentRegistry.sanctusReagent, 1000);
-            int maxAmount = 3000;
-            
-            if(reagentStack != null && reagentStack.amount > 0)
+            ItemStack stack = player.inventory.armorItemInSlot(2);
+            if(stack != null && stack.getItem() instanceof OmegaArmour)
             {
-//                renderTestHUD(mc, reagentStack, maxAmount);
+            	int duration = ((OmegaArmour)stack.getItem()).getDuration(stack);
+            	ReagentStack reagentStack = new ReagentStack(ReagentRegistry.aquasalusReagent, duration);
+                int maxAmount = 100;
+                
+                if(reagentStack != null && reagentStack.amount > 0)
+                {
+                    renderTestHUD(mc, reagentStack, maxAmount);
+                }
+                
             }
             
             if(SpellHelper.canPlayerSeeLPBar(player))
@@ -224,8 +231,8 @@ public class RenderHelper
     	
     	int amount = Math.max((int) (256 *  ((double)(maxAmount - reagentStack.amount) / maxAmount)), 0);
     	
-    	int x = (16 - xSize) / 2 * 8;
-        int y = (150 - ySize) / 2 * 8;
+    	int x = (lpBarX + 16 - xSize / 2) * 8;
+        int y = (lpBarY - ySize / 2) * 8;
         
         ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
         GL11.glColor4f(reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 1.0F);

@@ -72,6 +72,9 @@ import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.book.BUEntries;
+import WayofTime.alchemicalWizardry.common.commands.CommandBind;
+import WayofTime.alchemicalWizardry.common.commands.CommandSN;
+import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
 import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketMinorGrunt;
@@ -150,6 +153,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
@@ -255,9 +259,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
-import WayofTime.alchemicalWizardry.common.commands.CommandBind;
-import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
-import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
@@ -275,7 +276,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0a", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.0b", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
@@ -1264,6 +1265,7 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW031Convocation",isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
+        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
@@ -1523,7 +1525,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				strLine = strLine.replace('Â”', '"').replace('Â“','"');
+        				strLine = strLine.replace('”', '"').replace('“','"');
         				
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{

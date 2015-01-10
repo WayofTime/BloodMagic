@@ -49,7 +49,7 @@ public class ReagentRegistry
 
         sanctusReagent.setColour(255, 255, 0, 255);
         incendiumReagent.setColour(255, 0, 0, 255);
-        aquasalusReagent.setColour(47, 0, 196, 255);
+        aquasalusReagent.setColour(0, 0, 255, 255);
         magicalesReagent.setColour(150, 0, 146, 255);
         aetherReagent.setColour(105, 223, 86, 255);
         crepitousReagent.setColour(145, 145, 145, 255);

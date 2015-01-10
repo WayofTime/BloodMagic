@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common.items;
+package WayofTime.alchemicalWizardry.common.items.armour;
 
 import java.util.List;
 
@@ -27,6 +27,8 @@ import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.ILPGauge;
 import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
 import cpw.mods.fml.common.Optional;

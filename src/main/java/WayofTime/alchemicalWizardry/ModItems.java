@@ -14,7 +14,6 @@ import WayofTime.alchemicalWizardry.common.items.ArchmageBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.ArmourInhibitor;
 import WayofTime.alchemicalWizardry.common.items.BlankSpell;
 import WayofTime.alchemicalWizardry.common.items.BloodShard;
-import WayofTime.alchemicalWizardry.common.items.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.BoundAxe;
 import WayofTime.alchemicalWizardry.common.items.BoundPickaxe;
 import WayofTime.alchemicalWizardry.common.items.BoundShovel;
@@ -46,6 +45,11 @@ import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.TranscendentBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
+import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWater;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWind;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemAttunedCrystal;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemDestinationClearer;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemTankSegmenter;
@@ -206,6 +210,21 @@ public class ModItems
     
     public static Item transcendentBloodOrb;
     public static Item itemAssassinSigil;
+    
+    public static OmegaArmour boundHelmetWater;
+    public static OmegaArmour boundPlateWater;
+    public static OmegaArmour boundLeggingsWater;
+    public static OmegaArmour boundBootsWater;
+    
+    public static OmegaArmour boundHelmetEarth;
+    public static OmegaArmour boundPlateEarth;
+    public static OmegaArmour boundLeggingsEarth;
+    public static OmegaArmour boundBootsEarth;
+    
+    public static OmegaArmour boundHelmetWind;
+    public static OmegaArmour boundPlateWind;
+    public static OmegaArmour boundLeggingsWind;
+    public static OmegaArmour boundBootsWind;
 
     public static void init()
     {
@@ -309,6 +328,21 @@ public class ModItems
         itemHarvestSigil = new ItemHarvestSigil().setUnlocalizedName("itemHarvestSigil");
         itemCompressionSigil = new ItemPackRatSigil().setUnlocalizedName("itemCompressionSigil");
         itemAssassinSigil = new ItemSigilOfTheAssassin().setUnlocalizedName("itemAssassinSigil");
+        
+        boundHelmetWater = (OmegaArmour) new OmegaArmourWater(0).setUnlocalizedName("boundHelmetWater");
+        boundPlateWater = (OmegaArmour) new OmegaArmourWater(1).setUnlocalizedName("boundPlateWater");
+        boundLeggingsWater = (OmegaArmour) new OmegaArmourWater(2).setUnlocalizedName("boundLeggingsWater");
+        boundBootsWater = (OmegaArmour) new OmegaArmourWater(3).setUnlocalizedName("boundBootsWater");
+        
+        boundHelmetEarth = (OmegaArmour) new OmegaArmourEarth(0).setUnlocalizedName("boundHelmetEarth");
+        boundPlateEarth = (OmegaArmour) new OmegaArmourEarth(1).setUnlocalizedName("boundPlateEarth");
+        boundLeggingsEarth = (OmegaArmour) new OmegaArmourEarth(2).setUnlocalizedName("boundLeggingsEarth");
+        boundBootsEarth = (OmegaArmour) new OmegaArmourEarth(3).setUnlocalizedName("boundBootsEarth");
+        
+        boundHelmetWind = (OmegaArmour) new OmegaArmourWind(0).setUnlocalizedName("boundHelmetWind");
+        boundPlateWind = (OmegaArmour) new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
+        boundLeggingsWind = (OmegaArmour) new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
+        boundBootsWind = (OmegaArmour) new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
     }
 
     public static void registerItems()
@@ -417,6 +451,21 @@ public class ModItems
         GameRegistry.registerItem(ModItems.itemHarvestSigil, "itemHarvestSigil");
         GameRegistry.registerItem(ModItems.itemCompressionSigil, "itemCompressionSigil");
         GameRegistry.registerItem(ModItems.itemAssassinSigil, "itemAssassinSigil");
+        
+        GameRegistry.registerItem(ModItems.boundHelmetWater, "boundHelmetWater");
+        GameRegistry.registerItem(ModItems.boundPlateWater, "boundPlateWater");
+        GameRegistry.registerItem(ModItems.boundLeggingsWater, "boundLeggingsWater");
+        GameRegistry.registerItem(ModItems.boundBootsWater, "boundBootsWater");
+        
+        GameRegistry.registerItem(ModItems.boundHelmetEarth, "boundHelmetEarth");
+        GameRegistry.registerItem(ModItems.boundPlateEarth, "boundPlateEarth");
+        GameRegistry.registerItem(ModItems.boundLeggingsEarth, "boundLeggingsEarth");
+        GameRegistry.registerItem(ModItems.boundBootsEarth, "boundBootsEarth");
+        
+        GameRegistry.registerItem(ModItems.boundHelmetWind, "boundHelmetWind");
+        GameRegistry.registerItem(ModItems.boundPlateWind, "boundPlateWind");
+        GameRegistry.registerItem(ModItems.boundLeggingsWind, "boundLeggingsWind");
+        GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }

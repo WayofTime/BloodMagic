@@ -133,11 +133,16 @@ public class ItemHarvestSigil extends EnergyItems implements IHolding, ArmourUpg
     @Override
     public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        if (!(par3Entity instanceof EntityPlayer) || par2World.isRemote)
+        if ((!(par3Entity instanceof EntityPlayer)) || par2World.isRemote)
         {
             return;
         }
 
+        if(par2World.isRemote)
+        {
+        	return;
+        }
+        
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
         if (par1ItemStack.stackTagCompound == null)

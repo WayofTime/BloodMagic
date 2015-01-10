@@ -67,7 +67,7 @@ public class CheatyItem extends Item implements IBindable
             SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
         }
 
-        if (!par3EntityPlayer.worldObj.isRemote)
+        if (par3EntityPlayer.worldObj.isRemote)
         {
             return par1ItemStack;
         }
