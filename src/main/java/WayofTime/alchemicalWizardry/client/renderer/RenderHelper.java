@@ -80,7 +80,7 @@ public class RenderHelper
                 {
                 	float val = APISpellHelper.getPlayerCurrentReagentAmount(player);
                 	ReagentStack reagentStack = new ReagentStack(APISpellHelper.getPlayerReagentType(player), (int) val);
-
+                	
                     if(reagentStack != null && reagentStack.amount > 0)
                     {
                         renderTestHUD(mc, reagentStack, maxAmount);
@@ -273,14 +273,14 @@ public class RenderHelper
     	int x = (lpBarX + 16 - xSize / 2) * 8;
         int y = (lpBarY - ySize / 2) * 8;
         
-        ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
-        GL11.glColor4f(reagent.getColourRed(), reagent.getColourGreen(), reagent.getColourBlue(), 1.0F);
-        mc.getTextureManager().bindTexture(test2);
-        
         GL11.glScalef(1f/8f, 1f/8f, 1f/8f);
         
+        ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/container1.png");
+        GL11.glColor4f(reagent.getColourRed() / 255f, reagent.getColourGreen() / 255f, reagent.getColourBlue() / 255f, 1.0F);
+        mc.getTextureManager().bindTexture(test2);
+                
         drawTexturedModalRect(x, y + amount, 0, amount, 256, 256 - amount);
-        
+                
         ResourceLocation test = new ResourceLocation("alchemicalwizardry", "textures/gui/container.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(test);

@@ -113,6 +113,7 @@ import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWater;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import WayofTime.alchemicalWizardry.common.potion.PotionBoost;
@@ -1311,6 +1312,7 @@ public class AlchemicalWizardry
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 8), new ReagentStack(ReagentRegistry.potentiaReagent, 1000));
         
         OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater(ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater));
+        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth(ModItems.boundHelmetEarth, ModItems.boundPlateEarth, ModItems.boundLeggingsEarth, ModItems.boundBootsEarth));
     }
     
     public static void initDemonPacketRegistiry()

@@ -1,12 +1,8 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -16,9 +12,14 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectCrushing extends RitualEffect
 {
@@ -126,7 +127,7 @@ public class RitualEffectCrushing extends RitualEffect
                                 ItemStack item = new ItemStack(block, 1, meta);
                                 ItemStack copyStack = item.copyItemStack(item);
 
-                                SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
+                                SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
 
                                 if (copyStack.stackSize > 0)
                                 {
@@ -156,7 +157,7 @@ public class RitualEffectCrushing extends RitualEffect
                                             this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, true);
                                         }
 
-                                        SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
+                                        SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
                                         if (copyStack.stackSize > 0)
                                         {
                                             world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));

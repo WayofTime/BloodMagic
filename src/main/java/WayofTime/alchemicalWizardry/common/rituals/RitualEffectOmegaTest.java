@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -30,11 +31,11 @@ public class RitualEffectOmegaTest extends RitualEffect
         int x = ritualStone.getXCoord();
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
-
-        if (world.getWorldTime() % 200 != 0)
-        {
-            return;
-        }
+//
+//        if (world.getWorldTime() % 200 != 0)
+//        {
+//            return;
+//        }
 
         double range = 2;
 
@@ -44,14 +45,16 @@ public class RitualEffectOmegaTest extends RitualEffect
         {
 //        	OmegaParadigm waterParadigm = new OmegaParadigm(ReagentRegistry.aquasalusReagent, ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater, new ReagentRegenConfiguration(1, 1, 1));
         	
-        	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(ReagentRegistry.aquasalusReagent);
+        	Reagent reagent = ReagentRegistry.terraeReagent;
+        	
+        	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(reagent);
         	waterParadigm.convertPlayerArmour(player);
         	
         	APISpellHelper.setPlayerCurrentReagentAmount(player, tickDuration);
         	APISpellHelper.setPlayerMaxReagentAmount(player, tickDuration);
-        	APISpellHelper.setPlayerReagentType(player, ReagentRegistry.aquasalusReagent);
+        	APISpellHelper.setPlayerReagentType(player, reagent);
         	APISpellHelper.setCurrentAdditionalMaxHP(player, waterParadigm.getMaxAdditionalHealth());
-			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(ReagentRegistry.aquasalusReagent, APISpellHelper.getPlayerCurrentReagentAmount(player), APISpellHelper.getPlayerMaxReagentAmount(player)), (EntityPlayerMP)player);
+			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(reagent, APISpellHelper.getPlayerCurrentReagentAmount(player), APISpellHelper.getPlayerMaxReagentAmount(player)), (EntityPlayerMP)player);
         }
     }
 

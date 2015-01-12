@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -499,15 +500,37 @@ public class SpellHelper
         return returned;
     }
 
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory)
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir)
     {
         if (stack == null)
         {
             return stack;
         }
 
+        boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
+        
+        if(inventory instanceof ISidedInventory)
+        {
+        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	for(int in : array)
+        	{
+        		canBeInserted[in] = true;
+        	}
+        }else
+        {
+        	for(int i=0; i<canBeInserted.length; i++)
+        	{
+        		canBeInserted[i] = true;
+        	}
+        }
+        
         for (int i = 0; i < inventory.getSizeInventory(); i++)
         {
+        	if(!canBeInserted[i])
+        	{
+        		continue;
+        	}
+        	
             ItemStack[] combinedStacks = combineStacks(stack, inventory.getStackInSlot(i));
             stack = combinedStacks[0];
             inventory.setInventorySlotContents(i, combinedStacks[1]);

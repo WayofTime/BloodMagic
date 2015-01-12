@@ -1,20 +1,20 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectItemSuction extends RitualEffect
 {
@@ -75,7 +75,7 @@ public class RitualEffectItemSuction extends RitualEffect
                     ItemStack copyStack = itemEntity.getEntityItem().copy();
 
                     int pastAmount = copyStack.stackSize;
-                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity);
+                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
 
                     if (newStack != null && newStack.stackSize < pastAmount)
                     {
@@ -92,7 +92,6 @@ public class RitualEffectItemSuction extends RitualEffect
                         }
                         if (hasReductus)
                         {
-                            BlockFurnace d;
                             this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, true);
                         }
                     }
