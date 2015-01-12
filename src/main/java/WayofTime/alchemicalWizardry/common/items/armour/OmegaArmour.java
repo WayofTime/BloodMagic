@@ -39,17 +39,11 @@ public abstract class OmegaArmour extends BoundArmour
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
 		super.onArmorTick(world, player, itemStack);
-//		
-//		if(world.getWorldTime() % 20 == 0 && !world.isRemote)
-//		{
-//			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(ReagentRegistry.aquasalusReagent, this.getDuration(itemStack), 100), (EntityPlayerMP)player);
-//		}
-//		
-//		if(!this.decrementDuration(itemStack))
-//		{
-//			ItemStack stack = this.getContainedArmourStack(itemStack);
-//			player.inventory.armorInventory[3-this.armorType] = stack;
-//		}
+
+		if(this.armorType == 1)
+		{
+			paradigm.onUpdate(world, player, itemStack);
+		}
     }
 	
 	public void revertArmour(EntityPlayer player, ItemStack itemStack)
@@ -63,7 +57,6 @@ public abstract class OmegaArmour extends BoundArmour
 		ItemStack omegaStack = new ItemStack(this);
 		this.setContainedArmourStack(omegaStack, boundStack);
 		SoulNetworkHandler.checkAndSetItemOwner(omegaStack, SoulNetworkHandler.getOwnerName(boundStack));
-		this.setItemDuration(omegaStack, 100);
 		return omegaStack;
 	}
 	
@@ -99,49 +92,6 @@ public abstract class OmegaArmour extends BoundArmour
 		ItemStack armourStack = ItemStack.loadItemStackFromNBT(tag);
 		
 		return armourStack;
-	}
-	
-	public void setItemDuration(ItemStack omegaStack, int duration)
-	{
-		NBTTagCompound tag = omegaStack.getTagCompound();
-		if(tag == null)
-		{
-			tag = new NBTTagCompound();
-			omegaStack.setTagCompound(tag);
-		}
-		
-		tag.setInteger("duration", duration);
-	}
-	
-	public int getDuration(ItemStack omegaStack)
-	{
-		if(omegaStack.hasTagCompound())
-		{
-			return omegaStack.getTagCompound().getInteger("duration");
-		}else
-		{
-			return 0;
-		}
-	}
-	
-	/**
-	 * 
-	 * @param omegaStack
-	 * @return true if there is duration left (duration > 0)
-	 */
-	public boolean decrementDuration(ItemStack omegaStack)
-	{
-		int duration = this.getDuration(omegaStack);
-		
-		if(duration > 0)
-		{
-			this.setItemDuration(omegaStack, duration - 1);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 	
 	@Override

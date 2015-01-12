@@ -65,8 +65,12 @@ public class SpellLightningBolt extends HomSpell
         double yCoord = par3EntityPlayer.posY;
         double zCoord = par3EntityPlayer.posZ;
         par2World.getWorldInfo().setRaining(true);
-        par2World.setRainStrength(1.0f);
-        par2World.setThunderStrength(1.0f);
+        if(par2World.isRemote)
+        {
+            par2World.setRainStrength(1.0f);
+            par2World.setThunderStrength(1.0f);
+        }
+
         par2World.getWorldInfo().setThunderTime(0);
         par2World.getWorldInfo().setThundering(true);
 

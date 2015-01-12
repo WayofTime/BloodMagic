@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.omega;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
@@ -82,5 +83,10 @@ public class OmegaParadigm
 		ItemStack bootsStack = armours[0];
 		
 		return helmetStack != null && helmetStack.getItem() == helmet && chestStack != null && chestStack.getItem() == chestPiece && leggingsStack != null && leggingsStack.getItem() == leggings && bootsStack != null && bootsStack.getItem() == boots;
+	}
+	
+	public void onUpdate(World world, EntityPlayer player, ItemStack stack)
+	{
+		
 	}
 }

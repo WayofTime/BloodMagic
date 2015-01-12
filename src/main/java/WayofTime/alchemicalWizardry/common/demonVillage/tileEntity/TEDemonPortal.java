@@ -50,6 +50,8 @@ public class TEDemonPortal extends TileEntity
 	
 	public static int limit = 100;
 	
+	public static int demonLimit = 100;
+	
     public static int buildingGridDelay = 25;
     public static int roadGridDelay = 10;
     public static int demonHoardDelay = 40;
@@ -412,12 +414,15 @@ public class TEDemonPortal extends TileEntity
             }
         }
         
-        if(this.demonHoardCooldown <= 0)
+        if(this.demonHoardCooldown <= 0) //TODO
         {
-        	int complexityCost = this.createRandomDemonHoard(this, tier, this.type, this.isLockedDown());
-        	if(complexityCost > 0)
+        	if(this.hoardList.size() <= demonLimit)
         	{
-        		this.demonHoardCooldown = TEDemonPortal.demonHoardDelay * complexityCost;
+        		int complexityCost = this.createRandomDemonHoard(this, tier, this.type, this.isLockedDown());
+            	if(complexityCost > 0)
+            	{
+            		this.demonHoardCooldown += TEDemonPortal.demonHoardDelay * complexityCost;
+            	}
         	}
         }
 
