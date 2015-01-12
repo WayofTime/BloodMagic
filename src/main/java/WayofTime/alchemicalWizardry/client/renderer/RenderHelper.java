@@ -74,15 +74,18 @@ public class RenderHelper
             ItemStack stack = player.inventory.armorItemInSlot(2);
             if(stack != null && stack.getItem() instanceof OmegaArmour)
             {
-            	int duration = ((OmegaArmour)stack.getItem()).getDuration(stack);
-            	ReagentStack reagentStack = new ReagentStack(ReagentRegistry.aquasalusReagent, duration);
-                int maxAmount = 100;
+                int maxAmount = (int) APISpellHelper.getPlayerMaxReagentAmount(player);
                 
-                if(reagentStack != null && reagentStack.amount > 0)
+                if(maxAmount > 0)
                 {
-                    renderTestHUD(mc, reagentStack, maxAmount);
-                }
-                
+                	float val = APISpellHelper.getPlayerCurrentReagentAmount(player);
+                	ReagentStack reagentStack = new ReagentStack(APISpellHelper.getPlayerReagentType(player), (int) val);
+
+                    if(reagentStack != null && reagentStack.amount > 0)
+                    {
+                        renderTestHUD(mc, reagentStack, maxAmount);
+                    }
+                } 
             }
             
             if(SpellHelper.canPlayerSeeLPBar(player))
@@ -93,6 +96,13 @@ public class RenderHelper
                 {
                     renderLPHUD(mc, APISpellHelper.getPlayerLPTag(player), max);
                 }
+            }
+            
+            float maxHP = APISpellHelper.getCurrentAdditionalMaxHP(player);
+//            System.out.println("MaxHP: " + maxHP);
+            if(maxHP > 0)
+            {
+                renderHPHUD(mc, APISpellHelper.getCurrentAdditionalHP(player), maxHP);
             }
         }
 
@@ -119,6 +129,35 @@ public class RenderHelper
         drawTexturedModalRect(x, y + amount, 0, amount, 256, 256 - amount);
         
         ResourceLocation test = new ResourceLocation("alchemicalwizardry", "textures/gui/lpVial.png");
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        mc.getTextureManager().bindTexture(test);
+        
+
+        drawTexturedModalRect(x, y, 0, 0, 256, 256);
+        
+        GL11.glPopMatrix();
+    }
+    
+    private static void renderHPHUD(Minecraft mc, float hpAmount, float maxAmount)
+    {
+    	GL11.glPushMatrix();
+    	int xSize = 32;
+    	int ySize = 32;
+    	
+    	int amount = Math.max((int) (256 *  ((double)(hpAmount) / maxAmount)), 0);
+    	
+    	int x = (lpBarX + 8 - xSize / 2) * 8;
+        int y = (lpBarY + 32 - ySize / 2) * 8;
+                
+        ResourceLocation test2 = new ResourceLocation("alchemicalwizardry", "textures/gui/HPBar2.png");
+        GL11.glColor4f(1, 0, 0, 1.0F);
+        mc.getTextureManager().bindTexture(test2);
+        
+        GL11.glScalef(1f/8f, 1f/8f, 1f/8f);
+        
+        drawTexturedModalRect(x, y, amount, 0, amount, 256);
+        
+        ResourceLocation test = new ResourceLocation("alchemicalwizardry", "textures/gui/HPBar1.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.getTextureManager().bindTexture(test);
         

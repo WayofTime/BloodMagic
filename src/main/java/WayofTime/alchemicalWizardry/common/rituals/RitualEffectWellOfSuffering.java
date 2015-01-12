@@ -73,7 +73,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         {
             for (EntityLivingBase livingEntity : list)
             {
-                if (livingEntity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass()))
+                if (!livingEntity.isEntityAlive() || livingEntity instanceof EntityPlayer || AlchemicalWizardry.wellBlacklist.contains(livingEntity.getClass()))
                 {
                     continue;
                 }

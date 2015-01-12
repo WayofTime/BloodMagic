@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectOmegaTest extends RitualEffect
 {
+	public static final int tickDuration = 1 * 60 * 20;
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -38,8 +42,16 @@ public class RitualEffectOmegaTest extends RitualEffect
         
         for(EntityPlayer player : playerList)
         {
-        	OmegaParadigm waterParadigm = new OmegaParadigm(ReagentRegistry.aquasalusReagent, ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater);
+//        	OmegaParadigm waterParadigm = new OmegaParadigm(ReagentRegistry.aquasalusReagent, ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater, new ReagentRegenConfiguration(1, 1, 1));
+        	
+        	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(ReagentRegistry.aquasalusReagent);
         	waterParadigm.convertPlayerArmour(player);
+        	
+        	APISpellHelper.setPlayerCurrentReagentAmount(player, tickDuration);
+        	APISpellHelper.setPlayerMaxReagentAmount(player, tickDuration);
+        	APISpellHelper.setPlayerReagentType(player, ReagentRegistry.aquasalusReagent);
+        	APISpellHelper.setCurrentAdditionalMaxHP(player, waterParadigm.getMaxAdditionalHealth());
+			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(ReagentRegistry.aquasalusReagent, APISpellHelper.getPlayerCurrentReagentAmount(player), APISpellHelper.getPlayerMaxReagentAmount(player)), (EntityPlayerMP)player);
         }
     }
 

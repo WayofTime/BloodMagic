@@ -160,20 +160,20 @@ public class RitualEffectCrushing extends RitualEffect
                                         if (copyStack.stackSize > 0)
                                         {
                                             world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
-                                        }
-
-                                        if (hasOrbisTerrae)
-                                        {
-                                            this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
-                                        }
-                                        if (hasPotentia)
-                                        {
-                                            this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
-                                        }
-                                        if (hasVirtus)
-                                        {
-                                            this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
-                                        }
+                                        }  
+                                    }
+                                    
+                                    if (hasOrbisTerrae)
+                                    {
+                                        this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+                                    }
+                                    if (hasPotentia)
+                                    {
+                                        this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                                    }
+                                    if (hasVirtus)
+                                    {
+                                        this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
                                     }
                                 }
                             }

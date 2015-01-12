@@ -288,6 +288,7 @@ public enum NewPacketHandler
         {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             
+            APISpellHelper.setPlayerReagentType(player, msg.reagent);
             APISpellHelper.setPlayerCurrentReagentAmount(player, msg.currentAR);
             APISpellHelper.setPlayerMaxReagentAmount(player, msg.maxAR);
         }
@@ -430,8 +431,8 @@ public enum NewPacketHandler
     
     public static class CurrentAddedHPMessage extends BMMessage
     {
-    	int currentHP;
-    	int maxHP;
+    	float currentHP;
+    	float maxHP;
     }
 
     private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
@@ -673,8 +674,8 @@ public enum NewPacketHandler
                 	break;
                 	
                 case 13:
-                	target.writeInt(((CurrentAddedHPMessage) msg).currentHP);
-                	target.writeInt(((CurrentAddedHPMessage) msg).maxHP);
+                	target.writeFloat(((CurrentAddedHPMessage) msg).currentHP);
+                	target.writeFloat(((CurrentAddedHPMessage) msg).maxHP);
                 	
                 	break;
             }
@@ -906,8 +907,8 @@ public enum NewPacketHandler
                 	break;
                 	
                 case 13:
-                	((CurrentAddedHPMessage) msg).currentHP = dat.readInt();
-                	((CurrentAddedHPMessage) msg).maxHP = dat.readInt();
+                	((CurrentAddedHPMessage) msg).currentHP = dat.readFloat();
+                	((CurrentAddedHPMessage) msg).maxHP = dat.readFloat();
 
                 	break;
             }
@@ -1076,11 +1077,11 @@ public enum NewPacketHandler
     	return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
     
-    public static Packet getAddedHPPacket(int curHP, int maxHP)
+    public static Packet getAddedHPPacket(float health, float maxHP)
     {
     	CurrentAddedHPMessage msg = new CurrentAddedHPMessage();
         msg.index = 13;
-        msg.currentHP = curHP;
+        msg.currentHP = health;
         msg.maxHP = maxHP;
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);

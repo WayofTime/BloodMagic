@@ -39,12 +39,24 @@ public abstract class OmegaArmour extends BoundArmour
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
 		super.onArmorTick(world, player, itemStack);
-		if(!this.decrementDuration(itemStack))
-		{
-			ItemStack stack = this.getContainedArmourStack(itemStack);
-			player.inventory.armorInventory[3-this.armorType] = stack;
-		}
+//		
+//		if(world.getWorldTime() % 20 == 0 && !world.isRemote)
+//		{
+//			NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(ReagentRegistry.aquasalusReagent, this.getDuration(itemStack), 100), (EntityPlayerMP)player);
+//		}
+//		
+//		if(!this.decrementDuration(itemStack))
+//		{
+//			ItemStack stack = this.getContainedArmourStack(itemStack);
+//			player.inventory.armorInventory[3-this.armorType] = stack;
+//		}
     }
+	
+	public void revertArmour(EntityPlayer player, ItemStack itemStack)
+	{
+		ItemStack stack = this.getContainedArmourStack(itemStack);
+		player.inventory.armorInventory[3-this.armorType] = stack;
+	}
 	
 	public ItemStack getSubstituteStack(ItemStack boundStack)
 	{

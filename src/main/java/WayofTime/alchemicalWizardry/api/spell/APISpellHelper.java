@@ -109,38 +109,38 @@ public class APISpellHelper
 		setPlayerReagentType(player, ReagentRegistry.getKeyForReagent(reagent));
 	}
 	
-	public static int getCurrentAdditionalHP(EntityPlayer player)
+	public static float getCurrentAdditionalHP(EntityPlayer player)
 	{
 		NBTTagCompound data = player.getEntityData();
 		if(data.hasKey("BM:CurrentAddedHP"))
 		{
-			return data.getInteger("BM:CurrentAddedHP");
+			return data.getFloat("BM:CurrentAddedHP");
 		}
 		
 		return 0;
 	}
 	
-	public static void setCurrentAdditionalHP(EntityPlayer player, int amount)
+	public static void setCurrentAdditionalHP(EntityPlayer player, float amount)
 	{
 		NBTTagCompound data = player.getEntityData();
-		data.setInteger("BM:CurrentAddedHP", amount);
+		data.setFloat("BM:CurrentAddedHP", amount);
 	}
 	
-	public static int getCurrentAdditionalMaxHP(EntityPlayer player)
+	public static float getCurrentAdditionalMaxHP(EntityPlayer player)
 	{
 		NBTTagCompound data = player.getEntityData();
 		if(data.hasKey("BM:MaxAddedHP"))
 		{
-			return data.getInteger("BM:MaxAddedHP");
+			return data.getFloat("BM:MaxAddedHP");
 		}
 		
 		return 0;
 	}
 	
-	public static void setCurrentAdditionalMaxHP(EntityPlayer player, int amount)
+	public static void setCurrentAdditionalMaxHP(EntityPlayer player, float maxHP)
 	{
 		NBTTagCompound data = player.getEntityData();
-		data.setInteger("BM:MaxAddedHP", amount);	
+		data.setFloat("BM:MaxAddedHP", maxHP);	
 	}
 	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)

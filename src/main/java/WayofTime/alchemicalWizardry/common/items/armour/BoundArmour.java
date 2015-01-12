@@ -218,7 +218,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             return new ArmorProperties(-1, 0, 0);
         }
 
-        if (helmet.getItem().equals(ModItems.boundHelmet) && plate.getItem().equals(ModItems.boundPlate) && leggings.getItem().equals(ModItems.boundLeggings) && boots.getItem().equals(ModItems.boundBoots))
+        if (helmet.getItem() instanceof BoundArmour && plate.getItem() instanceof BoundArmour && leggings.getItem() instanceof BoundArmour && boots.getItem() instanceof BoundArmour)
         {
             if (source.isUnblockable())
             {

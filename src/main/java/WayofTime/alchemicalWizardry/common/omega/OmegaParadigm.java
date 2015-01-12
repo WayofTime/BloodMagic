@@ -13,7 +13,9 @@ public class OmegaParadigm
 	public OmegaArmour leggings;
 	public OmegaArmour boots;
 	
-	public OmegaParadigm(Reagent reagent, OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots)
+	public ReagentRegenConfiguration config;
+	
+	public OmegaParadigm(Reagent reagent, OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots, ReagentRegenConfiguration config)
 	{
 		this.helmet = helmet;
 		this.chestPiece = chestPiece;
@@ -28,6 +30,8 @@ public class OmegaParadigm
 		this.chestPiece.setReagent(reagent);
 		this.leggings.setReagent(reagent);
 		this.boots.setReagent(reagent);
+		
+		this.config = new ReagentRegenConfiguration(20, 10, 1);
 	}
 	
 	public void convertPlayerArmour(EntityPlayer player)
@@ -51,5 +55,32 @@ public class OmegaParadigm
 			armours[1] = omegaLeggingsStack;
 			armours[0] = omegaBootsStack;
 		}
+	}
+	
+	public ReagentRegenConfiguration getRegenConfig(EntityPlayer player)
+	{
+		return this.config;
+	}
+	
+	public int getMaxAdditionalHealth()
+	{
+		return 50;
+	}
+	
+	public float getCostPerTickOfUse(EntityPlayer player)
+	{
+		return 1;
+	}
+	
+	public boolean isPlayerWearingFullSet(EntityPlayer player)
+	{
+		ItemStack[] armours = player.inventory.armorInventory;
+		
+		ItemStack helmetStack = armours[3];
+		ItemStack chestStack = armours[2];
+		ItemStack leggingsStack = armours[1];
+		ItemStack bootsStack = armours[0];
+		
+		return helmetStack != null && helmetStack.getItem() == helmet && chestStack != null && chestStack.getItem() == chestPiece && leggingsStack != null && leggingsStack.getItem() == leggings && bootsStack != null && bootsStack.getItem() == boots;
 	}
 }

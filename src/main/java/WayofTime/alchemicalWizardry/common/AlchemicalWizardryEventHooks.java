@@ -16,30 +16,40 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
+import WayofTime.alchemicalWizardry.common.omega.ReagentRegenConfiguration;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -57,13 +67,143 @@ public class AlchemicalWizardryEventHooks
 	@SubscribeEvent
 	public void onAnvilUpdateEvent(AnvilUpdateEvent event)
 	{
-		if(event.isCancelable() && event.left != null && event.left.getItem() instanceof BoundArmour && event.right != null)
+		if(event.isCancelable() && event.left != null && event.right != null && (event.left.getItem() instanceof BoundArmour || event.right.getItem() instanceof BoundArmour))
 		{
 			event.setCanceled(true);
 		}
 	}
 
+	@SubscribeEvent(priority=EventPriority.HIGHEST)
+	public void onLivingHurtEvent(LivingHurtEvent event)
+	{
+		if(!event.isCanceled() && event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
+		{
+			EntityPlayer player = (EntityPlayer)event.entityLiving;
+
+			float prevHp = APISpellHelper.getCurrentAdditionalHP((EntityPlayer)event.entityLiving);
+			if(prevHp > 0) //TODO change the HP values to floats
+			{
+				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
+				if (recalculatedAmount <= 0) return;
+				
+				float ratio = recalculatedAmount / event.ammount;
+				
+	            float f1 = recalculatedAmount;
+	            recalculatedAmount = Math.max(recalculatedAmount - player.getAbsorptionAmount(), 0.0F);
+	            player.setAbsorptionAmount(player.getAbsorptionAmount() - (f1 - recalculatedAmount));
+	            
+	            if(prevHp > recalculatedAmount)
+	            {
+		            float hp = (prevHp - recalculatedAmount);
+		            
+		            if(hp > 0)
+					{
+						event.ammount = 0;
+					}else
+					{
+						event.ammount += hp / ratio;
+					}
+		            
+		            APISpellHelper.setCurrentAdditionalHP((EntityPlayer)event.entityLiving, Math.max(0, hp));
+
+					System.out.println("HP: " + hp);
+					APISpellHelper.setCurrentAdditionalHP(player, Math.max(0, hp));
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(Math.max(0, hp), APISpellHelper.getCurrentAdditionalMaxHP(player)), (EntityPlayerMP)player);
+					
+	            }				
+			}
+		}
+	}
+	
 	@SubscribeEvent
+	public void omegaUpdateHpEvent(LivingUpdateEvent event)
+	{
+		if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
+		{			
+			EntityPlayer player = (EntityPlayer)event.entityLiving;
+			Reagent reagent = APISpellHelper.getPlayerReagentType(player);
+			float reagentAmount = APISpellHelper.getPlayerCurrentReagentAmount(player);
+			
+			boolean hasReagentChanged = false;
+			
+			if(reagentAmount > 0 && OmegaRegistry.hasParadigm(reagent))
+			{
+				OmegaParadigm parad = OmegaRegistry.getParadigmForReagent(reagent);
+				ReagentRegenConfiguration config = parad.getRegenConfig(player);
+				
+				if(parad.isPlayerWearingFullSet(player))
+				{
+					if(event.entityLiving.worldObj.getWorldTime() % config.tickRate == 0)
+					{
+						boolean hasHealthChanged = false;
+						int maxHealth = parad.getMaxAdditionalHealth();
+						
+						float health = APISpellHelper.getCurrentAdditionalHP(player);
+						
+						if(health > maxHealth)
+						{
+							health = maxHealth;
+							hasHealthChanged = true;
+						}else if(health < maxHealth)
+						{
+							float addedAmount = Math.min(Math.min((reagentAmount / config.costPerPoint), config.healPerTick), maxHealth - health);
+							float drain = addedAmount * config.costPerPoint;
+							
+							reagentAmount -= drain;
+							hasReagentChanged = true;
+							
+							health += addedAmount;
+							
+							hasHealthChanged = true;
+						}
+						
+						if(player instanceof EntityPlayerMP)
+						{
+							if(hasHealthChanged)
+							{
+								APISpellHelper.setCurrentAdditionalHP(player, health);
+								NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(health, maxHealth), (EntityPlayerMP)player);
+							}
+						}
+					}
+				}
+				//Consumes the amount
+				float costPerTick = parad.getCostPerTickOfUse(player);
+				if(reagentAmount > costPerTick)
+				{
+					hasReagentChanged = true;
+					reagentAmount = Math.max(0, reagentAmount - costPerTick);
+				}else
+				{
+					hasReagentChanged = true;
+					reagentAmount = 0;
+				}
+			}
+	
+			if(reagentAmount <= 0)
+			{
+				ItemStack[] armourInventory = player.inventory.armorInventory;
+				for(ItemStack stack : armourInventory)
+				{
+					if(stack != null && stack.getItem() instanceof OmegaArmour)
+					{
+						((OmegaArmour)stack.getItem()).revertArmour(player, stack);
+					}
+				}
+			}
+			
+			if(player instanceof EntityPlayerMP)
+			{
+				if(hasReagentChanged)
+				{
+					APISpellHelper.setPlayerCurrentReagentAmount(player, reagentAmount);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(reagent, reagentAmount, APISpellHelper.getPlayerMaxReagentAmount(player)), (EntityPlayerMP)player);
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public void onPlayerDamageEvent(LivingAttackEvent event)
 	{
 		if (event.source.isProjectile())
