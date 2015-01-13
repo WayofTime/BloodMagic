@@ -45,7 +45,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             {
                 for (int k = -10; k <= 10; k++)
                 {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof TEAltar)
+                    if (world.getTileEntity(x + i, y + k, z + j) instanceof TEAltar) && !testFlag
                     {
                         tileAltar = (TEAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
