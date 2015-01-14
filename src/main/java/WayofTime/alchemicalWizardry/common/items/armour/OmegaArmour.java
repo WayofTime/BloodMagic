@@ -172,4 +172,12 @@ public abstract class OmegaArmour extends BoundArmour
             return super.getArmorModel(entityLiving, itemStack, armorSlot);
         }
     }
+    
+    public void onOmegaKeyPressed(EntityPlayer player, ItemStack stack)
+    {
+    	if(paradigm != null)
+    	{
+    		paradigm.onOmegaKeyPressed(player, stack);
+    	}
+    }
 }

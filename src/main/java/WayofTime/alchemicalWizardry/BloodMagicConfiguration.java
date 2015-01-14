@@ -85,6 +85,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.customPotionDeafID = config.get("Potion ID", "Deaf", 113).getInt();
 		AlchemicalWizardry.customPotionFeatherFallID = config.get("Potion ID", "FeatherFall", 114).getInt();
 		AlchemicalWizardry.customPotionDemonCloakID = config.get("Potion ID", "DemonCloak", 114).getInt();
+		AlchemicalWizardry.customPotionAmphibianID = config.get("Potion ID", "Amphibian", 115).getInt();
 
 		MeteorParadigm.maxChance = config.get("meteor", "maxChance", 1000).getInt();
 		AlchemicalWizardry.doMeteorsDestroyBlocks = config.get("meteor", "doMeteorsDestroyBlocks", true).getBoolean(true);

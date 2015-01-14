@@ -30,6 +30,7 @@ import WayofTime.alchemicalWizardry.common.block.EmptySocket;
 import WayofTime.alchemicalWizardry.common.block.ImperfectRitualStone;
 import WayofTime.alchemicalWizardry.common.block.LargeBloodStoneBrick;
 import WayofTime.alchemicalWizardry.common.block.LifeEssenceBlock;
+import WayofTime.alchemicalWizardry.common.block.MimicBlock;
 import WayofTime.alchemicalWizardry.common.block.RitualStone;
 import WayofTime.alchemicalWizardry.common.block.RuneOfSacrifice;
 import WayofTime.alchemicalWizardry.common.block.RuneOfSelfSacrifice;
@@ -90,6 +91,7 @@ public class ModBlocks
     public static Block blockCrystalBelljar;
     public static Block blockDemonChest;
     public static Block blockCrystal;
+    public static Block blockMimic;
 
     public static void init()
     {
@@ -127,6 +129,7 @@ public class ModBlocks
         blockCrystalBelljar = new BlockBelljar();
         blockDemonChest = new BlockDemonChest();
         blockCrystal = new BlockCrystal();
+        blockMimic = new MimicBlock();
         
         blockLifeEssence = new LifeEssenceBlock();
     }
@@ -171,6 +174,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockCrystalBelljar, ItemBlockCrystalBelljar.class, "blockCrystalBelljar");
         GameRegistry.registerBlock(ModBlocks.blockDemonChest, "blockDemonChest");
         GameRegistry.registerBlock(ModBlocks.blockCrystal, ItemCrystalBlock.class, "blockCrystal");
+        GameRegistry.registerBlock(ModBlocks.blockMimic, "blockMimic");
     }
 
     public static void registerBlocksInInit()

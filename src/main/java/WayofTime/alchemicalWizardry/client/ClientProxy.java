@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.client;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
@@ -178,6 +179,9 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerEvents()
     {
-        FMLCommonHandler.instance().bus().register(new ClientEventHandler());
+    	Object ob = new ClientEventHandler();
+        FMLCommonHandler.instance().bus().register(ob);
+        MinecraftForge.EVENT_BUS.register(ob);
+        KeyBindings.init();
     }
 }

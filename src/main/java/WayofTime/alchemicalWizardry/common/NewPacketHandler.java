@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -46,15 +47,8 @@ public enum NewPacketHandler
 {
     INSTANCE;
 
-    /**
-     * Our channel "pair" from {@link NetworkRegistry}
-     */
     private EnumMap<Side, FMLEmbeddedChannel> channels;
 
-
-    /**
-     * Make our packet handler, and add an {@link IronChestCodec} always
-     */
     private NewPacketHandler()
     {
         // request a channel pair for IronChest from the network registry
@@ -63,6 +57,11 @@ public enum NewPacketHandler
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {
             addClientHandler();
+        }
+        if(FMLCommonHandler.instance().getSide() == Side.SERVER)
+        {
+        	System.out.println("Server sided~");
+        	addServerHandler();
         }
     }
 
@@ -87,15 +86,16 @@ public enum NewPacketHandler
         clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentReagentBarMessageHandler", new CurrentReagentBarMessageHandler());
         clientChannel.pipeline().addAfter(tileAltarCodec, "CurrentAddedHPMessageHandler", new CurrentAddedHPMessageHandler());
     }
+    
+    @SideOnly(Side.SERVER)
+	private void addServerHandler()
+	{
+        FMLEmbeddedChannel serverChannel = this.channels.get(Side.SERVER);
 
+		String messageCodec = serverChannel.findChannelHandlerNameForType(TEAltarCodec.class);
+		serverChannel.pipeline().addAfter(messageCodec, "KeyboardMessageHandler", new KeyboardMessageHandler());
+	}
 
-    /**
-     * This class simply handles the {@link IronChestMessage} when it's received
-     * at the client side It can contain client only code, because it's only run
-     * on the client.
-     *
-     * @author cpw
-     */
     private static class TEAltarMessageHandler extends SimpleChannelInboundHandler<TEAltarMessage>
     {
         @Override
@@ -305,6 +305,20 @@ public enum NewPacketHandler
             APISpellHelper.setCurrentAdditionalMaxHP(player, msg.maxHP);
         }
     }
+    
+    private static class KeyboardMessageHandler extends SimpleChannelInboundHandler<KeyboardMessage>
+    {
+    	public KeyboardMessageHandler()
+    	{
+    		System.out.println("I am being created");
+    	}
+    	@Override
+        protected void channelRead0(ChannelHandlerContext ctx, KeyboardMessage msg) throws Exception
+        {
+    		System.out.println("Hmmm");
+    		
+        }
+    }
 
     public static class BMMessage
     {
@@ -434,6 +448,43 @@ public enum NewPacketHandler
     	float currentHP;
     	float maxHP;
     }
+    
+    public static class KeyboardMessage extends BMMessage
+    {
+    	byte keyPressed;
+    }
+    
+    private class ClientToServerCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
+    {
+    	public ClientToServerCodec()
+    	{
+    	}
+    	
+		@Override
+		public void encodeInto(ChannelHandlerContext ctx, BMMessage msg, ByteBuf target) throws Exception 
+		{
+			target.writeInt(msg.index);
+			
+			
+			switch(msg.index)
+			{
+			
+			}
+		}
+
+		@Override
+		public void decodeInto(ChannelHandlerContext ctx, ByteBuf source, BMMessage msg) 
+		{
+			int index = source.readInt();
+			
+			System.out.println("Packet is recieved and being decoded");
+			
+			switch(index)
+			{
+			
+			}
+		}
+    }
 
     private class TEAltarCodec extends FMLIndexedMessageToMessageCodec<BMMessage>
     {
@@ -453,6 +504,7 @@ public enum NewPacketHandler
             addDiscriminator(11, CurrentLPMessage.class);
             addDiscriminator(12, CurrentReagentBarMessage.class);
             addDiscriminator(13, CurrentAddedHPMessage.class);
+            addDiscriminator(14, KeyboardMessage.class);
         }
 
         @Override
@@ -678,6 +730,12 @@ public enum NewPacketHandler
                 	target.writeFloat(((CurrentAddedHPMessage) msg).maxHP);
                 	
                 	break;
+                	
+                case 14:
+        			System.out.println("Packet is being encoded");
+
+    				target.writeByte(((KeyboardMessage)msg).keyPressed);
+    				break;
             }
         }
 
@@ -911,6 +969,11 @@ public enum NewPacketHandler
                 	((CurrentAddedHPMessage) msg).maxHP = dat.readFloat();
 
                 	break;
+                	
+                case 14:
+                	System.out.println("Packet recieved: being decoded");
+    				((KeyboardMessage)msg).keyPressed = dat.readByte();
+    				break;
             }
         }
     }
@@ -1086,6 +1149,17 @@ public enum NewPacketHandler
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
+    
+    public static Packet getKeyboardPressPacket(byte bt)
+    {
+    	KeyboardMessage msg = new KeyboardMessage();
+    	msg.index = 14;
+    	msg.keyPressed = bt;
+    	
+    	System.out.println("Packet is being created");
+    	
+    	return INSTANCE.channels.get(Side.CLIENT).generatePacketFrom(msg);
+    }
 
     public void sendTo(Packet message, EntityPlayerMP player)
     {
@@ -1105,5 +1179,11 @@ public enum NewPacketHandler
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(point);
         this.channels.get(Side.SERVER).writeAndFlush(message);
+    }
+    
+    public void sendToServer(Packet message)
+    {
+        this.channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
+        this.channels.get(Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 }

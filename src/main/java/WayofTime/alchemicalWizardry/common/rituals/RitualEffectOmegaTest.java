@@ -42,10 +42,8 @@ public class RitualEffectOmegaTest extends RitualEffect
         List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
         
         for(EntityPlayer player : playerList)
-        {
-//        	OmegaParadigm waterParadigm = new OmegaParadigm(ReagentRegistry.aquasalusReagent, ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater, new ReagentRegenConfiguration(1, 1, 1));
-        	
-        	Reagent reagent = ReagentRegistry.terraeReagent;
+        {        	
+        	Reagent reagent = ReagentRegistry.aquasalusReagent;
         	
         	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(reagent);
         	waterParadigm.convertPlayerArmour(player);

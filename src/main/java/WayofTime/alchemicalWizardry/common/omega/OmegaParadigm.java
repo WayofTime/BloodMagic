@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -88,5 +89,15 @@ public class OmegaParadigm
 	public void onUpdate(World world, EntityPlayer player, ItemStack stack)
 	{
 		
+	}
+	
+	public void onOmegaKeyPressed(EntityPlayer player, ItemStack stack)
+	{
+		
+	}
+	
+	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
+	{
+		return false;
 	}
 }

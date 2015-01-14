@@ -63,6 +63,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryFuelHandler;
+import WayofTime.alchemicalWizardry.common.ClientToServerPacketHandler;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
 import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
 import WayofTime.alchemicalWizardry.common.LifeEssence;
@@ -116,6 +117,7 @@ import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWater;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
+import WayofTime.alchemicalWizardry.common.potion.PotionAmphibian;
 import WayofTime.alchemicalWizardry.common.potion.PotionBoost;
 import WayofTime.alchemicalWizardry.common.potion.PotionDeaf;
 import WayofTime.alchemicalWizardry.common.potion.PotionDemonCloak;
@@ -247,6 +249,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
@@ -313,6 +316,7 @@ public class AlchemicalWizardry
     public static Potion customPotionDeaf;
     public static Potion customPotionFeatherFall;
     public static Potion customPotionDemonCloak;
+    public static Potion customPotionAmphibian;
 
     public static int customPotionDrowningID;
     public static int customPotionBoostID;
@@ -330,6 +334,7 @@ public class AlchemicalWizardry
     public static int customPotionDeafID;
     public static int customPotionFeatherFallID;
     public static int customPotionDemonCloakID;
+    public static int customPotionAmphibianID;
 
 	public static boolean ritualDisabledWater;
 	public static boolean ritualDisabledLava;
@@ -534,6 +539,7 @@ public class AlchemicalWizardry
         FMLCommonHandler.instance().bus().register(eventHook);
         MinecraftForge.EVENT_BUS.register(eventHook);
         NewPacketHandler.INSTANCE.ordinal();
+        ClientToServerPacketHandler.init();
     }
 
     @EventHandler
@@ -716,7 +722,8 @@ public class AlchemicalWizardry
         customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID, false, 0).setIconIndex(0, 0).setPotionName("Soul Harden"));
         customPotionDeaf = (new PotionDeaf(customPotionDeafID, true, 0).setIconIndex(0, 0).setPotionName("Deafness"));
         customPotionFeatherFall = (new PotionFeatherFall(customPotionFeatherFallID, false, 0).setIconIndex(0, 0).setPotionName("Feather Fall"));
-        customPotionDemonCloak = (new PotionDemonCloak(customPotionDemonCloakID, false, 0).setIconIndex(0, 0).setPotionName("Demo Cloaking"));
+        customPotionDemonCloak = (new PotionDemonCloak(customPotionDemonCloakID, false, 0).setIconIndex(0, 0).setPotionName("Demon Cloaking"));
+        customPotionAmphibian = (new PotionAmphibian(customPotionAmphibianID, false, 0).setIconIndex(0, 0).setPotionName("Amphibian"));
 
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
 
@@ -747,6 +754,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TEBellJar.class, "containerBellJar");
         GameRegistry.registerTileEntity(TEAlchemicCalcinator.class, "containerAlchemicCalcinator");
         GameRegistry.registerTileEntity(TEDemonChest.class, "containerDemonChest");
+        GameRegistry.registerTileEntity(TEMimicBlock.class, "containerMimic");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.efficiencyRune.setHarvestLevel("pickaxe", 2);

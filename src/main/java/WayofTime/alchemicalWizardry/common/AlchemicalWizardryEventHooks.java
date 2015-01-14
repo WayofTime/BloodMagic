@@ -440,7 +440,7 @@ public class AlchemicalWizardryEventHooks
 			event.entityLiving.fallDistance = 0;
 		}
 
-		if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionDrowning))
+		if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionDrowning) && ! event.entityLiving.isPotionActive(Potion.waterBreathing))
 		{
 			int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionDrowning).getAmplifier();
 
