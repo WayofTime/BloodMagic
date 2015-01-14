@@ -81,7 +81,7 @@ public class AlchemicalWizardryEventHooks
 			EntityPlayer player = (EntityPlayer)event.entityLiving;
 
 			float prevHp = APISpellHelper.getCurrentAdditionalHP((EntityPlayer)event.entityLiving);
-			if(prevHp > 0) //TODO change the HP values to floats
+			if(prevHp > 0)
 			{
 				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
 				if (recalculatedAmount <= 0) return;
@@ -102,6 +102,20 @@ public class AlchemicalWizardryEventHooks
 					}else
 					{
 						event.ammount += hp / ratio;
+						Reagent reagent = APISpellHelper.getPlayerReagentType(player);
+						OmegaParadigm paradigm = OmegaRegistry.getParadigmForReagent(reagent);
+						if(paradigm != null)
+						{
+							ItemStack chestStack = player.inventory.armorInventory[2];
+
+							if(chestStack != null && chestStack.getItem() instanceof OmegaArmour)
+							{
+								if(((OmegaArmour)chestStack.getItem()).paradigm == paradigm)
+								{
+									paradigm.onHPBarDepleted(player, chestStack);
+								}
+							}
+						}
 					}
 		            
 		            APISpellHelper.setCurrentAdditionalHP((EntityPlayer)event.entityLiving, Math.max(0, hp));

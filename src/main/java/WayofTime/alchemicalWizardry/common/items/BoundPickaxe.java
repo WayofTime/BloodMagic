@@ -158,7 +158,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
 
                         if (str > 1.1f && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k))
                         {
-                            if (silkTouch)
+                            if (silkTouch && block.canSilkHarvest(par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta))
                             {
                                 ItemStack droppedItem = new ItemStack(block, 1, meta);
 

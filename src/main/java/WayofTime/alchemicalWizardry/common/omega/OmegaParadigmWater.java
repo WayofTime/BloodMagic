@@ -44,7 +44,7 @@ public class OmegaParadigmWater extends OmegaParadigm
 	{
 		if(entity instanceof EntityLivingBase)
 		{
-			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 1));
+			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 1, true));
 		}
 		return true;
 	}

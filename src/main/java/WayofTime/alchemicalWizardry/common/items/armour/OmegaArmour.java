@@ -55,6 +55,11 @@ public abstract class OmegaArmour extends BoundArmour
 	public ItemStack getSubstituteStack(ItemStack boundStack)
 	{
 		ItemStack omegaStack = new ItemStack(this);
+		if(boundStack != null && boundStack.hasTagCompound())
+		{
+			NBTTagCompound tag = (NBTTagCompound) boundStack.getTagCompound().copy();
+			omegaStack.setTagCompound(tag);
+		}
 		this.setContainedArmourStack(omegaStack, boundStack);
 		SoulNetworkHandler.checkAndSetItemOwner(omegaStack, SoulNetworkHandler.getOwnerName(boundStack));
 		return omegaStack;

@@ -112,7 +112,9 @@ public class TEMimicBlock extends TileEntity
             return false;
         }
 
-        if (world.getTileEntity(x, y, z) == null && world.isAirBlock(x, y, z))
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        
+        if (tileEntity == null && world.isAirBlock(x, y, z))
         {
             ItemStack item = new ItemStack(block, 1, meta);
 
@@ -126,6 +128,15 @@ public class TEMimicBlock extends TileEntity
                 world.markBlockForUpdate(x, y, z);
                 return true;
             }
+        }else
+        {
+        	if(tileEntity instanceof TEMimicBlock)
+        	{
+        		if(((TEMimicBlock) tileEntity).getBlock() == block && ((TEMimicBlock) tileEntity).getMetaOfMimic() == meta)
+        		{
+        			((TEMimicBlock) tileEntity).ticksRemaining = Math.max(duration, ((TEMimicBlock) tileEntity).ticksRemaining);
+        		}
+        	}
         }
 
         return false;

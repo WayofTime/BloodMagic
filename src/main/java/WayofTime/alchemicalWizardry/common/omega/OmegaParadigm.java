@@ -100,4 +100,9 @@ public class OmegaParadigm
 	{
 		return false;
 	}
+
+	public boolean onHPBarDepleted(EntityPlayer player, ItemStack stack)
+	{
+		return false;
+	}
 }
