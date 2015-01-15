@@ -69,9 +69,37 @@ public class OmegaParadigm
 		return 50;
 	}
 	
+	public boolean setOmegaStalling(EntityPlayer player, int duration)
+	{
+		ItemStack[] armours = player.inventory.armorInventory;
+		
+		ItemStack chestStack = armours[2];
+		
+		if(chestStack != null && chestStack.getItem() == this.chestPiece)
+		{
+			((OmegaArmour)chestStack.getItem()).setOmegaStallingDuration(chestStack, duration);
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public float getCostPerTickOfUse(EntityPlayer player)
 	{
 		return 1;
+	}
+	
+	public boolean doDrainReagent(EntityPlayer player)
+	{
+		ItemStack[] armours = player.inventory.armorInventory;
+		
+		ItemStack chestStack = armours[2];
+		
+		if(chestStack != null && chestStack.getItem() == this.chestPiece)
+		{
+			return !((OmegaArmour)chestStack.getItem()).hasOmegaStalling(chestStack);
+		}
+		return true;
 	}
 	
 	public boolean isPlayerWearingFullSet(EntityPlayer player)

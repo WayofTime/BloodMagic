@@ -181,32 +181,4 @@ public class RitualEffectDemonPortal extends RitualEffect
 
         return demonRitual;
     }
-    
-    public void addOffsetRunes(ArrayList<RitualComponent> ritualList, int off1, int off2, int y, int rune)
-    {
-    	ritualList.add(new RitualComponent(off1, y, off2, rune));
-    	ritualList.add(new RitualComponent(off2, y, off1, rune));
-    	ritualList.add(new RitualComponent(off1, y, -off2, rune));
-    	ritualList.add(new RitualComponent(-off2, y, off1, rune));
-    	ritualList.add(new RitualComponent(-off1, y, off2, rune));
-    	ritualList.add(new RitualComponent(off2, y, -off1, rune));
-    	ritualList.add(new RitualComponent(-off1, y, -off2, rune));
-    	ritualList.add(new RitualComponent(-off2, y, -off1, rune));
-    }
-    
-    public void addCornerRunes(ArrayList<RitualComponent> ritualList, int off1, int y, int rune)
-    {
-    	ritualList.add(new RitualComponent(off1, y, off1, rune));
-    	ritualList.add(new RitualComponent(off1, y, -off1, rune));
-    	ritualList.add(new RitualComponent(-off1, y, -off1, rune));
-    	ritualList.add(new RitualComponent(-off1, y, off1, rune));
-    }
-    
-    public void addParallelRunes(ArrayList<RitualComponent> ritualList, int off1, int y, int rune)
-    {
-    	ritualList.add(new RitualComponent(off1, y, 0, rune));
-    	ritualList.add(new RitualComponent(-off1, y, 0, rune));
-    	ritualList.add(new RitualComponent(0, y, -off1, rune));
-    	ritualList.add(new RitualComponent(0, y, off1, rune));
-    }
 }

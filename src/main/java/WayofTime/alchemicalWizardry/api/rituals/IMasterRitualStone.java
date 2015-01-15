@@ -37,4 +37,8 @@ public interface IMasterRitualStone extends ISegmentedReagentHandler
     public boolean areTanksEmpty();
     
     public int getRunningTime();
+    
+    public LocalRitualStorage getLocalStorage();
+    
+    public void setLocalStorage(LocalRitualStorage storage);
 }

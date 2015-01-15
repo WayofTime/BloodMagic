@@ -26,6 +26,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.event.RitualActivatedEvent;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
 import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
@@ -42,6 +43,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     private int direction;
     public boolean isRunning;
     public int runningTime;
+    
+    public LocalRitualStorage storage;
 
     private NBTTagCompound customRitualTag;
 
@@ -139,6 +142,15 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         }
 
         customRitualTag = tag.getCompoundTag("customRitualTag");
+        
+        LocalRitualStorage newStorage = Rituals.getLocalStorage(currentRitualString);
+        
+        NBTTagCompound localStorageTag = tag.getCompoundTag("localStorage");
+        if(newStorage != null)
+        {
+        	newStorage.readFromNBT(localStorageTag);
+        	storage = newStorage;
+        }
     }
 
     @Override
@@ -181,6 +193,10 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         tag.setTag("attunedTankMap", attunedTagList);
 
         tag.setTag("customRitualTag", customRitualTag);
+        
+        NBTTagCompound localStorageTag = new NBTTagCompound();
+        storage.writeToNBT(localStorageTag);
+        tag.setTag("localStorage", localStorageTag);
     }
 
     public void activateRitual(World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player, String crystalOwner)
@@ -243,7 +259,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                 if(drain > 0)
                 {
                 	player.addChatMessage(new ChatComponentText("A rush of energy flows through the ritual!"));
-
+                	
                     for (int i = 0; i < 12; i++)
                     {
                         SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
@@ -265,6 +281,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         cooldown = Rituals.getInitialCooldown(testRitual);
         var1 = 0;
         currentRitualString = testRitual;
+    	storage = Rituals.getLocalStorage(currentRitualString);
         isActive = true;
         isRunning = true;
         direction = Rituals.getDirectionOfRitual(world, xCoord, yCoord, zCoord, testRitual);
@@ -662,4 +679,16 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
     {
     	return this.runningTime;
     }
+
+	@Override
+	public LocalRitualStorage getLocalStorage() 
+	{
+		return storage;
+	}
+
+	@Override
+	public void setLocalStorage(LocalRitualStorage storage) 
+	{
+		this.storage = storage;
+	}
 }

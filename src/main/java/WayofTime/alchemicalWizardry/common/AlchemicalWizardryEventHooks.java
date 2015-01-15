@@ -130,7 +130,7 @@ public class AlchemicalWizardryEventHooks
 	}
 	
 	@SubscribeEvent
-	public void omegaUpdateHpEvent(LivingUpdateEvent event)
+	public void omegaUpdateReagentAndHpEvent(LivingUpdateEvent event)
 	{
 		if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 		{			
@@ -183,15 +183,21 @@ public class AlchemicalWizardryEventHooks
 				}
 				//Consumes the amount
 				float costPerTick = parad.getCostPerTickOfUse(player);
-				if(reagentAmount > costPerTick)
+				if(parad.doDrainReagent(player))
 				{
-					hasReagentChanged = true;
-					reagentAmount = Math.max(0, reagentAmount - costPerTick);
-				}else
-				{
-					hasReagentChanged = true;
-					reagentAmount = 0;
+					if(reagentAmount > costPerTick)
+					{
+						hasReagentChanged = true;
+						reagentAmount = Math.max(0, reagentAmount - costPerTick);
+					}else
+					{
+						hasReagentChanged = true;
+						reagentAmount = 0;
+					}
 				}
+				
+				
+				hasReagentChanged = true;
 			}
 	
 			if(reagentAmount <= 0)

@@ -39,10 +39,15 @@ public abstract class OmegaArmour extends BoundArmour
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
 		super.onArmorTick(world, player, itemStack);
-
+		
 		if(this.armorType == 1)
 		{
 			paradigm.onUpdate(world, player, itemStack);
+			int duration = this.getOmegaStallingDuration(itemStack);
+			if(duration > 0)
+			{
+				this.setOmegaStallingDuration(itemStack, duration - 1);
+			}
 		}
     }
 	
@@ -184,5 +189,34 @@ public abstract class OmegaArmour extends BoundArmour
     	{
     		paradigm.onOmegaKeyPressed(player, stack);
     	}
+    }
+    
+    public void setOmegaStallingDuration(ItemStack stack, int duration)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	tag.setInteger("OmegaStallDuration", duration);
+    }
+    
+    public int getOmegaStallingDuration(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	return tag.getInteger("OmegaStallDuration");
+    }
+    
+    public boolean hasOmegaStalling(ItemStack stack)
+    {
+    	return this.getOmegaStallingDuration(stack) > 0;
     }
 }

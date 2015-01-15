@@ -374,4 +374,22 @@ public class Rituals
 
         return null;
     }
+    
+    public static LocalRitualStorage getLocalStorage(String ritualID)
+    {
+    	if (ritualMap.containsKey(ritualID))
+        {
+            Rituals ritual = ritualMap.get(ritualID);
+            if (ritual != null)
+            {
+                RitualEffect eff = ritual.effect;
+                if(eff != null)
+                {
+                	return eff.getNewLocalStorage();
+                }
+            }
+        }
+    	
+    	return null;
+    }
 }
