@@ -64,9 +64,9 @@ public class LavaCrystal extends EnergyItems
         par3List.add("Store life to smelt");
         par3List.add("stuff in the furnace.");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

@@ -392,11 +392,11 @@ public class ItemSpellMultiTool extends Item
     {
         par3List.add("A mace filled with ancient alchemy");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             for (String str : this.getToolListString(par1ItemStack))
@@ -479,7 +479,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setFloat("itemAttack", Math.max(damage, 0.0f));
 
-            stack.stackTagCompound.setTag(tagName, tag);
+            stack.getTagCompound().setTag(tagName, tag);
         } else
         {
             stack.setTagCompound(new NBTTagCompound());
@@ -488,7 +488,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setFloat("itemAttack", Math.max(damage, 0.0f));
 
-            stack.stackTagCompound.setTag(tagName, tag);
+            stack.getTagCompound().setTag(tagName, tag);
         }
     }
 
@@ -655,7 +655,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setBoolean("silkTouch", silkTouch);
 
-            stack.stackTagCompound.setTag(tagName, tag);
+            stack.getTagCompound().setTag(tagName, tag);
         } else
         {
             stack.setTagCompound(new NBTTagCompound());
@@ -664,7 +664,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setBoolean("silkTouch", silkTouch);
 
-            stack.stackTagCompound.setTag(tagName, tag);
+            stack.getTagCompound().setTag(tagName, tag);
         }
     }
 
@@ -691,7 +691,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setInteger("fortuneLevel", Math.max(fortune, 0));
 
-            stack.stackTagCompound.setTag(tagName, tag);
+            stack.getTagCompound().setTag(tagName, tag);
         } else
         {
             stack.setTagCompound(new NBTTagCompound());
@@ -700,7 +700,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setInteger("fortuneLevel", Math.max(fortune, 0));
 
-            stack.stackTagCompound.setTag(tagName, tag);
+            stack.getTagCompound().setTag(tagName, tag);
         }
     }
 
@@ -776,7 +776,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setFloat("critChance", Math.max(chance, 0));
 
-            container.stackTagCompound.setTag(tagName, tag);
+            container.getTagCompound().setTag(tagName, tag);
         } else
         {
             container.setTagCompound(new NBTTagCompound());
@@ -785,7 +785,7 @@ public class ItemSpellMultiTool extends Item
 
             tag.setFloat("critChance", Math.max(chance, 0));
 
-            container.stackTagCompound.setTag(tagName, tag);
+            container.getTagCompound().setTag(tagName, tag);
         }
     }
 

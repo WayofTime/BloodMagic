@@ -153,7 +153,7 @@ public class BlockBelljar extends BlockContainer
             ItemStack drop = new ItemStack(this);
             NBTTagCompound tag = new NBTTagCompound();
             ((TEBellJar) tile).writeTankNBT(tag);
-            drop.stackTagCompound = tag;
+            drop.setTagCompound(tag);
 
             list.add(drop);
         }

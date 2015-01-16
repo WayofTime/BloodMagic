@@ -59,12 +59,12 @@ public class EnergySword extends ItemSword
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
     {
-        if (stack.stackTagCompound == null)
+        if (stack.getTagCompound() == null)
         {
             stack.setTagCompound(new NBTTagCompound());
         }
 
-        NBTTagCompound tag = stack.stackTagCompound;
+        NBTTagCompound tag = stack.getTagCompound();
 
         if (tag.getBoolean("isActive"))
         {
@@ -106,7 +106,7 @@ public class EnergySword extends ItemSword
         if (par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
-            par1ItemStack.stackTagCompound.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
+            par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
             return par1ItemStack;
         }
 
@@ -134,12 +134,12 @@ public class EnergySword extends ItemSword
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par2World.getWorldTime() % 100 == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par1ItemStack.stackTagCompound.getBoolean("isActive"))
+        if (par2World.getWorldTime() % 100 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par1ItemStack.getTagCompound().getBoolean("isActive"))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
@@ -156,7 +156,7 @@ public class EnergySword extends ItemSword
 
     public void setActivated(ItemStack par1ItemStack, boolean newActivated)
     {
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null)
         {
@@ -168,7 +168,7 @@ public class EnergySword extends ItemSword
 
     public boolean getActivated(ItemStack par1ItemStack)
     {
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null)
         {
@@ -189,9 +189,9 @@ public class EnergySword extends ItemSword
         par3List.add("Caution: may cause");
         par3List.add("a bad day...");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
+            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
             {
                 par3List.add("Activated");
             } else
@@ -199,9 +199,9 @@ public class EnergySword extends ItemSword
                 par3List.add("Deactivated");
             }
 
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }

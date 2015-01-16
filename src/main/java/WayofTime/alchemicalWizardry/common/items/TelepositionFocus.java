@@ -36,13 +36,13 @@ public class TelepositionFocus extends EnergyItems
     {
         par3List.add("An Enderpearl imbued with blood");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+            NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
@@ -64,12 +64,12 @@ public class TelepositionFocus extends EnergyItems
 
     public int getDimensionID(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return itemStack.stackTagCompound.getInteger("dimensionId");
+        return itemStack.getTagCompound().getInteger("dimensionId");
     }
 
     public World getWorld(ItemStack itemStack)
@@ -79,9 +79,9 @@ public class TelepositionFocus extends EnergyItems
 
     public int xCoord(ItemStack itemStack)
     {
-        if (!(itemStack.stackTagCompound == null))
+        if (!(itemStack.getTagCompound() == null))
         {
-            return itemStack.stackTagCompound.getInteger("xCoord");
+            return itemStack.getTagCompound().getInteger("xCoord");
         } else
         {
             return 0;
@@ -90,9 +90,9 @@ public class TelepositionFocus extends EnergyItems
 
     public int yCoord(ItemStack itemStack)
     {
-        if (!(itemStack.stackTagCompound == null))
+        if (!(itemStack.getTagCompound() == null))
         {
-            return itemStack.stackTagCompound.getInteger("yCoord");
+            return itemStack.getTagCompound().getInteger("yCoord");
         } else
         {
             return 0;
@@ -101,9 +101,9 @@ public class TelepositionFocus extends EnergyItems
 
     public int zCoord(ItemStack itemStack)
     {
-        if (!(itemStack.stackTagCompound == null))
+        if (!(itemStack.getTagCompound() == null))
         {
-            return itemStack.stackTagCompound.getInteger("zCoord");
+            return itemStack.getTagCompound().getInteger("zCoord");
         } else
         {
             return 0;

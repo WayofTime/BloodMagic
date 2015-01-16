@@ -58,7 +58,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
         par3List.add("A tool to tune alchemy");
         par3List.add("reagent transmission");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
             Reagent reagent = this.getReagent(par1ItemStack);
             if (reagent != null)

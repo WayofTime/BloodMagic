@@ -37,9 +37,9 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
     {
         par3List.add("I have a very magnetic personality!");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
+            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
             {
                 par3List.add("Activated");
             } else
@@ -47,7 +47,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
                 par3List.add("Deactivated");
             }
 
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -63,12 +63,12 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
     {
-        if (stack.stackTagCompound == null)
+        if (stack.getTagCompound() == null)
         {
             stack.setTagCompound(new NBTTagCompound());
         }
 
-        NBTTagCompound tag = stack.stackTagCompound;
+        NBTTagCompound tag = stack.getTagCompound();
 
         if (tag.getBoolean("isActive"))
         {
@@ -102,12 +102,12 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
             return par1ItemStack;
         }
 
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        NBTTagCompound tag = par1ItemStack.stackTagCompound;
+        NBTTagCompound tag = par1ItemStack.getTagCompound();
         tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
 
         if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
@@ -132,18 +132,18 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par1ItemStack.stackTagCompound.getBoolean("isActive"))
+        if (par1ItemStack.getTagCompound().getBoolean("isActive"))
         {
-            if (par2World.getWorldTime() % tickDelay == par1ItemStack.stackTagCompound.getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
             {
                 if(!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
                 {
-                	par1ItemStack.stackTagCompound.setBoolean("isActive", false);
+                	par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }
             }
 

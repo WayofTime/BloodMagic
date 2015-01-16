@@ -36,7 +36,7 @@ public class CommandUnbind extends CommandBase
         {
             if (!EnergyItems.getOwnerName(item).isEmpty())
             {
-                item.stackTagCompound.setString("ownerName", "");
+                item.getTagCompound().setString("ownerName", "");
                 func_152373_a(iCommandSender, this, "commands.unbind.success", new Object[0]);
             }
             else

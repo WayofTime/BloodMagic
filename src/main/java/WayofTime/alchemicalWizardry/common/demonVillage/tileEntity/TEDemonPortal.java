@@ -282,7 +282,7 @@ public class TEDemonPortal extends TileEntity
     {
     	if(demon instanceof IHoardDemon)
     	{
-    		boolean enthrall = ((IHoardDemon) demon).thrallDemon(this);
+    		boolean enthrall = ((IHoardDemon) demon).thrallDemon(new Int3(this.xCoord, this.yCoord, this.zCoord));
     		if(enthrall)
     		{
         		this.hoardList.add((IHoardDemon)demon);

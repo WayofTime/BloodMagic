@@ -42,9 +42,9 @@ public class CheatyItem extends Item implements IBindable
         par3List.add("Right-click to fill network,");
         par3List.add("shift-right to empty.");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -72,7 +72,7 @@ public class CheatyItem extends Item implements IBindable
             return par1ItemStack;
         }
 
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {
@@ -156,7 +156,7 @@ public class CheatyItem extends Item implements IBindable
             return 0;
         }
 
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {

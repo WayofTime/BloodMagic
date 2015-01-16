@@ -39,7 +39,7 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
     @Override
     public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
@@ -66,9 +66,9 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
     {
         par3List.add("Time to stay stealthy...");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

@@ -381,32 +381,32 @@ public class SoulNetworkHandler
 
     public static void checkAndSetItemOwner(ItemStack item, EntityPlayer player)
     {
-        if (item.stackTagCompound == null)
+        if (item.getTagCompound() == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-        if (item.stackTagCompound.getString("ownerName").equals(""))
+        if (item.getTagCompound().getString("ownerName").equals(""))
         {
         	ItemBindEvent event = new ItemBindEvent(player, SoulNetworkHandler.getUsername(player), item);
         	
         	if(!MinecraftForge.EVENT_BUS.post(event))
         	{
-                item.stackTagCompound.setString("ownerName", event.key);
+                item.getTagCompound().setString("ownerName", event.key);
         	}
         }
     }
 
     public static void checkAndSetItemOwner(ItemStack item, String ownerName)
     {
-        if (item.stackTagCompound == null)
+        if (item.getTagCompound() == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-        if (item.stackTagCompound.getString("ownerName").equals(""))
+        if (item.getTagCompound().getString("ownerName").equals(""))
         {
-            item.stackTagCompound.setString("ownerName", ownerName);
+            item.getTagCompound().setString("ownerName", ownerName);
         }
     }
 
@@ -448,11 +448,11 @@ public class SoulNetworkHandler
     
     public static String getOwnerName(ItemStack item)
     {
-        if (item.stackTagCompound == null)
+        if (item.getTagCompound() == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-        return item.stackTagCompound.getString("ownerName");
+        return item.getTagCompound().getString("ownerName");
     }
 }

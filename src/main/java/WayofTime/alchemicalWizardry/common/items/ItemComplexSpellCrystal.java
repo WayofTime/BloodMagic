@@ -35,13 +35,13 @@ public class ItemComplexSpellCrystal extends EnergyItems
     {
         par3List.add("Crystal of unimaginable power");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+            NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
@@ -65,7 +65,7 @@ public class ItemComplexSpellCrystal extends EnergyItems
 
             if (world != null)
             {
-                NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+                NBTTagCompound itemTag = par1ItemStack.getTagCompound();
                 TileEntity tileEntity = world.getTileEntity(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord"));
 
                 if (tileEntity instanceof TESpellParadigmBlock)
@@ -91,11 +91,11 @@ public class ItemComplexSpellCrystal extends EnergyItems
 
     public int getDimensionID(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return itemStack.stackTagCompound.getInteger("dimensionId");
+        return itemStack.getTagCompound().getInteger("dimensionId");
     }
 }

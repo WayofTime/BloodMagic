@@ -25,6 +25,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggroCloaking;
 import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.ai.EntityAIOccasionalRangedAttack;
@@ -33,6 +35,7 @@ import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAtta
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.rituals.LocalStorageAlphaPact;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRangedAttackMob, IHoardDemon
@@ -255,6 +258,16 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
             {
             	((TEDemonPortal) tile).enthrallDemon(this);
             	this.enthralled = true;
+            }else if(tile instanceof IMasterRitualStone)
+            {
+            	IMasterRitualStone stone = (IMasterRitualStone)tile;
+            	LocalRitualStorage stor = stone.getLocalStorage();
+            	if(stor instanceof LocalStorageAlphaPact)
+            	{
+            		LocalStorageAlphaPact storage = (LocalStorageAlphaPact)stor;
+            		
+            		storage.thrallDemon(this);
+            	}
             }
     	}
         super.onUpdate();
@@ -491,9 +504,9 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 	}
 
 	@Override
-	public boolean thrallDemon(TEDemonPortal teDemonPortal) 
+	public boolean thrallDemon(Int3 location) 
 	{
-		this.setPortalLocation(new Int3(teDemonPortal.xCoord, teDemonPortal.yCoord, teDemonPortal.zCoord));
+		this.setPortalLocation(location);
 		return true;
 	}
 

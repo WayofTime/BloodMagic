@@ -61,22 +61,22 @@ public abstract class HomSpell implements ISimpleSpell
 
     public void setSpellParadigm(ItemStack itemStack, int paradigm)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        itemStack.stackTagCompound.setInteger("paradigm", paradigm);
+        itemStack.getTagCompound().setInteger("paradigm", paradigm);
     }
 
     public int getSpellParadigm(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return (itemStack.stackTagCompound.getInteger("paradigm"));
+        return (itemStack.getTagCompound().getInteger("paradigm"));
     }
 
     //@Override
@@ -118,11 +118,11 @@ public abstract class HomSpell implements ISimpleSpell
 //	@Override
 //    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 //    {
-//        if (!(par1ItemStack.stackTagCompound == null))
+//        if (!(par1ItemStack.getTagCompound() == null))
 //        {
-//            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+//            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
 //            {
-//                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+//                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
 //            }
 //
 //            par3List.add("Current paradigm: " + this.getSpellParadigm(par1ItemStack));
@@ -131,11 +131,11 @@ public abstract class HomSpell implements ISimpleSpell
 
     public int getDimensionID(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return itemStack.stackTagCompound.getInteger("dimensionId");
+        return itemStack.getTagCompound().getInteger("dimensionId");
     }
 }

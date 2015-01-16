@@ -34,7 +34,7 @@ public class AlchemicalWizardryFuelHandler implements IFuelHandler
                 return 200;
             } else
             {
-                NBTTagCompound tag = itemStack.stackTagCompound;
+                NBTTagCompound tag = itemStack.getTagCompound();
 
                 if (tag == null)
                 {

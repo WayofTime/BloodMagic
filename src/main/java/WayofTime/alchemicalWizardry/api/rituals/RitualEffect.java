@@ -57,7 +57,7 @@ public abstract class RitualEffect
     
     public LocalRitualStorage getNewLocalStorage()
     {
-    	return null;
+    	return new LocalRitualStorage();
     }
     
     public void addOffsetRunes(ArrayList<RitualComponent> ritualList, int off1, int off2, int y, int rune)

@@ -70,12 +70,12 @@ public class BlockHomHeart extends BlockContainer
         {
             if (playerItem.getItem() instanceof BlankSpell)
             {
-                if (playerItem.stackTagCompound == null)
+                if (playerItem.getTagCompound() == null)
                 {
                     playerItem.setTagCompound(new NBTTagCompound());
                 }
 
-                NBTTagCompound itemTag = playerItem.stackTagCompound;
+                NBTTagCompound itemTag = playerItem.getTagCompound();
                 itemTag.setInteger("xCoord", x);
                 itemTag.setInteger("yCoord", y);
                 itemTag.setInteger("zCoord", z);

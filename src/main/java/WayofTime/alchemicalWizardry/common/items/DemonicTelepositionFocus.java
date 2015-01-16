@@ -29,13 +29,13 @@ public class DemonicTelepositionFocus extends TelepositionFocus
         par3List.add("A stronger version of the focus,");
         par3List.add("using a demonic shard");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+            NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));

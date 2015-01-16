@@ -58,12 +58,12 @@ public class BlockSpellParadigm extends BlockOrientable
 
         if (stack != null && stack.getItem() instanceof ItemComplexSpellCrystal)
         {
-            if (stack.stackTagCompound == null)
+            if (stack.getTagCompound() == null)
             {
                 stack.setTagCompound(new NBTTagCompound());
             }
 
-            NBTTagCompound itemTag = stack.stackTagCompound;
+            NBTTagCompound itemTag = stack.getTagCompound();
             itemTag.setInteger("xCoord", x);
             itemTag.setInteger("yCoord", y);
             itemTag.setInteger("zCoord", z);

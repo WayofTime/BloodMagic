@@ -43,7 +43,7 @@ public class SigilOfHolding extends EnergyItems
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
     {
-        if (!(stack.stackTagCompound == null))
+        if (!(stack.getTagCompound() == null))
         {
             ItemStack[] inv = getInternalInventory(stack);
 
@@ -52,7 +52,7 @@ public class SigilOfHolding extends EnergyItems
                 return this.itemIcon;
             }
 
-            ItemStack item = inv[stack.stackTagCompound.getInteger("selectedSlot")];
+            ItemStack item = inv[stack.getTagCompound().getInteger("selectedSlot")];
 
             if (item != null)
             {
@@ -68,9 +68,9 @@ public class SigilOfHolding extends EnergyItems
     {
         par3List.add("Used to hold several Sigils!");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             ItemStack[] inv = getInternalInventory(par1ItemStack);
 
             if (inv == null)
@@ -78,7 +78,7 @@ public class SigilOfHolding extends EnergyItems
                 return;
             }
 
-            ItemStack item = inv[par1ItemStack.stackTagCompound.getInteger("selectedSlot")];
+            ItemStack item = inv[par1ItemStack.getTagCompound().getInteger("selectedSlot")];
 
             if (item != null)
             {
@@ -135,7 +135,7 @@ public class SigilOfHolding extends EnergyItems
     @Override
     public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
             this.tickInternalInventory(par1ItemStack, par2World, par3Entity, par4, par5);
         }
@@ -143,7 +143,7 @@ public class SigilOfHolding extends EnergyItems
 
     public ItemStack[] getInternalInventory(ItemStack itemStack)
     {
-        NBTTagCompound itemTag = itemStack.stackTagCompound;
+        NBTTagCompound itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
         {
@@ -175,7 +175,7 @@ public class SigilOfHolding extends EnergyItems
 
     public void saveInternalInventory(ItemStack itemStack, ItemStack[] inventory)
     {
-        NBTTagCompound itemTag = itemStack.stackTagCompound;
+        NBTTagCompound itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
         {
@@ -222,7 +222,7 @@ public class SigilOfHolding extends EnergyItems
 
     public int getSelectedSlot(ItemStack itemStack)
     {
-        NBTTagCompound itemTag = itemStack.stackTagCompound;
+        NBTTagCompound itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
         {
@@ -248,7 +248,7 @@ public class SigilOfHolding extends EnergyItems
             }
         }
 
-        NBTTagCompound itemTag = itemStack.stackTagCompound;
+        NBTTagCompound itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
         {

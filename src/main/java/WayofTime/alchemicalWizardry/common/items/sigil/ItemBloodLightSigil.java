@@ -32,9 +32,9 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
     {
         par3List.add("I see a light!");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -102,7 +102,7 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
             return par1ItemStack;
         }
 
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,7 +29,9 @@ import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
 import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class TEMasterStone extends TileEntity implements IMasterRitualStone
 {
@@ -150,6 +151,9 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         {
         	newStorage.readFromNBT(localStorageTag);
         	storage = newStorage;
+        	storage.xCoord = xCoord;
+        	storage.yCoord = yCoord;
+        	storage.zCoord = zCoord;
         }
     }
 
@@ -194,9 +198,14 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
         tag.setTag("customRitualTag", customRitualTag);
         
-        NBTTagCompound localStorageTag = new NBTTagCompound();
-        storage.writeToNBT(localStorageTag);
-        tag.setTag("localStorage", localStorageTag);
+        if(storage != null)
+        {
+            NBTTagCompound localStorageTag = new NBTTagCompound();
+
+        	storage.writeToNBT(localStorageTag);
+            tag.setTag("localStorage", localStorageTag);
+        }
+        
     }
 
     public void activateRitual(World world, int crystalLevel, ItemStack activationCrystal, EntityPlayer player, String crystalOwner)
@@ -282,6 +291,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         var1 = 0;
         currentRitualString = testRitual;
     	storage = Rituals.getLocalStorage(currentRitualString);
+    	storage.setLocation(new Int3(xCoord, yCoord, zCoord));
         isActive = true;
         isRunning = true;
         direction = Rituals.getDirectionOfRitual(world, xCoord, yCoord, zCoord, testRitual);

@@ -28,13 +28,13 @@ public class EnhancedTelepositionFocus extends TelepositionFocus
     {
         par3List.add("A focus further enhanced in an altar");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+            NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));

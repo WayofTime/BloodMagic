@@ -67,6 +67,7 @@ import WayofTime.alchemicalWizardry.common.items.potion.StandardBindingAgent;
 import WayofTime.alchemicalWizardry.common.items.potion.StandardFillingAgent;
 import WayofTime.alchemicalWizardry.common.items.potion.WeakBindingAgent;
 import WayofTime.alchemicalWizardry.common.items.potion.WeakFillingAgent;
+import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.sigil.AirSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemBloodLightSigil;
@@ -225,6 +226,8 @@ public class ModItems
     public static OmegaArmour boundPlateWind;
     public static OmegaArmour boundLeggingsWind;
     public static OmegaArmour boundBootsWind;
+    
+    public static Item inputRoutingFocus;
 
     public static void init()
     {
@@ -343,6 +346,8 @@ public class ModItems
         boundPlateWind = (OmegaArmour) new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
         boundLeggingsWind = (OmegaArmour) new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
         boundBootsWind = (OmegaArmour) new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
+        
+        inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
     }
 
     public static void registerItems()
@@ -466,6 +471,8 @@ public class ModItems
         GameRegistry.registerItem(ModItems.boundPlateWind, "boundPlateWind");
         GameRegistry.registerItem(ModItems.boundLeggingsWind, "boundLeggingsWind");
         GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
+        
+        GameRegistry.registerItem(ModItems.inputRoutingFocus, "inputRoutingFocus");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }

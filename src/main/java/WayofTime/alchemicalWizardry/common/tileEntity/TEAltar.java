@@ -720,7 +720,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                 }
 
                 IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
-                NBTTagCompound itemTag = returnedItem.stackTagCompound;
+                NBTTagCompound itemTag = returnedItem.getTagCompound();
 
                 if (itemTag == null)
                 {

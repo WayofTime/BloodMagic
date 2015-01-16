@@ -51,7 +51,7 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
         par3List.add("Used to designate which");
         par3List.add("reagents can go into a container");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
             Reagent reagent = this.getReagent(par1ItemStack);
             if (reagent != null)

@@ -27,9 +27,9 @@ public class ItemBloodFrame extends EnergyItems //implements IHiveFrame
     {
         par3List.add("Stirs bees into a frenzy.");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

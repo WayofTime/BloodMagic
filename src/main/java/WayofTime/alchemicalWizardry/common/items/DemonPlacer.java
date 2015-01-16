@@ -183,42 +183,42 @@ public class DemonPlacer extends Item
 
     public static void setOwnerName(ItemStack par1ItemStack, String ownerName)
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        par1ItemStack.stackTagCompound.setString("ownerName", ownerName);
+        par1ItemStack.getTagCompound().setString("ownerName", ownerName);
     }
 
     public static String getOwnerName(ItemStack par1ItemStack)
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return par1ItemStack.stackTagCompound.getString("ownerName");
+        return par1ItemStack.getTagCompound().getString("ownerName");
     }
     
     public static void setDemonString(ItemStack itemStack, String demonName)
     {
-    	if (itemStack.stackTagCompound == null)
+    	if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        itemStack.stackTagCompound.setString("demonName", demonName);
+        itemStack.getTagCompound().setString("demonName", demonName);
     }
     
     public static String getDemonString(ItemStack itemStack)
     {
-    	if (itemStack.stackTagCompound == null)
+    	if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return itemStack.stackTagCompound.getString("demonName");
+        return itemStack.getTagCompound().getString("demonName");
     }
 
     @Override
@@ -226,11 +226,11 @@ public class DemonPlacer extends Item
     {
         par3List.add("Used to spawn demons.");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Demon's Owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Demon's Owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }

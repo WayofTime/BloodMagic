@@ -90,7 +90,7 @@ public class AlchemyFlask extends Item
 
     public static void setEffects(ItemStack par1ItemStack, List<AlchemyPotionHelper> list)
     {
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null)
         {
@@ -104,7 +104,7 @@ public class AlchemyFlask extends Item
             nbttaglist.appendTag(AlchemyPotionHelper.setEffectToNBT(aph));
         }
 
-        par1ItemStack.stackTagCompound.setTag("CustomFlaskEffects", nbttaglist);
+        par1ItemStack.getTagCompound().setTag("CustomFlaskEffects", nbttaglist);
     }
 
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -378,7 +378,7 @@ public class AlchemyFlask extends Item
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        par1ItemStack.stackTagCompound.setBoolean("throwable", flag);
+        par1ItemStack.getTagCompound().setBoolean("throwable", flag);
     }
 
     public EntityPotion getEntityPotion(ItemStack par1ItemStack, World worldObj, EntityLivingBase entityLivingBase)
@@ -401,7 +401,7 @@ public class AlchemyFlask extends Item
             d.setBoolean("Ambient", pe.getIsAmbient());
             nbttaglist.appendTag(d);
         }
-        potionStack.stackTagCompound.setTag("CustomPotionEffects", nbttaglist);
+        potionStack.getTagCompound().setTag("CustomPotionEffects", nbttaglist);
         EntityPotion entityPotion = new EntityPotion(worldObj, entityLivingBase, potionStack);
         return entityPotion;
     }

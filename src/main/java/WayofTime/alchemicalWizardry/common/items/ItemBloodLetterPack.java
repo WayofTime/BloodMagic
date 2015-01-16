@@ -47,9 +47,9 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     {
         par3List.add("This pack really chaffes...");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+            NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
             par3List.add("Stored LP: " + this.getStoredLP(par1ItemStack));
         }
@@ -143,7 +143,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
     	//This is where I need to do the updating
-    	if(!world.isRemote)
+    	if(world.isRemote)
     	{
     		return;
     	}

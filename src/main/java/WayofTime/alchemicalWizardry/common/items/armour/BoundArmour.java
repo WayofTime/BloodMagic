@@ -27,8 +27,8 @@ import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ILPGauge;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.ILPGauge;
 import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
 import cpw.mods.fml.common.Optional;
@@ -278,11 +278,11 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     {
         par3List.add("Devilish Protection");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (!par1ItemStack.stackTagCompound.getString("ownerName").equals(""))
+            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             ItemStack[] inv = getInternalInventory(par1ItemStack);
@@ -350,7 +350,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
@@ -500,13 +500,13 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
     public ItemStack[] getInternalInventory(ItemStack itemStack)
     {
-        NBTTagCompound itemTag = itemStack.stackTagCompound;
+        NBTTagCompound itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
-        itemTag = itemStack.stackTagCompound;
+        itemTag = itemStack.getTagCompound();
 
         ItemStack[] inv = new ItemStack[9];
         NBTTagList tagList = itemTag.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
@@ -532,7 +532,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
     public void saveInternalInventory(ItemStack itemStack, ItemStack[] inventory)
     {
-        NBTTagCompound itemTag = itemStack.stackTagCompound;
+        NBTTagCompound itemTag = itemStack.getTagCompound();
 
         if (itemTag == null)
         {

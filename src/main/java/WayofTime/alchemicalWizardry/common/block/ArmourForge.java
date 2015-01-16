@@ -105,7 +105,7 @@ public class ArmourForge extends Block
             return false;
         }
 
-        if (armourPiece.stackTagCompound == null)
+        if (armourPiece.getTagCompound() == null)
         {
             armourPiece.setTagCompound(new NBTTagCompound());
         }

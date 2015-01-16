@@ -154,6 +154,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHarvest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectInterdiction;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemRouting;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemSuction;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectJumping;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
@@ -1282,6 +1283,7 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
         Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
         Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
+        Rituals.registerRitual("AW035", 1, 100, new RitualEffectItemRouting(), "Ritual of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 

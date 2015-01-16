@@ -47,9 +47,9 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
         par3List.add("Peer into the soul to");
         par3List.add("get the current essence");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -68,7 +68,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
         	return par1ItemStack;
         }
 
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {

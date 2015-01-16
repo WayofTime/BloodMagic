@@ -46,9 +46,9 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add("Stores raw Life Essence");
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -65,7 +65,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
             SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
         }
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
@@ -187,7 +187,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             return 0;
         }
 
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {

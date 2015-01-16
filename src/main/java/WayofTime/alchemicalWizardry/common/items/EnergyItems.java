@@ -191,35 +191,35 @@ public class EnergyItems extends Item implements IBindable
 
     public static void setItemOwner(ItemStack item, String ownerName)
     {
-        if (item.stackTagCompound == null)
+        if (item.getTagCompound() == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-        item.stackTagCompound.setString("ownerName", ownerName);
+        item.getTagCompound().setString("ownerName", ownerName);
     }
 
     public static void checkAndSetItemOwner(ItemStack item, String ownerName)
     {
-        if (item.stackTagCompound == null)
+        if (item.getTagCompound() == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-        if (item.stackTagCompound.getString("ownerName").equals(""))
+        if (item.getTagCompound().getString("ownerName").equals(""))
         {
-            item.stackTagCompound.setString("ownerName", ownerName);
+            item.getTagCompound().setString("ownerName", ownerName);
         }
     }
 
     public static String getOwnerName(ItemStack item)
     {
-        if (item.stackTagCompound == null)
+        if (item.getTagCompound() == null)
         {
             item.setTagCompound(new NBTTagCompound());
         }
 
-        return item.stackTagCompound.getString("ownerName");
+        return item.getTagCompound().getString("ownerName");
     }
 
     public static void drainPlayerNetwork(EntityPlayer player, int damageToBeDone)

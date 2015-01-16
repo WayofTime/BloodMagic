@@ -36,9 +36,9 @@ public class ItemSeerSigil extends Item implements IHolding, ArmourUpgrade
     {
         par3List.add("When seeing all is not enough");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -52,7 +52,7 @@ public class ItemSeerSigil extends Item implements IHolding, ArmourUpgrade
             return par1ItemStack;
         }
 
-        NBTTagCompound itemTag = par1ItemStack.stackTagCompound;
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {

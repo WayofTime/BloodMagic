@@ -47,9 +47,9 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
     {
         par3List.add("Better than a Swiffer!");
 
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

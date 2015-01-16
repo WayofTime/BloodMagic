@@ -67,11 +67,11 @@ public class ItemRitualDiviner extends EnergyItems
         
         if(sneaking)
         {
-        	if (!(par1ItemStack.stackTagCompound == null))
+        	if (!(par1ItemStack.getTagCompound() == null))
             {
                 String ritualID = this.getCurrentRitual(par1ItemStack);
                 //TODO
-                par3List.add("Current owner: " + par1ItemStack.stackTagCompound.getString("ownerName"));
+                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
                 par3List.add("RitualID: " + ritualID);
                 List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
                 if (ritualList == null)
@@ -133,7 +133,7 @@ public class ItemRitualDiviner extends EnergyItems
     @Override
     public String getItemStackDisplayName(ItemStack par1ItemStack)
     {
-        if (!(par1ItemStack.stackTagCompound == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
             String ritualID = this.getCurrentRitual(par1ItemStack);
             if (ritualID.equals(""))
@@ -303,42 +303,42 @@ public class ItemRitualDiviner extends EnergyItems
 
     public String getCurrentRitual(ItemStack par1ItemStack)
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return par1ItemStack.stackTagCompound.getString("ritualID");
+        return par1ItemStack.getTagCompound().getString("ritualID");
     }
 
     public void setCurrentRitual(ItemStack par1ItemStack, String ritualID)
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        par1ItemStack.stackTagCompound.setString("ritualID", ritualID);
+        par1ItemStack.getTagCompound().setString("ritualID", ritualID);
     }
 
     public int getMaxRuneDisplacement(ItemStack par1ItemStack) //0 indicates the starting 4 runes, 1 indicates it can use Dusk runes
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        return par1ItemStack.stackTagCompound.getInteger("maxRuneDisplacement");
+        return par1ItemStack.getTagCompound().getInteger("maxRuneDisplacement");
     }
 
     public void setMaxRuneDisplacement(ItemStack par1ItemStack, int displacement)
     {
-        if (par1ItemStack.stackTagCompound == null)
+        if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        par1ItemStack.stackTagCompound.setInteger("maxRuneDisplacement", displacement);
+        par1ItemStack.getTagCompound().setInteger("maxRuneDisplacement", displacement);
     }
 
     @Override
@@ -353,22 +353,22 @@ public class ItemRitualDiviner extends EnergyItems
     
     public int getDirection(ItemStack itemStack)
     {
-    	if(itemStack.stackTagCompound == null)
+    	if(itemStack.getTagCompound() == null)
     	{
     		itemStack.setTagCompound(new NBTTagCompound());
     	}
     	
-    	return itemStack.stackTagCompound.getInteger("direction");
+    	return itemStack.getTagCompound().getInteger("direction");
     }
     
     public void setDirection(ItemStack itemStack, int direction)
     {
-    	if(itemStack.stackTagCompound == null)
+    	if(itemStack.getTagCompound() == null)
     	{
     		itemStack.setTagCompound(new NBTTagCompound());
     	}
     	
-    	itemStack.stackTagCompound.setInteger("direction", direction);
+    	itemStack.getTagCompound().setInteger("direction", direction);
     }
     
     public int cycleDirection(ItemStack itemStack)

@@ -103,7 +103,7 @@ public class RitualEffectUnbinding extends RitualEffect
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
                     world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
                     world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
-                    NBTTagCompound itemTag = itemStack.stackTagCompound;
+                    NBTTagCompound itemTag = itemStack.getTagCompound();
                     ItemStack[] inv = ((BoundArmour) itemStack.getItem()).getInternalInventory(itemStack);
 
                     if (inv != null)
@@ -130,7 +130,7 @@ public class RitualEffectUnbinding extends RitualEffect
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
                     world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
                     world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
-                    NBTTagCompound itemTag = itemStack.stackTagCompound;
+                    NBTTagCompound itemTag = itemStack.getTagCompound();
                     ItemStack[] inv = ((SigilOfHolding) itemStack.getItem()).getInternalInventory(itemStack);
 
                     if (inv != null)
