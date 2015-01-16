@@ -47,9 +47,6 @@ import WayofTime.alchemicalWizardry.common.items.TranscendentBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWater;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWind;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemAttunedCrystal;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemDestinationClearer;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemTankSegmenter;
@@ -332,21 +329,21 @@ public class ModItems
         itemCompressionSigil = new ItemPackRatSigil().setUnlocalizedName("itemCompressionSigil");
         itemAssassinSigil = new ItemSigilOfTheAssassin().setUnlocalizedName("itemAssassinSigil");
         
-        boundHelmetWater = (OmegaArmour) new OmegaArmourWater(0).setUnlocalizedName("boundHelmetWater");
-        boundPlateWater = (OmegaArmour) new OmegaArmourWater(1).setUnlocalizedName("boundPlateWater");
-        boundLeggingsWater = (OmegaArmour) new OmegaArmourWater(2).setUnlocalizedName("boundLeggingsWater");
-        boundBootsWater = (OmegaArmour) new OmegaArmourWater(3).setUnlocalizedName("boundBootsWater");
-        
-        boundHelmetEarth = (OmegaArmour) new OmegaArmourEarth(0).setUnlocalizedName("boundHelmetEarth");
-        boundPlateEarth = (OmegaArmour) new OmegaArmourEarth(1).setUnlocalizedName("boundPlateEarth");
-        boundLeggingsEarth = (OmegaArmour) new OmegaArmourEarth(2).setUnlocalizedName("boundLeggingsEarth");
-        boundBootsEarth = (OmegaArmour) new OmegaArmourEarth(3).setUnlocalizedName("boundBootsEarth");
-        
-        boundHelmetWind = (OmegaArmour) new OmegaArmourWind(0).setUnlocalizedName("boundHelmetWind");
-        boundPlateWind = (OmegaArmour) new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
-        boundLeggingsWind = (OmegaArmour) new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
-        boundBootsWind = (OmegaArmour) new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
-        
+//        boundHelmetWater = (OmegaArmour) new OmegaArmourWater(0).setUnlocalizedName("boundHelmetWater");
+//        boundPlateWater = (OmegaArmour) new OmegaArmourWater(1).setUnlocalizedName("boundPlateWater");
+//        boundLeggingsWater = (OmegaArmour) new OmegaArmourWater(2).setUnlocalizedName("boundLeggingsWater");
+//        boundBootsWater = (OmegaArmour) new OmegaArmourWater(3).setUnlocalizedName("boundBootsWater");
+//        
+//        boundHelmetEarth = (OmegaArmour) new OmegaArmourEarth(0).setUnlocalizedName("boundHelmetEarth");
+//        boundPlateEarth = (OmegaArmour) new OmegaArmourEarth(1).setUnlocalizedName("boundPlateEarth");
+//        boundLeggingsEarth = (OmegaArmour) new OmegaArmourEarth(2).setUnlocalizedName("boundLeggingsEarth");
+//        boundBootsEarth = (OmegaArmour) new OmegaArmourEarth(3).setUnlocalizedName("boundBootsEarth");
+//        
+//        boundHelmetWind = (OmegaArmour) new OmegaArmourWind(0).setUnlocalizedName("boundHelmetWind");
+//        boundPlateWind = (OmegaArmour) new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
+//        boundLeggingsWind = (OmegaArmour) new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
+//        boundBootsWind = (OmegaArmour) new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
+//        
         inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
     }
 
@@ -457,20 +454,20 @@ public class ModItems
         GameRegistry.registerItem(ModItems.itemCompressionSigil, "itemCompressionSigil");
         GameRegistry.registerItem(ModItems.itemAssassinSigil, "itemAssassinSigil");
         
-        GameRegistry.registerItem(ModItems.boundHelmetWater, "boundHelmetWater");
-        GameRegistry.registerItem(ModItems.boundPlateWater, "boundPlateWater");
-        GameRegistry.registerItem(ModItems.boundLeggingsWater, "boundLeggingsWater");
-        GameRegistry.registerItem(ModItems.boundBootsWater, "boundBootsWater");
-        
-        GameRegistry.registerItem(ModItems.boundHelmetEarth, "boundHelmetEarth");
-        GameRegistry.registerItem(ModItems.boundPlateEarth, "boundPlateEarth");
-        GameRegistry.registerItem(ModItems.boundLeggingsEarth, "boundLeggingsEarth");
-        GameRegistry.registerItem(ModItems.boundBootsEarth, "boundBootsEarth");
-        
-        GameRegistry.registerItem(ModItems.boundHelmetWind, "boundHelmetWind");
-        GameRegistry.registerItem(ModItems.boundPlateWind, "boundPlateWind");
-        GameRegistry.registerItem(ModItems.boundLeggingsWind, "boundLeggingsWind");
-        GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
+//        GameRegistry.registerItem(ModItems.boundHelmetWater, "boundHelmetWater");
+//        GameRegistry.registerItem(ModItems.boundPlateWater, "boundPlateWater");
+//        GameRegistry.registerItem(ModItems.boundLeggingsWater, "boundLeggingsWater");
+//        GameRegistry.registerItem(ModItems.boundBootsWater, "boundBootsWater");
+//        
+//        GameRegistry.registerItem(ModItems.boundHelmetEarth, "boundHelmetEarth");
+//        GameRegistry.registerItem(ModItems.boundPlateEarth, "boundPlateEarth");
+//        GameRegistry.registerItem(ModItems.boundLeggingsEarth, "boundLeggingsEarth");
+//        GameRegistry.registerItem(ModItems.boundBootsEarth, "boundBootsEarth");
+//        
+//        GameRegistry.registerItem(ModItems.boundHelmetWind, "boundHelmetWind");
+//        GameRegistry.registerItem(ModItems.boundPlateWind, "boundPlateWind");
+//        GameRegistry.registerItem(ModItems.boundLeggingsWind, "boundLeggingsWind");
+//        GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
         
         GameRegistry.registerItem(ModItems.inputRoutingFocus, "inputRoutingFocus");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
