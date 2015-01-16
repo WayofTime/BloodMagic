@@ -61,7 +61,7 @@ public class TEDemonPortal extends TileEntity
     public static float demonHoardChance = 0.8f;
     public static float portalTickRate = 1f;
 
-    public static int[] tierCostList = new int[]{1000, 5000, 10000};
+    public static int[] tierCostList = new int[]{1500};
     
     public static Set<IHoardDemon> hoardList = new HashSet();
 

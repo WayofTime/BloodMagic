@@ -114,6 +114,10 @@ import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWater;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWind;
+import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import WayofTime.alchemicalWizardry.common.potion.PotionAmphibian;
 import WayofTime.alchemicalWizardry.common.potion.PotionBoost;
 import WayofTime.alchemicalWizardry.common.potion.PotionDeaf;
@@ -132,6 +136,7 @@ import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulFray;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulHarden;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAlphaPact;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
@@ -149,12 +154,15 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHarvest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectInterdiction;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemRouting;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemSuction;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectJumping;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
@@ -1271,11 +1279,11 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW028SpawnWard", 1, 150000, new RitualEffectSpawnWard(), "Ward of Sacrosanctity", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
-        Rituals.registerRitual("AW031Convocation", isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
-//        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
-//        Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
-//        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
-//        Rituals.registerRitual("AW035", 1, 100, new RitualEffectItemRouting(), "Ritual of the Phantom Hands");
+        Rituals.registerRitual("AW031Convocation",isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
+        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
+        Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
+        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
+        Rituals.registerRitual("AW035", 1, 100, new RitualEffectItemRouting(), "Ritual of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
@@ -1318,9 +1326,9 @@ public class AlchemicalWizardry
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 7), new ReagentStack(ReagentRegistry.reductusReagent, 1000));
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 8), new ReagentStack(ReagentRegistry.potentiaReagent, 1000));
         
-//        OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater(ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater));
-//        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth(ModItems.boundHelmetEarth, ModItems.boundPlateEarth, ModItems.boundLeggingsEarth, ModItems.boundBootsEarth));
-//        OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind(ModItems.boundHelmetWind, ModItems.boundPlateWind, ModItems.boundLeggingsWind, ModItems.boundBootsWind));
+        OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater(ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater));
+        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth(ModItems.boundHelmetEarth, ModItems.boundPlateEarth, ModItems.boundLeggingsEarth, ModItems.boundBootsEarth));
+        OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind(ModItems.boundHelmetWind, ModItems.boundPlateWind, ModItems.boundLeggingsWind, ModItems.boundBootsWind));
     }
     
     public static void initDemonPacketRegistiry()

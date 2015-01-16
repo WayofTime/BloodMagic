@@ -16,6 +16,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
+import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectItemRouting extends RitualEffect
@@ -109,6 +110,98 @@ public class RitualEffectItemRouting extends RitualEffect
         		}
         	}
         }
+        
+        for(int i=0; i<4; i++)
+        {
+        	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
+        	TileEntity outputFocusInv = world.getTileEntity(x + outputFocusChest.xCoord, y + outputFocusChest.yCoord, z + outputFocusChest.zCoord);
+        	if(outputFocusInv instanceof IInventory)
+        	{
+        		IInventory outputFocusInventory = (IInventory)outputFocusInv;
+//        		for(int j=0; j<((IInventory) outputFocusInv).getSizeInventory(); j++)
+        		{
+        			ItemStack stack = ((IInventory) outputFocusInv).getStackInSlot(0);
+        			if(stack != null && stack.getItem() instanceof OutputRoutingFocus) //TODO change to output routing focus
+        			{
+        				boolean transferEverything = true;
+        				for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+        				{
+        					if(outputFocusInventory.getStackInSlot(j) != null)
+        					{
+        						transferEverything = false;
+        						break;
+        					}
+        				}
+        				
+        				OutputRoutingFocus outputFocus = (OutputRoutingFocus)stack.getItem();
+        				TileEntity outputChest = world.getTileEntity(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack)); //Destination
+    					ForgeDirection inputDirection = outputFocus.getSetDirection(stack);
+        				
+        				if(transferEverything)
+        				{
+            				if(outputChest instanceof IInventory)
+            				{
+            					IInventory outputChestInventory = (IInventory)outputChest;
+            					
+            					for(int n=0; n<bufferInventory.getSizeInventory(); n++)
+            					{
+        							ItemStack syphonedStack = bufferInventory.getStackInSlot(n);
+        							if(syphonedStack == null)
+        							{
+        								continue;
+        							}
+        							
+        							ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
+        							if(newStack != null && newStack.stackSize <= 0)
+        							{
+        								newStack = null;
+        							}
+        							bufferInventory.setInventorySlotContents(n, newStack);
+            						break;
+            					}
+            				}
+        				}else
+        				{
+        					
+            				
+        					if(!(outputChest instanceof IInventory))
+        					{
+        						continue;
+        					}
+        					
+        					for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+        					{
+        						ItemStack keyStack = outputFocusInventory.getStackInSlot(j);
+        						if(keyStack == null)
+        						{
+        							continue;	
+        						}
+        						
+        						for(int n=0; n<bufferInventory.getSizeInventory(); n++)
+    							{
+    								ItemStack checkStack = bufferInventory.getStackInSlot(n);
+    								if(checkStack == null)
+    								{
+    									continue;
+    								}
+    								
+    								if(outputFocus.doesItemMatch(keyStack, checkStack))
+    								{
+    									ItemStack newStack = SpellHelper.insertStackIntoInventory(checkStack, (IInventory)outputChest, inputDirection);
+            							if(newStack != null && newStack.stackSize <= 0)
+            							{
+            								newStack = null;
+            							}
+            							bufferInventory.setInventorySlotContents(n, newStack);
+                						break;
+    								}
+    							}
+        					}
+        				}
+        			}
+        		}
+        	}
+        }
     }
     
     public Int3 getInputBufferChestLocation(int number)
@@ -123,6 +216,22 @@ public class RitualEffectItemRouting extends RitualEffect
     		return new Int3(0, 0, 1);
     	case 3:
     		return new Int3(0, 0, -1);
+    	}
+    	return new Int3(0, 0, 0);
+    }
+    
+    public Int3 getOutputBufferChestLocation(int number)
+    {
+    	switch(number)
+    	{
+    	case 0:
+    		return new Int3(2, 0, 0);
+    	case 1:
+    		return new Int3(-2, 0, 0);
+    	case 2:
+    		return new Int3(0, 0, 2);
+    	case 3:
+    		return new Int3(0, 0, -2);
     	}
     	return new Int3(0, 0, 0);
     }

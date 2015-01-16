@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
 public class MeteorParadigm
 {
@@ -106,9 +105,16 @@ public class MeteorParadigm
                         if (randNum < 0)
                         {
                             ItemStack blockStack = mpc.getValidBlockParadigm();
-                            world.setBlock(x + i, y + j, z + k, Block.getBlockById(Item.getIdFromItem(blockStack.getItem())), blockStack.getItemDamage(), 3);
-                            hasPlacedBlock = true;
-                            break;
+                            if(blockStack != null && blockStack.getItem() instanceof ItemBlock)
+                            {
+                            	((ItemBlock)blockStack.getItem()).placeBlockAt(blockStack, null, world, x + i, y + j, z + k, 0, 0, 0, 0, blockStack.getItemDamage());
+                            	world.markBlockForUpdate(x + i, y + j, z + k);
+                                hasPlacedBlock = true;
+                                break;
+                            }
+//                            world.setBlock(x + i, y + j, z + k, Block.getBlockById(Item.getIdFromItem(blockStack.getItem())), blockStack.getItemDamage(), 3);
+//                            hasPlacedBlock = true;
+//                            break;
                         }
                     }
 
