@@ -82,7 +82,9 @@ public class RitualEffectMagnetic extends RitualEffect
             	
             	if(lastPos != null)
             	{
-            		
+            		j = lastPos.yCoord;
+            		i = Math.min(radius, Math.max(-radius, lastPos.xCoord));
+            		k = Math.min(radius, Math.max(-radius, lastPos.zCoord));
             	}
             	
                 while(j >= 0)
