@@ -53,9 +53,14 @@ public class SpellHelper
 
     public static boolean canEntityBeSeen(Entity entity, Entity entity2)
     {
-        return entity.worldObj.rayTraceBlocks(Vec3.createVectorHelper(entity.posX, entity.posY, entity.posZ), Vec3.createVectorHelper(entity2.posX, entity2.posY, entity2.posZ), false) == null;
+        return entity.worldObj.rayTraceBlocks(SpellHelper.createVec3(entity.posX, entity.posY, entity.posZ), SpellHelper.createVec3(entity2.posX, entity2.posY, entity2.posZ), false) == null;
     }
 
+    public static Vec3 createVec3(double x, double y, double z)
+    {
+    	return APISpellHelper.createVec3(x, y, z);
+    }
+    
     public static void smeltBlockInWorld(World world, int posX, int posY, int posZ)
     {
         FurnaceRecipes recipes = FurnaceRecipes.smelting();

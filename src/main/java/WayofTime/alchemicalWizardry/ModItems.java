@@ -68,6 +68,7 @@ import WayofTime.alchemicalWizardry.common.items.potion.StandardFillingAgent;
 import WayofTime.alchemicalWizardry.common.items.potion.WeakBindingAgent;
 import WayofTime.alchemicalWizardry.common.items.potion.WeakFillingAgent;
 import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
+import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.sigil.AirSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
 import WayofTime.alchemicalWizardry.common.items.sigil.ItemBloodLightSigil;
@@ -228,6 +229,7 @@ public class ModItems
     public static OmegaArmour boundBootsWind;
     
     public static Item inputRoutingFocus;
+    public static Item outputRoutingFocus;
 
     public static void init()
     {
@@ -348,6 +350,7 @@ public class ModItems
         boundBootsWind = (OmegaArmour) new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
         
         inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
+        outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
     }
 
     public static void registerItems()
@@ -473,6 +476,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
         
         GameRegistry.registerItem(ModItems.inputRoutingFocus, "inputRoutingFocus");
+        GameRegistry.registerItem(ModItems.outputRoutingFocus, "outputRoutingFocus");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }

@@ -197,7 +197,7 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
         double d0 = p_77621_2_.prevPosX + (p_77621_2_.posX - p_77621_2_.prevPosX) * (double)f;
         double d1 = p_77621_2_.prevPosY + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double)f + (double)(p_77621_1_.isRemote ? p_77621_2_.getEyeHeight() - p_77621_2_.getDefaultEyeHeight() : p_77621_2_.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
         double d2 = p_77621_2_.prevPosZ + (p_77621_2_.posZ - p_77621_2_.prevPosZ) * (double)f;
-        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
+        Vec3 vec3 = SpellHelper.createVec3(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
         float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
         float f5 = -MathHelper.cos(-f1 * 0.017453292F);
@@ -215,15 +215,15 @@ public class ItemSigilOfTheAssassin extends EnergyItems implements ArmourUpgrade
     
 //    public MovingObjectPosition movingObjectPositiongdsa(WOrld worldObj, int posX, int posY, int posZ)
 //    {
-//    	Vec3 var17 = Vec3.createVectorHelper(posX, posY, posZ);
-//        Vec3 var3 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
+//    	Vec3 var17 = SpellHelper.createVec3(posX, posY, posZ);
+//        Vec3 var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
 //        MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
-//        var17 = Vec3.createVectorHelper(posX, posY, posZ);
-//        var3 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
+//        var17 = SpellHelper.createVec3(posX, posY, posZ);
+//        var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
 //
 //        if (var4 != null)
 //        {
-//            var3 = Vec3.createVectorHelper(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
+//            var3 = SpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
 //        }
 //
 //        Entity var5 = null;

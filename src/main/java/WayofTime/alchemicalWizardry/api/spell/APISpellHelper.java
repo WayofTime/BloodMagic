@@ -16,6 +16,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class APISpellHelper 
 {
@@ -153,7 +154,7 @@ public class APISpellHelper
         if (!world.isRemote && player instanceof EntityPlayer)
             d1 += 1.62D;
         double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
-        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
+        Vec3 vec3 = SpellHelper.createVec3(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
         float f4 = MathHelper.sin(-f2 * 0.017453292F - (float) Math.PI);
         float f5 = -MathHelper.cos(-f1 * 0.017453292F);
@@ -168,6 +169,11 @@ public class APISpellHelper
         Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
     }
+	
+	public static Vec3 createVec3(double x, double y, double z)
+	{
+		return Vec3.createVectorHelper(x, y, z);
+	}
 	
 	public static List<ItemStack> getItemsFromBlock(World world, Block block, int x, int y, int z, int meta, boolean silkTouch, int fortune)
     {

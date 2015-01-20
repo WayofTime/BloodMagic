@@ -1,18 +1,20 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectMagnetic extends RitualEffect
 {
@@ -72,11 +74,22 @@ public class RitualEffectMagnetic extends RitualEffect
 
             if (replace)
             {
-                for (int j = y - 1; j >= 0; j--)
+            	Int3 lastPos = this.getLastPosition(ritualStone.getCustomRitualTag());
+            	
+            	int j = y - 1;
+            	int i = 0;
+            	int k = 0;
+            	
+            	if(lastPos != null)
+            	{
+            		
+            	}
+            	
+                while(j >= 0)
                 {
-                    for (int i = -radius; i <= radius; i++)
+                    while(i <= radius)
                     {
-                        for (int k = -radius; k <= radius; k++)
+                        while(k <= radius)
                         {
                             Block block = world.getBlock(x + i, j, z + k);
                             int meta = world.getBlockMetadata(x + i, j, z + k);
@@ -113,13 +126,26 @@ public class RitualEffectMagnetic extends RitualEffect
                                     {
                                         this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
                                     }
+                                    
+                                    this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
 
                                     return;
                                 }
                             }
+                            k++;
                         }
+                        k = -radius;
+                        i++;
                     }
+                    i = -radius;
+                    j--;
+                    this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+                    return;
                 }
+                
+                j = y - 1;
+                this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+                return;
             }
         }
     }
@@ -128,6 +154,24 @@ public class RitualEffectMagnetic extends RitualEffect
     public int getCostPerRefresh()
     {
         return 50;
+    }
+    
+    public Int3 getLastPosition(NBTTagCompound tag)
+    {
+    	if(tag != null)
+    	{
+    		return Int3.readFromNBT(tag);
+    	}
+    	
+    	return new Int3(0, 0, 0);
+    }
+    
+    public void setLastPosition(NBTTagCompound tag, Int3 pos)
+    {
+    	if(tag != null)
+    	{
+    		pos.writeToNBT(tag);
+    	}
     }
 
     @Override

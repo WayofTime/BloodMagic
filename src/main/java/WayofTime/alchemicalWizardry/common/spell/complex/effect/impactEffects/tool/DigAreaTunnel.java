@@ -1,17 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class DigAreaTunnel extends DigAreaEffect
 {
@@ -42,9 +43,9 @@ public class DigAreaTunnel extends DigAreaEffect
 
         double initialLength = this.getRandomVectorLength();
 
-        Vec3 initialVector = Vec3.createVectorHelper(opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
+        Vec3 initialVector = SpellHelper.createVec3(opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
 
-        Vec3 lastVec = Vec3.createVectorHelper(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
+        Vec3 lastVec = SpellHelper.createVec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
         vectorLine.add(initialVector);
 
         double currentLength = lastVec.lengthVector();
@@ -151,10 +152,10 @@ public class DigAreaTunnel extends DigAreaEffect
     {
         double vecLength = vector.lengthVector();
         AlchemicalWizardry.logger.info(vecLength);
-        Vec3 normVec = Vec3.createVectorHelper(vector.xCoord, vector.yCoord, vector.zCoord);
+        Vec3 normVec = SpellHelper.createVec3(vector.xCoord, vector.yCoord, vector.zCoord);
         normVec = normVec.normalize();
 
-        Vec3 prevVec = Vec3.createVectorHelper(0, 0, 0);
+        Vec3 prevVec = SpellHelper.createVec3(0, 0, 0);
         double distanceTravelled = 0;
 
         while (distanceTravelled < vecLength)

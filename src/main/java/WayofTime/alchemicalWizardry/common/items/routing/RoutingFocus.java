@@ -11,6 +11,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
+import WayofTime.alchemicalWizardry.common.Int3;
 
 public class RoutingFocus extends Item
 {
@@ -19,6 +21,11 @@ public class RoutingFocus extends Item
 		super();
         this.maxStackSize = 1;
 		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+	}
+	
+	public RoutingFocusPosAndFacing getPosAndFacing(ItemStack itemStack)
+	{
+		return new RoutingFocusPosAndFacing(new Int3(this.xCoord(itemStack), this.yCoord(itemStack), this.zCoord(itemStack)), this.getSetDirection(itemStack));
 	}
 	
 	@Override
@@ -68,7 +75,7 @@ public class RoutingFocus extends Item
 	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("An Enderpearl imbued with blood");
+        par3List.add(this.getFocusDescription());
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
@@ -78,6 +85,11 @@ public class RoutingFocus extends Item
             par3List.add("Direction: " + this.getSetDirection(par1ItemStack));
         }
     }
+	
+	public String getFocusDescription()
+	{
+		return "An Enderpearl imbued with blood";
+	}
     
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)

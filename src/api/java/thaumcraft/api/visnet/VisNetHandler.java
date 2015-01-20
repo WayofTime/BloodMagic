@@ -247,9 +247,9 @@ public class VisNetHandler {
 	// double yd = (source.yCoord-target.yCoord) / d;
 	// double zd = (source.zCoord-target.zCoord) / d;
 	// return source.getWorldObj().rayTraceBlocks(
-	// Vec3.createVectorHelper(source.xCoord-xd+.5+.5, source.yCoord-yd,
+	// SpellHelper.createVec3(source.xCoord-xd+.5+.5, source.yCoord-yd,
 	// source.zCoord-zd),
-	// Vec3.createVectorHelper(target.xCoord+.5, target.yCoord+.5,
+	// SpellHelper.createVec3(target.xCoord+.5, target.yCoord+.5,
 	// target.zCoord+.5)) == null;
 	// }
 

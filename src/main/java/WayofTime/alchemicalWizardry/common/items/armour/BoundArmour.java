@@ -134,6 +134,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundBoots");
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1)
     {

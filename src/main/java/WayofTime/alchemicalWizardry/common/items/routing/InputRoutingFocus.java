@@ -15,6 +15,6 @@ public class InputRoutingFocus extends RoutingFocus
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_deactivated");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:InputRoutingFocus");
     }
 }
