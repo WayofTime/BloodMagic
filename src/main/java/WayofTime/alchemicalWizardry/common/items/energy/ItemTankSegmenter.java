@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -48,15 +49,15 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used to designate which");
-        par3List.add("reagents can go into a container");
+        par3List.add(StatCollector.translateToLocal("tooltip.tanksegmenter.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.tanksegmenter.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             Reagent reagent = this.getReagent(par1ItemStack);
             if (reagent != null)
             {
-                par3List.add("Currently selected reagent: " + reagent.name);
+                par3List.add(StatCollector.translateToLocal("tooltip.reagent.selectedreagent") + " " + reagent.name);
             }
         }
     }
@@ -212,7 +213,7 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
                         numberAssigned = 0;
                     }
 
-                    player.addChatComponentMessage(new ChatComponentText("Tank now has " + numberAssigned + " tank(s) set to: " + reagent.name));
+                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("Tank now has ") + " " + numberAssigned + " " + "message.tanksegmenter.tankssetto" + " " + reagent.name));
 
                     reagentHandler.setTanksTunedToReagent(reagent, numberAssigned);
                 }
@@ -255,7 +256,7 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
 
         if (reagent != null)
         {
-            player.addChatComponentMessage(new ChatComponentText("Tank Segmenter now set to: " + reagent.name));
+            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.tanksegmenter.setto") + " " + reagent.name));
         }
     }
 }

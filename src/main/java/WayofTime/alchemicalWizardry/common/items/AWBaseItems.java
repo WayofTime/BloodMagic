@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class AWBaseItems extends Item
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Infused stone inside of");
-        par3List.add("a blood altar");
+        par3List.add(StatCollector.translateToLocal("tooltip.infusedstone.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.infusedstone.desc2"));
     }
 }

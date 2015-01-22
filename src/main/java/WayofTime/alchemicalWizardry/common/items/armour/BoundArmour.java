@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.Constants;
@@ -277,13 +278,13 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Devilish Protection");
+        par3List.add(StatCollector.translateToLocal("tooltip.boundarmor.devprotect"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
 
             ItemStack[] inv = getInternalInventory(par1ItemStack);
@@ -297,7 +298,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             {
                 if (inv[i] != null)
                 {
-                    par3List.add("Item in slot " + i + ": " + inv[i].getDisplayName());
+                    par3List.add(StatCollector.translateToLocal("tooltip.item.iteminslot") + " " + i + ": " + inv[i].getDisplayName());
                 }
             }
         }

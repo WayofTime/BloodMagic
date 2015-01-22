@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -45,10 +46,10 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Stores raw Life Essence");
+        par3List.add(StatCollector.translateToLocal("tooltip.energybattery.desc"));
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

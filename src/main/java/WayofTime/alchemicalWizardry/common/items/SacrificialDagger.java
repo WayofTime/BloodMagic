@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -43,11 +44,11 @@ public class SacrificialDagger extends Item
     {
         if (AlchemicalWizardry.wimpySettings)
         {
-            par3List.add("A slight draining feeling tickles your fingers");
+            par3List.add(StatCollector.translateToLocal("tooltip.sacrificialdagger.desc1"));
         } else
         {
-            par3List.add("Just a prick of the");
-            par3List.add("finger will suffice...");
+            par3List.add(StatCollector.translateToLocal("tooltip.sacrificialdagger.desc2"));
+            par3List.add(StatCollector.translateToLocal("tooltip.sacrificialdagger.desc3"));
         }
     }
 

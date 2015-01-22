@@ -16,6 +16,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -65,11 +66,11 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Infinite water, anyone?");
+        par3List.add(StatCollector.translateToLocal("tooltip.watersigil.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

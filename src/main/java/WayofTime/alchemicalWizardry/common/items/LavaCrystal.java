@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -61,12 +62,12 @@ public class LavaCrystal extends EnergyItems
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Store life to smelt");
-        par3List.add("stuff in the furnace.");
+        par3List.add(StatCollector.translateToLocal("tooltip.lavacrystal.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.lavacrystal.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -41,10 +42,10 @@ public class ItemDiabloKey extends EnergyItems
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Binds other items to the owner's network");
+        par3List.add(StatCollector.translateToLocal("tooltip.diablokey.desc"));
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

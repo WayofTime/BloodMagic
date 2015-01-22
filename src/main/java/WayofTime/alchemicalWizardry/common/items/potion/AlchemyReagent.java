@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
@@ -82,7 +83,7 @@ public class AlchemyReagent extends Item
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used in alchemy");
+        par3List.add(StatCollector.translateToLocal("tooltip.alchemy.usedinalchemy"));
 
         if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
         {
@@ -90,7 +91,7 @@ public class AlchemyReagent extends Item
 
             if (recipe != null)
             {
-                par3List.add(EnumChatFormatting.BLUE + "Recipe:");
+                par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemy.recipe"));
 
                 for (ItemStack item : recipe)
                 {
@@ -102,7 +103,7 @@ public class AlchemyReagent extends Item
             }
         } else
         {
-            par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+            par3List.add("-" + StatCollector.translateToLocal("tooltip.alchemy.press") + " " + EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemy.shift") + EnumChatFormatting.GRAY + " " + StatCollector.translateToLocal("tooltip.alchemy.forrecipe") + "-");
         }
     }
 }

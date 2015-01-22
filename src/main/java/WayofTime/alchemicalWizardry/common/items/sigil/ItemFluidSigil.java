@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
@@ -44,29 +45,29 @@ public class ItemFluidSigil extends Item implements IFluidContainerItem
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("A sigil with a lovely affinity for fluids");
+        par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             switch (this.getActionState(par1ItemStack))
             {
                 case STATE_SYPHON:
-                    par3List.add("Syphoning Mode");
+                    par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.syphoningmode"));
                     break;
                 case STATE_FORCE_SYPHON:
-                    par3List.add("Force-syphon Mode");
+                    par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.forcesyphonmode"));
                     break;
                 case STATE_PLACE:
-                    par3List.add("Fluid Placement Mode");
+                    par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.fluidplacementmode"));
                     break;
                 case STATE_INPUT_TANK:
-                    par3List.add("Fill Tank Mode");
+                    par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.filltankmode"));
                     break;
                 case STATE_DRAIN_TANK:
-                    par3List.add("Drain Tank Mode");
+                    par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.draintankmode"));
                     break;
                 case STATE_BEAST_DRAIN:
-                    par3List.add("Beast Mode");
+                    par3List.add(StatCollector.translateToLocal("tooltip.fluidsigil.beastmode"));
                     break;
             }
 

@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import thaumcraft.api.IGoggles;
 import thaumcraft.api.IRepairable;
@@ -119,17 +120,17 @@ public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGog
         switch (this.armorType)
         {
             case 0:
-                par3List.add("A pair of goggles imbued with power");
+                par3List.add(StatCollector.translateToLocal("tooltip.sanguinearmor.desc1"));
                 break;
             case 1:
 
             case 2:
 
             case 3:
-                par3List.add("Robes imbued with forbidden power");
+                par3List.add(StatCollector.translateToLocal("tooltip.sanguinearmor.desc2"));
         }
 
-        par3List.add("Vis discount: " + discount + "%");
+        par3List.add(StatCollector.translateToLocal("tooltip.sanguinearmor.visdisc") + " " + discount + "%");
     }
 
     @Override

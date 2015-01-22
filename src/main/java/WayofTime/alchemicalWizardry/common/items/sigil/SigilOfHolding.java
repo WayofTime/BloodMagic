@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -66,11 +67,11 @@ public class SigilOfHolding extends EnergyItems
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used to hold several Sigils!");
+        par3List.add(StatCollector.translateToLocal("tooltip.sigilofholding.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
             ItemStack[] inv = getInternalInventory(par1ItemStack);
 
             if (inv == null)
@@ -82,14 +83,14 @@ public class SigilOfHolding extends EnergyItems
 
             if (item != null)
             {
-                par3List.add("Current item: " + item.getDisplayName());
+                par3List.add(StatCollector.translateToLocal("tooltip.item.currentitem") + " " + item.getDisplayName());
             }
 
             for (int i = 0; i < invSize; i++)
             {
                 if (inv[i] != null)
                 {
-                    par3List.add("Item in slot " + i + ": " + inv[i].getDisplayName());
+                    par3List.add(StatCollector.translateToLocal("tooltip.item.iteminslot") + " " + i + ": " + inv[i].getDisplayName());
                 }
             }
         }

@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -224,13 +225,13 @@ public class DemonPlacer extends Item
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used to spawn demons.");
+        par3List.add(StatCollector.translateToLocal("tooltip.demonplacer.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Demon's Owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.demonsowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }

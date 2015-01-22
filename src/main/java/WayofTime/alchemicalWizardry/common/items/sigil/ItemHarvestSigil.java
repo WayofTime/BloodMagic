@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
@@ -35,19 +36,19 @@ public class ItemHarvestSigil extends EnergyItems implements IHolding, ArmourUpg
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("You sow what you reap");
+        par3List.add(StatCollector.translateToLocal("tooltip.harvestsigil.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             if (par1ItemStack.getTagCompound().getBoolean("isActive"))
             {
-                par3List.add("Activated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
             {
-                par3List.add("Deactivated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

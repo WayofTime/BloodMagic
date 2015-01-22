@@ -20,6 +20,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -44,12 +45,12 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Peer into the soul to");
-        par3List.add("get the current essence");
+        par3List.add(StatCollector.translateToLocal("tooltip.divinationsigil.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.divinationsigil.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -82,7 +83,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
 
         if (movingobjectposition == null)
         {
-            par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+            par3EntityPlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
 
             return par1ItemStack;
         } else
@@ -97,7 +98,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
 
                 if (!(tile instanceof IReagentHandler))
                 {
-                    par3EntityPlayer.addChatMessage(new ChatComponentText("Current Essence: " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+                    par3EntityPlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
 
                     return par1ItemStack;
                 }
@@ -111,7 +112,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
                     {
                         if (info != null && info.reagent != null && info.reagent.reagent != null)
                         {
-                            par3EntityPlayer.addChatComponentMessage(new ChatComponentText("Reagent: " + ReagentRegistry.getKeyForReagent(info.reagent.reagent) + ", Amount: " + info.reagent.amount));
+                            par3EntityPlayer.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.reagent") + " " + ReagentRegistry.getKeyForReagent(info.reagent.reagent) + "," + StatCollector.translateToLocal("message.divinationsigil.amount") + " " + info.reagent.amount));
                         }
                     }
                 }
