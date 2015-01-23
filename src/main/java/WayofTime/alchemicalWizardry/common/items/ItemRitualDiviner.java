@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
@@ -51,17 +52,17 @@ public class ItemRitualDiviner extends EnergyItems
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used to explore new types of rituals");
+        par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.desc"));
 
         if (this.getMaxRuneDisplacement(par1ItemStack) == 1)
         {
-            par3List.add("Can place Dusk runes");
+            par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.canplace"));
         } else
         {
-            par3List.add("Can not place Dusk runes");
+            par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.cannotplace"));
         }
         
-        par3List.add("Ritual tuned to face: " + this.getNameForDirection(this.getDirection(par1ItemStack)));
+        par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(par1ItemStack)));
 
         boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
         
@@ -71,8 +72,8 @@ public class ItemRitualDiviner extends EnergyItems
             {
                 String ritualID = this.getCurrentRitual(par1ItemStack);
                 //TODO
-                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
-                par3List.add("RitualID: " + ritualID);
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.alchemy.ritualid") + " " + ritualID);
                 List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
                 if (ritualList == null)
                 {
@@ -116,16 +117,16 @@ public class ItemRitualDiviner extends EnergyItems
                     }
                 }
 
-                par3List.add("Blank stones: " + blankStones);
-                par3List.add(EnumChatFormatting.AQUA + "Air stones: " + airStones);
-                par3List.add(EnumChatFormatting.BLUE + "Water stones: " + waterStones);
-                par3List.add(EnumChatFormatting.RED + "Fire stones: " + fireStones);
-                par3List.add(EnumChatFormatting.DARK_GREEN + "Earth stones: " + earthStones);
-                par3List.add(EnumChatFormatting.BOLD + "Dusk stones: " + duskStones);
+                par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.blankstones") + " " + blankStones);
+                par3List.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("tooltip.ritualdiviner.airstones") + " " + airStones);
+                par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.ritualdiviner.waterstones") + " " + waterStones);
+                par3List.add(EnumChatFormatting.RED + StatCollector.translateToLocal("tooltip.ritualdiviner.firestones") + " " + fireStones);
+                par3List.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocal("tooltip.ritualdiviner.earthstones") + " " + earthStones);
+                par3List.add(EnumChatFormatting.BOLD + StatCollector.translateToLocal("tooltip.ritualdiviner.duskstones") + " " + duskStones);
             }
         }else
         {
-        	par3List.add(EnumChatFormatting.AQUA + "-Press shift for extended information-");
+        	par3List.add(EnumChatFormatting.AQUA + "-" + StatCollector.translateToLocal("tooltip.ritualdiviner.moreinfo") + "-");
         }
         
     }
@@ -248,7 +249,7 @@ public class ItemRitualDiviner extends EnergyItems
         		return false;
         	}
         	this.cycleDirection(par1ItemStack);
-        	par2EntityPlayer.addChatComponentMessage(new ChatComponentText("Ritual tuned to face: " + this.getNameForDirection(this.getDirection(par1ItemStack))));
+        	par2EntityPlayer.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(par1ItemStack))));
         }
 
         return false;
@@ -268,7 +269,7 @@ public class ItemRitualDiviner extends EnergyItems
 
             if (par2World.isRemote)
             {
-                IChatComponent chatmessagecomponent = new ChatComponentText("Current Ritual: " + Rituals.getNameOfRitual(this.getCurrentRitual(par1ItemStack)));
+                IChatComponent chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.ritual.currentritual") + " " + Rituals.getNameOfRitual(this.getCurrentRitual(par1ItemStack)));
                 par3EntityPlayer.addChatComponentMessage(chatmessagecomponent);
             }
         }
@@ -292,7 +293,7 @@ public class ItemRitualDiviner extends EnergyItems
 
                 if (entityLiving.worldObj.isRemote)
                 {
-                    IChatComponent chatmessagecomponent = new ChatComponentText("Current Ritual: " + Rituals.getNameOfRitual(this.getCurrentRitual(stack)));
+                    IChatComponent chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.ritual.currentritual") + " " + Rituals.getNameOfRitual(this.getCurrentRitual(stack)));
                     player.addChatComponentMessage(chatmessagecomponent);
                 }
             }
@@ -395,16 +396,16 @@ public class ItemRitualDiviner extends EnergyItems
     	{
     	case 0:
     	case 1:
-    		dir = "NORTH";
+    		dir = StatCollector.translateToLocal("message.ritual.side.north");
     		break;
     	case 2:
-    		dir = "EAST";
+    		dir = StatCollector.translateToLocal("message.ritual.side.east");
     		break;
     	case 3:
-    		dir = "SOUTH";
+    		dir = StatCollector.translateToLocal("message.ritual.side.south");
     		break;
     	case 4:
-    		dir = "WEST";
+    		dir = StatCollector.translateToLocal("message.ritual.side.west");
     	}
     	
     	return dir;

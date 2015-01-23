@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public class ItemDestinationClearer extends Item implements IReagentManipulator
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Used to clear the destination");
-        par3List.add("list for an alchemy container");
+        par3List.add(StatCollector.translateToLocal("tooltip.destclearer.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.destclearer.desc2"));
     }
 
     @Override
@@ -71,7 +72,7 @@ public class ItemDestinationClearer extends Item implements IReagentManipulator
 
                 relay.reagentTargetList.clear();
 
-                player.addChatComponentMessage(new ChatComponentText("Destination list now cleared."));
+                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.destinationclearer.cleared")));
             }
         }
 

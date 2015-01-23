@@ -8,6 +8,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -57,10 +58,10 @@ public class ItemBlockCrystalBelljar extends ItemBlock
 
         if (tanks == null)
         {
-            list.add("- Empty");
+            list.add(StatCollector.translateToLocal("tooltip.crystalbelljar.empty"));
         } else
         {
-            list.add("Current Contents:");
+            list.add(StatCollector.translateToLocal("tooltip.crystalbelljar.contents"));
             for (int i = 0; i < tanks.length; i++)
             {
                 if (tanks[i] == null || tanks[i].getReagent() == null || tanks[i].getReagent().reagent == null)

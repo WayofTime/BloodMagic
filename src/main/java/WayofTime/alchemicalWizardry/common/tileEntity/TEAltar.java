@@ -14,6 +14,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -1052,9 +1053,9 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
     public void sendChatInfoToPlayer(EntityPlayer player)
     {
-        player.addChatMessage(new ChatComponentText("Altar's Current Essence: " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText("Altar's Current Tier: " + UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord)));
-        player.addChatMessage(new ChatComponentText("Capacity: " + this.getCapacity() + "LP"));
+        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.currentessence") + " " + this.fluid.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.currenttier") + " " + UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord)));
+        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.capacity") + " " + this.getCapacity() + "LP"));
     }
 
     public void sendMoreChatInfoToPlayer(EntityPlayer player)
@@ -1062,11 +1063,11 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         if (getStackInSlot(0) != null)
         {
             int stackSize = getStackInSlot(0).stackSize;
-            player.addChatMessage(new ChatComponentText("Altar's Progress: " + progress + "LP/" + liquidRequired * stackSize + "LP"));
-            player.addChatMessage(new ChatComponentText("Consumption rate: " + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
+            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.progress") + " " + progress + "LP/" + liquidRequired * stackSize + "LP"));
+            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.consumptionrate") + " " + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
         }
-        player.addChatMessage(new ChatComponentText("Altar's Current Essence: " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(" Input tank: " + this.fluidInput.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(" Output tank: " + this.fluidOutput.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.currentessence") + " " + this.fluid.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.inputtank") + " " + this.fluidInput.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.outputtank") + " " + this.fluidOutput.amount + "LP"));
     }
 }

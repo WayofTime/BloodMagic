@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -186,22 +187,22 @@ public class EnergySword extends ItemSword
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Caution: may cause");
-        par3List.add("a bad day...");
+        par3List.add(StatCollector.translateToLocal("tooltip.caution.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.caution.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             if (par1ItemStack.getTagCompound().getBoolean("isActive"))
             {
-                par3List.add("Activated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
             {
-                par3List.add("Deactivated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }

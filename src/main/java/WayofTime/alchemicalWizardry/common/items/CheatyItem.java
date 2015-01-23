@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -38,13 +39,13 @@ public class CheatyItem extends Item implements IBindable
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Creative only");
-        par3List.add("Right-click to fill network,");
-        par3List.add("shift-right to empty.");
+        par3List.add(StatCollector.translateToLocal("tooltip.mode.creative"));
+        par3List.add(StatCollector.translateToLocal("tooltip.cheatyitem.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.cheatyitem.desc2"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

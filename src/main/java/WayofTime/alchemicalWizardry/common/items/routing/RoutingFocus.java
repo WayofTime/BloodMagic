@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -81,8 +82,8 @@ public class RoutingFocus extends Item
         {
             NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            par3List.add("Coords: " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
-            par3List.add("Direction: " + this.getSetDirection(par1ItemStack));
+            par3List.add(StatCollector.translateToLocal("tooltip.alchemy.coords") + " " + itemTag.getInteger("xCoord") + ", " + itemTag.getInteger("yCoord") + ", " + itemTag.getInteger("zCoord"));
+            par3List.add(StatCollector.translateToLocal("tooltip.alchemy.direction") + " " + this.getSetDirection(par1ItemStack));
         }
     }
 	

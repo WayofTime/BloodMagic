@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.IDemon;
@@ -119,10 +120,10 @@ public class EntityDemon extends EntityTameable implements IDemon
 
             if (isSitting)
             {
-                chatmessagecomponent = new ChatComponentText("I will stay here for now, Master.");
+                chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.demon.willstay"));
             } else
             {
-                chatmessagecomponent = new ChatComponentText("I shall follow and protect you!");
+                chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.demon.shallfollow"));
             }
 
             owner.addChatComponentMessage(chatmessagecomponent);

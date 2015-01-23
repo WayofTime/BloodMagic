@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -34,19 +35,19 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Best not to wear a skirt.");
+        par3List.add(StatCollector.translateToLocal("tooltip.sigilofwind.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             if (par1ItemStack.getTagCompound().getBoolean("isActive"))
             {
-                par3List.add("Activated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
             {
-                par3List.add("Deactivated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

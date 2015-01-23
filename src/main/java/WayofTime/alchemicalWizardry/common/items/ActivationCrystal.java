@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
@@ -52,13 +53,13 @@ public class ActivationCrystal extends EnergyItems
         {
             case 0:
             {
-                par3List.add("Activates low-level rituals");
+                par3List.add(StatCollector.translateToLocal("tooltip.activationcrystal.lowlevelrituals"));
                 break;
             }
 
             case 1:
             {
-                par3List.add("Activates more powerful rituals");
+                par3List.add(StatCollector.translateToLocal("tooltip.activationcrystal.powerfulrituals"));
 
                 if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
                 {
@@ -66,7 +67,7 @@ public class ActivationCrystal extends EnergyItems
 
                     if (recipe != null)
                     {
-                        par3List.add(EnumChatFormatting.BLUE + "Recipe:");
+                        par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemy.recipe"));
 
                         for (ItemStack item : recipe)
                         {
@@ -78,7 +79,7 @@ public class ActivationCrystal extends EnergyItems
                     }
                 } else
                 {
-                    par3List.add("-Press " + EnumChatFormatting.BLUE + "shift" + EnumChatFormatting.GRAY + " for Recipe-");
+                    par3List.add("-" + StatCollector.translateToLocal("tooltip.alchemy.press") + " " + EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemy.shift") + EnumChatFormatting.GRAY + " " + StatCollector.translateToLocal("tooltip.alchemy.forrecipe") + "-");
                 }
 
                 break;
@@ -86,7 +87,7 @@ public class ActivationCrystal extends EnergyItems
             
             case 2:
             {
-                par3List.add("Creative only - activates any ritual");
+                par3List.add(StatCollector.translateToLocal("tooltip.activationcrystal.creativeonly"));
 
                 break;
             }
@@ -94,7 +95,7 @@ public class ActivationCrystal extends EnergyItems
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 

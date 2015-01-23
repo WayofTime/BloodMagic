@@ -268,11 +268,11 @@ public class AlchemyFlask extends Item
 
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add(EnumChatFormatting.BLUE + "Swigs left: " + (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage()) + "/" + par1ItemStack.getMaxDamage());
+        par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemyflask.swigsleft") + " " + (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage()) + "/" + par1ItemStack.getMaxDamage());
 
         if (this.isPotionThrowable(par1ItemStack))
         {
-            par3List.add(EnumChatFormatting.BLUE + "CAUTION: Contents are throwable");
+            par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.alchemyflask.caution"));
         }
 
         List list1 = AlchemyFlask.getPotionEffects(par1ItemStack);

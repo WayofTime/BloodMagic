@@ -20,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IDemon;
@@ -191,8 +192,8 @@ public class DaggerOfSacrifice extends EnergyItems
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Caution: may cause");
-        par3List.add("a bad day...");
+        par3List.add(StatCollector.translateToLocal("tooltip.caution.desc1"));
+        par3List.add(StatCollector.translateToLocal("tooltip.caution.desc2"));
     }
 
     @Override

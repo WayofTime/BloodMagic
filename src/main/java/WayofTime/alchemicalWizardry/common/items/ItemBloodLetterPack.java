@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
@@ -45,13 +46,13 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("This pack really chaffes...");
+        par3List.add(StatCollector.translateToLocal("tooltip.bloodletterpack.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
-            par3List.add("Stored LP: " + this.getStoredLP(par1ItemStack));
+            par3List.add(StatCollector.translateToLocal("tooltip.lp.storedlp") + " " + this.getStoredLP(par1ItemStack));
         }
     }
     

@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -148,21 +149,21 @@ public class EnergyBazooka extends EnergyItems
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add("Boom.");
+        par3List.add(StatCollector.translateToLocal("tooltip.energybazooka.desc"));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
             if (par1ItemStack.getTagCompound().getBoolean("isActive"))
             {
-                par3List.add("Activated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
             {
-                par3List.add("Deactivated");
+                par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
             if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add("Current owner: " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
     }
