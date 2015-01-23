@@ -4,6 +4,8 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaWind;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class OmegaArmourWind extends OmegaArmour
 {
@@ -19,12 +21,14 @@ public class OmegaArmourWind extends OmegaArmour
     }
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getChestModel()
 	{
 		return new ModelOmegaWind(1.0f, true, true, false, true);
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getLegsModel()
 	{
 		return new ModelOmegaWind(0.5f, false, false, true, false);

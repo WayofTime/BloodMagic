@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -19,12 +21,14 @@ public class OmegaArmourWater extends OmegaArmour
     }
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getChestModel()
 	{
 		return new ModelOmegaWater(1.0f, true, true, false, true);
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getLegsModel()
 	{
 		return new ModelOmegaWater(0.5f, false, false, true, false);

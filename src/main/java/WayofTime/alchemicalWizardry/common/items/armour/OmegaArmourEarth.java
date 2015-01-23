@@ -12,6 +12,9 @@ import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaEarth;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class OmegaArmourEarth extends OmegaArmour
 {
 	public OmegaArmourEarth(int armorType) 
@@ -26,12 +29,14 @@ public class OmegaArmourEarth extends OmegaArmour
     }
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getChestModel()
 	{
 		return new ModelOmegaEarth(1.0f, true, true, false, true);
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ModelBiped getLegsModel()
 	{
 		return new ModelOmegaEarth(0.5f, false, false, true, false);
