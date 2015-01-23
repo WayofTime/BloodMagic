@@ -112,6 +112,7 @@ import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
@@ -1326,9 +1327,9 @@ public class AlchemicalWizardry
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 7), new ReagentStack(ReagentRegistry.reductusReagent, 1000));
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 8), new ReagentStack(ReagentRegistry.potentiaReagent, 1000));
         
-        OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater(ModItems.boundHelmetWater, ModItems.boundPlateWater, ModItems.boundLeggingsWater, ModItems.boundBootsWater));
-        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth(ModItems.boundHelmetEarth, ModItems.boundPlateEarth, ModItems.boundLeggingsEarth, ModItems.boundBootsEarth));
-        OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind(ModItems.boundHelmetWind, ModItems.boundPlateWind, ModItems.boundLeggingsWind, ModItems.boundBootsWind));
+        OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater((OmegaArmour)ModItems.boundHelmetWater, (OmegaArmour)ModItems.boundPlateWater, (OmegaArmour)ModItems.boundLeggingsWater, (OmegaArmour)ModItems.boundBootsWater));
+        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth((OmegaArmour)ModItems.boundHelmetEarth, (OmegaArmour)ModItems.boundPlateEarth, (OmegaArmour)ModItems.boundLeggingsEarth, (OmegaArmour)ModItems.boundBootsEarth));
+        OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind((OmegaArmour)ModItems.boundHelmetWind, (OmegaArmour)ModItems.boundPlateWind, (OmegaArmour)ModItems.boundLeggingsWind, (OmegaArmour)ModItems.boundBootsWind));
     }
     
     public static void initDemonPacketRegistiry()

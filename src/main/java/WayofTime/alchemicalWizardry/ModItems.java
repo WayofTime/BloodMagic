@@ -46,7 +46,6 @@ import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.TranscendentBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
-import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWater;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWind;
@@ -213,20 +212,20 @@ public class ModItems
     public static Item transcendentBloodOrb;
     public static Item itemAssassinSigil;
     
-    public static OmegaArmour boundHelmetWater;
-    public static OmegaArmour boundPlateWater;
-    public static OmegaArmour boundLeggingsWater;
-    public static OmegaArmour boundBootsWater;
+    public static Item boundHelmetWater;
+    public static Item boundPlateWater;
+    public static Item boundLeggingsWater;
+    public static Item boundBootsWater;
     
-    public static OmegaArmour boundHelmetEarth;
-    public static OmegaArmour boundPlateEarth;
-    public static OmegaArmour boundLeggingsEarth;
-    public static OmegaArmour boundBootsEarth;
+    public static Item boundHelmetEarth;
+    public static Item boundPlateEarth;
+    public static Item boundLeggingsEarth;
+    public static Item boundBootsEarth;
     
-    public static OmegaArmour boundHelmetWind;
-    public static OmegaArmour boundPlateWind;
-    public static OmegaArmour boundLeggingsWind;
-    public static OmegaArmour boundBootsWind;
+    public static Item boundHelmetWind;
+    public static Item boundPlateWind;
+    public static Item boundLeggingsWind;
+    public static Item boundBootsWind;
     
     public static Item inputRoutingFocus;
     public static Item outputRoutingFocus;
@@ -334,20 +333,20 @@ public class ModItems
         itemCompressionSigil = new ItemPackRatSigil().setUnlocalizedName("itemCompressionSigil");
         itemAssassinSigil = new ItemSigilOfTheAssassin().setUnlocalizedName("itemAssassinSigil");
         
-        boundHelmetWater = (OmegaArmour) new OmegaArmourWater(0).setUnlocalizedName("boundHelmetWater");
-        boundPlateWater = (OmegaArmour) new OmegaArmourWater(1).setUnlocalizedName("boundPlateWater");
-        boundLeggingsWater = (OmegaArmour) new OmegaArmourWater(2).setUnlocalizedName("boundLeggingsWater");
-        boundBootsWater = (OmegaArmour) new OmegaArmourWater(3).setUnlocalizedName("boundBootsWater");
+        boundHelmetWater = new OmegaArmourWater(0).setUnlocalizedName("boundHelmetWater");
+        boundPlateWater = new OmegaArmourWater(1).setUnlocalizedName("boundPlateWater");
+        boundLeggingsWater = new OmegaArmourWater(2).setUnlocalizedName("boundLeggingsWater");
+        boundBootsWater = new OmegaArmourWater(3).setUnlocalizedName("boundBootsWater");
         
-        boundHelmetEarth = (OmegaArmour) new OmegaArmourEarth(0).setUnlocalizedName("boundHelmetEarth");
-        boundPlateEarth = (OmegaArmour) new OmegaArmourEarth(1).setUnlocalizedName("boundPlateEarth");
-        boundLeggingsEarth = (OmegaArmour) new OmegaArmourEarth(2).setUnlocalizedName("boundLeggingsEarth");
-        boundBootsEarth = (OmegaArmour) new OmegaArmourEarth(3).setUnlocalizedName("boundBootsEarth");
+        boundHelmetEarth = new OmegaArmourEarth(0).setUnlocalizedName("boundHelmetEarth");
+        boundPlateEarth = new OmegaArmourEarth(1).setUnlocalizedName("boundPlateEarth");
+        boundLeggingsEarth = new OmegaArmourEarth(2).setUnlocalizedName("boundLeggingsEarth");
+        boundBootsEarth = new OmegaArmourEarth(3).setUnlocalizedName("boundBootsEarth");
         
-        boundHelmetWind = (OmegaArmour) new OmegaArmourWind(0).setUnlocalizedName("boundHelmetWind");
-        boundPlateWind = (OmegaArmour) new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
-        boundLeggingsWind = (OmegaArmour) new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
-        boundBootsWind = (OmegaArmour) new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
+        boundHelmetWind = new OmegaArmourWind(0).setUnlocalizedName("boundHelmetWind");
+        boundPlateWind = new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
+        boundLeggingsWind = new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
+        boundBootsWind = new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
         
         inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
         outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
