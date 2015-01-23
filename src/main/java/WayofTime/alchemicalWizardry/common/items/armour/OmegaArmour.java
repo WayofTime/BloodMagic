@@ -110,12 +110,15 @@ public abstract class OmegaArmour extends BoundArmour
 		return "alchemicalwizardry:models/armor/OmegaWater.png";
     }
 	
+	@SideOnly(Side.CLIENT)
 	public abstract ModelBiped getChestModel();
-	
+	@SideOnly(Side.CLIENT)
 	public abstract ModelBiped getLegsModel();
-
+	@SideOnly(Side.CLIENT)
 	ModelBiped model1 = null;
+	@SideOnly(Side.CLIENT)
     ModelBiped model2 = null;
+	@SideOnly(Side.CLIENT)
     ModelBiped model = null;
 
     @Override
