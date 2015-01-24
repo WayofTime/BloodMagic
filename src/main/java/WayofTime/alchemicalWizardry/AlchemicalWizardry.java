@@ -1176,8 +1176,8 @@ public class AlchemicalWizardry
 	    
 	    DemonVillageLootRegistry.init();
 	    
-//	    if(parseTextFiles)
-//	    	this.parseTextFile();
+	    if(parseTextFiles)
+	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
     }

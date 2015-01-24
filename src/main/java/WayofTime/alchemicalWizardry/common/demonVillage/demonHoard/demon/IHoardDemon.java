@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.api.Int3;
 
 public interface IHoardDemon 
 {

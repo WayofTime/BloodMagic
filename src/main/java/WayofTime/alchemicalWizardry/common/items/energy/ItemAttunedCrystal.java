@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.energy;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.api;
 
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.Int3;
 
 public class RoutingFocusPosAndFacing 
 {

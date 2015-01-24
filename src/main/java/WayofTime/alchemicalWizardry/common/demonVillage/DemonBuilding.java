@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage;
 
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
 public class DemonBuilding

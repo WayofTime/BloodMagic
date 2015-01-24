@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.api.Int3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;

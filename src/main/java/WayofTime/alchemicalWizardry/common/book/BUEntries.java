@@ -37,11 +37,12 @@ public class BUEntries
 
 	}
 	
-	public void initEntries(){
+	public void initEntries()
+	{
 		rIntro = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText()}, "Introduction", 1);
 		rWeakRituals = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText(), new EntryText()}, "Weak Rituals", 1);
 		rRituals = new Entry(new IEntry[]{new EntryText(), new EntryText(), new EntryText(), new EntryText()}, "Rituals", 1);
-
+		rRitualWater = this.getPureTextEntry(2, "Ritual of the Full Spring", 1);
 		
 		theAltar = new Entry(new IEntry[]{new EntryItemText(new ItemStack(ModBlocks.blockAltar), "Blood Altar")}, EnumChatFormatting.BLUE + "Blood Altar", 1);
 		runes = new Entry(new IEntry[]{new EntryItemText(new ItemStack(ModBlocks.runeOfSelfSacrifice)), new EntryItemText(new ItemStack(ModBlocks.runeOfSacrifice)), new EntryItemText(new ItemStack(ModBlocks.speedRune))}, "Runes", 1);
@@ -73,9 +74,21 @@ public class BUEntries
 		debug = new Entry(new IEntry[]{new EntryText("Debug"), new EntryImage("bloodutils:textures/misc/screenshots/t1.png", 854, 480, "Debug")}, EnumChatFormatting.AQUA + "De" + EnumChatFormatting.RED + "bug", 1);
 		registerEntries();
 	}
+	
+	public Entry getPureTextEntry(int numberOfPages, String name, int pageNumber)
+	{
+		IEntry[] entries = new IEntry[numberOfPages];
+		for(int i=0; i<numberOfPages; i++)
+		{
+			entries[i] = new EntryText();
+		}
+		return new Entry(entries, name, pageNumber);
+	}
+	
 	public static Entry rIntro;
 	public static Entry rWeakRituals;
-	public static Entry rRituals;	
+	public static Entry rRituals;
+	public static Entry rRitualWater;
 	
 	public static Entry theAltar;
 	public static Entry runes;
@@ -112,23 +125,22 @@ public class BUEntries
 		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rIntro);
 		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rWeakRituals);
 		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rRituals);
-
+		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.rRitualWater);		
 		
-		
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualWater);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualLava);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualGreenGrove);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualInterdiction);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualContainment);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualHighJump);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualSpeed);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualMagnet);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualCrusher);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualShepherd);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualRegeneration);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualFeatheredKnife);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualMoon);
-		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualSoul);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualWater);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualLava);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualGreenGrove);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualInterdiction);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualContainment);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualHighJump);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualSpeed);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualMagnet);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualCrusher);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualShepherd);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualRegeneration);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualFeatheredKnife);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualMoon);
+//		EntryRegistry.registerEntry(BUEntries.categoryRituals, EntryRegistry.rituals, BUEntries.ritualSoul);
 
 		/** Debug */
 		EntryRegistry.registerEntry(BUEntries.categoryBasics, EntryRegistry.basics, BUEntries.debug);

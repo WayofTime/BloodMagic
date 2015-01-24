@@ -16,7 +16,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IBlockPortalNode;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.ITilePortalNode;

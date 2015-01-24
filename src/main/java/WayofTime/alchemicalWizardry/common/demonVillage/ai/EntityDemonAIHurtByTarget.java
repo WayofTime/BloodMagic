@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage.ai;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.tileentity.TileEntity;
-import WayofTime.alchemicalWizardry.common.Int3;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 

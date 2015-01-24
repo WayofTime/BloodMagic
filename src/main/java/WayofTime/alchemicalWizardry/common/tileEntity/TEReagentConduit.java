@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.common.Int3;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;

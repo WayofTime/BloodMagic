@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.common;
+package WayofTime.alchemicalWizardry.api;
 
 import net.minecraft.nbt.NBTTagCompound;
 
