@@ -9,7 +9,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.IGrowable;
+import net.minecraftforge.block.IGrowable;
 
 import java.util.ArrayList;
 import java.util.List;
