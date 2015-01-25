@@ -20,6 +20,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
+
 import java.util.List;
 
 public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
@@ -191,7 +192,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
                         Block block = par2World.getBlock(ix, iy, iz);
 
 
-                        if (block instanceof IPlantable)
+                        if (block instanceof IPlantable || block instanceof IGrowable)
                         {
                             if (par2World.rand.nextInt(50) == 0)
                             {
