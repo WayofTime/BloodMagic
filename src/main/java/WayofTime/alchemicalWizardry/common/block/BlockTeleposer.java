@@ -190,7 +190,9 @@ public class BlockTeleposer extends BlockContainer
         int metaI = worldI.getBlockMetadata(xi, yi, zi);
         int metaF = worldF.getBlockMetadata(xf, yf, zf);
         
-        //TODO Teleposer event
+        TeleposeEvent evt = new TeleposeEvent(worldI, xi, yi, zi, blockI, metaI, worldF, xf, yf, zf, blockF, metaF);
+        if (MinecraftForge.EVENT_BUS.post(evt))
+            return false;
         
         worldI.playSoundEffect(xi, yi, zi, "mob.endermen.portal", 1.0F, 1.0F);
         worldF.playSoundEffect(xf, yf, zf, "mob.endermen.portal", 1.0F, 1.0F);
