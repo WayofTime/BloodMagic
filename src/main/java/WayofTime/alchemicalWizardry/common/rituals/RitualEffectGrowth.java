@@ -9,6 +9,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.IGrowable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class RitualEffectGrowth extends RitualEffect
                 {
                     Block block = world.getBlock(x + i, y + 2, z + j);
 
-                    if (block instanceof IPlantable)
+                    if (block instanceof IPlantable || block instanceof IGrowable)
                     {
                         {
                             SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
