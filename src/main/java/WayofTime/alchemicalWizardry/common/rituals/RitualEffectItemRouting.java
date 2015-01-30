@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.inventory.IInventory;
@@ -51,8 +53,26 @@ public class RitualEffectItemRouting extends RitualEffect
         {
         	return;
         }
-                
+        
+        Map<Int3, IInventory> tileMap = new HashMap();
+        
         IInventory bufferInventory = (IInventory)bufferTile;
+        
+        List<IInventory> outputList = new ArrayList();
+        for(int i=0; i<4; i++) //Check output foci chests, return if none available
+        {
+        	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
+        	TileEntity outputFocusInv = world.getTileEntity(x + outputFocusChest.xCoord, y + outputFocusChest.yCoord, z + outputFocusChest.zCoord);
+        	if(outputFocusInv instanceof IInventory)
+        	{
+        		outputList.add((IInventory)outputFocusInv);
+        	}
+        }
+        
+        if(outputList.isEmpty())
+        {
+        	return;
+        }
         
         for(int i=0; i<4; i++)
         {
@@ -60,17 +80,17 @@ public class RitualEffectItemRouting extends RitualEffect
         	TileEntity inputFocusInv = world.getTileEntity(x + inputFocusChest.xCoord, y + inputFocusChest.yCoord, z + inputFocusChest.zCoord);
         	if(inputFocusInv instanceof IInventory)
         	{
-        		for(int j=0; j<((IInventory) inputFocusInv).getSizeInventory(); j++)
+        		for(int ji=0; ji<((IInventory) inputFocusInv).getSizeInventory(); ji++) //Iterate through foci inventory
         		{
-        			ItemStack stack = ((IInventory) inputFocusInv).getStackInSlot(j);
-        			if(stack != null && stack.getItem() instanceof InputRoutingFocus)
+        			ItemStack inputFocusStack = ((IInventory) inputFocusInv).getStackInSlot(ji);
+        			if(inputFocusStack != null && inputFocusStack.getItem() instanceof InputRoutingFocus)
         			{
-        				InputRoutingFocus inputFocus = (InputRoutingFocus)stack.getItem();
-        				TileEntity inputChest = world.getTileEntity(inputFocus.xCoord(stack), inputFocus.yCoord(stack), inputFocus.zCoord(stack));
+        				InputRoutingFocus inputFocus = (InputRoutingFocus)inputFocusStack.getItem();
+        				TileEntity inputChest = world.getTileEntity(inputFocus.xCoord(inputFocusStack), inputFocus.yCoord(inputFocusStack), inputFocus.zCoord(inputFocusStack));
         				if(inputChest instanceof IInventory)
         				{
         					IInventory inputChestInventory = (IInventory)inputChest;
-        					ForgeDirection syphonDirection = inputFocus.getSetDirection(stack);
+        					ForgeDirection syphonDirection = inputFocus.getSetDirection(inputFocusStack);
         					boolean[] canSyphonList = new boolean[inputChestInventory.getSizeInventory()];
         					if(inputChest instanceof ISidedInventory)
         					{
@@ -81,33 +101,187 @@ public class RitualEffectItemRouting extends RitualEffect
         						}
         					}else
         					{
-        						for(int n=0; n<inputChestInventory.getSizeInventory(); n++)
+        						for(int ni=0; ni<inputChestInventory.getSizeInventory(); ni++)
         						{
-        							canSyphonList[n] = true;
+        							canSyphonList[ni] = true;
         						}
         					}
         					
-        					for(int n=0; n<inputChestInventory.getSizeInventory(); n++)
+        					for(int ni=0; ni<inputChestInventory.getSizeInventory(); ni++)
         					{
-        						if(canSyphonList[n])
+        						if(canSyphonList[ni])
         						{
-        							ItemStack syphonedStack = inputChestInventory.getStackInSlot(n);
+        							ItemStack syphonedStack = inputChestInventory.getStackInSlot(ni); //Has a syphoned item linked, next need to find a destination
         							if(syphonedStack == null)
         							{
         								continue;
         							}
-        							
+        							        							
         							int size = syphonedStack.stackSize;
-        							ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, bufferInventory, ForgeDirection.DOWN);
-        							if(size == newStack.stackSize)
-									{
-										continue;
-									}
-        							if(newStack != null && newStack.stackSize <= 0)
+        							
+        							for(IInventory outputFocusInventory : outputList)
         							{
-        								newStack = null;
+        								ItemStack stack = outputFocusInventory.getStackInSlot(0);
+        				    			if(stack != null && stack.getItem() instanceof OutputRoutingFocus) //TODO change to output routing focus
+        				    			{
+        				    				boolean transferEverything = true;
+        				    				for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+        				    				{
+        				    					if(outputFocusInventory.getStackInSlot(j) != null)
+        				    					{
+        				    						transferEverything = false;
+        				    						break;
+        				    					}
+        				    				}
+        				    				
+        				    				OutputRoutingFocus outputFocus = (OutputRoutingFocus)stack.getItem();
+        				    				
+        				    				RoutingFocusParadigm parad = new RoutingFocusParadigm();
+        				    				parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(stack));
+        				    				parad.addLogic(outputFocus.getLogic(stack.getItemDamage()));
+        				    				
+        				    				Int3 outputChestPos = new Int3(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack));
+        				    				TileEntity outputChest; //Destination
+        				    				if(tileMap.containsKey(outputChestPos))
+        				    				{
+        				    					outputChest = (TileEntity) tileMap.get(outputChestPos);
+        				    				}else
+        				    				{
+        				    					outputChest = world.getTileEntity(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack));
+        				    					if(outputChest instanceof IInventory)
+        				    					{
+        				    						tileMap.put(outputChestPos, (IInventory)outputChest);
+        				    					}
+        				    				}
+        									ForgeDirection inputDirection = outputFocus.getSetDirection(stack);
+        				    				
+//        				    				if(transferEverything)
+//        				    				{
+//        				        				if(outputChest instanceof IInventory)
+//        				        				{
+//        				        					IInventory outputChestInventory = (IInventory)outputChest;
+//        				        					
+//        				        					for(int n=0; n<bufferInventory.getSizeInventory(); n++)
+//        				        					{
+//        				    							ItemStack syphonedStack = bufferInventory.getStackInSlot(n);
+//        				    							if(syphonedStack == null)
+//        				    							{
+//        				    								continue;
+//        				    							}
+//        				    							int size = syphonedStack.stackSize;
+//        				    							ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
+//        				    							if(size == newStack.stackSize)
+//        												{
+//        													continue;
+//        												}
+//        				    							if(newStack != null && newStack.stackSize <= 0)
+//        				    							{
+//        				    								newStack = null;
+//        				    							}
+//        				    							bufferInventory.setInventorySlotContents(n, newStack);
+////        				        						break;
+//        				        					}
+//        				        				}
+//        				    				}else
+        				    				{
+        				    					if(!(outputChest instanceof IInventory))
+        				    					{
+        				    						continue;
+        				    					}
+        				    					
+        				    					IInventory outputChestInventory = (IInventory)outputChest;
+        				    					
+        				    					boolean lastItemWasFocus = true;
+        				    					
+        				    					for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+        				    					{
+        				    						ItemStack keyStack = outputFocusInventory.getStackInSlot(j);
+        				    						if(keyStack == null)
+        				    						{
+        				    							continue;	
+        				    						}
+        				    						
+        				    						if(keyStack.getItem() instanceof OutputRoutingFocus)
+        				    						{
+        				    							if(!lastItemWasFocus)
+        				    							{    							
+        				    								parad.clear();
+        				    							}
+        				    							
+        				    							outputFocus = (OutputRoutingFocus)keyStack.getItem();
+        				    							
+        				    							parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(keyStack));
+        				    							parad.addLogic(outputFocus.getLogic(keyStack.getItemDamage()));
+        				    							lastItemWasFocus = true;
+        				    							continue;
+        				    						}else
+        				    						{
+        				    							lastItemWasFocus = false;
+        				    						}
+        				    						
+        				    						for(RoutingFocusPosAndFacing posAndFacing : parad.locationList)
+        				    						{
+        				    							if(posAndFacing == null)
+        				    							{
+        				    								continue;
+        				    							}
+        				    							inputDirection = posAndFacing.facing;
+        				    							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord)))
+        				    							{
+        				    								outputChestPos = new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord);
+        				    								if(tileMap.containsKey(outputChestPos))
+        				    								{
+        				    									outputChest = (TileEntity) tileMap.get(outputChestPos);
+        				    								}else
+        				    								{
+            				    								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
+            				    								if(outputChest instanceof IInventory)
+            				    								{
+            				    									tileMap.put(outputChestPos, (IInventory)outputChest);
+            				    								}
+        				    								}
+        				    								if(outputChest instanceof IInventory)
+        				    								{
+        				    									outputChestInventory = (IInventory)outputChest;
+        				    								}else
+        				    								{
+        				    									continue;
+        				    								}
+        				    							}
+        				    								
+    				    								if(parad.doesItemMatch(keyStack, syphonedStack))
+    				    								{
+    				    									ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
+    				    									if(size == newStack.stackSize)
+    				    									{
+    				    										continue;
+    				    									}
+    				    									
+    				            							if(newStack != null && newStack.stackSize <= 0)
+    				            							{
+        				            							size = newStack.stackSize;
+    				            								newStack = null;
+    				            							}
+    				            							inputChestInventory.setInventorySlotContents(ni, newStack);
+//        				                					break;
+    				    								}
+        				    						}
+        				    					}
+        				    				}
+        				    			}
+        				        	
         							}
-        							inputChestInventory.setInventorySlotContents(n, newStack);
+        							
+//        							ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, bufferInventory, ForgeDirection.DOWN);
+//        							if(size == newStack.stackSize)
+//									{
+//										continue;
+//									}
+//        							if(newStack != null && newStack.stackSize <= 0)
+//        							{
+//        								newStack = null;
+//        							}
+//        							inputChestInventory.setInventorySlotContents(n, newStack);
 //        							break;
         						}
         					}
@@ -117,148 +291,148 @@ public class RitualEffectItemRouting extends RitualEffect
         	}
         }
         
-        for(int i=0; i<4; i++)
-        {
-        	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
-        	TileEntity outputFocusInv = world.getTileEntity(x + outputFocusChest.xCoord, y + outputFocusChest.yCoord, z + outputFocusChest.zCoord);
-        	if(outputFocusInv instanceof IInventory)
-        	{
-        		IInventory outputFocusInventory = (IInventory)outputFocusInv;
-    			ItemStack stack = ((IInventory) outputFocusInv).getStackInSlot(0);
-    			if(stack != null && stack.getItem() instanceof OutputRoutingFocus) //TODO change to output routing focus
-    			{
-    				boolean transferEverything = true;
-    				for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
-    				{
-    					if(outputFocusInventory.getStackInSlot(j) != null)
-    					{
-    						transferEverything = false;
-    						break;
-    					}
-    				}
-    				
-    				OutputRoutingFocus outputFocus = (OutputRoutingFocus)stack.getItem();
-    				
-    				RoutingFocusParadigm parad = new RoutingFocusParadigm();
-    				parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(stack));
-    				parad.addLogic(outputFocus.getLogic(stack.getItemDamage()));
-    				
-    				TileEntity outputChest = world.getTileEntity(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack)); //Destination
-					ForgeDirection inputDirection = outputFocus.getSetDirection(stack);
-    				
-    				if(transferEverything)
-    				{
-        				if(outputChest instanceof IInventory)
-        				{
-        					IInventory outputChestInventory = (IInventory)outputChest;
-        					
-        					for(int n=0; n<bufferInventory.getSizeInventory(); n++)
-        					{
-    							ItemStack syphonedStack = bufferInventory.getStackInSlot(n);
-    							if(syphonedStack == null)
-    							{
-    								continue;
-    							}
-    							int size = syphonedStack.stackSize;
-    							ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
-    							if(size == newStack.stackSize)
-								{
-									continue;
-								}
-    							if(newStack != null && newStack.stackSize <= 0)
-    							{
-    								newStack = null;
-    							}
-    							bufferInventory.setInventorySlotContents(n, newStack);
-//        						break;
-        					}
-        				}
-    				}else
-    				{
-    					if(!(outputChest instanceof IInventory))
-    					{
-    						continue;
-    					}
-    					
-    					IInventory outputChestInventory = (IInventory)outputChest;
-    					
-    					boolean lastItemWasFocus = true;
-    					
-    					for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
-    					{
-    						ItemStack keyStack = outputFocusInventory.getStackInSlot(j);
-    						if(keyStack == null)
-    						{
-    							continue;	
-    						}
-    						
-    						if(keyStack.getItem() instanceof OutputRoutingFocus)
-    						{
-    							if(!lastItemWasFocus)
-    							{    							
-    								parad.clear();
-    							}
-    							
-    							outputFocus = (OutputRoutingFocus)keyStack.getItem();
-    							
-    							parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(keyStack));
-    							parad.addLogic(outputFocus.getLogic(keyStack.getItemDamage()));
-    							lastItemWasFocus = true;
-    							continue;
-    						}else
-    						{
-    							lastItemWasFocus = false;
-    						}
-    						
-    						for(RoutingFocusPosAndFacing posAndFacing : parad.locationList)
-    						{
-    							if(posAndFacing == null)
-    							{
-    								continue;
-    							}
-    							inputDirection = posAndFacing.facing;
-    							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord)))
-    							{
-    								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
-    								if(outputChest instanceof IInventory)
-    								{
-    									outputChestInventory = (IInventory)outputChest;
-    								}else
-    								{
-    									continue;
-    								}
-    							}
-    							
-    							for(int n=0; n<bufferInventory.getSizeInventory(); n++)
-    							{
-    								ItemStack checkStack = bufferInventory.getStackInSlot(n);
-    								if(checkStack == null)
-    								{
-    									continue;
-    								}
-    								
-    								if(parad.doesItemMatch(keyStack, checkStack))
-    								{
-    									int size = checkStack.stackSize;
-    									ItemStack newStack = SpellHelper.insertStackIntoInventory(checkStack, outputChestInventory, inputDirection);
-    									if(size == newStack.stackSize)
-    									{
-    										continue;
-    									}
-            							if(newStack != null && newStack.stackSize <= 0)
-            							{
-            								newStack = null;
-            							}
-            							bufferInventory.setInventorySlotContents(n, newStack);
-//                						break;
-    								}
-    							}
-    						}
-    					}
-    				}
-    			}
-        	}
-        }
+//        for(int i=0; i<4; i++)
+//        {
+//        	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
+//        	TileEntity outputFocusInv = world.getTileEntity(x + outputFocusChest.xCoord, y + outputFocusChest.yCoord, z + outputFocusChest.zCoord);
+//        	if(outputFocusInv instanceof IInventory)
+//        	{
+//        		IInventory outputFocusInventory = (IInventory)outputFocusInv;
+//    			ItemStack stack = outputFocusInventory.getStackInSlot(0);
+//    			if(stack != null && stack.getItem() instanceof OutputRoutingFocus) //TODO change to output routing focus
+//    			{
+//    				boolean transferEverything = true;
+//    				for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+//    				{
+//    					if(outputFocusInventory.getStackInSlot(j) != null)
+//    					{
+//    						transferEverything = false;
+//    						break;
+//    					}
+//    				}
+//    				
+//    				OutputRoutingFocus outputFocus = (OutputRoutingFocus)stack.getItem();
+//    				
+//    				RoutingFocusParadigm parad = new RoutingFocusParadigm();
+//    				parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(stack));
+//    				parad.addLogic(outputFocus.getLogic(stack.getItemDamage()));
+//    				
+//    				TileEntity outputChest = world.getTileEntity(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack)); //Destination
+//					ForgeDirection inputDirection = outputFocus.getSetDirection(stack);
+//    				
+//    				if(transferEverything)
+//    				{
+//        				if(outputChest instanceof IInventory)
+//        				{
+//        					IInventory outputChestInventory = (IInventory)outputChest;
+//        					
+//        					for(int n=0; n<bufferInventory.getSizeInventory(); n++)
+//        					{
+//    							ItemStack syphonedStack = bufferInventory.getStackInSlot(n);
+//    							if(syphonedStack == null)
+//    							{
+//    								continue;
+//    							}
+//    							int size = syphonedStack.stackSize;
+//    							ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
+//    							if(size == newStack.stackSize)
+//								{
+//									continue;
+//								}
+//    							if(newStack != null && newStack.stackSize <= 0)
+//    							{
+//    								newStack = null;
+//    							}
+//    							bufferInventory.setInventorySlotContents(n, newStack);
+////        						break;
+//        					}
+//        				}
+//    				}else
+//    				{
+//    					if(!(outputChest instanceof IInventory))
+//    					{
+//    						continue;
+//    					}
+//    					
+//    					IInventory outputChestInventory = (IInventory)outputChest;
+//    					
+//    					boolean lastItemWasFocus = true;
+//    					
+//    					for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+//    					{
+//    						ItemStack keyStack = outputFocusInventory.getStackInSlot(j);
+//    						if(keyStack == null)
+//    						{
+//    							continue;	
+//    						}
+//    						
+//    						if(keyStack.getItem() instanceof OutputRoutingFocus)
+//    						{
+//    							if(!lastItemWasFocus)
+//    							{    							
+//    								parad.clear();
+//    							}
+//    							
+//    							outputFocus = (OutputRoutingFocus)keyStack.getItem();
+//    							
+//    							parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(keyStack));
+//    							parad.addLogic(outputFocus.getLogic(keyStack.getItemDamage()));
+//    							lastItemWasFocus = true;
+//    							continue;
+//    						}else
+//    						{
+//    							lastItemWasFocus = false;
+//    						}
+//    						
+//    						for(RoutingFocusPosAndFacing posAndFacing : parad.locationList)
+//    						{
+//    							if(posAndFacing == null)
+//    							{
+//    								continue;
+//    							}
+//    							inputDirection = posAndFacing.facing;
+//    							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord)))
+//    							{
+//    								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
+//    								if(outputChest instanceof IInventory)
+//    								{
+//    									outputChestInventory = (IInventory)outputChest;
+//    								}else
+//    								{
+//    									continue;
+//    								}
+//    							}
+//    							
+//    							for(int n=0; n<bufferInventory.getSizeInventory(); n++)
+//    							{
+//    								ItemStack checkStack = bufferInventory.getStackInSlot(n);
+//    								if(checkStack == null)
+//    								{
+//    									continue;
+//    								}
+//    								
+//    								if(parad.doesItemMatch(keyStack, checkStack))
+//    								{
+//    									int size = checkStack.stackSize;
+//    									ItemStack newStack = SpellHelper.insertStackIntoInventory(checkStack, outputChestInventory, inputDirection);
+//    									if(size == newStack.stackSize)
+//    									{
+//    										continue;
+//    									}
+//            							if(newStack != null && newStack.stackSize <= 0)
+//            							{
+//            								newStack = null;
+//            							}
+//            							bufferInventory.setInventorySlotContents(n, newStack);
+////                						break;
+//    								}
+//    							}
+//    						}
+//    					}
+//    				}
+//    			}
+//        	}
+//        }
     }
     
     public Int3 getInputBufferChestLocation(int number)

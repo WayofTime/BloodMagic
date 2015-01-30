@@ -35,4 +35,10 @@ public class Int3
     {
         return o instanceof Int3 ? ((Int3) o).xCoord == this.xCoord && ((Int3) o).yCoord == this.yCoord && ((Int3) o).zCoord == this.zCoord : false;
     }
+    
+    @Override
+    public int hashCode()
+    {
+        return this.xCoord + this.yCoord << 8 + this.zCoord << 16;
+    }
 }

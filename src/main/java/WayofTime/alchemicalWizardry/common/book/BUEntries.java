@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.book;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -41,9 +44,10 @@ public class BUEntries
 	
 	public void initEntries()
 	{
+		HashMap<Integer, IEntry> aIntroMap = new HashMap();
+		aIntroMap.put(0, new EntryImage("bloodutils:textures/misc/screenshots/t1.png", 854, 480));
 		/* The Architect */
-		
-		aIntro = this.getPureTextEntry(5, "Your classic tragic backstory", 1);
+		aIntro = this.getMixedTextEntry(6, "Your classic tragic backstory", 1, aIntroMap);
 		aBloodAltar = this.getPureTextEntry(3, "The Blood Altar", 1);
 		aSoulNetwork = this.getPureTextEntry(3, "The Soul Network", 1);
 		aBasicsOfSigils = this.getPureTextEntry(4, "Basics of sigils and a glimpse into the soul", 1);
@@ -139,6 +143,25 @@ public class BUEntries
 		{
 			entries[i] = new EntryText();
 		}
+		return new Entry(entries, name, pageNumber);
+	}
+	
+	public Entry getMixedTextEntry(int numberOfPages, String name, int pageNumber, Map<Integer, IEntry> map)
+	{
+		IEntry[] entries = new IEntry[numberOfPages];
+		for(int i=0; i<numberOfPages; i++)
+		{
+			entries[i] = new EntryText();
+		}
+		
+		for(Map.Entry<Integer, IEntry> ent : map.entrySet())
+		{
+			if(ent.getKey() < entries.length)
+			{
+				entries[ent.getKey()] = ent.getValue();
+			}
+		}
+		
 		return new Entry(entries, name, pageNumber);
 	}
 	

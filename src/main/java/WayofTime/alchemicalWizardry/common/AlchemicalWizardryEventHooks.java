@@ -685,8 +685,18 @@ public class AlchemicalWizardryEventHooks
 	}
 
 	@Optional.Method(modid = "Botania")
-	private boolean isManaBurst(Entity projectile)
+	private boolean isManaBurst(Entity entity)
 	{
-		return projectile instanceof IManaBurst;
+		if(entity instanceof IManaBurst) {
+            ItemStack lens = ((IManaBurst)entity).getSourceLens();
+            if(lens.getItemDamage()!=8 && lens.getItemDamage()!=11)
+                return false;
+            else
+                return true;
+        }
+        else
+            return false;
+
+
 	}
 }

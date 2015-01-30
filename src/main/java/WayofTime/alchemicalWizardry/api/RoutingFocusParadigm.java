@@ -11,6 +11,8 @@ public class RoutingFocusParadigm
 	
 	public List<RoutingFocusPosAndFacing> locationList = new LinkedList();
 	
+	public int maximumAmount = 0;
+	
 	public void addRoutingFocusPosAndFacing(RoutingFocusPosAndFacing facing)
 	{
 		locationList.add(facing);
@@ -37,5 +39,15 @@ public class RoutingFocusParadigm
 	{
 		logicList.clear();
 		locationList.clear();
+	}
+	
+	public void setMaximumAmount(int amt)
+	{
+		this.maximumAmount = amt;
+	}
+	
+	public int getMaximumAmount()
+	{
+		return this.maximumAmount;
 	}
 }

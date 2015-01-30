@@ -49,7 +49,7 @@ public class EntryImage implements IEntry{
 		if(this.entryName == null)
 			this.entryName = key;
 		
-		String s = StatCollector.translateToLocal("bu.entry." + this.entryName + "." + page);
+		String s = StatCollector.translateToLocal("aw.entry." + this.entryName + "." + page);
 		x = left + width / 2 - 58;
 		y = (top + 15) + 65;
 

@@ -1508,8 +1508,8 @@ public class AlchemicalWizardry
         			String strLine;
         			//Read File Line By Line
         			
-        			int maxWidth = 25;
-        			int maxLines = 16;
+        			int defMaxLines = 16;
+        			int maxLines = defMaxLines;
         			
         			int currentPage = 0;
         			
@@ -1546,6 +1546,31 @@ public class AlchemicalWizardry
     						currentTitle = "aw.entry." + title;
     						
         					continue;
+        				}else if(strLine.startsWith("//SPECIAL "))
+        				{
+        					if(strings[currentPage].isEmpty())
+        					{
+        						String lines = strLine.replaceFirst("//SPECIAL ", "");
+        						Integer ln = Integer.decode(lines);
+        						if(ln != null)
+        						{
+            						maxLines = ln;
+        						}
+        					}else
+        					{
+        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
+        						for(int i=0; i<strings.length; i++)
+        						{
+        							newStrings[i] = strings[i];
+        						}
+        						
+        						currentPage++;
+        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
+        						newStrings[currentPage] = "";
+        						strings = newStrings;
+        					}
+        					
+        					continue;
         				}
         				
         				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
@@ -1568,12 +1593,6 @@ public class AlchemicalWizardry
         					word = word.replace('\t', ' ');
         					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
 
-//        					if(currentWidth != 0 && currentWidth + length + 1 > maxWidth)
-//        					{
-//        						currentLine++;
-//        						currentWidth = 0;
-//        					}
-        					//if(currentLine > maxLines)
         					if(list.size() > maxLines)
         					{
         						changePage = true;
@@ -1593,7 +1612,9 @@ public class AlchemicalWizardry
         						strings = newStrings;
         						
         						pageIndex++;
-
+        						
+        						maxLines = defMaxLines;
+        						
         						changePage = false;
         					}else
         					{
