@@ -39,6 +39,7 @@ public class EntryRegistry
 	public static HashMap<Category, Integer> maxEntries = new HashMap<Category, Integer>();
 	
 	
+	public static HashMap<String, Entry> architect = new HashMap<String, Entry>();
 	public static HashMap<String, Entry> basics = new HashMap<String, Entry>();
 	public static HashMap<String, Entry> rituals = new HashMap<String, Entry>();
 	public static HashMap<String, Entry> bloodUtils = new HashMap<String, Entry>();

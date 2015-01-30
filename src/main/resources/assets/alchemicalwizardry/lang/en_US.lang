@@ -201,6 +201,7 @@ item.itemHarvestSigil.name=Harvest Goddess Sigil
 item.itemCompressionSigil.name=Sigil of Compression
 item.itemAssassinSigil.name=Sigil of the Assassin
 item.transcendentBloodOrb.name=Transcendent Blood Orb
+item.itemMailCatalogue.name=Mail Order Catalogue
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

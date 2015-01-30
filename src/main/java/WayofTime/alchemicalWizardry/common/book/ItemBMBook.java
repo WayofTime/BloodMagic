@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.mob.BookEntityItem;
 
 public class ItemBMBook extends Item
 {
@@ -47,4 +48,15 @@ public class ItemBMBook extends Item
     		stack.setTagCompound(new NBTTagCompound());
     }
 
+    @Override
+    public boolean hasCustomEntity(ItemStack stack)
+	{
+		return true;
+	}
+
+    @Override
+	public Entity createEntity(World world, Entity location, ItemStack itemstack)
+	{
+		return new BookEntityItem(world, location, itemstack);
+	}
 }
