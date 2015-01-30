@@ -372,6 +372,8 @@ public class AlchemicalWizardry
 	public static boolean ritualDisabledVeilOfEvil;
 	public static boolean ritualDisabledFullStomach;
 
+    public static String[] teleposerBlacklist;
+
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     public static boolean isBotaniaLoaded;
@@ -1548,7 +1550,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				strLine = strLine.replace('”', '"').replace('“','"');
+        				strLine = strLine.replace('ï¿½', '"').replace('ï¿½','"');
         				
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{

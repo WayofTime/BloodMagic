@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -672,6 +674,29 @@ public class AlchemicalWizardryEventHooks
 			if (entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFireFuse).getDuration() <= 2)
 			{
 				entityLiving.worldObj.createExplosion(null, x, y, z, radius, false);
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onTelepose(TeleposeEvent event) {
+		for (int i = 0; i < AlchemicalWizardry.teleposerBlacklist.length; i++) {
+			String[] blockData = AlchemicalWizardry.teleposerBlacklist[i].split(":");
+
+			if (blockData.length == 3) {
+
+				Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+				int meta;
+
+				// Check if it's an int, if so, parse it. If not, set to 0 to avoid crashing.
+				if (blockData[2].matches("-?\\d+"))
+					meta = Integer.parseInt(blockData[2]);
+				else
+					meta = 0;
+
+				if (block != null)
+					if ((event.initialBlock == block || event.finalBlock == block) && (event.initialMetadata == meta || event.finalMetadata == meta))
+						event.setCanceled(true);
 			}
 		}
 	}
