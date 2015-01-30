@@ -43,5 +43,13 @@ public class TeleposeEvent extends Event {
     finalBlock = bf;
     finalMetadata = mf;
   }
+  
+  public TileEntity getInitialTile() {
+    return initialWorld.getTileEntity(initialX, initialY, initialZ);
+  }
+  
+  public TileEntity getFinalTile() {
+    return finalWorld.getTileEntity(finalX, finalY, finalZ);
+  }
 
 }
