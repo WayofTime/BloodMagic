@@ -13,5 +13,7 @@ public class MineTweakerIntegration
         MineTweakerAPI.registerClass(Binding.class);
         MineTweakerAPI.registerClass(BloodAltar.class);
         MineTweakerAPI.registerClass(BloodOrb.class);
+        MineTweakerAPI.registerClass(FallingTower.class);
+        MineTweakerAPI.registerClass(HarvestMoon.class);
     }
 }
