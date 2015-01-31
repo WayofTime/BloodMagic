@@ -54,8 +54,10 @@ public class LavaCrystal extends EnergyItems
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-        int damage = this.getDamage(par1ItemStack);
+        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        {
+            int damage = this.getDamage(par1ItemStack);
+        }
         return par1ItemStack;
     }
 

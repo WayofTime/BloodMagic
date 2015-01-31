@@ -55,7 +55,11 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        {
+            return par1ItemStack;
+        }
+
         World world = par3EntityPlayer.worldObj;
         
         if (world != null)

@@ -96,9 +96,7 @@ public class SigilOfElementalAffinity extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }

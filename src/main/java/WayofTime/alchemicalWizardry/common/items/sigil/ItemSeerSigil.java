@@ -46,9 +46,7 @@ public class ItemSeerSigil extends Item implements IHolding, ArmourUpgrade
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (par3EntityPlayer.worldObj.isRemote)
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.worldObj.isRemote)
         {
             return par1ItemStack;
         }

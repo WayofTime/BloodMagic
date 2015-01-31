@@ -259,9 +259,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             int maxRitualID = Rituals.getNumberOfRituals();
             String currentRitualID = this.getCurrentRitual(par1ItemStack);

@@ -379,22 +379,22 @@ public class SoulNetworkHandler
         }
     }
 
-    public static void checkAndSetItemOwner(ItemStack item, EntityPlayer player)
+    public static boolean checkAndSetItemOwner(ItemStack item, EntityPlayer player)
     {
-        if (item.getTagCompound() == null)
-        {
-            item.setTagCompound(new NBTTagCompound());
-        }
+        if (item.hasTagCompound() && !item.getTagCompound().getString("ownerName").equals("")) return true;
 
-        if (item.getTagCompound().getString("ownerName").equals(""))
+        ItemBindEvent event = new ItemBindEvent(player, SoulNetworkHandler.getUsername(player), item);
+
+        if(!MinecraftForge.EVENT_BUS.post(event))
         {
-        	ItemBindEvent event = new ItemBindEvent(player, SoulNetworkHandler.getUsername(player), item);
-        	
-        	if(!MinecraftForge.EVENT_BUS.post(event))
-        	{
-                item.getTagCompound().setString("ownerName", event.key);
-        	}
+            if (!item.hasTagCompound())
+            {
+                item.setTagCompound(new NBTTagCompound());
+            }
+            item.getTagCompound().setString("ownerName", event.key);
+            return true;
         }
+        return false;
     }
 
     public static void checkAndSetItemOwner(ItemStack item, String ownerName)

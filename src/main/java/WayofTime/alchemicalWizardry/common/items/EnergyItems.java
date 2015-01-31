@@ -184,9 +184,10 @@ public class EnergyItems extends Item implements IBindable
     }
 
     //Global static methods
-    public static void checkAndSetItemOwner(ItemStack item, EntityPlayer player)
+    public static boolean checkAndSetItemOwner(ItemStack item, EntityPlayer player)
     {
-        SoulNetworkHandler.checkAndSetItemOwner(item, player);
+        if (SpellHelper.isFakePlayer(player)) return false;
+        return SoulNetworkHandler.checkAndSetItemOwner(item, player);
     }
 
     public static void setItemOwner(ItemStack item, String ownerName)
