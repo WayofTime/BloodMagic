@@ -22,6 +22,7 @@ import org.lwjgl.input.Keyboard;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IRitualDiviner;
 import WayofTime.alchemicalWizardry.api.rituals.IRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
@@ -29,7 +30,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemRitualDiviner extends EnergyItems
+public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
 {
     private int maxMetaData;
 
@@ -302,6 +303,7 @@ public class ItemRitualDiviner extends EnergyItems
         return false;
     }
 
+    @Override
     public String getCurrentRitual(ItemStack par1ItemStack)
     {
         if (par1ItemStack.getTagCompound() == null)
@@ -312,6 +314,7 @@ public class ItemRitualDiviner extends EnergyItems
         return par1ItemStack.getTagCompound().getString("ritualID");
     }
 
+    @Override
     public void setCurrentRitual(ItemStack par1ItemStack, String ritualID)
     {
         if (par1ItemStack.getTagCompound() == null)
@@ -322,6 +325,7 @@ public class ItemRitualDiviner extends EnergyItems
         par1ItemStack.getTagCompound().setString("ritualID", ritualID);
     }
 
+    @Override
     public int getMaxRuneDisplacement(ItemStack par1ItemStack) //0 indicates the starting 4 runes, 1 indicates it can use Dusk runes
     {
         if (par1ItemStack.getTagCompound() == null)
@@ -332,6 +336,7 @@ public class ItemRitualDiviner extends EnergyItems
         return par1ItemStack.getTagCompound().getInteger("maxRuneDisplacement");
     }
 
+    @Override
     public void setMaxRuneDisplacement(ItemStack par1ItemStack, int displacement)
     {
         if (par1ItemStack.getTagCompound() == null)
@@ -352,6 +357,7 @@ public class ItemRitualDiviner extends EnergyItems
         list.add(duskRitualDivinerStack);
     }
     
+    @Override
     public int getDirection(ItemStack itemStack)
     {
     	if(itemStack.getTagCompound() == null)
@@ -362,6 +368,7 @@ public class ItemRitualDiviner extends EnergyItems
     	return itemStack.getTagCompound().getInteger("direction");
     }
     
+    @Override
     public void setDirection(ItemStack itemStack, int direction)
     {
     	if(itemStack.getTagCompound() == null)
@@ -372,6 +379,7 @@ public class ItemRitualDiviner extends EnergyItems
     	itemStack.getTagCompound().setInteger("direction", direction);
     }
     
+    @Override
     public int cycleDirection(ItemStack itemStack)
     {
     	int direction = this.getDirection(itemStack);
@@ -389,6 +397,7 @@ public class ItemRitualDiviner extends EnergyItems
     	return direction;
     }
     
+    @Override
     public String getNameForDirection(int direction)
     {
     	String dir = "";
