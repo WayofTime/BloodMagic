@@ -18,7 +18,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -190,7 +189,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
             var16.setBlockBoundsBasedOnState(worldObj, xTile, yTile, zTile);
             AxisAlignedBB var2 = var16.getCollisionBoundingBoxFromPool(worldObj, xTile, yTile, zTile);
 
-            if (var2 != null && var2.isVecInside(SpellHelper.createVec3(posX, posY, posZ)))
+            if (var2 != null && var2.isVecInside(APISpellHelper.createVec3(posX, posY, posZ)))
             {
                 inGround = true;
             }
@@ -219,15 +218,15 @@ public class EntitySpellProjectile extends Entity implements IProjectile
                 }
             }
 
-            Vec3 var17 = SpellHelper.createVec3(posX, posY, posZ);
-            Vec3 var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
+            Vec3 var17 = APISpellHelper.createVec3(posX, posY, posZ);
+            Vec3 var3 = APISpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
             MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
-            var17 = SpellHelper.createVec3(posX, posY, posZ);
-            var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
+            var17 = APISpellHelper.createVec3(posX, posY, posZ);
+            var3 = APISpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
 
             if (var4 != null)
             {
-                var3 = SpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
+                var3 = APISpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
             }
 
             Entity var5 = null;
