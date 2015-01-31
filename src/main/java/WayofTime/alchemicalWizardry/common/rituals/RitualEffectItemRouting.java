@@ -47,16 +47,16 @@ public class RitualEffectItemRouting extends RitualEffect
         int yBufOffset = 1;
         int zBufOffset = 0;
         
-        TileEntity bufferTile = world.getTileEntity(x + xBufOffset, y + yBufOffset, z + zBufOffset);
-        
-        if(!(bufferTile instanceof IInventory))
-        {
-        	return;
-        }
+//        TileEntity bufferTile = world.getTileEntity(x + xBufOffset, y + yBufOffset, z + zBufOffset);
+//        
+//        if(!(bufferTile instanceof IInventory))
+//        {
+//        	return;
+//        }
         
         Map<Int3, IInventory> tileMap = new HashMap();
         
-        IInventory bufferInventory = (IInventory)bufferTile;
+//        IInventory bufferInventory = (IInventory)bufferTile;
         
         List<IInventory> outputList = new ArrayList();
         for(int i=0; i<4; i++) //Check output foci chests, return if none available
@@ -112,7 +112,7 @@ public class RitualEffectItemRouting extends RitualEffect
         						if(canSyphonList[ni])
         						{
         							ItemStack syphonedStack = inputChestInventory.getStackInSlot(ni); //Has a syphoned item linked, next need to find a destination
-        							if(syphonedStack == null)
+        							if(syphonedStack == null || (inputChestInventory instanceof ISidedInventory && !((ISidedInventory)inputChestInventory).canExtractItem(ni, syphonedStack, syphonDirection.ordinal())))
         							{
         								continue;
         							}
@@ -121,39 +121,27 @@ public class RitualEffectItemRouting extends RitualEffect
         							
         							for(IInventory outputFocusInventory : outputList)
         							{
-        								ItemStack stack = outputFocusInventory.getStackInSlot(0);
-        				    			if(stack != null && stack.getItem() instanceof OutputRoutingFocus) //TODO change to output routing focus
+        								//ItemStack stack = outputFocusInventory.getStackInSlot(0);
+        				    			//if(stack != null && stack.getItem() instanceof OutputRoutingFocus) //TODO change to output routing focus
         				    			{
-        				    				boolean transferEverything = true;
-        				    				for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
-        				    				{
-        				    					if(outputFocusInventory.getStackInSlot(j) != null)
-        				    					{
-        				    						transferEverything = false;
-        				    						break;
-        				    					}
-        				    				}
+//        				    				boolean transferEverything = true;
+//        				    				for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+//        				    				{
+//        				    					if(outputFocusInventory.getStackInSlot(j) != null)
+//        				    					{
+//        				    						transferEverything = false;
+//        				    						break;
+//        				    					}
+//        				    				}
         				    				
-        				    				OutputRoutingFocus outputFocus = (OutputRoutingFocus)stack.getItem();
+        				    				OutputRoutingFocus outputFocus;;
         				    				
         				    				RoutingFocusParadigm parad = new RoutingFocusParadigm();
-        				    				parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(stack));
-        				    				parad.addLogic(outputFocus.getLogic(stack.getItemDamage()));
+//        				    				parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(stack));
+//        				    				parad.addLogic(outputFocus.getLogic(stack.getItemDamage()));
         				    				
-        				    				Int3 outputChestPos = new Int3(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack));
-        				    				TileEntity outputChest; //Destination
-        				    				if(tileMap.containsKey(outputChestPos))
-        				    				{
-        				    					outputChest = (TileEntity) tileMap.get(outputChestPos);
-        				    				}else
-        				    				{
-        				    					outputChest = world.getTileEntity(outputFocus.xCoord(stack), outputFocus.yCoord(stack), outputFocus.zCoord(stack));
-        				    					if(outputChest instanceof IInventory)
-        				    					{
-        				    						tileMap.put(outputChestPos, (IInventory)outputChest);
-        				    					}
-        				    				}
-        									ForgeDirection inputDirection = outputFocus.getSetDirection(stack);
+        				    				TileEntity outputChest = null; //Destination
+        									ForgeDirection inputDirection;;
         				    				
 //        				    				if(transferEverything)
 //        				    				{
@@ -184,16 +172,16 @@ public class RitualEffectItemRouting extends RitualEffect
 //        				        				}
 //        				    				}else
         				    				{
-        				    					if(!(outputChest instanceof IInventory))
-        				    					{
-        				    						continue;
-        				    					}
+//        				    					if(!(outputChest instanceof IInventory))
+//        				    					{
+//        				    						continue;
+//        				    					}
         				    					
-        				    					IInventory outputChestInventory = (IInventory)outputChest;
+        				    					IInventory outputChestInventory = null;
         				    					
         				    					boolean lastItemWasFocus = true;
         				    					
-        				    					for(int j=1; j<outputFocusInventory.getSizeInventory(); j++)
+        				    					for(int j=0; j<outputFocusInventory.getSizeInventory(); j++)
         				    					{
         				    						ItemStack keyStack = outputFocusInventory.getStackInSlot(j);
         				    						if(keyStack == null)
@@ -228,18 +216,7 @@ public class RitualEffectItemRouting extends RitualEffect
         				    							inputDirection = posAndFacing.facing;
         				    							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord)))
         				    							{
-        				    								outputChestPos = new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord);
-        				    								if(tileMap.containsKey(outputChestPos))
-        				    								{
-        				    									outputChest = (TileEntity) tileMap.get(outputChestPos);
-        				    								}else
-        				    								{
-            				    								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
-            				    								if(outputChest instanceof IInventory)
-            				    								{
-            				    									tileMap.put(outputChestPos, (IInventory)outputChest);
-            				    								}
-        				    								}
+        				    								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
         				    								if(outputChest instanceof IInventory)
         				    								{
         				    									outputChestInventory = (IInventory)outputChest;
@@ -486,4 +463,6 @@ public class RitualEffectItemRouting extends RitualEffect
 
         return omegaRitual;
     }
+    
+    
 }

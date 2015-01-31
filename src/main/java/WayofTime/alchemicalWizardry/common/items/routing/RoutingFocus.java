@@ -6,13 +6,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
 import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
 
 public class RoutingFocus extends Item
@@ -151,5 +152,36 @@ public class RoutingFocus extends Item
         {
             return 0;
         }
+    }
+    
+    public RoutingFocusLogic getLogic(int damage)
+	{
+		return new RoutingFocusLogic();
+	}
+    
+    public int getDefaultStackLimit(int damage)
+    {
+    	return 0;
+    }
+    
+    public int getStackLimitAmount(ItemStack itemStack)
+    {
+    	if (!(itemStack.getTagCompound() == null))
+        {
+            return itemStack.getTagCompound().getInteger("stackLimit");
+        } else
+        {
+            return getDefaultStackLimit(itemStack.getItemDamage());
+        }
+    }
+    
+    public void setStackLimitAmount(ItemStack itemStack, int amt)
+    {
+    	if ((itemStack.getTagCompound() == null))
+        {
+            itemStack.setTagCompound(new NBTTagCompound());   
+        }
+    	
+    	itemStack.getTagCompound().setInteger("stackLimit", amt);
     }
 }

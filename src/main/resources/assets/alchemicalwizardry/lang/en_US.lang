@@ -202,6 +202,11 @@ item.itemCompressionSigil.name=Sigil of Compression
 item.itemAssassinSigil.name=Sigil of the Assassin
 item.transcendentBloodOrb.name=Transcendent Blood Orb
 item.itemMailCatalogue.name=Mail Order Catalogue
+item.inputRoutingFocus.name=Input Routing Focus
+item.outputRoutingFocus.default.name=Default Output Routing Focus
+item.outputRoutingFocus.modItem.name=Output Routing Focus (ModItem)
+item.outputRoutingFocus.ignMeta.name=Output Routing Focus (Ignore Meta)
+item.outputRoutingFocus.matchNBT.name=Output Routing Focus (MatchNBT)
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

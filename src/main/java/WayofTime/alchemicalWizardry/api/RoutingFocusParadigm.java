@@ -26,10 +26,16 @@ public class RoutingFocusParadigm
 	public boolean doesItemMatch(ItemStack keyStack, ItemStack checkedStack)
 	{
 		boolean isGood = false;
+		boolean isFirst = true;
 		for(RoutingFocusLogic logic : logicList)
 		{
+			if(isFirst)
+			{
+				isGood = logic.getDefaultMatch(keyStack, checkedStack);
+				isFirst = false;
+				continue;
+			}
 			isGood = logic.doesItemMatch(isGood, keyStack, checkedStack);
-			if(isGood){return true;}
 		}
 		
 		return isGood;

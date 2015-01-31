@@ -1,6 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.routing;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
@@ -52,11 +56,28 @@ public class OutputRoutingFocus extends RoutingFocus
 		case 1:
 			addedString = "modItem";
 			break;
+		case 2:
+			addedString = "ignMeta";
+			break;
+		case 3:
+			addedString = "matchNBT";
+			break;
 		}
 		
 		return super.getUnlocalizedName() + "." + addedString;
 	}
 	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item id, CreativeTabs creativeTab, List list)
+    {
+        for (int meta = 0; meta < 4; ++meta)
+        {
+            list.add(new ItemStack(id, 1, meta));
+        }
+    }
+	
+	@Override
 	public RoutingFocusLogic getLogic(int damage)
 	{
 		switch(damage)

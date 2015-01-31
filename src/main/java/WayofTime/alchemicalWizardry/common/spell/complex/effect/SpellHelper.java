@@ -519,7 +519,7 @@ public class SpellHelper
         	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
         	for(int in : array)
         	{
-        		canBeInserted[in] = true;
+        		canBeInserted[in] = ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
         	}
         }else
         {
