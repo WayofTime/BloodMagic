@@ -16,7 +16,6 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class APISpellHelper 
 {
