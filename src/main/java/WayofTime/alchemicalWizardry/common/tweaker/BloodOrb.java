@@ -6,6 +6,7 @@ import static WayofTime.alchemicalWizardry.common.tweaker.MTHelper.toStack;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IIngredient;
@@ -51,7 +52,7 @@ public class BloodOrb
         @Override
         public void apply() 
         {
-            if (isShapeless) iRecipe = new ShapedBloodOrbRecipe(output, recipe);
+            if (isShapeless) iRecipe = new ShapelessBloodOrbRecipe(output, recipe);
             else iRecipe = new ShapedBloodOrbRecipe(output, recipe);
             CraftingManager.getInstance().getRecipeList().add(iRecipe);
         }
@@ -105,7 +106,7 @@ public class BloodOrb
         {
             for (IRecipe r : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) 
             {
-                if(r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(output)) {
+                if((r instanceof ShapedBloodOrbRecipe || r instanceof ShapelessBloodOrbRecipe) && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(output)) {
                     iRecipe = r;
                     break;
                 }
