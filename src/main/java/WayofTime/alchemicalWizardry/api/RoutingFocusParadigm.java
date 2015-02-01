@@ -45,6 +45,7 @@ public class RoutingFocusParadigm
 	{
 		logicList.clear();
 		locationList.clear();
+		maximumAmount = 0;
 	}
 	
 	public void setMaximumAmount(int amt)
