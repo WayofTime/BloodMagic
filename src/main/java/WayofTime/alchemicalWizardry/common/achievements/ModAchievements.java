@@ -14,7 +14,7 @@ public class ModAchievements
 
     public static void init()
     {
-        firstPrick = new AchievementsMod(StatCollector.translateToLocal("achievements.firstPrick"), 0, 0, ModItems.sacrificialDagger, firstPrick);
+        firstPrick = new AchievementsMod(StatCollector.translateToLocal("achievement.firstPrick"), 0, 0, ModItems.sacrificialDagger, firstPrick);
 
         alchemicalWizardryPage = new AchievementPage("AlchemicalWizardry", AchievementsMod.achievements.toArray(new Achievement[AchievementsMod.achievements.size()]));
         AchievementPage.registerAchievementPage(alchemicalWizardryPage);
