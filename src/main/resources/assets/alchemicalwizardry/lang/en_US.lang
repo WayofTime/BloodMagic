@@ -415,3 +415,6 @@ message.ritualdemonportal.missingjar=A jar on one of the pillars appears to be m
 message.tanksegmenter.nowhas=Tank now has
 message.tanksegmenter.setto=Tank Segmenter now set to:
 message.tanksegmenter.tankssetto=tank(s) set to:
+
+#Achievements
+achievement.firstPrick=Your first prick!
