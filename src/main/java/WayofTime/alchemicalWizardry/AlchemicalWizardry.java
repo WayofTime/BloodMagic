@@ -69,6 +69,7 @@ import WayofTime.alchemicalWizardry.common.LifeBucketHandler;
 import WayofTime.alchemicalWizardry.common.LifeEssence;
 import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
@@ -545,6 +546,7 @@ public class AlchemicalWizardry
         MinecraftForge.EVENT_BUS.register(eventHook);
         NewPacketHandler.INSTANCE.ordinal();
         ClientToServerPacketHandler.init();
+        ModAchievements.init();
     }
 
     @EventHandler
@@ -1574,7 +1576,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
+        				strLine = strLine.replace('Â”', '"').replace('Â“','"').replace("Â…", "...").replace('Â’', '\'').replace('Â–', '-');
         				
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{
