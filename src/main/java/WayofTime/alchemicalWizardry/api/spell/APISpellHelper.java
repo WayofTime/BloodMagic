@@ -19,9 +19,26 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 
 public class APISpellHelper 
 {
+	/**
+	 * Thanks Kihira! <3
+	 * @param player
+	 * @return persistent data tag
+	 */
+	private static NBTTagCompound getPersistentDataTag(EntityPlayer player) 
+	{ 
+		NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG); 
+        NBTTagCompound beaconData = forgeData.getCompoundTag("BloodMagic"); 
+
+        //Creates/sets the tags if they don't exist 
+        if (!forgeData.hasKey("BloodMagic")) forgeData.setTag("BloodMagic", beaconData); 
+        if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG)) player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData); 
+
+        return beaconData; 
+	} 
+	
 	public static int getPlayerLPTag(EntityPlayer player)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		if(data.hasKey("BM:StoredLP"))
 		{
 			return data.getInteger("BM:StoredLP");
@@ -32,13 +49,13 @@ public class APISpellHelper
 	
 	public static void setPlayerLPTag(EntityPlayer player, int amount)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setInteger("BM:StoredLP", amount);
 	}
 	
 	public static int getPlayerMaxLPTag(EntityPlayer player)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		if(data.hasKey("BM:MaxStoredLP"))
 		{
 			return data.getInteger("BM:MaxStoredLP");
@@ -49,13 +66,13 @@ public class APISpellHelper
 	
 	public static void setPlayerMaxLPTag(EntityPlayer player, int amount)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setInteger("BM:MaxStoredLP", amount);
 	}
 	
 	public static float getPlayerCurrentReagentAmount(EntityPlayer player)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		if(data.hasKey("BM:StoredReagentAmount"))
 		{
 			return data.getFloat("BM:StoredReagentAmount");
@@ -66,13 +83,13 @@ public class APISpellHelper
 	
 	public static void setPlayerCurrentReagentAmount(EntityPlayer player, float amount)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setFloat("BM:StoredReagentAmount", amount);
 	}
 	
 	public static float getPlayerMaxReagentAmount(EntityPlayer player)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		if(data.hasKey("BM:MaxReagentAmount"))
 		{
 			return data.getFloat("BM:MaxReagentAmount");
@@ -83,13 +100,13 @@ public class APISpellHelper
 	
 	public static void setPlayerMaxReagentAmount(EntityPlayer player, float amount)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setFloat("BM:MaxReagentAmount", amount);
 	}
 	
 	public static Reagent getPlayerReagentType(EntityPlayer player)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		if(data.hasKey("BM:ReagentType"))
 		{
 			return ReagentRegistry.getReagentForKey(data.getString("BM:ReagentType"));
@@ -100,7 +117,7 @@ public class APISpellHelper
 	
 	public static void setPlayerReagentType(EntityPlayer player, String str)
 	{
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setString("BM:ReagentType", str);
 	}
 	
