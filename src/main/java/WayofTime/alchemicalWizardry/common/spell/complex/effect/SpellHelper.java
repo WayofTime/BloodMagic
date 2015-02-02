@@ -310,7 +310,7 @@ public class SpellHelper
             return false;
         }
 
-        if (player instanceof FakePlayer || SpellHelper.getUsername(player).contains("[CoFH]") || SpellHelper.getUsername(player).contains("[ThaumcraftTablet]"))
+        if (player instanceof FakePlayer || SpellHelper.getUsername(player).contains("[CoFH]") || SpellHelper.getUsername(player).contains("[Thaumcraft"))
         {
             return true;
         }
