@@ -101,35 +101,33 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
     @Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
-
-        if (applyBonemeal(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer))
+        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer))
         {
-            EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
-
-            if (par3World.isRemote)
+            if (applyBonemeal(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer))
             {
-                par3World.playAuxSFX(2005, par4, par5, par6, 0);
+                EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
+
+                if (par3World.isRemote)
+                {
+                    par3World.playAuxSFX(2005, par4, par5, par6, 0);
+                    return true;
+                }
+
                 return true;
             }
-
-            return true;
         }
-
         return false;
     }
 
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (par2World.isRemote)
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
 
-        if (par3EntityPlayer.isSneaking())
+        if (par2World.isRemote)
         {
             return par1ItemStack;
         }

@@ -100,9 +100,7 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
             return par1ItemStack;
         }

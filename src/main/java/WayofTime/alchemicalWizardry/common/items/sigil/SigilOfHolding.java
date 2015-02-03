@@ -100,36 +100,37 @@ public class SigilOfHolding extends EnergyItems
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         //TODO Might be a good idea to have this item need to be in the player's first slot
-        this.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (par3EntityPlayer.isSneaking())
+        if (checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
-            if (this.addSigilToInventory(par1ItemStack, par3EntityPlayer))
+            if (par3EntityPlayer.isSneaking())
+            {
+                if (this.addSigilToInventory(par1ItemStack, par3EntityPlayer))
+                {
+                    return par1ItemStack;
+                }
+
+                selectNextSlot(par1ItemStack);
+                return par1ItemStack;
+            }
+
+            int currentSlot = this.getSelectedSlot(par1ItemStack);
+            ItemStack[] inv = getInternalInventory(par1ItemStack);
+
+            if (inv == null)
             {
                 return par1ItemStack;
             }
 
-            selectNextSlot(par1ItemStack);
-            return par1ItemStack;
+            ItemStack itemUsed = inv[currentSlot];
+
+            if (itemUsed == null)
+            {
+                return par1ItemStack;
+            }
+
+            itemUsed.getItem().onItemRightClick(itemUsed, par2World, par3EntityPlayer);
+            saveInternalInventory(par1ItemStack, inv);
         }
-
-        int currentSlot = this.getSelectedSlot(par1ItemStack);
-        ItemStack[] inv = getInternalInventory(par1ItemStack);
-
-        if (inv == null)
-        {
-            return par1ItemStack;
-        }
-
-        ItemStack itemUsed = inv[currentSlot];
-
-        if (itemUsed == null)
-        {
-            return par1ItemStack;
-        }
-
-        itemUsed.getItem().onItemRightClick(itemUsed, par2World, par3EntityPlayer);
-        saveInternalInventory(par1ItemStack, inv);
         return par1ItemStack;
     }
 

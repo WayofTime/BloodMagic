@@ -59,7 +59,7 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
     {
         EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
-        if (par3EntityPlayer.worldObj.isRemote)
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.worldObj.isRemote)
         {
             return par1ItemStack;
         }

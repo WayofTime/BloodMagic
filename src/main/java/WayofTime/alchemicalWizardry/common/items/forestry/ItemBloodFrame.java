@@ -44,14 +44,14 @@ public class ItemBloodFrame extends EnergyItems //implements IHiveFrame
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
-
-        if (par1ItemStack.getItemDamage() > 0)
+        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
-            EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
-            par1ItemStack.setItemDamage(par1ItemStack.getItemDamage() - 1);
+            if (par1ItemStack.getItemDamage() > 0)
+            {
+                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
+                par1ItemStack.setItemDamage(par1ItemStack.getItemDamage() - 1);
+            }
         }
-
         return par1ItemStack;
     }
 
