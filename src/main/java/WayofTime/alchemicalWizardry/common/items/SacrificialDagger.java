@@ -3,10 +3,14 @@ package WayofTime.alchemicalWizardry.common.items;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -161,5 +165,10 @@ public class SacrificialDagger extends Item
             return "Sacrificial Orb";
         }
         return super.getItemStackDisplayName(par1ItemStack);
+    }
+    
+    public Achievement getAchievementOnCraft(ItemStack stack, EntityPlayer player, IInventory matrix)
+    {
+        return ModAchievements.firstPrick;
     }
 }
