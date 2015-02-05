@@ -162,4 +162,9 @@ public class SacrificialDagger extends Item
         }
         return super.getItemStackDisplayName(par1ItemStack);
     }
+    
+    public Achievement getAchievementOnCraft(ItemStack stack, EntityPlayer player, IInventory matrix)
+    {
+        return ModAchievements.firstPrick;
+    }
 }
