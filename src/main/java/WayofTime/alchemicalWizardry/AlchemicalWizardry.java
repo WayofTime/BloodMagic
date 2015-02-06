@@ -9,12 +9,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import WayofTime.alchemicalWizardry.common.rituals.*;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.event.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -36,6 +41,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -138,41 +144,6 @@ import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulFray;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulHarden;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAlphaPact;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectDemonPortal;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEllipsoid;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEvaporation;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectExpulsion;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredEarth;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredKnife;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFlight;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFullStomach;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHarvest;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectInterdiction;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemRouting;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemSuction;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectJumping;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSupression;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectUnbinding;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectVeilOfEvil;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWater;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWellOfSuffering;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeDefaultEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeDefensiveEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeEnvironmentalEarth;
@@ -272,16 +243,8 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
 import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -806,6 +769,8 @@ public class AlchemicalWizardry
         this.initiateRegistry();
         this.initCompressionHandlers();
 
+        this.blacklistDemons();
+
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -1183,6 +1148,52 @@ public class AlchemicalWizardry
 	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
+    }
+
+    public static void blacklistDemons()
+    {
+        String[] mobs = new String[]{"FallenAngel","LowerGuardian","BileDemon","WingedFireDemon","SmallEarthGolem","IceDemon","BoulderFist","Shade","AirElemental",
+                "WaterElemental","EarthElemental","FireElemental","ShadeElemental","HolyElemental","MinorDemonGrunt","MinorDemonGruntFire","MinorDemonGruntWind",
+                "MinorDemonGruntIce","MinorDemonGruntEarth", "MinorDemonGruntGuardian","MinorDemonGruntGuardianFire","MinorDemonGruntGuardianWind","MinorDemonGruntGuardianIce",
+                "MinorDemonGruntGuardianEarth"};
+        Class[] mobClasses = new Class[]{EntityFallenAngel.class,EntityLowerGuardian.class,EntityBileDemon.class,EntityWingedFireDemon.class,EntitySmallEarthGolem.class,EntityIceDemon.class,
+                EntityBoulderFist.class,EntityShade.class,EntityAirElemental.class,EntityWaterElemental.class,EntityEarthElemental.class,EntityFireElemental.class,EntityShadeElemental.class,
+                EntityHolyElemental.class,EntityMinorDemonGrunt.class,EntityMinorDemonGruntFire.class,EntityMinorDemonGruntWind.class,EntityMinorDemonGruntIce.class,
+                EntityMinorDemonGruntEarth.class,EntityMinorDemonGruntGuardian.class,EntityMinorDemonGruntGuardianFire.class,EntityMinorDemonGruntGuardianWind.class,
+                EntityMinorDemonGruntGuardianIce.class,EntityMinorDemonGruntGuardianEarth.class};
+        if (Loader.isModLoaded("MineFactoryReloaded"))
+        {
+            ModContainer bloodMagic = Loader.instance().activeModContainer();
+            Method method = null;
+            Constructor<FMLInterModComms.IMCMessage> constructor = null;
+            try
+            {
+                constructor = FMLInterModComms.IMCMessage.class.getDeclaredConstructor(String.class, Object.class);
+                constructor.setAccessible(true);
+                method = FMLInterModComms.class.getDeclaredMethod("enqueueMessage", Object.class, String.class, FMLInterModComms.IMCMessage.class);
+                method.setAccessible(true);
+            }
+            catch(Exception e)
+            {
+                logger.log(Level.ERROR, "Grinder Message reflection failed");
+            }
+            for (int i = 0; i<mobs.length; i++)
+            {
+                FMLInterModComms.sendMessage("MineFactoryReloaded", "registerAutoSpawnerBlacklist", mobs[i]);
+                if (method == null) continue;
+                try{
+                    FMLInterModComms.IMCMessage message = constructor.newInstance("registerGrinderBlacklist",mobClasses[i]);
+                    method.invoke(null, bloodMagic, "MineFactoryReloaded", message);
+                }catch (Exception e)
+                {
+                    logger.log(Level.ERROR, "Failed to blacklist Grinder for "+ mobs[i]);
+                }
+            }
+        }
+        if (Loader.isModLoaded("EnderIO"))
+        {
+            for (String demon:mobs) FMLInterModComms.sendMessage("EnderIO", "poweredSpawner:blacklist:add", demon);
+        }
     }
 
     public static void initAlchemyPotionRecipes()
