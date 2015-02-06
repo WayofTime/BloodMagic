@@ -771,6 +771,8 @@ public class AlchemicalWizardry
 
         this.blacklistDemons();
 
+        this.blacklistAccelerators();
+
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -1148,6 +1150,15 @@ public class AlchemicalWizardry
 	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
+    }
+
+    public static void blacklistAccelerators()
+    {
+        if (Loader.isModLoaded("Torcherino"))
+        {
+            FMLInterModComms.sendMessage("Torcherino", "blacklist-tile", TEAltar.class.getName());
+            FMLInterModComms.sendMessage("Torcherino", "blacklist-tile", TEMasterStone.class.getName());
+        }
     }
 
     public static void blacklistDemons()
