@@ -1,13 +1,14 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.block.BloodRune;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.IFadedRune;
+import WayofTime.alchemicalWizardry.common.block.BloodRune;
 
 public class UpgradedAltars
 {
@@ -170,6 +171,10 @@ public class UpgradedAltars
 
     public static AltarUpgradeComponent getUpgrades(World world, int x, int y, int z, int altarTier)
     {
+    	if(!world.isRemote)
+    	{
+    		return null;
+    	}
         AltarUpgradeComponent upgrades = new AltarUpgradeComponent();
         List<AltarComponent> list = UpgradedAltars.getAltarUpgradeListForTier(altarTier);
 
@@ -180,49 +185,52 @@ public class UpgradedAltars
                 //Currently checks the getRuneEffect.
                 //TODO Change so that it uses the metadata instead, with the BlockID.
                 Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
+                int meta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                
                 if (testBlock instanceof BloodRune)
                 {
-                    if (!world.isRemote)
+                    if (testBlock instanceof IFadedRune && altarTier > ((IFadedRune)testBlock).getAltarTierLimit(meta))
                     {
-                        switch (((BloodRune) testBlock).getRuneEffect(world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
-                        {
-                            case 1:
-                                upgrades.addSpeedUpgrade();
-                                break;
+                        return UpgradedAltars.getUpgrades(world, x, y, z, ((IFadedRune)testBlock).getAltarTierLimit(meta));
+                    }
+                    
+                    switch (((BloodRune) testBlock).getRuneEffect(meta))
+                    {
+                        case 1:
+                            upgrades.addSpeedUpgrade();
+                            break;
 
-                            case 2:
-                                upgrades.addEfficiencyUpgrade();
-                                break;
+                        case 2:
+                            upgrades.addEfficiencyUpgrade();
+                            break;
 
-                            case 3:
-                                upgrades.addSacrificeUpgrade();
-                                break;
+                        case 3:
+                            upgrades.addSacrificeUpgrade();
+                            break;
 
-                            case 4:
-                                upgrades.addSelfSacrificeUpgrade();
-                                break;
+                        case 4:
+                            upgrades.addSelfSacrificeUpgrade();
+                            break;
 
-                            case 5:
-                                upgrades.addaltarCapacitiveUpgrade();
-                                break;
+                        case 5:
+                            upgrades.addaltarCapacitiveUpgrade();
+                            break;
 
-                            case 6:
-                                upgrades.addDisplacementUpgrade();
-                                break;
+                        case 6:
+                            upgrades.addDisplacementUpgrade();
+                            break;
 
-                            case 7:
-                                upgrades.addorbCapacitiveUpgrade();
-                                break;
+                        case 7:
+                            upgrades.addorbCapacitiveUpgrade();
+                            break;
 
-                            case 8:
-                                upgrades.addBetterCapacitiveUpgrade();
-                                break;
-                                
-                            case 9:
-                            	upgrades.addAccelerationUpgrade();
-                            	break;
-                        }
+                        case 8:
+                            upgrades.addBetterCapacitiveUpgrade();
+                            break;
+                            
+                        case 9:
+                        	upgrades.addAccelerationUpgrade();
+                        	break;
                     }
                 }
             }

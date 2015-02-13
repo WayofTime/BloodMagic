@@ -345,6 +345,7 @@ public class AlchemicalWizardry
     public static boolean respawnWithDebuff;
     public static boolean lockdownAltar;
     public static boolean causeHungerWithRegen;
+    public static boolean causeHungerChatMessage = true;
 
     public static List<Class> wellBlacklist;
 
@@ -1587,7 +1588,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				strLine = strLine.replace('Â”', '"').replace('Â“','"').replace("Â…", "...").replace('Â’', '\'').replace('Â–', '-');
+        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
         				
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{
