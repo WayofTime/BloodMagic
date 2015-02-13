@@ -1,6 +1,10 @@
 package WayofTime.alchemicalWizardry.common.potion;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+
+import java.util.ArrayList;
 
 public class PotionSoulFray extends Potion
 {
@@ -14,5 +18,17 @@ public class PotionSoulFray extends Potion
     {
         super.setIconIndex(par1, par2);
         return this;
+    }
+
+    @Override
+    public void performEffect(EntityLivingBase entityLivingBase, int level)
+    {
+        entityLivingBase.getActivePotionEffect(this).setCurativeItems(new ArrayList<ItemStack>());
+    }
+
+    @Override
+    public boolean isReady(int duration, int level)
+    {
+        return true;
     }
 }
