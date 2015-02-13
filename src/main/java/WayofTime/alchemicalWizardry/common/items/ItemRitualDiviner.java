@@ -154,7 +154,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     {
     	int direction = this.getDirection(par1ItemStack);
     	
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer);
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer)) return false;
         ItemStack[] playerInventory = par2EntityPlayer.inventory.mainInventory;
         TileEntity tileEntity = par3World.getTileEntity(par4, par5, par6);
 
@@ -187,7 +187,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
             {
                 if (par3World.isAirBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction)))
                 {
-                    if (playerInvRitualStoneLocation >= 0)
+                    if (playerInvRitualStoneLocation >= 0 || par2EntityPlayer.capabilities.isCreativeMode)
                     {
                         if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(par1ItemStack))
                         {
@@ -243,7 +243,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                     }
                 }
             }
-        }else if(!(par3World.getBlock(par4, par5, par6) instanceof IRitualStone))
+        }else if(!(par3World.getBlock(par4, par5, par6) instanceof IRitualStone) && !par2EntityPlayer.isSneaking())
         {
         	if(par3World.isRemote)
         	{
@@ -251,6 +251,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
         	}
         	this.cycleDirection(par1ItemStack);
         	par2EntityPlayer.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(par1ItemStack))));
+            return true;
         }
 
         return false;
@@ -259,18 +260,9 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
         {
-            int maxRitualID = Rituals.getNumberOfRituals();
-            String currentRitualID = this.getCurrentRitual(par1ItemStack);
-
-            this.setCurrentRitual(par1ItemStack, Rituals.getNextRitualKey(currentRitualID));
-
-            if (par2World.isRemote)
-            {
-                IChatComponent chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.ritual.currentritual") + " " + Rituals.getNameOfRitual(this.getCurrentRitual(par1ItemStack)));
-                par3EntityPlayer.addChatComponentMessage(chatmessagecomponent);
-            }
+            rotateRituals(par2World,par3EntityPlayer, par1ItemStack, true);
         }
 
         return par1ItemStack;
@@ -283,22 +275,42 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            if (player.isSneaking() && !player.isSwingInProgress)
+            if (!EnergyItems.checkAndSetItemOwner(stack,player)) return true;
+
+            if (!player.isSwingInProgress)
             {
-                int maxRitualID = Rituals.getNumberOfRituals();
-                String currentRitualID = this.getCurrentRitual(stack);
-
-                this.setCurrentRitual(stack, Rituals.getPreviousRitualKey(currentRitualID));
-
-                if (entityLiving.worldObj.isRemote)
+                if (player.isSneaking())
                 {
-                    IChatComponent chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.ritual.currentritual") + " " + Rituals.getNameOfRitual(this.getCurrentRitual(stack)));
-                    player.addChatComponentMessage(chatmessagecomponent);
+                    rotateRituals(player.worldObj, player, stack, false);
+                }
+                else
+                {
+                    if (!player.worldObj.isRemote)
+                    {
+                        int direction = this.getDirection(stack) - 1;
+                        if (direction == 0) direction = 4;
+                        this.setDirection(stack, direction);
+                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(direction)));
+                    }
                 }
             }
         }
 
         return false;
+    }
+
+    public void rotateRituals(World world, EntityPlayer player, ItemStack stack, boolean next)
+    {
+        int maxRitualID = Rituals.getNumberOfRituals();
+        String currentRitualID = this.getCurrentRitual(stack);
+
+        this.setCurrentRitual(stack, next? Rituals.getNextRitualKey(currentRitualID):Rituals.getPreviousRitualKey(currentRitualID));
+
+        if (world.isRemote)
+        {
+            IChatComponent chatmessagecomponent = new ChatComponentText(StatCollector.translateToLocal("message.ritual.currentritual") + " " + Rituals.getNameOfRitual(this.getCurrentRitual(stack)));
+            player.addChatComponentMessage(chatmessagecomponent);
+        }
     }
 
     @Override

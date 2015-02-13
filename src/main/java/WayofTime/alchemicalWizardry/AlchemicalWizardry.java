@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -772,6 +769,8 @@ public class AlchemicalWizardry
 
         this.blacklistDemons();
 
+        this.blacklistAccelerators();
+
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -1149,6 +1148,31 @@ public class AlchemicalWizardry
 	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
+    }
+
+    public static void blacklistAccelerators()
+    {
+        if (Loader.isModLoaded("Torcherino"))
+        {
+            FMLInterModComms.sendMessage("Torcherino", "blacklist-tile", TEAltar.class.getName());
+            FMLInterModComms.sendMessage("Torcherino", "blacklist-tile", TEMasterStone.class.getName());
+        }
+        if (Loader.isModLoaded("ChromatiCraft"))
+        {
+            try
+            {
+                Class api = Class.forName("Reika.ChromatiCraft.API.AcceleratorBlacklist");
+                Class reason = Class.forName("Reika.ChromatiCraft.API.AcceleratorBlacklist$BlacklistReason");
+                Object exploit = Enum.valueOf(reason,"EXPLOIT");
+                Method add = api.getMethod("addBlacklist", Class.class, String.class, reason);
+                add.invoke(null, TEAltar.class, TEAltar.class.getSimpleName(),exploit);
+                add.invoke(null, TEMasterStone.class, TEMasterStone.class.getSimpleName(),exploit);
+            } catch (Exception e)
+            {
+                logger.log(Level.ERROR, "ChromatiCraft Accelerator Blacklist Failure");
+            }
+
+        }
     }
 
     public static void blacklistDemons()
