@@ -43,6 +43,7 @@ public class EntryRegistry
 	public static HashMap<String, Entry> basics = new HashMap<String, Entry>();
 	public static HashMap<String, Entry> rituals = new HashMap<String, Entry>();
 	public static HashMap<String, Entry> bloodUtils = new HashMap<String, Entry>();
+	public static HashMap<String, Entry> test = new HashMap();
 
 	public static Entry[] getEntriesInOrderForCategory(Category category)
 	{
