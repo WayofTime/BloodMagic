@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.book.compact.Entry;
 import WayofTime.alchemicalWizardry.book.entries.EntryCraftingRecipeCustomText;
 import WayofTime.alchemicalWizardry.book.entries.EntryImageCustomText;
+import WayofTime.alchemicalWizardry.book.entries.EntryItemCustomText;
 import WayofTime.alchemicalWizardry.book.entries.EntryTextCustomText;
 import WayofTime.alchemicalWizardry.book.entries.IEntryCustomText;
 import cpw.mods.fml.relauncher.Side;
@@ -25,7 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BookParser 
 {
 	@SideOnly(Side.CLIENT)
-    public static List<Entry> parseTextFile()
+    public static List<Entry> parseTextFile(String location)
     {
     	File textFiles = new File("config/BloodMagic/bookDocs");
     	ArrayList<Entry> entryList = new ArrayList();
@@ -34,7 +37,7 @@ public class BookParser
     		try {
     			System.out.println("I am in an island of files!");
     			
-                InputStream input = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardryBooks/books/book.txt");
+                InputStream input = AlchemicalWizardry.class.getResourceAsStream(location);
 
         		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(true);
                 
@@ -138,7 +141,7 @@ public class BookParser
         					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
             				if(list != null)
             				{
-                				System.out.println("Number of lines: " + list.size());
+                				//System.out.println("Number of lines: " + list.size());
             				}
         				}
 	        				
@@ -194,7 +197,7 @@ public class BookParser
         					}
         				}
         				
-    					System.out.println("" + strLine);
+    					//System.out.println("" + strLine);
     				}
         			
         			strings[currentPage] = strings[currentPage];
@@ -261,7 +264,7 @@ public class BookParser
 	
 	public static boolean containsSpecialInfo(String unparsedString)
 	{
-		return unparsedString.startsWith("//IMAGE") || unparsedString.startsWith("//CRAFTING");
+		return unparsedString.startsWith("//IMAGE") || unparsedString.startsWith("//CRAFTING") || unparsedString.startsWith("//ITEM");
 	}
 	
 	public static IEntryCustomText getEntryForStringTitle(String unparsedString)
@@ -287,10 +290,19 @@ public class BookParser
 		}else if(unparsedString.startsWith("//CRAFTING "))
 		{
 			String lines = unparsedString.replaceFirst("//CRAFTING ", "");
-			IRecipe recipe = SpecialEntryRegistry.getIRecipeForKey(lines);
+			ItemStack stack = APISpellHelper.getItemStackForString(lines);
+			IRecipe recipe = APISpellHelper.getRecipeForItemStack(stack);
 			if(recipe != null)
 			{
 				return new EntryCraftingRecipeCustomText(recipe);
+			}
+		}else if(unparsedString.startsWith("//ITEM "))
+		{
+			String lines = unparsedString.replaceFirst("//ITEM ", "");
+			ItemStack stack = APISpellHelper.getItemStackForString(lines);
+			if(stack != null)
+			{
+				return new EntryItemCustomText(stack);
 			}
 		}
 		
@@ -312,6 +324,9 @@ public class BookParser
 		}else if(unparsedString.startsWith("//CRAFTING "))
 		{
 			return 0;
+		}else if(unparsedString.startsWith("//ITEM "))
+		{
+			return 9;
 		}
 		
 		return def;

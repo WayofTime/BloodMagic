@@ -8,7 +8,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -16,6 +19,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class APISpellHelper 
 {
@@ -246,5 +250,76 @@ public class APISpellHelper
             default:
                 return "";
         }
+    }
+	
+	public static Block getBlockForString(String str)
+    {
+        String[] parts = str.split(":");
+        String modId = parts[0];
+        String name = parts[1];
+        return GameRegistry.findBlock(modId, name);
+    }
+
+    public static Item getItemForString(String str)
+    {
+        String[] parts = str.split(":");
+        String modId = parts[0];
+        String name = parts[1];
+        return GameRegistry.findItem(modId, name);
+    }
+    
+    public static ItemStack getItemStackForString(String str)
+    {
+    	String[] parts = str.split(":");
+    	int meta = 0;
+    	if(parts.length >= 3)
+    	{
+    		meta = Integer.decode(parts[2]);
+    	}else if(parts.length < 2)
+    	{
+    		return null;
+    	}
+        String modId = parts[0];
+        String name = parts[1];
+        
+        String itemString = modId + ":" + name;
+        Item item = APISpellHelper.getItemForString(itemString);
+        if(item != null)
+        {
+        	return new ItemStack(item, 1, meta);
+        }
+        
+        Block block = APISpellHelper.getBlockForString(itemString);
+        if(block != null)
+        {
+        	return new ItemStack(block, 1, meta);
+        }
+        
+        return null;
+    }
+    
+    public static IRecipe getRecipeForItemStack(ItemStack reqStack) //Does not match NBT. Durrr! -smack-
+    {
+    	if(reqStack == null)
+    	{
+    		return null; //Why are you even doing this to yourself!? You know this can't be healthy!
+    	}
+    	List craftingList = CraftingManager.getInstance().getRecipeList();
+    	for(Object posRecipe : craftingList)
+    	{
+    		if(posRecipe instanceof IRecipe)
+    		{
+    			ItemStack outputStack = ((IRecipe) posRecipe).getRecipeOutput();
+    			if(outputStack != null)
+    			{
+    				if(outputStack.getItem() == reqStack.getItem() && (outputStack.getItem().getHasSubtypes() ? outputStack.getItemDamage() == reqStack.getItemDamage() : true))
+    				{
+    					return (IRecipe)posRecipe;
+    				}
+    			}
+    		}
+    	}
+    	
+    	return null;
     }
 }

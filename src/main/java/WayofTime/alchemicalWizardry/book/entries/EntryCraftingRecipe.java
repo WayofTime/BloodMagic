@@ -20,6 +20,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.book.classes.guide.GuiEntry;
 
@@ -63,7 +64,11 @@ public class EntryCraftingRecipe implements IEntry{
 				ItemStack s = null;
 				if(rec.getInput()[i] instanceof ItemStack){
 					s = (ItemStack)rec.getInput()[i];
+				}else if(rec.getInput()[i] instanceof Integer)
+				{
+					s = AltarRecipeRegistry.orbMap.get((Integer)rec.getInput()[i]);
 				}else if(rec.getInput()[i] instanceof Object){
+					System.out.println(rec.getInput()[i].getClass());
 					s = new ItemStack(ModItems.masterBloodOrb);
 				}else{
 					s = ((ArrayList<ItemStack>)rec.getInput()[i]).get(0);

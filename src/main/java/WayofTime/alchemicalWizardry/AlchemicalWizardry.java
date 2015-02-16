@@ -77,7 +77,6 @@ import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.book.BUEntries;
-import WayofTime.alchemicalWizardry.common.book.SpecialEntryRegistry;
 import WayofTime.alchemicalWizardry.common.commands.CommandBind;
 import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
@@ -298,7 +297,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class AlchemicalWizardry
 {
-	public static boolean parseTextFiles = true;
+	public static boolean parseTextFiles = false;
 	
     public static boolean doMeteorsDestroyBlocks = true;
     public static String[] diamondMeteorArray;
@@ -671,19 +670,12 @@ public class AlchemicalWizardry
         ItemStack magicalesStack = new ItemStack(ModItems.magicales);
         //All crafting goes here
         GameRegistry.addRecipe(sacrificialDaggerStack, "ggg", " dg", "i g", 'g', glassStack, 'd', goldIngotStack, 'i', ironIngotStack);
-        SpecialEntryRegistry.registerLatestIRecipe("sacrificialKnife"); 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(lavaCrystalStackCrafted, "glg", "lbl", "odo", 'g', glassStack, 'l', lavaBucketStack, 'b', weakBloodOrbStack, 'd', diamondStack, 'o', obsidianStack));
-        SpecialEntryRegistry.registerLatestIRecipe("lavaCrystal"); 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(waterSigilStackCrafted, "www", "wbw", "wow", 'w', waterBucketStack, 'b', blankSlateStack, 'o', weakBloodOrbStack));
-        SpecialEntryRegistry.registerLatestIRecipe("waterSigil");
         GameRegistry.addRecipe(lavaSigilStackCrafted, "lml", "lbl", "lcl", 'l', lavaBucketStack, 'b', blankSlateStack, 'm', magmaCreamStack, 'c', lavaCrystalStack);
-        SpecialEntryRegistry.registerLatestIRecipe("lavaSigil");
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(voidSigilStackCrafted, "ese", "ere", "eoe", 'e', emptyBucketStack, 'r', reinforcedSlateStack, 'o', apprenticeBloodOrbStack, 's', stringStack));
-        SpecialEntryRegistry.registerLatestIRecipe("voidSigil");
         GameRegistry.addRecipe(bloodAltarStack, "s s", "scs", "gdg", 's', stoneStack, 'c', furnaceStack, 'd', diamondStack, 'g', goldIngotStack);
-        SpecialEntryRegistry.registerLatestIRecipe("bloodAltar");
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(bloodRuneCraftedStack, "sss", "ror", "sss", 's', stoneStack, 'o', weakBloodOrbStack, 'r', blankSlateStack));
-        SpecialEntryRegistry.registerLatestIRecipe("blankRune");
         GameRegistry.addRecipe(speedRuneStack, "sbs", "uru", "sbs", 'u', sugarStack, 's', stoneStack, 'r', bloodRuneStack, 'b', blankSlateStack);
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 1), "sbs", "bob", "srs", 's', stoneStack, 'o', magicianBloodOrbStack, 'b', emptyBucketStack, 'r', new ItemStack(ModItems.imbuedSlate)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 2), "sbs", "bob", "srs", 's', stoneStack, 'o', magicianBloodOrbStack, 'b', waterBucketStack, 'r', new ItemStack(ModItems.imbuedSlate)));

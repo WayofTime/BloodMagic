@@ -1,13 +1,16 @@
 package WayofTime.alchemicalWizardry.api.altarRecipeRegistry;
 
-import net.minecraft.item.ItemStack;
-
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import net.minecraft.item.ItemStack;
 
 public class AltarRecipeRegistry
 {
     public static List<AltarRecipe> altarRecipes = new LinkedList();
+    public static Map<Integer, ItemStack> orbMap = new HashMap();
 
     public static void registerAltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate, int drainRate, boolean canBeFilled)
     {
@@ -21,6 +24,10 @@ public class AltarRecipeRegistry
 
     public static void registerAltarOrbRecipe(ItemStack orbStack, int minTier, int consumptionRate)
     {
+    	if(!orbMap.containsKey(minTier))
+    	{
+    		orbMap.put(minTier, orbStack);
+    	}
         registerAltarRecipe(null, orbStack, minTier, 0, consumptionRate, 0, true);
     }
 

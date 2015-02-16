@@ -139,7 +139,6 @@ public class BUEntries
 		/** Debug */
 		debug = new Entry(new IEntry[]{new EntryText("Debug"), new EntryImage("bloodutils:textures/misc/screenshots/t1.png", 854, 480, "Debug")}, EnumChatFormatting.AQUA + "De" + EnumChatFormatting.RED + "bug", 1);
 		
-		registerKeys();
 		registerEntries();
 	}
 	
@@ -258,11 +257,6 @@ public class BUEntries
 
 	public static Entry debug;
 	
-	public void registerKeys()
-	{
-		
-	}
-	
 	public void registerEntries()
 	{
 		/* Architect */
@@ -347,7 +341,7 @@ public class BUEntries
 		
 		
 		
-		this.registerCategory(BUEntries.categoryTest, EntryRegistry.test, BookParser.parseTextFile());
+		this.registerCategory(BUEntries.categoryTest, EntryRegistry.test, BookParser.parseTextFile("/assets/alchemicalwizardryBooks/books/book.txt"));
 	}
 	
 	public void registerCategory(Category cat, HashMap<String, Entry> entryMap, List<Entry> entries)
