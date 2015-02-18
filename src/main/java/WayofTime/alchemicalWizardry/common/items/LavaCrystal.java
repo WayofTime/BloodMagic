@@ -1,17 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
-import java.util.List;
+import net.minecraft.world.WorldProvider;
+import net.minecraftforge.common.DimensionManager;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class LavaCrystal extends EnergyItems
 {
@@ -84,7 +86,13 @@ public class LavaCrystal extends EnergyItems
                 return false;
             }
 
-            World world = MinecraftServer.getServer().worldServers[0];
+//            World world = MinecraftServer.getServer().worldServers[0];
+            WorldProvider provider = DimensionManager.getProvider(0);
+            if(provider == null || provider.worldObj == null)
+            {
+            	return false;
+            }
+            World world = provider.worldObj;
             LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
 
             if (data == null)

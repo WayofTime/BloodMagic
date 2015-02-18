@@ -387,6 +387,7 @@ message.altar.currenttier=Altar's Current Tier: %s
 message.altar.progress=Altar's Progress:
 message.altar.inputtank= Input Tank: %s LP
 message.altar.outputtank= Output Tank: %s LP
+message.altar.hunger=[BM] Your high regeneration rate has caused you to become hungry...
 message.attunedcrystal.clearing=Clearing saved container...
 message.attunedcrystal.error.cannotfind=Can no longer find linked container.
 message.attunedcrystal.error.noconnections=Linked container has no connections remaining!

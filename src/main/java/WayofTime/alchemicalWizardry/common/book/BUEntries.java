@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.book;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
@@ -30,16 +31,20 @@ public class BUEntries
 		categoryRituals = new Category("Rituals", new ItemStack(ModItems.itemRitualDiviner), EnumType.ITEM);
 		catagoryArchitect = new Category("The Architect", new ItemStack(ModBlocks.blockAltar), EnumType.BLOCK);
 
+		categoryTest = new Category("Test", new ItemStack(ModItems.aether), EnumType.ITEM);
+
 		registerCategories();
 	}
 	public static Category categoryBasics;
 	public static Category categoryRituals;
 	public static Category catagoryArchitect;
+	public static Category categoryTest;
 	
 	public void registerCategories(){
 		EntryRegistry.registerCategories(BUEntries.categoryBasics);
 		EntryRegistry.registerCategories(BUEntries.categoryRituals);
 		EntryRegistry.registerCategories(BUEntries.catagoryArchitect);
+		EntryRegistry.registerCategories(BUEntries.categoryTest);
 	}
 	
 	public void initEntries()
@@ -133,6 +138,7 @@ public class BUEntries
 		
 		/** Debug */
 		debug = new Entry(new IEntry[]{new EntryText("Debug"), new EntryImage("bloodutils:textures/misc/screenshots/t1.png", 854, 480, "Debug")}, EnumChatFormatting.AQUA + "De" + EnumChatFormatting.RED + "bug", 1);
+		
 		registerEntries();
 	}
 	
@@ -332,5 +338,17 @@ public class BUEntries
 
 		/** Debug */
 		EntryRegistry.registerEntry(BUEntries.categoryBasics, EntryRegistry.basics, BUEntries.debug);
+		
+		
+		
+		this.registerCategory(BUEntries.categoryTest, EntryRegistry.test, BookParser.parseTextFile("/assets/alchemicalwizardryBooks/books/book.txt"));
+	}
+	
+	public void registerCategory(Category cat, HashMap<String, Entry> entryMap, List<Entry> entries)
+	{
+		for(Entry entry : entries)
+		{
+			EntryRegistry.registerEntry(cat, entryMap, entry);
+		}
 	}
 }

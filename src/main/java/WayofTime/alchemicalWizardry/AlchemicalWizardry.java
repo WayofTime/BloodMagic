@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import WayofTime.alchemicalWizardry.common.rituals.*;
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -141,6 +141,41 @@ import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulFray;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulHarden;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAlphaPact;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectDemonPortal;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEllipsoid;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEvaporation;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectExpulsion;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredEarth;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFeatheredKnife;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFlight;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectFullStomach;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectGrowth;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHarvest;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectHealing;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectInterdiction;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemRouting;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectItemSuction;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectJumping;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSupression;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectUnbinding;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectVeilOfEvil;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWater;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectWellOfSuffering;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeDefaultEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeDefensiveEarth;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.cse.earth.CSEMeleeEnvironmentalEarth;
@@ -240,8 +275,18 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
 import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -252,7 +297,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class AlchemicalWizardry
 {
-	public static boolean parseTextFiles = true;
+	public static boolean parseTextFiles = false;
 	
     public static boolean doMeteorsDestroyBlocks = true;
     public static String[] diamondMeteorArray;
@@ -342,6 +387,7 @@ public class AlchemicalWizardry
     public static boolean respawnWithDebuff;
     public static boolean lockdownAltar;
     public static boolean causeHungerWithRegen;
+    public static boolean causeHungerChatMessage = true;
 
     public static List<Class> wellBlacklist;
 
@@ -1565,7 +1611,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				if(strLine.startsWith("//TITLE "))
+        				if(strLine.startsWith("//TITLE ")) //New entry~
         				{
         					String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
     						for(int i=0; i<strings.length; i++)
@@ -1611,7 +1657,7 @@ public class AlchemicalWizardry
         					continue;
         				}
         				
-        				strLine = strLine.replace('Â”', '"').replace('Â“','"').replace("Â…", "...").replace('Â’', '\'').replace('Â–', '-');
+        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
         				
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{
@@ -1635,7 +1681,7 @@ public class AlchemicalWizardry
         					{
         						changePage = true;
         					}
-        					if(changePage)
+        					if(changePage) //Encode into current entry, then move to next entry
         					{
         						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
         						for(int i=0; i<strings.length; i++)

@@ -332,7 +332,7 @@ public class AlchemicalWizardryEventHooks
 	@SubscribeEvent
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event)
 	{
-		if (AlchemicalWizardry.respawnWithDebuff)
+		if (AlchemicalWizardry.respawnWithDebuff && event.player != null)
 		{
 			event.player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, 20 * 60 * 5, 0));
 		}

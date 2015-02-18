@@ -57,7 +57,7 @@ public class RitualEffectDemonPortal extends RitualEffect
         		if(reagentAmount < neededAmount)
         		{
         			reagentsFulfilled = false;
-        			System.out.println("Reagents not fulfilled. Missing: " + ReagentRegistry.getKeyForReagent(reagent));
+//        			System.out.println("Reagents not fulfilled. Missing: " + ReagentRegistry.getKeyForReagent(reagent));
         			int drainAmount = Math.min(drainRate, neededAmount - reagentAmount);
         			
         			if(drainAmount <= 0)
