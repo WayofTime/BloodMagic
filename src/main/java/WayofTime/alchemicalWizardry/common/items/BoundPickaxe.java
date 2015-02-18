@@ -235,12 +235,12 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
 
     public boolean getActivated(ItemStack par1ItemStack)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
+        if (!par1ItemStack.hasTagCompound())
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
+
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         return itemTag.getBoolean("isActive");
     }
@@ -331,7 +331,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-        if ("pickaxe".equals(toolClass))
+        if (getActivated(stack) && "pickaxe".equals(toolClass))
         {
             return 5;
         }

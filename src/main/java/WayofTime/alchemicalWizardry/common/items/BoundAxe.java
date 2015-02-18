@@ -227,12 +227,12 @@ public class BoundAxe extends ItemAxe implements IBindable
 
     public boolean getActivated(ItemStack par1ItemStack)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
+        if (!par1ItemStack.hasTagCompound())
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
+
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         return itemTag.getBoolean("isActive");
     }
@@ -321,7 +321,7 @@ public class BoundAxe extends ItemAxe implements IBindable
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-        if ("axe".equals(toolClass))
+        if (getActivated(stack) && "axe".equals(toolClass))
         {
             return 5;
         }
