@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -31,6 +33,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
+import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
@@ -675,6 +678,31 @@ public class AlchemicalWizardryEventHooks
 			}
 		}
 	}
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onTelepose(TeleposeEvent event) {
+        for (int i = 0; i < BloodMagicConfiguration.teleposerBlacklist.length; i++) {
+            String[] blockData = BloodMagicConfiguration.teleposerBlacklist[i].split(":");
+
+            if (blockData.length == 3) {
+
+                Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+                int meta;
+
+                // Check if it's an int, if so, parse it. If not, set to 0 to avoid crashing.
+                if (blockData[2].matches("-?\\d+"))
+                    meta = Integer.parseInt(blockData[2]);
+                else if (blockData[2].equals("*"))
+                    meta = OreDictionary.WILDCARD_VALUE;
+                else
+                    meta = 0;
+
+                if (block != null)
+                    if (( block == event.initialBlock || block == event.finalBlock) && ( meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
+                        event.setCanceled(true);
+            }
+        }
+    }
 
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
