@@ -684,12 +684,13 @@ public class AlchemicalWizardryEventHooks
         for (int i = 0; i < BloodMagicConfiguration.teleposerBlacklist.length; i++) {
             String[] blockData = BloodMagicConfiguration.teleposerBlacklist[i].split(":");
 
+            // If the block follows full syntax: modid:blockname:meta
             if (blockData.length == 3) {
 
                 Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
                 int meta;
 
-                // Check if it's an int, if so, parse it. If not, set to 0 to avoid crashing.
+                // Check if it's an int, if so, parse it. If not, set meta to 0 to avoid crashing.
                 if (blockData[2].matches("-?\\d+"))
                     meta = Integer.parseInt(blockData[2]);
                 else if (blockData[2].equals("*"))
@@ -698,7 +699,17 @@ public class AlchemicalWizardryEventHooks
                     meta = 0;
 
                 if (block != null)
-                    if (( block == event.initialBlock || block == event.finalBlock) && ( meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
+                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
+                        event.setCanceled(true);
+
+            // If the block uses shorthand syntax: modid:blockname
+            } else if (blockData.length == 2) {
+
+                Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+                int meta = 0;
+
+                if (block != null)
+                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
                         event.setCanceled(true);
             }
         }
