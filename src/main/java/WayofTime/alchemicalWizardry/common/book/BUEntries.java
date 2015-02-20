@@ -17,6 +17,8 @@ import WayofTime.alchemicalWizardry.book.entries.EntryText;
 import WayofTime.alchemicalWizardry.book.entries.IEntry;
 import WayofTime.alchemicalWizardry.book.enums.EnumType;
 import WayofTime.alchemicalWizardry.book.registries.EntryRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BUEntries
 {
@@ -47,6 +49,7 @@ public class BUEntries
 		EntryRegistry.registerCategories(BUEntries.categoryTest);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void initEntries()
 	{
 		HashMap<Integer, IEntry> aIntroMap = new HashMap();

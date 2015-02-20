@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
+import WayofTime.alchemicalWizardry.common.book.BUEntries;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
@@ -105,6 +106,13 @@ public class ClientProxy extends CommonProxy
     public static int renderPass;
     public static int altarRenderType;
 
+    @Override
+    public void registerPostSideObjects()
+    {
+    	BUEntries entries = new BUEntries();
+    	entries.postInit();
+    }
+    
     @Override
     public void registerRenderers()
     {

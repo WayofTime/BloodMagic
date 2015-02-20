@@ -484,6 +484,37 @@ public class SpellHelper
      * @param stack2 Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
+    public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2, int transferMax)
+    {
+        ItemStack[] returned = new ItemStack[2];
+
+        if (canCombine(stack1, stack2))
+        {
+            int transferedAmount = Math.min(transferMax, stack2 == null ? stack1.stackSize : Math.min(stack2.getMaxStackSize() - stack2.stackSize, stack1.stackSize));
+            if (transferedAmount > 0)
+            {
+                ItemStack copyStack = stack1.splitStack(transferedAmount);
+                if (stack2 == null)
+                {
+                    stack2 = copyStack;
+                } else
+                {
+                    stack2.stackSize += transferedAmount;
+                }
+            }
+        }
+
+        returned[0] = stack1;
+        returned[1] = stack2;
+
+        return returned;
+    }
+    
+    /**
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
+     * @return Stacks after stacking
+     */
     public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2)
     {
         ItemStack[] returned = new ItemStack[2];
@@ -552,6 +583,115 @@ public class SpellHelper
         }
 
         return stack;
+    }
+    
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir, int limit)
+    {
+        if (stack == null)
+        {
+            return stack;
+        }
+
+        boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
+        
+        if(inventory instanceof ISidedInventory)
+        {
+        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	for(int in : array)
+        	{
+        		canBeInserted[in] = ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
+        	}
+        }else
+        {
+        	for(int i=0; i<canBeInserted.length; i++)
+        	{
+        		canBeInserted[i] = true;
+        	}
+        }
+        
+        int numberMatching = 0;
+        
+        for (int i = 0; i < inventory.getSizeInventory(); i++)
+        {
+        	if(!canBeInserted[i])
+        	{
+        		continue;
+        	}
+        	
+        	ItemStack invStack = inventory.getStackInSlot(i);
+        	
+        	if(invStack != null && canCombine(stack, invStack))
+        	{
+        		numberMatching += invStack.stackSize;
+        	}
+        }
+        
+        if(numberMatching >= limit)
+        {
+        	return stack;
+        }
+        
+        int newLimit = limit - numberMatching;
+        
+        for (int i = 0; i < inventory.getSizeInventory(); i++)
+        {
+        	if(!canBeInserted[i])
+        	{
+        		continue;
+        	}
+        	
+        	int prevStackSize = stack.stackSize;
+        	
+            ItemStack[] combinedStacks = combineStacks(stack, inventory.getStackInSlot(i), newLimit);
+            stack = combinedStacks[0];
+            inventory.setInventorySlotContents(i, combinedStacks[1]);
+
+            newLimit -= (prevStackSize - stack.stackSize);
+            
+            if (newLimit <= 0 || stack.stackSize <= 0)
+            {
+                return stack;
+            }
+        }
+
+        return stack;
+    }
+    
+    public static int getNumberOfItemsInInventory(IInventory inventory, ForgeDirection dir)
+    {
+        boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
+
+    	if(inventory instanceof ISidedInventory)
+        {
+        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	for(int in : array)
+        	{
+        		canBeInserted[in] = true;
+        	}
+        }else
+        {
+        	for(int i=0; i<canBeInserted.length; i++)
+        	{
+        		canBeInserted[i] = true;
+        	}
+        }
+    	
+    	int amountOfItems = 0;
+    	
+    	for(int i=0; i<canBeInserted.length; i++)
+    	{
+    		if(canBeInserted[i])
+    		{
+        		ItemStack stack = inventory.getStackInSlot(i);
+        		
+        		if(stack != null)
+        		{
+        			amountOfItems += stack.stackSize;
+        		}
+    		}
+    	}
+    	
+    	return amountOfItems;
     }
 
     public static boolean hydrateSoil(World world, int x, int y, int z)

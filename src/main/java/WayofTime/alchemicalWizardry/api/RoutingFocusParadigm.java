@@ -20,6 +20,10 @@ public class RoutingFocusParadigm
 	
 	public void addLogic(RoutingFocusLogic logic)
 	{
+		if(logic instanceof ILimitingLogic)
+		{
+			maximumAmount += ((ILimitingLogic)logic).getRoutingLimit();
+		}
 		logicList.add(logic);
 	}
 	

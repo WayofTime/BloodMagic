@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -15,6 +16,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
 import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RoutingFocus extends Item
 {
@@ -30,25 +32,25 @@ public class RoutingFocus extends Item
 		return new RoutingFocusPosAndFacing(new Int3(this.xCoord(itemStack), this.yCoord(itemStack), this.zCoord(itemStack)), this.getSetDirection(itemStack));
 	}
 	
-	@Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
-    {
-		this.cycleDirection(itemStack);
-		return itemStack;
-    }
-	
-	public void cycleDirection(ItemStack itemStack)
-	{
-		ForgeDirection dir = this.getSetDirection(itemStack);
-		int direction = dir.ordinal();
-		direction++;
-		if(direction >= ForgeDirection.VALID_DIRECTIONS.length)
-		{
-			direction = 0;
-		}
-		
-		this.setSetDirection(itemStack, ForgeDirection.getOrientation(direction));
-	}
+//	@Override
+//    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
+//    {
+//		this.cycleDirection(itemStack);
+//		return itemStack;
+//    }
+//	
+//	public void cycleDirection(ItemStack itemStack)
+//	{
+//		ForgeDirection dir = this.getSetDirection(itemStack);
+//		int direction = dir.ordinal();
+//		direction++;
+//		if(direction >= ForgeDirection.VALID_DIRECTIONS.length)
+//		{
+//			direction = 0;
+//		}
+//		
+//		this.setSetDirection(itemStack, ForgeDirection.getOrientation(direction));
+//	}
 	
 	public ForgeDirection getSetDirection(ItemStack itemStack)
 	{
@@ -77,7 +79,7 @@ public class RoutingFocus extends Item
 	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add(this.getFocusDescription());
+        par3List.add(StatCollector.translateToLocal(this.getFocusDescription()));
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
@@ -96,15 +98,35 @@ public class RoutingFocus extends Item
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
+		if(world.isRemote)
+		{
+			return false;
+		}
+		
 		TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile instanceof IInventory)
 		{
+			if(player.isSneaking())
+			{
+				if(this instanceof ILimitedRoutingFocus)
+				{
+					int pastAmount = ((ILimitedRoutingFocus)this).getRoutingFocusLimit(stack);
+					int amount = SpellHelper.getNumberOfItemsInInventory((IInventory)tile, ForgeDirection.getOrientation(side));
+					if(amount != pastAmount)
+					{
+						((ILimitedRoutingFocus)this).setRoutingFocusLimit(stack, amount);
+						player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.routerfocus.limit") + amount));
+					}					
+				}
+			}
+			
 			this.setCoordinates(stack, x, y, z);
+			this.setSetDirection(stack, ForgeDirection.getOrientation(side));
 			
 			return true;
 		}
-		
-		return false;
+
+		return true;
 	}
 	
 	public void setCoordinates(ItemStack itemStack, int x, int y, int z)
@@ -154,34 +176,8 @@ public class RoutingFocus extends Item
         }
     }
     
-    public RoutingFocusLogic getLogic(int damage)
+    public RoutingFocusLogic getLogic(ItemStack itemStack)
 	{
 		return new RoutingFocusLogic();
 	}
-    
-    public int getDefaultStackLimit(int damage)
-    {
-    	return 0;
-    }
-    
-    public int getStackLimitAmount(ItemStack itemStack)
-    {
-    	if (!(itemStack.getTagCompound() == null))
-        {
-            return itemStack.getTagCompound().getInteger("stackLimit");
-        } else
-        {
-            return getDefaultStackLimit(itemStack.getItemDamage());
-        }
-    }
-    
-    public void setStackLimitAmount(ItemStack itemStack, int amt)
-    {
-    	if ((itemStack.getTagCompound() == null))
-        {
-            itemStack.setTagCompound(new NBTTagCompound());   
-        }
-    	
-    	itemStack.getTagCompound().setInteger("stackLimit", amt);
-    }
 }

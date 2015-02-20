@@ -378,6 +378,7 @@ tooltip.tanksegmenter.desc2=reagents can go into a container
 tooltip.telepositionfocus.desc=An Enderpearl imbued with blood
 tooltip.voidsigil.desc=Better than a Swiffer!
 tooltip.watersigil.desc=Infinite water, anyone?
+tooltip.routingFocus.limit=Limit:
 
 #Messages
 message.altar.capacity=Capacity: %s LP
@@ -416,6 +417,7 @@ message.ritualdemonportal.missingjar=A jar on one of the pillars appears to be m
 message.tanksegmenter.nowhas=Tank now has
 message.tanksegmenter.setto=Tank Segmenter now set to:
 message.tanksegmenter.tankssetto=tank(s) set to:
+message.routerfocus.limit=Focus' Item Limit set to: 
 
 #Achievements
 achievement.firstPrick=Your first prick!

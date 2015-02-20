@@ -35,6 +35,11 @@ public class CommonProxy
     {
         // Nothing here as the server doesn't render graphics!
     }
+    
+    public void registerPostSideObjects()
+    {
+    	
+    }
 
     public void registerEntities()
     {

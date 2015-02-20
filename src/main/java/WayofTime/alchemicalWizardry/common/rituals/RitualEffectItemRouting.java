@@ -199,7 +199,7 @@ public class RitualEffectItemRouting extends RitualEffect
         				    							outputFocus = (OutputRoutingFocus)keyStack.getItem();
         				    							
         				    							parad.addRoutingFocusPosAndFacing(outputFocus.getPosAndFacing(keyStack));
-        				    							parad.addLogic(outputFocus.getLogic(keyStack.getItemDamage()));
+        				    							parad.addLogic(outputFocus.getLogic(keyStack));
         				    							lastItemWasFocus = true;
         				    							continue;
         				    						}else
@@ -228,7 +228,14 @@ public class RitualEffectItemRouting extends RitualEffect
         				    								
     				    								if(parad.doesItemMatch(keyStack, syphonedStack))
     				    								{
-    				    									ItemStack newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
+    				    									ItemStack newStack = null;
+    				    									if(parad.maximumAmount <= 0)
+    				    									{
+        				    									newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
+    				    									}else
+    				    									{
+    				    										newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection, parad.maximumAmount);
+    				    									}
     				    									if(size == newStack.stackSize)
     				    									{
     				    										continue;

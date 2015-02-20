@@ -1,14 +1,8 @@
 package WayofTime.alchemicalWizardry;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -17,7 +11,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -76,7 +69,6 @@ import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.book.BUEntries;
 import WayofTime.alchemicalWizardry.common.commands.CommandBind;
 import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
@@ -141,7 +133,6 @@ import WayofTime.alchemicalWizardry.common.potion.PotionReciprocation;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulFray;
 import WayofTime.alchemicalWizardry.common.potion.PotionSoulHarden;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAlphaPact;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
@@ -166,8 +157,6 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLava;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLeap;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
@@ -290,8 +279,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.1", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
@@ -941,6 +928,8 @@ public class AlchemicalWizardry
         MeteorRegistry.registerMeteorParadigm(ironBlockStack, this.ironBlockMeteorArray, this.ironBlockMeteorRadius);
         MeteorRegistry.registerMeteorParadigm(new ItemStack(Items.nether_star), this.netherStarMeteorArray, this.netherStarMeteorRadius);
 
+        ItemStack stickStack = new ItemStack(Items.stick, 1, craftingConstant);
+        
         //Register spell component recipes
         ItemStack complexSpellCrystalStack = new ItemStack(ModItems.itemComplexSpellCrystal);
         ItemStack quartzRodStack = new ItemStack(ModItems.baseItems, 1, 0);
@@ -975,6 +964,8 @@ public class AlchemicalWizardry
         ItemStack soulShardStack = new ItemStack(ModItems.baseItems, 1, 29);
         ItemStack soulRunicPlateStack = new ItemStack(ModItems.baseItems, 1, 30);
         ItemStack livingBraceStack = new ItemStack(ModItems.baseItems, 1, 31);
+        ItemStack enderShardStack = new ItemStack(ModItems.baseItems, 1, 32);
+        ItemStack enderShardCraftedStack = new ItemStack(ModItems.baseItems, 8, 32);
 
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockCrystal), "lsl", "sls", "lsl", 'l', lifeShardStack, 's', soulShardStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockCrystal, 4, 1), "ss", "ss", 's', new ItemStack(ModBlocks.blockCrystal, 1, 0));
@@ -1068,6 +1059,15 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemSigilOfSupression), "wtl", "wvl", "wol", 'v', new ItemStack(ModItems.voidSigil), 't', new ItemStack(ModBlocks.blockTeleposer), 'o', masterBloodOrbStack, 'l', lavaBucketStack, 'w', waterBucketStack));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemSigilOfEnderSeverance), "ptp", "ese", "pop", 's', new ItemStack(ModItems.demonicSlate), 't', weakBloodShardStack, 'o', masterBloodOrbStack, 'e', new ItemStack(Items.ender_eye), 'p', new ItemStack(Items.ender_pearl)));
 
+        GameRegistry.addShapelessRecipe(enderShardCraftedStack, weakBloodShardStack, new ItemStack(Items.ender_pearl));
+        
+        GameRegistry.addRecipe(new ItemStack(ModItems.inputRoutingFocus), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', glassStack);
+        GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 0), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', stoneStack);
+        GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 1), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', new ItemStack(Blocks.sandstone));
+        GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 2), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', new ItemStack(Items.dye, 1, craftingConstant));
+        GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 3), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', obsidianStack);
+
+        
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.flint, 2, 0), 1, new ItemStack[]{new ItemStack(Blocks.gravel), new ItemStack(Items.flint)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.grass), 2, new ItemStack[]{new ItemStack(Blocks.dirt), new ItemStack(Items.dye, 1, 15), new ItemStack(Items.wheat_seeds), new ItemStack(Items.wheat_seeds)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.leather, 3, 0), 2, new ItemStack[]{new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh), waterBucketStack, new ItemStack(Items.flint)}, 1);
@@ -1087,8 +1087,7 @@ public class AlchemicalWizardry
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-    	BUEntries entries = new BUEntries();
-    	entries.postInit();
+    	proxy.registerPostSideObjects();
         //TODO Thaumcraft Integration
         if (Loader.isModLoaded("Thaumcraft"))
         {
@@ -1189,8 +1188,8 @@ public class AlchemicalWizardry
 	    
 	    DemonVillageLootRegistry.init();
 	    
-	    if(parseTextFiles)
-	    	this.parseTextFile();
+//	    if(parseTextFiles)
+//	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
     }
@@ -1365,10 +1364,10 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW031Convocation",isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
-        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
-        Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
-        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
-        Rituals.registerRitual("AW035", 1, 100, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
+//        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
+//        Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
+//        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
+        Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
@@ -1572,187 +1571,187 @@ public class AlchemicalWizardry
     	return strings;
     }
     
-    @SideOnly(Side.CLIENT)
-    public void parseTextFile()
-    {
-    	File textFiles = new File("config/BloodMagic/bookDocs");
-    	//if(textFiles.exists())
-    	{
-    		try {
-    			System.out.println("I am in an island of files!");
-    			
-                InputStream input = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardryBooks/books/book.txt");
-
-        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(true);
-                
-                if(input != null)
-                {
-                	DataInputStream in = new DataInputStream(input);
-                	BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        			String strLine;
-        			//Read File Line By Line
-        			
-        			int defMaxLines = 16;
-        			int maxLines = defMaxLines;
-        			
-        			int currentPage = 0;
-        			
-        			int pageIndex = 1;
-        			
-        			String currentTitle = "aw.entry.Magnus";
-        			
-        			String[] strings = new String[1];
-        			strings[0] = "";
-        			
-        			while ((strLine = br.readLine()) != null)   
-        			{
-        				if(strLine.trim().isEmpty())
-        				{
-        					continue;
-        				}
-        				
-        				if(strLine.startsWith("//TITLE ")) //New entry~
-        				{
-        					String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
-    						for(int i=0; i<strings.length; i++)
-    						{
-    							newStrings[i] = strings[i];
-    						}
-    						
-    						currentPage++;
-    						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
-    						newStrings[currentPage] = "";
-    						strings = newStrings;
-    						
-    						pageIndex = 1;
-    						
-    						String title = strLine.replaceFirst("//TITLE ", " ").trim();
-    						currentTitle = "aw.entry." + title;
-    						
-        					continue;
-        				}else if(strLine.startsWith("//SPECIAL "))
-        				{
-        					if(strings[currentPage].isEmpty())
-        					{
-        						String lines = strLine.replaceFirst("//SPECIAL ", "");
-        						Integer ln = Integer.decode(lines);
-        						if(ln != null)
-        						{
-            						maxLines = ln;
-        						}
-        					}else
-        					{
-        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
-        						for(int i=0; i<strings.length; i++)
-        						{
-        							newStrings[i] = strings[i];
-        						}
-        						
-        						currentPage++;
-        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
-        						newStrings[currentPage] = "";
-        						strings = newStrings;
-        					}
-        					
-        					continue;
-        				}
-        				
-        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
-        				
-        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
-        				{
-        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
-            				if(list != null)
-            				{
-                				System.out.println("Number of lines: " + list.size());
-            				}
-        				}
-	        				
-        				String[] cutStrings = strLine.split(" ");
-
-        				for(String word : cutStrings)
-        				{
-        					boolean changePage = false;
-        					int length = word.length();
-        					word = word.replace('\t', ' ');
-        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
-
-        					if(list.size() > maxLines)
-        					{
-        						changePage = true;
-        					}
-        					if(changePage) //Encode into current entry, then move to next entry
-        					{
-        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
-        						for(int i=0; i<strings.length; i++)
-        						{
-        							newStrings[i] = strings[i];
-        						}
-        						
-        						currentPage++;
-
-        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
-        						newStrings[currentPage] = word;
-        						strings = newStrings;
-        						
-        						pageIndex++;
-        						
-        						maxLines = defMaxLines;
-        						
-        						changePage = false;
-        					}else
-        					{
-        						strings[currentPage] = strings[currentPage] + " " + word;
-        					}
-        				}
-        				
-        				int currentLines = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage], 110).size();
-        				while(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " ", 110).size() <= currentLines)
-        				{
-        					{
-            					strings[currentPage] = strings[currentPage] + " ";
-        					}
-        				}
-        				
-    					System.out.println("" + strLine);
-    				}
-        			
-        			strings[currentPage] = currentTitle + "." + pageIndex + "=" + strings[currentPage];
-        			
-        	        File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryBooks");
-        	        if(!bmDirectory.exists())
-        	        {
-        	        	bmDirectory.mkdirs();
-        	        }
-
-        	        File file = new File(bmDirectory, "books.txt");
-//                    if (file.exists() && file.length() > 3L)
-//                    {
-//                        
-//                    }else
-                    {
-                    	PrintWriter writer = new PrintWriter(file);
-            			for(String stri : strings)
-            			{
-            				writer.println(stri);
-            			}
-            			writer.close();
-                    }
-        			
+//    @SideOnly(Side.CLIENT)
+//    public void parseTextFile()
+//    {
+//    	File textFiles = new File("config/BloodMagic/bookDocs");
+//    	//if(textFiles.exists())
+//    	{
+//    		try {
+//    			System.out.println("I am in an island of files!");
+//    			
+//                InputStream input = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardryBooks/books/book.txt");
+//
+//        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(true);
+//                
+//                if(input != null)
+//                {
+//                	DataInputStream in = new DataInputStream(input);
+//                	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//        			String strLine;
+//        			//Read File Line By Line
 //        			
-                }
-                
-        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(false);
-
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
-    }
+//        			int defMaxLines = 16;
+//        			int maxLines = defMaxLines;
+//        			
+//        			int currentPage = 0;
+//        			
+//        			int pageIndex = 1;
+//        			
+//        			String currentTitle = "aw.entry.Magnus";
+//        			
+//        			String[] strings = new String[1];
+//        			strings[0] = "";
+//        			
+//        			while ((strLine = br.readLine()) != null)   
+//        			{
+//        				if(strLine.trim().isEmpty())
+//        				{
+//        					continue;
+//        				}
+//        				
+//        				if(strLine.startsWith("//TITLE ")) //New entry~
+//        				{
+//        					String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
+//    						for(int i=0; i<strings.length; i++)
+//    						{
+//    							newStrings[i] = strings[i];
+//    						}
+//    						
+//    						currentPage++;
+//    						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
+//    						newStrings[currentPage] = "";
+//    						strings = newStrings;
+//    						
+//    						pageIndex = 1;
+//    						
+//    						String title = strLine.replaceFirst("//TITLE ", " ").trim();
+//    						currentTitle = "aw.entry." + title;
+//    						
+//        					continue;
+//        				}else if(strLine.startsWith("//SPECIAL "))
+//        				{
+//        					if(strings[currentPage].isEmpty())
+//        					{
+//        						String lines = strLine.replaceFirst("//SPECIAL ", "");
+//        						Integer ln = Integer.decode(lines);
+//        						if(ln != null)
+//        						{
+//            						maxLines = ln;
+//        						}
+//        					}else
+//        					{
+//        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
+//        						for(int i=0; i<strings.length; i++)
+//        						{
+//        							newStrings[i] = strings[i];
+//        						}
+//        						
+//        						currentPage++;
+//        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
+//        						newStrings[currentPage] = "";
+//        						strings = newStrings;
+//        					}
+//        					
+//        					continue;
+//        				}
+//        				
+//        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
+//        				
+//        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
+//        				{
+//        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
+//            				if(list != null)
+//            				{
+//                				System.out.println("Number of lines: " + list.size());
+//            				}
+//        				}
+//	        				
+//        				String[] cutStrings = strLine.split(" ");
+//
+//        				for(String word : cutStrings)
+//        				{
+//        					boolean changePage = false;
+//        					int length = word.length();
+//        					word = word.replace('\t', ' ');
+//        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
+//
+//        					if(list.size() > maxLines)
+//        					{
+//        						changePage = true;
+//        					}
+//        					if(changePage) //Encode into current entry, then move to next entry
+//        					{
+//        						String[] newStrings = new String[currentPage + 1 + 1]; //Just to show that it is increasing
+//        						for(int i=0; i<strings.length; i++)
+//        						{
+//        							newStrings[i] = strings[i];
+//        						}
+//        						
+//        						currentPage++;
+//
+//        						newStrings[currentPage - 1] = currentTitle + "." + pageIndex + "=" + newStrings[currentPage - 1];
+//        						newStrings[currentPage] = word;
+//        						strings = newStrings;
+//        						
+//        						pageIndex++;
+//        						
+//        						maxLines = defMaxLines;
+//        						
+//        						changePage = false;
+//        					}else
+//        					{
+//        						strings[currentPage] = strings[currentPage] + " " + word;
+//        					}
+//        				}
+//        				
+//        				int currentLines = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage], 110).size();
+//        				while(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " ", 110).size() <= currentLines)
+//        				{
+//        					{
+//            					strings[currentPage] = strings[currentPage] + " ";
+//        					}
+//        				}
+//        				
+//    					System.out.println("" + strLine);
+//    				}
+//        			
+//        			strings[currentPage] = currentTitle + "." + pageIndex + "=" + strings[currentPage];
+//        			
+//        	        File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryBooks");
+//        	        if(!bmDirectory.exists())
+//        	        {
+//        	        	bmDirectory.mkdirs();
+//        	        }
+//
+//        	        File file = new File(bmDirectory, "books.txt");
+////                    if (file.exists() && file.length() > 3L)
+////                    {
+////                        
+////                    }else
+//                    {
+//                    	PrintWriter writer = new PrintWriter(file);
+//            			for(String stri : strings)
+//            			{
+//            				writer.println(stri);
+//            			}
+//            			writer.close();
+//                    }
+//        			
+////        			
+//                }
+//                
+//        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(false);
+//
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    	}
+//    }
     
     @Mod.EventHandler
     public void initCommands(FMLServerStartingEvent event)
