@@ -34,6 +34,9 @@ public class BloodMagicConfiguration
 	public static final String CATEGORY_GAMEPLAY = "gameplay";
 
 
+    public static String[] teleposerBlacklist;
+    public static String[] blacklist = {};
+
 	public static void init(File configFile)
 	{
 		for (String s : DEFAULT_COLOR_LIST.split(";"))
@@ -136,7 +139,9 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledSpawnWard = config.get("Ritual Blacklist", "Ward of Sacrosanctity", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledVeilOfEvil = config.get("Ritual Blacklist", "Veil of Evil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
-		
+
+        teleposerBlacklist = config.get("Teleposer Blacklist", "Blacklist", blacklist, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is: \nmodid:blockname:meta").getStringList();
+
 		String tempDemonConfigs = "Demon Configs";
 		TEDemonPortal.buildingGridDelay = config.get(tempDemonConfigs, "Building Grid Delay", 25).getInt();
 		TEDemonPortal.roadGridDelay = config.get(tempDemonConfigs, "Road Grid Delay", 10).getInt();
