@@ -233,12 +233,12 @@ public class BoundShovel extends ItemSpade implements IBindable
 
     public boolean getActivated(ItemStack par1ItemStack)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
+        if (!par1ItemStack.hasTagCompound())
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
+
+        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
         return itemTag.getBoolean("isActive");
     }
@@ -330,7 +330,7 @@ public class BoundShovel extends ItemSpade implements IBindable
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-        if ("shovel".equals(toolClass))
+        if (getActivated(stack) && "shovel".equals(toolClass))
         {
             return 5;
         }
