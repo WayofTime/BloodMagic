@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -13,9 +10,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SacrificialDagger extends Item
 {
@@ -56,7 +58,21 @@ public class SacrificialDagger extends Item
     {
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            par3EntityPlayer.setHealth(par3EntityPlayer.getHealth() - 2);
+        	SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(par3EntityPlayer, true, true, 2);
+        	if(MinecraftForge.EVENT_BUS.post(evt))
+        	{
+        		return par1ItemStack;
+        	}
+        	
+        	if(evt.shouldDrainHealth)
+        	{
+                par3EntityPlayer.setHealth(par3EntityPlayer.getHealth() - 2);
+        	}
+        	
+        	if(!evt.shouldFillAltar)
+        	{
+        		return par1ItemStack;
+        	}
         }
 
         if (par3EntityPlayer instanceof FakePlayer)

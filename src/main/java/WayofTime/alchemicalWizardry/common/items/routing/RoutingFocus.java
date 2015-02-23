@@ -92,7 +92,7 @@ public class RoutingFocus extends Item
 	
 	public String getFocusDescription()
 	{
-		return "An Enderpearl imbued with blood";
+		return "tooltip.routingFocus.desc";
 	}
     
 	@Override

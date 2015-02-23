@@ -171,7 +171,7 @@ public class UpgradedAltars
 
     public static AltarUpgradeComponent getUpgrades(World world, int x, int y, int z, int altarTier)
     {
-    	if(!world.isRemote)
+    	if(world.isRemote)
     	{
     		return null;
     	}

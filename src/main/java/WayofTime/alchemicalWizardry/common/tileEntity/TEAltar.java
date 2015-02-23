@@ -36,6 +36,8 @@ import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeCompone
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
+import com.ibm.icu.text.MessageFormat;
+
 public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar
 {
     public static final int sizeInv = 1;
@@ -1057,9 +1059,9 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
     public void sendChatInfoToPlayer(EntityPlayer player)
     {
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.currentessence") + " " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.currenttier") + " " + UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord)));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.capacity") + " " + this.getCapacity() + "LP"));
+        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.currentessence"), this.fluid.amount)));
+        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.currenttier"), UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord))));
+        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.capacity"), this.getCapacity())));
     }
 
     public void sendMoreChatInfoToPlayer(EntityPlayer player)
@@ -1070,8 +1072,8 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.progress") + " " + progress + "LP/" + liquidRequired * stackSize + "LP"));
             player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.consumptionrate") + " " + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
         }
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.currentessence") + " " + this.fluid.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.inputtank") + " " + this.fluidInput.amount + "LP"));
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.outputtank") + " " + this.fluidOutput.amount + "LP"));
+        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.currentessence"), this.fluid.amount)));
+        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.inputtank"), this.fluidInput.amount)));
+        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.outputtank"), this.fluidOutput.amount)));
     }
 }

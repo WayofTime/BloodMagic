@@ -379,6 +379,7 @@ tooltip.telepositionfocus.desc=An Enderpearl imbued with blood
 tooltip.voidsigil.desc=Better than a Swiffer!
 tooltip.watersigil.desc=Infinite water, anyone?
 tooltip.routingFocus.limit=Limit:
+tooltip.routingFocus.desc=A focus used to route items
 
 #Messages
 message.altar.capacity=Capacity: %s LP
