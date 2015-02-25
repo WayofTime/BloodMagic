@@ -85,7 +85,7 @@ public class BlockTeleposer extends BlockContainer
         {
             if (playerItem.getItem() instanceof TelepositionFocus)
             {
-            	SoulNetworkHandler.checkAndSetItemOwner(playerItem, player);
+            	SoulNetworkHandler.checkAndSetItemPlayer(playerItem, player);
             	
                 if (playerItem.getTagCompound() == null)
                 {
