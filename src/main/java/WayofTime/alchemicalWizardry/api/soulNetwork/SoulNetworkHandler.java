@@ -379,7 +379,12 @@ public class SoulNetworkHandler
         }
     }
 
-    public static boolean checkAndSetItemOwner(ItemStack item, EntityPlayer player)
+    public static void checkAndSetItemOwner(ItemStack item, EntityPlayer player)
+    {
+        checkAndSetItemPlayer(item, player);
+    }
+
+    public static boolean checkAndSetItemPlayer(ItemStack item, EntityPlayer player)
     {
         if (item.hasTagCompound() && !item.getTagCompound().getString("ownerName").equals("")) return true;
 
