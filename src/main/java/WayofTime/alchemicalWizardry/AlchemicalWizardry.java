@@ -74,6 +74,7 @@ import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
 import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
+import WayofTime.alchemicalWizardry.common.compress.StorageBlockCraftingManager;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketMinorGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.DemonPacketRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
@@ -797,7 +798,6 @@ public class AlchemicalWizardry
         
         this.initDemonPacketRegistiry();
         this.initiateRegistry();
-        this.initCompressionHandlers();
 
         this.blacklistDemons();
 
@@ -1188,6 +1188,9 @@ public class AlchemicalWizardry
 	    
 	    DemonVillageLootRegistry.init();
 	    
+        this.initCompressionHandlers();
+
+	    
 //	    if(parseTextFiles)
 //	    	this.parseTextFile();
 	    
@@ -1496,6 +1499,7 @@ public class AlchemicalWizardry
     
     public void initCompressionHandlers()
     {
+    	StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
     	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 64));
     	CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
     	

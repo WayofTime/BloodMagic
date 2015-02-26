@@ -23,4 +23,8 @@ public interface IBloodAltar
     public float getDislocationMultiplier();
 
     public int getBufferCapacity();
+
+	public void sacrificialDaggerCall(int amount, boolean b);
+
+	public void startCycle();
 }

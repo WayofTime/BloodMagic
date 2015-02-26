@@ -14,8 +14,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -120,7 +120,7 @@ public class SacrificialDagger extends Item
         int posX = (int) Math.round(player.posX - 0.5f);
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
-        TEAltar altarEntity = getAltar(world, posX, posY, posZ);
+        IBloodAltar altarEntity = getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -131,7 +131,7 @@ public class SacrificialDagger extends Item
         altarEntity.startCycle();
     }
 
-    public TEAltar getAltar(World world, int x, int y, int z)
+    public IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity = null;
 
@@ -143,27 +143,27 @@ public class SacrificialDagger extends Item
                 {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if ((tileEntity instanceof TEAltar))
+                    if ((tileEntity instanceof IBloodAltar))
                     {
-                        return (TEAltar) tileEntity;
+                        return (IBloodAltar) tileEntity;
                     }
                 }
 
-                if ((tileEntity instanceof TEAltar))
+                if ((tileEntity instanceof IBloodAltar))
                 {
-                    return (TEAltar) tileEntity;
+                    return (IBloodAltar) tileEntity;
                 }
             }
 
-            if ((tileEntity instanceof TEAltar))
+            if ((tileEntity instanceof IBloodAltar))
             {
-                return (TEAltar) tileEntity;
+                return (IBloodAltar) tileEntity;
             }
         }
 
-        if ((tileEntity instanceof TEAltar))
+        if ((tileEntity instanceof IBloodAltar))
         {
-            return (TEAltar) tileEntity;
+            return (IBloodAltar) tileEntity;
         }
 
         return null;

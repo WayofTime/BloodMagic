@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.compress.CompressionHandler;
 import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
@@ -30,7 +29,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 			for(int i=2; i<=3; i++)
 			{
 				ItemStack stacky = getRecipe(invStack, world, i);
-				if(isResultStackReversible(stacky, i, world))
+				if(stacky!=null)
 				{
 					int threshold = CompressionRegistry.getItemThreshold(invStack);
 
@@ -98,7 +97,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 		return needed;
 	}
 	
-	public boolean isResultStackReversible(ItemStack stack, int gridSize, World world)
+	public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world)
 	{
 		if(stack == null)
 		{
@@ -114,7 +113,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 		
 		inventory.setInventorySlotContents(0, stack);
 
-		ItemStack returnStack = CraftingManager.getInstance().findMatchingRecipe(inventory, world);
+		ItemStack returnStack = StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
 		if(returnStack == null)
 		{
 			return false;
@@ -140,7 +139,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 		}
 	}
 	
-	public ItemStack getRecipe(ItemStack stack, World world, int gridSize)
+	public static ItemStack getRecipe(ItemStack stack, World world, int gridSize)
 	{
 		InventoryCrafting inventory = new InventoryCrafting(new Container()
 	    {
@@ -154,25 +153,25 @@ public class AdvancedCompressionHandler extends CompressionHandler
 			inventory.setInventorySlotContents(i, stack);
 		}
 		
-		return CraftingManager.getInstance().findMatchingRecipe(inventory, world);
+		return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world);
 	}
 	
-	public boolean has22Recipe(ItemStack stack, World world)
+	public static boolean has22Recipe(ItemStack stack, World world)
 	{
 		return get22Recipe(stack, world) != null;
 	}
 	
-	public ItemStack get22Recipe(ItemStack stack, World world)
+	public static ItemStack get22Recipe(ItemStack stack, World world)
 	{
 		return getRecipe(stack, world, 2);
 	}
 	
-	public boolean has33Recipe(ItemStack stack, World world)
+	public static boolean has33Recipe(ItemStack stack, World world)
 	{
-		return get22Recipe(stack, world) != null;
+		return get33Recipe(stack, world) != null;
 	}
 	
-	public ItemStack get33Recipe(ItemStack stack, World world)
+	public static ItemStack get33Recipe(ItemStack stack, World world)
 	{
 		return getRecipe(stack, world, 3);
 	}
