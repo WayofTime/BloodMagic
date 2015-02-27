@@ -11,10 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogicLimitDefault;
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogicLimitIgnMeta;
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogicLimitMatchNBT;
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogicLimitModItems;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitDefault;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitIgnMeta;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitMatchNBT;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

@@ -1,8 +1,8 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
-import WayofTime.alchemicalWizardry.api.RoutingFocusLogicModItems;
 import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicModItems;
 
 public class OutputRoutingFocusModItems extends OutputRoutingFocus
 {

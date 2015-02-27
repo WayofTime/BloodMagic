@@ -1,13 +1,13 @@
-package WayofTime.alchemicalWizardry.api;
+package WayofTime.alchemicalWizardry.common.routing;
 
 import net.minecraft.item.ItemStack;
 import WayofTime.alchemicalWizardry.common.items.routing.ILimitedRoutingFocus;
 
-public class RoutingFocusLogicLimitModItems extends RoutingFocusLogicModItems implements ILimitingLogic
+public class RoutingFocusLogicLimitDefault extends RoutingFocusLogicLimit
 {
 	public int limit = 0;
 	
-	public RoutingFocusLogicLimitModItems(ItemStack stack)
+	public RoutingFocusLogicLimitDefault(ItemStack stack)
 	{
 		if(stack != null && stack.getItem() instanceof ILimitedRoutingFocus)
 		{

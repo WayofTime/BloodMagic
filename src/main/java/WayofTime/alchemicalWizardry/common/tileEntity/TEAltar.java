@@ -36,8 +36,6 @@ import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeCompone
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-import com.ibm.icu.text.MessageFormat;
-
 public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar
 {
     public static final int sizeInv = 1;
@@ -70,6 +68,8 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
     private int lockdownDuration;
     private int demonBloodDuration;
+    
+    private int cooldownAfterCrafting = 0;
 
     public TEAltar()
     {
@@ -192,6 +192,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         lockdownDuration = par1NBTTagCompound.getInteger("lockdownDuration");
         accelerationUpgrades = par1NBTTagCompound.getInteger("accelerationUpgrades");
         demonBloodDuration = par1NBTTagCompound.getInteger("demonBloodDuration");
+        cooldownAfterCrafting = par1NBTTagCompound.getInteger("cooldownAfterCrafting");
     }
 
     public void setMainFluid(FluidStack fluid)
@@ -271,6 +272,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         par1NBTTagCompound.setInteger("lockdownDuration", lockdownDuration);
         par1NBTTagCompound.setInteger("accelerationUpgrades", this.accelerationUpgrades);
         par1NBTTagCompound.setInteger("demonBloodDuration", demonBloodDuration);
+        par1NBTTagCompound.setInteger("cooldownAfterCrafting", cooldownAfterCrafting);
     }
 
     @Override
@@ -646,13 +648,17 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             this.fluid.amount -= fluidOutputted;
         }
 
-        if (worldObj.getWorldTime() % 100 == 0)
+        if (worldObj.getWorldTime() % 100 == 0 && this.cooldownAfterCrafting <= 0)
         {
             startCycle();
         }
 
         if (!isActive)
         {
+        	if(cooldownAfterCrafting > 0)
+        	{
+        		cooldownAfterCrafting--;
+        	}
             return;
         }
 
@@ -1076,4 +1082,13 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.inputtank"), this.fluidInput.amount)));
         player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.outputtank"), this.fluidOutput.amount)));
     }
+
+	@Override
+	public void requestPauseAfterCrafting(int amount) 
+	{
+		if(this.isActive)
+		{
+			this.cooldownAfterCrafting = amount;
+		}
+	}
 }

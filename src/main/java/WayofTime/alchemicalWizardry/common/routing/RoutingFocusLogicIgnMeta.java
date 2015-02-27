@@ -1,5 +1,6 @@
-package WayofTime.alchemicalWizardry.api;
+package WayofTime.alchemicalWizardry.common.routing;
 
+import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
 import net.minecraft.item.ItemStack;
 
 public class RoutingFocusLogicIgnMeta extends RoutingFocusLogic
