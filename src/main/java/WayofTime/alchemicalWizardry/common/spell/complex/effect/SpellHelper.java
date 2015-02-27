@@ -313,25 +313,10 @@ public class SpellHelper
         return isFakePlayer(player);
     }
 
+	private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
     public static boolean isFakePlayer(EntityPlayer player)
     {
-        if (player instanceof FakePlayer || SpellHelper.getUsername(player).equals("[CoFH]") || SpellHelper.getUsername(player).startsWith("[Thaumcraft"))
-        {
-            return true;
-        }
-
-        String str = player.getClass().getSimpleName();
-        if (str.contains("GC"))
-        {
-            return false;
-        }
-
-        if (player.getClass().equals(EntityPlayerMP.class))
-        {
-            return false;
-        }
-
-        return false;
+        return player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(name).matches();
     }
 
     public static void smashBlock(World world, int posX, int posY, int posZ)
