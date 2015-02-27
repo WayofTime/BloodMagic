@@ -207,6 +207,7 @@ item.outputRoutingFocus.default.name=Default Output Routing Focus
 item.outputRoutingFocus.modItem.name=Output Routing Focus (ModItem)
 item.outputRoutingFocus.ignMeta.name=Output Routing Focus (Ignore Meta)
 item.outputRoutingFocus.matchNBT.name=Output Routing Focus (MatchNBT)
+item.outputRoutingFocus.global.name=Output Routing Focus (Global)
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic

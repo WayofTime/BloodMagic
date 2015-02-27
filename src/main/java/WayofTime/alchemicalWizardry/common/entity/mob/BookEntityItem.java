@@ -43,7 +43,6 @@ public class BookEntityItem extends EntityItem
 	public void onUpdate()
 	{
 		super.onUpdate();
-		System.out.println("I is alive");
 	}
 	
 	@Override

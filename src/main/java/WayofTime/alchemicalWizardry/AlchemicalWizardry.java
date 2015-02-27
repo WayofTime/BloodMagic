@@ -1066,6 +1066,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 1), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', new ItemStack(Blocks.sandstone));
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 2), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', new ItemStack(Items.dye, 1, craftingConstant));
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 3), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', obsidianStack);
+        GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 4), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', stringStack);
 
         
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.flint, 2, 0), 1, new ItemStack[]{new ItemStack(Blocks.gravel), new ItemStack(Items.flint)}, 1);

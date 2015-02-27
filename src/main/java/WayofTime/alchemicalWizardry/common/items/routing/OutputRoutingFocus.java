@@ -12,6 +12,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitDefault;
+import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitGlobal;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitIgnMeta;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitMatchNBT;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitModItems;
@@ -23,6 +24,7 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
 	IIcon modItemIcon;
 	IIcon ignMetaIcon;
 	IIcon matchNBTIcon;
+	IIcon globalIcon;
 	
 	public OutputRoutingFocus()
 	{
@@ -52,6 +54,7 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
         this.modItemIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusModItems");
         this.ignMetaIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusIgnMeta");
         this.matchNBTIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusMatchNBT");
+        this.globalIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusGlobal");
     }
 	
 	@SideOnly(Side.CLIENT)
@@ -67,6 +70,8 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
 			return this.ignMetaIcon;
 		case 3:
 			return this.matchNBTIcon;
+		case 4:
+			return this.globalIcon;
 		}
         return this.itemIcon;
     }
@@ -90,6 +95,9 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
 		case 3:
 			addedString = "matchNBT";
 			break;
+		case 4:
+			addedString = "global";
+			break;
 		}
 		
 		return super.getUnlocalizedName() + "." + addedString;
@@ -99,7 +107,7 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item id, CreativeTabs creativeTab, List list)
     {
-        for (int meta = 0; meta < 4; ++meta)
+        for (int meta = 0; meta < 5; ++meta)
         {
             list.add(new ItemStack(id, 1, meta));
         }
@@ -120,6 +128,8 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
 				return new RoutingFocusLogicLimitIgnMeta(itemStack);
 			case 3:
 				return new RoutingFocusLogicLimitMatchNBT(itemStack);
+			case 4:
+				return new RoutingFocusLogicLimitGlobal(itemStack);
 			}
 		}
 		
