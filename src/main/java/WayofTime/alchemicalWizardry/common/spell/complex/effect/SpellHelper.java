@@ -316,7 +316,7 @@ public class SpellHelper
 	private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
     public static boolean isFakePlayer(EntityPlayer player)
     {
-        return player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(name).matches();
+        return player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(SpellHelper.getUsername(player)).matches();
     }
 
     public static void smashBlock(World world, int posX, int posY, int posZ)
