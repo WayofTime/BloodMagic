@@ -68,7 +68,7 @@ public class DaggerOfSacrifice extends EnergyItems
         	return false;
         }
 
-        if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityWither || par2EntityLivingBase instanceof EntityDragon || par2EntityLivingBase instanceof EntityPlayer || par2EntityLivingBase instanceof IBossDisplayData)
+        if (par2EntityLivingBase.isChild() || par2EntityLivingBase instanceof EntityPlayer || par2EntityLivingBase instanceof IBossDisplayData)
         {
             return false;
         }
@@ -85,88 +85,15 @@ public class DaggerOfSacrifice extends EnergyItems
         	((IDemon)par2EntityLivingBase).setDropCrystal(false);
         	this.findAndNotifyAltarOfDemon(world, par2EntityLivingBase);
         }
-        
-        if (par2EntityLivingBase instanceof EntityVillager && !par2EntityLivingBase.isChild())
+
+        int lifeEssence = 500;
+        if (par2EntityLivingBase instanceof EntityVillager) lifeEssence = 2000;
+        else if (par2EntityLivingBase instanceof EntitySlime) lifeEssence = 150;
+        else if (par2EntityLivingBase instanceof EntityEnderman) lifeEssence = 200;
+        else if (par2EntityLivingBase instanceof EntityAnimal) lifeEssence = 250;
+
+        if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, lifeEssence))
         {
-            if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, 2000))
-            {
-                double posX = par2EntityLivingBase.posX;
-                double posY = par2EntityLivingBase.posY;
-                double posZ = par2EntityLivingBase.posZ;
-
-
-                for (int i = 0; i < 8; i++)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
-                }
-
-                par2EntityLivingBase.setHealth(-1);
-                par2EntityLivingBase.onDeath(DamageSource.generic);
-                return false;
-            }
-        }
-
-        if (par2EntityLivingBase instanceof EntitySlime && !par2EntityLivingBase.isChild())
-        {
-            if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, 150))
-            {
-                double posX = par2EntityLivingBase.posX;
-                double posY = par2EntityLivingBase.posY;
-                double posZ = par2EntityLivingBase.posZ;
-
-                for (int i = 0; i < 8; i++)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
-                }
-
-                par2EntityLivingBase.setHealth(-1);
-                par2EntityLivingBase.onDeath(DamageSource.generic);
-                return false;
-            }
-        }
-
-        if (par2EntityLivingBase instanceof EntityEnderman && !par2EntityLivingBase.isChild())
-        {
-            if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, 200))
-            {
-                double posX = par2EntityLivingBase.posX;
-                double posY = par2EntityLivingBase.posY;
-                double posZ = par2EntityLivingBase.posZ;
-
-                for (int i = 0; i < 8; i++)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
-                }
-
-                par2EntityLivingBase.setHealth(-1);
-                par2EntityLivingBase.onDeath(DamageSource.generic);
-                return false;
-            }
-        }
-
-        if (par2EntityLivingBase instanceof EntityAnimal && !par2EntityLivingBase.isChild())
-        {
-            if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, 250))
-            {
-                double posX = par2EntityLivingBase.posX;
-                double posY = par2EntityLivingBase.posY;
-                double posZ = par2EntityLivingBase.posZ;
-
-                for (int i = 0; i < 8; i++)
-                {
-                    SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
-                }
-
-                par2EntityLivingBase.setHealth(-1);
-                par2EntityLivingBase.onDeath(DamageSource.generic);
-                return false;
-            }
-        }
-
-        if (findAndFillAltar(par2EntityLivingBase.worldObj, par2EntityLivingBase, 500))
-        {
-            
-        	
             double posX = par2EntityLivingBase.posX;
             double posY = par2EntityLivingBase.posY;
             double posZ = par2EntityLivingBase.posZ;
@@ -178,7 +105,6 @@ public class DaggerOfSacrifice extends EnergyItems
 
             par2EntityLivingBase.setHealth(-1);
             par2EntityLivingBase.onDeath(DamageSource.generic);
-            return false;
         }
 
         return false;
