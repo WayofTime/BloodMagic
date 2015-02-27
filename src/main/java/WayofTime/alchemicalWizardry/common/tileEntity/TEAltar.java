@@ -69,7 +69,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     private int lockdownDuration;
     private int demonBloodDuration;
     
-    private int cooldownAfterCrafting = 0;
+    private int cooldownAfterCrafting = 500;
 
     public TEAltar()
     {
@@ -584,6 +584,11 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             this.lockdownDuration--;
         }
 
+        if(worldObj.isRemote)
+        {
+        	return;
+        }
+        
         if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
         {
             {
@@ -647,8 +652,8 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             this.fluidOutput.amount += fluidOutputted;
             this.fluid.amount -= fluidOutputted;
         }
-
-        if (worldObj.getWorldTime() % 100 == 0 && this.cooldownAfterCrafting <= 0)
+        
+        if (worldObj.getWorldTime() % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
         {
             startCycle();
         }
@@ -862,11 +867,6 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
         this.checkAndSetAltar();
 
         if (fluid == null || fluid.amount <= 0)
-        {
-            return;
-        }
-
-        if (getStackInSlot(0) == null)
         {
             return;
         }

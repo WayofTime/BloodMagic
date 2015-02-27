@@ -33,6 +33,11 @@ public class AltarRecipeRegistry
 
     public static boolean isRequiredItemValid(ItemStack testItem, int currentTierAltar)
     {
+    	if(testItem == null)
+    	{
+    		return false;
+    	}
+    	
         for (AltarRecipe recipe : altarRecipes)
         {
             if (recipe.doesRequiredItemMatch(testItem, currentTierAltar))
