@@ -35,7 +35,7 @@ public class StorageBlockCraftingManager
     		{
     			IRecipe recipe = (IRecipe)obj;
     			ItemStack outputStack = recipe.getRecipeOutput();
-    			if(outputStack == null)
+    			if(outputStack == null || outputStack.getItem() == null)
     			{
     				continue;
     			}
