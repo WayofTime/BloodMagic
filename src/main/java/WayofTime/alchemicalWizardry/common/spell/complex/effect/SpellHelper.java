@@ -462,7 +462,7 @@ public class SpellHelper
 
         boolean tagsEqual = ItemStack.areItemStackTagsEqual(stack1, stack2);
 
-        return stack1.getItem() == stack2.getItem() && tagsEqual && stack1.getItemDamage() == stack2.getItemDamage() && Math.min(stack2.getMaxStackSize() - stack2.stackSize, stack1.stackSize) > 0;
+        return stack1.getItem() == stack2.getItem() && tagsEqual && stack1.getItemDamage() == stack2.getItemDamage();
     }
 
     /**
@@ -605,13 +605,13 @@ public class SpellHelper
         	}
         	
         	ItemStack invStack = inventory.getStackInSlot(i);
-        	
+        	        	
         	if(invStack != null && canCombine(stack, invStack))
         	{
         		numberMatching += invStack.stackSize;
         	}
         }
-        
+                
         if(numberMatching >= limit)
         {
         	return stack;
