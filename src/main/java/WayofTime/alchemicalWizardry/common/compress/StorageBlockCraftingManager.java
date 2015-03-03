@@ -8,7 +8,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
@@ -29,12 +28,13 @@ public class StorageBlockCraftingManager
     
     public void addStorageBlockRecipes()
     {
-    	List list = CraftingManager.getInstance().getRecipeList();
+    	this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingOptions();
+    	
     	List<IRecipe> tempRecipeList = new LinkedList();
     	
 		World world = DimensionManager.getWorld(0);
 		
-		for(Object obj : list)
+		for(Object obj : this.recipes)
 		{
 			if(obj instanceof IRecipe)
 			{
@@ -93,11 +93,11 @@ public class StorageBlockCraftingManager
 					tempRecipeList.add(recipe);
 					continue;
 				}
-				
-				
 			}
 		}
-				
+						
+		List<IRecipe> tempRecipeList2 = new LinkedList();
+		
     	for(Object obj : tempRecipeList)
     	{
     		if(obj instanceof IRecipe)
@@ -111,14 +111,16 @@ public class StorageBlockCraftingManager
     			    			    			
     			if(isResultStackReversible(outputStack, 2, world, tempRecipeList) || isResultStackReversible(outputStack, 3, world, tempRecipeList))
     			{
-    				recipes.add(recipe);
+    				tempRecipeList2.add(recipe);
     				AlchemicalWizardry.logger.info("Now adding recipe for " + outputStack + " to the compression handler.");
     			}
     		}
     	}
+    	
+    	this.recipes = tempRecipeList2;
     }
     
-    public static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List list)
+    private static boolean isResultStackReversible(ItemStack stack, int gridSize, World world, List list)
 	{
 		if(stack == null)
 		{
@@ -160,7 +162,7 @@ public class StorageBlockCraftingManager
 		}
 	}
     
-    public static ItemStack getRecipe(ItemStack stack, World world, int gridSize, List list)
+    private static ItemStack getRecipe(ItemStack stack, World world, int gridSize, List list)
 	{
 		InventoryCrafting inventory = new InventoryCrafting(new Container()
 	    {
@@ -177,22 +179,22 @@ public class StorageBlockCraftingManager
 		return StorageBlockCraftingManager.getInstance().findMatchingRecipe(inventory, world, list);
 	}
 	
-	public static boolean has22Recipe(ItemStack stack, World world, List list)
+    private static boolean has22Recipe(ItemStack stack, World world, List list)
 	{
 		return get22Recipe(stack, world, list) != null;
 	}
 	
-	public static ItemStack get22Recipe(ItemStack stack, World world, List list)
+    private static ItemStack get22Recipe(ItemStack stack, World world, List list)
 	{
 		return getRecipe(stack, world, 2, list);
 	}
 	
-	public static boolean has33Recipe(ItemStack stack, World world, List list)
+    private static boolean has33Recipe(ItemStack stack, World world, List list)
 	{
 		return get33Recipe(stack, world, list) != null;
 	}
 	
-	public static ItemStack get33Recipe(ItemStack stack, World world, List list)
+    private static ItemStack get33Recipe(ItemStack stack, World world, List list)
 	{
 		return getRecipe(stack, world, 3, list);
 	}
@@ -202,7 +204,7 @@ public class StorageBlockCraftingManager
 		return this.findMatchingRecipe(p_82787_1_, p_82787_2_, this.recipes);
 	}
 	
-	public ItemStack findMatchingRecipe(InventoryCrafting p_82787_1_, World p_82787_2_, List list)
+	private ItemStack findMatchingRecipe(InventoryCrafting p_82787_1_, World p_82787_2_, List list)
     {
         int i = 0;
         ItemStack itemstack = null;
