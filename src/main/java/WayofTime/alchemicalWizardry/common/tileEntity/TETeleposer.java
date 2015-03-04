@@ -246,7 +246,7 @@ public class TETeleposer extends TEInventory
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack)
     {
-        return slot == 0;
+        return itemstack.getItem() instanceof TelepositionFocus;
     }
 
 }
