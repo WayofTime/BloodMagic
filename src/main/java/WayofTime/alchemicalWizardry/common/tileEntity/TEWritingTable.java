@@ -27,120 +27,25 @@ import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEWritingTable extends TileEntity implements IInventory, ISidedInventory
+public class TEWritingTable extends TEInventory implements ISidedInventory
 {
-    private ItemStack[] inv;
+	public static final int sizeInv = 7;
+	
     private int progress;
     private int progressNeeded = 100;
     private int amountUsed;
 
     private int accelerationTime;
 
-    public static final int sizeInv = 7;
-
     public TEWritingTable()
     {
-        inv = new ItemStack[7];
-    }
-
-    @Override
-    public int getSizeInventory()
-    {
-        return inv.length;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slot)
-    {
-        return inv[slot];
-    }
-
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack stack)
-    {
-        inv[slot] = stack;
-
-        if (stack != null && stack.stackSize > getInventoryStackLimit())
-        {
-            stack.stackSize = getInventoryStackLimit();
-        }
-    }
-
-    @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
-        ItemStack stack = getStackInSlot(slot);
-
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
-                setInventorySlotContents(slot, null);
-            } else
-            {
-                stack = stack.splitStack(amt);
-
-                if (stack.stackSize == 0)
-                {
-                    setInventorySlotContents(slot, null);
-                }
-            }
-        }
-
-        return stack;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
-        ItemStack stack = getStackInSlot(slot);
-
-        if (stack != null)
-        {
-            setInventorySlotContents(slot, null);
-        }
-
-        return stack;
-    }
-
-    @Override
-    public int getInventoryStackLimit()
-    {
-        return 64;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
-    {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
-    }
-
-    @Override
-    public void openInventory()
-    {
-    }
-
-    @Override
-    public void closeInventory()
-    {
+        super(sizeInv);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tagCompound)
     {
         super.readFromNBT(tagCompound);
-        NBTTagList tagList = tagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
-
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-            byte slot = tag.getByte("Slot");
-
-            if (slot >= 0 && slot < inv.length)
-            {
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-            }
-        }
 
         progress = tagCompound.getInteger("progress");
         amountUsed = tagCompound.getInteger("amountUsed");
@@ -152,22 +57,7 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
     public void writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
-        NBTTagList itemList = new NBTTagList();
-
-        for (int i = 0; i < inv.length; i++)
-        {
-            ItemStack stack = inv[i];
-
-            if (stack != null)
-            {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                stack.writeToNBT(tag);
-                itemList.appendTag(tag);
-            }
-        }
-
-        tagCompound.setTag("Inventory", itemList);
+        
         tagCompound.setInteger("progress", progress);
         tagCompound.setInteger("amountUsed", amountUsed);
 
@@ -178,12 +68,6 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
     public String getInventoryName()
     {
         return "aw.TEWritingTable";
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
     }
 
     @Override
