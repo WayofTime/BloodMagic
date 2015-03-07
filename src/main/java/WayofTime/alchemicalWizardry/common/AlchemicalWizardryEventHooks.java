@@ -548,6 +548,14 @@ public class AlchemicalWizardryEventHooks
 				double delY = projectile.posY - entity.posY;
 				double delZ = projectile.posZ - entity.posZ;
 
+				double angle = (delX*projectile.motionX + delY*projectile.motionY + delZ*projectile.motionZ)/
+						(Math.sqrt(delX * delX + delY * delY + delZ * delZ)*Math.sqrt(projectile.motionX*projectile.motionX + projectile.motionY* projectile.motionY + projectile.motionZ*projectile.motionZ));
+				angle = Math.acos(angle);
+				if (angle < 3*(Math.PI/4)) {
+					//angle is < 135 degrees
+					continue;
+				}
+
 				if (throwingEntity != null)
 				{
 					delX = -projectile.posX + throwingEntity.posX;
