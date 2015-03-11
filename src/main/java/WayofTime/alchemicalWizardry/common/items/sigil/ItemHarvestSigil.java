@@ -185,6 +185,10 @@ public class ItemHarvestSigil extends EnergyItems implements IHolding, ArmourUpg
 	@Override
 	public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) 
 	{
+		if(world.isRemote)
+		{
+			return;
+		}
 		int range = 3;
         int verticalRange = 1;
         int posX = (int) Math.round(player.posX - 0.5f);

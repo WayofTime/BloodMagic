@@ -95,11 +95,37 @@ public class SigilOfHolding extends EnergyItems
             }
         }
     }
+    
+    @Override
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    {
+        if (checkAndSetItemOwner(par1ItemStack, par2EntityPlayer))
+        {
+        	int currentSlot = this.getSelectedSlot(par1ItemStack);
+            ItemStack[] inv = getInternalInventory(par1ItemStack);
+
+            if (inv == null)
+            {
+                return false;
+            }
+
+            ItemStack itemUsed = inv[currentSlot];
+
+            if (itemUsed == null)
+            {
+                return false;
+            }
+
+            itemUsed.getItem().onItemUse(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10);
+            saveInternalInventory(par1ItemStack, inv);
+        }
+        
+        return true;
+    }
 
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        //TODO Might be a good idea to have this item need to be in the player's first slot
         if (checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
             if (par3EntityPlayer.isSneaking())

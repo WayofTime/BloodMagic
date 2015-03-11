@@ -171,6 +171,10 @@ public class ItemPackRatSigil extends EnergyItems implements IHolding, ArmourUpg
 	@Override
 	public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) 
 	{
+		if(world.isRemote)
+		{
+			return;
+		}
 		ItemStack stack = CompressionRegistry.compressInventory(player.inventory.mainInventory, world);
     	if(stack != null)
     	{
