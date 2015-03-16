@@ -563,97 +563,94 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             return;
         }
 
-        if (worldTime % 1 == 0)
+        if (!canBeFilled)
         {
-            if (!canBeFilled)
+            if (fluid != null && fluid.amount >= 1)
             {
-                if (fluid != null && fluid.amount >= 1)
+                int stackSize = getStackInSlot(0).stackSize;
+                int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+
+                if (liquidDrained > (liquidRequired * stackSize - progress))
                 {
-                    int stackSize = getStackInSlot(0).stackSize;
-                    int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
-
-                    if (liquidDrained > (liquidRequired * stackSize - progress))
-                    {
-                        liquidDrained = liquidRequired * stackSize - progress;
-                    }
-
-                    fluid.amount = fluid.amount - liquidDrained;
-                    progress += liquidDrained;
-
-                    if (worldTime % 4 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
-                    }
-
-                    if (progress >= liquidRequired * stackSize)
-                    {
-                        ItemStack result = null;
-                        result = AltarRecipeRegistry.getItemForItemAndTier(this.getStackInSlot(0), this.upgradeLevel);
-                        if (result != null)
-                        {
-                            result.stackSize *= stackSize;
-                        }
-
-                        setInventorySlotContents(0, result);
-                        progress = 0;
-
-                        for (int i = 0; i < 8; i++)
-                        {
-                            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
-                        }
-                        this.isActive = false;
-                    }
-                } else if (progress > 0)
-                {
-                    progress -= (int) (efficiencyMultiplier * drainRate);
-
-                    if (worldTime % 2 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
-                    }
+                    liquidDrained = liquidRequired * stackSize - progress;
                 }
-            } else
+
+                fluid.amount = fluid.amount - liquidDrained;
+                progress += liquidDrained;
+
+                if (worldTime % 4 == 0)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                }
+
+                if (progress >= liquidRequired * stackSize)
+                {
+                    ItemStack result = null;
+                    result = AltarRecipeRegistry.getItemForItemAndTier(this.getStackInSlot(0), this.upgradeLevel);
+                    if (result != null)
+                    {
+                        result.stackSize *= stackSize;
+                    }
+
+                    setInventorySlotContents(0, result);
+                    progress = 0;
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
+                    }
+                    this.isActive = false;
+                }
+            } else if (progress > 0)
             {
-                ItemStack returnedItem = getStackInSlot(0);
+                progress -= (int) (efficiencyMultiplier * drainRate);
 
-                if (!(returnedItem.getItem() instanceof IBloodOrb))
+                if (worldTime % 2 == 0)
                 {
-                    return;
-                }
-
-                IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
-                NBTTagCompound itemTag = returnedItem.getTagCompound();
-
-                if (itemTag == null)
-                {
-                    return;
-                }
-
-                String ownerName = itemTag.getString("ownerName");
-
-                if (ownerName.equals(""))
-                {
-                    return;
-                }
-
-                if (fluid != null && fluid.amount >= 1)
-                {
-                    int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
-
-                    int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
-
-                    fluid.amount = fluid.amount - drain;
-
-                    if (worldTime % 4 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
-                    }
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
                 }
             }
-            if (worldObj != null)
+        } else
+        {
+            ItemStack returnedItem = getStackInSlot(0);
+
+            if (!(returnedItem.getItem() instanceof IBloodOrb))
             {
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                return;
             }
+
+            IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
+            NBTTagCompound itemTag = returnedItem.getTagCompound();
+
+            if (itemTag == null)
+            {
+                return;
+            }
+
+            String ownerName = itemTag.getString("ownerName");
+
+            if (ownerName.equals(""))
+            {
+                return;
+            }
+
+            if (fluid != null && fluid.amount >= 1)
+            {
+                int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+
+                int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
+
+                fluid.amount = fluid.amount - drain;
+
+                if (worldTime % 4 == 0)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                }
+            }
+        }
+        if (worldObj != null)
+        {
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
