@@ -9,6 +9,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
@@ -19,6 +20,10 @@ public abstract class OmegaArmour extends BoundArmour
 {
 	public OmegaParadigm paradigm;
 	public Reagent reagent;
+	protected boolean storeBiomeID = false;
+	protected boolean storeDimensionID = false;
+	protected boolean storeYLevel = false;
+	protected boolean storeSeesSky = false;
 	
 	public OmegaArmour(int armorType) 
 	{
@@ -30,6 +35,11 @@ public abstract class OmegaArmour extends BoundArmour
 		this.paradigm = paradigm;
 	}
 	
+	public OmegaParadigm getOmegaParadigm()
+	{
+		return this.paradigm;
+	}
+	
 	public void setReagent(Reagent reagent)
 	{
 		this.reagent = reagent;
@@ -39,6 +49,28 @@ public abstract class OmegaArmour extends BoundArmour
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
 		super.onArmorTick(world, player, itemStack);
+		
+		if(this.storeBiomeID())
+		{
+			int xCoord = (int) Math.floor(player.posX);
+			int zCoord = (int) Math.floor(player.posZ);
+			
+			BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
+			if(biome != null)
+			{
+				this.setBiomeIDStored(itemStack, biome.biomeID);
+			}
+		}
+		
+		if(this.storeDimensionID())
+		{
+			this.setDimensionIDStored(itemStack, world.provider.dimensionId);
+		}
+		
+		if(this.storeYLevel())
+		{
+			this.setYLevelStored(itemStack, (int) Math.floor(player.posY));
+		}
 		
 		if(this.armorType == 1)
 		{
@@ -221,5 +253,97 @@ public abstract class OmegaArmour extends BoundArmour
     public boolean hasOmegaStalling(ItemStack stack)
     {
     	return this.getOmegaStallingDuration(stack) > 0;
+    }
+    
+    public boolean storeBiomeID()
+    {
+    	return this.storeBiomeID;
+    }
+    
+    public boolean storeDimensionID()
+    {
+    	return this.storeDimensionID;
+    }
+    
+    public boolean storeYLevel()
+    {
+    	return this.storeYLevel;
+    }
+    
+    public boolean storeSeesSky()
+    {
+    	return this.storeSeesSky;
+    }
+    
+    public int getBiomeIDStored(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	return tag.getInteger("biomeID");
+    }
+    
+    public void setBiomeIDStored(ItemStack stack, int id)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	tag.setInteger("biomeID", id);
+    }
+    
+    public int getDimensionIDStored(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	return tag.getInteger("dimensionID");
+    }
+    
+    public void setDimensionIDStored(ItemStack stack, int id)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	tag.setInteger("dimensionID", id);
+    }
+    
+    public int getYLevelStored(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	return tag.getInteger("yLevel");
+    }
+    
+    public void setYLevelStored(ItemStack stack, int level)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	tag.setInteger("yLevel", level);
     }
 }

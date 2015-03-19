@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,25 +210,25 @@ public class BookParser
 					iEntryList.clear();
 					//
         			
-        	        File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryBooks");
-        	        if(!bmDirectory.exists())
-        	        {
-        	        	bmDirectory.mkdirs();
-        	        }
-
-        	        File file = new File(bmDirectory, "books.txt");
-//                    if (file.exists() && file.length() > 3L)
+//        	        File bmDirectory = new File("src/main/resources/assets/alchemicalwizardryBooks");
+//        	        if(!bmDirectory.exists())
+//        	        {
+//        	        	bmDirectory.mkdirs();
+//        	        }
+//
+//        	        File file = new File(bmDirectory, "books.txt");
+////                    if (file.exists() && file.length() > 3L)
+////                    {
+////                        
+////                    }else
 //                    {
-//                        
-//                    }else
-                    {
-                    	PrintWriter writer = new PrintWriter(file);
-            			for(String stri : strings)
-            			{
-            				writer.println(stri);
-            			}
-            			writer.close();
-                    }
+//                    	PrintWriter writer = new PrintWriter(file);
+//            			for(String stri : strings)
+//            			{
+//            				writer.println(stri);
+//            			}
+//            			writer.close();
+//                    }
         			
 //        			
                 }

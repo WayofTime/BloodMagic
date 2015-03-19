@@ -43,7 +43,7 @@ public class RitualEffectOmegaTest extends RitualEffect
         
         for(EntityPlayer player : playerList)
         {        	
-        	Reagent reagent = ReagentRegistry.aquasalusReagent;
+        	Reagent reagent = ReagentRegistry.aetherReagent;
         	
         	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(reagent);
         	waterParadigm.convertPlayerArmour(player);

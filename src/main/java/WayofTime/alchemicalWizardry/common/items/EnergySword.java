@@ -1,8 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,8 +17,11 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EnergySword extends ItemSword
 {
@@ -75,11 +77,29 @@ public class EnergySword extends ItemSword
             return this.passiveIcon;
         }
     }
+    
+    private OmegaParadigm getOmegaParadigmOfWeilder(EntityPlayer player)
+    {
+    	return OmegaRegistry.getOmegaParadigmOfWeilder(player);
+    }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
-        return !getActivated(stack);
+    	boolean isActive = getActivated(stack);
+    	if(isActive && !player.worldObj.isRemote)
+    	{
+    		OmegaParadigm parad = this.getOmegaParadigmOfWeilder(player);
+    		
+    		if(parad != null && parad.isPlayerWearingFullSet(player))
+    		{
+    			if(!parad.onBoundSwordLeftClickEntity(stack, player, entity))
+    			{
+    				return true;
+    			}
+    		}
+    	}
+        return !isActive;
     }
 
     @Override

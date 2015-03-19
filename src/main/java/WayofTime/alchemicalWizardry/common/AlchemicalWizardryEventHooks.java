@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,14 +32,17 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergySword;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
@@ -66,7 +68,28 @@ public class AlchemicalWizardryEventHooks
 	public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
 	public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
 
-
+	@SubscribeEvent
+	public void onEntityInteractEvent(EntityInteractEvent event)
+	{
+		EntityPlayer player = event.entityPlayer;
+		OmegaParadigm parad = OmegaRegistry.getOmegaParadigmOfWeilder(player);
+		if(parad == null)
+		{
+			return;
+		}
+		ItemStack heldItem = player.getHeldItem();
+		if(heldItem == null)
+		{
+			parad.onEmptyHandEntityInteract(player, event.target); 
+		}else
+		{
+			if(heldItem.getItem() instanceof EnergySword)
+			{
+				parad.onBoundSwordInteractWithEntity(player, event.target);
+			}
+		}
+	}
+	
 	@SubscribeEvent
 	public void onAnvilUpdateEvent(AnvilUpdateEvent event)
 	{

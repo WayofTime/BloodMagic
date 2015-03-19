@@ -133,4 +133,26 @@ public class OmegaParadigm
 	{
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param stack
+	 * @param player
+	 * @param entity
+	 * @return False if it does not do damage
+	 */
+	public boolean onBoundSwordLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
+	{
+		return true;
+	}
+	
+	public void onEmptyHandEntityInteract(EntityPlayer player, Entity entity)
+	{
+		
+	}
+	
+	public void onBoundSwordInteractWithEntity(EntityPlayer player, Entity entity)
+	{
+		
+	}
 }
