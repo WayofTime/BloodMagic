@@ -48,6 +48,7 @@ import WayofTime.alchemicalWizardry.common.items.TranscendentBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
+import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourFire;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWater;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWind;
 import WayofTime.alchemicalWizardry.common.items.energy.ItemAttunedCrystal;
@@ -228,6 +229,11 @@ public class ModItems
     public static Item boundLeggingsWind;
     public static Item boundBootsWind;
     
+    public static Item boundHelmetFire;
+    public static Item boundPlateFire;
+    public static Item boundLeggingsFire;
+    public static Item boundBootsFire;
+    
     public static Item inputRoutingFocus;
     public static Item outputRoutingFocus;
     
@@ -350,6 +356,11 @@ public class ModItems
         boundPlateWind = new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
         boundLeggingsWind = new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
         boundBootsWind = new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
+        
+        boundHelmetFire = new OmegaArmourFire(0).setUnlocalizedName("boundHelmetFire");
+        boundPlateFire = new OmegaArmourFire(1).setUnlocalizedName("boundPlateFire");
+        boundLeggingsFire = new OmegaArmourFire(2).setUnlocalizedName("boundLeggingsFire");
+        boundBootsFire = new OmegaArmourFire(3).setUnlocalizedName("boundBootsFire");
         
         inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
         outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
@@ -478,6 +489,11 @@ public class ModItems
         GameRegistry.registerItem(ModItems.boundPlateWind, "boundPlateWind");
         GameRegistry.registerItem(ModItems.boundLeggingsWind, "boundLeggingsWind");
         GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
+        
+        GameRegistry.registerItem(ModItems.boundHelmetFire, "boundHelmetFire");
+        GameRegistry.registerItem(ModItems.boundPlateFire, "boundPlateFire");
+        GameRegistry.registerItem(ModItems.boundLeggingsFire, "boundLeggingsFire");
+        GameRegistry.registerItem(ModItems.boundBootsFire, "boundBootsFire");
         
         GameRegistry.registerItem(ModItems.inputRoutingFocus, "inputRoutingFocus");
         GameRegistry.registerItem(ModItems.outputRoutingFocus, "outputRoutingFocus");

@@ -27,7 +27,7 @@ public class SpellWindGust extends HomSpell
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -50,7 +50,7 @@ public class SpellWindGust extends HomSpell
     @Override
     public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -97,7 +97,7 @@ public class SpellWindGust extends HomSpell
     @Override
     public ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -106,7 +106,7 @@ public class SpellWindGust extends HomSpell
         {
             EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getDefensiveEnergy());
         }
-
+        
         int distance = 3;
         double yaw = par3EntityPlayer.rotationYaw / 180 * Math.PI;
         double pitch = par3EntityPlayer.rotationPitch / 180 * Math.PI;
@@ -136,7 +136,7 @@ public class SpellWindGust extends HomSpell
     @Override
     public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }

@@ -127,7 +127,7 @@ public class AlchemicalWizardryEventHooks
 						event.ammount = 0;
 					}else
 					{
-						event.ammount += hp / ratio;
+						event.ammount -= hp / ratio;
 						Reagent reagent = APISpellHelper.getPlayerReagentType(player);
 						OmegaParadigm paradigm = OmegaRegistry.getParadigmForReagent(reagent);
 						if(paradigm != null)

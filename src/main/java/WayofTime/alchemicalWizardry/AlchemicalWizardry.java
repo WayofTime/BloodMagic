@@ -113,6 +113,7 @@ import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
+import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWater;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWind;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
@@ -1419,6 +1420,8 @@ public class AlchemicalWizardry
         OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater((OmegaArmour)ModItems.boundHelmetWater, (OmegaArmour)ModItems.boundPlateWater, (OmegaArmour)ModItems.boundLeggingsWater, (OmegaArmour)ModItems.boundBootsWater));
         OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth((OmegaArmour)ModItems.boundHelmetEarth, (OmegaArmour)ModItems.boundPlateEarth, (OmegaArmour)ModItems.boundLeggingsEarth, (OmegaArmour)ModItems.boundBootsEarth));
         OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind((OmegaArmour)ModItems.boundHelmetWind, (OmegaArmour)ModItems.boundPlateWind, (OmegaArmour)ModItems.boundLeggingsWind, (OmegaArmour)ModItems.boundBootsWind));
+        OmegaRegistry.registerParadigm(ReagentRegistry.incendiumReagent, new OmegaParadigmFire((OmegaArmour)ModItems.boundHelmetFire, (OmegaArmour)ModItems.boundPlateFire, (OmegaArmour)ModItems.boundLeggingsFire, (OmegaArmour)ModItems.boundBootsFire));
+
     }
     
     public static void initDemonPacketRegistiry()
