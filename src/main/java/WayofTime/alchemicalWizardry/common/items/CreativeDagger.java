@@ -23,6 +23,25 @@ public class CreativeDagger extends Item
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+        if (!par3EntityPlayer.capabilities.isCreativeMode)
+        {
+        	SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(par3EntityPlayer, true, true, 2);
+        	if(MinecraftForge.EVENT_BUS.post(evt))
+        	{
+        		return par1ItemStack;
+        	}
+        	
+        	if(evt.shouldDrainHealth)
+        	{
+                par3EntityPlayer.setHealth(par3EntityPlayer.getHealth() - 2);
+        	}
+        	
+        	if(!evt.shouldFillAltar)
+        	{
+        		return par1ItemStack;
+        	}
+        }
+
         if (par3EntityPlayer instanceof FakePlayer)
         {
             return par1ItemStack;
@@ -46,7 +65,20 @@ public class CreativeDagger extends Item
         {
             return par1ItemStack;
         }
-        findAndFillAltar(par2World, par3EntityPlayer, Integer.MAX_VALUE);
+
+        if (par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+        {
+            findAndFillAltar(par2World, par3EntityPlayer, Integer.MAX_VALUE);
+        } else
+        {
+            findAndFillAltar(par2World, par3EntityPlayer, Integer.MAX_VALUE);
+        }
+
+        if (par3EntityPlayer.getHealth() <= 0.001f)
+        {
+            par3EntityPlayer.onDeath(DamageSource.generic);
+        }
+
         return par1ItemStack;
     }
 
@@ -55,7 +87,7 @@ public class CreativeDagger extends Item
         int posX = (int) Math.round(player.posX - 0.5f);
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
-        TEAltar altarEntity = getAltar(world, posX, posY, posZ);
+        IBloodAltar altarEntity = getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -66,7 +98,7 @@ public class CreativeDagger extends Item
         altarEntity.startCycle();
     }
 
-    public TEAltar getAltar(World world, int x, int y, int z)
+    public IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity = null;
 
@@ -78,29 +110,28 @@ public class CreativeDagger extends Item
                 {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if ((tileEntity instanceof TEAltar))
+                    if ((tileEntity instanceof IBloodAltar))
                     {
-                        return (TEAltar) tileEntity;
+                        return (IBloodAltar) tileEntity;
                     }
                 }
 
-                if ((tileEntity instanceof TEAltar))
+                if ((tileEntity instanceof IBloodAltar))
                 {
-                    return (TEAltar) tileEntity;
+                    return (IBloodAltar) tileEntity;
                 }
             }
 
-            if ((tileEntity instanceof TEAltar))
+            if ((tileEntity instanceof IBloodAltar))
             {
-                return (TEAltar) tileEntity;
+                return (IBloodAltar) tileEntity;
             }
         }
 
-        if ((tileEntity instanceof TEAltar))
+        if ((tileEntity instanceof IBloodAltar))
         {
-            return (TEAltar) tileEntity;
+            return (IBloodAltar) tileEntity;
         }
 
         return null;
     }
-}
