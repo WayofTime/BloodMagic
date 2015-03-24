@@ -34,8 +34,13 @@ public class ImperfectRitualStone extends Block
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xOff, float yOff, float zOff)
-    {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xOff, float yOff, float zOff)    {
+{        
+        if (SpellHelper.isFakePlayer(world, player))
+        {
+            return false;
+        }
+        else
         {
             Block block = world.getBlock(x, y + 1, z);
 
