@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
 public class CreativeDagger extends Item
@@ -55,7 +56,7 @@ public class CreativeDagger extends Item
         int posX = (int) Math.round(player.posX - 0.5f);
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
-        TEAltar altarEntity = getAltar(world, posX, posY, posZ);
+        IBloodAltar altarEntity = getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -66,7 +67,7 @@ public class CreativeDagger extends Item
         altarEntity.startCycle();
     }
 
-    public TEAltar getAltar(World world, int x, int y, int z)
+    public IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity = null;
 
@@ -103,3 +104,4 @@ public class CreativeDagger extends Item
 
         return null;
     }
+}

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.client.renderer.BMRenderItem;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -10,6 +11,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
 
 public class TEAltarRenderer extends TileEntitySpecialRenderer
@@ -19,7 +21,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
 
     public TEAltarRenderer()
     {
-        customRenderItem = new RenderItem()
+        customRenderItem = new BMRenderItem()
         {
             @Override
             public boolean shouldBob()
