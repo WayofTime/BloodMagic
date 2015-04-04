@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
 public class CreativeDagger extends Item
 {
@@ -78,29 +78,28 @@ public class CreativeDagger extends Item
                 {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if ((tileEntity instanceof TEAltar))
+                    if ((tileEntity instanceof IBloodAltar))
                     {
-                        return (TEAltar) tileEntity;
+                        return (IBloodAltar) tileEntity;
                     }
                 }
 
-                if ((tileEntity instanceof TEAltar))
+                if ((tileEntity instanceof IBloodAltar))
                 {
-                    return (TEAltar) tileEntity;
+                    return (IBloodAltar) tileEntity;
                 }
             }
 
-            if ((tileEntity instanceof TEAltar))
+            if ((tileEntity instanceof IBloodAltar))
             {
-                return (TEAltar) tileEntity;
+                return (IBloodAltar) tileEntity;
             }
         }
 
-        if ((tileEntity instanceof TEAltar))
+        if ((tileEntity instanceof IBloodAltar))
         {
-            return (TEAltar) tileEntity;
+            return (IBloodAltar) tileEntity;
         }
 
         return null;
     }
-}
