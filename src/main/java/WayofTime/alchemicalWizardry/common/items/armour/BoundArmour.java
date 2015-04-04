@@ -725,9 +725,28 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         return 1.0f;
     }
 
-    public int getItemEnchantability()
+    public int getItemEnchantability(ItemStack stack)
     {
+    	NBTTagCompound tag = stack.getTagCompound();
+        if (tag != null)
+        {
+            return tag.getInteger("enchantability");
+        }
+        
         return Integer.MIN_VALUE;
+    }
+    
+    public void setItemEnchantability(ItemStack stack, int enchantability)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+
+        if (tag == null)
+        {
+            stack.setTagCompound(new NBTTagCompound());
+            tag = stack.getTagCompound();
+        }
+
+        tag.setInteger("enchantability", enchantability);
     }
 
     public boolean getIsInvisible(ItemStack armourStack)

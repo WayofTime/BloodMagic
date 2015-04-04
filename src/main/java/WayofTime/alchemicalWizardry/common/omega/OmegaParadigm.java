@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
+import java.util.Random;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,7 +38,7 @@ public class OmegaParadigm
 		this.config = new ReagentRegenConfiguration(20, 10, 1);
 	}
 	
-	public void convertPlayerArmour(EntityPlayer player)
+	public boolean convertPlayerArmour(EntityPlayer player, int x, int y, int z, int stability, int affinity)
 	{
 		ItemStack[] armours = player.inventory.armorInventory;
 		
@@ -47,16 +49,22 @@ public class OmegaParadigm
 		
 		if(helmetStack != null && helmetStack.getItem() == ModItems.boundHelmet && chestStack != null && chestStack.getItem() == ModItems.boundPlate && leggingsStack != null && leggingsStack.getItem() == ModItems.boundLeggings && bootsStack != null && bootsStack.getItem() == ModItems.boundBoots)
 		{
-			ItemStack omegaHelmetStack = helmet.getSubstituteStack(helmetStack);
-			ItemStack omegaChestStack = chestPiece.getSubstituteStack(chestStack);
-			ItemStack omegaLeggingsStack = leggings.getSubstituteStack(leggingsStack);
-			ItemStack omegaBootsStack = boots.getSubstituteStack(bootsStack);
+			long worldSeed = player.worldObj.getSeed();
+			Random rand = new Random(worldSeed + stability * (affinity + 7) * 94 + 84321*x - 17423*y + 76*z);
+			ItemStack omegaHelmetStack = helmet.getSubstituteStack(helmetStack, stability, affinity, rand);
+			ItemStack omegaChestStack = chestPiece.getSubstituteStack(chestStack, stability, affinity, rand);
+			ItemStack omegaLeggingsStack = leggings.getSubstituteStack(leggingsStack, stability, affinity, rand);
+			ItemStack omegaBootsStack = boots.getSubstituteStack(bootsStack, stability, affinity, rand);
 			
 			armours[3] = omegaHelmetStack;
 			armours[2] = omegaChestStack;
 			armours[1] = omegaLeggingsStack;
 			armours[0] = omegaBootsStack;
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public ReagentRegenConfiguration getRegenConfig(EntityPlayer player)

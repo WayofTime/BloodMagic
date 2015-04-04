@@ -1,6 +1,17 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -89,7 +100,7 @@ public abstract class OmegaArmour extends BoundArmour
 		player.inventory.armorInventory[3-this.armorType] = stack;
 	}
 	
-	public ItemStack getSubstituteStack(ItemStack boundStack)
+	public ItemStack getSubstituteStack(ItemStack boundStack, int stability, int affinity, Random rand)
 	{
 		ItemStack omegaStack = new ItemStack(this);
 		if(boundStack != null && boundStack.hasTagCompound())
@@ -99,6 +110,107 @@ public abstract class OmegaArmour extends BoundArmour
 		}
 		this.setContainedArmourStack(omegaStack, boundStack);
 		SoulNetworkHandler.checkAndSetItemOwner(omegaStack, SoulNetworkHandler.getOwnerName(boundStack));
+		this.setItemEnchantability(omegaStack, 50);
+		
+		List enchantList = new ArrayList();
+		
+		for(int i=0; i<10; i++)
+		{
+			enchantList.addAll(EnchantmentHelper.buildEnchantmentList(rand, omegaStack, 30));
+		}
+		
+		Map<Enchantment, Map<Integer, Integer>> map = new HashMap();
+		
+		for(Object obj : enchantList)
+		{
+            EnchantmentData enchantmentdata = (EnchantmentData)obj;
+            
+            if(!map.containsKey(enchantmentdata.enchantmentobj))
+            {
+            	map.put(enchantmentdata.enchantmentobj, new HashMap());
+            }
+            
+            Map<Integer, Integer> numMap = map.get(enchantmentdata.enchantmentobj);
+            if(numMap.containsKey(enchantmentdata.enchantmentLevel))
+            {
+            	numMap.put(enchantmentdata.enchantmentLevel, numMap.get(enchantmentdata.enchantmentLevel)+1);
+            }else
+            {
+            	numMap.put(enchantmentdata.enchantmentLevel, 1);
+            }
+		}
+		
+		List newEnchantList = new ArrayList();
+		
+		for(Entry<Enchantment, Map<Integer, Integer>> entry : map.entrySet()) //Assume enchant # 0 is level 1 enchant
+		{
+			Enchantment ench = entry.getKey();
+			Map<Integer, Integer> numMap = entry.getValue();
+			
+			if(numMap.isEmpty())
+			{
+				continue;
+			}
+
+			int[] enchantValues = new int[1];
+			
+			for(Entry<Integer, Integer> entry1 : numMap.entrySet())
+			{
+				int enchantLevel = entry1.getKey();
+				int number = entry1.getValue();
+				
+				if(enchantLevel >= enchantValues.length)
+				{
+					int[] newEnchantValues = new int[enchantLevel+1];
+					for(int i=0; i< enchantValues.length; i++)
+					{
+						newEnchantValues[i] = enchantValues[i];
+					}
+					
+					enchantValues = newEnchantValues;
+				}
+				
+				enchantValues[enchantLevel] += number;
+			}
+			
+			int size = enchantValues.length;
+			int i = 0;
+			while(i<size)
+			{
+				int number = enchantValues[i];
+				if(number >= 2 && i+1 >= size)
+				{
+					int[] newEnchantValues = new int[i+2];
+					for(int z=0; z< enchantValues.length; z++)
+					{
+						newEnchantValues[z] = enchantValues[z];
+					}
+					
+					enchantValues = newEnchantValues;
+					enchantValues[i+1] += number/2;
+					size = enchantValues.length;
+				}
+				i++;
+			}
+			
+			newEnchantList.add(new EnchantmentData(ench, enchantValues.length-1));
+		}
+		
+		Iterator iterator = newEnchantList.iterator();
+
+        while (iterator.hasNext())
+        {
+            EnchantmentData enchantmentdata = (EnchantmentData)iterator.next();
+
+            {
+                omegaStack.addEnchantment(enchantmentdata.enchantmentobj, enchantmentdata.enchantmentLevel);
+            }
+        }
+		
+		for(int i=0; i<1; i++)
+		{
+//			omegaStack = EnchantmentHelper.addRandomEnchantment(new Random(), omegaStack, 30);
+		}
 		return omegaStack;
 	}
 	

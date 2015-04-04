@@ -116,11 +116,14 @@ public class SigilOfHolding extends EnergyItems
                 return false;
             }
 
-            itemUsed.getItem().onItemUse(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10);
+            boolean bool = itemUsed.getItem().onItemUse(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10);
+
             saveInternalInventory(par1ItemStack, inv);
+            
+            return bool;
         }
         
-        return true;
+        return false;
     }
 
     @Override

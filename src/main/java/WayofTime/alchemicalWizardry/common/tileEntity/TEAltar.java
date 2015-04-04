@@ -628,7 +628,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
                     if (regenEffect != null && regenEffect.getAmplifier() > 0)
                     {
-                    	if(AlchemicalWizardry.causeHungerChatMessage && player.getActivePotionEffect(Potion.hunger) == null)
+                    	if(AlchemicalWizardry.causeHungerChatMessage && !player.isPotionActive(Potion.hunger.id))
                     	{
                         	player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.hunger")));
                     	}

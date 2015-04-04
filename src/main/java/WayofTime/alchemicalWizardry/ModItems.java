@@ -20,6 +20,7 @@ import WayofTime.alchemicalWizardry.common.items.BoundShovel;
 import WayofTime.alchemicalWizardry.common.items.CheatyItem;
 import WayofTime.alchemicalWizardry.common.items.CreativeDagger;
 import WayofTime.alchemicalWizardry.common.items.DaggerOfSacrifice;
+import WayofTime.alchemicalWizardry.common.items.DawnScribeTool;
 import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
 import WayofTime.alchemicalWizardry.common.items.DemonicTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.DuskScribeTool;
@@ -124,6 +125,7 @@ public class ModItems
     public static Item fireScribeTool;
     public static Item earthScribeTool;
     public static Item airScribeTool;
+    public static Item dawnScribeTool;
     public static Item activationCrystal;
     public static Item boundPickaxe;
     public static Item boundAxe;
@@ -337,6 +339,8 @@ public class ModItems
         itemDestinationClearer = new ItemDestinationClearer().setUnlocalizedName("destinationClearer");
         itemBloodMagicBook = new ItemBMBook().setUnlocalizedName("bmBook");
         
+        dawnScribeTool = new DawnScribeTool().setUnlocalizedName("dawnScribeTool");
+        
         itemBloodPack = new ItemBloodLetterPack().setUnlocalizedName("itemBloodPack");
         itemHarvestSigil = new ItemHarvestSigil().setUnlocalizedName("itemHarvestSigil");
         itemCompressionSigil = new ItemPackRatSigil().setUnlocalizedName("itemCompressionSigil");
@@ -469,6 +473,8 @@ public class ModItems
         
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
         GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");
+        
+        GameRegistry.registerItem(ModItems.dawnScribeTool, "dawnScribeTool");
         
         GameRegistry.registerItem(ModItems.itemBloodPack, "itemBloodPack");
         GameRegistry.registerItem(ModItems.itemHarvestSigil, "itemHarvestSigil");

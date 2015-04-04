@@ -17,13 +17,7 @@ public class OmegaParadigmFire extends OmegaParadigm
 	@Override
 	public float getCostPerTickOfUse(EntityPlayer player)
 	{
-		if(player.isAirBorne)
-		{
-			return 0.5f;
-		}else
-		{
-			return 1;
-		}
+		return 1;
 	}
 	
 	@Override

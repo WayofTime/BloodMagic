@@ -83,6 +83,8 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
         {
             return par1ItemStack;
         }
+        
+        System.out.println("Being called");
 
         float f = 1.0F;
         double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double) f;

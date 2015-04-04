@@ -189,7 +189,15 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack)
     {
-        return false;
+    	switch(i)
+    	{
+    	case 0:
+    		if(itemstack != null)
+    		{
+    			return itemstack.getItem() instanceof IBloodOrb;
+    		}
+    	}
+        return i != 6;
     }
 
     @Override
@@ -903,6 +911,6 @@ public class TEWritingTable extends TileEntity implements IInventory, ISidedInve
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) 
 	{
-		return true;
+		return slot == 6;
 	}
 }

@@ -9,6 +9,7 @@ import WayofTime.alchemicalWizardry.common.block.BlockBloodLightSource;
 import WayofTime.alchemicalWizardry.common.block.BlockConduit;
 import WayofTime.alchemicalWizardry.common.block.BlockCrystal;
 import WayofTime.alchemicalWizardry.common.block.BlockDemonPortal;
+import WayofTime.alchemicalWizardry.common.block.BlockEnchantmentGlyph;
 import WayofTime.alchemicalWizardry.common.block.BlockHomHeart;
 import WayofTime.alchemicalWizardry.common.block.BlockMasterStone;
 import WayofTime.alchemicalWizardry.common.block.BlockPedestal;
@@ -92,6 +93,8 @@ public class ModBlocks
     public static Block blockDemonChest;
     public static Block blockCrystal;
     public static Block blockMimic;
+    public static Block blockEnchantmentGlyph;
+    
 
     public static void init()
     {
@@ -132,6 +135,7 @@ public class ModBlocks
         blockMimic = new MimicBlock();
         
         blockLifeEssence = new LifeEssenceBlock();
+        blockEnchantmentGlyph = new BlockEnchantmentGlyph();
     }
 
     public static void registerBlocksInPre()
@@ -175,6 +179,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockDemonChest, "blockDemonChest");
         GameRegistry.registerBlock(ModBlocks.blockCrystal, ItemCrystalBlock.class, "blockCrystal");
         GameRegistry.registerBlock(ModBlocks.blockMimic, "blockMimic");
+        GameRegistry.registerBlock(ModBlocks.blockEnchantmentGlyph, "blockEnchantmentGlyph");
     }
 
     public static void registerBlocksInInit()

@@ -1,17 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
-import java.util.UUID;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaFire;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -20,7 +12,7 @@ public class OmegaArmourFire extends OmegaArmour
 	public OmegaArmourFire(int armorType) 
 	{
 		super(armorType);
-		this.storeYLevel = true;
+//		this.storeYLevel = true;
 	}
 	
 	@Override
@@ -43,16 +35,15 @@ public class OmegaArmourFire extends OmegaArmour
 		return new ModelOmegaFire(0.5f, false, false, true, false);
 	}
 	
-	@Override
-	public Multimap getAttributeModifiers(ItemStack stack)
-    {
-		Multimap map = HashMultimap.create();
-		int yLevel = this.getYLevelStored(stack);
-		
-		map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85212 /** Random number **/, armorType), "Armor modifier" + armorType, getDefaultHealthBoost()*getHealthBoostModifierForLevel(yLevel), 0)); 
-		
-		return map; 
-    }
+//	@Override
+//	public Multimap getAttributeModifiers(ItemStack stack)
+//    {
+//		Multimap map = HashMultimap.create();
+//		
+////		map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85212 /** Random number **/, armorType), "Armor modifier" + armorType, getDefaultHealthBoost()*getHealthBoostModifierForLevel(yLevel), 0)); 
+//		
+//		return map; 
+//    }
 	
 	public float getDefaultHealthBoost()
 	{
@@ -70,8 +61,8 @@ public class OmegaArmourFire extends OmegaArmour
 		return 0.25f;
 	}
 	
-	public float getHealthBoostModifierForLevel(int yLevel)
-	{
-		return (float)Math.sqrt(((float)yLevel)/64f) * 1.5f - 1;
-	}
+//	public float getHealthBoostModifierForLevel(int yLevel)
+//	{
+//		return (float)Math.sqrt(((float)yLevel)/64f) * 1.5f - 1;
+//	}
 }
