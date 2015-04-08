@@ -111,6 +111,7 @@ public class AlchemicalWizardryEventHooks
 			{
 				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
 				if (recalculatedAmount <= 0) return;
+				recalculatedAmount = SpellHelper.applyPotionDamageCalculations(player, event.source, recalculatedAmount);
 				
 				float ratio = recalculatedAmount / event.ammount;
 				

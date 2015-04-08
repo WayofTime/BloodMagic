@@ -1,14 +1,22 @@
 package WayofTime.alchemicalWizardry.common.items.armour;
 
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaFire;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class OmegaArmourFire extends OmegaArmour
 {
+	private static IIcon helmetIcon;
+    private static IIcon plateIcon;
+    private static IIcon leggingsIcon;
+    private static IIcon bootsIcon;
+    
 	public OmegaArmourFire(int armorType) 
 	{
 		super(armorType);
@@ -34,6 +42,44 @@ public class OmegaArmourFire extends OmegaArmour
 	{
 		return new ModelOmegaFire(0.5f, false, false, true, false);
 	}
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
+        this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaHelmet_fire");
+        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaPlate_fire");
+        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaLeggings_fire");
+        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaBoots_fire");
+    }
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1)
+    {
+        if (this.equals(ModItems.boundHelmetFire))
+        {
+            return this.helmetIcon;
+        }
+
+        if (this.equals(ModItems.boundPlateFire))
+        {
+            return this.plateIcon;
+        }
+
+        if (this.equals(ModItems.boundLeggingsFire))
+        {
+            return this.leggingsIcon;
+        }
+
+        if (this.equals(ModItems.boundBootsFire))
+        {
+            return this.bootsIcon;
+        }
+
+        return this.itemIcon;
+    }
 	
 //	@Override
 //	public Multimap getAttributeModifiers(ItemStack stack)

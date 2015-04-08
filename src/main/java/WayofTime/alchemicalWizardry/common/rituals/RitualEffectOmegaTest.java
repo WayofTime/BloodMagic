@@ -40,8 +40,9 @@ public class RitualEffectOmegaTest extends RitualEffect
             return;
         }
 
-        OmegaStructureParameters param = OmegaStructureHandler.getStructureStabilityFactor(world, x, y, z, 5);
+        OmegaStructureParameters param = OmegaStructureHandler.getStructureStabilityFactor(world, x, y, z, 5, new Int3(0,1,0));
         int stab = param.stability;
+        int enchantability = param.enchantability;
         
         System.out.println("Stability: " + stab);
         
@@ -51,12 +52,12 @@ public class RitualEffectOmegaTest extends RitualEffect
         
         for(EntityPlayer player : playerList)
         {        	
-        	Reagent reagent = ReagentRegistry.incendiumReagent;
+        	Reagent reagent = ReagentRegistry.aetherReagent;
         	
         	int affinity = 0;
         	
         	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(reagent);
-        	if(waterParadigm != null && waterParadigm.convertPlayerArmour(player, x, y, z, stab, affinity))
+        	if(waterParadigm != null && waterParadigm.convertPlayerArmour(player, x, y, z, stab, affinity, enchantability))
         	{
         		APISpellHelper.setPlayerCurrentReagentAmount(player, tickDuration);
             	APISpellHelper.setPlayerMaxReagentAmount(player, tickDuration);

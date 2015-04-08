@@ -1507,6 +1507,7 @@ public class AlchemicalWizardry
     {
     	StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
     	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 64));
+    	CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.snowball, 4, 0), new ItemStack(Blocks.snow), 8));
     	CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
     	
     	CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.cobblestone), 64);

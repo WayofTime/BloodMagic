@@ -41,6 +41,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
         setEnergyUsed(100);
         this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.maxMetaData = 4;
+        this.hasSubtypes = true;
     }
 
     @Override
@@ -87,6 +88,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                 int fireStones = 0;
                 int earthStones = 0;
                 int duskStones = 0;
+                int dawnStones = 0;
 
                 for (RitualComponent rc : ritualList)
                 {
@@ -115,6 +117,10 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                         case RitualComponent.DUSK:
                             duskStones++;
                             break;
+                        
+                        case RitualComponent.DAWN:
+                        	dawnStones++;
+                        	break;
                     }
                 }
 
@@ -124,6 +130,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                 par3List.add(EnumChatFormatting.RED + StatCollector.translateToLocal("tooltip.ritualdiviner.firestones") + " " + fireStones);
                 par3List.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocal("tooltip.ritualdiviner.earthstones") + " " + earthStones);
                 par3List.add(EnumChatFormatting.BOLD + StatCollector.translateToLocal("tooltip.ritualdiviner.duskstones") + " " + duskStones);
+                par3List.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("tooltip.ritualdiviner.dawnstones") + " " + dawnStones);
             }
         }else
         {
@@ -283,16 +290,16 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                 {
                     rotateRituals(player.worldObj, player, stack, false);
                 }
-                else
-                {
-                    if (!player.worldObj.isRemote)
-                    {
-                        int direction = this.getDirection(stack) - 1;
-                        if (direction == 0) direction = 4;
-                        this.setDirection(stack, direction);
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(direction)));
-                    }
-                }
+//                else
+//                {
+//                    if (!player.worldObj.isRemote)
+//                    {
+//                        int direction = this.getDirection(stack) - 1;
+//                        if (direction == 0) direction = 4;
+//                        this.setDirection(stack, direction);
+//                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(direction)));
+//                    }
+//                }
             }
         }
 
@@ -338,23 +345,13 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @Override
     public int getMaxRuneDisplacement(ItemStack par1ItemStack) //0 indicates the starting 4 runes, 1 indicates it can use Dusk runes
     {
-        if (par1ItemStack.getTagCompound() == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        return par1ItemStack.getTagCompound().getInteger("maxRuneDisplacement");
+        return par1ItemStack.getItemDamage();
     }
 
     @Override
     public void setMaxRuneDisplacement(ItemStack par1ItemStack, int displacement)
     {
-        if (par1ItemStack.getTagCompound() == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        par1ItemStack.getTagCompound().setInteger("maxRuneDisplacement", displacement);
+        par1ItemStack.setItemDamage(displacement);
     }
 
     @Override

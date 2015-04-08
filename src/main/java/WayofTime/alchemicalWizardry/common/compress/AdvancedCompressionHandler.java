@@ -34,7 +34,7 @@ public class AdvancedCompressionHandler extends CompressionHandler
 					int threshold = CompressionRegistry.getItemThreshold(invStack);
 
 					int needed = i*i;
-					int neededLeft = iterateThroughInventory(invStack, threshold, inv, needed, false);
+					int neededLeft = iterateThroughInventory(invStack, threshold + invStack.getMaxStackSize() - needed, inv, needed, false);
 					if(neededLeft <= 0)
 					{
 						iterateThroughInventory(invStack, 0, inv, needed, true);

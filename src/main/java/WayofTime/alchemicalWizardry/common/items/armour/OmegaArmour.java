@@ -100,7 +100,7 @@ public abstract class OmegaArmour extends BoundArmour
 		player.inventory.armorInventory[3-this.armorType] = stack;
 	}
 	
-	public ItemStack getSubstituteStack(ItemStack boundStack, int stability, int affinity, Random rand)
+	public ItemStack getSubstituteStack(ItemStack boundStack, int stability, int affinity, int enchantability, Random rand)
 	{
 		ItemStack omegaStack = new ItemStack(this);
 		if(boundStack != null && boundStack.hasTagCompound())
@@ -110,13 +110,17 @@ public abstract class OmegaArmour extends BoundArmour
 		}
 		this.setContainedArmourStack(omegaStack, boundStack);
 		SoulNetworkHandler.checkAndSetItemOwner(omegaStack, SoulNetworkHandler.getOwnerName(boundStack));
-		this.setItemEnchantability(omegaStack, 50);
+		this.setItemEnchantability(omegaStack, 70);
 		
 		List enchantList = new ArrayList();
 		
-		for(int i=0; i<10; i++)
+		for(int i=0; i<100; i++)
 		{
-			enchantList.addAll(EnchantmentHelper.buildEnchantmentList(rand, omegaStack, 30));
+			List lst = EnchantmentHelper.buildEnchantmentList(rand, omegaStack, 30);
+			if(lst != null)
+			{
+				enchantList.addAll(lst);
+			}
 		}
 		
 		Map<Enchantment, Map<Integer, Integer>> map = new HashMap();

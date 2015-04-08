@@ -17,7 +17,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,7 +28,6 @@ public class MimicBlock extends BlockContainer
 		super(Material.water);
 		setHardness(2.0F);
         setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setBlockName("blockMimic");
 //        this.setBlockBounds(0, 0, 0, 0, 0, 0);
     }

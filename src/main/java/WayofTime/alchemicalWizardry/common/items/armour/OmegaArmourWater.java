@@ -8,15 +8,23 @@ import com.google.common.collect.Multimap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.biome.BiomeGenBase;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaWater;
 
 public class OmegaArmourWater extends OmegaArmour
 {
+	private static IIcon helmetIcon;
+    private static IIcon plateIcon;
+    private static IIcon leggingsIcon;
+    private static IIcon bootsIcon;
+    
 	public OmegaArmourWater(int armorType) 
 	{
 		super(armorType);
@@ -42,6 +50,44 @@ public class OmegaArmourWater extends OmegaArmour
 	{
 		return new ModelOmegaWater(0.5f, false, false, true, false);
 	}
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
+        this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaHelmet_water");
+        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaPlate_water");
+        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaLeggings_water");
+        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaBoots_water");
+    }
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1)
+    {
+        if (this.equals(ModItems.boundHelmetWater))
+        {
+            return this.helmetIcon;
+        }
+
+        if (this.equals(ModItems.boundPlateWater))
+        {
+            return this.plateIcon;
+        }
+
+        if (this.equals(ModItems.boundLeggingsWater))
+        {
+            return this.leggingsIcon;
+        }
+
+        if (this.equals(ModItems.boundBootsWater))
+        {
+            return this.bootsIcon;
+        }
+
+        return this.itemIcon;
+    }
 	
 	@Override
 	public Multimap getAttributeModifiers(ItemStack stack)

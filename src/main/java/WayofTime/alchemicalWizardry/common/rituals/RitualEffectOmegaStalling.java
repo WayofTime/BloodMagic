@@ -54,7 +54,7 @@ public class RitualEffectOmegaStalling extends RitualEffect
                     	OmegaParadigm parad = OmegaRegistry.getParadigmForReagent(reagent);
                     	if(parad != null)
                     	{
-                    		parad.setOmegaStalling(player, 30);
+                    		parad.setOmegaStalling(player, 100);
                     		SoulNetworkHandler.syphonFromNetwork(owner, getCostPerRefresh());
                     	}
                 	}

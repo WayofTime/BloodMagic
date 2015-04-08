@@ -8,10 +8,13 @@ import java.util.regex.Pattern;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -22,14 +25,17 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.S06PacketUpdateHealth;
 import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -799,5 +805,100 @@ public class SpellHelper
     public static boolean areItemStacksEqual(ItemStack stack, ItemStack compressedStack)
     {
     	return stack.isItemEqual(compressedStack) && (stack.getTagCompound() == null ? compressedStack.getTagCompound() == null : stack.getTagCompound().equals(compressedStack.getTagCompound()));
+    }
+    
+    /*
+     * Ripped from EntityLivingBase, since it decided to be a scrub and make the method protected.
+     */
+    public static float applyPotionDamageCalculations(EntityLivingBase entity, DamageSource p_70672_1_, float p_70672_2_)
+    {
+        if (p_70672_1_.isDamageAbsolute())
+        {
+            return p_70672_2_;
+        }
+        else
+        {
+            if (entity instanceof EntityZombie)
+            {
+                //par2 = par2; // Forge: Noop Warning
+            }
+
+            int i;
+            int j;
+            float f1;
+
+            if (entity.isPotionActive(Potion.resistance) && p_70672_1_ != DamageSource.outOfWorld)
+            {
+                i = (entity.getActivePotionEffect(Potion.resistance).getAmplifier() + 1) * 5;
+                j = 25 - i;
+                f1 = p_70672_2_ * (float)j;
+                p_70672_2_ = f1 / 25.0F;
+            }
+
+            if (p_70672_2_ <= 0.0F)
+            {
+                return 0.0F;
+            }
+            else
+            {
+                return applySpecialProtection(entity, p_70672_1_, p_70672_2_);
+            }
+        }
+    }
+    
+    public static double protCoeff = 0.875;
+    public static double scalCoeff = 0.8;
+    
+    public static float applySpecialProtection(EntityLivingBase entity, DamageSource source, float damage)
+    {
+    	ItemStack[] armour = entity.getLastActiveItems();
+    	
+    	if(armour == null)
+    	{
+    		return damage;
+    	}
+    	
+    	int total = 0;
+    	for(int i = 0; i < armour.length; i++)
+    	{
+    		ItemStack stack = armour[i];
+    		if(stack != null)
+    		{
+    			NBTTagList nbttaglist = stack.getEnchantmentTagList();
+    			
+    			if(nbttaglist != null)
+    			{
+    				for(int j = 0; j < nbttaglist.tagCount(); ++j)
+    				{
+    					short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
+                        short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
+
+                        if (Enchantment.enchantmentsList[short1] != null)
+                        {
+                        	Enchantment ench = Enchantment.enchantmentsList[short1];
+                        	if(ench instanceof EnchantmentProtection)
+                        	{
+                        		total += ench.calcModifierDamage(short2, source);
+                        	}
+                        }
+    				}
+    			}
+    		}
+    	}
+    	
+    	if(total > 0)
+    	{
+    		total = (total + 1 >> + 1) + rand.nextInt(total + 1 >> + 1);
+    		if(total <= 20)
+    		{
+    			return damage * (25 - total) / 25;
+    		}else
+    		{
+    			float factor = (float)(0.8 + 0.2 * (1 - Math.pow(protCoeff, Math.pow((total - 20), scalCoeff))));
+    			return damage * (1 - factor);
+    		}
+    	}
+    	
+    	return damage;
     }
 }

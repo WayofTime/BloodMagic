@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.omega;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.Int3;
 
 public class OmegaStructureHandler 
 {
@@ -13,9 +14,9 @@ public class OmegaStructureHandler
 		return true;
 	}
 	
-	public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim)
+	public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim, Int3 offset)
 	{
-        int range = expLim;
+		int range = expLim;
 
         int[][][] boolList = new int[range * 2 + 1][range * 2 + 1][range * 2 + 1]; //0 indicates unchecked, 1 indicates checked and is air, -1 indicates checked to be right next to air blocks in question but is NOT air
 
@@ -30,7 +31,7 @@ public class OmegaStructureHandler
             }
         }
 
-        boolList[range][range][range] = 1;
+        boolList[range + offset.xCoord][range + offset.yCoord][range + offset.zCoord] = 1;
         boolean isReady = false;
 
         while (!isReady)
@@ -208,18 +209,16 @@ public class OmegaStructureHandler
                     {
                         tally += indTally;
                     }
-                    
-//                    Block block = world.getBlock(x + i - range, y + j - range, z + k - range);
-//
-//                    if (block == ModBlocks.blockSpectralContainer)
-//                    {
-//                        world.setBlockToAir(x + i - range, y + j - range, z + k - range);
-//                    }
                 }
             }
         }
     
 	
 		return new OmegaStructureParameters(tally, enchantability);
+	}
+	
+	public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim)
+	{
+        return getStructureStabilityFactor(world, x, y, z, expLim, new Int3(0, 0, 0));
 	}
 }

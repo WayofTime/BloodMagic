@@ -3,10 +3,13 @@ package WayofTime.alchemicalWizardry.common.items.armour;
 import java.util.UUID;
 
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaWind;
 
 import com.google.common.collect.HashMultimap;
@@ -17,6 +20,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class OmegaArmourWind extends OmegaArmour
 {
+	private static IIcon helmetIcon;
+    private static IIcon plateIcon;
+    private static IIcon leggingsIcon;
+    private static IIcon bootsIcon;
+	
 	public OmegaArmourWind(int armorType) 
 	{
 		super(armorType);
@@ -42,6 +50,44 @@ public class OmegaArmourWind extends OmegaArmour
 	{
 		return new ModelOmegaWind(0.5f, false, false, true, false);
 	}
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
+        this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaHelmet_wind");
+        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaPlate_wind");
+        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaLeggings_wind");
+        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaBoots_wind");
+    }
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1)
+    {
+        if (this.equals(ModItems.boundHelmetWind))
+        {
+            return this.helmetIcon;
+        }
+
+        if (this.equals(ModItems.boundPlateWind))
+        {
+            return this.plateIcon;
+        }
+
+        if (this.equals(ModItems.boundLeggingsWind))
+        {
+            return this.leggingsIcon;
+        }
+
+        if (this.equals(ModItems.boundBootsWind))
+        {
+            return this.bootsIcon;
+        }
+
+        return this.itemIcon;
+    }
 	
 	@Override
 	public Multimap getAttributeModifiers(ItemStack stack)

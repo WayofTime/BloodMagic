@@ -43,21 +43,8 @@ public class RitualEffectItemRouting extends RitualEffect
             return;
         }
                 
-        int xBufOffset = 0;
-        int yBufOffset = 1;
-        int zBufOffset = 0;
-        
-//        TileEntity bufferTile = world.getTileEntity(x + xBufOffset, y + yBufOffset, z + zBufOffset);
-//        
-//        if(!(bufferTile instanceof IInventory))
-//        {
-//        	return;
-//        }
-        
         Map<Int3, IInventory> tileMap = new HashMap();
-        
-//        IInventory bufferInventory = (IInventory)bufferTile;
-        
+                
         List<IInventory> outputList = new ArrayList();
         for(int i=0; i<4; i++) //Check output foci chests, return if none available
         {
