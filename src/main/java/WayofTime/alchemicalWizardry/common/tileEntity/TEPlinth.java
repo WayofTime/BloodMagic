@@ -22,9 +22,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TEPlinth extends TileEntity implements IInventory
+public class TEPlinth extends TEInventory
 {
-    private ItemStack[] inv;
+	public static final int sizeInv = 1;
 
     private boolean isActive;
     private boolean paradigm;
@@ -33,8 +33,6 @@ public class TEPlinth extends TileEntity implements IInventory
     private ItemStack[] ring2Inv;
     private ItemStack[] ring3Inv;
 
-    public static final int sizeInv = 1;
-
     private int progressInterval;
     private int progress;
 
@@ -42,7 +40,7 @@ public class TEPlinth extends TileEntity implements IInventory
 
     public TEPlinth()
     {
-        this.inv = new ItemStack[1];
+    	super(sizeInv);
         this.ring1Inv = new ItemStack[6];
         this.ring2Inv = new ItemStack[6];
         this.ring3Inv = new ItemStack[6];
@@ -55,18 +53,6 @@ public class TEPlinth extends TileEntity implements IInventory
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
-
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-            int slot = tag.getByte("Slot");
-
-            if (slot >= 0 && slot < inv.length)
-            {
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-            }
-        }
 
         NBTTagList ring1TagList = par1NBTTagCompound.getTagList("ring1Inv", Constants.NBT.TAG_COMPOUND);
 
@@ -116,22 +102,7 @@ public class TEPlinth extends TileEntity implements IInventory
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < inv.length; i++)
-        {
-            ItemStack stack = inv[i];
-
-            if (inv[i] != null)
-            {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                inv[i].writeToNBT(tag);
-                itemList.appendTag(tag);
-            }
-        }
-
-        par1NBTTagCompound.setTag("Inventory", itemList);
         NBTTagList ring1ItemList = new NBTTagList();
 
         for (int i = 0; i < ring1Inv.length; i++)
@@ -186,97 +157,15 @@ public class TEPlinth extends TileEntity implements IInventory
     }
 
     @Override
-    public int getSizeInventory()
-    {
-        return 1;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slot)
-    {
-        return inv[slot];
-    }
-
-    @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
-        ItemStack stack = getStackInSlot(slot);
-
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
-                setInventorySlotContents(slot, null);
-            } else
-            {
-                stack = stack.splitStack(amt);
-
-                if (stack.stackSize == 0)
-                {
-                    setInventorySlotContents(slot, null);
-                }
-            }
-        }
-
-        return stack;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
-        ItemStack stack = getStackInSlot(slot);
-
-        if (stack != null)
-        {
-            setInventorySlotContents(slot, null);
-        }
-
-        return stack;
-    }
-
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack itemStack)
-    {
-        inv[slot] = itemStack;
-
-        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
-        {
-            itemStack.stackSize = getInventoryStackLimit();
-        }
-    }
-
-    @Override
     public String getInventoryName()
     {
         return "TEPlinth";
     }
 
     @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
-    }
-
-    @Override
     public int getInventoryStackLimit()
     {
         return 1;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer)
-    {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
-    }
-
-    @Override
-    public void openInventory()
-    {
-    }
-
-    @Override
-    public void closeInventory()
-    {
     }
 
     //Logic for the actual block is under here
@@ -654,12 +543,7 @@ public class TEPlinth extends TileEntity implements IInventory
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack)
     {
-        if (slot == 0)
-        {
-            return true;
-        }
-
-        return false;
+        return slot == 0;
     }
 
     public static void initialize()

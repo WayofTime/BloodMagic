@@ -36,10 +36,10 @@ import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeCompone
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFluidHandler, IBloodAltar
+public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, IBloodAltar
 {
     public static final int sizeInv = 1;
-    private ItemStack[] inv;
+    
     private int resultID;
     private int resultDamage;
     private int upgradeLevel;
@@ -73,7 +73,7 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
 
     public TEAltar()
     {
-        this.inv = new ItemStack[1];
+        super(sizeInv);
         resultID = 0;
         resultDamage = 0;
         this.capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
@@ -131,18 +131,6 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        NBTTagList tagList = par1NBTTagCompound.getTagList("Inventory", Constants.NBT.TAG_COMPOUND);
-
-        for (int i = 0; i < tagList.tagCount(); i++)
-        {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-            int slot = tag.getByte("Slot");
-
-            if (slot >= 0 && slot < inv.length)
-            {
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-            }
-        }
 
         resultID = par1NBTTagCompound.getInteger("resultID");
         resultDamage = par1NBTTagCompound.getInteger("resultDamage");
@@ -214,24 +202,9 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        NBTTagList itemList = new NBTTagList();
-
-        for (int i = 0; i < inv.length; i++)
-        {
-            ItemStack stack = inv[i];
-
-            if (inv[i] != null)
-            {
-                NBTTagCompound tag = new NBTTagCompound();
-                tag.setByte("Slot", (byte) i);
-                inv[i].writeToNBT(tag);
-                itemList.appendTag(tag);
-            }
-        }
 
         par1NBTTagCompound.setInteger("resultID", resultID);
         par1NBTTagCompound.setInteger("resultDamage", resultDamage);
-        par1NBTTagCompound.setTag("Inventory", itemList);
 
         if (fluid != null)
         {
@@ -276,98 +249,9 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
     }
 
     @Override
-    public int getSizeInventory()
-    {
-        return inv.length;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int slot)
-    {
-        return inv[slot];
-    }
-
-    @Override
-    public ItemStack decrStackSize(int slot, int amt)
-    {
-        ItemStack stack = getStackInSlot(slot);
-
-        if (stack != null)
-        {
-            if (stack.stackSize <= amt)
-            {
-                setInventorySlotContents(slot, null);
-            } else
-            {
-                stack = stack.splitStack(amt);
-
-                if (stack.stackSize == 0)
-                {
-                    setInventorySlotContents(slot, null);
-                }
-            }
-        }
-
-        return stack;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int slot)
-    {
-        ItemStack stack = getStackInSlot(slot);
-
-        if (stack != null)
-        {
-            setInventorySlotContents(slot, null);
-        }
-
-        return stack;
-    }
-
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack itemStack)
-    {
-        inv[slot] = itemStack;
-        this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-
-        if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
-        {
-            itemStack.stackSize = getInventoryStackLimit();
-        }
-    }
-
-    @Override
     public String getInventoryName()
     {
         return "TEAltar";
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
-    }
-
-    @Override
-    public int getInventoryStackLimit()
-    {
-        return 64;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer)
-    {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && entityPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
-    }
-
-    @Override
-    public void openInventory()
-    {
-    }
-
-    @Override
-    public void closeInventory()
-    {
     }
 
     //IFluidTank methods
@@ -679,97 +563,94 @@ public class TEAltar extends TileEntity implements IInventory, IFluidTank, IFlui
             return;
         }
 
-        if (worldTime % 1 == 0)
+        if (!canBeFilled)
         {
-            if (!canBeFilled)
+            if (fluid != null && fluid.amount >= 1)
             {
-                if (fluid != null && fluid.amount >= 1)
+                int stackSize = getStackInSlot(0).stackSize;
+                int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+
+                if (liquidDrained > (liquidRequired * stackSize - progress))
                 {
-                    int stackSize = getStackInSlot(0).stackSize;
-                    int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
-
-                    if (liquidDrained > (liquidRequired * stackSize - progress))
-                    {
-                        liquidDrained = liquidRequired * stackSize - progress;
-                    }
-
-                    fluid.amount = fluid.amount - liquidDrained;
-                    progress += liquidDrained;
-
-                    if (worldTime % 4 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
-                    }
-
-                    if (progress >= liquidRequired * stackSize)
-                    {
-                        ItemStack result = null;
-                        result = AltarRecipeRegistry.getItemForItemAndTier(this.getStackInSlot(0), this.upgradeLevel);
-                        if (result != null)
-                        {
-                            result.stackSize *= stackSize;
-                        }
-
-                        setInventorySlotContents(0, result);
-                        progress = 0;
-
-                        for (int i = 0; i < 8; i++)
-                        {
-                            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
-                        }
-                        this.isActive = false;
-                    }
-                } else if (progress > 0)
-                {
-                    progress -= (int) (efficiencyMultiplier * drainRate);
-
-                    if (worldTime % 2 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
-                    }
+                    liquidDrained = liquidRequired * stackSize - progress;
                 }
-            } else
+
+                fluid.amount = fluid.amount - liquidDrained;
+                progress += liquidDrained;
+
+                if (worldTime % 4 == 0)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                }
+
+                if (progress >= liquidRequired * stackSize)
+                {
+                    ItemStack result = null;
+                    result = AltarRecipeRegistry.getItemForItemAndTier(this.getStackInSlot(0), this.upgradeLevel);
+                    if (result != null)
+                    {
+                        result.stackSize *= stackSize;
+                    }
+
+                    setInventorySlotContents(0, result);
+                    progress = 0;
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
+                    }
+                    this.isActive = false;
+                }
+            } else if (progress > 0)
             {
-                ItemStack returnedItem = getStackInSlot(0);
+                progress -= (int) (efficiencyMultiplier * drainRate);
 
-                if (!(returnedItem.getItem() instanceof IBloodOrb))
+                if (worldTime % 2 == 0)
                 {
-                    return;
-                }
-
-                IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
-                NBTTagCompound itemTag = returnedItem.getTagCompound();
-
-                if (itemTag == null)
-                {
-                    return;
-                }
-
-                String ownerName = itemTag.getString("ownerName");
-
-                if (ownerName.equals(""))
-                {
-                    return;
-                }
-
-                if (fluid != null && fluid.amount >= 1)
-                {
-                    int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
-
-                    int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
-
-                    fluid.amount = fluid.amount - drain;
-
-                    if (worldTime % 4 == 0)
-                    {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
-                    }
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
                 }
             }
-            if (worldObj != null)
+        } else
+        {
+            ItemStack returnedItem = getStackInSlot(0);
+
+            if (!(returnedItem.getItem() instanceof IBloodOrb))
             {
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                return;
             }
+
+            IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
+            NBTTagCompound itemTag = returnedItem.getTagCompound();
+
+            if (itemTag == null)
+            {
+                return;
+            }
+
+            String ownerName = itemTag.getString("ownerName");
+
+            if (ownerName.equals(""))
+            {
+                return;
+            }
+
+            if (fluid != null && fluid.amount >= 1)
+            {
+                int liquidDrained = Math.min((int) (upgradeLevel >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+
+                int drain = SoulNetworkHandler.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence() * this.orbCapacityMultiplier));
+
+                fluid.amount = fluid.amount - drain;
+
+                if (worldTime % 4 == 0)
+                {
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                }
+            }
+        }
+        if (worldObj != null)
+        {
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
 
