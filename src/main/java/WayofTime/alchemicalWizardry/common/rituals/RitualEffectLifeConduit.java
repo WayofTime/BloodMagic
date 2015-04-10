@@ -1,19 +1,20 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidStack;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectLifeConduit extends RitualEffect
 {
@@ -50,6 +51,12 @@ public class RitualEffectLifeConduit extends RitualEffect
         {
             return;
         }
+        
+        if(!(tileAltar instanceof IFluidHandler))
+        {
+        	return;
+        }
+        
         int d0 = 15;
         int vertRange = 20;
 
@@ -69,10 +76,10 @@ public class RitualEffectLifeConduit extends RitualEffect
             return;
         }
 
-        int fillAmount = Math.min(currentEssence / 2, tileAltar.fill(ForgeDirection.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 10000), false));
+        int fillAmount = Math.min(currentEssence / 2, ((IFluidHandler)tileAltar).fill(ForgeDirection.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 10000), false));
 
         {
-            tileAltar.fill(ForgeDirection.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fillAmount), true);
+        	((IFluidHandler)tileAltar).fill(ForgeDirection.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fillAmount), true);
             if (entityOwner.getHealth() > 2.0f && fillAmount != 0)
             {
                 entityOwner.setHealth(2.0f);
