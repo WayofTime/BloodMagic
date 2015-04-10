@@ -184,7 +184,14 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
                 }
             }
         }
-
+        
+        dropMultisetStacks(dropMultiset, par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ);
+        
+        return par1ItemStack;
+    }
+    
+    public static void dropMultisetStacks(Multiset<ItemType> dropMultiset, World world, double x, double y, double z)
+    {
         for (Multiset.Entry<ItemType> entry : dropMultiset.entrySet())
         {
             int count = entry.getCount();
@@ -194,15 +201,13 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             //Drop in groups of maximum size
             while (count >= maxStackSize)
             {
-                par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, type.createStack(maxStackSize)));
+                world.spawnEntityInWorld(new EntityItem(world, x, y, z, type.createStack(maxStackSize)));
                 count -= maxStackSize;
             }
             //Drop remainder
             if (count > 0)
-                par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, type.createStack(count)));
+                world.spawnEntityInWorld(new EntityItem(world, x, y, z, type.createStack(count)));
         }
-        
-        return par1ItemStack;
     }
 
     @Override
