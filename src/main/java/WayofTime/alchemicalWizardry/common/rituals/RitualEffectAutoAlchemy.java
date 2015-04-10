@@ -50,7 +50,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             }
 
             IBloodAltar altar = (IBloodAltar) topEntity;
-            ItemStack targetStack = tileAltar.getStackInSlot(0);
+            ItemStack targetStack = altar.getStackInSlot(0);
             if (targetStack == null)
             {
                 return;
