@@ -20,7 +20,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class RitualEffectDemonPortal extends RitualEffect
@@ -98,9 +98,9 @@ public class RitualEffectDemonPortal extends RitualEffect
     public boolean checkCreatePortal(IMasterRitualStone ritualStone)
     {
     	TileEntity entity = ritualStone.getWorld().getTileEntity(ritualStone.getXCoord(), ritualStone.getYCoord() + 1, ritualStone.getZCoord());
-    	if(entity instanceof TEAltar)
+    	if(entity instanceof IBloodAltar)
     	{
-    		TEAltar altar = (TEAltar)entity;
+    		IBloodAltar altar = (IBloodAltar)entity;
     		if(altar.hasDemonBlood() && ritualStone.getWorld().isAirBlock(ritualStone.getXCoord(), ritualStone.getYCoord() + 2, ritualStone.getZCoord()))
     		{
     			return true;
