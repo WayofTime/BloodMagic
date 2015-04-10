@@ -5,7 +5,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
@@ -36,7 +36,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             return;
         }
 
-        TEAltar tileAltar = null;
+        IBloodAltar tileAltar = null;
         boolean testFlag = false;
 
         for (int i = -5; i <= 5; i++)
@@ -45,9 +45,9 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             {
                 for (int k = -10; k <= 10; k++)
                 {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof TEAltar)
+                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
                     {
-                        tileAltar = (TEAltar) world.getTileEntity(x + i, y + k, z + j);
+                        tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
                     }
                 }
