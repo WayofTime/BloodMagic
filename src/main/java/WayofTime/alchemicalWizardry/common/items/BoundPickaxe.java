@@ -1,10 +1,8 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,9 +18,16 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.ItemType;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BoundPickaxe extends ItemPickaxe implements IBindable
 {
@@ -142,6 +147,8 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
+        HashMultiset<ItemType> dropMultiset = HashMultiset.create();
+        
         for (int i = -5; i <= 5; i++)
         {
             for (int j = -5; j <= 5; j++)
@@ -159,25 +166,15 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
                         {
                             if (silkTouch && block.canSilkHarvest(par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta))
                             {
-                                ItemStack droppedItem = new ItemStack(block, 1, meta);
-
-                                if (!par2World.isRemote)
-                                {
-                                    par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, droppedItem));
-                                }
+                                dropMultiset.add(new ItemType(block, meta));
                             } else
                             {
                                 ArrayList<ItemStack> itemDropList = block.getDrops(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
 
                                 if (itemDropList != null)
                                 {
-                                    for (ItemStack item : itemDropList)
-                                    {
-                                        if (!par2World.isRemote)
-                                        {
-                                            par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, item));
-                                        }
-                                    }
+                                    for (ItemStack stack : itemDropList)
+                                        dropMultiset.add(ItemType.fromStack(stack), stack.stackSize);
                                 }
                             }
 
@@ -188,6 +185,23 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             }
         }
 
+        for (Multiset.Entry<ItemType> entry : dropMultiset.entrySet())
+        {
+            int count = entry.getCount();
+            ItemType type = entry.getElement();
+            int maxStackSize = type.item.getItemStackLimit(type.createStack(1));
+            
+            //Drop in groups of maximum size
+            while (count >= maxStackSize)
+            {
+                par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, type.createStack(maxStackSize)));
+                count -= maxStackSize;
+            }
+            //Drop remainder
+            if (count > 0)
+                par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, type.createStack(count)));
+        }
+        
         return par1ItemStack;
     }
 
