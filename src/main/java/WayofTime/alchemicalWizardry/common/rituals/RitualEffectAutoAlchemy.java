@@ -6,7 +6,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -44,12 +44,12 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             int flag = 0;
 
             TileEntity topEntity = world.getTileEntity(x, y + 1, z);
-            if (!(topEntity instanceof TEAltar))
+            if (!(topEntity instanceof IBloodAltar))
             {
                 return;
             }
 
-            TEAltar tileAltar = (TEAltar) topEntity;
+            IBloodAltar altar = (IBloodAltar) topEntity;
             ItemStack targetStack = tileAltar.getStackInSlot(0);
             if (targetStack == null)
             {
