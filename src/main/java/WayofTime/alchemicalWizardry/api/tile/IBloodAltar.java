@@ -34,4 +34,10 @@ public interface IBloodAltar
 	 * @param amount
 	 */
 	public void requestPauseAfterCrafting(int amount);
+	
+	public void addToDemonBloodDuration(int dur);
+	
+	public boolean hasDemonBlood();
+	
+	public void decrementDemonBlood();
 }
