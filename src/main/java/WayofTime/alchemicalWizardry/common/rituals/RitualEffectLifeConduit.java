@@ -6,7 +6,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -28,7 +28,7 @@ public class RitualEffectLifeConduit extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        TEAltar tileAltar = null;
+        IBloodAltar tileAltar = null;
         boolean testFlag = false;
 
         for (int i = -5; i <= 5; i++)
@@ -37,9 +37,9 @@ public class RitualEffectLifeConduit extends RitualEffect
             {
                 for (int k = -10; k <= 10; k++)
                 {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof TEAltar)
+                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
                     {
-                        tileAltar = (TEAltar) world.getTileEntity(x + i, y + k, z + j);
+                        tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
                     }
                 }
