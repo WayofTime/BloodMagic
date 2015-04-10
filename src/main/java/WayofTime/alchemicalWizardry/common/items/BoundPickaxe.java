@@ -119,6 +119,11 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             return par1ItemStack;
         }
+        
+        if (par2World.isRemote)
+        {
+            return par1ItemStack;
+        }
 
         if (!getActivated(par1ItemStack) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
@@ -126,11 +131,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         }
 
         if (par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionInhibit))
-        {
-            return par1ItemStack;
-        }
-
-        if (par2World.isRemote)
         {
             return par1ItemStack;
         }
