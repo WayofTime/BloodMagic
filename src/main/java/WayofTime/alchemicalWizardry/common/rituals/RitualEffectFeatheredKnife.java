@@ -53,7 +53,7 @@ public class RitualEffectFeatheredKnife extends RitualEffect
                 {
                     if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
                     {
-                        tileAltar = (TEAltar) world.getTileEntity(x + i, y + k, z + j);
+                        tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
                     }
                 }
