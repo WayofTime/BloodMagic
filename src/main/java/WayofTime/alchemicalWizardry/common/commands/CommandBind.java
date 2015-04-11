@@ -1,16 +1,15 @@
 package WayofTime.alchemicalWizardry.common.commands;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
 public class CommandBind extends CommandBase
 {

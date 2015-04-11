@@ -1,18 +1,14 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.ItemType;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -22,11 +18,15 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.ItemType;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 import com.google.common.collect.HashMultiset;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BoundAxe extends ItemAxe implements IBindable
 {

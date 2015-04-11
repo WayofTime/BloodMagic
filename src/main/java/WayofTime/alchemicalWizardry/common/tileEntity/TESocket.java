@@ -1,16 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.Constants;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 
 public class TESocket extends TEInventory
 {

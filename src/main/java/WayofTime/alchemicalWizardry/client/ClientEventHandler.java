@@ -7,8 +7,6 @@ import net.minecraftforge.client.event.sound.SoundEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
-import WayofTime.alchemicalWizardry.common.ClientToServerPacketHandler;
-import WayofTime.alchemicalWizardry.common.MessageKeyPressed;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -23,12 +21,12 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
     {
-        if(KeyBindings.omegaTest.isPressed())
-        {
-            System.out.println("ping");
-//            NewPacketHandler.INSTANCE.sendToServer(NewPacketHandler.getKeyboardPressPacket((byte)2));
-            ClientToServerPacketHandler.INSTANCE.sendToServer(new MessageKeyPressed(MessageKeyPressed.Key.OMEGA_ACTIVE));
-        }
+//        if(KeyBindings.omegaTest.isPressed())
+//        {
+//            System.out.println("ping");
+////            NewPacketHandler.INSTANCE.sendToServer(NewPacketHandler.getKeyboardPressPacket((byte)2));
+//            ClientToServerPacketHandler.INSTANCE.sendToServer(new MessageKeyPressed(MessageKeyPressed.Key.OMEGA_ACTIVE));
+//        }
     }
     
     @SubscribeEvent

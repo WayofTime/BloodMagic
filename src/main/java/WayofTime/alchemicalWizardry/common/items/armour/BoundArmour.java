@@ -373,7 +373,14 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
         this.setIsInvisible(itemStack, player.isPotionActive(Potion.invisibility.id));
 
-        if (itemStack.getItemDamage() > 0)
+        this.repairArmour(world, player, itemStack);
+
+        return;
+    }
+    
+    public void repairArmour(World world, EntityPlayer player, ItemStack itemStack)
+    {
+    	if (itemStack.getItemDamage() > 0)
         {
             EnergyItems.checkAndSetItemOwner(itemStack, player);
 
@@ -385,8 +392,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
                 }
             }
         }
-
-        return;
     }
 
     public void tickInternalInventory(ItemStack par1ItemStack, World par2World, EntityPlayer par3Entity, int par4, boolean par5)

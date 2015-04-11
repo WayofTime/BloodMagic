@@ -11,22 +11,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.omega.IEnchantmentGlyph;
+import WayofTime.alchemicalWizardry.common.omega.IStabilityGlyph;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
+public class BlockStabilityGlyph extends Block implements IStabilityGlyph
 {
-	public IIcon enchantability;
-	public IIcon enchantmentLevel;
+	public IIcon stability1;
 	
-    public BlockEnchantmentGlyph()
+    public BlockStabilityGlyph()
     {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("enchantmentGlyph");
+        this.setBlockName("stabilityGlyph");
     }
 
     @Override
@@ -34,8 +33,7 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:LargeBloodStoneBrick");
-        this.enchantability = iconRegister.registerIcon("AlchemicalWizardry:GlyphEnchantability");
-        this.enchantmentLevel = iconRegister.registerIcon("AlchemicalWizardry:GlyphEnchantmentLevel");
+        this.stability1 = iconRegister.registerIcon("AlchemicalWizardry:GlyphStability1");
     }
     
     @Override
@@ -45,9 +43,7 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
         switch (meta)
         {
             case 0:
-                return enchantability;
-            case 1:
-                return enchantmentLevel;
+                return stability1;
             default:
                 return this.blockIcon;
         }
@@ -59,42 +55,17 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 		switch(meta)
 		{
 		case 0:
-			return -faceCount * 10;
-		case 1:
-			return -faceCount * 20;
+			return faceCount * 2;
 		default: 
-			return -faceCount * 20;
+			return faceCount;
 		}
 	}
-
-	@Override
-	public int getEnchantability(World world, int x, int y, int z, int meta) 
-	{
-		switch(meta)
-		{
-		case 0:
-			return 1;
-		default:
-			return 0;	
-		}
-	}
-
-	@Override
-	public int getEnchantmentLevel(World world, int x, int y, int z, int meta) 
-	{
-		switch(meta)
-		{
-		case 1:
-			return 1;
-		default:
-			return 0;	
-		}
-	}	
+	
 	
 	@SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-		for(int i=0; i<2; i++)
+		for(int i=0; i<1; i++)
 		{
 			par3List.add(new ItemStack(par1, 1, i));
 		}

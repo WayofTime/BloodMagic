@@ -38,7 +38,7 @@ public class OmegaParadigm
 		this.config = new ReagentRegenConfiguration(20, 10, 1);
 	}
 	
-	public boolean convertPlayerArmour(EntityPlayer player, int x, int y, int z, int stability, int affinity, int enchantability)
+	public boolean convertPlayerArmour(EntityPlayer player, int x, int y, int z, int stability, int affinity, int enchantability, int enchantmentLevel)
 	{
 		ItemStack[] armours = player.inventory.armorInventory;
 		
@@ -49,12 +49,14 @@ public class OmegaParadigm
 		
 		if(helmetStack != null && helmetStack.getItem() == ModItems.boundHelmet && chestStack != null && chestStack.getItem() == ModItems.boundPlate && leggingsStack != null && leggingsStack.getItem() == ModItems.boundLeggings && bootsStack != null && bootsStack.getItem() == ModItems.boundBoots)
 		{
+			System.out.println("Enchantability: " + enchantability);
+			
 			long worldSeed = player.worldObj.getSeed();
-			Random rand = new Random(worldSeed + stability * (affinity + 7) * 94 + 84321*x - 17423*y + 76*z - 1623451*enchantability);
-			ItemStack omegaHelmetStack = helmet.getSubstituteStack(helmetStack, stability, affinity, enchantability, rand);
-			ItemStack omegaChestStack = chestPiece.getSubstituteStack(chestStack, stability, affinity, enchantability, rand);
-			ItemStack omegaLeggingsStack = leggings.getSubstituteStack(leggingsStack, stability, affinity, enchantability, rand);
-			ItemStack omegaBootsStack = boots.getSubstituteStack(bootsStack, stability, affinity, enchantability, rand);
+			Random rand = new Random(worldSeed + stability * (affinity + 7) * 94 + 84321*x - 17423*y + 76*z - 1623451*enchantability + 2 * enchantmentLevel);
+			ItemStack omegaHelmetStack = helmet.getSubstituteStack(helmetStack, stability, affinity, enchantability, enchantmentLevel, rand);
+			ItemStack omegaChestStack = chestPiece.getSubstituteStack(chestStack, stability, affinity, enchantability, enchantmentLevel, rand);
+			ItemStack omegaLeggingsStack = leggings.getSubstituteStack(leggingsStack, stability, affinity, enchantability, enchantmentLevel, rand);
+			ItemStack omegaBootsStack = boots.getSubstituteStack(bootsStack, stability, affinity, enchantability, enchantmentLevel, rand);
 			
 			armours[3] = omegaHelmetStack;
 			armours[2] = omegaChestStack;

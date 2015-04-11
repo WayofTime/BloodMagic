@@ -1,14 +1,9 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryComponent;
-import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.PlinthComponent;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -18,9 +13,12 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryComponent;
+import WayofTime.alchemicalWizardry.common.IDemon;
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.PlinthComponent;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 
 public class TEPlinth extends TEInventory
 {

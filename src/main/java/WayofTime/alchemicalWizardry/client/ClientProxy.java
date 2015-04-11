@@ -110,7 +110,7 @@ public class ClientProxy extends CommonProxy
     public void registerPostSideObjects()
     {
     	BUEntries entries = new BUEntries();
-    	entries.postInit();
+//    	entries.postInit();
     }
     
     @Override

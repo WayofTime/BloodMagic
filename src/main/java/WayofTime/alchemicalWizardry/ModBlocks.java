@@ -22,6 +22,7 @@ import WayofTime.alchemicalWizardry.common.block.BlockSpellEffect;
 import WayofTime.alchemicalWizardry.common.block.BlockSpellEnhancement;
 import WayofTime.alchemicalWizardry.common.block.BlockSpellModifier;
 import WayofTime.alchemicalWizardry.common.block.BlockSpellParadigm;
+import WayofTime.alchemicalWizardry.common.block.BlockStabilityGlyph;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.block.BlockWritingTable;
 import WayofTime.alchemicalWizardry.common.block.BloodRune;
@@ -41,10 +42,12 @@ import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.BlockDemonChe
 import WayofTime.alchemicalWizardry.common.items.ItemBlockCrystalBelljar;
 import WayofTime.alchemicalWizardry.common.items.ItemBloodRuneBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemCrystalBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemEnchantmentGlyphBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
+import WayofTime.alchemicalWizardry.common.items.ItemStabilityGlyphBlock;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -94,6 +97,7 @@ public class ModBlocks
     public static Block blockCrystal;
     public static Block blockMimic;
     public static Block blockEnchantmentGlyph;
+    public static Block blockStabilityGlyph;
     
 
     public static void init()
@@ -136,6 +140,7 @@ public class ModBlocks
         
         blockLifeEssence = new LifeEssenceBlock();
         blockEnchantmentGlyph = new BlockEnchantmentGlyph();
+        blockStabilityGlyph = new BlockStabilityGlyph();
     }
 
     public static void registerBlocksInPre()
@@ -179,7 +184,8 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockDemonChest, "blockDemonChest");
         GameRegistry.registerBlock(ModBlocks.blockCrystal, ItemCrystalBlock.class, "blockCrystal");
         GameRegistry.registerBlock(ModBlocks.blockMimic, "blockMimic");
-        GameRegistry.registerBlock(ModBlocks.blockEnchantmentGlyph, "blockEnchantmentGlyph");
+        GameRegistry.registerBlock(ModBlocks.blockEnchantmentGlyph, ItemEnchantmentGlyphBlock.class, "blockEnchantmentGlyph");
+        GameRegistry.registerBlock(ModBlocks.blockStabilityGlyph, ItemStabilityGlyphBlock.class, "blockStabilityGlyph");
     }
 
     public static void registerBlocksInInit()

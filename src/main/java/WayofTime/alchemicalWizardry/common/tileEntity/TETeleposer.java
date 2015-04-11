@@ -1,24 +1,19 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import java.util.Iterator;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
-
-import java.util.Iterator;
-import java.util.List;
 
 public class TETeleposer extends TEInventory
 {

@@ -284,7 +284,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.1", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.2", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
@@ -731,6 +731,7 @@ public class AlchemicalWizardry
         customPotionAmphibian = (new PotionAmphibian(customPotionAmphibianID, false, 0).setIconIndex(0, 0).setPotionName("Amphibian"));
 
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
+        ItemStack transcendentBloodOrbStack = new ItemStack(ModItems.transcendentBloodOrb);
 
 //        ModBlocks.blockLifeEssence.setUnlocalizedName("lifeEssenceBlock");
         FluidContainerRegistry.registerFluidContainer(lifeEssenceFluid, new ItemStack(ModItems.bucketLife), FluidContainerRegistry.EMPTY_BUCKET);
@@ -1071,7 +1072,10 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 3), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', obsidianStack);
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 4), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', stringStack);
 
-        
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockStabilityGlyph), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, '1', crepitousStack, 'g', etherealSlateStack, 'b', praesidiumStack, 's', magicalesStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockEnchantmentGlyph, 1, 0), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, 'g', etherealSlateStack, 'b', magicalesStack, '1', offensaStack, 's', lifeShardStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockEnchantmentGlyph, 1, 1), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, 'g', etherealSlateStack, 'b', magicalesStack, '1', virtusStack, 's', soulShardStack);
+
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.flint, 2, 0), 1, new ItemStack[]{new ItemStack(Blocks.gravel), new ItemStack(Items.flint)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.grass), 2, new ItemStack[]{new ItemStack(Blocks.dirt), new ItemStack(Items.dye, 1, 15), new ItemStack(Items.wheat_seeds), new ItemStack(Items.wheat_seeds)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.leather, 3, 0), 2, new ItemStack[]{new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh), waterBucketStack, new ItemStack(Items.flint)}, 1);
@@ -1086,6 +1090,8 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.soul_sand, 3, 0), 3, new ItemStack[]{new ItemStack(Blocks.sand), new ItemStack(Blocks.sand), new ItemStack(Blocks.sand), waterBucketStack, weakBloodShardStack}, 3);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.mycelium, 1, 0), 5, new ItemStack[]{new ItemStack(Blocks.grass), new ItemStack(Blocks.brown_mushroom), new ItemStack(Blocks.red_mushroom)}, 2);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.ice), 2, new ItemStack[]{waterBucketStack, new ItemStack(Items.snowball)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.potionitem, 1, 0), 1, new ItemStack[]{new ItemStack(Items.glass_bottle), new ItemStack(Blocks.cactus)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.glass_bottle, 3), 1, new ItemStack[]{glassStack, glassStack, glassStack}, 1);
     }
 
     @EventHandler

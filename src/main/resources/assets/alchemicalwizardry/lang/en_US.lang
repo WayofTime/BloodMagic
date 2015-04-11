@@ -59,6 +59,9 @@ tile.crystalBlock.fullCrystal.name=Crystal Cluster
 tile.crystalBlock.crystalBrick.name=Crystal Cluster Brick
 tile.demonPortal.name=Demon Portal
 tile.demonChest.name=Demon's Chest
+tile.enchantmentGlyph.enchantability.name=Glyph of the Adept Enchanter
+tile.enchantmentGlyph.enchantmentLevel.name=Glyph of Arcane Potential
+tile.stabilityGlyph.stability1.name=Glyph of Rigid Stability
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb
@@ -203,6 +206,7 @@ item.itemAssassinSigil.name=Sigil of the Assassin
 item.transcendentBloodOrb.name=Transcendent Blood Orb
 item.itemMailCatalogue.name=Mail Order Catalogue
 item.inputRoutingFocus.name=Input Routing Focus
+item.bloodMagicBaseItem.EnderShard.name=Ender Shard
 item.outputRoutingFocus.default.name=Default Output Routing Focus
 item.outputRoutingFocus.modItem.name=Output Routing Focus (ModItem)
 item.outputRoutingFocus.ignMeta.name=Output Routing Focus (Ignore Meta)
