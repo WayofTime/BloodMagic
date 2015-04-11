@@ -1382,8 +1382,8 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW031Convocation",isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
-        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
-        Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
+        Rituals.registerRitual("AW032Symmetry", 2, 15000000, new RitualEffectOmegaTest(), "Symmetry of the Omega");
+        Rituals.registerRitual("AW033Stalling", 2, 15000000, new RitualEffectOmegaStalling(), "Omega Stalling");
 //        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
         Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
