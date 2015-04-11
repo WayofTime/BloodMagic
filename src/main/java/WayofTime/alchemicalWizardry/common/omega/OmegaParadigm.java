@@ -48,9 +48,7 @@ public class OmegaParadigm
 		ItemStack bootsStack = armours[0];
 		
 		if(helmetStack != null && helmetStack.getItem() == ModItems.boundHelmet && chestStack != null && chestStack.getItem() == ModItems.boundPlate && leggingsStack != null && leggingsStack.getItem() == ModItems.boundLeggings && bootsStack != null && bootsStack.getItem() == ModItems.boundBoots)
-		{
-			System.out.println("Enchantability: " + enchantability);
-			
+		{			
 			long worldSeed = player.worldObj.getSeed();
 			Random rand = new Random(worldSeed + stability * (affinity + 7) * 94 + 84321*x - 17423*y + 76*z - 1623451*enchantability + 2 * enchantmentLevel);
 			ItemStack omegaHelmetStack = helmet.getSubstituteStack(helmetStack, stability, affinity, enchantability, enchantmentLevel, rand);

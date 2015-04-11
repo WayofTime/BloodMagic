@@ -54,8 +54,9 @@ public class RitualEffectOmegaStalling extends RitualEffect
                     	OmegaParadigm parad = OmegaRegistry.getParadigmForReagent(reagent);
                     	if(parad != null)
                     	{
+                    		float costOffset = parad.getCostPerTickOfUse(player);
                     		parad.setOmegaStalling(player, 100);
-                    		SoulNetworkHandler.syphonFromNetwork(owner, getCostPerRefresh());
+                    		SoulNetworkHandler.syphonFromNetwork(owner, (int)(getCostPerRefresh() * Math.min(costOffset, 1)));
                     	}
                 	}
                 }
@@ -86,7 +87,7 @@ public class RitualEffectOmegaStalling extends RitualEffect
         this.addParallelRunes(omegaRitual, 4, 4, RitualComponent.WATER);
         this.addParallelRunes(omegaRitual, 3, 5, RitualComponent.BLANK);
         this.addParallelRunes(omegaRitual, 2, 5, RitualComponent.FIRE);
-        this.addParallelRunes(omegaRitual, 1, 5, RitualComponent.DUSK);
+        this.addParallelRunes(omegaRitual, 1, 5, RitualComponent.DAWN);
         this.addOffsetRunes(omegaRitual, 5, 3, 1, RitualComponent.WATER);
         this.addOffsetRunes(omegaRitual, 6, 3, 1, RitualComponent.DUSK);
         this.addOffsetRunes(omegaRitual, 6, 4, 1, RitualComponent.FIRE);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +31,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectOmegaTest extends RitualEffect
 {
-	public static final boolean isTesting = true;
+	public static final boolean isTesting = false;
 	public static final int drainTotal = 32 * 1000;
 	
     @Override
@@ -54,7 +55,12 @@ public class RitualEffectOmegaTest extends RitualEffect
         int enchantability = param.enchantability;
         int enchantmentLevel = param.enchantmentLevel;
         
-        System.out.println("Stability: " + stab + ", Enchantability: " + enchantability + ", Enchantment Level: " + enchantmentLevel);
+        if(stab <= 0)
+        {
+        	return;
+        }
+        
+//        System.out.println("Stability: " + stab + ", Enchantability: " + enchantability + ", Enchantment Level: " + enchantmentLevel);
         
         double range = 0.5;
 
@@ -144,6 +150,7 @@ public class RitualEffectOmegaTest extends RitualEffect
     		    			{
         		    			drainLeft -= drained.amount;
         		    			world.markBlockForUpdate(x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord);
+        		    			world.addWeatherEffect(new EntityLightningBolt(world, x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord));
     		    			}
     		    		}
     				}
@@ -165,24 +172,70 @@ public class RitualEffectOmegaTest extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
-        animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(0, 0, 1, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(0, 0, -1, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, 2, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(1, 0, -2, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.WATER));
-        animalGrowthRitual.add(new RitualComponent(2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
-        animalGrowthRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
-        return animalGrowthRitual;
+        ArrayList<RitualComponent> omegaRitual = new ArrayList();
+        this.addCornerRunes(omegaRitual, 1, 0, RitualComponent.DUSK);
+        this.addCornerRunes(omegaRitual, 2, 0, RitualComponent.DUSK);
+        this.addCornerRunes(omegaRitual, 3, 0, RitualComponent.BLANK);
+        this.addCornerRunes(omegaRitual, 4, 0, RitualComponent.DUSK);
+        this.addCornerRunes(omegaRitual, 5, 0, RitualComponent.BLANK);
+        this.addParallelRunes(omegaRitual, 1, 0, RitualComponent.DAWN);
+        this.addParallelRunes(omegaRitual, 2, 0, RitualComponent.BLANK);
+        this.addParallelRunes(omegaRitual, 4, 0, RitualComponent.BLANK);
+        this.addParallelRunes(omegaRitual, 5, 0, RitualComponent.DAWN);
+        this.addOffsetRunes(omegaRitual, 1, 3, 0, RitualComponent.DUSK);
+        this.addOffsetRunes(omegaRitual, 1, 5, 0, RitualComponent.DUSK);
+
+        for(int i=2; i<=4; i++)
+        {
+        	omegaRitual.add(new RitualComponent(-5, 0, i, RitualComponent.WATER));
+        	omegaRitual.add(new RitualComponent(-5, 0, -i, RitualComponent.WATER));
+        	omegaRitual.add(new RitualComponent(5, 0, i, RitualComponent.FIRE));
+        	omegaRitual.add(new RitualComponent(5, 0, -i, RitualComponent.FIRE));
+        	omegaRitual.add(new RitualComponent(i, 0, -5, RitualComponent.EARTH));
+        	omegaRitual.add(new RitualComponent(-i, 0, -5, RitualComponent.EARTH));
+        	omegaRitual.add(new RitualComponent(i, 0, 5, RitualComponent.AIR));
+        	omegaRitual.add(new RitualComponent(-i, 0, 5, RitualComponent.AIR));
+        }
+        
+        for(int i=2; i<=3; i++)
+        {
+        	omegaRitual.add(new RitualComponent(4, 0, i, RitualComponent.WATER));
+        	omegaRitual.add(new RitualComponent(4, 0, -i, RitualComponent.WATER));
+        	omegaRitual.add(new RitualComponent(-4, 0, i, RitualComponent.FIRE));
+        	omegaRitual.add(new RitualComponent(-4, 0, -i, RitualComponent.FIRE));
+        	omegaRitual.add(new RitualComponent(i, 0, 4, RitualComponent.EARTH));
+        	omegaRitual.add(new RitualComponent(-i, 0, 4, RitualComponent.EARTH));
+        	omegaRitual.add(new RitualComponent(i, 0, -4, RitualComponent.AIR));
+        	omegaRitual.add(new RitualComponent(-i, 0, -4, RitualComponent.AIR));
+        }
+        
+        omegaRitual.add(new RitualComponent(-2, 0, 1, RitualComponent.AIR));
+        omegaRitual.add(new RitualComponent(-2, 0, -1, RitualComponent.AIR));
+        omegaRitual.add(new RitualComponent(-4, 0, 1, RitualComponent.AIR));
+        omegaRitual.add(new RitualComponent(-4, 0, -1, RitualComponent.AIR));
+        omegaRitual.add(new RitualComponent(2, 0, 1, RitualComponent.EARTH));
+        omegaRitual.add(new RitualComponent(2, 0, -1, RitualComponent.EARTH));
+        omegaRitual.add(new RitualComponent(4, 0, 1, RitualComponent.EARTH));
+        omegaRitual.add(new RitualComponent(4, 0, -1, RitualComponent.EARTH));
+        omegaRitual.add(new RitualComponent(1, 0, 2, RitualComponent.FIRE));
+        omegaRitual.add(new RitualComponent(-1, 0, 2, RitualComponent.FIRE));
+        omegaRitual.add(new RitualComponent(1, 0, 4, RitualComponent.FIRE));
+        omegaRitual.add(new RitualComponent(-1, 0, 4, RitualComponent.FIRE));
+        omegaRitual.add(new RitualComponent(1, 0, -2, RitualComponent.WATER));
+        omegaRitual.add(new RitualComponent(-1, 0, -2, RitualComponent.WATER));
+        omegaRitual.add(new RitualComponent(1, 0, -4, RitualComponent.WATER));
+        omegaRitual.add(new RitualComponent(-1, 0, -4, RitualComponent.WATER));
+        
+        omegaRitual.add(new RitualComponent(-3, 0, 2, RitualComponent.FIRE));
+        omegaRitual.add(new RitualComponent(-3, 0, -2, RitualComponent.FIRE));
+        omegaRitual.add(new RitualComponent(3, 0, 2, RitualComponent.WATER));
+        omegaRitual.add(new RitualComponent(3, 0, -2, RitualComponent.WATER));
+        omegaRitual.add(new RitualComponent(-2, 0, -3, RitualComponent.AIR));
+        omegaRitual.add(new RitualComponent(2, 0, -3, RitualComponent.AIR));
+        omegaRitual.add(new RitualComponent(-2, 0, 3, RitualComponent.EARTH));
+        omegaRitual.add(new RitualComponent(2, 0, 3, RitualComponent.EARTH));
+        
+        return omegaRitual;
     }
     
     public Int3 getJarLocation(int i)

@@ -21,7 +21,6 @@ import org.lwjgl.input.Keyboard;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IRitualDiviner;
 import WayofTime.alchemicalWizardry.api.rituals.IRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -59,7 +58,11 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
         if (this.getMaxRuneDisplacement(par1ItemStack) == 1)
         {
             par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.canplace"));
-        } else
+        }else if (this.getMaxRuneDisplacement(par1ItemStack) >= 2)
+        {
+            par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.canplacedawn"));
+
+        }else
         {
             par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.cannotplace"));
         }
@@ -358,10 +361,15 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item id, CreativeTabs creativeTab, List list)
     {
-        list.add(new ItemStack(ModItems.itemRitualDiviner));
-        ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
-        ((ItemRitualDiviner) duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
+        list.add(new ItemStack(id));
+        
+        ItemStack duskRitualDivinerStack = new ItemStack(id);
+        this.setMaxRuneDisplacement(duskRitualDivinerStack, 1);
         list.add(duskRitualDivinerStack);
+        
+        ItemStack dawnRitualDivinerStack = new ItemStack(id);
+        this.setMaxRuneDisplacement(dawnRitualDivinerStack, 2);
+        list.add(dawnRitualDivinerStack);
     }
     
     @Override

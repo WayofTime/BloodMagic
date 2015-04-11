@@ -147,7 +147,6 @@ public class AlchemicalWizardryEventHooks
 		            
 		            APISpellHelper.setCurrentAdditionalHP((EntityPlayer)event.entityLiving, Math.max(0, hp));
 
-					System.out.println("HP: " + hp);
 					APISpellHelper.setCurrentAdditionalHP(player, Math.max(0, hp));
 					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(Math.max(0, hp), APISpellHelper.getCurrentAdditionalMaxHP(player)), (EntityPlayerMP)player);
 	            }				

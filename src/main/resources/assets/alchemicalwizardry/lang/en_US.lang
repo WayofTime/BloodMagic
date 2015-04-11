@@ -364,6 +364,7 @@ tooltip.ritualdiviner.airstones=Air Stones:
 tooltip.ritualdiviner.blankstones=Blank Stones:
 tooltip.ritualdiviner.cannotplace=Can not place Dusk runes
 tooltip.ritualdiviner.canplace=Can place Dusk runes
+tooltip.ritualdiviner.canplacedawn=Can place Dusk and Dawn runes
 tooltip.ritualdiviner.desc=Used to explore new types of rituals
 tooltip.ritualdiviner.duskstones=Dusk Stones:
 tooltip.ritualdiviner.earthstones=Earth Stones:

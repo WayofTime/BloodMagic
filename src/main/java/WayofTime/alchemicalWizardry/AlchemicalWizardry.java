@@ -643,6 +643,8 @@ public class AlchemicalWizardry
         ItemStack simpleCatalystStack = new ItemStack(ModItems.simpleCatalyst);
         ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
         ((ItemRitualDiviner) duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
+        ItemStack dawnRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
+        ((ItemRitualDiviner) dawnRitualDivinerStack.getItem()).setMaxRuneDisplacement(dawnRitualDivinerStack, 2);
         waterSigilStackCrafted.setItemDamage(waterSigilStackCrafted.getMaxDamage());
         lavaSigilStackCrafted.setItemDamage(lavaSigilStackCrafted.getMaxDamage());
         voidSigilStackCrafted.setItemDamage(voidSigilStackCrafted.getMaxDamage());
@@ -1076,6 +1078,8 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockEnchantmentGlyph, 1, 0), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, 'g', etherealSlateStack, 'b', magicalesStack, '1', offensaStack, 's', lifeShardStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockEnchantmentGlyph, 1, 1), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, 'g', etherealSlateStack, 'b', magicalesStack, '1', virtusStack, 's', soulShardStack);
 
+        GameRegistry.addRecipe(dawnRitualDivinerStack, " d ", "srs", " d ", 'd', new ItemStack(ModItems.dawnScribeTool), 's', etherealSlateStack, 'r', duskRitualDivinerStack);
+        
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.flint, 2, 0), 1, new ItemStack[]{new ItemStack(Blocks.gravel), new ItemStack(Items.flint)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.grass), 2, new ItemStack[]{new ItemStack(Blocks.dirt), new ItemStack(Items.dye, 1, 15), new ItemStack(Items.wheat_seeds), new ItemStack(Items.wheat_seeds)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.leather, 3, 0), 2, new ItemStack[]{new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh), new ItemStack(Items.rotten_flesh), waterBucketStack, new ItemStack(Items.flint)}, 1);
@@ -1342,6 +1346,7 @@ public class AlchemicalWizardry
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.alchemyFlask), new ItemStack(Items.glass_bottle), 2, 2000, 5, 5, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.reinforcedSlate), new ItemStack(ModItems.blankSlate), 2, 2000, 5, 5, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.bucketLife), new ItemStack(Items.bucket), 1, 1000, 5, 0, false);
+        AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.dawnScribeTool), new ItemStack(Blocks.glowstone), 6, 20000, 50, 35, false);
     }
 
     public static void initRituals()
