@@ -168,6 +168,21 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         return false;
     }
 
+    public boolean isAffectedBySoulHarden()
+    {
+    	return true;
+    }
+    
+    public double getBaseArmourReduction()
+    {
+    	return 0.9;
+    }
+    
+    public double getArmourPenetrationReduction()
+    {
+    	return 0.9;
+    }
+    
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
     {
@@ -188,7 +203,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             h = player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier() + 1;
         }
         
-        armourReduction = 1 - 0.1 * Math.pow(1.0/3.0, Math.max(0, h - f)) - 0.1 * Math.max(0, f-h);
+        armourReduction = isAffectedBySoulHarden() ? 1 - (1 - this.getBaseArmourReduction()) * Math.pow(1.0/3.0, Math.max(0, h - f)) - 0.1 * Math.max(0, f-h) : getBaseArmourReduction();
 
         damageAmount *= (armourReduction);
 
@@ -224,7 +239,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         {
             if (source.isUnblockable())
             {
-                return new ArmorProperties(-1, damageAmount * 0.9d, maxAbsorption);
+                return new ArmorProperties(-1, damageAmount * getArmourPenetrationReduction(), maxAbsorption);
             }
 
             return new ArmorProperties(-1, damageAmount, maxAbsorption);

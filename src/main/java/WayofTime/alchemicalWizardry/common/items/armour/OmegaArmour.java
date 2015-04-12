@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.armour;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,6 +39,8 @@ public abstract class OmegaArmour extends BoundArmour
 	protected boolean storeYLevel = false;
 	protected boolean storeSeesSky = false;
 	
+	protected List<Enchantment> illegalEnchantmentList = new LinkedList();
+	
 	public float reagentDrainPerDamage = 0.1f;
 	
 	public OmegaArmour(int armorType) 
@@ -61,30 +64,51 @@ public abstract class OmegaArmour extends BoundArmour
 	}
 	
 	@Override
+	public boolean isAffectedBySoulHarden()
+    {
+    	return false;
+    }
+    
+	@Override
+    public double getBaseArmourReduction()
+    {
+    	return 0.9;
+    }
+    
+	@Override
+    public double getArmourPenetrationReduction()
+    {
+    	return 0.5;
+    }
+	
+	@Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
 		super.onArmorTick(world, player, itemStack);
 		
-		if(this.storeBiomeID())
+		if(world.getWorldTime() % 50 == 0)
 		{
-			int xCoord = (int) Math.floor(player.posX);
-			int zCoord = (int) Math.floor(player.posZ);
-			
-			BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
-			if(biome != null)
+			if(this.storeBiomeID())
 			{
-				this.setBiomeIDStored(itemStack, biome.biomeID);
+				int xCoord = (int) Math.floor(player.posX);
+				int zCoord = (int) Math.floor(player.posZ);
+				
+				BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
+				if(biome != null)
+				{
+					this.setBiomeIDStored(itemStack, biome.biomeID);
+				}
 			}
-		}
-		
-		if(this.storeDimensionID())
-		{
-			this.setDimensionIDStored(itemStack, world.provider.dimensionId);
-		}
-		
-		if(this.storeYLevel())
-		{
-			this.setYLevelStored(itemStack, (int) Math.floor(player.posY));
+			
+			if(this.storeDimensionID())
+			{
+				this.setDimensionIDStored(itemStack, world.provider.dimensionId);
+			}
+			
+			if(this.storeYLevel())
+			{
+				this.setYLevelStored(itemStack, (int) Math.floor(player.posY));
+			}
 		}
 		
 		if(this.armorType == 1)
@@ -172,9 +196,17 @@ public abstract class OmegaArmour extends BoundArmour
             }
 		}
 		
+		for(Enchantment ench : this.illegalEnchantmentList)
+		{
+			if(map.containsKey(ench))
+			{
+				map.remove(ench);
+			}
+		}
+		
 		List newEnchantList = new ArrayList();
 		
-		for(Entry<Enchantment, Map<Integer, Integer>> entry : map.entrySet()) //Assume enchant # 0 is level 1 enchant
+		for(Entry<Enchantment, Map<Integer, Integer>> entry : map.entrySet())
 		{
 			Enchantment ench = entry.getKey();
 			Map<Integer, Integer> numMap = entry.getValue();

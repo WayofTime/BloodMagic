@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -67,6 +68,8 @@ public class AlchemicalWizardryEventHooks
 
 	public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
 	public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
+	
+	public static Random rand = new Random();
 
 	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteractEvent event)
@@ -149,6 +152,14 @@ public class AlchemicalWizardryEventHooks
 
 					APISpellHelper.setCurrentAdditionalHP(player, Math.max(0, hp));
 					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(Math.max(0, hp), APISpellHelper.getCurrentAdditionalMaxHP(player)), (EntityPlayerMP)player);
+					
+					if(event.ammount <= 0.3)
+					{
+						if(rand.nextInt(10) == 0)
+						{
+							event.ammount++;
+						}
+					}
 	            }				
 			}
 		}
