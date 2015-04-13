@@ -20,9 +20,9 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 {
     public static final int timeDelay = 25;
     public static final int amount = 10;
-    public static final int offensaDrain =5; // LP amount per damage
-    public static final int potentiaDrain =10; // Increase Range
-    public static final int sanctusDrain = 5; // Reduce LP use
+    public static final int offensaDrain =2; // LP amount per damage
+    public static final int potentiaDrain =5; // Increase Range
+    public static final int sanctusDrain = 2; // Reduce LP use
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -52,7 +52,9 @@ public class RitualEffectWellOfSuffering extends RitualEffect
                     if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
                     {
                         tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
-                        testFlag = true;
+                        if (tileAltar.getCurrentBlood()!=tileAltar.getCapacity()){
+                            testFlag = true;
+                        }
                     }
                 }
             }
