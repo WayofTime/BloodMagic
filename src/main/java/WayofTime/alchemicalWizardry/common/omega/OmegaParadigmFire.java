@@ -14,12 +14,16 @@ public class OmegaParadigmFire extends OmegaParadigm
 {
 	public OmegaParadigmFire(OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots) 
 	{
-		super(ReagentRegistry.incendiumReagent,  helmet, chestPiece, leggings, boots, new ReagentRegenConfiguration(50, 10, 100));
+		super(ReagentRegistry.incendiumReagent,  helmet, chestPiece, leggings, boots, new ReagentRegenConfiguration(50, 1, 10));
 	}
 	
 	@Override
 	public float getCostPerTickOfUse(EntityPlayer player)
 	{
+		if(player.isBurning())
+		{
+			return 0.5f;
+		}
 		return 1;
 	}
 	

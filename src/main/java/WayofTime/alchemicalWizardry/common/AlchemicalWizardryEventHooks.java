@@ -105,8 +105,13 @@ public class AlchemicalWizardryEventHooks
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public void onLivingHurtEvent(LivingHurtEvent event)
 	{
+		System.out.println("IsRemote: " + event.entity.worldObj.isRemote);
 		if(!event.isCanceled() && event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 		{
+			if(event.entityLiving.getHealth() > event.entityLiving.getMaxHealth())
+			{
+				event.entityLiving.setHealth(event.entityLiving.getMaxHealth());
+			}
 			EntityPlayer player = (EntityPlayer)event.entityLiving;
 
 			float prevHp = APISpellHelper.getCurrentAdditionalHP((EntityPlayer)event.entityLiving);
@@ -155,7 +160,7 @@ public class AlchemicalWizardryEventHooks
 					
 					if(event.ammount <= 0.3)
 					{
-						if(rand.nextInt(10) == 0)
+//						if(rand.nextInt(10) == 0)
 						{
 							event.ammount++;
 						}
@@ -216,6 +221,13 @@ public class AlchemicalWizardryEventHooks
 							}
 						}
 					}
+				}else
+				{
+					reagentAmount = 0;
+					APISpellHelper.setPlayerMaxReagentAmount(player, 0);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getReagentBarPacket(null, 0, 0), (EntityPlayerMP)player);
+					APISpellHelper.setCurrentAdditionalHP(player, 0);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(0, 0), (EntityPlayerMP)player);
 				}
 				//Consumes the amount
 				float costPerTick = parad.getCostPerTickOfUse(player);
@@ -238,13 +250,21 @@ public class AlchemicalWizardryEventHooks
 	
 			if(reagentAmount <= 0)
 			{
+				boolean hasRevertedArmour = false;
 				ItemStack[] armourInventory = player.inventory.armorInventory;
 				for(ItemStack stack : armourInventory)
 				{
 					if(stack != null && stack.getItem() instanceof OmegaArmour)
 					{
 						((OmegaArmour)stack.getItem()).revertArmour(player, stack);
+						hasRevertedArmour = true;
 					}
+				}
+				
+				if(hasRevertedArmour)
+				{
+					APISpellHelper.setCurrentAdditionalHP(player, 0);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(0, 0), (EntityPlayerMP)player);
 				}
 			}
 			

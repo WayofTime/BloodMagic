@@ -97,12 +97,13 @@ public class OmegaArmourWater extends OmegaArmour
 		BiomeGenBase biome = BiomeGenBase.getBiome(biomeID);
 		if(biome != null)
 		{
-			map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85312 /** Random number **/, armorType), "Armor modifier" + armorType, getDefaultHealthBoost()*getHealthBoostModifierForBiome(biome), 0)); 
+			map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85312 /** Random number **/, armorType), "Health modifier" + armorType, getDefaultArmourBoost()*getHealthBoostModifierForBiome(biome), 2));
+			map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85432 /** Random number **/, armorType), "Damage modifier" + armorType, getDefaultArmourBoost()*getDamageModifierForBiome(biome), 2));			
 		}
 		return map; 
     }
 	
-	public float getDefaultHealthBoost()
+	public float getDefaultArmourBoost()
 	{
 		switch(this.armorType)
 		{
@@ -120,21 +121,44 @@ public class OmegaArmourWater extends OmegaArmour
 	
 	public float getHealthBoostModifierForBiome(BiomeGenBase biome)
 	{
+		float modifier = 0.05f;
 		if(biome.isEqualTo(BiomeGenBase.hell))
 		{
-			return -0.5f;
+			return modifier * -0.5f;
 		}
 		
-		if(biome.isEqualTo(BiomeGenBase.ocean))
+		if(biome.isEqualTo(BiomeGenBase.ocean) || biome.isEqualTo(BiomeGenBase.river))
 		{
-			return 2.0f;
+			return modifier * 2.0f;
 		}
 		
 		if(biome.isHighHumidity())
 		{
-			return 1.5f;
+			return modifier * 1.5f;
 		}
 		
-		return 0.5f;
+		return modifier * 0.5f;
+	}
+	
+	public float getDamageModifierForBiome(BiomeGenBase biome)
+	{
+		float modifier = 0.03f;
+		
+		if(biome.isEqualTo(BiomeGenBase.hell))
+		{
+			return modifier * -0.5f;
+		}
+		
+		if(biome.isEqualTo(BiomeGenBase.ocean) || biome.isEqualTo(BiomeGenBase.river))
+		{
+			return modifier * 2.0f;
+		}
+		
+		if(biome.isHighHumidity())
+		{
+			return modifier * 1.5f;
+		}
+		
+		return modifier * 0.5f;
 	}
 }

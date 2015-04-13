@@ -1095,7 +1095,11 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.mycelium, 1, 0), 5, new ItemStack[]{new ItemStack(Blocks.grass), new ItemStack(Blocks.brown_mushroom), new ItemStack(Blocks.red_mushroom)}, 2);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.ice), 2, new ItemStack[]{waterBucketStack, new ItemStack(Items.snowball)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.potionitem, 1, 0), 1, new ItemStack[]{new ItemStack(Items.glass_bottle), new ItemStack(Blocks.cactus)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(waterBucketStack, 1, new ItemStack[]{emptyBucketStack, new ItemStack(Blocks.cactus)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.glass_bottle, 3), 1, new ItemStack[]{glassStack, glassStack, glassStack}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.ghast_tear, 2), 100, new ItemStack[]{ghastTearStack, concentratedCatalystStack, weakBloodShardStack, new ItemStack(Blocks.soul_sand), new ItemStack(Blocks.soul_sand)}, 5);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.coal, 5), 1, new ItemStack[]{new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.clay_ball, 4), 5, new ItemStack[]{new ItemStack(Blocks.sand), waterBucketStack}, 2);
     }
 
     @EventHandler

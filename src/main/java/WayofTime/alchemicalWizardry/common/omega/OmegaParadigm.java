@@ -74,7 +74,7 @@ public class OmegaParadigm
 	
 	public int getMaxAdditionalHealth()
 	{
-		return 50;
+		return 20;
 	}
 	
 	public boolean setOmegaStalling(EntityPlayer player, int duration)

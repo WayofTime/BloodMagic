@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -19,6 +20,8 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 {
     public static final int timeDelay = 25;
     public static final int amount = 10;
+    
+    private static final int tennebraeDrain = 5;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -65,6 +68,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         int entityCount = 0;
+        boolean hasTennebrae = this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
 
         if (currentEssence < this.getCostPerRefresh() * list.size())
         {
@@ -80,8 +84,10 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 
                 if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, 1))
                 {
+                	hasTennebrae = hasTennebrae && this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, true);
+
                     entityCount++;
-                    tileAltar.sacrificialDaggerCall(this.amount, true);
+                    tileAltar.sacrificialDaggerCall(this.amount * (hasTennebrae ? 2 : 1), true);
                 }
             }
 
