@@ -20,9 +20,9 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 {
     public static final int timeDelay = 25;
     public static final int amount = 10;
-    public static final int offensaDrain =5;  LP amount per damage
-    public static final int potentiaDrain =10;  Increase Range
-    public static final int sanctusDrain = 5; Reduce LP use
+    public static final int offensaDrain =5; // LP amount per damage
+    public static final int potentiaDrain =10; // Increase Range
+    public static final int sanctusDrain = 5; // Reduce LP use
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -65,7 +65,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 
         int d0 = 10;
         boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
-        int vertRange = 10 * (hasPotential ? 2 : 1);
+        int vertRange = 10 * (hasPotentia ? 2 : 1);
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);        
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);    
         int entityCount = 0;
@@ -95,7 +95,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
                 {
                     this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                 }
-            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount* (canDrainReagent(ritualStone, ReagentRegistry.SanctusReagent, SanctusDrain, true)?0.5:1));
+            SoulNetworkHandler.syphonFromNetwork(owner, (int)(this.getCostPerRefresh() * entityCount* (canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true)?0.5:1)));
             }
         }
     }
