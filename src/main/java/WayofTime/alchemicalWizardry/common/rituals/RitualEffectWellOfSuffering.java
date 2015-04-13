@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -19,6 +20,9 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 {
     public static final int timeDelay = 25;
     public static final int amount = 10;
+    public static final int offensaDrain =5;  LP amount per damage
+    public static final int potentiaDrain =10;  Increase Range
+    public static final int sanctusDrain = 5; Reduce LP use
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -60,13 +64,14 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         }
 
         int d0 = 10;
-        int vertRange = 10;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
-        List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
-
+        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        int vertRange = 10 * (hasPotential ? 2 : 1);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);        
+        List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);    
         int entityCount = 0;
-
-        if (currentEssence < this.getCostPerRefresh() * list.size())
+        
+        boolean hasSanctus = this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, false);
+        if (currentEssence < this.getCostPerRefresh() * list.size() * (hasSanctus ? 0.5 :1))
         {
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
@@ -81,11 +86,17 @@ public class RitualEffectWellOfSuffering extends RitualEffect
                 if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, 1))
                 {
                     entityCount++;
-                    tileAltar.sacrificialDaggerCall(this.amount, true);
+                    tileAltar.sacrificialDaggerCall(this.amount*(canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true)? 2:1), true);
                 }
             }
-
-            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
+            if (entityCount > 0)
+            {
+                if (hasPotentia)
+                {
+                    this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                }
+            SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount* (canDrainReagent(ritualStone, ReagentRegistry.SanctusReagent, SanctusDrain, true)?0.5:1));
+            }
         }
     }
 
