@@ -164,6 +164,23 @@ public class APISpellHelper
 		data.setFloat("BM:MaxAddedHP", maxHP);	
 	}
 	
+	public static int getPlayerReagentRegenCooldownTag(EntityPlayer player)
+	{
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
+		if(data.hasKey("BM:ReagentRegenCooldown"))
+		{
+			return data.getInteger("BM:ReagentRegenCooldown");
+		}
+		
+		return 0;
+	}
+	
+	public static void setPlayerReagentRegenCooldownTag(EntityPlayer player, int amount)
+	{
+		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
+		data.setInteger("BM:ReagentRegenCooldown", amount);
+	}
+	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
     {
         float f = 1.0F;

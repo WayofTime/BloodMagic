@@ -35,7 +35,7 @@ public class OmegaParadigm
 		this.leggings.setReagent(reagent);
 		this.boots.setReagent(reagent);
 		
-		this.config = new ReagentRegenConfiguration(20, 10, 1);
+		this.config = new ReagentRegenConfiguration(100, 1, 10);
 	}
 	
 	public boolean convertPlayerArmour(EntityPlayer player, int x, int y, int z, int stability, int affinity, int enchantability, int enchantmentLevel)

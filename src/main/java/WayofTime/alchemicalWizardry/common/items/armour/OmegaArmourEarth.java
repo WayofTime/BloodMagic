@@ -124,11 +124,11 @@ public class OmegaArmourEarth extends OmegaArmour
 	
 	public float getHealthBoostModifierForLevel(int yLevel)
 	{
-		return (float) (0.05 * Math.max(-0.5, -((float)yLevel)/64f * 1.5f + 5.5f));
+		return 0.05f * (yLevel <= 50 ? 1.5f : yLevel >= 100 ? -0.5f : 0.5f);
 	}
 	
 	public float getDamageModifierForLevel(int yLevel)
 	{
-		return 0.02f * ((((float)yLevel)/64f) * 1.5f - 1);
+		return 0.03f * (yLevel <= 50 ? 1.5f : yLevel >= 100 ? -0.5f : 0.5f);
 	}
 }

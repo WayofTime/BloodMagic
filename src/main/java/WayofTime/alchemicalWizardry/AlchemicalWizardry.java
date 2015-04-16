@@ -139,6 +139,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrafting;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectDemonPortal;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEllipsoid;
@@ -1387,8 +1388,10 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW031Convocation",isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
         Rituals.registerRitual("AW032Symmetry", 2, 15000000, new RitualEffectOmegaTest(), "Symmetry of the Omega");
-        Rituals.registerRitual("AW033Stalling", 2, 15000000, new RitualEffectOmegaStalling(), "Omega Stalling");
-//        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
+        Rituals.registerRitual("AW033Stalling", 2, 15000000, new RitualEffectOmegaStalling(), "Duet of the Fused Souls");
+        
+        Rituals.registerRitual("AW034", 2, 100, new RitualEffectCrafting(), "Ritual of Teh Crafts");
+        
         Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }

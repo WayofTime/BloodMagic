@@ -99,4 +99,10 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 			par3List.add(new ItemStack(par1, 1, i));
 		}
     }
+	
+	@Override
+    public int damageDropped(int metadata)
+    {
+        return metadata;
+    }
 }

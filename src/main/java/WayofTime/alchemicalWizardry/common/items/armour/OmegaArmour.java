@@ -161,6 +161,8 @@ public abstract class OmegaArmour extends BoundArmour
 		SoulNetworkHandler.checkAndSetItemOwner(omegaStack, SoulNetworkHandler.getOwnerName(boundStack));
 		this.setItemEnchantability(omegaStack, Math.min(enchantability, 70));
 		
+		EnchantmentHelper.setEnchantments(new HashMap(), omegaStack);
+		
 		List enchantList = new ArrayList();
 		
 		int adjustedEnchantLevel = Math.min(enchantmentLevel, 30);

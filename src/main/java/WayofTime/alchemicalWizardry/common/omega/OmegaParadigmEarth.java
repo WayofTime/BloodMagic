@@ -37,13 +37,6 @@ public class OmegaParadigmEarth extends OmegaParadigm
 			{
 				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, 0, true));
 			}
-			
-//			if(player.isInWater())
-//			{
-//				player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 200, 2, true));
-//				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2, true));
-//				player.addPotionEffect(new PotionEffect(Potion.weakness.id, 200, 1, true));
-//			}
 		}
 		
 		if(player.posY > 100)

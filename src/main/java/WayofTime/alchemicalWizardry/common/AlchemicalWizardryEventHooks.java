@@ -105,21 +105,24 @@ public class AlchemicalWizardryEventHooks
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public void onLivingHurtEvent(LivingHurtEvent event)
 	{
-		System.out.println("IsRemote: " + event.entity.worldObj.isRemote);
 		if(!event.isCanceled() && event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 		{
-			if(event.entityLiving.getHealth() > event.entityLiving.getMaxHealth())
-			{
-				event.entityLiving.setHealth(event.entityLiving.getMaxHealth());
-			}
 			EntityPlayer player = (EntityPlayer)event.entityLiving;
 
+			if(APISpellHelper.getCurrentAdditionalMaxHP(player) > 0)
+			{
+				APISpellHelper.setPlayerReagentRegenCooldownTag(player, 20 * 20);
+			}
+			
 			float prevHp = APISpellHelper.getCurrentAdditionalHP((EntityPlayer)event.entityLiving);
 			if(prevHp > 0)
 			{
+				double originalDamage = event.ammount;
+				double initialReagentHp = prevHp;
+				
 				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
 				if (recalculatedAmount <= 0) return;
-				recalculatedAmount = SpellHelper.applyPotionDamageCalculations(player, event.source, recalculatedAmount);
+				recalculatedAmount = SpellHelper.applyPotionDamageCalculations(player, event.source, recalculatedAmount); //Recalculated damage
 				
 				float ratio = recalculatedAmount / event.ammount;
 				
@@ -129,43 +132,43 @@ public class AlchemicalWizardryEventHooks
 	            
 	            if(prevHp > recalculatedAmount)
 	            {
-		            float hp = (prevHp - recalculatedAmount);
-		            
-		            if(hp > 0)
-					{
-						event.ammount = 0;
-					}else
-					{
-						event.ammount -= hp / ratio;
-						Reagent reagent = APISpellHelper.getPlayerReagentType(player);
-						OmegaParadigm paradigm = OmegaRegistry.getParadigmForReagent(reagent);
-						if(paradigm != null)
-						{
-							ItemStack chestStack = player.inventory.armorInventory[2];
+		            float hp = (prevHp - recalculatedAmount); //New HP - this is obviously > 0...
 
-							if(chestStack != null && chestStack.getItem() instanceof OmegaArmour)
+//					event.setCanceled(true);
+		            event.ammount = 0;
+					Reagent reagent = APISpellHelper.getPlayerReagentType(player);
+					OmegaParadigm paradigm = OmegaRegistry.getParadigmForReagent(reagent);
+					if(paradigm != null)
+					{
+						ItemStack chestStack = player.inventory.armorInventory[2];
+
+						if(chestStack != null && chestStack.getItem() instanceof OmegaArmour)
+						{
+							if(((OmegaArmour)chestStack.getItem()).paradigm == paradigm)
 							{
-								if(((OmegaArmour)chestStack.getItem()).paradigm == paradigm)
-								{
-									paradigm.onHPBarDepleted(player, chestStack);
-								}
+								paradigm.onHPBarDepleted(player, chestStack);
 							}
 						}
 					}
-		            
-		            APISpellHelper.setCurrentAdditionalHP((EntityPlayer)event.entityLiving, Math.max(0, hp));
 
-					APISpellHelper.setCurrentAdditionalHP(player, Math.max(0, hp));
-					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(Math.max(0, hp), APISpellHelper.getCurrentAdditionalMaxHP(player)), (EntityPlayerMP)player);
+					APISpellHelper.setCurrentAdditionalHP(player, hp);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(hp, APISpellHelper.getCurrentAdditionalMaxHP(player)), (EntityPlayerMP)player);
 					
-					if(event.ammount <= 0.3)
+//					if(event.ammount <= 0.3)
+//					{
+//						event.ammount++;
+//					}
+	            }else
+	            {
+	            	APISpellHelper.setCurrentAdditionalHP(player, 0);
+					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(0, APISpellHelper.getCurrentAdditionalMaxHP(player)), (EntityPlayerMP)player);
+					
+					event.ammount -= prevHp / ratio;
+					if(event.ammount < 0)
 					{
-//						if(rand.nextInt(10) == 0)
-						{
-							event.ammount++;
-						}
+						event.ammount = 0;
 					}
-	            }				
+	            }
 			}
 		}
 	}
@@ -183,12 +186,40 @@ public class AlchemicalWizardryEventHooks
 			
 			if(reagentAmount > 0 && OmegaRegistry.hasParadigm(reagent))
 			{
+				int cooldown = APISpellHelper.getPlayerReagentRegenCooldownTag(player);
+				if(cooldown > 0)
+				{
+					float extra = 0;
+					if(player.isPotionActive(AlchemicalWizardry.customPotionSoulHarden))
+					{
+						extra += 0.25f * (1 + player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulHarden).getAmplifier());
+					}
+					
+					if(player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+					{
+						extra -= 0.25f * (1 + player.getActivePotionEffect(AlchemicalWizardry.customPotionSoulFray).getAmplifier());
+					}
+					
+					int deduction =  - 1 - (extra >= 0 ? (rand.nextFloat() < extra ? 1 : 0) : (rand.nextFloat() < -extra/2 ? -1 : 0));
+					
+					APISpellHelper.setPlayerReagentRegenCooldownTag(player, Math.max(cooldown + deduction, 0));
+					return;
+				}
 				OmegaParadigm parad = OmegaRegistry.getParadigmForReagent(reagent);
 				ReagentRegenConfiguration config = parad.getRegenConfig(player);
 				
 				if(parad.isPlayerWearingFullSet(player))
 				{
-					if(event.entityLiving.worldObj.getWorldTime() % config.tickRate == 0)
+					int tickRate = config.tickRate;
+					
+					if(player.isPotionActive(Potion.regeneration))
+					{
+						int i = player.getActivePotionEffect(Potion.regeneration).getAmplifier();
+						double factor = Math.pow(1.5, i+1);
+						tickRate = Math.max((int)(tickRate / factor), 1);
+					}
+					
+					if(event.entityLiving.worldObj.getWorldTime() % tickRate == 0)
 					{
 						boolean hasHealthChanged = false;
 						int maxHealth = parad.getMaxAdditionalHealth();
