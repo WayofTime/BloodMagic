@@ -13,11 +13,13 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -27,12 +29,15 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 public class RitualEffectCrafting extends RitualEffect
 {
     public static final boolean isTesting = false;
-    public static final boolean limitToSingleStack = false;
+    public static final boolean limitToSingleStack = true;
     public static final int potentiaDrain = 2;
+    public static final int virtusDrain = 2;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
+//    	long startTime = System.nanoTime();
+    	
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
@@ -41,7 +46,9 @@ public class RitualEffectCrafting extends RitualEffect
         int y = ritualStone.getYCoord();
         int z = ritualStone.getZCoord();
 
-        if(world.getWorldTime() % 1 != 0)
+        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
+        
+        if(world.getWorldTime() % (hasPotentia ? 1 : 4) != 0)
         {
         	return;
         }
@@ -51,7 +58,23 @@ public class RitualEffectCrafting extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            int slotDesignation = 0;
+        	NBTTagCompound tag = ritualStone.getCustomRitualTag();
+
+        	if(tag == null)
+        	{
+        		ritualStone.setCustomRitualTag(new NBTTagCompound());
+        		tag = ritualStone.getCustomRitualTag();
+        	}
+        	
+        	boolean lastFailed = tag.getBoolean("didLastCraftFail");
+        	
+            int slotDesignation = tag.getInteger("slotDesignation");
+            if(lastFailed)
+            {
+            	slotDesignation++;
+            	tag.setInteger("slotDesignation", slotDesignation);
+            	tag.setBoolean("didLastCraftFail", false);
+            }
             int direction = ritualStone.getDirection();
             
             boolean canContinue = false;
@@ -69,11 +92,13 @@ public class RitualEffectCrafting extends RitualEffect
             {
             	for(int j=-1; j<=1; j++)
             	{
-            		TileEntity inv = world.getTileEntity(x + j, y + 2, z + i);
+        			int gridSpace = (i+1)*3 + (j+1);
+
+            		Int3 pos = this.getSlotPositionForDirection(gridSpace, direction);
+            		TileEntity inv = world.getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord);
             		if(inv instanceof IInventory)
             		{
-            			int gridSpace = (i+1)*3 + (j+1);
-            			if(((IInventory) inv).getSizeInventory() < slotDesignation || !((IInventory) inv).isItemValidForSlot(slotDesignation, ((IInventory) inv).getStackInSlot(slotDesignation)))
+            			if(((IInventory) inv).getSizeInventory() <= slotDesignation || !((IInventory) inv).isItemValidForSlot(slotDesignation, ((IInventory) inv).getStackInSlot(slotDesignation)))
             			{
             				continue;
             			}else
@@ -92,13 +117,21 @@ public class RitualEffectCrafting extends RitualEffect
             
             if(!canContinue)
             {
+            	tag.setInteger("slotDesignation", 0);
             	return;
             }
             
             ItemStack returnStack = CraftingManager.getInstance().findMatchingRecipe(inventory, world);
             
-            if (returnStack != null)
+            if (returnStack == null)
             {
+            	tag.setBoolean("didLastCraftFail", true);
+            	return;
+            }else
+            {
+            	boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
+            	boolean addOutputToInputs = hasVirtus;
+            	
                 IInventory outputInv = null;
                 
                 List<IInventory> invList = new ArrayList();
@@ -107,19 +140,119 @@ public class RitualEffectCrafting extends RitualEffect
                 TileEntity southEntity = world.getTileEntity(x, y-1, z + 2);
                 TileEntity eastEntity = world.getTileEntity(x + 2, y-1, z);
                 TileEntity westEntity = world.getTileEntity(x - 2, y-1, z);
-
-                if(southEntity instanceof IInventory)
-                {
-                	outputInv = (IInventory)southEntity;
-                }
                 
-                if(northEntity instanceof IInventory)
+                switch(direction)
                 {
-                	invList.add((IInventory)northEntity);
+                case 1:
+                	if(southEntity instanceof IInventory)
+                    {
+                    	outputInv = (IInventory)southEntity;
+                    }else
+                    {
+                    	return;
+                    }
+
+            		if(northEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)northEntity);
+            		}
+            		if(eastEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)eastEntity);
+            		}
+            		if(westEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)westEntity);
+            		}
+                	
+                	break;
+                	
+                case 2:
+                	if(westEntity instanceof IInventory)
+                    {
+                    	outputInv = (IInventory)westEntity;
+                    }else
+                    {
+                    	return;
+                    }
+
+            		if(northEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)northEntity);
+            		}
+            		if(eastEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)eastEntity);
+            		}
+            		if(southEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)southEntity);
+            		}
+            		
+                	break;
+                	
+                case 3:
+                	if(northEntity instanceof IInventory)
+                    {
+                    	outputInv = (IInventory)northEntity;
+                    }else
+                    {
+                    	return;
+                    }
+
+            		if(eastEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)eastEntity);
+            		}
+            		if(southEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)southEntity);
+            		}
+            		if(westEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)westEntity);
+            		}
+            		
+                	break;
+                	
+                case 4:
+                	if(eastEntity instanceof IInventory)
+                    {
+                    	outputInv = (IInventory)eastEntity;
+                    }else
+                    {
+                    	return;
+                    }
+
+            		if(northEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)northEntity);
+            		}
+            		if(southEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)southEntity);
+            		}
+            		if(westEntity instanceof IInventory)
+            		{
+            			invList.add((IInventory)westEntity);
+            		}
+            		
+                	break;
                 }
 
-                if (outputInv != null && (!limitToSingleStack ? SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, ForgeDirection.DOWN) : SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, ForgeDirection.DOWN, true, returnStack.getMaxStackSize())))
+                if (outputInv != null)
                 {
+                	if(!(!limitToSingleStack ? SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, ForgeDirection.DOWN) : SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, ForgeDirection.DOWN, true, returnStack.getMaxStackSize())))
+                	{
+                		tag.setBoolean("didLastCraftFail", true);
+                		return;
+                	}
+                	
+                	if(addOutputToInputs)
+                	{
+                		invList.add(outputInv);
+                	}
+                	
                 	Map<Integer, Map<Integer, Integer>> syphonMap = new HashMap(); //Inventory, Slot, how much claimed
                 	
                 	for(int n = 0; n < recipe.length; n++) //Look for the correct items
@@ -159,14 +292,13 @@ public class RitualEffectCrafting extends RitualEffect
 
                 				if(this.areItemsEqualForCrafting(recipeStack, invItem))
                 				{
-                					System.out.println("Item is equal and valid");
                 					//TODO
                 					inventory.setInventorySlotContents(n, invItem);
-                					ItemStack returnedStack = CraftingManager.getInstance().findMatchingRecipe(inventory, world);
-                					if(returnedStack == null || returnedStack.getItem() == null || returnedStack.getItem() != returnStack.getItem())
-                					{
-                						continue;
-                					}
+//                					ItemStack returnedStack = CraftingManager.getInstance().findMatchingRecipe(inventory, world);
+//                					if(returnedStack == null || returnedStack.getItem() == null || returnedStack.getItem() != returnStack.getItem())
+//                					{
+//                						continue;
+//                					}
                 					Map<Integer, Integer> slotMap = syphonMap.get(i);
                 					if(slotMap == null)
                 					{
@@ -195,15 +327,13 @@ public class RitualEffectCrafting extends RitualEffect
                 		
                 		if(!isItemTaken)
                 		{
-//                			System.out.println("Item is not available!");
+                			tag.setBoolean("didLastCraftFail", true);
                 			return;
                 		}
                 	}
                 	
                 	/* The recipe is valid and the items have been found */
-                	
-                	System.out.println("Valid!");
-                	
+                	                	
                 	SpellHelper.insertStackIntoInventory(CraftingManager.getInstance().findMatchingRecipe(inventory, world), outputInv, ForgeDirection.DOWN);
                 	
                 	for(Entry<Integer, Map<Integer, Integer>> entry1 : syphonMap.entrySet())
@@ -224,16 +354,30 @@ public class RitualEffectCrafting extends RitualEffect
                     				inputInv.setInventorySlotContents(entry2.getKey(), null);
                     			}
                 			}
-                			
                 		}
+                	}
+                	
+                	if(addOutputToInputs && syphonMap.containsKey(invList.size()))
+                	{
+                		this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, true);
                 	}
                 	                	
                     SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
+                    
+                    if(hasPotentia)
+                    {
+                    	this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+                    }
                     
                     world.markBlockForUpdate(x, y-1, z + 2);
                     world.markBlockForUpdate(x, y-1, z - 2);
                     world.markBlockForUpdate(x + 2, y-1, z);
                     world.markBlockForUpdate(x - 2, y-1, z);
+                    
+//                    long endTime = System.nanoTime();
+//
+//                	long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+//                	System.out.println("(Total) method time in ms: " + (float)(duration)/1000000.0);
                 }
             }  
         }
@@ -242,7 +386,7 @@ public class RitualEffectCrafting extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return 10;
     }
 
     @Override
@@ -266,20 +410,15 @@ public class RitualEffectCrafting extends RitualEffect
     
     public boolean areItemsEqualForCrafting(ItemStack stack1, ItemStack stack2)
     {
-    	if (stack1 == null)
+    	if (stack1 == null || stack2 == null)
         {
             return false;
         }
-
-        if (stack2 == null)
-        {
-            return true;
-        }
-
-        if (stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
-        {
-            return false;
-        }
+//
+//        if (stack1.isItemStackDamageable() ^ stack2.isItemStackDamageable())
+//        {
+//            return false;
+//        }
 
         return stack1.getItem() == stack2.getItem() && (stack1.getItem().getHasSubtypes() ? stack1.getItemDamage() == stack2.getItemDamage() : true);
     }
@@ -298,11 +437,11 @@ public class RitualEffectCrafting extends RitualEffect
     	case 1: //NORTH-facing
     		return new Int3(x, 2, z);
     	case 2: //EAST-facing
-    		return new Int3(-z, 2, x);
+    		return new Int3(z, 2, -x);
     	case 3: //SOUTH-facing
     		return new Int3(-x, 2, -z);
     	case 4: //WEST-facing
-    		return new Int3(z, 2, -x);
+    		return new Int3(-z, 2, x);
     	}
     	return new Int3(0,0,0);
     }

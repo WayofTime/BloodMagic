@@ -1390,7 +1390,7 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW032Symmetry", 2, 15000000, new RitualEffectOmegaTest(), "Symmetry of the Omega");
         Rituals.registerRitual("AW033Stalling", 2, 15000000, new RitualEffectOmegaStalling(), "Duet of the Fused Souls");
         
-        Rituals.registerRitual("AW034", 2, 100, new RitualEffectCrafting(), "Ritual of Teh Crafts");
+        Rituals.registerRitual("AW034Crafting", 1, 15000, new RitualEffectCrafting(), "Rhythm of the Beating Anvil");
         
         Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));

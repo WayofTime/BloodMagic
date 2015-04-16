@@ -187,6 +187,7 @@ public class AlchemicalWizardryEventHooks
 			if(reagentAmount > 0 && OmegaRegistry.hasParadigm(reagent))
 			{
 				int cooldown = APISpellHelper.getPlayerReagentRegenCooldownTag(player);
+				boolean canHealHPBar = true;
 				if(cooldown > 0)
 				{
 					float extra = 0;
@@ -203,55 +204,60 @@ public class AlchemicalWizardryEventHooks
 					int deduction =  - 1 - (extra >= 0 ? (rand.nextFloat() < extra ? 1 : 0) : (rand.nextFloat() < -extra/2 ? -1 : 0));
 					
 					APISpellHelper.setPlayerReagentRegenCooldownTag(player, Math.max(cooldown + deduction, 0));
-					return;
+					canHealHPBar = false;
 				}
+				
 				OmegaParadigm parad = OmegaRegistry.getParadigmForReagent(reagent);
 				ReagentRegenConfiguration config = parad.getRegenConfig(player);
 				
 				if(parad.isPlayerWearingFullSet(player))
 				{
-					int tickRate = config.tickRate;
-					
-					if(player.isPotionActive(Potion.regeneration))
+					if(canHealHPBar)
 					{
-						int i = player.getActivePotionEffect(Potion.regeneration).getAmplifier();
-						double factor = Math.pow(1.5, i+1);
-						tickRate = Math.max((int)(tickRate / factor), 1);
-					}
-					
-					if(event.entityLiving.worldObj.getWorldTime() % tickRate == 0)
-					{
-						boolean hasHealthChanged = false;
-						int maxHealth = parad.getMaxAdditionalHealth();
+						int tickRate = config.tickRate;
 						
-						float health = APISpellHelper.getCurrentAdditionalHP(player);
-						
-						if(health > maxHealth)
+						if(player.isPotionActive(Potion.regeneration))
 						{
-							health = maxHealth;
-							hasHealthChanged = true;
-						}else if(health < maxHealth)
-						{
-							float addedAmount = Math.min(Math.min((reagentAmount / config.costPerPoint), config.healPerTick), maxHealth - health);
-							float drain = addedAmount * config.costPerPoint;
-							
-							reagentAmount -= drain;
-							hasReagentChanged = true;
-							
-							health += addedAmount;
-							
-							hasHealthChanged = true;
+							int i = player.getActivePotionEffect(Potion.regeneration).getAmplifier();
+							double factor = Math.pow(1.5, i+1);
+							tickRate = Math.max((int)(tickRate / factor), 1);
 						}
 						
-						if(player instanceof EntityPlayerMP)
+						if(event.entityLiving.worldObj.getWorldTime() % tickRate == 0)
 						{
-							if(hasHealthChanged)
+							boolean hasHealthChanged = false;
+							int maxHealth = parad.getMaxAdditionalHealth();
+							
+							float health = APISpellHelper.getCurrentAdditionalHP(player);
+							
+							if(health > maxHealth)
 							{
-								APISpellHelper.setCurrentAdditionalHP(player, health);
-								NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(health, maxHealth), (EntityPlayerMP)player);
+								health = maxHealth;
+								hasHealthChanged = true;
+							}else if(health < maxHealth)
+							{
+								float addedAmount = Math.min(Math.min((reagentAmount / config.costPerPoint), config.healPerTick), maxHealth - health);
+								float drain = addedAmount * config.costPerPoint;
+								
+								reagentAmount -= drain;
+								hasReagentChanged = true;
+								
+								health += addedAmount;
+								
+								hasHealthChanged = true;
+							}
+							
+							if(player instanceof EntityPlayerMP)
+							{
+								if(hasHealthChanged)
+								{
+									APISpellHelper.setCurrentAdditionalHP(player, health);
+									NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getAddedHPPacket(health, maxHealth), (EntityPlayerMP)player);
+								}
 							}
 						}
 					}
+					
 				}else
 				{
 					reagentAmount = 0;
