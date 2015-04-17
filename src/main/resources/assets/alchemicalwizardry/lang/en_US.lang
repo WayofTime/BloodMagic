@@ -445,5 +445,5 @@ message.tanksegmenter.tankssetto=tank(s) set to:
 message.routerfocus.limit=Focus' Item Limit set to: 
 
 #Achievements
-achievement.alchemicalwizardy:firstPrick!=Your first prick!
-achievement.alchemicalwizardy:firstPrick!.desc=The first drop of life in the Altar...
+achievement.alchemicalwizardy:achievment.firstPrick=Your first prick!
+achievement.alchemicalwizardy:achievment.firstPrick.desc=The first drop of life in the Altar...
