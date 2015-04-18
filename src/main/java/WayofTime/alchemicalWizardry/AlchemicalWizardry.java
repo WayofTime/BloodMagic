@@ -139,6 +139,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrafting;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrushing;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectDemonPortal;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectEllipsoid;
@@ -284,7 +285,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.1", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.2", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
@@ -643,6 +644,8 @@ public class AlchemicalWizardry
         ItemStack simpleCatalystStack = new ItemStack(ModItems.simpleCatalyst);
         ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
         ((ItemRitualDiviner) duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
+        ItemStack dawnRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
+        ((ItemRitualDiviner) dawnRitualDivinerStack.getItem()).setMaxRuneDisplacement(dawnRitualDivinerStack, 2);
         waterSigilStackCrafted.setItemDamage(waterSigilStackCrafted.getMaxDamage());
         lavaSigilStackCrafted.setItemDamage(lavaSigilStackCrafted.getMaxDamage());
         voidSigilStackCrafted.setItemDamage(voidSigilStackCrafted.getMaxDamage());
@@ -731,6 +734,7 @@ public class AlchemicalWizardry
         customPotionAmphibian = (new PotionAmphibian(customPotionAmphibianID, false, 0).setIconIndex(0, 0).setPotionName("Amphibian"));
 
         ItemStack masterBloodOrbStack = new ItemStack(ModItems.masterBloodOrb);
+        ItemStack transcendentBloodOrbStack = new ItemStack(ModItems.transcendentBloodOrb);
 
 //        ModBlocks.blockLifeEssence.setUnlocalizedName("lifeEssenceBlock");
         FluidContainerRegistry.registerFluidContainer(lifeEssenceFluid, new ItemStack(ModItems.bucketLife), FluidContainerRegistry.EMPTY_BUCKET);
@@ -1071,6 +1075,11 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 3), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', obsidianStack);
         GameRegistry.addRecipe(new ItemStack(ModItems.outputRoutingFocus, 1, 4), "sgs", "geg", "sgs", 'e', enderShardStack, 's', stickStack, 'g', stringStack);
 
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockStabilityGlyph), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, '1', crepitousStack, 'g', etherealSlateStack, 'b', praesidiumStack, 's', magicalesStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockEnchantmentGlyph, 1, 0), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, 'g', etherealSlateStack, 'b', magicalesStack, '1', offensaStack, 's', lifeShardStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockEnchantmentGlyph, 1, 1), "1s1", "grg", "bob", 'o', transcendentBloodOrbStack, 'r', bloodRuneStack, 'g', etherealSlateStack, 'b', magicalesStack, '1', virtusStack, 's', soulShardStack);
+
+        GameRegistry.addRecipe(dawnRitualDivinerStack, " d ", "srs", " d ", 'd', new ItemStack(ModItems.dawnScribeTool), 's', etherealSlateStack, 'r', duskRitualDivinerStack);
         
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.flint, 2, 0), 1, new ItemStack[]{new ItemStack(Blocks.gravel), new ItemStack(Items.flint)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.grass), 2, new ItemStack[]{new ItemStack(Blocks.dirt), new ItemStack(Items.dye, 1, 15), new ItemStack(Items.wheat_seeds), new ItemStack(Items.wheat_seeds)}, 1);
@@ -1086,6 +1095,12 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.soul_sand, 3, 0), 3, new ItemStack[]{new ItemStack(Blocks.sand), new ItemStack(Blocks.sand), new ItemStack(Blocks.sand), waterBucketStack, weakBloodShardStack}, 3);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.mycelium, 1, 0), 5, new ItemStack[]{new ItemStack(Blocks.grass), new ItemStack(Blocks.brown_mushroom), new ItemStack(Blocks.red_mushroom)}, 2);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Blocks.ice), 2, new ItemStack[]{waterBucketStack, new ItemStack(Items.snowball)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.potionitem, 1, 0), 1, new ItemStack[]{new ItemStack(Items.glass_bottle), new ItemStack(Blocks.cactus)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(waterBucketStack, 1, new ItemStack[]{emptyBucketStack, new ItemStack(Blocks.cactus)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.glass_bottle, 3), 1, new ItemStack[]{glassStack, glassStack, glassStack}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.ghast_tear, 2), 100, new ItemStack[]{ghastTearStack, concentratedCatalystStack, weakBloodShardStack, new ItemStack(Blocks.soul_sand), new ItemStack(Blocks.soul_sand)}, 5);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.coal, 5), 1, new ItemStack[]{new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1)}, 1);
+        AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.clay_ball, 4), 5, new ItemStack[]{new ItemStack(Blocks.sand), waterBucketStack}, 2);
     }
 
     @EventHandler
@@ -1115,7 +1130,7 @@ public class AlchemicalWizardry
                 Item itemThaumBoots = GameRegistry.findItem("Thaumcraft", "ItemBootsThaumium");
 
                 AspectList aspectList = new AspectList();
-                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
+//                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
 
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineHelmet), aspectList);
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineRobe), aspectList);
@@ -1336,6 +1351,7 @@ public class AlchemicalWizardry
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.alchemyFlask), new ItemStack(Items.glass_bottle), 2, 2000, 5, 5, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.reinforcedSlate), new ItemStack(ModItems.blankSlate), 2, 2000, 5, 5, false);
         AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.bucketLife), new ItemStack(Items.bucket), 1, 1000, 5, 0, false);
+        AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.dawnScribeTool), new ItemStack(Blocks.glowstone), 6, 20000, 50, 35, false);
     }
 
     public static void initRituals()
@@ -1371,9 +1387,11 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW029VeilOfEvil", 1, 150000, new RitualEffectVeilOfEvil(), "Veil of Evil", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW030FullStomach", 1, 100000, new RitualEffectFullStomach(), "Requiem of the Satiated Stomach", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW031Convocation",isDemonRitualCreativeOnly ? 10 : 2, 15000000, new RitualEffectDemonPortal(), "Convocation of the Damned", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleDemon.png"), 220, 22, 22, 255, 0, 0.501, 0.501, 0, 5, false));
-        Rituals.registerRitual("AW032", 1, 100, new RitualEffectOmegaTest(), "Symmetry of the Omega");
-        Rituals.registerRitual("AW033", 2, 100, new RitualEffectOmegaStalling(), "Omega Stalling");
-//        Rituals.registerRitual("AW034", 2, 100, new RitualEffectAlphaPact(), "Alpha Pact");
+        Rituals.registerRitual("AW032Symmetry", 2, 15000000, new RitualEffectOmegaTest(), "Symmetry of the Omega");
+        Rituals.registerRitual("AW033Stalling", 2, 15000000, new RitualEffectOmegaStalling(), "Duet of the Fused Souls");
+        
+        Rituals.registerRitual("AW034Crafting", 1, 15000, new RitualEffectCrafting(), "Rhythm of the Beating Anvil");
+        
         Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }

@@ -1,16 +1,15 @@
 package WayofTime.alchemicalWizardry.common.commands;
 
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import java.util.List;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
 public class CommandBind extends CommandBase
 {
@@ -39,7 +38,7 @@ public class CommandBind extends CommandBase
 
         if (targetPlayer == null)
         {
-            throw new CommandException("commands.bind.failed.noPlayer", new Object[0]);
+            throw new CommandException("commands.bind.failed.noPlayer");
         }
 
         if (item != null && item.getItem() instanceof IBindable)
@@ -47,16 +46,16 @@ public class CommandBind extends CommandBase
             if (EnergyItems.getOwnerName(item).isEmpty())
             {
                 EnergyItems.checkAndSetItemOwner(item, targetPlayer);
-                func_152373_a(iCommandSender, this, "commands.bind.success", new Object[0]);
+                func_152373_a(iCommandSender, this, "commands.bind.success");
             }
             else
             {
-                throw new CommandException("commands.bind.failed.alreadyBound", new Object[0]);
+                throw new CommandException("commands.bind.failed.alreadyBound");
             }
         }
         else if (!(item.getItem() instanceof IBindable))
         {
-            throw new CommandException("commands.bind.failed.notBindable", new Object[0]);
+            throw new CommandException("commands.bind.failed.notBindable");
         }
     }
 

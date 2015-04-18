@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -10,7 +9,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelBloodAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 
 public class TEAltarRenderer extends TileEntitySpecialRenderer
 {
@@ -44,7 +47,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
             if (tileAltar.getStackInSlot(0) != null)
             {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
-                float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+                float rotationAngle = Minecraft.getMinecraft().gameSettings.fancyGraphics ? (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) : 0;
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));

@@ -4,18 +4,15 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -352,7 +349,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             return 0;
         }
 
-        if (resource.fluidID != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).fluidID)
+        if (resource.getFluidID() != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).getFluidID())
         {
             return 0;
         }
@@ -917,7 +914,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[1] = 0;
         } else
         {
-            sortList[0] = this.fluid.fluidID;
+            sortList[0] = this.fluid.getFluidID();
             sortList[1] = this.fluid.amount;
         }
 
@@ -927,7 +924,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[3] = 0;
         } else
         {
-            sortList[2] = this.fluidInput.fluidID;
+            sortList[2] = this.fluidInput.getFluidID();
             sortList[3] = this.fluidInput.amount;
         }
 
@@ -937,7 +934,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[5] = 0;
         } else
         {
-            sortList[4] = this.fluidOutput.fluidID;
+            sortList[4] = this.fluidOutput.getFluidID();
             sortList[5] = this.fluidOutput.amount;
         }
 

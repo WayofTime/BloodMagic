@@ -417,7 +417,7 @@ public class SoulNetworkHandler
 
     public static String getUsername(EntityPlayer player)
     {
-        return player.getDisplayName();
+        return player.getCommandSenderName();
     }
 
     public static EntityPlayer getPlayerForUsername(String str)

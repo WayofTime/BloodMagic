@@ -59,6 +59,14 @@ tile.crystalBlock.fullCrystal.name=Crystal Cluster
 tile.crystalBlock.crystalBrick.name=Crystal Cluster Brick
 tile.demonPortal.name=Demon Portal
 tile.demonChest.name=Demon's Chest
+tile.enchantmentGlyph.enchantability.name=Glyph of the Adept Enchanter
+tile.enchantmentGlyph.enchantmentLevel.name=Glyph of Arcane Potential
+tile.stabilityGlyph.stability1.name=Glyph of Rigid Stability
+tile.schematicSaver.name=Schematic Saver
+tile.blockMimic.name=Mimic Block
+tile.blockSpectralContainer.name=Spectral Container
+tile.blockBloodLightSource.name=Blood Light
+tile.spectralBlock.name=Spectral Block
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb
@@ -203,6 +211,7 @@ item.itemAssassinSigil.name=Sigil of the Assassin
 item.transcendentBloodOrb.name=Transcendent Blood Orb
 item.itemMailCatalogue.name=Mail Order Catalogue
 item.inputRoutingFocus.name=Input Routing Focus
+item.bloodMagicBaseItem.EnderShard.name=Ender Shard
 item.outputRoutingFocus.default.name=Default Output Routing Focus
 item.outputRoutingFocus.modItem.name=Output Routing Focus (ModItem)
 item.outputRoutingFocus.ignMeta.name=Output Routing Focus (Ignore Meta)
@@ -360,6 +369,7 @@ tooltip.ritualdiviner.airstones=Air Stones:
 tooltip.ritualdiviner.blankstones=Blank Stones:
 tooltip.ritualdiviner.cannotplace=Can not place Dusk runes
 tooltip.ritualdiviner.canplace=Can place Dusk runes
+tooltip.ritualdiviner.canplacedawn=Can place Dusk and Dawn runes
 tooltip.ritualdiviner.desc=Used to explore new types of rituals
 tooltip.ritualdiviner.duskstones=Dusk Stones:
 tooltip.ritualdiviner.earthstones=Earth Stones:
@@ -368,6 +378,7 @@ tooltip.ritualdiviner.moreinfo=Press shift for extended information
 tooltip.ritualdiviner.ritualtunedto=Ritual tuned to face:
 tooltip.ritualdiviner.waterstones=Water Stones:
 tooltip.ritualdiviner.dawnstones=Dawn Stones:
+tooltip.ritualdiviner.totalStones=Total Stones:
 tooltip.sacrificialdagger.desc1=A slight draining feeling tickles your fingers
 tooltip.sacrificialdagger.desc2=Just a prick of the
 tooltip.sacrificialdagger.desc3=finger will suffice...
@@ -440,4 +451,5 @@ message.tanksegmenter.tankssetto=tank(s) set to:
 message.routerfocus.limit=Focus' Item Limit set to: 
 
 #Achievements
-achievement.firstPrick=Your first prick!
+achievement.alchemicalwizardy:firstPrick=Your first prick!
+achievement.alchemicalwizardy:firstPrick.desc=The first drop of life into the Altar...

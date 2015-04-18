@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.client;
 
+import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -110,7 +111,7 @@ public class ClientProxy extends CommonProxy
     public void registerPostSideObjects()
     {
     	BUEntries entries = new BUEntries();
-    	entries.postInit();
+//    	entries.postInit();
     }
     
     @Override
@@ -146,6 +147,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityMinorDemonGruntGuardianEarth.class, new RenderMinorDemonGruntGuardian(new ModelMinorDemonGruntGuardian(), 0.5F));
         RenderingRegistry.registerEntityRenderingHandler(EntityMinorDemonGruntGuardianWind.class, new RenderMinorDemonGruntGuardian(new ModelMinorDemonGruntGuardian(), 0.5F));
 
+        MinecraftForge.EVENT_BUS.register(new RitualDivinerRender());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TEAltar.class, new TEAltarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new RenderPedestal());

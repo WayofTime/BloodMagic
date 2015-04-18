@@ -44,13 +44,13 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             int flag = 0;
 
             TileEntity topEntity = world.getTileEntity(x, y + 1, z);
-            if (!(topEntity instanceof IBloodAltar))
+            if (!(topEntity instanceof IBloodAltar) || !(topEntity instanceof IBloodAltar))
             {
                 return;
             }
 
             IBloodAltar altar = (IBloodAltar) topEntity;
-            ItemStack targetStack = altar.getStackInSlot(0);
+            ItemStack targetStack = ((IInventory)altar).getStackInSlot(0);
             if (targetStack == null)
             {
                 return;

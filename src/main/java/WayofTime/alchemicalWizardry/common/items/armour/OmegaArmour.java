@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.armour;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,6 +24,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,6 +38,10 @@ public abstract class OmegaArmour extends BoundArmour
 	protected boolean storeDimensionID = false;
 	protected boolean storeYLevel = false;
 	protected boolean storeSeesSky = false;
+	
+	protected List<Enchantment> illegalEnchantmentList = new LinkedList();
+	
+	public float reagentDrainPerDamage = 0.1f;
 	
 	public OmegaArmour(int armorType) 
 	{
@@ -57,30 +64,51 @@ public abstract class OmegaArmour extends BoundArmour
 	}
 	
 	@Override
+	public boolean isAffectedBySoulHarden()
+    {
+    	return false;
+    }
+    
+	@Override
+    public double getBaseArmourReduction()
+    {
+    	return 0.9;
+    }
+    
+	@Override
+    public double getArmourPenetrationReduction()
+    {
+    	return 0.5;
+    }
+	
+	@Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)
     {
 		super.onArmorTick(world, player, itemStack);
 		
-		if(this.storeBiomeID())
+		if(world.getWorldTime() % 50 == 0)
 		{
-			int xCoord = (int) Math.floor(player.posX);
-			int zCoord = (int) Math.floor(player.posZ);
-			
-			BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
-			if(biome != null)
+			if(this.storeBiomeID())
 			{
-				this.setBiomeIDStored(itemStack, biome.biomeID);
+				int xCoord = (int) Math.floor(player.posX);
+				int zCoord = (int) Math.floor(player.posZ);
+				
+				BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
+				if(biome != null)
+				{
+					this.setBiomeIDStored(itemStack, biome.biomeID);
+				}
 			}
-		}
-		
-		if(this.storeDimensionID())
-		{
-			this.setDimensionIDStored(itemStack, world.provider.dimensionId);
-		}
-		
-		if(this.storeYLevel())
-		{
-			this.setYLevelStored(itemStack, (int) Math.floor(player.posY));
+			
+			if(this.storeDimensionID())
+			{
+				this.setDimensionIDStored(itemStack, world.provider.dimensionId);
+			}
+			
+			if(this.storeYLevel())
+			{
+				this.setYLevelStored(itemStack, (int) Math.floor(player.posY));
+			}
 		}
 		
 		if(this.armorType == 1)
@@ -94,13 +122,34 @@ public abstract class OmegaArmour extends BoundArmour
 		}
     }
 	
+	@Override
+	public void repairArmour(World world, EntityPlayer player, ItemStack itemStack)
+	{
+		if (itemStack.getItemDamage() > 0)
+        {
+            if (!player.capabilities.isCreativeMode)
+            {
+                if(EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
+                {
+                	Reagent reagent = APISpellHelper.getPlayerReagentType(player);
+        			float reagentAmount = APISpellHelper.getPlayerCurrentReagentAmount(player);
+        			
+        			reagentAmount -= itemStack.getItemDamage() * reagentDrainPerDamage;
+        			APISpellHelper.setPlayerCurrentReagentAmount(player, Math.max(0, reagentAmount));
+        			
+                	itemStack.setItemDamage(0);
+                }
+            }
+        }
+	}
+	
 	public void revertArmour(EntityPlayer player, ItemStack itemStack)
 	{
 		ItemStack stack = this.getContainedArmourStack(itemStack);
 		player.inventory.armorInventory[3-this.armorType] = stack;
 	}
 	
-	public ItemStack getSubstituteStack(ItemStack boundStack, int stability, int affinity, int enchantability, Random rand)
+	public ItemStack getSubstituteStack(ItemStack boundStack, int stability, int affinity, int enchantability, int enchantmentLevel, Random rand)
 	{
 		ItemStack omegaStack = new ItemStack(this);
 		if(boundStack != null && boundStack.hasTagCompound())
@@ -110,13 +159,18 @@ public abstract class OmegaArmour extends BoundArmour
 		}
 		this.setContainedArmourStack(omegaStack, boundStack);
 		SoulNetworkHandler.checkAndSetItemOwner(omegaStack, SoulNetworkHandler.getOwnerName(boundStack));
-		this.setItemEnchantability(omegaStack, 70);
+		this.setItemEnchantability(omegaStack, Math.min(enchantability, 70));
+		
+		EnchantmentHelper.setEnchantments(new HashMap(), omegaStack);
 		
 		List enchantList = new ArrayList();
 		
-		for(int i=0; i<100; i++)
+		int adjustedEnchantLevel = Math.min(enchantmentLevel, 30);
+		int additionalPasses = enchantmentLevel - adjustedEnchantLevel;
+		
+		for(int i=0; i<1+additionalPasses; i++)
 		{
-			List lst = EnchantmentHelper.buildEnchantmentList(rand, omegaStack, 30);
+			List lst = EnchantmentHelper.buildEnchantmentList(rand, omegaStack, adjustedEnchantLevel);
 			if(lst != null)
 			{
 				enchantList.addAll(lst);
@@ -144,9 +198,17 @@ public abstract class OmegaArmour extends BoundArmour
             }
 		}
 		
+		for(Enchantment ench : this.illegalEnchantmentList)
+		{
+			if(map.containsKey(ench))
+			{
+				map.remove(ench);
+			}
+		}
+		
 		List newEnchantList = new ArrayList();
 		
-		for(Entry<Enchantment, Map<Integer, Integer>> entry : map.entrySet()) //Assume enchant # 0 is level 1 enchant
+		for(Entry<Enchantment, Map<Integer, Integer>> entry : map.entrySet())
 		{
 			Enchantment ench = entry.getKey();
 			Map<Integer, Integer> numMap = entry.getValue();

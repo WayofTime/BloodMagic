@@ -56,7 +56,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfTheFastMiner");
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:MiningSigil_deactivated");
         this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:MiningSigil_activated");
         this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:MiningSigil_deactivated");
     }

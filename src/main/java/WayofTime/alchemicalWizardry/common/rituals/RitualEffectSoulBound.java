@@ -66,9 +66,13 @@ public class RitualEffectSoulBound extends RitualEffect
                     if (BindingRegistry.isRequiredItemValid(itemStack))
                     {
                         ritualStone.setVar1(BindingRegistry.getIndexForItem(itemStack) + 1);
+                        itemStack.stackSize--;
                         world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
-                        item.setDead();
+                        if(itemStack.stackSize <= 0)
+                        {
+                            item.setDead();
+                        }
                         break;
                     }
 

@@ -28,6 +28,7 @@ public class OmegaArmourEarth extends OmegaArmour
 	public OmegaArmourEarth(int armorType) 
 	{
 		super(armorType);
+		this.storeYLevel = true;
 	}
 	
 	@Override
@@ -89,15 +90,45 @@ public class OmegaArmourEarth extends OmegaArmour
     }
 	
 	@Override 
-	public Multimap getItemAttributeModifiers() 
+	public Multimap getAttributeModifiers(ItemStack stack) 
 	{ 
 		Multimap map = HashMultimap.create(); 
-		map.put(SharedMonsterAttributes.knockbackResistance.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(179618 /** Random number **/, armorType), "Armor modifier" + armorType, getKnockbackResist(), 0)); 
+		int yLevel = this.getYLevelStored(stack);
+		map.put(SharedMonsterAttributes.knockbackResistance.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(179618 /** Random number **/, armorType), "Knockback modifier" + armorType, getKnockbackResist(), 0)); 
+		map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(80532 /** Random number **/, armorType), "Health modifier" + armorType, getDefaultArmourBoost()*getHealthBoostModifierForLevel(yLevel), 1)); 
+		map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85112 /** Random number **/, armorType), "Damage modifier" + armorType, getDefaultArmourBoost()*getDamageModifierForLevel(yLevel), 2));		
+		
 		return map; 
 	} 
 
 	public float getKnockbackResist()
 	{
 		return 0.25f;
+	}
+	
+	public float getDefaultArmourBoost()
+	{
+		switch(this.armorType)
+		{
+		case 0:
+			return 2.5f;
+		case 1:
+			return 4;
+		case 2:
+			return 3.5f;
+		case 3:
+			return 2;
+		}
+		return 0.25f;
+	}
+	
+	public float getHealthBoostModifierForLevel(int yLevel)
+	{
+		return 0.05f * (yLevel <= 50 ? 1.5f : yLevel >= 100 ? -0.5f : 0.5f);
+	}
+	
+	public float getDamageModifierForLevel(int yLevel)
+	{
+		return 0.03f * (yLevel <= 50 ? 1.5f : yLevel >= 100 ? -0.5f : 0.5f);
 	}
 }

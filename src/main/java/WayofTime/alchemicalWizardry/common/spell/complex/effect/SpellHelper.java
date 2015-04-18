@@ -466,9 +466,7 @@ public class SpellHelper
             return false;
         }
 
-        boolean tagsEqual = ItemStack.areItemStackTagsEqual(stack1, stack2);
-
-        return stack1.getItem() == stack2.getItem() && tagsEqual && stack1.getItemDamage() == stack2.getItemDamage();
+        return stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage() && ItemStack.areItemStackTagsEqual(stack1, stack2);
     }
 
     /**
@@ -547,13 +545,13 @@ public class SpellHelper
         	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
         	for(int in : array)
         	{
-        		canBeInserted[in] = ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
+        		canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
         	}
         }else
         {
         	for(int i=0; i<canBeInserted.length; i++)
         	{
-        		canBeInserted[i] = true;
+        		canBeInserted[i] = inventory.isItemValidForSlot(i, stack);
         	}
         }
         
@@ -575,6 +573,92 @@ public class SpellHelper
         }
 
         return stack;
+    }
+    
+    
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir)
+    {
+    	return canInsertStackFullyIntoInventory(stack, inventory, dir, false, 0);
+    }
+    
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir, boolean fillToLimit, int limit)
+    {
+        if (stack == null)
+        {
+            return true;
+        }
+        
+        int itemsLeft = stack.stackSize;
+
+        boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
+        
+        if(inventory instanceof ISidedInventory)
+        {
+        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	for(int in : array)
+        	{
+        		canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
+        	}
+        }else
+        {
+        	for(int i=0; i<canBeInserted.length; i++)
+        	{
+        		canBeInserted[i] = inventory.isItemValidForSlot(i, stack);
+        	}
+        }
+        
+        int numberMatching = 0;
+        
+        if(fillToLimit)
+        {
+	        for (int i = 0; i < inventory.getSizeInventory(); i++)
+	        {
+	        	if(!canBeInserted[i])
+	        	{
+	        		continue;
+	        	}
+	        	
+	        	ItemStack invStack = inventory.getStackInSlot(i);
+	        	        	
+	        	if(invStack != null && canCombine(stack, invStack))
+	        	{
+	        		numberMatching += invStack.stackSize;
+	        	}
+	        }
+        }
+        
+        if(fillToLimit && limit < stack.stackSize + numberMatching)
+        {
+        	return false;
+        }
+        
+        for (int i = 0; i < inventory.getSizeInventory(); i++)
+        {
+        	if(!canBeInserted[i])
+        	{
+        		continue;
+        	}
+        	
+        	ItemStack invStack = inventory.getStackInSlot(i);
+            boolean canCombine = canCombine(stack, invStack);
+            if(canCombine)
+            {
+            	if(invStack == null)
+            	{
+            		itemsLeft = 0;
+            	}else
+            	{
+                	itemsLeft -= (invStack.getMaxStackSize() - invStack.stackSize);
+            	}
+            }
+
+            if(itemsLeft <= 0)
+            {
+            	return true;
+            }
+        }
+
+        return false;
     }
     
     public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir, int limit)

@@ -17,7 +17,7 @@ public class OmegaParadigmWater extends OmegaParadigm
 {
 	public OmegaParadigmWater(OmegaArmour helmet, OmegaArmour chestPiece, OmegaArmour leggings, OmegaArmour boots) 
 	{
-		super(ReagentRegistry.aquasalusReagent,  helmet, chestPiece, leggings, boots, new ReagentRegenConfiguration(50, 10, 100));
+		super(ReagentRegistry.aquasalusReagent,  helmet, chestPiece, leggings, boots, new ReagentRegenConfiguration(50, 1, 10));
 	}
 	
 	@Override
@@ -37,6 +37,14 @@ public class OmegaParadigmWater extends OmegaParadigm
 	{
 		player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 3, 0, true));
 		player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionAmphibian.id, 3, 0, true));
+		
+		if(world.getWorldTime() % 100 == 0 && !world.isRemote)
+		{
+			if(player.isInWater() && player.getHealth() < player.getMaxHealth())
+			{
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, 0, true));
+			}
+		}
 	}
 	
 	@Override

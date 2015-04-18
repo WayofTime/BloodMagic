@@ -7,7 +7,7 @@ import WayofTime.alchemicalWizardry.api.Int3;
 
 public class OmegaStructureHandler 
 {
-	public static final OmegaStructureParameters emptyParam = new OmegaStructureParameters(0, 0);
+	public static final OmegaStructureParameters emptyParam = new OmegaStructureParameters(0, 0, 0);
 	
 	public static boolean isStructureIntact(World world, int x, int y, int z)
 	{
@@ -155,6 +155,7 @@ public class OmegaStructureHandler
         
         int tally = 0;
         int enchantability = 0;
+        int enchantmentLevel = 0;
         
         for (int i = 0; i < 2 * range + 1; i++)
         {
@@ -198,23 +199,27 @@ public class OmegaStructureHandler
                     {
                     	indTally++;
                     }
-                    
+                                        
                     Block block = world.getBlock(x - range + i, y - range + j, z - range + k);
-                    int meta = 0;
+                    int meta = world.getBlockMetadata(x - range + i, y - range + j, z - range + k);    
+                    
                     if(block instanceof IEnchantmentGlyph)
                     {
-                    	tally -= ((IEnchantmentGlyph)block).getSubtractedStabilityForFaceCount(world, x-range+i, y-range+j, z-range+k, meta, indTally);
+                    	tally += ((IEnchantmentGlyph)block).getAdditionalStabilityForFaceCount(world, x-range+i, y-range+j, z-range+k, meta, indTally);
                     	enchantability += ((IEnchantmentGlyph)block).getEnchantability(world, x-range+i, y-range+j, z-range+k, meta);
+                    	enchantmentLevel += ((IEnchantmentGlyph)block).getEnchantmentLevel(world, x-range+i, y-range+j, z-range+k, meta);
+                    }else if(block instanceof IStabilityGlyph)
+                    {
+                    	tally += ((IStabilityGlyph)block).getAdditionalStabilityForFaceCount(world, x-range+i, y-range+j, z-range+k, meta, indTally);
                     }else
                     {
                         tally += indTally;
-                    }
+                    } 
                 }
             }
         }
-    
 	
-		return new OmegaStructureParameters(tally, enchantability);
+		return new OmegaStructureParameters(tally, enchantability, enchantmentLevel);
 	}
 	
 	public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim)

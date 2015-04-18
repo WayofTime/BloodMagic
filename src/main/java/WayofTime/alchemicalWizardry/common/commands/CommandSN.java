@@ -1,11 +1,13 @@
 package WayofTime.alchemicalWizardry.common.commands;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class CommandSN extends CommandBase
                 int amount = parseIntBounded(icommandsender, astring[2], Integer.MIN_VALUE, Integer.MAX_VALUE);
 
                 SoulNetworkHandler.addCurrentEssenceToMaximum(owner, amount, Integer.MAX_VALUE);
-                func_152373_a(icommandsender, this, "commands.soulnetwork.add.success", new Object[] {amount, owner});
+                func_152373_a(icommandsender, this, "commands.soulnetwork.add.success", amount, owner);
             }
             else if ("subtract".equalsIgnoreCase(astring[1]))
             {
@@ -50,42 +52,42 @@ public class CommandSN extends CommandBase
                 {
                     int lp = SoulNetworkHandler.getCurrentEssence(owner);
                     SoulNetworkHandler.syphonFromNetwork(owner, lp);
-                    func_152373_a(icommandsender, this, "commands.soulnetwork.subtract.success", new Object[] {SoulNetworkHandler.getCurrentEssence(owner), owner});
+                    func_152373_a(icommandsender, this, "commands.soulnetwork.subtract.success", SoulNetworkHandler.getCurrentEssence(owner), owner);
                 }
                 else
                 {
                     SoulNetworkHandler.syphonFromNetwork(owner, amount);
-                    func_152373_a(icommandsender, this, "commands.soulnetwork.subtract.success", new Object[] {amount, owner});
+                    func_152373_a(icommandsender, this, "commands.soulnetwork.subtract.success", amount, owner);
                 }
             }
             else if ("fill".equalsIgnoreCase(astring[1]))
             {
                 int amount = Integer.MAX_VALUE - SoulNetworkHandler.getCurrentEssence(owner);
                 SoulNetworkHandler.addCurrentEssenceToMaximum(owner, amount, Integer.MAX_VALUE);
-                func_152373_a(icommandsender, this, "commands.soulnetwork.fill.success", new Object[] {owner});
+                func_152373_a(icommandsender, this, "commands.soulnetwork.fill.success", owner);
             }
             else if ("empty".equalsIgnoreCase(astring[1]))
             {
                 SoulNetworkHandler.syphonFromNetwork(owner, SoulNetworkHandler.getCurrentEssence(owner));
-                func_152373_a(icommandsender, this, "commands.soulnetwork.empty.success", new Object[] {owner});
+                func_152373_a(icommandsender, this, "commands.soulnetwork.empty.success", owner);
             }
             else if ("get".equalsIgnoreCase(astring[1]))
             {
                 int amount = SoulNetworkHandler.getCurrentEssence(owner);
-                func_152373_a(icommandsender, this, "commands.soulnetwork.get.success", new Object[] {amount, owner});
+                func_152373_a(icommandsender, this, "commands.soulnetwork.get.success", amount, owner);
             }
             else
             {
-                throw new CommandException("commands.soulnetwork.notACommand", new Object[0]);
+                throw new CommandException("commands.soulnetwork.notACommand");
             }
         }
         else if (astring.length == 0)
         {
-            throw new CommandException("commands.soulnetwork.noPlayer", new Object[0]);
+            throw new CommandException("commands.soulnetwork.noPlayer");
         }
         else if (astring.length == 1)
         {
-            throw new CommandException("commands.soulnetwork.noCommand", new Object[0]);
+            throw new CommandException("commands.soulnetwork.noCommand");
         }
     }
 
@@ -97,7 +99,7 @@ public class CommandSN extends CommandBase
         }
         else if (astring.length == 2)
         {
-            return getListOfStringsMatchingLastWord(astring, new String[] {"add", "subtract", "fill", "empty"});
+            return getListOfStringsMatchingLastWord(astring, "add", "subtract", "fill", "empty");
         }
 
         return null;

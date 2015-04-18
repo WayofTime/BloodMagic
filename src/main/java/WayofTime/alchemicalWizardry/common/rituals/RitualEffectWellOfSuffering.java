@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -19,6 +20,10 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 {
     public static final int timeDelay = 25;
     public static final int amount = 10;
+    
+    private static final int tennebraeDrain = 5;
+    private static final int potentiaDrain = 10;
+    private static final int offensaDrain = 3;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -58,13 +63,17 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         {
             return;
         }
+        
+        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
         int d0 = 10;
-        int vertRange = 10;
+        int vertRange = hasPotentia ? 20 : 10;
         AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         int entityCount = 0;
+        boolean hasTennebrae = this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, false);
+        boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false);
 
         if (currentEssence < this.getCostPerRefresh() * list.size())
         {
@@ -78,14 +87,24 @@ public class RitualEffectWellOfSuffering extends RitualEffect
                     continue;
                 }
 
-                if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, 1))
+                hasOffensa = hasOffensa && this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, true);
+                
+                if (livingEntity.attackEntityFrom(DamageSource.outOfWorld, hasOffensa ? 2 : 1))
                 {
+                	hasTennebrae = hasTennebrae && this.canDrainReagent(ritualStone, ReagentRegistry.tenebraeReagent, tennebraeDrain, true);
+                	
+                	
                     entityCount++;
-                    tileAltar.sacrificialDaggerCall(this.amount, true);
+                    tileAltar.sacrificialDaggerCall(this.amount * (hasTennebrae ? 2 : 1) * (hasOffensa ? 2 : 1), true);
                 }
             }
 
             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * entityCount);
+            
+            if(hasPotentia)
+            {
+            	this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
+            }
         }
     }
 

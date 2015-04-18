@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.achievements;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 
@@ -11,6 +12,11 @@ public class AchievementTrigger
     public void onItemPickedUp(PlayerEvent.ItemPickupEvent event)
     {
         ItemStack stack = event.pickedUp.getEntityItem();
+
+        for (Item item : AchievementsRegistry.list)
+        {
+
+        }
 
         if (stack != null && stack.getItem() instanceof IPickupAchievement)
         {

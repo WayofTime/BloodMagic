@@ -94,13 +94,13 @@ public class OmegaArmourWind extends OmegaArmour
     {
 		Multimap map = HashMultimap.create();
 		int yLevel = this.getYLevelStored(stack);
-		
-		map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85212 /** Random number **/, armorType), "Armor modifier" + armorType, getDefaultHealthBoost()*getHealthBoostModifierForLevel(yLevel), 0)); 
+		map.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(85212 /** Random number **/, armorType), "Health modifier" + armorType, getDefaultArmourBoost()*getHealthBoostModifierForLevel(yLevel), 1)); 
+		map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(86212 /** Random number **/, armorType), "Damage modifier" + armorType, getDefaultArmourBoost()*getDamageModifierForLevel(yLevel), 2));
 		
 		return map; 
     }
 	
-	public float getDefaultHealthBoost()
+	public float getDefaultArmourBoost()
 	{
 		switch(this.armorType)
 		{
@@ -118,6 +118,11 @@ public class OmegaArmourWind extends OmegaArmour
 	
 	public float getHealthBoostModifierForLevel(int yLevel)
 	{
-		return (float)Math.sqrt(((float)yLevel)/64f) * 1.5f - 1;
+		return 0.05f * ((((float)yLevel)/64f) * 1.5f - 1);
+	}
+	
+	public float getDamageModifierForLevel(int yLevel)
+	{
+		return 0.02f * ((((float)yLevel)/64f) * 1.5f - 1);
 	}
 }

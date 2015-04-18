@@ -213,7 +213,7 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
                         numberAssigned = 0;
                     }
 
-                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.tanksegmenter.nowhas") + " " + numberAssigned + " " + "message.tanksegmenter.tankssetto" + " " + reagent.name));
+                    player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.tanksegmenter.nowhas") + " " + numberAssigned + " " + StatCollector.translateToLocal("message.tanksegmenter.tankssetto") + " " + reagent.name));
 
                     reagentHandler.setTanksTunedToReagent(reagent, numberAssigned);
                 }

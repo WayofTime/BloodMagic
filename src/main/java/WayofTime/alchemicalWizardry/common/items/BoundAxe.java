@@ -1,17 +1,14 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -21,9 +18,15 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.common.ItemType;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.HashMultiset;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BoundAxe extends ItemAxe implements IBindable
 {
@@ -112,6 +115,11 @@ public class BoundAxe extends ItemAxe implements IBindable
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             return par1ItemStack;
         }
+        
+        if (par2World.isRemote)
+        {
+            return par1ItemStack;
+        }
 
         if (!getActivated(par1ItemStack) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
@@ -135,6 +143,8 @@ public class BoundAxe extends ItemAxe implements IBindable
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
+        HashMultiset<ItemType> dropMultiset = HashMultiset.create();
+        
         for (int i = -5; i <= 5; i++)
         {
             for (int j = 0; j <= 10; j++)
@@ -152,27 +162,18 @@ public class BoundAxe extends ItemAxe implements IBindable
                         {
                             if (silkTouch && block.canSilkHarvest(par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta))
                             {
-                                ItemStack droppedItem = new ItemStack(block, 1, meta);
-
-                                if (!par2World.isRemote)
-                                {
-                                    par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, droppedItem));
-                                }
+                                dropMultiset.add(new ItemType(block, meta));
                             } else
                             {
                                 ArrayList<ItemStack> itemDropList = block.getDrops(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
 
                                 if (itemDropList != null)
                                 {
-                                    for (ItemStack item : itemDropList)
-                                    {
-                                        if (!par2World.isRemote)
-                                        {
-                                            par2World.spawnEntityInWorld(new EntityItem(par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ, item));
-                                        }
-                                    }
+                                    for (ItemStack stack : itemDropList)
+                                        dropMultiset.add(ItemType.fromStack(stack), stack.stackSize);
                                 }
                             }
+
                             par2World.setBlockToAir(posX + i, posY + j, posZ + k);
                         }
                     }
@@ -180,7 +181,8 @@ public class BoundAxe extends ItemAxe implements IBindable
             }
         }
 
-        
+        BoundPickaxe.dropMultisetStacks(dropMultiset, par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ);
+
         return par1ItemStack;
     }
 
