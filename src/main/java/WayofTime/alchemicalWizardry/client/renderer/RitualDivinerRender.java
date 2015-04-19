@@ -15,6 +15,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
+/*
+ *  Created in Scala by Alex-Hawks
+ *  Translated and implemented by Arcaratus
+ */
 public class RitualDivinerRender
 {
     @SubscribeEvent
