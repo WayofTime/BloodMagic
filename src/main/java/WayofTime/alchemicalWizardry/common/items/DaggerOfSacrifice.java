@@ -24,7 +24,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
 import com.google.common.collect.Multimap;
 
@@ -169,7 +169,7 @@ public class DaggerOfSacrifice extends EnergyItems
         int posX = (int) Math.round(sacrifice.posX - 0.5f);
         int posY = (int) sacrifice.posY;
         int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
-        TEAltar altarEntity = this.getAltar(world, posX, posY, posZ);
+        IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -181,7 +181,7 @@ public class DaggerOfSacrifice extends EnergyItems
         return true;
     }
 
-    public TEAltar getAltar(World world, int x, int y, int z)
+    public IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity = null;
 
@@ -193,27 +193,27 @@ public class DaggerOfSacrifice extends EnergyItems
                 {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
-                    if ((tileEntity instanceof TEAltar))
+                    if ((tileEntity instanceof IBloodAltar))
                     {
-                        return (TEAltar) tileEntity;
+                        return (IBloodAltar) tileEntity;
                     }
                 }
 
-                if ((tileEntity instanceof TEAltar))
+                if ((tileEntity instanceof IBloodAltar))
                 {
-                    return (TEAltar) tileEntity;
+                    return (IBloodAltar) tileEntity;
                 }
             }
 
-            if ((tileEntity instanceof TEAltar))
+            if ((tileEntity instanceof IBloodAltar))
             {
-                return (TEAltar) tileEntity;
+                return (IBloodAltar) tileEntity;
             }
         }
 
-        if ((tileEntity instanceof TEAltar))
+        if ((tileEntity instanceof IBloodAltar))
         {
-            return (TEAltar) tileEntity;
+            return (IBloodAltar) tileEntity;
         }
 
         return null;
