@@ -1130,7 +1130,7 @@ public class AlchemicalWizardry
                 Item itemThaumBoots = GameRegistry.findItem("Thaumcraft", "ItemBootsThaumium");
 
                 AspectList aspectList = new AspectList();
-//                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
+                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
 
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineHelmet), aspectList);
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineRobe), aspectList);
@@ -1685,7 +1685,7 @@ public class AlchemicalWizardry
 //        					continue;
 //        				}
 //        				
-//        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
+//        				strLine = strLine.replace('Â”', '"').replace('Â“','"').replace("Â…", "...").replace('Â’', '\'').replace('Â–', '-');
 //        				
 //        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
 //        				{
