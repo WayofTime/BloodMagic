@@ -152,7 +152,7 @@ public class DaggerOfSacrifice extends EnergyItems
         int posX = (int) Math.round(sacrifice.posX - 0.5f);
         int posY = (int) sacrifice.posY;
         int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
-        TEAltar altarEntity = this.getAltar(world, posX, posY, posZ);
+        IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
