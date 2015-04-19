@@ -349,7 +349,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             return 0;
         }
 
-        if (resource.fluidID != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).fluidID)
+        if (resource.getFluidID() != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).getFluidID())
         {
             return 0;
         }
@@ -914,7 +914,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[1] = 0;
         } else
         {
-            sortList[0] = this.fluid.fluidID;
+            sortList[0] = this.fluid.getFluidID();
             sortList[1] = this.fluid.amount;
         }
 
@@ -924,7 +924,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[3] = 0;
         } else
         {
-            sortList[2] = this.fluidInput.fluidID;
+            sortList[2] = this.fluidInput.getFluidID();
             sortList[3] = this.fluidInput.amount;
         }
 
@@ -934,7 +934,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[5] = 0;
         } else
         {
-            sortList[4] = this.fluidOutput.fluidID;
+            sortList[4] = this.fluidOutput.getFluidID();
             sortList[5] = this.fluidOutput.amount;
         }
 

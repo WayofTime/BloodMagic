@@ -62,6 +62,11 @@ tile.demonChest.name=Demon's Chest
 tile.enchantmentGlyph.enchantability.name=Glyph of the Adept Enchanter
 tile.enchantmentGlyph.enchantmentLevel.name=Glyph of Arcane Potential
 tile.stabilityGlyph.stability1.name=Glyph of Rigid Stability
+tile.schematicSaver.name=Schematic Saver
+tile.blockMimic.name=Mimic Block
+tile.blockSpectralContainer.name=Spectral Container
+tile.blockBloodLightSource.name=Blood Light
+tile.spectralBlock.name=Spectral Block
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb
@@ -373,6 +378,7 @@ tooltip.ritualdiviner.moreinfo=Press shift for extended information
 tooltip.ritualdiviner.ritualtunedto=Ritual tuned to face:
 tooltip.ritualdiviner.waterstones=Water Stones:
 tooltip.ritualdiviner.dawnstones=Dawn Stones:
+tooltip.ritualdiviner.totalStones=Total Stones:
 tooltip.sacrificialdagger.desc1=A slight draining feeling tickles your fingers
 tooltip.sacrificialdagger.desc2=Just a prick of the
 tooltip.sacrificialdagger.desc3=finger will suffice...
@@ -445,5 +451,5 @@ message.tanksegmenter.tankssetto=tank(s) set to:
 message.routerfocus.limit=Focus' Item Limit set to: 
 
 #Achievements
-achievement.alchemicalwizardy:achievement.firstPrick=Your first prick!
-achievement.alchemicalwizardy:achievement.firstPrick.desc=The first drop of life in the Altar...
+achievement.alchemicalwizardy:firstPrick=Your first prick!
+achievement.alchemicalwizardy:firstPrick.desc=The first drop of life into the Altar...
