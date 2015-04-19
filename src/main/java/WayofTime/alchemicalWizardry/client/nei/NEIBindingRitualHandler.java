@@ -20,8 +20,7 @@ public class NEIBindingRitualHandler extends TemplateRecipeHandler
 {
     public class CachedBindingRecipe extends CachedRecipe
     {
-        PositionedStack input;
-        PositionedStack output;
+        PositionedStack input, output;
 
         public CachedBindingRecipe(BindingRecipe recipe)
         {
@@ -45,7 +44,7 @@ public class NEIBindingRitualHandler extends TemplateRecipeHandler
     @Override
     public void loadCraftingRecipes(String outputId, Object... results)
     {
-        if (outputId.equals("alchemicalwizardry.binding") && getClass() == NEIBindingRitualHandler.class)
+        if (outputId.equals("alchemicalwizardry.bindingritual") && getClass() == NEIBindingRitualHandler.class)
         {
             for (BindingRecipe recipe : BindingRegistry.bindingRecipes)
             {
@@ -94,13 +93,13 @@ public class NEIBindingRitualHandler extends TemplateRecipeHandler
     @Override
     public String getOverlayIdentifier()
     {
-        return "bindingritual";
+        return "alchemicalwizardry.bindingritual";
     }
 
     @Override
     public void loadTransferRects()
     {
-        transferRects.add(new RecipeTransferRect(new Rectangle(90, 32, 22, 16), "alchemicalwizardry.bindingritual"));
+        transferRects.add(new RecipeTransferRect(new Rectangle(68, 20, 22, 16), "alchemicalwizardry.bindingritual"));
     }
 
     @Override

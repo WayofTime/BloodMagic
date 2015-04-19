@@ -1688,7 +1688,7 @@ public class AlchemicalWizardry
 //        					continue;
 //        				}
 //        				
-//        				strLine = strLine.replace('”', '"').replace('“','"').replace("…", "...").replace('’', '\'').replace('–', '-');
+//        				strLine = strLine.replace('Â”', '"').replace('Â“','"').replace("Â…", "...").replace('Â’', '\'').replace('Â–', '-');
 //        				
 //        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
 //        				{

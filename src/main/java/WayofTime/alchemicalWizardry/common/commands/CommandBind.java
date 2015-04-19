@@ -38,7 +38,7 @@ public class CommandBind extends CommandBase
 
         if (targetPlayer == null)
         {
-            throw new CommandException("commands.bind.failed.noPlayer", new Object[0]);
+            throw new CommandException("commands.bind.failed.noPlayer");
         }
 
         if (item != null && item.getItem() instanceof IBindable)
@@ -46,16 +46,16 @@ public class CommandBind extends CommandBase
             if (EnergyItems.getOwnerName(item).isEmpty())
             {
                 EnergyItems.checkAndSetItemOwner(item, targetPlayer);
-                func_152373_a(iCommandSender, this, "commands.bind.success", new Object[0]);
+                func_152373_a(iCommandSender, this, "commands.bind.success");
             }
             else
             {
-                throw new CommandException("commands.bind.failed.alreadyBound", new Object[0]);
+                throw new CommandException("commands.bind.failed.alreadyBound");
             }
         }
         else if (!(item.getItem() instanceof IBindable))
         {
-            throw new CommandException("commands.bind.failed.notBindable", new Object[0]);
+            throw new CommandException("commands.bind.failed.notBindable");
         }
     }
 

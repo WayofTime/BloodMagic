@@ -36,17 +36,17 @@ public class CommandUnbind extends CommandBase
         {
             if (!EnergyItems.getOwnerName(item).isEmpty())
             {
-                item.getTagCompound().setString("ownerName", "");
-                func_152373_a(iCommandSender, this, "commands.unbind.success", new Object[0]);
+                item.getTagCompound().removeTag("ownerName");
+                func_152373_a(iCommandSender, this, "commands.unbind.success");
             }
             else
             {
-                throw new CommandException("commands.unbind.failed.notBindable", new Object[0]);
+                throw new CommandException("commands.unbind.failed.notBindable");
             }
         }
         else if (!(item.getItem() instanceof IBindable))
         {
-            throw new CommandException("commands.unbind.failed.notBindable", new Object[0]);
+            throw new CommandException("commands.unbind.failed.notBindable");
         }
     }
 }

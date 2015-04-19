@@ -257,11 +257,6 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
         {
             verticalOffset--;
         }
-        
-        if (world.isRemote)
-        {
-            verticalOffset--;
-        }
 
         int posX = (int) Math.round(player.posX - 0.5f);
         int posY = (int) player.posY;

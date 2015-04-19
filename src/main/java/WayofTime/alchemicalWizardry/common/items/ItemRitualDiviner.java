@@ -127,13 +127,16 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                     }
                 }
 
-                par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.blankstones") + " " + blankStones);
+                int totalStones = blankStones + airStones + waterStones + fireStones + earthStones + duskStones + dawnStones;
+
+                par3List.add(EnumChatFormatting.WHITE + StatCollector.translateToLocal("tooltip.ritualdiviner.blankstones") + " " + blankStones);
                 par3List.add(EnumChatFormatting.AQUA + StatCollector.translateToLocal("tooltip.ritualdiviner.airstones") + " " + airStones);
                 par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("tooltip.ritualdiviner.waterstones") + " " + waterStones);
                 par3List.add(EnumChatFormatting.RED + StatCollector.translateToLocal("tooltip.ritualdiviner.firestones") + " " + fireStones);
                 par3List.add(EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocal("tooltip.ritualdiviner.earthstones") + " " + earthStones);
-                par3List.add(EnumChatFormatting.BOLD + StatCollector.translateToLocal("tooltip.ritualdiviner.duskstones") + " " + duskStones);
+                par3List.add(EnumChatFormatting.DARK_PURPLE + StatCollector.translateToLocal("tooltip.ritualdiviner.duskstones") + " " + duskStones);
                 par3List.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("tooltip.ritualdiviner.dawnstones") + " " + dawnStones);
+                par3List.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal("tooltip.ritualdiviner.totalStones") + " " + totalStones);
             }
         }else
         {
