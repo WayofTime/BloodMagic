@@ -13,6 +13,10 @@ import net.minecraftforge.client.event.RenderWorldLastEvent
 
 import scala.collection.JavaConversions
 
+/*
+ *  Code made by Alex-Hawks
+ *  Implemented by Arcaratus
+ */
 class RitualDivinerRender {
 
   @SubscribeEvent
