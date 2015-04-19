@@ -11,20 +11,18 @@ public class AchievementTrigger
     @SubscribeEvent
     public void onItemPickedUp(PlayerEvent.ItemPickupEvent event)
     {
-        ItemStack stack = event.pickedUp.getEntityItem();
-
-        for (Item item : AchievementsRegistry.list)
+        for (Item item : AchievementsRegistry.pickupList)
         {
+            ItemStack stack = event.pickedUp.getEntityItem();
 
-        }
-
-        if (stack != null && stack.getItem() instanceof IPickupAchievement)
-        {
-            Achievement achievement = ((IPickupAchievement) stack.getItem()).getAchievementOnPickup(stack, event.player, event.pickedUp);
-
-            if (achievement != null)
+            if (stack != null && stack.getItem() == item)
             {
-                event.player.addStat(achievement, 1);
+                Achievement achievement = AchievementsRegistry.getAchievementForItem(item);
+
+                if (achievement != null)
+                {
+                    event.player.addStat(achievement, 1);
+                }
             }
         }
     }
@@ -32,13 +30,16 @@ public class AchievementTrigger
     @SubscribeEvent
     public void onItemCrafted(PlayerEvent.ItemCraftedEvent event)
     {
-        if (event.crafting != null && event.crafting.getItem() instanceof ICraftAchievement)
+        for (Item item : AchievementsRegistry.craftinglist)
         {
-            Achievement achievement = ((ICraftAchievement) event.crafting.getItem()).getAchievementOnCraft(event.crafting, event.player, event.craftMatrix);
-
-            if (achievement != null)
+            if (event.crafting != null && event.crafting.getItem() == item)
             {
-                event.player.addStat(achievement, 1);
+                Achievement achievement = AchievementsRegistry.getAchievementForItem(event.crafting.getItem());
+
+                if (achievement != null)
+                {
+                    event.player.addStat(achievement, 1);
+                }
             }
         }
     }
