@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.achievements;
 
 import WayofTime.alchemicalWizardry.ModItems;
 import net.minecraft.item.Item;
+import net.minecraft.block.Block;
 import net.minecraft.stats.Achievement;
 
 import java.util.ArrayList;
@@ -38,6 +39,11 @@ public class AchievementsRegistry
         {
             return ModAchievements.weakOrb;
         }
+        return null;
+    }
+    
+    public static Achievement getAchievementForBlock(Block block)
+    {
         return null;
     }
 }
