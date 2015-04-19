@@ -154,8 +154,18 @@ public class BlockTeleposer extends BlockContainer
     {
         return new TETeleposer();
     }
-
+    
     public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
+    {
+    	return swapBlocks(caller, worldI, worldF, xi, yi, zi, xf, yf, zf, true, 3);
+    }
+    
+    public static boolean swapBlocksWithoutSound(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
+    {
+    	return swapBlocks(caller, worldI, worldF, xi, yi, zi, xf, yf, zf, false, 3);
+    }
+
+    public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf, boolean doSound, int flag)
     {
         TileEntity tileEntityI = worldI.getTileEntity(xi, yi, zi);
         TileEntity tileEntityF = worldF.getTileEntity(xf, yf, zf);
@@ -196,10 +206,11 @@ public class BlockTeleposer extends BlockContainer
         if (MinecraftForge.EVENT_BUS.post(evt))
             return false;
         
-        worldI.playSoundEffect(xi, yi, zi, "mob.endermen.portal", 1.0F, 1.0F);
-        worldF.playSoundEffect(xf, yf, zf, "mob.endermen.portal", 1.0F, 1.0F);
-        
-        
+        if(doSound)
+        {
+        	worldI.playSoundEffect(xi, yi, zi, "mob.endermen.portal", 1.0F, 1.0F);
+            worldF.playSoundEffect(xf, yf, zf, "mob.endermen.portal", 1.0F, 1.0F);
+        }
         
         //CLEAR TILES
         Block finalBlock = blockF;
@@ -221,7 +232,7 @@ public class BlockTeleposer extends BlockContainer
         }
 
         //TILES CLEARED
-        worldF.setBlock(xf, yf, zf, initialBlock, metaI, 3);
+        worldF.setBlock(xf, yf, zf, initialBlock, metaI, flag);
 
         if (tileEntityI != null)
         {
@@ -244,7 +255,7 @@ public class BlockTeleposer extends BlockContainer
         	} 
         }
 
-        worldI.setBlock(xi, yi, zi, finalBlock, metaF, 3);
+        worldI.setBlock(xi, yi, zi, finalBlock, metaF, flag);
 
         if (tileEntityF != null)
         {        	

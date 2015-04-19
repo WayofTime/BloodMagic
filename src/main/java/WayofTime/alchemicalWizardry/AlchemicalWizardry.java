@@ -164,6 +164,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSphereCreator;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSupression;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectUnbinding;
@@ -1393,6 +1394,8 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW034Crafting", 1, 15000, new RitualEffectCrafting(), "Rhythm of the Beating Anvil");
         
         Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
+        
+        Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Birth of the Bastion");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
