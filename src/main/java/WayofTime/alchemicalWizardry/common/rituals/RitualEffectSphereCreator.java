@@ -160,8 +160,8 @@ public class RitualEffectSphereCreator extends RitualEffect
                 }
                 j = -radius;
                 i++;
-                this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
-                return;
+//                this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+//                return;
             }
             
             ritualStone.setActive(false);
