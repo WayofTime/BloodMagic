@@ -56,8 +56,6 @@ public class ItemSpellMultiTool extends Item
         float damage = this.getCustomItemAttack(par1ItemStack);
         
         float f = (float)par3EntityLivingBase.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
-
-        damage *= f;
         
         SpellParadigmTool parad = this.loadParadigmFromStack(par1ItemStack);
 
@@ -73,6 +71,8 @@ public class ItemSpellMultiTool extends Item
             damage *= 1.75f;
         }
 
+        damage *= f;
+        
         if (par3EntityLivingBase instanceof EntityPlayer)
         {
             par2EntityLivingBase.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) par3EntityLivingBase), damage);
