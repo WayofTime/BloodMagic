@@ -1,13 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class SelfEnvironmentalWind extends SelfSpellEffect
 {
@@ -29,7 +29,7 @@ public class SelfEnvironmentalWind extends SelfSpellEffect
 
         for (Entity entity : entities)
         {
-            if ((!entity.equals(player)) && entity instanceof EntityLiving)
+            if ((!entity.equals(player)) && entity instanceof EntityLivingBase)
             {
                 double dist = Math.sqrt(entity.getDistanceToEntity(player));
                 double xVel = wantedVel * (entity.posX - posX) / dist;

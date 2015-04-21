@@ -104,6 +104,7 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
+import WayofTime.alchemicalWizardry.common.harvest.AgriCraftCropHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
@@ -1197,6 +1198,12 @@ public class AlchemicalWizardry
         {
             MineTweakerIntegration.register();
             AlchemicalWizardry.logger.info("Loaded MineTweaker 3 Integration");
+        }
+        
+        if(Loader.isModLoaded("AgriCraft"))
+        {
+        	HarvestRegistry.registerHarvestHandler(new AgriCraftCropHarvestHandler());
+        	AlchemicalWizardry.logger.info("Loaded AgriCraft Handlers!");
         }
         
         this.isBotaniaLoaded = Loader.isModLoaded("Botania");

@@ -118,11 +118,11 @@ public class OmegaArmourWind extends OmegaArmour
 	
 	public float getHealthBoostModifierForLevel(int yLevel)
 	{
-		return 0.05f * ((((float)yLevel)/64f) * 1.5f - 1);
+		return 0.05f * ((((float)Math.min(yLevel, 255))/64f) * 1.5f - 1);
 	}
 	
 	public float getDamageModifierForLevel(int yLevel)
 	{
-		return 0.02f * ((((float)yLevel)/64f) * 1.5f - 1);
+		return 0.02f * ((((float)Math.min(yLevel, 255))/64f) * 1.5f - 1);
 	}
 }

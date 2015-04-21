@@ -1,15 +1,16 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class SelfEnvironmentalEarth extends SelfSpellEffect
 {
@@ -28,9 +29,9 @@ public class SelfEnvironmentalEarth extends SelfSpellEffect
 
         for (Entity entity : entities)
         {
-            if (entity instanceof EntityLiving)
+            if (entity instanceof EntityLivingBase)
             {
-                ((EntityLiving) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, dur, this.potencyUpgrades));
+                ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, dur, this.potencyUpgrades));
             }
         }
     }
