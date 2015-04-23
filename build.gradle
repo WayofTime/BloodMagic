@@ -40,6 +40,9 @@ repositories {
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
     }
+    maven {
+    	url 'http://tehnut.info/maven/'
+    }
 	ivy {
 		name "MineTweaker3"
         artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
@@ -52,6 +55,7 @@ dependencies {
     compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
 	compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
 	compile "codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev"
+	compile "info.amerifrance.guideapi:Guide-API:" + config.mc_version + "-" + config.guideapi_version + ":deobf"
 }
 
 minecraft {
