@@ -69,7 +69,7 @@ public class RitualEffectItemRouting extends RitualEffect
 				RoutingFocusParadigm parad = new RoutingFocusParadigm();
 				
 				TileEntity outputChest = null; //Destination
-				ForgeDirection inputDirection;;
+				ForgeDirection inputDirection;
 				
 				{        				    					
 					IInventory outputChestInventory = null;

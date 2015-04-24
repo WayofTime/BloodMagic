@@ -69,6 +69,7 @@ import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
+import WayofTime.alchemicalWizardry.common.book.BloodMagicGuide;
 import WayofTime.alchemicalWizardry.common.commands.CommandBind;
 import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
@@ -274,6 +275,7 @@ import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.ModContainer;
@@ -1170,6 +1172,11 @@ public class AlchemicalWizardry
         {
             this.isThaumcraftLoaded = false;
         }
+        
+        if(Loader.isModLoaded("guideapi"))
+        {
+        	this.registerBMBook();
+        }
 
         if (Loader.isModLoaded("Forestry"))
         {
@@ -1222,6 +1229,12 @@ public class AlchemicalWizardry
 //	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
+    }
+    
+    @Optional.Method(modid = "guideapi")
+    public static void registerBMBook()
+    {
+    	BloodMagicGuide.registerGuide();
     }
 
     public static void blacklistAccelerators()

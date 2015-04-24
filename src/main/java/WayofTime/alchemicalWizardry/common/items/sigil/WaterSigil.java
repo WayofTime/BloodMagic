@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,15 +12,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class WaterSigil extends ItemBucket implements ArmourUpgrade
 {
@@ -39,11 +38,11 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
     }
 
     @Override
-    public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public void onCreated(ItemStack stack, World world, EntityPlayer player)
     {
-        if (par1ItemStack.getTagCompound() == null)
+        if (stack.getTagCompound() == null)
         {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new NBTTagCompound());
         }
     }
 
@@ -57,116 +56,100 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        ItemStack copiedStack = itemStack.copy();
-        copiedStack.setItemDamage(copiedStack.getItemDamage() + 1);
-        copiedStack.stackSize = 1;
-        return copiedStack;
+        return itemStack;
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.watersigil.desc"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(stack.getTagCompound() == null))
         {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
         }
     }
 
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+    	return stack;
+    }
+    
+    @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    {
+        if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
-            return par1ItemStack;
+            return false;
         }
         
-        System.out.println("Being called");
-
-        float f = 1.0F;
-        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double) f;
-        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double) f + 1.62D - (double) par3EntityPlayer.yOffset;
-        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double) f;
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
-
-        if (movingobjectposition == null)
+        if (!world.canMineBlock(player, x, y, z))
         {
-            return par1ItemStack;
-        } else
+            return false;
+        }
+
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof IFluidHandler)
         {
-            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
+            int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, false);
+
+            if (amount > 0 && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
-                int i = movingobjectposition.blockX;
-                int j = movingobjectposition.blockY;
-                int k = movingobjectposition.blockZ;
-
-                if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
-                {
-                    return par1ItemStack;
-                }
-
-                TileEntity tile = par2World.getTileEntity(i, j, k);
-                if (tile instanceof IFluidHandler)
-                {
-                    FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
-                    int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, false);
-
-                    if (amount > 0 && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                    {
-                        ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, true);
-                    }
-
-                    return par1ItemStack;
-                }
-
-                {
-                    if (movingobjectposition.sideHit == 0)
-                    {
-                        --j;
-                    }
-
-                    if (movingobjectposition.sideHit == 1)
-                    {
-                        ++j;
-                    }
-
-                    if (movingobjectposition.sideHit == 2)
-                    {
-                        --k;
-                    }
-
-                    if (movingobjectposition.sideHit == 3)
-                    {
-                        ++k;
-                    }
-
-                    if (movingobjectposition.sideHit == 4)
-                    {
-                        --i;
-                    }
-
-                    if (movingobjectposition.sideHit == 5)
-                    {
-                        ++i;
-                    }
-
-                    if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
-                    {
-                        return par1ItemStack;
-                    }
-
-                    if(this.canPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k) && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                    {
-                    	this.tryPlaceContainedLiquid(par2World, d0, d1, d2, i, j, k);
-                    }
-                }
+                ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, true);
             }
 
-            return par1ItemStack;
+            return false;
         }
+
+        {
+            if (side == 0)
+            {
+                --y;
+            }
+
+            if (side == 1)
+            {
+                ++y;
+            }
+
+            if (side == 2)
+            {
+                --z;
+            }
+
+            if (side == 3)
+            {
+                ++z;
+            }
+
+            if (side == 4)
+            {
+                --x;
+            }
+
+            if (side == 5)
+            {
+                ++x;
+            }
+
+            if (!player.canPlayerEdit(x, y, z, side, stack))
+            {
+                return false;
+            }
+
+            if(this.canPlaceContainedLiquid(world, x, y, z, x, y, z) && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+            {
+            	return this.tryPlaceContainedLiquid(world, x, y, z, x, y, z);
+            }
+        }
+            
+
+        return false;
+        
     }
 
     /**
@@ -193,6 +176,7 @@ public class WaterSigil extends ItemBucket implements ArmourUpgrade
             } else
             {
                 par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
+                par1World.markBlockForUpdate(par8, par9, par10);
             }
 
             return true;
