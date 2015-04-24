@@ -19,6 +19,8 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.client.nei.NEIConfig;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class APISpellHelper 
@@ -179,6 +181,19 @@ public class APISpellHelper
 	{
 		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setInteger("BM:ReagentRegenCooldown", amount);
+	}
+	
+	public static ItemStack getOrbForLevel(int level)
+	{
+		for (Item item : NEIConfig.bloodOrbs) 
+		{
+			if (((IBloodOrb) item).getOrbLevel() == level) 
+			{
+				return new ItemStack(item);
+			}
+		}
+		
+		return null;
 	}
 	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
