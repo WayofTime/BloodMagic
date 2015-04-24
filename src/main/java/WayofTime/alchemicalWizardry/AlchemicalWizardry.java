@@ -105,6 +105,7 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
+import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
 import WayofTime.alchemicalWizardry.common.harvest.AgriCraftCropHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
@@ -1175,6 +1176,11 @@ public class AlchemicalWizardry
         
         if(Loader.isModLoaded("guideapi"))
         {
+        	long initialTime = System.nanoTime();
+        	RecipeHolder.init();
+        	long finalTime = System.nanoTime();
+        	AlchemicalWizardry.logger.info("Recipe Holder initialized: took " + (finalTime - initialTime)/1000000f + "ms.");
+        	
         	this.registerBMBook();
         }
 

@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -17,10 +18,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.client.nei.NEIConfig;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class APISpellHelper 
@@ -185,15 +185,23 @@ public class APISpellHelper
 	
 	public static ItemStack getOrbForLevel(int level)
 	{
-		for (Item item : NEIConfig.bloodOrbs) 
+		switch(level)
 		{
-			if (((IBloodOrb) item).getOrbLevel() == level) 
-			{
-				return new ItemStack(item);
-			}
-		}
-		
-		return null;
+		case 1:
+			return new ItemStack(ModItems.weakBloodOrb);
+		case 2:
+			return new ItemStack(ModItems.apprenticeBloodOrb);
+		case 3:
+			return new ItemStack(ModItems.magicianBloodOrb);
+		case 4:
+			return new ItemStack(ModItems.masterBloodOrb);
+		case 5:
+			return new ItemStack(ModItems.archmageBloodOrb);
+		case 6:
+			return new ItemStack(ModItems.transcendentBloodOrb);
+		default:
+			return new ItemStack(Blocks.fire);
+		}	
 	}
 	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
