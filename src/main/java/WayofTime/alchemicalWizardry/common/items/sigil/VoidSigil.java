@@ -2,7 +2,6 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
-import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBucket;
@@ -16,6 +15,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -78,7 +78,7 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return false;
         }
@@ -108,19 +108,47 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
             return false;
         }
 
-        if (this.isFull == 0)
+        if (side == 0)
         {
-            if (!player.canPlayerEdit(x, y, z, side, stack))
-            {
-                return false;
-            }
-
-            if (world.getBlock(x, y, z).getMaterial() instanceof MaterialLiquid && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
-            {
-                world.setBlockToAir(x, y, z);
-                return true;
-            }
+            --y;
         }
+
+        if (side == 1)
+        {
+            ++y;
+        }
+
+        if (side == 2)
+        {
+            --z;
+        }
+
+        if (side == 3)
+        {
+            ++z;
+        }
+
+        if (side == 4)
+        {
+            --x;
+        }
+
+        if (side == 5)
+        {
+            ++x;
+        }
+        
+        if (!player.canPlayerEdit(x, y, z, side, stack))
+        {
+            return false;
+        }
+
+        if (SpellHelper.isBlockFluid(world.getBlock(x, y, z)) && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+        {
+            world.setBlockToAir(x, y, z);
+            return true;
+        }
+        
 
         return false;
     }
