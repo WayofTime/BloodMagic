@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
@@ -148,7 +149,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
             if (player.isSneaking())
             {
                 this.setHasSavedCoordinates(itemStack, false);
-                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.attunedcrystal.clearing")));
+                player.addChatComponentMessage(new ChatComponentTranslation("message.attunedcrystal.clearing"));
             }
 
             return itemStack;
@@ -224,14 +225,14 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
 
                         if (dimension != world.provider.dimensionId || Math.abs(coords.xCoord - x) > maxDistance || Math.abs(coords.yCoord - y) > maxDistance || Math.abs(coords.zCoord - z) > maxDistance)
                         {
-                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.attunedcrystal.error.toofar")));
+                            player.addChatComponentMessage(new ChatComponentTranslation("message.attunedcrystal.error.toofar"));
                             return itemStack;
                         }
 
                         TileEntity pastTile = world.getTileEntity(coords.xCoord, coords.yCoord, coords.zCoord);
                         if (!(pastTile instanceof TEReagentConduit))
                         {
-                            player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.attunedcrystal.error.cannotfind")));
+                            player.addChatComponentMessage(new ChatComponentTranslation("message.attunedcrystal.error.cannotfind"));
                             return itemStack;
                         }
 
@@ -254,7 +255,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                                 player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.attunedcrystal.linked") + " " + reagent.name));
                             } else
                             {
-                                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.attunedcrystal.error.noconnections")));
+                                player.addChatComponentMessage(new ChatComponentTranslation("message.attunedcrystal.error.noconnections"));
                             }
                         }
                         world.markBlockForUpdate(coords.xCoord, coords.yCoord, coords.zCoord);
@@ -265,7 +266,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                         this.setDimension(itemStack, dimension);
                         this.setCoordinates(itemStack, new Int3(x, y, z));
 
-                        player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.attunedcrystal.linking")));
+                        player.addChatComponentMessage(new ChatComponentTranslation("message.attunedcrystal.linking"));
                     }
                 }
             }
