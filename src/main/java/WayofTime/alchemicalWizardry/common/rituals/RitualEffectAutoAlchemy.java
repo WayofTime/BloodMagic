@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -8,14 +18,6 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectAutoAlchemy extends RitualEffect
 {
@@ -269,6 +271,12 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                                 {
                                     continue;
                                 }
+                                
+                            	if(!inputInv1.isItemValidForSlot(j, curItem) || (inputInv1 instanceof ISidedInventory && !((ISidedInventory) inputInv1).canExtractItem(j, curItem, ForgeDirection.DOWN.ordinal())))
+                            	{
+                            		continue;
+                            	}
+                                
                                 if (areItemStacksEqualWithWildcard(recItem, curItem))
                                 {
                                     if (alchStack == null)

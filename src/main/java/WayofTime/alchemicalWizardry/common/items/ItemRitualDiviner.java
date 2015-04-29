@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -21,7 +22,9 @@ import org.lwjgl.input.Keyboard;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IRitualDiviner;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.IRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
@@ -51,14 +54,14 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean x)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.desc"));
 
-        if (this.getMaxRuneDisplacement(par1ItemStack) == 1)
+        if (this.getMaxRuneDisplacement(stack) == 1)
         {
             par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.canplace"));
-        }else if (this.getMaxRuneDisplacement(par1ItemStack) >= 2)
+        }else if (this.getMaxRuneDisplacement(stack) >= 2)
         {
             par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.canplacedawn"));
 
@@ -67,19 +70,19 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
             par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.cannotplace"));
         }
         
-        par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(par1ItemStack)));
+        par3List.add(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(stack)));
 
         boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
         
         if(sneaking)
         {
-        	if (!(par1ItemStack.getTagCompound() == null))
+        	if (!(stack.getTagCompound() == null))
             {
-                String ritualID = this.getCurrentRitual(par1ItemStack);
+                String ritualID = this.getCurrentRitual(stack);
                 //TODO
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
                 par3List.add(StatCollector.translateToLocal("tooltip.alchemy.ritualid") + " " + ritualID);
-                List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
+                List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(stack));
                 if (ritualList == null)
                 {
                     return;
@@ -146,35 +149,56 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack par1ItemStack)
+    public String getItemStackDisplayName(ItemStack stack)
     {
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(stack.getTagCompound() == null))
         {
-            String ritualID = this.getCurrentRitual(par1ItemStack);
+            String ritualID = this.getCurrentRitual(stack);
             if (ritualID.equals(""))
             {
-                return super.getItemStackDisplayName(par1ItemStack);
+                return super.getItemStackDisplayName(stack);
             }
             return "Ritual: " + Rituals.getNameOfRitual(ritualID);
         } else
         {
-            return super.getItemStackDisplayName(par1ItemStack);
+            return super.getItemStackDisplayName(stack);
         }
     }
 
     @Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
     {
-    	int direction = this.getDirection(par1ItemStack);
-    	
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer)) return false;
-        ItemStack[] playerInventory = par2EntityPlayer.inventory.mainInventory;
-        TileEntity tileEntity = par3World.getTileEntity(par4, par5, par6);
+        if (!EnergyItems.checkAndSetItemOwner(stack, player)) return false;
+
+        if(placeRitualStoneAtMasterStone(stack, player, world, x, y, z))
+        {
+        	this.setStoredLocation(stack, new Int3(x, y, z));
+        	return true;
+        }else if(!(world.getBlock(x, y, z) instanceof IRitualStone || world.getBlock(x, y, z) instanceof IMasterRitualStone) && !player.isSneaking())
+        {
+        	if(world.isRemote)
+        	{
+        		return false;
+        	}
+        	this.cycleDirection(stack);
+        	player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(stack))));
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean placeRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, int x, int y, int z)
+    {
+    	int direction = this.getDirection(stack);
+
+    	ItemStack[] playerInventory = player.inventory.mainInventory;
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity instanceof TEMasterStone)
         {
             TEMasterStone masterStone = (TEMasterStone) tileEntity;
-            List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(par1ItemStack));
+            List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(stack));
             if (ritualList == null)
             {
                 return false;
@@ -198,28 +222,28 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
 
             for (RitualComponent rc : ritualList)
             {
-                if (par3World.isAirBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction)))
+                if (world.isAirBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)))
                 {
-                    if (playerInvRitualStoneLocation >= 0 || par2EntityPlayer.capabilities.isCreativeMode)
+                    if (playerInvRitualStoneLocation >= 0 || player.capabilities.isCreativeMode)
                     {
-                        if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(par1ItemStack))
+                        if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(stack))
                         {
-                            par3World.playAuxSFX(200, par4, par5 + 1, par6, 0);
+                            world.playAuxSFX(200, x, y + 1, z, 0);
                             return true;
                         }
 
-                        if (!par2EntityPlayer.capabilities.isCreativeMode)
+                        if (!player.capabilities.isCreativeMode)
                         {
-                            par2EntityPlayer.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
+                            player.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
                         }
 
-                        if(EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
+                        if(EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
                         {
-                        	par3World.setBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction), ModBlocks.ritualStone, rc.getStoneType(), 3);
+                        	world.setBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction), ModBlocks.ritualStone, rc.getStoneType(), 3);
 
-                            if (par3World.isRemote)
+                            if (world.isRemote)
                             {
-                                par3World.playAuxSFX(2005, par4, par5 + 1, par6, 0);
+                                world.playAuxSFX(2005, x, y + 1, z, 0);
                                 
                                 return true;
                             }
@@ -229,56 +253,119 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                     }
                 } else
                 {
-                    Block block = par3World.getBlock(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction));
+                    Block block = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
                     if (block == ModBlocks.ritualStone)
                     {
-                        int metadata = par3World.getBlockMetadata(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction));
+                        int metadata = world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
                         if (metadata != rc.getStoneType())
                         {
-                        	if(EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
+                        	if(EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
                         	{
-	                            if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(par1ItemStack))
+	                            if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(stack))
 	                            {
-	                                par3World.playAuxSFX(200, par4, par5 + 1, par6, 0);
+	                                world.playAuxSFX(200, x, y + 1, z, 0);
 	                                return true;
 	                            }
 	
-	                            par3World.setBlockMetadataWithNotify(par4 + rc.getX(direction), par5 + rc.getY(), par6 + rc.getZ(direction), rc.getStoneType(), 3);
+	                            world.setBlockMetadataWithNotify(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction), rc.getStoneType(), 3);
 	                            return true;
                         	}
                         }
                     } else
                     {
-                        par3World.playAuxSFX(0000, par4, par5 + 1, par6, 0);
+                        world.playAuxSFX(0000, x, y + 1, z, 0);
                         return true;
                     }
                 }
             }
-        }else if(!(par3World.getBlock(par4, par5, par6) instanceof IRitualStone) && !par2EntityPlayer.isSneaking())
-        {
-        	if(par3World.isRemote)
-        	{
-        		return false;
-        	}
-        	this.cycleDirection(par1ItemStack);
-        	par2EntityPlayer.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("tooltip.ritualdiviner.ritualtunedto") + " " + this.getNameForDirection(this.getDirection(par1ItemStack))));
-            return true;
         }
 
         return false;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
+    	if(entity instanceof EntityPlayer && hasStoredLocation(stack) && world.getWorldTime() % 5 == 0)
+    	{
+			Int3 loc = getStoredLocation(stack);
+			
+			int x = loc.xCoord;
+			int y = loc.yCoord;
+			int z = loc.zCoord;
+			
+			if(!this.placeRitualStoneAtMasterStone(stack, (EntityPlayer)entity, world, x, y, z))
+			{
+				this.voidStoredLocation(stack);
+			}
+    	}
+    }
+    
+    public void setStoredLocation(ItemStack stack, Int3 location)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null)
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	NBTTagCompound locTag = location.writeToNBT(new NBTTagCompound());
+    	locTag.setBoolean("isStored", true);
+    	
+    	tag.setTag("location", locTag);
+    }
+    
+    public void voidStoredLocation(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null || !tag.hasKey("location"))
+    	{
+    		tag = new NBTTagCompound();
+    		stack.setTagCompound(tag);
+    	}
+    	
+    	NBTTagCompound locTag = (NBTTagCompound)tag.getTag("location");
+    	locTag.setBoolean("isStored", false);
+    }
+    
+    public Int3 getStoredLocation(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null || !tag.hasKey("location"))
+    	{
+    		return new Int3(0, 0, 0);
+    	}
+    	
+    	NBTTagCompound locTag = (NBTTagCompound)tag.getTag("location");
+    	
+    	return Int3.readFromNBT(locTag);
+    }
+    
+    public boolean hasStoredLocation(ItemStack stack)
+    {
+    	NBTTagCompound tag = stack.getTagCompound();
+    	if(tag == null || !tag.hasKey("location"))
+    	{
+    		return false;
+    	}
+    	
+    	NBTTagCompound locTag = (NBTTagCompound)tag.getTag("location");
+    	
+    	return locTag.getBoolean("isStored");
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+        if (EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
         {
-            rotateRituals(par2World,par3EntityPlayer, par1ItemStack, true);
+            rotateRituals(par2World,par3EntityPlayer, stack, true);
         }
 
-        return par1ItemStack;
+        return stack;
     }
 
     @Override
@@ -327,37 +414,37 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     }
 
     @Override
-    public String getCurrentRitual(ItemStack par1ItemStack)
+    public String getCurrentRitual(ItemStack stack)
     {
-        if (par1ItemStack.getTagCompound() == null)
+        if (stack.getTagCompound() == null)
         {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new NBTTagCompound());
         }
 
-        return par1ItemStack.getTagCompound().getString("ritualID");
+        return stack.getTagCompound().getString("ritualID");
     }
 
     @Override
-    public void setCurrentRitual(ItemStack par1ItemStack, String ritualID)
+    public void setCurrentRitual(ItemStack stack, String ritualID)
     {
-        if (par1ItemStack.getTagCompound() == null)
+        if (stack.getTagCompound() == null)
         {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new NBTTagCompound());
         }
 
-        par1ItemStack.getTagCompound().setString("ritualID", ritualID);
+        stack.getTagCompound().setString("ritualID", ritualID);
     }
 
     @Override
-    public int getMaxRuneDisplacement(ItemStack par1ItemStack) //0 indicates the starting 4 runes, 1 indicates it can use Dusk runes
+    public int getMaxRuneDisplacement(ItemStack stack) //0 indicates the starting 4 runes, 1 indicates it can use Dusk runes
     {
-        return par1ItemStack.getItemDamage();
+        return stack.getItemDamage();
     }
 
     @Override
-    public void setMaxRuneDisplacement(ItemStack par1ItemStack, int displacement)
+    public void setMaxRuneDisplacement(ItemStack stack, int displacement)
     {
-        par1ItemStack.setItemDamage(displacement);
+        stack.setItemDamage(displacement);
     }
 
     @Override

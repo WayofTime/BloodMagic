@@ -155,9 +155,15 @@ public class BloodMagicGuide
 		fivePeoplePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.fivePeople")));
 		entries.add(new EntryUniText(fivePeoplePages, "guide.BloodMagic.entryName.architect.fivePeople"));
 		
+		ArrayList<IPage> tier3Pages = new ArrayList();
+        tier3Pages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/altars/T3.png"), true));
+        tier3Pages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.tier3")));
+		entries.add(new EntryUniText(tier3Pages, "guide.BloodMagic.entryName.architect.tier3"));
 		
-		
-		
+		ArrayList<IPage> magicianOrbPages = new ArrayList();
+		magicianOrbPages.add(new PageAltarRecipe(RecipeHolder.magicianBloodOrbRecipe));
+		magicianOrbPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.magicianOrb")));
+		entries.add(new EntryUniText(magicianOrbPages, "guide.BloodMagic.entryName.architect.magicianOrb"));
 		
         categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.architect", new ItemStack(ModItems.divinationSigil)));
 	}

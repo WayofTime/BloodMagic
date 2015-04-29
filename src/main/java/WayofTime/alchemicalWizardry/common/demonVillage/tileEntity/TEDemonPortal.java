@@ -63,7 +63,7 @@ public class TEDemonPortal extends TileEntity
 
     public static int[] tierCostList = new int[]{1500};
     
-    public static Set<IHoardDemon> hoardList = new HashSet();
+    public Set<IHoardDemon> hoardList = new HashSet();
 
     public static List<DemonBuilding> buildingList = new ArrayList();
     public Random rand = new Random();
