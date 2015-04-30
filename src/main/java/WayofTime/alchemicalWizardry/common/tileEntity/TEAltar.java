@@ -512,7 +512,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
                     {
                     	if(AlchemicalWizardry.causeHungerChatMessage && !player.isPotionActive(Potion.hunger.id))
                     	{
-                    		player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.hunger")));
+                        	player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.hunger")));
                     	}
                         player.addPotionEffect(new PotionEffect(Potion.hunger.id, 40, regenEffect.getAmplifier() * 2 - 2));
                     }
