@@ -42,6 +42,23 @@ public class APISpellHelper
         return beaconData; 
 	} 
 	
+	public static int getCurrentIncense(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:CurrentIncense"))
+		{
+			return data.getInteger("BM:CurrentIncense");
+		}
+		
+		return 0;
+	}
+	
+	public static void setCurrentIncense(EntityPlayer player, int amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setInteger("BM:CurrentIncense", amount);
+	}
+	
 	public static int getPlayerLPTag(EntityPlayer player)
 	{
 		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);

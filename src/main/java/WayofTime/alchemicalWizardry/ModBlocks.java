@@ -99,7 +99,7 @@ public class ModBlocks
     public static Block blockMimic;
     public static Block blockEnchantmentGlyph;
     public static Block blockStabilityGlyph;
-    public static Block blockIncence;
+    public static Block blockCrucible;
 
     public static void init()
     {
@@ -142,7 +142,7 @@ public class ModBlocks
         blockLifeEssence = new LifeEssenceBlock();
         blockEnchantmentGlyph = new BlockEnchantmentGlyph();
         blockStabilityGlyph = new BlockStabilityGlyph();
-        blockIncence = new BlockCrucible();
+        blockCrucible = new BlockCrucible();
     }
 
     public static void registerBlocksInPre()
@@ -189,7 +189,7 @@ public class ModBlocks
         GameRegistry.registerBlock(ModBlocks.blockEnchantmentGlyph, ItemEnchantmentGlyphBlock.class, "blockEnchantmentGlyph");
         GameRegistry.registerBlock(ModBlocks.blockStabilityGlyph, ItemStabilityGlyphBlock.class, "blockStabilityGlyph");
         
-//        GameRegistry.registerBlock(ModBlocks.blockIncence, "blockIncence");
+        GameRegistry.registerBlock(ModBlocks.blockCrucible, "blockCrucible");
     }
 
     public static void registerBlocksInInit()
