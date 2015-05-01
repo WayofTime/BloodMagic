@@ -125,7 +125,6 @@ public class DivinationSigil extends Item implements ArmourUpgrade, IReagentMani
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9, true));
     }
 
     @Override

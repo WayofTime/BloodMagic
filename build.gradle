@@ -41,6 +41,7 @@ repositories {
         url 'http://dvs1.progwml6.com/files/maven'
     }
     maven {
+    	name 'TehNut Repo'
     	url 'http://tehnut.info/maven/'
     }
 	ivy {

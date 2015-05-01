@@ -16,6 +16,8 @@ public class BlockCrucible extends BlockContainer
 	public BlockCrucible() 
 	{
 		super(Material.anvil);
+		this.setHardness(2.0f);
+		this.setResistance(1.5f);
 		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 		this.setBlockName("blockCrucible");
 	}
@@ -29,7 +31,7 @@ public class BlockCrucible extends BlockContainer
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
     {
-        this.setBlockBounds(0.4F, 0.0F, 0.4F, 0.6F, 0.8F, 0.6F);        
+        this.setBlockBounds(0.4F, 0.0F, 0.4F, 0.6F, 0.6F, 0.6F);        
     }
 	
 	@Override

@@ -9,7 +9,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
@@ -18,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -65,12 +65,12 @@ public class SacrificialDagger extends Item
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount)
     {
-        if(itemInUseCount < 32)
-        {
-        	return;
-        }
+//        if(itemInUseCount < 32)
+//        {
+//        	return;
+//        }
 
-        
+        PlayerSacrificeHandler.sacrificePlayerHealth(player);
     }
     
     @Override
@@ -211,7 +211,7 @@ public class SacrificialDagger extends Item
     
     public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player)
     {
-    	return !world.isRemote && player.isPotionActive(Potion.regeneration);
+    	return !world.isRemote && (PlayerSacrificeHandler.getPlayerIncense(player) > 0);
     }
     
     public boolean canUseForSacrifice(ItemStack stack)

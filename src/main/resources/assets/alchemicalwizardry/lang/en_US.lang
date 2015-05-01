@@ -235,6 +235,8 @@ item.boundPlateWater.name=Water Omega Plate
 item.boundLeggingsWater.name=Water Omega Leggings
 item.boundBootsWater.name=Water Omega Boots
 
+item.bloodMagicIncenseItem.Woodash.name=Testing Incense
+
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 
