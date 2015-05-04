@@ -75,7 +75,7 @@ public class RecipeHolder
 	public static AltarRecipe daggerRecipe;
 	public static AltarRecipe weakActivationRecipe;
 	public static AltarRecipe filledSocketRecipe;
-	
+	public static AltarRecipe teleposerFocusRecipe1;
 	
 	public static void init()
 	{
@@ -141,6 +141,7 @@ public class RecipeHolder
 		daggerRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.daggerOfSacrifice));
 		weakActivationRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.activationCrystal, 1, 0));
 		filledSocketRecipe = getAltarRecipeForItemStack(new ItemStack(ModBlocks.bloodSocket));
+		teleposerFocusRecipe1 = getAltarRecipeForItemStack(new ItemStack(ModItems.telepositionFocus));
 	}
 	
 	private static IRecipe getRecipeForItemStack(ItemStack stack)

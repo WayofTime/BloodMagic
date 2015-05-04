@@ -12,19 +12,19 @@ public class PlayerSacrificeHandler
 {
 	public static float scalingOfSacrifice = 0.0025f;
 	public static int soulFrayDuration = 400;
-	public static int getPlayerIncense(EntityPlayer player)
+	public static float getPlayerIncense(EntityPlayer player)
 	{
 		return APISpellHelper.getCurrentIncense(player);
 	}
 	
-	public static void setPlayerIncense(EntityPlayer player, int amount)
+	public static void setPlayerIncense(EntityPlayer player, float amount)
 	{
 		APISpellHelper.setCurrentIncense(player, amount);
 	}
 	
-	public static boolean incrementIncense(EntityPlayer player, int min, int max)
+	public static boolean incrementIncense(EntityPlayer player, float min, float max)
 	{
-		int amount = getPlayerIncense(player);
+		float amount = getPlayerIncense(player);
 		if(amount < min || amount >= max)
 		{
 			return false;
@@ -43,7 +43,7 @@ public class PlayerSacrificeHandler
 			return false;
 		}
 		
-		int amount = getPlayerIncense(player);
+		float amount = getPlayerIncense(player);
 		
 		if(amount >= 0)
 		{
@@ -68,9 +68,9 @@ public class PlayerSacrificeHandler
 		return false;
 	}
 	
-	public static float getModifier(int incense)
+	public static float getModifier(float amount)
 	{
-		return 1 + incense*scalingOfSacrifice;
+		return 1 + amount*scalingOfSacrifice;
 	}
 	
 	public static boolean findAndFillAltar(World world, EntityPlayer player, int amount)

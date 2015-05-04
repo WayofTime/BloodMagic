@@ -17,4 +17,5 @@ public interface IIncense
 	public float getRedColour(ItemStack stack);
 	public float getGreenColour(ItemStack stack);
 	public float getBlueColour(ItemStack stack);
+	float getTickRate(ItemStack stack);
 }

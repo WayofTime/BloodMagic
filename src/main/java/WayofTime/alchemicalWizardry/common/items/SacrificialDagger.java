@@ -91,11 +91,11 @@ public class SacrificialDagger extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-    	if (this.canUseForSacrifice(stack))
-        {
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-            return stack;
-        }
+//    	if (this.canUseForSacrifice(stack))
+//        {
+//            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+//            return stack;
+//        }
     	
         if (!player.capabilities.isCreativeMode)
         {

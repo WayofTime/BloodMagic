@@ -401,6 +401,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
 
     public void rotateRituals(World world, EntityPlayer player, ItemStack stack, boolean next)
     {
+    	this.voidStoredLocation(stack);
         int maxRitualID = Rituals.getNumberOfRituals();
         String currentRitualID = this.getCurrentRitual(stack);
 
@@ -487,6 +488,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @Override
     public int cycleDirection(ItemStack itemStack)
     {
+    	this.voidStoredLocation(itemStack);
     	int direction = this.getDirection(itemStack);
     	
     	if(direction < 4)

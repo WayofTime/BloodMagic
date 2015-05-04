@@ -42,21 +42,21 @@ public class APISpellHelper
         return beaconData; 
 	} 
 	
-	public static int getCurrentIncense(EntityPlayer player)
+	public static float getCurrentIncense(EntityPlayer player)
 	{
 		NBTTagCompound data = player.getEntityData();
 		if(data.hasKey("BM:CurrentIncense"))
 		{
-			return data.getInteger("BM:CurrentIncense");
+			return data.getFloat("BM:CurrentIncense");
 		}
 		
 		return 0;
 	}
 	
-	public static void setCurrentIncense(EntityPlayer player, int amount)
+	public static void setCurrentIncense(EntityPlayer player, float amount)
 	{
 		NBTTagCompound data = player.getEntityData();
-		data.setInteger("BM:CurrentIncense", amount);
+		data.setFloat("BM:CurrentIncense", amount);
 	}
 	
 	public static int getPlayerLPTag(EntityPlayer player)

@@ -14,6 +14,7 @@ import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TETeleposer extends TEInventory
 {
@@ -165,6 +166,26 @@ public class TETeleposer extends TEInventory
                                 entityplayer2 = (EntityLivingBase) iterator2.next();
                                 entityplayer2.worldObj = worldF;
                                 entityplayer2.setPositionAndUpdate(entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf);
+                            }
+                        }else
+                        {
+                        	iterator1 = list1.iterator();
+                            iterator2 = list2.iterator();
+
+                            while (iterator1.hasNext())
+                            {
+                                entityplayer1 = (EntityLivingBase) iterator1.next();
+                            	SpellHelper.teleportEntityToDim(worldObj, worldF.provider.dimensionId, entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf, entityplayer1);
+//                                entityplayer1.worldObj = worldF;
+//                                entityplayer1.setPositionAndUpdate(entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf);
+                            }
+
+                            while (iterator2.hasNext())
+                            {
+                                entityplayer2 = (EntityLivingBase) iterator2.next();
+                                SpellHelper.teleportEntityToDim(worldF, worldObj.provider.dimensionId, entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf, entityplayer2);
+//                                entityplayer2.worldObj = worldF;
+//                                entityplayer2.setPositionAndUpdate(entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf);
                             }
                         }
                     }

@@ -94,6 +94,12 @@ public class ItemIncense extends Item implements IIncense
 	{
 		return 200;
 	}
+	
+	@Override
+	public float getTickRate(ItemStack stack)
+	{
+		return 1.0f;
+	}
 
 	@Override
 	public float getRedColour(ItemStack stack) 

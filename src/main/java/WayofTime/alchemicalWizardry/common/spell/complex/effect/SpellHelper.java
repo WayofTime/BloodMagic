@@ -816,7 +816,7 @@ public class SpellHelper
     }
 
     //Adapated from Enhanced Portals 3 code
-    public static Entity teleportEntityToDim(World oldWorld, int newWorldID, int x, int y, int z, Entity entity)
+    public static Entity teleportEntityToDim(World oldWorld, int newWorldID, double d, double e, double f, Entity entity)
     {
         if (entity != null)
         {
@@ -838,11 +838,11 @@ public class SpellHelper
                         player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.difficultySetting, newWorldServer.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
                         oldWorldServer.removeEntity(player);
                         player.isDead = false;
-                        player.setLocationAndAngles(x, y, z, player.rotationYaw, player.rotationPitch);
+                        player.setLocationAndAngles(d, e, f, player.rotationYaw, player.rotationPitch);
                         newWorldServer.spawnEntityInWorld(player);
                         player.setWorld(newWorldServer);
                         config.func_72375_a(player, oldWorldServer);
-                        player.playerNetServerHandler.setPlayerLocation(x, y, z, entity.rotationYaw, entity.rotationPitch);
+                        player.playerNetServerHandler.setPlayerLocation(d, e, f, entity.rotationYaw, entity.rotationPitch);
                         player.theItemInWorldManager.setWorld(newWorldServer);
                         config.updateTimeAndWeatherForPlayer(player, newWorldServer);
                         config.syncPlayerInventory(player);
@@ -859,7 +859,7 @@ public class SpellHelper
                         player.timeUntilPortal = 150;
                     }
                     player.worldObj.theProfiler.endSection();
-                    newWorldServer.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+                    newWorldServer.playSoundEffect(d, e, f, "mob.endermen.portal", 1.0F, 1.0F);
                     return player;
                 } else
                 {
@@ -870,7 +870,7 @@ public class SpellHelper
                     Entity teleportedEntity = EntityList.createEntityFromNBT(tag, newWorldServer);
                     if (teleportedEntity != null)
                     {
-                        teleportedEntity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+                        teleportedEntity.setLocationAndAngles(d, e, f, entity.rotationYaw, entity.rotationPitch);
                         teleportedEntity.forceSpawn = true;
                         newWorldServer.spawnEntityInWorld(teleportedEntity);
                         teleportedEntity.setWorld(newWorldServer);
@@ -878,7 +878,7 @@ public class SpellHelper
                     }
                     oldWorldServer.resetUpdateEntityTick();
                     newWorldServer.resetUpdateEntityTick();
-                    newWorldServer.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+                    newWorldServer.playSoundEffect(d, e, f, "mob.endermen.portal", 1.0F, 1.0F);
                     return teleportedEntity;
                 }
             }
@@ -896,11 +896,11 @@ public class SpellHelper
      */
     public static float applyPotionDamageCalculations(EntityLivingBase entity, DamageSource p_70672_1_, float p_70672_2_)
     {
-        if (p_70672_1_.isDamageAbsolute())
-        {
-            return p_70672_2_;
-        }
-        else
+//        if (p_70672_1_.isDamageAbsolute())
+//        {
+//            return p_70672_2_;
+//        }
+//        else
         {
             if (entity instanceof EntityZombie)
             {
