@@ -1385,8 +1385,8 @@ public class AlchemicalWizardry
 
     public static void initRituals()
     {
-        Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 30, 255, 255, 0, 0.501, 0.8, 0, 1.5, false));
-        Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 255, 0, 0, 255, 0, 0.501, 0.8, 0, 1.5, false));
+        Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/WaterArray.png"), 0, 30, 255, 255, 0, 0.501, 0.8, 0, 1.5, false));
+        Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/LavaArray.png"), 255, 0, 0, 255, 0, 0.501, 0.8, 0, 1.5, false));
         Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 244, 164, 96, 255, 0, 1.0, 1.6, 0, 1.5, false));
         Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 27, 227, 206, 255, 0, 0.501, 0.8, 0, 1.5, false));
         Rituals.registerRitual("AW005Containment", 1, 2000, new RitualEffectContainment(), "Ritual of Containment", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 186, 21, 21, 255, 0, 2.5, 2.5, 0, 2.5, false));

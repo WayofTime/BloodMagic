@@ -286,6 +286,55 @@ public class BloodMagicGuide
 		fieldTripPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.fieldTrip")));
 		entries.add(new EntryUniText(fieldTripPages, "guide.BloodMagic.entryName.architect.fieldTrip"));
 		
+		ArrayList<IPage> bindingKeyPages = new ArrayList();
+		bindingKeyPages.add(new PageIRecipe(RecipeHolder.keyOfBindingRecipe));
+		bindingKeyPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.bindingKey")));
+		entries.add(new EntryUniText(bindingKeyPages, "guide.BloodMagic.entryName.architect.bindingKey"));
+		
+		ArrayList<IPage> tier5AltarPages = new ArrayList();
+        tier5AltarPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/altars/T5.png"), true));
+		tier5AltarPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.tier5Altar")));
+		entries.add(new EntryUniText(tier5AltarPages, "guide.BloodMagic.entryName.architect.tier5Altar"));
+		
+		ArrayList<IPage> priceOfPowerPages = new ArrayList();
+		priceOfPowerPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.priceOfPower")));
+		entries.add(new EntryUniText(priceOfPowerPages, "guide.BloodMagic.entryName.architect.priceOfPower"));
+		
+		ArrayList<IPage> demonicOrbPages = new ArrayList();
+		demonicOrbPages.add(new PageAltarRecipe(RecipeHolder.archmageBloodOrbRecipe));
+		demonicOrbPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.demonicOrb")));
+		entries.add(new EntryUniText(demonicOrbPages, "guide.BloodMagic.entryName.architect.demonicOrb"));
+		
+		ArrayList<IPage> energyBazookaPages = new ArrayList();
+		demonicOrbPages.add(new PageOrbRecipe(RecipeHolder.energyBazookaRecipe));
+		energyBazookaPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.energyBazooka")));
+		entries.add(new EntryUniText(energyBazookaPages, "guide.BloodMagic.entryName.architect.energyBazooka"));
+		
+		ArrayList<IPage> accelerationRunePages = new ArrayList();
+		demonicOrbPages.add(new PageOrbRecipe(RecipeHolder.accelerationRuneRecipe));
+		accelerationRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.accelerationRune")));
+		entries.add(new EntryUniText(accelerationRunePages, "guide.BloodMagic.entryName.architect.accelerationRune"));
+		
+		ArrayList<IPage> harvestPages = new ArrayList();
+		demonicOrbPages.add(new PageOrbRecipe(RecipeHolder.harvestSigilRecipe));
+		harvestPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.harvest")));
+		entries.add(new EntryUniText(harvestPages, "guide.BloodMagic.entryName.architect.harvest"));
+		
+		ArrayList<IPage> demonProblemPages = new ArrayList();
+		demonProblemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.demonProblem")));
+		entries.add(new EntryUniText(demonProblemPages, "guide.BloodMagic.entryName.architect.demonProblem"));
+		
+		ArrayList<IPage> tier6AltarPages = new ArrayList();
+        tier6AltarPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/altars/T6.png"), true));
+		tier6AltarPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.tier6Altar")));
+		tier6AltarPages.add(new PageIRecipe(RecipeHolder.crystalCluserRecipe));
+		tier6AltarPages.add(new PageAltarRecipe(RecipeHolder.transcendentBloodOrbRecipe));
+		entries.add(new EntryUniText(tier6AltarPages, "guide.BloodMagic.entryName.architect.tier6Altar"));
+		
+		ArrayList<IPage> moreThanHumanPages = new ArrayList();
+		moreThanHumanPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.moreThanHuman")));
+		entries.add(new EntryUniText(moreThanHumanPages, "guide.BloodMagic.entryName.architect.moreThanHuman"));
+		
         categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.architect", new ItemStack(ModItems.divinationSigil)));
 	}
 }
