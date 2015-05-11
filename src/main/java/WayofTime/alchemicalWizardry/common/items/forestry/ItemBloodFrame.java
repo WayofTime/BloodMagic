@@ -1,25 +1,29 @@
 package WayofTime.alchemicalWizardry.common.items.forestry;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import forestry.api.apiculture.IBee;
+import forestry.api.apiculture.IBeeGenome;
+import forestry.api.apiculture.IBeeHousing;
+import forestry.api.apiculture.IHiveFrame;
 
-import java.util.List;
-
-public class ItemBloodFrame extends EnergyItems //implements IHiveFrame
+public class ItemBloodFrame extends EnergyItems implements IHiveFrame
 {
     public ItemBloodFrame()
     {
         super();
         this.maxStackSize = 1;
         this.setMaxDamage(10);
-        setEnergyUsed(3000);
+        setEnergyUsed(1000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
@@ -48,14 +52,15 @@ public class ItemBloodFrame extends EnergyItems //implements IHiveFrame
         {
             if (par1ItemStack.getItemDamage() > 0)
             {
-                EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed());
-                par1ItemStack.setItemDamage(par1ItemStack.getItemDamage() - 1);
+                if(EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                {
+                	par1ItemStack.setItemDamage(par1ItemStack.getItemDamage() - 1);
+                }
             }
         }
         return par1ItemStack;
     }
 
-    /**TODO Bee Stuff
      @Override public float getTerritoryModifier(IBeeGenome genome, float currentModifier)
      {
      // TODO Auto-generated method stub
@@ -135,6 +140,6 @@ public class ItemBloodFrame extends EnergyItems //implements IHiveFrame
 
      }
 
-     */
+     
 
 }

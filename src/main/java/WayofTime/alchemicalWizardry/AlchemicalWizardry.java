@@ -113,6 +113,7 @@ import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
+import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
@@ -1190,14 +1191,14 @@ public class AlchemicalWizardry
         {
             this.isForestryLoaded = true;
 
-//        	ModItems.itemBloodFrame = new ItemBloodFrame(this.itemBloodFrameItemID).setUnlocalizedName("bloodFrame");
-//        	
-//        	ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
-//        	
-//        	if(provenFrame !=null)
-//        	{
-//        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
-//        	}
+        	ModItems.itemBloodFrame = new ItemBloodFrame().setUnlocalizedName("bloodFrame");
+        	
+        	ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
+        	
+        	if(provenFrame !=null)
+        	{
+        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
+        	}
         } else
         {
             this.isForestryLoaded = false;
