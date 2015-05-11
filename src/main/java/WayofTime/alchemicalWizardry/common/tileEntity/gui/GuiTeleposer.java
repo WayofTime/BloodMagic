@@ -15,16 +15,16 @@ public class GuiTeleposer extends GuiContainer
     {
         super(new ContainerTeleposer(inventoryPlayer, tileEntity));
         xSize = 176;
-        ySize = 121;
+        ySize = 222;
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int param1, int param2)
     {
         //the parameters for drawString are: string, x, y, color
-        fontRendererObj.drawString("Teleposer", 64, 5, 4210752);
+        fontRendererObj.drawString("Teleposer", 8, 6, 4210752);
         //draws "Inventory" or your regional equivalent
-        fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 29, 4210752);
+        fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 130, 4210752);
     }
 
     @Override
@@ -37,5 +37,6 @@ public class GuiTeleposer extends GuiContainer
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+        GuiBrewingStand d;
     }
 }

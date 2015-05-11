@@ -62,15 +62,13 @@ public class ContainerWritingTable extends Container
                 {
                     return null;
                 }
-            }
-            else if (stack.getItem() instanceof IBloodOrb)
+            } else if (stack.getItem() instanceof IBloodOrb)
             {
                 if (!this.mergeItemStack(stackInSlot, 0, 1, false))
                 {
                     return null;
                 }
-            }
-            else if (!this.mergeItemStack(stackInSlot, 1, 6, false))
+            } else if (!this.mergeItemStack(stackInSlot, 1, 6, false))
             {
                 return null;
             }
