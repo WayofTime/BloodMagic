@@ -5,6 +5,10 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+/*
+ *  Created in Scala by Alex-Hawks
+ *  Translated and implemented by Arcaratus
+ */
 public class RenderFakeBlocks
 {
     public static void drawFakeBlock(WayofTime.alchemicalWizardry.api.Vector3 vector3, Block block, int meta, double minX, double minY, double minZ, World world)
@@ -14,8 +18,11 @@ public class RenderFakeBlocks
         double maxZ = minZ + 1;
         Tessellator tessellator = Tessellator.instance;
 
+        
         tessellator.startDrawingQuads();
+        tessellator.setColorRGBA(255, 255, 255, 200);
 
+        
         float texMinU, texMaxU, texMinV, texMaxV;
 
         texMinU = getMinU(block, meta, 0);

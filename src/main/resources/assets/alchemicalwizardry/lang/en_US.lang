@@ -235,6 +235,8 @@ item.boundPlateWater.name=Water Omega Plate
 item.boundLeggingsWater.name=Water Omega Leggings
 item.boundBootsWater.name=Water Omega Boots
 
+item.bloodMagicIncenseItem.Woodash.name=Testing Incense
+
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
 
@@ -244,6 +246,10 @@ bm.string.drain=Drain
 bm.string.tier=Tier
 bm.string.crafting.orb.shaped=Shaped Orb Crafting
 bm.string.crafting.orb.shapeless=Shapeless Orb Crafting
+text.recipe.altar=Blood Altar
+text.recipe.altar.tier=Tier: %s
+text.recipe.altar.bloodRequired=LP: %s
+text.recipe.shapedOrb=Shaped Orb Recipe
 
 #Entities
 entity.AWWayofTime.EarthElemental.name=Earth Elemental

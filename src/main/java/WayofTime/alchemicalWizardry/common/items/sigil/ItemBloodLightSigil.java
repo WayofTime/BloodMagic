@@ -6,17 +6,20 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBloodLightSigil extends EnergyItems implements IHolding
+public class ItemBloodLightSigil extends EnergyItems implements IHolding, ArmourUpgrade
 {
     private int tickDelay = 100;
 
@@ -116,5 +119,23 @@ public class ItemBloodLightSigil extends EnergyItems implements IHolding
         }
 
         return par1ItemStack;
+    }
+    
+    @Override
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
+    {
+        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9, true));
+    }
+
+    @Override
+    public boolean isUpgrade()
+    {
+        return true;
+    }
+
+    @Override
+    public int getEnergyForTenSeconds()
+    {
+        return 25;
     }
 }

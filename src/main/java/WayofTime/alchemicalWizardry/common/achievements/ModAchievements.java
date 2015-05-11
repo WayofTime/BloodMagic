@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.achievements;
 
-import WayofTime.alchemicalWizardry.ModItems;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
-import net.minecraftforge.common.MinecraftForge;
+import WayofTime.alchemicalWizardry.ModItems;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ModAchievements
 {

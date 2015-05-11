@@ -56,10 +56,10 @@ public class AlchemyCircleRenderer extends MRSRenderer
         GL11.glDisable(GL11.GL_CULL_FACE);
         float f2 = 0;
         float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//        GL11.glEnable(GL11.GL_BLEND);
+//        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        GL11.glDepthMask(false);
+//        GL11.glDepthMask(false);
 
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
@@ -80,7 +80,7 @@ public class AlchemyCircleRenderer extends MRSRenderer
 
         tessellator.draw();
 
-        GL11.glDepthMask(true);
+//        GL11.glDepthMask(true);
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_TEXTURE_2D);

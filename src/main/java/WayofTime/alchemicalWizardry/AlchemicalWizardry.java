@@ -69,6 +69,7 @@ import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
+import WayofTime.alchemicalWizardry.common.book.BloodMagicGuide;
 import WayofTime.alchemicalWizardry.common.commands.CommandBind;
 import WayofTime.alchemicalWizardry.common.commands.CommandSN;
 import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
@@ -104,6 +105,8 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
+import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
+import WayofTime.alchemicalWizardry.common.harvest.AgriCraftCropHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
@@ -164,6 +167,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSphereCreator;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSupression;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectUnbinding;
@@ -250,6 +254,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
+import WayofTime.alchemicalWizardry.common.tileEntity.TECrucible;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
@@ -275,6 +280,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -764,6 +770,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TEAlchemicCalcinator.class, "containerAlchemicCalcinator");
         GameRegistry.registerTileEntity(TEDemonChest.class, "containerDemonChest");
         GameRegistry.registerTileEntity(TEMimicBlock.class, "containerMimic");
+        GameRegistry.registerTileEntity(TECrucible.class, "containerCrucible");
         ModBlocks.bloodRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.speedRune.setHarvestLevel("pickaxe", 2);
         ModBlocks.efficiencyRune.setHarvestLevel("pickaxe", 2);
@@ -1168,6 +1175,16 @@ public class AlchemicalWizardry
         {
             this.isThaumcraftLoaded = false;
         }
+        
+        if(Loader.isModLoaded("guideapi"))
+        {
+        	long initialTime = System.nanoTime();
+        	RecipeHolder.init();
+        	long finalTime = System.nanoTime();
+        	AlchemicalWizardry.logger.info("Recipe Holder initialized: took " + (finalTime - initialTime)/1000000f + "ms.");
+        	
+        	this.registerBMBook();
+        }
 
         if (Loader.isModLoaded("Forestry"))
         {
@@ -1198,6 +1215,12 @@ public class AlchemicalWizardry
             AlchemicalWizardry.logger.info("Loaded MineTweaker 3 Integration");
         }
         
+        if(Loader.isModLoaded("AgriCraft"))
+        {
+        	HarvestRegistry.registerHarvestHandler(new AgriCraftCropHarvestHandler());
+        	AlchemicalWizardry.logger.info("Loaded AgriCraft Handlers!");
+        }
+        
         this.isBotaniaLoaded = Loader.isModLoaded("Botania");
         
         this.isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
@@ -1214,6 +1237,12 @@ public class AlchemicalWizardry
 //	    	this.parseTextFile();
 	    
 //	    this.createItemTextureFiles();
+    }
+    
+    @Optional.Method(modid = "guideapi")
+    public static void registerBMBook()
+    {
+    	BloodMagicGuide.registerGuide();
     }
 
     public static void blacklistAccelerators()
@@ -1356,15 +1385,15 @@ public class AlchemicalWizardry
 
     public static void initRituals()
     {
-        Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 30, 255, 255, 0, 0.501, 0.8, 0, 1.5, false));
-        Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 255, 0, 0, 255, 0, 0.501, 0.8, 0, 1.5, false));
-        Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 244, 164, 96, 255, 0, 1.0, 1.6, 0, 1.5, false));
-        Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 27, 227, 206, 255, 0, 0.501, 0.8, 0, 1.5, false));
+        Rituals.registerRitual("AW001Water", 1, 500, new RitualEffectWater(), "Ritual of the Full Spring", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/WaterArray.png"), 0, 30, 255, 255, 0, 0.501, 0.8, 0, 1.5, false));
+        Rituals.registerRitual("AW002Lava", 1, 10000, new RitualEffectLava(), "Serenade of the Nether", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/LavaArray.png"), 255, 0, 0, 255, 0, 0.501, 0.8, 0, 1.5, false));
+        Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/GreenGroveArray.png"), 244, 164, 96, 255, 0, 1.0, 1.6, 0, 1.5, false));
+        Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/InterdictionArray.png"), 27, 227, 206, 255, 0, 0.501, 0.8, 0, 1.5, false));
         Rituals.registerRitual("AW005Containment", 1, 2000, new RitualEffectContainment(), "Ritual of Containment", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 186, 21, 21, 255, 0, 2.5, 2.5, 0, 2.5, false));
         Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectSoulBound(), "Ritual of Binding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleBinding.png"), 193, 7, 7, 255, 0, 0.501, 1.0, 0, 2.5, true));
         Rituals.registerRitual("AW007Unbinding", 1, 30000, new RitualEffectUnbinding(), "Ritual of Unbinding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 193, 7, 7, 255, 0, 0.5, 0.8, 0, 2.5, false));
         Rituals.registerRitual("AW008HighJump", 1, 1000, new RitualEffectJumping(), "Ritual of the High Jump", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 10, 183, 173, 255, 0, 0.501, 1.501, 0, 1.5, false));
-        Rituals.registerRitual("AW009Magnetism", 1, 5000, new RitualEffectMagnetic(), "Ritual of Magnetism", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 126, 39, 0, 255, 0, 0.501, 2.0, 0, 1.5, false));
+        Rituals.registerRitual("AW009Magnetism", 1, 5000, new RitualEffectMagnetic(), "Ritual of Magnetism", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/MagnetismArray.png"), 126, 39, 0, 255, 0, 0.501, 2.0, 0, 1.5, false));
         Rituals.registerRitual("AW010Crusher", 1, 2500, new RitualEffectCrushing(), "Ritual of the Crusher", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW011Speed", 1, 1000, new RitualEffectLeap(), "Ritual of Speed", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
         Rituals.registerRitual("AW012AnimalGrowth", 1, 10000, new RitualEffectAnimalGrowth(), "Ritual of the Shepherd", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 0, 0, 0, 255, 0, 0.501, 0.501, 0, 1.5, false));
@@ -1393,6 +1422,8 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW034Crafting", 1, 15000, new RitualEffectCrafting(), "Rhythm of the Beating Anvil");
         
         Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
+        
+        Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Birth of the Bastion");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 

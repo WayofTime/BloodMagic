@@ -36,6 +36,7 @@ import WayofTime.alchemicalWizardry.common.items.ItemBloodLetterPack;
 import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
 import WayofTime.alchemicalWizardry.common.items.ItemComponents;
 import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
+import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.ItemMailOrderCatalogue;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
@@ -240,6 +241,8 @@ public class ModItems
     public static Item outputRoutingFocus;
     
     public static Item itemMailCatalogue;
+    
+    public static Item itemIncense;
 
     public static void init()
     {
@@ -370,6 +373,8 @@ public class ModItems
         outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
         
         itemMailCatalogue = new ItemMailOrderCatalogue().setUnlocalizedName("itemMailCatalogue");
+        
+        itemIncense = new ItemIncense().setUnlocalizedName("bloodMagicIncenseItem");
     }
 
     public static void registerItems()
@@ -505,6 +510,7 @@ public class ModItems
         GameRegistry.registerItem(ModItems.outputRoutingFocus, "outputRoutingFocus");
         
         GameRegistry.registerItem(ModItems.itemMailCatalogue, "itemMailCatalogue");
+        GameRegistry.registerItem(ModItems.itemIncense, "bloodMagicIncenseItem");
         //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }

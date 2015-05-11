@@ -1,5 +1,9 @@
 package WayofTime.alchemicalWizardry.api;
 
+/*
+ *  Created in Scala by Alex-Hawks
+ *  Translated and implemented by Arcaratus
+ */
 public class Vector3
 {
     public int x, y, z;

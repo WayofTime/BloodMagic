@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 
 public class ProjectileOffensiveWind extends ProjectileImpactEffect
 {
@@ -19,9 +20,9 @@ public class ProjectileOffensiveWind extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        if (mop instanceof EntityLiving)
+        if (mop instanceof EntityLivingBase)
         {
-            ((EntityLiving) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, (int) (100 * (2 * this.powerUpgrades + 1) * (1 / (this.potencyUpgrades + 1))), this.potencyUpgrades));
+            ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, (int) (100 * (2 * this.powerUpgrades + 1) * (1 / (this.potencyUpgrades + 1))), this.potencyUpgrades));
         }
     }
 

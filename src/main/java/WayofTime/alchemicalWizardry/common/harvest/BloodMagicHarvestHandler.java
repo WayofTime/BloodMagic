@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import java.util.List;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -9,8 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
 
 public class BloodMagicHarvestHandler implements IHarvestHandler
 {
@@ -21,6 +22,10 @@ public class BloodMagicHarvestHandler implements IHarvestHandler
 
     public int getHarvestMeta(Block block)
     {
+    	if(block instanceof BlockCrops)
+    	{
+    		
+    	}
         if (block == Blocks.wheat)
         {
             return 7;

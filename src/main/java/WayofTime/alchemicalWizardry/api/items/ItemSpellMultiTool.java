@@ -11,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -48,12 +49,14 @@ public class ItemSpellMultiTool extends Item
     {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundTool");
     }
-
+    
     @Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
         float damage = this.getCustomItemAttack(par1ItemStack);
-
+        
+        float f = (float)par3EntityLivingBase.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+        
         SpellParadigmTool parad = this.loadParadigmFromStack(par1ItemStack);
 
         if (parad != null)
@@ -68,6 +71,8 @@ public class ItemSpellMultiTool extends Item
             damage *= 1.75f;
         }
 
+        damage *= f;
+        
         if (par3EntityLivingBase instanceof EntityPlayer)
         {
             par2EntityLivingBase.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) par3EntityLivingBase), damage);
@@ -149,7 +154,7 @@ public class ItemSpellMultiTool extends Item
                     {
                         if (isEffective)
                         {
-                            if (localBlock.removedByPlayer(world, player, x, y, z))
+                            if (localBlock.removedByPlayer(world, player, x, y, z, true))
                             {
                                 localBlock.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
                             }
@@ -194,8 +199,8 @@ public class ItemSpellMultiTool extends Item
             }
         }
 
-        if (!world.isRemote)
-            world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
+//        if (!world.isRemote)
+//            world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
         return true;
 
     }

@@ -10,10 +10,12 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -163,6 +165,13 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.isDemonRitualCreativeOnly = config.get(tempDemonConfigs, "IsDemonRitualCreativeOnly", false).getBoolean();
 		
 		BoundArmour.tryComplexRendering = config.get("WimpySettings", "UseFancyBoundArmour", true).getBoolean(true);
+		
+		ItemIncense.itemDuration = config.get("TestIncenseSettings", "ItemDuration", 100).getInt();
+		ItemIncense.minValue = config.get("TestIncenseSettings", "MinValue", 0).getInt();
+		ItemIncense.maxValue = config.get("TestIncenseSettings", "MaxValue", 100).getInt();
+		PlayerSacrificeHandler.scalingOfSacrifice = (float) config.get("TestIncenseSettings", "ScalingFactor", 0.0025f).getDouble();
+		PlayerSacrificeHandler.soulFrayDuration = config.get("TestIncenseSettings", "SoulFrayDuration", 400).getInt();
+
 
 		Side side = FMLCommonHandler.instance().getSide();
 		if (side == Side.CLIENT)

@@ -1,26 +1,23 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.material.MaterialLiquid;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class VoidSigil extends ItemBucket implements ArmourUpgrade
 {
@@ -44,13 +41,13 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.voidsigil.desc"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(stack.getTagCompound() == null))
         {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
         }
     }
 
@@ -73,73 +70,87 @@ public class VoidSigil extends ItemBucket implements ArmourUpgrade
         return this.energyUsed;
     }
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+    	return stack;
+    }
+    
+    @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    {
+        if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
-            return par1ItemStack;
+            return false;
         }
 
         float f = 1.0F;
-        double d0 = par3EntityPlayer.prevPosX + (par3EntityPlayer.posX - par3EntityPlayer.prevPosX) * (double) f;
-        double d1 = par3EntityPlayer.prevPosY + (par3EntityPlayer.posY - par3EntityPlayer.prevPosY) * (double) f + 1.62D - (double) par3EntityPlayer.yOffset;
-        double d2 = par3EntityPlayer.prevPosZ + (par3EntityPlayer.posZ - par3EntityPlayer.prevPosZ) * (double) f;
+        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
+        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
+        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
         boolean flag = this.isFull == 0;
-        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, flag);
 
-        if (movingobjectposition == null)
+        if (!world.canMineBlock(player, x, y, z))
         {
-            return par1ItemStack;
-        } else
-        {
-            FillBucketEvent event = new FillBucketEvent(par3EntityPlayer, par1ItemStack, par2World, movingobjectposition);
-
-            if (MinecraftForge.EVENT_BUS.post(event))
-            {
-                return par1ItemStack;
-            }
-
-            if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            {
-                int i = movingobjectposition.blockX;
-                int j = movingobjectposition.blockY;
-                int k = movingobjectposition.blockZ;
-
-                if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
-                {
-                    return par1ItemStack;
-                }
-
-                TileEntity tile = par2World.getTileEntity(i, j, k);
-                if (tile instanceof IFluidHandler)
-                {
-                    FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, false);
-
-                    if (amount != null && amount.amount > 0 && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                    {
-                        ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), 1000, true);
-                    }
-
-                    return par1ItemStack;
-                }
-
-                if (this.isFull == 0)
-                {
-                    if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
-                    {
-                        return par1ItemStack;
-                    }
-
-                    if (par2World.getBlock(i, j, k).getMaterial() instanceof MaterialLiquid && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
-                    {
-                        par2World.setBlockToAir(i, j, k);
-                    }
-                }
-            }
-
-            return par1ItemStack;
+            return false;
         }
+
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof IFluidHandler)
+        {
+            FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(side), 1000, false);
+
+            if (amount != null && amount.amount > 0 && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+            {
+                ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(side), 1000, true);
+                return true;
+            }
+
+            return false;
+        }
+
+        if (side == 0)
+        {
+            --y;
+        }
+
+        if (side == 1)
+        {
+            ++y;
+        }
+
+        if (side == 2)
+        {
+            --z;
+        }
+
+        if (side == 3)
+        {
+            ++z;
+        }
+
+        if (side == 4)
+        {
+            --x;
+        }
+
+        if (side == 5)
+        {
+            ++x;
+        }
+        
+        if (!player.canPlayerEdit(x, y, z, side, stack))
+        {
+            return false;
+        }
+
+        if (SpellHelper.isBlockFluid(world.getBlock(x, y, z)) && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+        {
+            world.setBlockToAir(x, y, z);
+            return true;
+        }
+        
+
+        return false;
     }
 
     /**

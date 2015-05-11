@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.client.renderer;
 
+import org.lwjgl.opengl.GL11;
+
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.Vector3;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -15,6 +17,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
+/*
+ *  Created in Scala by Alex-Hawks
+ *  Translated and implemented by Arcaratus
+ */
 public class RitualDivinerRender
 {
     @SubscribeEvent
@@ -52,6 +58,9 @@ public class RitualDivinerRender
                 return;
             }
 
+            GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             for (RitualComponent ritualComponent : ritualEffect.getRitualComponentList())
             {
                 Vector3 vX = vec3.add(new Vector3(ritualComponent.getX(direction), ritualComponent.getY(), ritualComponent.getZ(direction)));
@@ -64,6 +73,7 @@ public class RitualDivinerRender
                     RenderFakeBlocks.drawFakeBlock(vX, ModBlocks.ritualStone, ritualComponent.getStoneType(), minX, minY, minZ, world);
                 }
             }
+            GL11.glPopMatrix();
         }
     }
 

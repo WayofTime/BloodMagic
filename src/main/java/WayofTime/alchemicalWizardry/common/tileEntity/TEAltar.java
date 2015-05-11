@@ -501,22 +501,22 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
                 }
             }
 
-            if (AlchemicalWizardry.causeHungerWithRegen)
-            {
-                List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
-                for (EntityPlayer player : list)
-                {
-                    PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
-                    if (regenEffect != null && regenEffect.getAmplifier() > 0)
-                    {
-                    	if(AlchemicalWizardry.causeHungerChatMessage && !player.isPotionActive(Potion.hunger.id))
-                    	{
-                        	player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.hunger")));
-                    	}
-                        player.addPotionEffect(new PotionEffect(Potion.hunger.id, 40, regenEffect.getAmplifier() * 2 - 2));
-                    }
-                }
-            }
+//            if (AlchemicalWizardry.causeHungerWithRegen)
+//            {
+//                List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
+//                for (EntityPlayer player : list)
+//                {
+//                    PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
+//                    if (regenEffect != null && regenEffect.getAmplifier() > 0)
+//                    {
+//                    	if(AlchemicalWizardry.causeHungerChatMessage && !player.isPotionActive(Potion.hunger.id))
+//                    	{
+//                        	player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.hunger")));
+//                    	}
+//                        player.addPotionEffect(new PotionEffect(Potion.hunger.id, 40, regenEffect.getAmplifier() * 2 - 2));
+//                    }
+//                }
+//            }
         }
         
         if(worldObj.getWorldTime() % Math.max(20 - this.accelerationUpgrades, 1) == 0)

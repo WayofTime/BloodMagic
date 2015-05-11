@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -17,6 +18,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -39,6 +41,23 @@ public class APISpellHelper
 
         return beaconData; 
 	} 
+	
+	public static float getCurrentIncense(EntityPlayer player)
+	{
+		NBTTagCompound data = player.getEntityData();
+		if(data.hasKey("BM:CurrentIncense"))
+		{
+			return data.getFloat("BM:CurrentIncense");
+		}
+		
+		return 0;
+	}
+	
+	public static void setCurrentIncense(EntityPlayer player, float amount)
+	{
+		NBTTagCompound data = player.getEntityData();
+		data.setFloat("BM:CurrentIncense", amount);
+	}
 	
 	public static int getPlayerLPTag(EntityPlayer player)
 	{
@@ -179,6 +198,27 @@ public class APISpellHelper
 	{
 		NBTTagCompound data = APISpellHelper.getPersistentDataTag(player);
 		data.setInteger("BM:ReagentRegenCooldown", amount);
+	}
+	
+	public static ItemStack getOrbForLevel(int level)
+	{
+		switch(level)
+		{
+		case 1:
+			return new ItemStack(ModItems.weakBloodOrb);
+		case 2:
+			return new ItemStack(ModItems.apprenticeBloodOrb);
+		case 3:
+			return new ItemStack(ModItems.magicianBloodOrb);
+		case 4:
+			return new ItemStack(ModItems.masterBloodOrb);
+		case 5:
+			return new ItemStack(ModItems.archmageBloodOrb);
+		case 6:
+			return new ItemStack(ModItems.transcendentBloodOrb);
+		default:
+			return new ItemStack(Blocks.fire);
+		}	
 	}
 	
 	public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)

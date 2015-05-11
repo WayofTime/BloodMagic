@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 
 public class MeleeDefaultWind extends ExtrapolatedMeleeEntityEffect
 {
@@ -21,7 +21,7 @@ public class MeleeDefaultWind extends ExtrapolatedMeleeEntityEffect
     {
         double wantedVel = -(0.5d + 0.7d * this.powerUpgrades);
 
-        if (entity instanceof EntityLiving)
+        if (entity instanceof EntityLivingBase)
         {
             double dist = Math.sqrt(entity.getDistanceToEntity(player));
             double xVel = wantedVel * (entity.posX - player.posX) / dist;

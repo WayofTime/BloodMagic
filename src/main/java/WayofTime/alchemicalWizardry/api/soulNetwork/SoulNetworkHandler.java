@@ -157,7 +157,7 @@ public class SoulNetworkHandler
      *
      * @param ist            Owned itemStack
      * @param player         Player using the item
-     * @param damageToBeDone
+     * @param drain
      * @return True if the action should be executed and false if it should not. Always returns false if client-sided.
      */
     public static boolean syphonAndDamageFromNetwork(ItemStack ist, EntityPlayer player, int drain)
