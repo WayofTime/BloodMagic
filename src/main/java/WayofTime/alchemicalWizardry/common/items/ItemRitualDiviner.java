@@ -328,7 +328,14 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     	}
     	
     	NBTTagCompound locTag = (NBTTagCompound)tag.getTag("location");
+<<<<<<< HEAD
     	locTag.setBoolean("isStored", false);
+=======
+    	if(locTag != null)
+    	{
+        	locTag.setBoolean("isStored", false);
+    	}
+>>>>>>> origin/master
     }
     
     public Int3 getStoredLocation(ItemStack stack)

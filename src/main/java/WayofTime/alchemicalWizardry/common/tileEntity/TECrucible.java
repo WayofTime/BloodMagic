@@ -23,6 +23,10 @@ public class TECrucible extends TEInventory
 	public int ticksRemaining = 0;
 	public int minValue = 0;
 	public int maxValue = 0;
+<<<<<<< HEAD
+=======
+	public float incrementValue = 0;
+>>>>>>> origin/master
 	
 	public int state = 0; //0 is when it gives off gray particles, 1 is when it gives off white particles (player can't use this incense anymore), 2 is the normal colour of the incense, 3 means no particles (it is out)
 	
@@ -59,6 +63,11 @@ public class TECrucible extends TEInventory
 				minValue = incense.getMinLevel(stack);
 				maxValue = incense.getMaxLevel(stack);
 				
+<<<<<<< HEAD
+=======
+				incrementValue = incense.getTickRate(stack);
+				
+>>>>>>> origin/master
 				stack.stackSize--;
 				if(stack.stackSize <= 0)
 				{
@@ -78,7 +87,11 @@ public class TECrucible extends TEInventory
 				
 				for(EntityPlayer player : playerList)
 				{
+<<<<<<< HEAD
 					if(ticksRemaining > 0 && PlayerSacrificeHandler.incrementIncense(player, minValue, maxValue))
+=======
+					if(ticksRemaining > 0 && PlayerSacrificeHandler.incrementIncense(player, minValue, maxValue, incrementValue))
+>>>>>>> origin/master
 					{
 						ticksRemaining--;
 						if(state != 2)

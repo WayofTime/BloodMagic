@@ -69,6 +69,7 @@ public class SacrificialDagger extends Item
 //        {
 //        	return;
 //        }
+<<<<<<< HEAD
 
         PlayerSacrificeHandler.sacrificePlayerHealth(player);
     }
@@ -99,6 +100,38 @@ public class SacrificialDagger extends Item
     	
         if (!player.capabilities.isCreativeMode)
         {
+=======
+
+        PlayerSacrificeHandler.sacrificePlayerHealth(player);
+    }
+    
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+        return 72000;
+    }
+    
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.bow;
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+    	if (this.canUseForSacrifice(stack))
+        {
+            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+            return stack;
+        }
+    	
+        if (!player.capabilities.isCreativeMode)
+        {
+>>>>>>> origin/master
         	SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2);
         	if(MinecraftForge.EVENT_BUS.post(evt))
         	{
@@ -183,6 +216,14 @@ public class SacrificialDagger extends Item
                 for (int k = -2; k <= 1; k++)
                 {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
+<<<<<<< HEAD
+=======
+                    
+                    if(tileEntity instanceof IBloodAltar)
+                    {
+                    	return (IBloodAltar)tileEntity;
+                    }
+>>>>>>> origin/master
                 }
             }
         }
