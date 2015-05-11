@@ -10,7 +10,7 @@ import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
 public class PlayerSacrificeHandler 
 {
-	public static float scalingOfSacrifice = 0.001f;
+	public static float scalingOfSacrifice = 0.0025f;
 	public static int soulFrayDuration = 400;
 	public static float getPlayerIncense(EntityPlayer player)
 	{
@@ -22,7 +22,7 @@ public class PlayerSacrificeHandler
 		APISpellHelper.setCurrentIncense(player, amount);
 	}
 	
-	public static boolean incrementIncense(EntityPlayer player, float min, float max, float increment)
+	public static boolean incrementIncense(EntityPlayer player, float min, float max)
 	{
 		float amount = getPlayerIncense(player);
 		if(amount < min || amount >= max)
@@ -30,7 +30,7 @@ public class PlayerSacrificeHandler
 			return false;
 		}
 		
-		amount = amount + Math.max(increment, max - amount);
+		amount++;
 		setPlayerIncense(player, amount);
 		
 		return true;

@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemIncense extends Item implements IIncense
 {
-    private static final String[] ITEM_NAMES = new String[]{"Woodash", "Cloves"};
+    private static final String[] ITEM_NAMES = new String[]{"Woodash"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
@@ -80,26 +80,12 @@ public class ItemIncense extends Item implements IIncense
 	@Override
 	public int getMinLevel(ItemStack stack) 
 	{
-		switch(stack.getItemDamage())
-		{
-		case 0:
-			return 0;
-		case 1:
-			return 200;
-		}
 		return 0;
 	}
 
 	@Override
 	public int getMaxLevel(ItemStack stack) 
 	{
-		switch(stack.getItemDamage())
-		{
-		case 0:
-			return 200;
-		case 1:
-			return 500;
-		}
 		return 100;
 	}
 
@@ -112,13 +98,6 @@ public class ItemIncense extends Item implements IIncense
 	@Override
 	public float getTickRate(ItemStack stack)
 	{
-		switch(stack.getItemDamage())
-		{
-		case 0:
-			return 1.0f;
-		case 1:
-			return 0.5f;
-		}
 		return 1.0f;
 	}
 

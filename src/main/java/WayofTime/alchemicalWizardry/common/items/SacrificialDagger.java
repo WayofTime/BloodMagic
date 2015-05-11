@@ -91,11 +91,11 @@ public class SacrificialDagger extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-    	if (this.canUseForSacrifice(stack))
-        {
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-            return stack;
-        }
+//    	if (this.canUseForSacrifice(stack))
+//        {
+//            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+//            return stack;
+//        }
     	
         if (!player.capabilities.isCreativeMode)
         {
@@ -183,11 +183,6 @@ public class SacrificialDagger extends Item
                 for (int k = -2; k <= 1; k++)
                 {
                     tileEntity = world.getTileEntity(i + x, k + y, j + z);
-                    
-                    if(tileEntity instanceof IBloodAltar)
-                    {
-                    	return (IBloodAltar)tileEntity;
-                    }
                 }
             }
         }

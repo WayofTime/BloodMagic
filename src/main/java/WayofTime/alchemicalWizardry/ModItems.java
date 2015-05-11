@@ -511,5 +511,6 @@ public class ModItems
         
         GameRegistry.registerItem(ModItems.itemMailCatalogue, "itemMailCatalogue");
         GameRegistry.registerItem(ModItems.itemIncense, "bloodMagicIncenseItem");
+        //GameRegistry.registerItem(ModItems.itemBloodFrame, "itemBloodFrame");
     }
 }
