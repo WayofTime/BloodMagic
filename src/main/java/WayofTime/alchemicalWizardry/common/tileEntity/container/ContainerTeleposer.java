@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.container;
 
+import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,7 +15,7 @@ public class ContainerTeleposer extends Container
     public ContainerTeleposer(InventoryPlayer inventoryPlayer, TETeleposer te)
     {
         tileEntity = te;
-        addSlotToContainer(new Slot(tileEntity, 0, 80, 67));
+        addSlotToContainer(new Slot(tileEntity, 0, 80, 15));
         bindPlayerInventory(inventoryPlayer);
     }
 
@@ -30,13 +31,13 @@ public class ContainerTeleposer extends Container
         {
             for (int j = 0; j < 9; j++)
             {
-                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
+                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 39 + i * 18));
             }
         }
 
         for (int i = 0; i < 9; i++)
         {
-            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 198));
+            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 97));
         }
     }
 
@@ -45,30 +46,27 @@ public class ContainerTeleposer extends Container
     {
         ItemStack stack = null;
         Slot slotObject = (Slot) inventorySlots.get(slot);
+        int slots = inventorySlots.size();
+
         if (slotObject != null && slotObject.getHasStack())
         {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
+            System.out.println("Slots: " + slots);
 
-            if (slot == 7)
+            if (stack.getItem() instanceof TelepositionFocus)
             {
-                if (!this.mergeItemStack(stackInSlot, 7, 35, true))
+                if (slot <= slots)
+                {
+                    if (!this.mergeItemStack(stackInSlot, 0, slots, false))
+                    {
+                        return null;
+                    }
+                }
+                else if (!this.mergeItemStack(stackInSlot, slots, 36 + slots, false))
                 {
                     return null;
                 }
-
-                slotObject.onSlotChange(stackInSlot, stack);
-            }
-            if (slot < 1)
-            {
-                if (!this.mergeItemStack(stackInSlot, 7, 35, true))
-                {
-                    return null;
-                }
-            }
-            else if (!this.mergeItemStack(stackInSlot, 0, 0, false))
-            {
-                return null;
             }
 
             if (stackInSlot.stackSize == 0)

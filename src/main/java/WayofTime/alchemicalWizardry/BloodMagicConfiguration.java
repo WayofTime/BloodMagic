@@ -166,11 +166,19 @@ public class BloodMagicConfiguration
 		
 		BoundArmour.tryComplexRendering = config.get("WimpySettings", "UseFancyBoundArmour", true).getBoolean(true);
 		
+<<<<<<< HEAD
+		ItemIncense.itemDuration = config.get("TestIncenseSettings", "ItemDuration", 100).getInt();
+		ItemIncense.minValue = config.get("TestIncenseSettings", "MinValue", 0).getInt();
+		ItemIncense.maxValue = config.get("TestIncenseSettings", "MaxValue", 100).getInt();
+		PlayerSacrificeHandler.scalingOfSacrifice = (float) config.get("TestIncenseSettings", "ScalingFactor", 0.0025f).getDouble();
+		PlayerSacrificeHandler.soulFrayDuration = config.get("TestIncenseSettings", "SoulFrayDuration", 400).getInt();
+=======
 //		ItemIncense.itemDuration = config.get("TestIncenseSettings", "ItemDuration", 100).getInt();
 //		ItemIncense.minValue = config.get("TestIncenseSettings", "MinValue", 0).getInt();
 //		ItemIncense.maxValue = config.get("TestIncenseSettings", "MaxValue", 100).getInt();
 //		PlayerSacrificeHandler.scalingOfSacrifice = (float) config.get("TestIncenseSettings", "ScalingFactor", 0.0025f).getDouble();
 //		PlayerSacrificeHandler.soulFrayDuration = config.get("TestIncenseSettings", "SoulFrayDuration", 400).getInt();
+>>>>>>> origin/master
 
 
 		Side side = FMLCommonHandler.instance().getSide();
