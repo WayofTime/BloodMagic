@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class RitualEffectSoulBound extends RitualEffect
+public class RitualEffectBinding extends RitualEffect
 {
     @Override
     public void performEffect(IMasterRitualStone ritualStone)

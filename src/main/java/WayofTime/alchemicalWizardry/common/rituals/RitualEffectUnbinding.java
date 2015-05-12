@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.UnbindingRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -95,15 +96,15 @@ public class RitualEffectUnbinding extends RitualEffect
                 {
                     ritualStone.setVar1(-1);
                 }
+                else if (UnbindingRegistry.isRequiredItemValid(itemStack))
+                {
+                    ritualStone.setVar1(UnbindingRegistry.getIndexForItem(itemStack) + 9);
+                }
 
-                if (ritualStone.getVar1() > 0)
+                if (ritualStone.getVar1() > 0 && ritualStone.getVar1() <= 8)
                 {
                     item.setDead();
-                    world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
-                    world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
-                    world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
-                    world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
-                    NBTTagCompound itemTag = itemStack.getTagCompound();
+                    doLightning(world, x, y, z);
                     ItemStack[] inv = ((BoundArmour) itemStack.getItem()).getInternalInventory(itemStack);
 
                     if (inv != null)
@@ -112,6 +113,7 @@ public class RitualEffectUnbinding extends RitualEffect
                         {
                             if (internalItem != null)
                             {
+                                doLightning(world, x, y, z);
                                 EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, internalItem.copy());
                                 world.spawnEntityInWorld(newItem);
                             }
@@ -126,11 +128,7 @@ public class RitualEffectUnbinding extends RitualEffect
                 } else if (ritualStone.getVar1() == -1)
                 {
                     item.setDead();
-                    world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
-                    world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
-                    world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
-                    world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
-                    NBTTagCompound itemTag = itemStack.getTagCompound();
+                    doLightning(world, x, y, z);
                     ItemStack[] inv = ((SigilOfHolding) itemStack.getItem()).getInternalInventory(itemStack);
 
                     if (inv != null)
@@ -151,12 +149,21 @@ public class RitualEffectUnbinding extends RitualEffect
                     drain = true;
                     break;
                 }
-
+                else if (ritualStone.getVar1() >= 9)
+                {
+                    item.setDead();
+                    doLightning(world, x, y, z);
+                    ItemStack spawnedItem = UnbindingRegistry.getOutputForIndex(ritualStone.getVar1() - 9);
+                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, spawnedItem.copy());
+                    world.spawnEntityInWorld(newItem);
+                    ritualStone.setActive(false);
+                    drain = true;
+                    break;
+                }
 
             }
 
-            if (drain)
-            {
+            if (drain) {
                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
             }
         }
@@ -165,6 +172,14 @@ public class RitualEffectUnbinding extends RitualEffect
         {
             SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
         }
+    }
+
+    private void doLightning(World world, int x, int y, int z)
+    {
+        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z - 5));
+        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z + 5));
+        world.addWeatherEffect(new EntityLightningBolt(world, x - 5, y + 1, z));
+        world.addWeatherEffect(new EntityLightningBolt(world, x + 5, y + 1, z));
     }
 
     @Override
