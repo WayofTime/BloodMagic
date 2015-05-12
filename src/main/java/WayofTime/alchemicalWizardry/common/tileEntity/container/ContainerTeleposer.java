@@ -52,7 +52,6 @@ public class ContainerTeleposer extends Container
         {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
-            System.out.println("Slots: " + slots);
 
             if (stack.getItem() instanceof TelepositionFocus)
             {

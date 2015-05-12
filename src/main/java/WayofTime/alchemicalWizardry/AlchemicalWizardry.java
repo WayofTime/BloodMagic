@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import WayofTime.alchemicalWizardry.api.bindingRegistry.UnbindingRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -166,7 +167,7 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSoulBound;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBinding;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSphereCreator;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
@@ -376,6 +377,13 @@ public class AlchemicalWizardry
 	public static boolean ritualDisabledSpawnWard;
 	public static boolean ritualDisabledVeilOfEvil;
 	public static boolean ritualDisabledFullStomach;
+    public static boolean ritualDisabledConvocation;
+    public static boolean ritualDisabledSymmetry;
+    public static boolean ritualDisabledStalling;
+    public static boolean ritualDisabledCrafting;
+    public static boolean ritualDisabledPhantomHands;
+    public static boolean ritualDisabledSphereIsland;
+
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
@@ -1391,7 +1399,7 @@ public class AlchemicalWizardry
         Rituals.registerRitual("AW003GreenGrove", 1, 1000, new RitualEffectGrowth(), "Ritual of the Green Grove", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/GreenGroveArray.png"), 244, 164, 96, 255, 0, 1.0, 1.6, 0, 1.5, false));
         Rituals.registerRitual("AW004Interdiction", 1, 1000, new RitualEffectInterdiction(), "Interdiction Ritual", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/InterdictionArray.png"), 27, 227, 206, 255, 0, 0.501, 0.8, 0, 1.5, false));
         Rituals.registerRitual("AW005Containment", 1, 2000, new RitualEffectContainment(), "Ritual of Containment", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 186, 21, 21, 255, 0, 2.5, 2.5, 0, 2.5, false));
-        Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectSoulBound(), "Ritual of Binding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleBinding.png"), 193, 7, 7, 255, 0, 0.501, 1.0, 0, 2.5, true));
+        Rituals.registerRitual("AW006Binding", 1, 5000, new RitualEffectBinding(), "Ritual of Binding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/TransCircleBinding.png"), 193, 7, 7, 255, 0, 0.501, 1.0, 0, 2.5, true));
         Rituals.registerRitual("AW007Unbinding", 1, 30000, new RitualEffectUnbinding(), "Ritual of Unbinding", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 193, 7, 7, 255, 0, 0.5, 0.8, 0, 2.5, false));
         Rituals.registerRitual("AW008HighJump", 1, 1000, new RitualEffectJumping(), "Ritual of the High Jump", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/SimpleTransCircle.png"), 10, 183, 173, 255, 0, 0.501, 1.501, 0, 1.5, false));
         Rituals.registerRitual("AW009Magnetism", 1, 5000, new RitualEffectMagnetic(), "Ritual of Magnetism", new AlchemyCircleRenderer(new ResourceLocation("alchemicalwizardry:textures/models/AlchemyArrays/MagnetismArray.png"), 126, 39, 0, 255, 0, 0.501, 2.0, 0, 1.5, false));
@@ -1422,7 +1430,7 @@ public class AlchemicalWizardry
         
         Rituals.registerRitual("AW034Crafting", 1, 15000, new RitualEffectCrafting(), "Rhythm of the Beating Anvil");
         
-        Rituals.registerRitual("AW035", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
+        Rituals.registerRitual("AW035PhantomHands", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         
         Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Birth of the Bastion");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
@@ -1435,6 +1443,9 @@ public class AlchemicalWizardry
         BindingRegistry.registerRecipe(new ItemStack(ModItems.boundShovel), new ItemStack(Items.diamond_shovel));
         BindingRegistry.registerRecipe(new ItemStack(ModItems.energySword), new ItemStack(Items.diamond_sword));
         BindingRegistry.registerRecipe(new ItemStack(ModItems.energyBlaster), new ItemStack(ModItems.apprenticeBloodOrb));
+        BindingRegistry.registerRecipe(new ItemStack(Items.baked_potato), new ItemStack(Items.potato));        // <---Shhhhhh....
+
+        UnbindingRegistry.addAllUnbindingRecipesFromBinding();
     }
 
     public static void initHarvestRegistry()

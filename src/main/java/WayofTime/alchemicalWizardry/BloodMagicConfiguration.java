@@ -10,12 +10,10 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
 import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -46,7 +44,6 @@ public class BloodMagicConfiguration
 			String[] ct = s.split(",");
 			colorList.add(new ColourThreshold(Integer.valueOf(ct[0].trim()), ct[1].trim()));
 		}
-
 
 		config = new Configuration(configFile);
 
@@ -142,6 +139,12 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledSpawnWard = config.get("Ritual Blacklist", "Ward of Sacrosanctity", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledVeilOfEvil = config.get("Ritual Blacklist", "Veil of Evil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledFullStomach = config.get("Ritual Blacklist", "Requiem of the Satiated Stomach", false).getBoolean(false);
+		AlchemicalWizardry.ritualDisabledConvocation = config.get("Ritual Blacklist", "Convocation of the Damned", false).getBoolean(false);
+		AlchemicalWizardry.ritualDisabledSymmetry = config.get("Ritual Blacklist", "Symmetry of the Omega", false).getBoolean(false);
+		AlchemicalWizardry.ritualDisabledStalling = config.get("Ritual Blacklist", "Duet of the Fused Souls", false).getBoolean(false);
+		AlchemicalWizardry.ritualDisabledCrafting = config.get("Ritual Blacklist", "Rhythm of the Beating Anvil", false).getBoolean(false);
+		AlchemicalWizardry.ritualDisabledPhantomHands = config.get("Ritual Blacklist", "Orchestra of the Phantom Hands", false).getBoolean(false);
+		AlchemicalWizardry.ritualDisabledSphereIsland = config.get("Ritual Blacklist", "Birth of the Bastion", false).getBoolean(false);
 
         teleposerBlacklist = config.get("Teleposer Blacklist", "Blacklist", blacklist, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is: \nmodid:blockname:meta").getStringList();
 
@@ -371,6 +374,36 @@ public class BloodMagicConfiguration
 		{
 			Rituals.ritualMap.remove("AW030FullStomach");
 			Rituals.keyList.remove("AW030FullStomach");
+		}
+		if (AlchemicalWizardry.ritualDisabledConvocation)
+		{
+			Rituals.ritualMap.remove("AW031Convocation");
+			Rituals.keyList.remove("AW031Convocation");
+		}
+		if (AlchemicalWizardry.ritualDisabledSymmetry)
+		{
+			Rituals.ritualMap.remove("AW032Symmetry");
+			Rituals.keyList.remove("AW032Symmetry");
+		}
+		if (AlchemicalWizardry.ritualDisabledStalling)
+		{
+			Rituals.ritualMap.remove("AW033Stalling");
+			Rituals.keyList.remove("AW033Stalling");
+		}
+		if (AlchemicalWizardry.ritualDisabledCrafting)
+		{
+			Rituals.ritualMap.remove("AW034Crafting");
+			Rituals.keyList.remove("AW034Crafting");
+		}
+		if (AlchemicalWizardry.ritualDisabledPhantomHands)
+		{
+			Rituals.ritualMap.remove("AW035PhantomHands");
+			Rituals.keyList.remove("AW035PhantomHands");
+		}
+		if (AlchemicalWizardry.ritualDisabledSphereIsland)
+		{
+			Rituals.ritualMap.remove("AW036SphereIsland");
+			Rituals.keyList.remove("AW036SphereIsland");
 		}
 	}
 }
