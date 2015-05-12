@@ -323,8 +323,10 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     	NBTTagCompound tag = stack.getTagCompound();
     	if(tag == null || !tag.hasKey("location"))
     	{
-    		tag = new NBTTagCompound();
-    		stack.setTagCompound(tag);
+//    		tag = new NBTTagCompound();
+//    		stack.setTagCompound(tag);
+    		this.setStoredLocation(stack, new Int3(0,0,0));
+    		return;
     	}
     	
     	NBTTagCompound locTag = (NBTTagCompound)tag.getTag("location");
