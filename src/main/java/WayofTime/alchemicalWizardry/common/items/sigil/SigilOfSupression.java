@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
+public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISigil
 {
     private static IIcon activeIcon;
     private static IIcon passiveIcon;
@@ -29,7 +30,7 @@ public class ItemSigilOfSupression extends EnergyItems implements ArmourUpgrade
     private int radius = 5;
     private int refresh = 100;
 
-    public ItemSigilOfSupression()
+    public SigilOfSupression()
     {
         super();
         this.maxStackSize = 1;

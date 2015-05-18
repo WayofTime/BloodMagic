@@ -38,21 +38,14 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * Handles the packet wrangling for IronChest
- *
- * @author cpw
- */
 public enum NewPacketHandler
 {
     INSTANCE;
 
     private EnumMap<Side, FMLEmbeddedChannel> channels;
 
-    private NewPacketHandler()
+    NewPacketHandler()
     {
-        // request a channel pair for IronChest from the network registry
-        // Add the IronChestCodec as a member of both channel pipelines
         this.channels = NetworkRegistry.INSTANCE.newChannel("BloodMagic", new TEAltarCodec());
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
         {

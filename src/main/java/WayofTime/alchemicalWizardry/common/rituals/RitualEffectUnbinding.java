@@ -11,12 +11,10 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -92,9 +90,6 @@ public class RitualEffectUnbinding extends RitualEffect
                 } else if (itemStack.getItem() == ModItems.boundBoots)
                 {
                     ritualStone.setVar1(4);
-                } else if (itemStack.getItem() == ModItems.sigilOfHolding)
-                {
-                    ritualStone.setVar1(-1);
                 }
                 else if (UnbindingRegistry.isRequiredItemValid(itemStack))
                 {
@@ -121,29 +116,6 @@ public class RitualEffectUnbinding extends RitualEffect
                     }
 
                     EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, ritualStone.getVar1()));
-                    world.spawnEntityInWorld(newItem);
-                    ritualStone.setActive(false);
-                    drain = true;
-                    break;
-                } else if (ritualStone.getVar1() == -1)
-                {
-                    item.setDead();
-                    doLightning(world, x, y, z);
-                    ItemStack[] inv = ((SigilOfHolding) itemStack.getItem()).getInternalInventory(itemStack);
-
-                    if (inv != null)
-                    {
-                        for (ItemStack internalItem : inv)
-                        {
-                            if (internalItem != null)
-                            {
-                                EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, internalItem.copy());
-                                world.spawnEntityInWorld(newItem);
-                            }
-                        }
-                    }
-
-                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModItems.sigilOfHolding, 1, 0));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
                     drain = true;

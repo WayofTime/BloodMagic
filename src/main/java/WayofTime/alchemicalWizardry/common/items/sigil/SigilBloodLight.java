@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,11 +20,11 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBloodLightSigil extends EnergyItems implements IHolding, ArmourUpgrade
+public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgrade, ISigil
 {
     private int tickDelay = 100;
 
-    public ItemBloodLightSigil()
+    public SigilBloodLight()
     {
         super();
         this.maxStackSize = 1;

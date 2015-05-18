@@ -60,8 +60,8 @@ public class MessageKeyPressed implements IMessage, IMessageHandler<MessageKeyPr
         return null;
     }
     
-    public static enum Key
+    public enum Key
     {
-    	OMEGA_ACTIVE;
+    	OMEGA_ACTIVE
     }
 }

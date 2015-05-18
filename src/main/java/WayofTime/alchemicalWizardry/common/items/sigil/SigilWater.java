@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,12 +25,12 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class WaterSigil extends ItemBucket implements ArmourUpgrade
+public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
 {
     private Block isFull = Blocks.water;
     private int energyUsed;
 
-    public WaterSigil()
+    public SigilWater()
     {
         super(Blocks.water);
         this.maxStackSize = 1;

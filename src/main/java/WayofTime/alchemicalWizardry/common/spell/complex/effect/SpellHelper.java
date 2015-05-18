@@ -50,7 +50,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class SpellHelper
@@ -131,7 +131,7 @@ public class SpellHelper
             
             ItemStack heldStack = player.getHeldItem();
     		
-            if (heldStack != null && heldStack.getItem() instanceof DivinationSigil)
+            if (heldStack != null && heldStack.getItem() instanceof SigilDivination)
             {
                 return true;
             }

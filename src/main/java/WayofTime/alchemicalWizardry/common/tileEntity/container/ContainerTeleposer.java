@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -15,7 +16,7 @@ public class ContainerTeleposer extends Container
     public ContainerTeleposer(InventoryPlayer inventoryPlayer, TETeleposer te)
     {
         tileEntity = te;
-        addSlotToContainer(new Slot(tileEntity, 0, 80, 15));
+        addSlotToContainer(new SlotTeleposer(te, 0, 80, 15));
         bindPlayerInventory(inventoryPlayer);
     }
 
@@ -85,5 +86,19 @@ public class ContainerTeleposer extends Container
         }
 
         return stack;
+    }
+
+    private class SlotTeleposer extends Slot
+    {
+        public SlotTeleposer(IInventory inventory, int slotIndex, int x, int y)
+        {
+            super(inventory, slotIndex, x, y);
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack itemStack)
+        {
+            return itemStack.getItem() instanceof TelepositionFocus;
+        }
     }
 }

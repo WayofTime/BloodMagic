@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.ContainerHolding;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.GuiHolding;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.InventoryHolding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -40,6 +43,9 @@ public class GuiHandler implements IGuiHandler
                 {
                     return new ContainerTeleposer(player.inventory, (TETeleposer) tileEntity);
                 }
+
+            case 3:
+                return new ContainerHolding(player, new InventoryHolding(player.getHeldItem()));
         }
 
         return null;
@@ -99,6 +105,8 @@ public class GuiHandler implements IGuiHandler
             	}
             	return new GuiCategories(player);
 
+            case 3:
+                return new GuiHolding(player, new InventoryHolding(player.getHeldItem()));
         }
 
         return null;
