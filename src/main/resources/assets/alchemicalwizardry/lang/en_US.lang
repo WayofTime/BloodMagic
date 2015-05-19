@@ -67,6 +67,7 @@ tile.blockMimic.name=Mimic Block
 tile.blockSpectralContainer.name=Spectral Container
 tile.blockBloodLightSource.name=Blood Light
 tile.spectralBlock.name=Spectral Block
+tile.blockCrucible.name=Incense Crucible
 
 #Item Localization
 item.weakBloodOrb.name=Weak Blood Orb
@@ -235,7 +236,11 @@ item.boundPlateWater.name=Water Omega Plate
 item.boundLeggingsWater.name=Water Omega Leggings
 item.boundBootsWater.name=Water Omega Boots
 
-item.bloodMagicIncenseItem.Woodash.name=Testing Incense
+item.bloodMagicIncenseItem.Woodash.name=Wood Ash
+item.bloodMagicIncenseItem.Byrrus.name=Byrrus
+item.bloodMagicIncenseItem.Livens.name=Livens
+item.bloodMagicIncenseItem.Viridis.name=Viridis
+item.bloodMagicIncenseItem.Purpura.name=Purpura
 
 #Creative Tab
 itemGroup.tabBloodMagic=Blood Magic
@@ -416,6 +421,7 @@ tooltip.voidsigil.desc=Better than a Swiffer!
 tooltip.watersigil.desc=Infinite water, anyone?
 tooltip.routingFocus.limit=Limit:
 tooltip.routingFocus.desc=A focus used to route items
+tooltip.alchemy.usedinincense=Purifying incense used in a crucible
 
 #Messages
 message.altar.capacity=Capacity: %s LP

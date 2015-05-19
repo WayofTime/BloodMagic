@@ -112,6 +112,7 @@ import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
+import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
@@ -1117,6 +1118,9 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.ghast_tear, 2), 100, new ItemStack[]{ghastTearStack, concentratedCatalystStack, weakBloodShardStack, new ItemStack(Blocks.soul_sand), new ItemStack(Blocks.soul_sand)}, 5);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.coal, 5), 1, new ItemStack[]{new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.clay_ball, 4), 5, new ItemStack[]{new ItemStack(Blocks.sand), waterBucketStack}, 2);
+        
+        ItemIncense.registerIncenseRecipes();
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockCrucible), "i i", "sis", " S ", 's', new ItemStack(Blocks.stone_slab), 'i', ironIngotStack, 'S', stoneStack);
     }
 
     @EventHandler

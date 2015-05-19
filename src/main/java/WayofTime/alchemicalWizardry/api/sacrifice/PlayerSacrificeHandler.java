@@ -30,8 +30,10 @@ public class PlayerSacrificeHandler
 			return false;
 		}
 		
-		amount = amount + Math.max(increment, max - amount);
+		amount = amount + Math.min(increment, max - amount);
 		setPlayerIncense(player, amount);
+		
+//		System.out.println("Amount of incense: " + amount + ", Increment: " + increment);
 		
 		return true;
 	}

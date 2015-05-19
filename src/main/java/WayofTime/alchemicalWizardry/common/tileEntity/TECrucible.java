@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,6 +17,8 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TECrucible extends TEInventory
 {
+	private int radius = 5;
+	
 	public float rColour;
 	public float gColour;
 	public float bColour;
@@ -72,7 +75,7 @@ public class TECrucible extends TEInventory
 
 		if(ticksRemaining > 0)
 		{
-			List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 3, 3);
+			List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, radius, radius);
 			
 			if(playerList != null && !playerList.isEmpty())
 			{
@@ -103,6 +106,8 @@ public class TECrucible extends TEInventory
 				if(stateChanged)
 				{
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
+					updateNeighbors();
 				}
 			}else
 			{
@@ -110,6 +115,7 @@ public class TECrucible extends TEInventory
 				{
 					state = 0;
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+					updateNeighbors();
 				}
 			}
 		}else
@@ -118,8 +124,25 @@ public class TECrucible extends TEInventory
 			{
 				state = 0;
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				updateNeighbors();
 			}
 		}
+	}
+	
+	private void updateNeighbors()
+	{
+		Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
+        block = worldObj.getBlock(xCoord - 1, yCoord, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord - 1, yCoord, zCoord, block);
+        block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord + 1, zCoord, block);
+        block = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord - 1, zCoord, block);
+        block = worldObj.getBlock(xCoord, yCoord, zCoord + 1);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord + 1, block);
+        block = worldObj.getBlock(xCoord, yCoord, zCoord - 1);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block); 
 	}
 	
 	public void spawnClientParticle(World world, int x, int y, int z, Random rand)
@@ -127,15 +150,16 @@ public class TECrucible extends TEInventory
 		switch(state)
 		{
 		case 0:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
+	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
 			break;
 			
 		case 1:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, 0.9, 0.9, 0.9);
+	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 1.0, 1.0, 1.0);
 			break;
 			
 		case 2:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
+	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
+	        world.spawnParticle("flame", x + 0.5D + rand.nextGaussian() / 32, y + 0.7D, z + 0.5D + rand.nextGaussian() / 32, 0, 0.02, 0);
 			break;
 			
 		case 3:
@@ -152,6 +176,7 @@ public class TECrucible extends TEInventory
     	tag.setInteger("ticksRemaining", ticksRemaining);
     	tag.setInteger("minValue", minValue);
     	tag.setInteger("maxValue", maxValue);
+    	tag.setFloat("increment", this.incrementValue);
         
         this.writeClientNBT(tag);
     }
@@ -164,6 +189,7 @@ public class TECrucible extends TEInventory
     	ticksRemaining = tag.getInteger("ticksRemaining");
     	minValue = tag.getInteger("minValue");
     	maxValue = tag.getInteger("maxValue");
+    	incrementValue = tag.getFloat("increment");
 
         this.readClientNBT(tag);
     }
@@ -211,4 +237,9 @@ public class TECrucible extends TEInventory
     {
         return stack != null ? stack.getItem() instanceof IIncense : false;
     }
+
+	public int getRSPowerOutput() 
+	{
+		return (state == 1 || state == 0) ? 0 : 15;
+	}
 }
