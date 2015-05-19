@@ -12,6 +12,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import WayofTime.alchemicalWizardry.api.bindingRegistry.UnbindingRegistry;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -116,7 +118,7 @@ import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
@@ -465,6 +467,7 @@ public class AlchemicalWizardry
     @SidedProxy(clientSide = "WayofTime.alchemicalWizardry.client.ClientProxy", serverSide = "WayofTime.alchemicalWizardry.common.CommonProxy")
     public static CommonProxy proxy;
 
+    public static final HoldingPacketHandler packetPipeline = new HoldingPacketHandler();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -552,13 +555,14 @@ public class AlchemicalWizardry
         ModItems.init();
         ModItems.registerItems();
 
-        RecipeSorter.INSTANCE.register("AWWayofTime:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
-        RecipeSorter.INSTANCE.register("AWWayofTime:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+        RecipeSorter.register("AWWayofTime:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
+        RecipeSorter.register("AWWayofTime:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
 
         Object eventHook = new AlchemicalWizardryEventHooks();
         FMLCommonHandler.instance().bus().register(eventHook);
         MinecraftForge.EVENT_BUS.register(eventHook);
         NewPacketHandler.INSTANCE.ordinal();
+        HoldingPacketHandler.init();
         ClientToServerPacketHandler.init();
         ModAchievements.init();
     }
@@ -805,29 +809,29 @@ public class AlchemicalWizardry
 
         //Gui registration
         UpgradedAltars.loadAltars();
-        SigilOfHolding.initiateSigilOfHolding();
         ArmourForge.initializeRecipes();
         TEPlinth.initialize();
 
-        this.initAlchemyPotionRecipes();
-        this.initAltarRecipes();
-        
-        this.initBindingRecipes();
-        this.initHarvestRegistry();
-        this.initCombinedAlchemyPotionRecipes();
-        
+        initAlchemyPotionRecipes();
+        initAltarRecipes();
+
+        initBindingRecipes();
+        initHarvestRegistry();
+        initCombinedAlchemyPotionRecipes();
+
         ReagentRegistry.initReagents();
-        this.initReagentRegistries();
-        this.initRituals();
-        
-        this.initDemonPacketRegistiry();
-        this.initiateRegistry();
+        initReagentRegistries();
+        initRituals();
 
-        this.blacklistDemons();
+        initDemonPacketRegistiry();
+        initiateRegistry();
 
-        this.blacklistAccelerators();
+        blacklistDemons();
+
+        blacklistAccelerators();
 
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
+        MinecraftForge.EVENT_BUS.register(new ScrollHelper());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
@@ -893,20 +897,20 @@ public class AlchemicalWizardry
         HomSpellRegistry.registerBasicSpell(new ItemStack(Items.water_bucket), new SpellWateryGrave());
         HomSpellRegistry.registerBasicSpell(new ItemStack(Blocks.obsidian), new SpellEarthBender());
         HomSpellRegistry.registerBasicSpell(new ItemStack(Items.ender_pearl), new SpellTeleport());
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityFallenAngelID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, aetherStack, tennebraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityLowerGuardianID), new ItemStack[]{cobblestoneStack, cobblestoneStack, terraeStack, tennebraeStack, new ItemStack(Items.iron_ingot), new ItemStack(Items.gold_nugget)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityBileDemonID), new ItemStack[]{new ItemStack(Items.poisonous_potato), tennebraeStack, terraeStack, new ItemStack(Items.porkchop), new ItemStack(Items.egg), new ItemStack(Items.beef)}, new ItemStack[]{crepitousStack, crepitousStack, terraeStack, ironBlockStack, ironBlockStack, diamondStack}, new ItemStack[]{}, 0, 5);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityWingedFireDemonID), new ItemStack[]{aetherStack, incendiumStack, incendiumStack, incendiumStack, tennebraeStack, new ItemStack(Blocks.netherrack)}, new ItemStack[]{diamondStack, new ItemStack(Blocks.gold_block), magicalesStack, magicalesStack, new ItemStack(Items.fire_charge), new ItemStack(Blocks.coal_block)}, new ItemStack[]{}, 0, 5);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entitySmallEarthGolemID), new ItemStack[]{new ItemStack(Items.clay_ball), terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityIceDemonID), new ItemStack[]{crystallosStack, crystallosStack, aquasalusStack, crystallosStack, sanctusStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityBoulderFistID), new ItemStack[]{terraeStack, sanctusStack, tennebraeStack, new ItemStack(Items.bone), new ItemStack(Items.cooked_beef), new ItemStack(Items.cooked_beef)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityShadeID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, aetherStack, glassStack, new ItemStack(Items.glass_bottle)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityAirElementalID), new ItemStack[]{aetherStack, aetherStack, aetherStack, aetherStack, aetherStack, aetherStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityWaterElementalID), new ItemStack[]{aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityEarthElementalID), new ItemStack[]{terraeStack, terraeStack, terraeStack, terraeStack, terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityFireElementalID), new ItemStack[]{incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityShadeElementalID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
-        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityFallenAngelID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, aetherStack, tennebraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityLowerGuardianID), new ItemStack[]{cobblestoneStack, cobblestoneStack, terraeStack, tennebraeStack, new ItemStack(Items.iron_ingot), new ItemStack(Items.gold_nugget)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityBileDemonID), new ItemStack[]{new ItemStack(Items.poisonous_potato), tennebraeStack, terraeStack, new ItemStack(Items.porkchop), new ItemStack(Items.egg), new ItemStack(Items.beef)}, new ItemStack[]{crepitousStack, crepitousStack, terraeStack, ironBlockStack, ironBlockStack, diamondStack}, new ItemStack[]{}, 0, 5);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityWingedFireDemonID), new ItemStack[]{aetherStack, incendiumStack, incendiumStack, incendiumStack, tennebraeStack, new ItemStack(Blocks.netherrack)}, new ItemStack[]{diamondStack, new ItemStack(Blocks.gold_block), magicalesStack, magicalesStack, new ItemStack(Items.fire_charge), new ItemStack(Blocks.coal_block)}, new ItemStack[]{}, 0, 5);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entitySmallEarthGolemID), new ItemStack[]{new ItemStack(Items.clay_ball), terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityIceDemonID), new ItemStack[]{crystallosStack, crystallosStack, aquasalusStack, crystallosStack, sanctusStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityBoulderFistID), new ItemStack[]{terraeStack, sanctusStack, tennebraeStack, new ItemStack(Items.bone), new ItemStack(Items.cooked_beef), new ItemStack(Items.cooked_beef)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityShadeID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, aetherStack, glassStack, new ItemStack(Items.glass_bottle)}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityAirElementalID), new ItemStack[]{aetherStack, aetherStack, aetherStack, aetherStack, aetherStack, aetherStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityWaterElementalID), new ItemStack[]{aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack, aquasalusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityEarthElementalID), new ItemStack[]{terraeStack, terraeStack, terraeStack, terraeStack, terraeStack, terraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityFireElementalID), new ItemStack[]{incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack, incendiumStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityShadeElementalID), new ItemStack[]{tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack, tennebraeStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
+        SummoningRegistry.registerSummon(new SummoningHelperAW(entityHolyElementalID), new ItemStack[]{sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
 //        SummoningRegistry.registerSummon(new SummoningHelperAW(this.entityMinorDemonGruntID), new ItemStack[]{incendiumStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack, sanctusStack}, new ItemStack[]{}, new ItemStack[]{}, 0, 4);
         
         //Custom mobs
@@ -948,9 +952,9 @@ public class AlchemicalWizardry
         //Ore Dictionary Registration
         OreDictionary.registerOre("oreCoal", Blocks.coal_ore);
         MeteorRegistry.registerMeteorParadigm(diamondStack, diamondMeteorArray, diamondMeteorRadius);
-        MeteorRegistry.registerMeteorParadigm(stoneStack, this.stoneMeteorArray, this.stoneMeteorRadius);
-        MeteorRegistry.registerMeteorParadigm(ironBlockStack, this.ironBlockMeteorArray, this.ironBlockMeteorRadius);
-        MeteorRegistry.registerMeteorParadigm(new ItemStack(Items.nether_star), this.netherStarMeteorArray, this.netherStarMeteorRadius);
+        MeteorRegistry.registerMeteorParadigm(stoneStack, stoneMeteorArray, stoneMeteorRadius);
+        MeteorRegistry.registerMeteorParadigm(ironBlockStack, ironBlockMeteorArray, ironBlockMeteorRadius);
+        MeteorRegistry.registerMeteorParadigm(new ItemStack(Items.nether_star), netherStarMeteorArray, netherStarMeteorRadius);
 
         ItemStack stickStack = new ItemStack(Items.stick, 1, craftingConstant);
         
@@ -1130,7 +1134,7 @@ public class AlchemicalWizardry
         //TODO Thaumcraft Integration
         if (Loader.isModLoaded("Thaumcraft"))
         {
-            this.isThaumcraftLoaded = true;
+            isThaumcraftLoaded = true;
 
             try
             {
@@ -1186,7 +1190,7 @@ public class AlchemicalWizardry
             }
         } else
         {
-            this.isThaumcraftLoaded = false;
+            isThaumcraftLoaded = false;
         }
         
         if(Loader.isModLoaded("guideapi"))
@@ -1196,12 +1200,12 @@ public class AlchemicalWizardry
         	long finalTime = System.nanoTime();
         	AlchemicalWizardry.logger.info("Recipe Holder initialized: took " + (finalTime - initialTime)/1000000f + "ms.");
         	
-        	this.registerBMBook();
+        	registerBMBook();
         }
 
         if (Loader.isModLoaded("Forestry"))
         {
-            this.isForestryLoaded = true;
+            isForestryLoaded = true;
 
         	ModItems.itemBloodFrame = new ItemBloodFrame().setUnlocalizedName("bloodFrame");
         	
@@ -1213,7 +1217,7 @@ public class AlchemicalWizardry
         	}
         } else
         {
-            this.isForestryLoaded = false;
+            isForestryLoaded = false;
         }
 
         if (Loader.isModLoaded("harvestcraft"))
@@ -1234,9 +1238,9 @@ public class AlchemicalWizardry
         	AlchemicalWizardry.logger.info("Loaded AgriCraft Handlers!");
         }
         
-        this.isBotaniaLoaded = Loader.isModLoaded("Botania");
+        isBotaniaLoaded = Loader.isModLoaded("Botania");
         
-        this.isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
+        isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
 
         BloodMagicConfiguration.loadBlacklist();
 	    BloodMagicConfiguration.blacklistRituals();

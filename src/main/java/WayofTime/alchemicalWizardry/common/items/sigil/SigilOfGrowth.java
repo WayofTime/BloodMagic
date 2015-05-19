@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.relauncher.Side;
@@ -23,7 +24,7 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import java.util.List;
 
-public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade
+public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
 {
     private static IIcon activeIcon;
     private static IIcon passiveIcon;

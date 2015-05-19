@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
 import cpw.mods.fml.relauncher.Side;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade
+public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISigil
 {
     private static IIcon activeIcon;
     private static IIcon passiveIcon;

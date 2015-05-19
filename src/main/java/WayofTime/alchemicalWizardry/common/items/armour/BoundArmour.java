@@ -30,7 +30,7 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ILPGauge;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import WayofTime.alchemicalWizardry.common.items.sigil.DivinationSigil;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.Optional.Interface;
@@ -685,7 +685,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             }
             if (item.getItem() instanceof ArmourUpgrade && blood > 0)
             {
-            	if (item.getItem() instanceof DivinationSigil)
+            	if (item.getItem() instanceof SigilDivination)
                 {
                     return true;
                 }

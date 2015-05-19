@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,9 +25,9 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class DivinationSigil extends Item implements ArmourUpgrade, IReagentManipulator, IBindable
+public class SigilDivination extends Item implements ArmourUpgrade, IReagentManipulator, IBindable, ISigil
 {
-    public DivinationSigil()
+    public SigilDivination()
     {
         super();
         this.maxStackSize = 1;

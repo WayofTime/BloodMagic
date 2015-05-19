@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -23,7 +24,7 @@ import net.minecraftforge.fluids.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemFluidSigil extends Item implements IFluidContainerItem
+public class SigilFluid extends Item implements IFluidContainerItem, ISigil
 {
     private int capacity = 128 * 1000;
     private static final int STATE_SYPHON = 0;
@@ -34,7 +35,7 @@ public class ItemFluidSigil extends Item implements IFluidContainerItem
     private static final int STATE_BEAST_DRAIN = 5;
     private static final int maxNumOfStates = 6;
 
-    public ItemFluidSigil()
+    public SigilFluid()
     {
         super();
         this.setMaxDamage(0);

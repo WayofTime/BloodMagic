@@ -18,7 +18,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -138,7 +138,7 @@ public class BlockAltar extends BlockContainer
             }
             else if (playerItem.getItem().equals(ModItems.sigilOfHolding))
             {
-                ItemStack item = ((SigilOfHolding) playerItem.getItem()).getCurrentItem(playerItem);
+                ItemStack item = SigilOfHolding.getCurrentSigil(playerItem);
 
                 if (item != null && item.getItem().equals(ModItems.divinationSigil))
                 {

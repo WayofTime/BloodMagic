@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBucket;
@@ -19,12 +20,12 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class VoidSigil extends ItemBucket implements ArmourUpgrade
+public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil
 {
     private int isFull;
     private int energyUsed;
 
-    public VoidSigil()
+    public SigilVoid()
     {
         super(null);
         this.maxStackSize = 1;

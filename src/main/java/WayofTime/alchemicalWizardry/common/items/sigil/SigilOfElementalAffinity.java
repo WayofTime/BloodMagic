@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfElementalAffinity extends EnergyItems
+public class SigilOfElementalAffinity extends EnergyItems implements ISigil
 {
     @SideOnly(Side.CLIENT)
     private static IIcon activeIcon;
