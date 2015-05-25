@@ -113,6 +113,7 @@ import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
 import WayofTime.alchemicalWizardry.common.items.ItemIncense;
+import WayofTime.alchemicalWizardry.common.items.ItemMailOrderCatalogue;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
@@ -760,7 +761,6 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemBloodLightSigil), "btb", "sss", "bob", 'o', magicianBloodOrbStack, 'b', glowstoneBlockStack, 't', new ItemStack(Blocks.torch), 's', imbuedSlateStack));
         GameRegistry.addRecipe(new ItemStack(ModItems.itemKeyOfDiablo), " gw", "gdg", "wg ", 'w', weakBloodShardStack, 'g', goldIngotStack, 'd', diamondStack);
         GameRegistry.addRecipe(new ItemStack(ModItems.itemBloodPack), "gbg","flf","gsg",'s', blankSlateStack,'g', glassStack,'f',new ItemStack(Items.flint,1,craftingConstant),'b', emptyBucketStack, 'l', new ItemStack(Items.leather_chestplate));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemMailCatalogue), new ItemStack(Items.book), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.feather), glassStack, glassStack);
         customPotionDrowning = (new PotionDrowning(customPotionDrowningID, true, 0)).setIconIndex(0, 0).setPotionName("Drowning");
         customPotionBoost = (new PotionBoost(customPotionBoostID, false, 0)).setIconIndex(0, 0).setPotionName("Boost");
         customPotionProjProt = (new PotionProjectileProtect(customPotionProjProtID, false, 0)).setIconIndex(0, 0).setPotionName("Whirlwind");
@@ -1226,6 +1226,10 @@ public class AlchemicalWizardry
         	long finalTime = System.nanoTime();
         	AlchemicalWizardry.logger.info("Recipe Holder initialized: took " + (finalTime - initialTime)/1000000f + "ms.");
         	
+            ModItems.itemMailCatalogue = new ItemMailOrderCatalogue().setUnlocalizedName("itemMailCatalogue");
+            GameRegistry.registerItem(ModItems.itemMailCatalogue, "itemMailCatalogue");
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemMailCatalogue), new ItemStack(Items.book), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.feather), new ItemStack(Blocks.glass, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.glass, 1, OreDictionary.WILDCARD_VALUE));
+
         	registerBMBook();
         }
 

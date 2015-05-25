@@ -50,12 +50,13 @@ public class MailOrderEntityItem extends EntityItem
 		
 		if(!worldObj.isRemote && this.ticksExisted > 100 && !this.isDead)
 		{
+			worldObj.addWeatherEffect(new EntityLightningBolt(worldObj, this.posX, this.posY, this.posZ));
+
 			if(AlchemicalWizardry.isPneumaticCraftLoaded)
 			{
 				this.deliverItemViaDrone(this.posX, this.posY, this.posZ);
 			}else
 			{
-				worldObj.addWeatherEffect(new EntityLightningBolt(worldObj, this.posX, this.posY, this.posZ));
 				EntityItem entity = new BookEntityItem(worldObj, this.posX, this.posY, this.posZ, GuideRegistry.getItemStackForBook(BloodMagicGuide.bloodMagicGuide));
 				entity.lifespan = 6000;
 				entity.delayBeforeCanPickup = 20;

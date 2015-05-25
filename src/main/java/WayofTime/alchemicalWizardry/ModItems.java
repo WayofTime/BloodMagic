@@ -37,7 +37,6 @@ import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
 import WayofTime.alchemicalWizardry.common.items.ItemComponents;
 import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
 import WayofTime.alchemicalWizardry.common.items.ItemIncense;
-import WayofTime.alchemicalWizardry.common.items.ItemMailOrderCatalogue;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
@@ -73,26 +72,26 @@ import WayofTime.alchemicalWizardry.common.items.potion.WeakFillingAgent;
 import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilAir;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilBloodLight;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilFluid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilHarvest;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilPackRat;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfEnderSeverance;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfSupression;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheAssassin;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilLava;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfElementalAffinity;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfEnderSeverance;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfGrowth;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfHaste;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfMagnetism;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfSupression;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheAssassin;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheBridge;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilPackRat;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilVoid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilWater;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -371,9 +370,7 @@ public class ModItems
         
         inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
         outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
-        
-        itemMailCatalogue = new ItemMailOrderCatalogue().setUnlocalizedName("itemMailCatalogue");
-        
+                
         itemIncense = new ItemIncense().setUnlocalizedName("bloodMagicIncenseItem");
     }
 
@@ -509,7 +506,6 @@ public class ModItems
         GameRegistry.registerItem(ModItems.inputRoutingFocus, "inputRoutingFocus");
         GameRegistry.registerItem(ModItems.outputRoutingFocus, "outputRoutingFocus");
         
-        GameRegistry.registerItem(ModItems.itemMailCatalogue, "itemMailCatalogue");
         GameRegistry.registerItem(ModItems.itemIncense, "bloodMagicIncenseItem");
     }
 }
