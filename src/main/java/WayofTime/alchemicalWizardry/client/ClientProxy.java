@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.client;
 
-import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
-import WayofTime.alchemicalWizardry.common.book.BUEntries;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
@@ -110,7 +109,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerPostSideObjects()
     {
-    	BUEntries entries = new BUEntries();
+//    	BUEntries entries = new BUEntries();
 //    	entries.postInit();
     }
     

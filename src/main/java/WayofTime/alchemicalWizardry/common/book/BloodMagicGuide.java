@@ -8,9 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.guide.PageAltarRecipe;
 import WayofTime.alchemicalWizardry.api.guide.PageOrbRecipe;
+import WayofTime.alchemicalWizardry.api.guide.PageRitualMultiBlock;
 import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
 import amerifrance.guideapi.api.GuideRegistry;
 import amerifrance.guideapi.api.abstraction.CategoryAbstract;
@@ -31,6 +33,8 @@ public class BloodMagicGuide
 	public static void registerGuide()
 	{
 		registerArchitectBook();
+		registerRitualBook();
+		
 		bloodMagicGuide = new Book(categories, "guide.BloodMagic.book.title", "guide.BloodMagic.welcomeMessage", "guide.BloodMagic.book.name", new Color(190, 10, 0));
         GuideRegistry.registerBook(bloodMagicGuide);
 	}
@@ -336,5 +340,43 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(moreThanHumanPages, "guide.BloodMagic.entryName.architect.moreThanHuman"));
 		
         categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.architect", new ItemStack(ModItems.divinationSigil)));
+	}
+	
+	public static void registerRitualBook()
+	{
+		List<EntryAbstract> entries = new ArrayList();
+		
+		ArrayList<IPage> testPages = new ArrayList();
+        testPages.add(PageRitualMultiBlock.getPageForRitual("AW031Convocation"));
+        entries.add(new EntryUniText(testPages, "Test page"));
+        
+		
+		ArrayList<IPage> introPages = new ArrayList();
+        introPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.intro")));
+        entries.add(new EntryUniText(introPages, "guide.BloodMagic.entryName.rituals.intro"));
+        
+        ArrayList<IPage> weakRitualPages = new ArrayList();
+        weakRitualPages.add(new PageOrbRecipe(RecipeHolder.weakRitualStoneRecipe));
+        weakRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.weakRitual")));
+        entries.add(new EntryUniText(weakRitualPages, "guide.BloodMagic.entryName.rituals.weakRitual"));
+        
+        ArrayList<IPage> ritualsPages = new ArrayList();
+        ritualsPages.add(new PageOrbRecipe(RecipeHolder.ritualStoneRecipe));
+        ritualsPages.add(new PageOrbRecipe(RecipeHolder.masterStoneRecipe));
+        ritualsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.rituals")));
+        ritualsPages.add(new PageAltarRecipe(RecipeHolder.weakActivationRecipe));
+        entries.add(new EntryUniText(ritualsPages, "guide.BloodMagic.entryName.rituals.rituals"));
+        
+        ArrayList<IPage> waterRitualPages = new ArrayList();
+        waterRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Water.png"), true));
+        waterRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.waterRitual")));
+        entries.add(new EntryUniText(waterRitualPages, "guide.BloodMagic.entryName.rituals.waterRitual"));
+        
+        ArrayList<IPage> lavaRitualPages = new ArrayList();
+        lavaRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/lava.png"), true));
+        lavaRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.lavaRitual")));
+        entries.add(new EntryUniText(lavaRitualPages, "guide.BloodMagic.entryName.rituals.lavaRitual"));
+		
+		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.rituals", new ItemStack(ModBlocks.blockMasterStone)));
 	}
 }

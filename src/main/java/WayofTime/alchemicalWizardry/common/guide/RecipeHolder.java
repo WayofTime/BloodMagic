@@ -36,6 +36,7 @@ public class RecipeHolder
 	public static IRecipe phantomBridgeRecipe;
 	public static IRecipe holdingSigilRecipe;
 	public static IRecipe affinitySigilRecipe;
+	public static IRecipe weakRitualStoneRecipe;
 	public static IRecipe ritualStoneRecipe;
 	public static IRecipe masterStoneRecipe;
 	public static IRecipe bloodLampRecipe;
@@ -125,6 +126,7 @@ public class RecipeHolder
 		accelerationRuneRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.bloodRune, 1, 5));
 		harvestSigilRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemHarvestSigil));
 		crystalCluserRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockCrystal));	
+		weakRitualStoneRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.imperfectRitualStone));
 		
 		weakBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.weakBloodOrb));
 		apprenticeBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.apprenticeBloodOrb));
