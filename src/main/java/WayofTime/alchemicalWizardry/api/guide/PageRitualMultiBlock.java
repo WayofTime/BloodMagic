@@ -58,11 +58,13 @@ public class PageRitualMultiBlock extends PageMultiBlock
 			maxZ = Math.max(comp.getZ(), maxZ);
 		}
 		
+		System.out.println("Min: (" + minX + ", " + minY + ", " + minZ + "), Max: (" + maxX + ", " + maxY + ", " + maxZ + ")");
+		
 		ItemStack[][][] tempStructure = new ItemStack[maxY-minY+1][maxX-minX+1][maxZ-minZ+1]; //First value is vertical, second is down to the left, third is down to the right
 		
 		for(RitualComponent comp : ritualComponents)
 		{
-			tempStructure[comp.getY() - minY][comp.getX() - minX][comp.getZ() - minZ] = new ItemStack(ModBlocks.ritualStone, 1, comp.getStoneType());
+			tempStructure[comp.getY() - minY][comp.getX() - minX][comp.getZ() - minZ] = getStackForRitualStone(comp.getStoneType());
 		}
 		
 		tempStructure[-minY][-minX][-minZ] = new ItemStack(ModBlocks.blockMasterStone);

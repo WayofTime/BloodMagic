@@ -77,6 +77,8 @@ public class RecipeHolder
 	public static AltarRecipe weakActivationRecipe;
 	public static AltarRecipe filledSocketRecipe;
 	public static AltarRecipe teleposerFocusRecipe1;
+	public static AltarRecipe duskRecipe;
+	public static AltarRecipe dawnRecipe;
 	
 	public static void init()
 	{
@@ -144,6 +146,8 @@ public class RecipeHolder
 		weakActivationRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.activationCrystal, 1, 0));
 		filledSocketRecipe = getAltarRecipeForItemStack(new ItemStack(ModBlocks.bloodSocket));
 		teleposerFocusRecipe1 = getAltarRecipeForItemStack(new ItemStack(ModItems.telepositionFocus));
+		duskRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.duskScribeTool));
+		dawnRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.dawnScribeTool));
 	}
 	
 	private static IRecipe getRecipeForItemStack(ItemStack stack)

@@ -417,6 +417,7 @@ public class AlchemicalWizardry
     public static boolean isForestryLoaded;
     public static boolean isBotaniaLoaded;
     public static boolean isFMPLoaded;
+    public static boolean isPneumaticCraftLoaded;
 
     public static boolean wimpySettings;
     public static boolean respawnWithDebuff;
@@ -1264,8 +1265,10 @@ public class AlchemicalWizardry
         }
         
         isBotaniaLoaded = Loader.isModLoaded("Botania");
-        
+        isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
         isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
+        
+        
 
         BloodMagicConfiguration.loadBlacklist();
 	    BloodMagicConfiguration.blacklistRituals();

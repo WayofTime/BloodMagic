@@ -12,7 +12,6 @@ import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.guide.PageAltarRecipe;
 import WayofTime.alchemicalWizardry.api.guide.PageOrbRecipe;
-import WayofTime.alchemicalWizardry.api.guide.PageRitualMultiBlock;
 import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
 import amerifrance.guideapi.api.GuideRegistry;
 import amerifrance.guideapi.api.abstraction.CategoryAbstract;
@@ -346,9 +345,9 @@ public class BloodMagicGuide
 	{
 		List<EntryAbstract> entries = new ArrayList();
 		
-		ArrayList<IPage> testPages = new ArrayList();
-        testPages.add(PageRitualMultiBlock.getPageForRitual("AW031Convocation"));
-        entries.add(new EntryUniText(testPages, "Test page"));
+//		ArrayList<IPage> testPages = new ArrayList();
+//        testPages.add(PageRitualMultiBlock.getPageForRitual("AW031Convocation"));
+//        entries.add(new EntryUniText(testPages, "Test page"));
         
 		
 		ArrayList<IPage> introPages = new ArrayList();
@@ -373,9 +372,225 @@ public class BloodMagicGuide
         entries.add(new EntryUniText(waterRitualPages, "guide.BloodMagic.entryName.rituals.waterRitual"));
         
         ArrayList<IPage> lavaRitualPages = new ArrayList();
-        lavaRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/lava.png"), true));
+        lavaRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Lava.png"), true));
         lavaRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.lavaRitual")));
         entries.add(new EntryUniText(lavaRitualPages, "guide.BloodMagic.entryName.rituals.lavaRitual"));
+        
+        ArrayList<IPage> groveRitualPages = new ArrayList();
+        groveRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/GreenGrove.png"), true));
+        groveRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.groveRitual")));
+        entries.add(new EntryUniText(groveRitualPages, "guide.BloodMagic.entryName.rituals.groveRitual"));
+        
+        ArrayList<IPage> interdictionRitualPages = new ArrayList();
+        interdictionRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Interdiction.png"), true));
+        interdictionRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.interdictionRitual")));
+        entries.add(new EntryUniText(interdictionRitualPages, "guide.BloodMagic.entryName.rituals.interdictionRitual"));
+        
+        ArrayList<IPage> containmentRitualPages = new ArrayList();
+        containmentRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Containment.png"), true));
+        containmentRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.containmentRitual")));
+        entries.add(new EntryUniText(containmentRitualPages, "guide.BloodMagic.entryName.rituals.containmentRitual"));
+        
+        ArrayList<IPage> bindingRitualPages = new ArrayList();
+        bindingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Binding.png"), true));
+        bindingRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.bindingRitual")));
+        entries.add(new EntryUniText(bindingRitualPages, "guide.BloodMagic.entryName.rituals.bindingRitual"));
+        
+        ArrayList<IPage> beastModePages = new ArrayList();
+        beastModePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.beastMode")));
+        entries.add(new EntryUniText(beastModePages, "guide.BloodMagic.entryName.rituals.beastMode"));
+        
+        ArrayList<IPage> unbindingRitualPages = new ArrayList();
+        unbindingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Unbinding.png"), true));
+        unbindingRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.unbindingRitual")));
+        entries.add(new EntryUniText(unbindingRitualPages, "guide.BloodMagic.entryName.rituals.unbindingRitual"));
+        
+        ArrayList<IPage> jumpRitualPages = new ArrayList();
+        jumpRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Jump.png"), true));
+        jumpRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.jumpRitual")));
+        entries.add(new EntryUniText(jumpRitualPages, "guide.BloodMagic.entryName.rituals.jumpRitual"));
+        
+        ArrayList<IPage> duskInkPages = new ArrayList();
+        duskInkPages.add(new PageAltarRecipe(RecipeHolder.duskRecipe));
+        duskInkPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.duskInk")));
+        entries.add(new EntryUniText(duskInkPages, "guide.BloodMagic.entryName.rituals.duskInk"));
+        
+        ArrayList<IPage> magnetismRitualPages = new ArrayList();
+        magnetismRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Magnetism.png"), true));
+        magnetismRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.magnetismRitual")));
+        entries.add(new EntryUniText(magnetismRitualPages, "guide.BloodMagic.entryName.rituals.magnetismRitual"));
+        
+        ArrayList<IPage> crusherRitualPages = new ArrayList();
+        crusherRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Crusher.png"), true));
+        crusherRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.crusherRitual")));
+        entries.add(new EntryUniText(crusherRitualPages, "guide.BloodMagic.entryName.rituals.crusherRitual"));
+        
+        ArrayList<IPage> speedRitualPages = new ArrayList();
+        speedRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Speed.png"), true));
+        speedRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.speedRitual")));
+        entries.add(new EntryUniText(speedRitualPages, "guide.BloodMagic.entryName.rituals.speedRitual"));
+        
+        ArrayList<IPage> shepherdRitualPages = new ArrayList();
+        shepherdRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/AnimalGrowth.png"), true));
+        shepherdRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.shepherdRitual")));
+        entries.add(new EntryUniText(shepherdRitualPages, "guide.BloodMagic.entryName.rituals.shepherdRitual"));
+        
+        ArrayList<IPage> darkMagicPages = new ArrayList();
+        darkMagicPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.darkMagic")));
+        entries.add(new EntryUniText(darkMagicPages, "guide.BloodMagic.entryName.rituals.darkMagic"));
+        
+        ArrayList<IPage> knifeAndSufferingRitualPages = new ArrayList();
+        knifeAndSufferingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/WellOfSuffering.png"), true));
+        knifeAndSufferingRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.knifeAndSufferingRitual.1")));
+        knifeAndSufferingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/FeatheredKnife.png"), true));
+        knifeAndSufferingRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.knifeAndSufferingRitual.2")));
+        entries.add(new EntryUniText(knifeAndSufferingRitualPages, "guide.BloodMagic.entryName.rituals.knifeAndSufferingRitual"));
+        
+        ArrayList<IPage> regenerationRitualPages = new ArrayList();
+        regenerationRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Regeneration.png"), true));
+        regenerationRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.regenerationRitual")));
+        entries.add(new EntryUniText(regenerationRitualPages, "guide.BloodMagic.entryName.rituals.regenerationRitual"));
+        
+        ArrayList<IPage> harvestFestivalPages = new ArrayList();
+        harvestFestivalPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.harvestFestival")));
+        entries.add(new EntryUniText(harvestFestivalPages, "guide.BloodMagic.entryName.rituals.harvestFestival"));
+        
+        ArrayList<IPage> thenThereWereFivePages = new ArrayList();
+        thenThereWereFivePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.thenThereWereFive")));
+        entries.add(new EntryUniText(thenThereWereFivePages, "guide.BloodMagic.entryName.rituals.thenThereWereFive"));
+        
+        ArrayList<IPage> alchemyRitualPages = new ArrayList();
+        alchemyRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Alchemy.png"), true));
+        alchemyRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.alchemyRitual")));
+        entries.add(new EntryUniText(alchemyRitualPages, "guide.BloodMagic.entryName.rituals.alchemyRitual"));
+        
+        ArrayList<IPage> domeRitualPages = new ArrayList();
+        domeRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Dome.png"), true));
+        domeRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.domeRitual")));
+        entries.add(new EntryUniText(domeRitualPages, "guide.BloodMagic.entryName.rituals.domeRitual"));
+        
+        ArrayList<IPage> awakenedCrystalPages = new ArrayList();
+        awakenedCrystalPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.awakenedCrystal")));
+        entries.add(new EntryUniText(awakenedCrystalPages, "guide.BloodMagic.entryName.rituals.awakenedCrystal"));
+        
+        ArrayList<IPage> featheredEarthRitualPages = new ArrayList();
+        featheredEarthRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/FeatheredEarth.png"), true));
+        featheredEarthRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.featheredEarthRitual")));
+        entries.add(new EntryUniText(featheredEarthRitualPages, "guide.BloodMagic.entryName.rituals.featheredEarthRitual"));
+        
+        ArrayList<IPage> gaiaRitualPages = new ArrayList();
+        gaiaRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Gaia.png"), true));
+        gaiaRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.gaiaRitual")));
+        entries.add(new EntryUniText(gaiaRitualPages, "guide.BloodMagic.entryName.rituals.gaiaRitual"));
+        
+        ArrayList<IPage> condorRitualPages = new ArrayList();
+        condorRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Flight.png"), true));
+        condorRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.condorRitual")));
+        entries.add(new EntryUniText(condorRitualPages, "guide.BloodMagic.entryName.rituals.condorRitual"));
+        
+        ArrayList<IPage> meteorRitualPages = new ArrayList();
+        meteorRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Meteor.png"), true));
+        meteorRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.meteorRitual")));
+        entries.add(new EntryUniText(meteorRitualPages, "guide.BloodMagic.entryName.rituals.meteorRitual"));
+        
+        ArrayList<IPage> expulsionRitualPages = new ArrayList();
+        expulsionRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Expulsion.png"), true));
+        expulsionRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.expulsionRitual")));
+        entries.add(new EntryUniText(expulsionRitualPages, "guide.BloodMagic.entryName.rituals.expulsionRitual"));
+        
+        ArrayList<IPage> costOfProgressPages = new ArrayList();
+        costOfProgressPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.costOfProgress.1")));
+        costOfProgressPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.costOfProgress.2")));
+        entries.add(new EntryUniText(costOfProgressPages, "guide.BloodMagic.entryName.rituals.costOfProgress"));
+        
+        ArrayList<IPage> zephyrRitualPages = new ArrayList();
+        zephyrRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Zeohyr.png"), true));
+        zephyrRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.zephyrRitual")));
+        entries.add(new EntryUniText(zephyrRitualPages, "guide.BloodMagic.entryName.rituals.zephyrRitual"));
+        
+        ArrayList<IPage> harvestRitualPages = new ArrayList();
+        harvestRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Harvest.png"), true));
+        harvestRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.harvestRitual")));
+        entries.add(new EntryUniText(harvestRitualPages, "guide.BloodMagic.entryName.rituals.harvestRitual"));
+        
+        ArrayList<IPage> eternalSoulRitualPages = new ArrayList();
+        eternalSoulRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/EternalSoul.png"), true));
+        eternalSoulRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.eternalSoulRitual")));
+        entries.add(new EntryUniText(eternalSoulRitualPages, "guide.BloodMagic.entryName.rituals.eternalSoulRitual"));
+        
+        ArrayList<IPage> ellipsoidRitualPages = new ArrayList();
+        ellipsoidRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Ellipsoid.png"), true));
+        ellipsoidRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.ellipsoidRitual")));
+        entries.add(new EntryUniText(ellipsoidRitualPages, "guide.BloodMagic.entryName.rituals.ellipsoidRitual"));
+        
+        ArrayList<IPage> evaporationRitualPages = new ArrayList();
+        evaporationRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Evaporation.png"), true));
+        evaporationRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.evaporationRitual")));
+        entries.add(new EntryUniText(evaporationRitualPages, "guide.BloodMagic.entryName.rituals.evaporationRitual"));
+        
+        ArrayList<IPage> sacrosanctityRitualPages = new ArrayList();
+        sacrosanctityRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Sacrosanctity.png"), true));
+        sacrosanctityRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.sacrosanctityRitual")));
+        entries.add(new EntryUniText(sacrosanctityRitualPages, "guide.BloodMagic.entryName.rituals.sacrosanctityRitual"));
+        
+        ArrayList<IPage> evilRitualPages = new ArrayList();
+        evilRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/VeilOfEvil.png"), true));
+        evilRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.evilRitual")));
+        entries.add(new EntryUniText(evilRitualPages, "guide.BloodMagic.entryName.rituals.evilRitual"));
+        
+        ArrayList<IPage> stomachRitualPages = new ArrayList();
+        stomachRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Stomach.png"), true));
+        stomachRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.stomachRitual")));
+        entries.add(new EntryUniText(stomachRitualPages, "guide.BloodMagic.entryName.rituals.stomachRitual"));
+        
+        ArrayList<IPage> reagentEffectsRitualPages = new ArrayList();
+        for(int i=1; i<=24; i++)
+        {
+            reagentEffectsRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.reagentEffects." + i)));
+        }
+        entries.add(new EntryUniText(reagentEffectsRitualPages, "guide.BloodMagic.entryName.rituals.reagentEffects"));
+        
+        ArrayList<IPage> conclaveOfMagesPages = new ArrayList();
+        conclaveOfMagesPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.conclaveOfMages")));
+        entries.add(new EntryUniText(conclaveOfMagesPages, "guide.BloodMagic.entryName.rituals.conclaveOfMages"));
+        
+        ArrayList<IPage> forbiddenParadisePages = new ArrayList();
+        forbiddenParadisePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.forbiddenParadise")));
+        entries.add(new EntryUniText(forbiddenParadisePages, "guide.BloodMagic.entryName.rituals.forbiddenParadise"));
+        
+        ArrayList<IPage> convocationRitualPages = new ArrayList();
+        convocationRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Convocation.png"), true));
+        convocationRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.convocationRitual")));
+        entries.add(new EntryUniText(convocationRitualPages, "guide.BloodMagic.entryName.rituals.convocationRitual"));
+        
+        ArrayList<IPage> longHaulPages = new ArrayList();
+        longHaulPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.longHaul")));
+        entries.add(new EntryUniText(longHaulPages, "guide.BloodMagic.entryName.rituals.longHaul"));
+        
+        ArrayList<IPage> phantomHandsRitualPages = new ArrayList();
+        phantomHandsRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/PhantomHands.png"), true));
+        phantomHandsRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.phantomHandsRitual")));
+        entries.add(new EntryUniText(phantomHandsRitualPages, "guide.BloodMagic.entryName.rituals.phantomHandsRitual"));
+        
+        ArrayList<IPage> anvilRitualPages = new ArrayList();
+        anvilRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/BeatingAnvil.png"), true));
+        anvilRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.anvilRitual")));
+        entries.add(new EntryUniText(anvilRitualPages, "guide.BloodMagic.entryName.rituals.anvilRitual"));
+        
+        ArrayList<IPage> dawnInkPages = new ArrayList();
+        dawnInkPages.add(new PageAltarRecipe(RecipeHolder.dawnRecipe));
+        dawnInkPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.dawnInk")));
+        entries.add(new EntryUniText(dawnInkPages, "guide.BloodMagic.entryName.rituals.dawnInk"));
+        
+        ArrayList<IPage> symmetryRitualPages = new ArrayList();
+        symmetryRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/SymmetryOmega.png"), true));
+        symmetryRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.symmetryRitual")));
+        entries.add(new EntryUniText(lavaRitualPages, "guide.BloodMagic.entryName.rituals.symmetryRitual"));
+        
+        ArrayList<IPage> stallingRitualPages = new ArrayList();
+        stallingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/StallingOmega.png"), true));
+        stallingRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.stallingRitual")));
+        entries.add(new EntryUniText(stallingRitualPages, "guide.BloodMagic.entryName.rituals.stallingRitual"));
 		
 		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.rituals", new ItemStack(ModBlocks.blockMasterStone)));
 	}
