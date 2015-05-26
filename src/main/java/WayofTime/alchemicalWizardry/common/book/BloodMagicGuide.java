@@ -33,6 +33,8 @@ public class BloodMagicGuide
 	{
 		registerArchitectBook();
 		registerRitualBook();
+		registerDemonBook();
+		registerSpellBook();
 		
 		bloodMagicGuide = new Book(categories, "guide.BloodMagic.book.title", "guide.BloodMagic.welcomeMessage", "guide.BloodMagic.book.name", new Color(190, 10, 0));
         GuideRegistry.registerBook(bloodMagicGuide);
@@ -362,6 +364,11 @@ public class BloodMagicGuide
         ArrayList<IPage> ritualsPages = new ArrayList();
         ritualsPages.add(new PageOrbRecipe(RecipeHolder.ritualStoneRecipe));
         ritualsPages.add(new PageOrbRecipe(RecipeHolder.masterStoneRecipe));
+        ritualsPages.add(new PageAltarRecipe(RecipeHolder.waterScribeTool));
+        ritualsPages.add(new PageAltarRecipe(RecipeHolder.fireScribeTool));
+        ritualsPages.add(new PageAltarRecipe(RecipeHolder.earthScribeTool));
+        ritualsPages.add(new PageAltarRecipe(RecipeHolder.airScribeTool));
+        ritualsPages.add(new PageIRecipe(RecipeHolder.ritualDiviner1Recipe));
         ritualsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.rituals")));
         ritualsPages.add(new PageAltarRecipe(RecipeHolder.weakActivationRecipe));
         entries.add(new EntryUniText(ritualsPages, "guide.BloodMagic.entryName.rituals.rituals"));
@@ -593,5 +600,132 @@ public class BloodMagicGuide
         entries.add(new EntryUniText(stallingRitualPages, "guide.BloodMagic.entryName.rituals.stallingRitual"));
 		
 		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.rituals", new ItemStack(ModBlocks.blockMasterStone)));
+	}
+	
+	public static void registerDemonBook()
+	{
+		List<EntryAbstract> entries = new ArrayList();
+		
+		ArrayList<IPage> ashesPages = new ArrayList();
+        ashesPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.ashes")));
+        entries.add(new EntryUniText(ashesPages, "guide.BloodMagic.entryName.demons.ashes"));
+        
+        ArrayList<IPage> tamedDemonPages = new ArrayList();
+        tamedDemonPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.tamedDemon")));
+        entries.add(new EntryUniText(tamedDemonPages, "guide.BloodMagic.entryName.demons.tamedDemon"));
+        
+        ArrayList<IPage> futurePages = new ArrayList();
+        futurePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.future")));
+        entries.add(new EntryUniText(futurePages, "guide.BloodMagic.entryName.demons.future"));
+        
+        ArrayList<IPage> knightPages = new ArrayList();
+        knightPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.knight")));
+        entries.add(new EntryUniText(knightPages, "guide.BloodMagic.entryName.demons.knight"));
+        
+        ArrayList<IPage> demonShardPages = new ArrayList();
+        demonShardPages.addAll(PageHelper.pagesForLongText((StatCollector.translateToLocal("aw.entries.demons.demonShard")), new ItemStack(ModItems.demonBloodShard)));
+        entries.add(new EntryUniText(demonShardPages, "guide.BloodMagic.entryName.demons.demonShard"));
+       
+		
+		ArrayList<IPage> demonSummoningPages = new ArrayList();
+		demonSummoningPages.add(new PageIRecipe(RecipeHolder.arcanePedestalRecipe));
+		demonSummoningPages.add(new PageIRecipe(RecipeHolder.arcanePlinthRecipe));
+        demonSummoningPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/demons/Ring1.png"), true));
+        demonSummoningPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/demons/Ring2.png"), true));
+        demonSummoningPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.demonSummoning")));
+        entries.add(new EntryUniText(demonSummoningPages, "guide.BloodMagic.entryName.demons.demonSummoning"));
+        
+        ArrayList<IPage> keysGatePages = new ArrayList();
+        for(int i=1; i<=10; i++)
+        {
+        	keysGatePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.keysGate." + i)));
+        }
+        entries.add(new EntryUniText(keysGatePages, "guide.BloodMagic.entryName.demons.keysGate"));
+        
+        ArrayList<IPage> futurePlansPages = new ArrayList();
+        futurePlansPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.futurePlans")));
+        entries.add(new EntryUniText(futurePlansPages, "guide.BloodMagic.entryName.demons.futurePlans"));
+        
+        ArrayList<IPage> demonInvasionPages = new ArrayList();
+        demonInvasionPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.demonInvasion")));
+        entries.add(new EntryUniText(demonInvasionPages, "guide.BloodMagic.entryName.demons.demonInvasion"));
+        
+        ArrayList<IPage> observationsPages = new ArrayList();
+        observationsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.demons.observations")));
+        entries.add(new EntryUniText(observationsPages, "guide.BloodMagic.entryName.demons.observations"));        
+        
+		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.demons", new ItemStack(ModItems.demonBloodShard)));
+	}
+	
+	public static void registerSpellBook()
+	{
+		List<EntryAbstract> entries = new ArrayList();
+
+		ArrayList<IPage> demonGirlPages = new ArrayList();
+        demonGirlPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.demonGirl")));
+        entries.add(new EntryUniText(demonGirlPages, "guide.BloodMagic.entryName.spells.demonGirl"));
+        
+        ArrayList<IPage> spellTablePages = new ArrayList();
+        spellTablePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.spellTable.1")));
+        spellTablePages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/spells/SimpleSpellTable.png"), true));
+        spellTablePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.spellTable.2")));
+        entries.add(new EntryUniText(spellTablePages, "guide.BloodMagic.entryName.spells.spellTable"));
+        
+        ArrayList<IPage> simpleEffectsPages = new ArrayList();
+        for(int i=1; i<=11; i++)
+        {
+            simpleEffectsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.simpleEffects." + i)));
+        }
+        entries.add(new EntryUniText(simpleEffectsPages, "guide.BloodMagic.entryName.spells.simpleEffects"));
+        
+        ArrayList<IPage> tableAndSkullsPages = new ArrayList();
+		tableAndSkullsPages.add(new PageAltarRecipe(RecipeHolder.blankSpellRecipe));
+        tableAndSkullsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.tableAndSkulls.1")));
+		tableAndSkullsPages.add(new PageOrbRecipe(RecipeHolder.spellTableRecipe));
+        tableAndSkullsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.tableAndSkulls.2")));
+        entries.add(new EntryUniText(tableAndSkullsPages, "guide.BloodMagic.entryName.spells.tableAndSkulls"));
+        
+        ArrayList<IPage> timePassesPages = new ArrayList();
+        timePassesPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.timePasses")));
+        entries.add(new EntryUniText(timePassesPages, "guide.BloodMagic.entryName.spells.timePasses"));
+        
+        ArrayList<IPage> complexSpellBasicsPages = new ArrayList();
+        complexSpellBasicsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellBasics.1")));
+        complexSpellBasicsPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/spells/Paradigm.png"), true));
+        
+        for(int i=2; i<=6; i++)
+        	complexSpellBasicsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellBasics." + i)));
+        
+        complexSpellBasicsPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/spells/Effect.png"), true));
+        complexSpellBasicsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellBasics.7")));
+        complexSpellBasicsPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/spells/Modifier.png"), true));
+        
+        for(int i=8; i<=12; i++)
+        	complexSpellBasicsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellBasics." + i)));
+        
+        complexSpellBasicsPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/spells/Enhancement.png"), true));
+        
+        for(int i=13; i<=16; i++)
+        	complexSpellBasicsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellBasics." + i)));
+        
+        complexSpellBasicsPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/spells/Conduit.png"), true));
+        complexSpellBasicsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellBasics.17")));
+
+        entries.add(new EntryUniText(complexSpellBasicsPages, "guide.BloodMagic.entryName.spells.complexSpellBasics"));
+        
+        ArrayList<IPage> complexSpellEffectsPages = new ArrayList();
+        for(int i=1; i<=17; i++)
+        	complexSpellEffectsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.complexSpellEffects." + i)));
+        entries.add(new EntryUniText(complexSpellEffectsPages, "guide.BloodMagic.entryName.spells.complexSpellEffects"));
+        
+        ArrayList<IPage> offTopicPages = new ArrayList();
+        offTopicPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.offTopic")));
+        entries.add(new EntryUniText(offTopicPages, "guide.BloodMagic.entryName.spells.offTopic"));
+        
+        ArrayList<IPage> demonicPowerPages = new ArrayList();
+        demonicPowerPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.demonicPower")));
+        entries.add(new EntryUniText(demonicPowerPages, "guide.BloodMagic.entryName.spells.demonicPower"));
+        
+		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.spells", new ItemStack(ModItems.itemComplexSpellCrystal)));
 	}
 }

@@ -344,7 +344,7 @@ public class BUEntries
 		
 		
 		
-		this.registerCategory(BUEntries.categoryTest, EntryRegistry.test, BookParser.parseTextFile("/assets/alchemicalwizardryBooks/books/book.txt"));
+//		this.registerCategory(BUEntries.categoryTest, EntryRegistry.test, BookParser.parseTextFile("/assets/alchemicalwizardryBooks/books/book.txt"));
 	}
 	
 	public void registerCategory(Category cat, HashMap<String, Entry> entryMap, List<Entry> entries)

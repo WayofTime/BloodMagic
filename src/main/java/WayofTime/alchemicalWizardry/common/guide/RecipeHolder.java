@@ -59,7 +59,9 @@ public class RecipeHolder
 	public static IRecipe accelerationRuneRecipe;
 	public static IRecipe harvestSigilRecipe;
 	public static IRecipe crystalCluserRecipe;
-	
+	public static IRecipe arcanePlinthRecipe;
+	public static IRecipe arcanePedestalRecipe;
+	public static IRecipe spellTableRecipe;
 	
 	public static AltarRecipe weakBloodOrbRecipe;
 	public static AltarRecipe apprenticeBloodOrbRecipe;
@@ -77,6 +79,11 @@ public class RecipeHolder
 	public static AltarRecipe weakActivationRecipe;
 	public static AltarRecipe filledSocketRecipe;
 	public static AltarRecipe teleposerFocusRecipe1;
+	public static AltarRecipe blankSpellRecipe;
+	public static AltarRecipe waterScribeTool;
+	public static AltarRecipe fireScribeTool;
+	public static AltarRecipe earthScribeTool;
+	public static AltarRecipe airScribeTool;
 	public static AltarRecipe duskRecipe;
 	public static AltarRecipe dawnRecipe;
 	
@@ -130,6 +137,10 @@ public class RecipeHolder
 		crystalCluserRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockCrystal));	
 		weakRitualStoneRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.imperfectRitualStone));
 		
+		arcanePlinthRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockPlinth));
+		arcanePedestalRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockPedestal));
+		spellTableRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockHomHeart));
+		
 		weakBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.weakBloodOrb));
 		apprenticeBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.apprenticeBloodOrb));
 		magicianBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.magicianBloodOrb));
@@ -146,6 +157,11 @@ public class RecipeHolder
 		weakActivationRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.activationCrystal, 1, 0));
 		filledSocketRecipe = getAltarRecipeForItemStack(new ItemStack(ModBlocks.bloodSocket));
 		teleposerFocusRecipe1 = getAltarRecipeForItemStack(new ItemStack(ModItems.telepositionFocus));
+		blankSpellRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.blankSpell));
+		waterScribeTool = getAltarRecipeForItemStack(new ItemStack(ModItems.waterScribeTool));
+		fireScribeTool = getAltarRecipeForItemStack(new ItemStack(ModItems.fireScribeTool));
+		earthScribeTool = getAltarRecipeForItemStack(new ItemStack(ModItems.earthScribeTool));
+		airScribeTool = getAltarRecipeForItemStack(new ItemStack(ModItems.airScribeTool));
 		duskRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.duskScribeTool));
 		dawnRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.dawnScribeTool));
 	}
