@@ -118,7 +118,6 @@ import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
@@ -857,7 +856,6 @@ public class AlchemicalWizardry
         blacklistAccelerators();
 
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
-        MinecraftForge.EVENT_BUS.register(new ScrollHelper());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 

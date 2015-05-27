@@ -36,6 +36,7 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjecti
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderConduit;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderCrystalBelljar;
@@ -192,5 +193,6 @@ public class ClientProxy extends CommonProxy
         FMLCommonHandler.instance().bus().register(ob);
         MinecraftForge.EVENT_BUS.register(ob);
         KeyBindings.init();
+        MinecraftForge.EVENT_BUS.register(new ScrollHelper());
     }
 }
