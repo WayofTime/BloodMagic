@@ -62,6 +62,21 @@ public class RecipeHolder
 	public static IRecipe arcanePlinthRecipe;
 	public static IRecipe arcanePedestalRecipe;
 	public static IRecipe spellTableRecipe;
+	public static IRecipe alchemySetRecipe;
+	public static IRecipe crucibleRecipe;
+	
+	public static IRecipe woodAshRecipe;
+	public static IRecipe byrrusRecipe;
+	public static IRecipe livensRecipe;
+	public static IRecipe virRecipe;
+	public static IRecipe purpuraRecipe;
+	
+	public static IRecipe routerRecipe;
+	public static IRecipe segmenterRecipe;
+	public static IRecipe cleanserRecipe;
+	public static IRecipe calcinatorRecipe;
+	public static IRecipe belljarRecipe;
+	public static IRecipe relayRecipe;
 	
 	public static AltarRecipe weakBloodOrbRecipe;
 	public static AltarRecipe apprenticeBloodOrbRecipe;
@@ -86,6 +101,7 @@ public class RecipeHolder
 	public static AltarRecipe airScribeTool;
 	public static AltarRecipe duskRecipe;
 	public static AltarRecipe dawnRecipe;
+	public static AltarRecipe flaskRecipe;
 	
 	public static void init()
 	{
@@ -141,6 +157,21 @@ public class RecipeHolder
 		arcanePedestalRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockPedestal));
 		spellTableRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockHomHeart));
 		
+		alchemySetRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockWritingTable));
+		crucibleRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockCrucible));
+		woodAshRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemIncense, 1, 0));
+		byrrusRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemIncense, 1, 1));
+		livensRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemIncense, 1, 2));
+		virRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemIncense, 1, 3));
+		purpuraRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemIncense, 1, 4));
+		
+		routerRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemAttunedCrystal));
+		segmenterRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemTankSegmenter));
+		cleanserRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemDestinationClearer));
+		calcinatorRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockAlchemicCalcinator));
+		belljarRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockCrystalBelljar));
+		relayRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockReagentConduit));
+		
 		weakBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.weakBloodOrb));
 		apprenticeBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.apprenticeBloodOrb));
 		magicianBloodOrbRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.magicianBloodOrb));
@@ -164,6 +195,7 @@ public class RecipeHolder
 		airScribeTool = getAltarRecipeForItemStack(new ItemStack(ModItems.airScribeTool));
 		duskRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.duskScribeTool));
 		dawnRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.dawnScribeTool));
+		flaskRecipe = getAltarRecipeForItemStack(new ItemStack(ModItems.alchemyFlask));
 	}
 	
 	private static IRecipe getRecipeForItemStack(ItemStack stack)

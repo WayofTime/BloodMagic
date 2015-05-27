@@ -35,6 +35,7 @@ public class BloodMagicGuide
 		registerRitualBook();
 		registerDemonBook();
 		registerSpellBook();
+		registerAlchemyBook();
 		
 		bloodMagicGuide = new Book(categories, "guide.BloodMagic.book.title", "guide.BloodMagic.welcomeMessage", "guide.BloodMagic.book.name", new Color(190, 10, 0));
         GuideRegistry.registerBook(bloodMagicGuide);
@@ -598,6 +599,10 @@ public class BloodMagicGuide
         stallingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/StallingOmega.png"), true));
         stallingRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.stallingRitual")));
         entries.add(new EntryUniText(stallingRitualPages, "guide.BloodMagic.entryName.rituals.stallingRitual"));
+        
+        ArrayList<IPage> newMoonRitualPages = new ArrayList();
+        newMoonRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.newMoonRitual")));
+        entries.add(new EntryUniText(newMoonRitualPages, "guide.BloodMagic.entryName.rituals.newMoonRitual"));
 		
 		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.rituals", new ItemStack(ModBlocks.blockMasterStone)));
 	}
@@ -727,5 +732,94 @@ public class BloodMagicGuide
         entries.add(new EntryUniText(demonicPowerPages, "guide.BloodMagic.entryName.spells.demonicPower"));
         
 		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.spells", new ItemStack(ModItems.itemComplexSpellCrystal)));
+	}
+	
+	public static void registerAlchemyBook()
+	{
+		List<EntryAbstract> entries = new ArrayList();
+		
+		ArrayList<IPage> fatedMeetingPages = new ArrayList();
+        fatedMeetingPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.fatedMeeting")));
+        entries.add(new EntryUniText(fatedMeetingPages, "guide.BloodMagic.entryName.alchemy.fatedMeeting"));
+        
+        ArrayList<IPage> firstStepsPages = new ArrayList();
+        firstStepsPages.add(new PageOrbRecipe(RecipeHolder.alchemySetRecipe));
+        firstStepsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.firstSteps")));
+        entries.add(new EntryUniText(firstStepsPages, "guide.BloodMagic.entryName.alchemy.firstSteps"));
+        
+        ArrayList<IPage> chemistrySetPages = new ArrayList();
+        for(int i=1; i<=10; i++)
+        	chemistrySetPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.chemistrySet." + i)));
+        entries.add(new EntryUniText(chemistrySetPages, "guide.BloodMagic.entryName.alchemy.chemistrySet"));
+        
+        ArrayList<IPage> incensePages = new ArrayList();
+        incensePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.incense.1")));
+        incensePages.add(new PageIRecipe(RecipeHolder.crucibleRecipe));
+        incensePages.add(new PageIRecipe(RecipeHolder.woodAshRecipe));
+        incensePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.incense.2")));
+        incensePages.add(new PageIRecipe(RecipeHolder.byrrusRecipe));
+        incensePages.add(new PageIRecipe(RecipeHolder.livensRecipe));
+        incensePages.add(new PageIRecipe(RecipeHolder.virRecipe));
+        incensePages.add(new PageIRecipe(RecipeHolder.purpuraRecipe));
+        incensePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.incense.3")));
+        entries.add(new EntryUniText(incensePages, "guide.BloodMagic.entryName.alchemy.incense"));
+        
+        ArrayList<IPage> potionsPages = new ArrayList();
+        potionsPages.add(new PageAltarRecipe(RecipeHolder.flaskRecipe));
+        potionsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.potions")));
+        entries.add(new EntryUniText(potionsPages, "guide.BloodMagic.entryName.alchemy.potions"));
+        
+        ArrayList<IPage> reagentRevolutionPages = new ArrayList();
+        for(int i=1; i<=8; i++)
+        	reagentRevolutionPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentRevolution." + i)));
+        entries.add(new EntryUniText(reagentRevolutionPages, "guide.BloodMagic.entryName.alchemy.reagentRevolution"));
+        
+        ArrayList<IPage> newPotionsPages = new ArrayList();
+        newPotionsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.newPotions")));
+        entries.add(new EntryUniText(newPotionsPages, "guide.BloodMagic.entryName.alchemy.newPotions"));
+        
+        ArrayList<IPage> soulSandPages = new ArrayList();
+        soulSandPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.soulSand")));
+        entries.add(new EntryUniText(soulSandPages, "guide.BloodMagic.entryName.alchemy.soulSand"));
+        
+        ArrayList<IPage> timeGoesByPages = new ArrayList();
+        timeGoesByPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.timeGoesBy")));
+        entries.add(new EntryUniText(timeGoesByPages, "guide.BloodMagic.entryName.alchemy.timeGoesBy"));
+        
+        ArrayList<IPage> catalystsPages = new ArrayList();
+        catalystsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.catalysts")));
+        entries.add(new EntryUniText(catalystsPages, "guide.BloodMagic.entryName.alchemy.catalysts"));
+        
+        ArrayList<IPage> activationCrystalPages = new ArrayList();
+        activationCrystalPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.activationCrystal")));
+        entries.add(new EntryUniText(activationCrystalPages, "guide.BloodMagic.entryName.alchemy.activationCrystal"));
+        
+        ArrayList<IPage> reagentSystemPages = new ArrayList();
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.1")));
+        reagentSystemPages.add(new PageIRecipe(RecipeHolder.calcinatorRecipe));
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.2")));
+        reagentSystemPages.add(new PageIRecipe(RecipeHolder.belljarRecipe));
+        reagentSystemPages.add(new PageIRecipe(RecipeHolder.relayRecipe));
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.3")));
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.4")));
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.5")));
+        reagentSystemPages.add(new PageIRecipe(RecipeHolder.routerRecipe));
+        reagentSystemPages.add(new PageIRecipe(RecipeHolder.segmenterRecipe));
+        reagentSystemPages.add(new PageIRecipe(RecipeHolder.cleanserRecipe));
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.6")));
+        
+        reagentSystemPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.reagentSystem.7")));
+
+        entries.add(new EntryUniText(reagentSystemPages, "guide.BloodMagic.entryName.alchemy.reagentSystem"));
+        
+        ArrayList<IPage> magusSecretPages = new ArrayList();
+        magusSecretPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.magusSecret")));
+        entries.add(new EntryUniText(magusSecretPages, "guide.BloodMagic.entryName.alchemy.magusSecret"));
+        
+        ArrayList<IPage> simpleCreationsPages = new ArrayList();
+        simpleCreationsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.simpleCreations")));
+        entries.add(new EntryUniText(simpleCreationsPages, "guide.BloodMagic.entryName.alchemy.simpleCreations"));
+		
+		categories.add(new CategoryItemStack(entries, "guide.BloodMagic.category.alchemy", new ItemStack(ModItems.alchemyFlask)));
 	}
 }

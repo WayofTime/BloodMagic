@@ -1522,7 +1522,7 @@ public class AlchemicalWizardry
         
         Rituals.registerRitual("AW035PhantomHands", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         
-        Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Birth of the Bastion");
+        Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Blood of the New Moon");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 
