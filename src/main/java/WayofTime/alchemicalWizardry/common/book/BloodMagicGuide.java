@@ -5,19 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.guide.OrbRecipeRenderer;
 import WayofTime.alchemicalWizardry.api.guide.PageAltarRecipe;
-import WayofTime.alchemicalWizardry.api.guide.PageOrbRecipe;
 import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
 import amerifrance.guideapi.api.GuideRegistry;
 import amerifrance.guideapi.api.abstraction.CategoryAbstract;
 import amerifrance.guideapi.api.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.abstraction.IPage;
 import amerifrance.guideapi.api.base.Book;
+import amerifrance.guideapi.api.util.BookBuilder;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.categories.CategoryItemStack;
 import amerifrance.guideapi.entries.EntryUniText;
@@ -37,8 +39,17 @@ public class BloodMagicGuide
 		registerSpellBook();
 		registerAlchemyBook();
 		
-		bloodMagicGuide = new Book(categories, "guide.BloodMagic.book.title", "guide.BloodMagic.welcomeMessage", "guide.BloodMagic.book.name", new Color(190, 10, 0));
+		BookBuilder bmBookBuilder = new BookBuilder();
+		bmBookBuilder.setCategories(categories).setUnlocBookTitle("guide.BloodMagic.book.title").setUnlocWelcomeMessage("guide.BloodMagic.welcomeMessage").setUnlocDisplayName("guide.BloodMagic.book.name").setBookColor(new Color(190, 10, 0));
+		
+//		bloodMagicGuide = new Book(categories, "guide.BloodMagic.book.title", "guide.BloodMagic.welcomeMessage", "guide.BloodMagic.book.name", new Color(190, 10, 0));
+		bloodMagicGuide = bmBookBuilder.build();
         GuideRegistry.registerBook(bloodMagicGuide);
+	}
+	
+	public static PageIRecipe getOrbPageForRecipe(IRecipe recipe)
+	{
+		return new PageIRecipe(recipe, new OrbRecipeRenderer(recipe));
 	}
 	
 	public static void registerArchitectBook()
@@ -67,18 +78,18 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(blankSlatePages, "guide.BloodMagic.entryName.architect.blankSlate"));
 		
 		ArrayList<IPage> divinationSigilPages = new ArrayList();
-		divinationSigilPages.add(new PageOrbRecipe(RecipeHolder.divinationSigilRecipe));
+		divinationSigilPages.add(getOrbPageForRecipe(RecipeHolder.divinationSigilRecipe));
 		divinationSigilPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.divination")));
 		entries.add(new EntryUniText(divinationSigilPages, "guide.BloodMagic.entryName.architect.divination"));
 
 		ArrayList<IPage> waterSigilPages = new ArrayList();
 		waterSigilPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.waterSigil.1")));
-		waterSigilPages.add(new PageOrbRecipe(RecipeHolder.waterSigilRecipe));
+		waterSigilPages.add(getOrbPageForRecipe(RecipeHolder.waterSigilRecipe));
 		waterSigilPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.waterSigil.2")));
 		entries.add(new EntryUniText(waterSigilPages, "guide.BloodMagic.entryName.architect.waterSigil"));
 		
 		ArrayList<IPage> lavaCrystalPages = new ArrayList();
-		lavaCrystalPages.add(new PageOrbRecipe(RecipeHolder.lavaCrystalRecipe));
+		lavaCrystalPages.add(getOrbPageForRecipe(RecipeHolder.lavaCrystalRecipe));
 		lavaCrystalPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.lavaCrystal")));
 		entries.add(new EntryUniText(lavaCrystalPages, "guide.BloodMagic.entryName.architect.lavaCrystal"));
 		
@@ -92,7 +103,7 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(lavaSigilPages, "guide.BloodMagic.entryName.architect.lavaSigil"));
 
 		ArrayList<IPage> blankRunePages = new ArrayList();
-		blankRunePages.add(new PageOrbRecipe(RecipeHolder.blankRuneRecipe));
+		blankRunePages.add(getOrbPageForRecipe(RecipeHolder.blankRuneRecipe));
 		blankRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.blankRunes.1")));
         blankRunePages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/altars/T2.png"), true));
 		blankRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.blankRunes.2")));
@@ -109,17 +120,17 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(apprenticeOrbPages, "guide.BloodMagic.entryName.architect.apprenticeOrb"));
 		
 		ArrayList<IPage> voidSigilPages = new ArrayList();
-		voidSigilPages.add(new PageOrbRecipe(RecipeHolder.voidSigilRecipe));
+		voidSigilPages.add(getOrbPageForRecipe(RecipeHolder.voidSigilRecipe));
 		voidSigilPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.voidSigil")));
 		entries.add(new EntryUniText(voidSigilPages, "guide.BloodMagic.entryName.architect.voidSigil"));
 		
 		ArrayList<IPage> airSigilPages = new ArrayList();
-		airSigilPages.add(new PageOrbRecipe(RecipeHolder.airSigilRecipe));
+		airSigilPages.add(getOrbPageForRecipe(RecipeHolder.airSigilRecipe));
 		airSigilPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.airSigil")));
 		entries.add(new EntryUniText(airSigilPages, "guide.BloodMagic.entryName.architect.airSigil"));
 		
 		ArrayList<IPage> sightSigilPages = new ArrayList();
-		sightSigilPages.add(new PageOrbRecipe(RecipeHolder.sightSigilRecipe));
+		sightSigilPages.add(getOrbPageForRecipe(RecipeHolder.sightSigilRecipe));
 		sightSigilPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.sightSigil")));
 		entries.add(new EntryUniText(sightSigilPages, "guide.BloodMagic.entryName.architect.sightSigil"));
 		
@@ -128,7 +139,7 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(advancedAltarPages, "guide.BloodMagic.entryName.architect.advancedAltar"));
 
 		ArrayList<IPage> fastMinerPages = new ArrayList();
-		fastMinerPages.add(new PageOrbRecipe(RecipeHolder.fastMinerRecipe));
+		fastMinerPages.add(getOrbPageForRecipe(RecipeHolder.fastMinerRecipe));
 		fastMinerPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.fastMiner")));
 		entries.add(new EntryUniText(fastMinerPages, "guide.BloodMagic.entryName.architect.fastMiner"));
 		
@@ -137,7 +148,7 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(soulFrayPages, "guide.BloodMagic.entryName.architect.soulFray"));
 		
 		ArrayList<IPage> greenGrovePages = new ArrayList();
-		greenGrovePages.add(new PageOrbRecipe(RecipeHolder.greenGroveRecipe));
+		greenGrovePages.add(getOrbPageForRecipe(RecipeHolder.greenGroveRecipe));
 		greenGrovePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.greenGrove")));
 		entries.add(new EntryUniText(greenGrovePages, "guide.BloodMagic.entryName.architect.greenGrove"));
 		
@@ -147,9 +158,9 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(daggerPages, "guide.BloodMagic.entryName.architect.dagger"));
 		
 		ArrayList<IPage> sacrificePages = new ArrayList();
-		sacrificePages.add(new PageIRecipe(RecipeHolder.selfSacrificeRuneRecipe));
+		sacrificePages.add(getOrbPageForRecipe(RecipeHolder.selfSacrificeRuneRecipe));
 		sacrificePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.sacrifice.1")));
-		sacrificePages.add(new PageIRecipe(RecipeHolder.sacrificeRuneRecipe));
+		sacrificePages.add(getOrbPageForRecipe(RecipeHolder.sacrificeRuneRecipe));
 		sacrificePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.sacrifice.2")));
 		entries.add(new EntryUniText(sacrificePages, "guide.BloodMagic.entryName.architect.sacrifice"));
 		
@@ -173,40 +184,40 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(magicianOrbPages, "guide.BloodMagic.entryName.architect.magicianOrb"));
 		
 		ArrayList<IPage> newRunePages = new ArrayList();
-		newRunePages.add(new PageOrbRecipe(RecipeHolder.capacityRuneRecipe));
+		newRunePages.add(getOrbPageForRecipe(RecipeHolder.capacityRuneRecipe));
 		newRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.newRune.1")));
-		newRunePages.add(new PageOrbRecipe(RecipeHolder.dislocationRuneRecipe));
+		newRunePages.add(getOrbPageForRecipe(RecipeHolder.dislocationRuneRecipe));
 		newRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.newRune.2")));
 		entries.add(new EntryUniText(newRunePages, "guide.BloodMagic.entryName.architect.newRune"));
 		
 		ArrayList<IPage> magnetismPages = new ArrayList();
-		magnetismPages.add(new PageOrbRecipe(RecipeHolder.magnetismSigilRecipe));
+		magnetismPages.add(getOrbPageForRecipe(RecipeHolder.magnetismSigilRecipe));
 		magnetismPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.magnetism")));
 		entries.add(new EntryUniText(magnetismPages, "guide.BloodMagic.entryName.architect.magnetism"));
 		
 		ArrayList<IPage> phantomBridgePages = new ArrayList();
-		phantomBridgePages.add(new PageOrbRecipe(RecipeHolder.phantomBridgeRecipe));
+		phantomBridgePages.add(getOrbPageForRecipe(RecipeHolder.phantomBridgeRecipe));
 		phantomBridgePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.phantomBridge")));
 		entries.add(new EntryUniText(phantomBridgePages, "guide.BloodMagic.entryName.architect.phantomBridge"));
 		
 		ArrayList<IPage> holdingPages = new ArrayList();
-		holdingPages.add(new PageOrbRecipe(RecipeHolder.holdingSigilRecipe));
+		holdingPages.add(getOrbPageForRecipe(RecipeHolder.holdingSigilRecipe));
 		holdingPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.holding")));
 		entries.add(new EntryUniText(holdingPages, "guide.BloodMagic.entryName.architect.holding"));
 		
 		ArrayList<IPage> elementalAffinityPages = new ArrayList();
-		elementalAffinityPages.add(new PageOrbRecipe(RecipeHolder.affinitySigilRecipe));
+		elementalAffinityPages.add(getOrbPageForRecipe(RecipeHolder.affinitySigilRecipe));
 		elementalAffinityPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.elementalAffinity")));
 		entries.add(new EntryUniText(elementalAffinityPages, "guide.BloodMagic.entryName.architect.elementalAffinity"));
 		
 		ArrayList<IPage> ritualStonesPages = new ArrayList();
-		ritualStonesPages.add(new PageOrbRecipe(RecipeHolder.ritualStoneRecipe));
-		ritualStonesPages.add(new PageOrbRecipe(RecipeHolder.masterStoneRecipe));
+		ritualStonesPages.add(getOrbPageForRecipe(RecipeHolder.ritualStoneRecipe));
+		ritualStonesPages.add(getOrbPageForRecipe(RecipeHolder.masterStoneRecipe));
 		ritualStonesPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.ritualStones")));
 		entries.add(new EntryUniText(ritualStonesPages, "guide.BloodMagic.entryName.architect.ritualStones"));
 
 		ArrayList<IPage> bloodLampPages = new ArrayList();
-		bloodLampPages.add(new PageOrbRecipe(RecipeHolder.bloodLampRecipe));
+		bloodLampPages.add(getOrbPageForRecipe(RecipeHolder.bloodLampRecipe));
 		bloodLampPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.bloodLamp")));
 		entries.add(new EntryUniText(bloodLampPages, "guide.BloodMagic.entryName.architect.bloodLamp"));
 		
@@ -214,7 +225,7 @@ public class BloodMagicGuide
 		boundArmourPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.boundArmour.1")));
 		boundArmourPages.add(new PageIRecipe(RecipeHolder.emptySocketRecipe));
 		boundArmourPages.add(new PageAltarRecipe(RecipeHolder.filledSocketRecipe));
-		boundArmourPages.add(new PageOrbRecipe(RecipeHolder.soulForgeRecipe));
+		boundArmourPages.add(getOrbPageForRecipe(RecipeHolder.soulForgeRecipe));
 		boundArmourPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.boundArmour.2")));
 		entries.add(new EntryUniText(boundArmourPages, "guide.BloodMagic.entryName.architect.boundArmour"));
 		
@@ -253,17 +264,17 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(masterOrbPages, "guide.BloodMagic.entryName.architect.masterOrb"));
 		
 		ArrayList<IPage> whirlwindPages = new ArrayList();
-		whirlwindPages.add(new PageOrbRecipe(RecipeHolder.whirlwindSigilRecipe));
+		whirlwindPages.add(getOrbPageForRecipe(RecipeHolder.whirlwindSigilRecipe));
 		whirlwindPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.whirlwind")));
 		entries.add(new EntryUniText(whirlwindPages, "guide.BloodMagic.entryName.architect.whirlwind"));
 		
 		ArrayList<IPage> compressionPages = new ArrayList();
-		compressionPages.add(new PageOrbRecipe(RecipeHolder.compressionSigilRecipe));
+		compressionPages.add(getOrbPageForRecipe(RecipeHolder.compressionSigilRecipe));
 		compressionPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.compression")));
 		entries.add(new EntryUniText(compressionPages, "guide.BloodMagic.entryName.architect.compression"));
 		
 		ArrayList<IPage> severancePages = new ArrayList();
-		severancePages.add(new PageOrbRecipe(RecipeHolder.enderSeveranceSigilRecipe));
+		severancePages.add(getOrbPageForRecipe(RecipeHolder.enderSeveranceSigilRecipe));
 		severancePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.severance")));
 		entries.add(new EntryUniText(severancePages, "guide.BloodMagic.entryName.architect.severance"));
 		
@@ -274,17 +285,17 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(teleposerPages, "guide.BloodMagic.entryName.architect.teleposer"));
 		
 		ArrayList<IPage> suppressionPages = new ArrayList();
-		suppressionPages.add(new PageOrbRecipe(RecipeHolder.suppressionSigilRecipe));
+		suppressionPages.add(getOrbPageForRecipe(RecipeHolder.suppressionSigilRecipe));
 		suppressionPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.suppression")));
 		entries.add(new EntryUniText(suppressionPages, "guide.BloodMagic.entryName.architect.suppression"));
 		
 		ArrayList<IPage> superiorCapacityPages = new ArrayList();
-		superiorCapacityPages.add(new PageOrbRecipe(RecipeHolder.superiorCapacityRecipe));
+		superiorCapacityPages.add(getOrbPageForRecipe(RecipeHolder.superiorCapacityRecipe));
 		superiorCapacityPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.superiorCapacity")));
 		entries.add(new EntryUniText(superiorCapacityPages, "guide.BloodMagic.entryName.architect.superiorCapacity"));
 		
 		ArrayList<IPage> orbRunePages = new ArrayList();
-		orbRunePages.add(new PageOrbRecipe(RecipeHolder.orbRuneRecipe));
+		orbRunePages.add(getOrbPageForRecipe(RecipeHolder.orbRuneRecipe));
 		orbRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.orbRune")));
 		entries.add(new EntryUniText(orbRunePages, "guide.BloodMagic.entryName.architect.orbRune"));
 		
@@ -312,17 +323,17 @@ public class BloodMagicGuide
 		entries.add(new EntryUniText(demonicOrbPages, "guide.BloodMagic.entryName.architect.demonicOrb"));
 		
 		ArrayList<IPage> energyBazookaPages = new ArrayList();
-		demonicOrbPages.add(new PageOrbRecipe(RecipeHolder.energyBazookaRecipe));
+		demonicOrbPages.add(getOrbPageForRecipe(RecipeHolder.energyBazookaRecipe));
 		energyBazookaPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.energyBazooka")));
 		entries.add(new EntryUniText(energyBazookaPages, "guide.BloodMagic.entryName.architect.energyBazooka"));
 		
 		ArrayList<IPage> accelerationRunePages = new ArrayList();
-		demonicOrbPages.add(new PageOrbRecipe(RecipeHolder.accelerationRuneRecipe));
+		demonicOrbPages.add(getOrbPageForRecipe(RecipeHolder.accelerationRuneRecipe));
 		accelerationRunePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.accelerationRune")));
 		entries.add(new EntryUniText(accelerationRunePages, "guide.BloodMagic.entryName.architect.accelerationRune"));
 		
 		ArrayList<IPage> harvestPages = new ArrayList();
-		demonicOrbPages.add(new PageOrbRecipe(RecipeHolder.harvestSigilRecipe));
+		demonicOrbPages.add(getOrbPageForRecipe(RecipeHolder.harvestSigilRecipe));
 		harvestPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.architect.harvest")));
 		entries.add(new EntryUniText(harvestPages, "guide.BloodMagic.entryName.architect.harvest"));
 		
@@ -358,13 +369,13 @@ public class BloodMagicGuide
         entries.add(new EntryUniText(introPages, "guide.BloodMagic.entryName.rituals.intro"));
         
         ArrayList<IPage> weakRitualPages = new ArrayList();
-        weakRitualPages.add(new PageOrbRecipe(RecipeHolder.weakRitualStoneRecipe));
+        weakRitualPages.add(getOrbPageForRecipe(RecipeHolder.weakRitualStoneRecipe));
         weakRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.weakRitual")));
         entries.add(new EntryUniText(weakRitualPages, "guide.BloodMagic.entryName.rituals.weakRitual"));
         
         ArrayList<IPage> ritualsPages = new ArrayList();
-        ritualsPages.add(new PageOrbRecipe(RecipeHolder.ritualStoneRecipe));
-        ritualsPages.add(new PageOrbRecipe(RecipeHolder.masterStoneRecipe));
+        ritualsPages.add(getOrbPageForRecipe(RecipeHolder.ritualStoneRecipe));
+        ritualsPages.add(getOrbPageForRecipe(RecipeHolder.masterStoneRecipe));
         ritualsPages.add(new PageAltarRecipe(RecipeHolder.waterScribeTool));
         ritualsPages.add(new PageAltarRecipe(RecipeHolder.fireScribeTool));
         ritualsPages.add(new PageAltarRecipe(RecipeHolder.earthScribeTool));
@@ -512,7 +523,7 @@ public class BloodMagicGuide
         entries.add(new EntryUniText(costOfProgressPages, "guide.BloodMagic.entryName.rituals.costOfProgress"));
         
         ArrayList<IPage> zephyrRitualPages = new ArrayList();
-        zephyrRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Zeohyr.png"), true));
+        zephyrRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/Zephyr.png"), true));
         zephyrRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.zephyrRitual")));
         entries.add(new EntryUniText(zephyrRitualPages, "guide.BloodMagic.entryName.rituals.zephyrRitual"));
         
@@ -593,7 +604,7 @@ public class BloodMagicGuide
         ArrayList<IPage> symmetryRitualPages = new ArrayList();
         symmetryRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/SymmetryOmega.png"), true));
         symmetryRitualPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.rituals.symmetryRitual")));
-        entries.add(new EntryUniText(lavaRitualPages, "guide.BloodMagic.entryName.rituals.symmetryRitual"));
+        entries.add(new EntryUniText(symmetryRitualPages, "guide.BloodMagic.entryName.rituals.symmetryRitual"));
         
         ArrayList<IPage> stallingRitualPages = new ArrayList();
         stallingRitualPages.add(new PageUnlocImage("", new ResourceLocation("alchemicalwizardry:textures/misc/screenshots/rituals/StallingOmega.png"), true));
@@ -686,7 +697,7 @@ public class BloodMagicGuide
         ArrayList<IPage> tableAndSkullsPages = new ArrayList();
 		tableAndSkullsPages.add(new PageAltarRecipe(RecipeHolder.blankSpellRecipe));
         tableAndSkullsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.tableAndSkulls.1")));
-		tableAndSkullsPages.add(new PageOrbRecipe(RecipeHolder.spellTableRecipe));
+		tableAndSkullsPages.add(getOrbPageForRecipe(RecipeHolder.spellTableRecipe));
         tableAndSkullsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.spells.tableAndSkulls.2")));
         entries.add(new EntryUniText(tableAndSkullsPages, "guide.BloodMagic.entryName.spells.tableAndSkulls"));
         
@@ -743,7 +754,7 @@ public class BloodMagicGuide
         entries.add(new EntryUniText(fatedMeetingPages, "guide.BloodMagic.entryName.alchemy.fatedMeeting"));
         
         ArrayList<IPage> firstStepsPages = new ArrayList();
-        firstStepsPages.add(new PageOrbRecipe(RecipeHolder.alchemySetRecipe));
+        firstStepsPages.add(getOrbPageForRecipe(RecipeHolder.alchemySetRecipe));
         firstStepsPages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.firstSteps")));
         entries.add(new EntryUniText(firstStepsPages, "guide.BloodMagic.entryName.alchemy.firstSteps"));
         
@@ -757,10 +768,10 @@ public class BloodMagicGuide
         incensePages.add(new PageIRecipe(RecipeHolder.crucibleRecipe));
         incensePages.add(new PageIRecipe(RecipeHolder.woodAshRecipe));
         incensePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.incense.2")));
-        incensePages.add(new PageIRecipe(RecipeHolder.byrrusRecipe));
-        incensePages.add(new PageIRecipe(RecipeHolder.livensRecipe));
-        incensePages.add(new PageIRecipe(RecipeHolder.virRecipe));
-        incensePages.add(new PageIRecipe(RecipeHolder.purpuraRecipe));
+        incensePages.add(getOrbPageForRecipe(RecipeHolder.byrrusRecipe));
+        incensePages.add(getOrbPageForRecipe(RecipeHolder.livensRecipe));
+        incensePages.add(getOrbPageForRecipe(RecipeHolder.virRecipe));
+        incensePages.add(getOrbPageForRecipe(RecipeHolder.purpuraRecipe));
         incensePages.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("aw.entries.alchemy.incense.3")));
         entries.add(new EntryUniText(incensePages, "guide.BloodMagic.entryName.alchemy.incense"));
         

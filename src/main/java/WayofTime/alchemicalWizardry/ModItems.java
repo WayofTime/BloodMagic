@@ -205,7 +205,6 @@ public class ModItems
     public static Item itemTankSegmenter;
     public static Item itemDestinationClearer;
     
-    public static Item itemBloodMagicBook;
     public static Item itemHarvestSigil;
     public static Item itemCompressionSigil;
 
@@ -339,7 +338,6 @@ public class ModItems
         itemAttunedCrystal = new ItemAttunedCrystal().setUnlocalizedName("itemAttunedCrystal");
         itemTankSegmenter = new ItemTankSegmenter().setUnlocalizedName("itemTankSegmenter");
         itemDestinationClearer = new ItemDestinationClearer().setUnlocalizedName("destinationClearer");
-        itemBloodMagicBook = new ItemBMBook().setUnlocalizedName("bmBook");
         
         dawnScribeTool = new DawnScribeTool().setUnlocalizedName("dawnScribeTool");
         
@@ -470,8 +468,6 @@ public class ModItems
         GameRegistry.registerItem(ModItems.itemAttunedCrystal, "itemAttunedCrystal");
         GameRegistry.registerItem(ModItems.itemTankSegmenter, "itemTankSegmenter");
         GameRegistry.registerItem(ModItems.itemDestinationClearer, "itemDestinationClearer");
-
-        GameRegistry.registerItem(ModItems.itemBloodMagicBook, "itemBloodMagicBook");
         
         GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
         GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");

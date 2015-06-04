@@ -7,10 +7,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -48,6 +50,8 @@ public class TECrucible extends TEInventory
 		if(worldObj.isRemote)
 			return;
 		
+		boolean stateChanged = false;
+		
 		if(ticksRemaining <= 0)
 		{
 			ItemStack stack = this.getStackInSlot(0);
@@ -70,6 +74,8 @@ public class TECrucible extends TEInventory
 				{
 					this.setInventorySlotContents(0, null);
 				}
+				
+				stateChanged = true;
 			}
 		}
 
@@ -79,7 +85,6 @@ public class TECrucible extends TEInventory
 			
 			if(playerList != null && !playerList.isEmpty())
 			{
-				boolean stateChanged = false;
 				boolean allAreGood = true;
 				
 				for(EntityPlayer player : playerList)
@@ -103,12 +108,7 @@ public class TECrucible extends TEInventory
 					stateChanged = true;
 				}
 				
-				if(stateChanged)
-				{
-					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-
-					updateNeighbors();
-				}
+				
 			}else
 			{
 				if(state != 0)
@@ -126,6 +126,13 @@ public class TECrucible extends TEInventory
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 				updateNeighbors();
 			}
+		}
+		
+		if(stateChanged)
+		{
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
+			updateNeighbors();
 		}
 	}
 	
@@ -200,6 +207,20 @@ public class TECrucible extends TEInventory
     	tag.setFloat("gColour", gColour);
     	tag.setFloat("bColour", bColour);
     	tag.setInteger("state", state);
+    	
+    	NBTTagList invList = new NBTTagList();
+        for (int i = 0; i < inv.length; i++)
+        {
+            if (inv[i] != null)
+            {
+                NBTTagCompound stackTag = new NBTTagCompound();
+                stackTag.setByte("Slot", (byte) i);
+                inv[i].writeToNBT(stackTag);
+                invList.appendTag(stackTag);
+            }
+        }
+
+        tag.setTag("Inventory", invList);
     }
     
     public void readClientNBT(NBTTagCompound tag)
@@ -208,6 +229,17 @@ public class TECrucible extends TEInventory
     	gColour = tag.getFloat("gColour");
     	bColour = tag.getFloat("bColour");
     	state = tag.getInteger("state");
+    	
+    	NBTTagList invList = tag.getTagList("Inventory",
+                Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < invList.tagCount(); i++)
+        {
+            NBTTagCompound stackTag = invList.getCompoundTagAt(i);
+            int slot = stackTag.getByte("Slot");
+
+            if (slot >= 0 && slot < inv.length)
+                inv[slot] = ItemStack.loadItemStackFromNBT(stackTag);
+        }
     }
 
     

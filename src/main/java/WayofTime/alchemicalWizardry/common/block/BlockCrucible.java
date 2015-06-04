@@ -7,6 +7,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 import WayofTime.alchemicalWizardry.common.tileEntity.TECrucible;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,6 +39,33 @@ public class BlockCrucible extends BlockContainer
 		this.setBlockName("blockCrucible");
 		this.setBlockBounds(0.3125F, 0.0F, 0.3125F, 0.6875F, 0.625F, 0.6875F);
 	}
+	
+	@Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
+    {
+        TECrucible tileEntity = (TECrucible) world.getTileEntity(x, y, z);
+
+        if (tileEntity == null || player.isSneaking())
+        {
+            return false;
+        }
+
+        ItemStack playerItem = player.getCurrentEquippedItem();
+
+        if (tileEntity.getStackInSlot(0) == null && playerItem != null && playerItem.getItem() instanceof IIncense)
+        {
+            ItemStack newItem = playerItem.copy();
+            newItem.stackSize = 1;
+            --playerItem.stackSize;
+            tileEntity.setInventorySlotContents(0, newItem);
+//        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null) //Disabled currently
+//        {
+//            player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
+//            tileEntity.setInventorySlotContents(0, null);
+        }
+        world.markBlockForUpdate(x, y, z);
+        return true;
+    }
 	
 	@Override
     @SideOnly(Side.CLIENT)
