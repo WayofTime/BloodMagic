@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.client;
 
-import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
 import WayofTime.alchemicalWizardry.common.CommonProxy;
-import WayofTime.alchemicalWizardry.common.book.BUEntries;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGrunt;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntEarth;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.EntityMinorDemonGruntFire;
@@ -37,6 +36,7 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjecti
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderConduit;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderCrystalBelljar;
@@ -110,7 +110,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerPostSideObjects()
     {
-    	BUEntries entries = new BUEntries();
+//    	BUEntries entries = new BUEntries();
 //    	entries.postInit();
     }
     
@@ -193,5 +193,6 @@ public class ClientProxy extends CommonProxy
         FMLCommonHandler.instance().bus().register(ob);
         MinecraftForge.EVENT_BUS.register(ob);
         KeyBindings.init();
+        MinecraftForge.EVENT_BUS.register(new ScrollHelper());
     }
 }

@@ -65,6 +65,10 @@ public class RitualEffectExpulsion extends RitualEffect
 
             for (EntityPlayer entityplayer : playerList)
             {
+            	if(entityplayer.capabilities.isCreativeMode)
+            	{
+            		continue;
+            	}
                 String playerString = SpellHelper.getUsername(entityplayer);
                 if (!playerString.equals(owner))
                 {

@@ -48,7 +48,7 @@ public class RitualEffectEllipsoid extends RitualEffect
         int ySize = item2 == null ? 0 : item2.stackSize;
         int zSize = item3 == null ? 0 : item3.stackSize;
 
-        int cost = (int) Math.pow((xSize + 1) * (ySize + 1) * (zSize + 1), 0.333);
+        int cost = 5;
 
         if (currentEssence < cost)
         {

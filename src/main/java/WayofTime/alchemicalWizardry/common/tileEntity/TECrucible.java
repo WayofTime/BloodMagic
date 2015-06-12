@@ -3,19 +3,24 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TECrucible extends TEInventory
 {
+	private int radius = 5;
+	
 	public float rColour;
 	public float gColour;
 	public float bColour;
@@ -45,6 +50,8 @@ public class TECrucible extends TEInventory
 		if(worldObj.isRemote)
 			return;
 		
+		boolean stateChanged = false;
+		
 		if(ticksRemaining <= 0)
 		{
 			ItemStack stack = this.getStackInSlot(0);
@@ -67,16 +74,17 @@ public class TECrucible extends TEInventory
 				{
 					this.setInventorySlotContents(0, null);
 				}
+				
+				stateChanged = true;
 			}
 		}
 
 		if(ticksRemaining > 0)
 		{
-			List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 3, 3);
+			List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, radius, radius);
 			
 			if(playerList != null && !playerList.isEmpty())
 			{
-				boolean stateChanged = false;
 				boolean allAreGood = true;
 				
 				for(EntityPlayer player : playerList)
@@ -100,16 +108,14 @@ public class TECrucible extends TEInventory
 					stateChanged = true;
 				}
 				
-				if(stateChanged)
-				{
-					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-				}
+				
 			}else
 			{
 				if(state != 0)
 				{
 					state = 0;
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+					updateNeighbors();
 				}
 			}
 		}else
@@ -118,8 +124,32 @@ public class TECrucible extends TEInventory
 			{
 				state = 0;
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				updateNeighbors();
 			}
 		}
+		
+		if(stateChanged)
+		{
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
+			updateNeighbors();
+		}
+	}
+	
+	private void updateNeighbors()
+	{
+		Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
+        block = worldObj.getBlock(xCoord - 1, yCoord, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord - 1, yCoord, zCoord, block);
+        block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord + 1, zCoord, block);
+        block = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord - 1, zCoord, block);
+        block = worldObj.getBlock(xCoord, yCoord, zCoord + 1);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord + 1, block);
+        block = worldObj.getBlock(xCoord, yCoord, zCoord - 1);
+        block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block); 
 	}
 	
 	public void spawnClientParticle(World world, int x, int y, int z, Random rand)
@@ -127,15 +157,16 @@ public class TECrucible extends TEInventory
 		switch(state)
 		{
 		case 0:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
+	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
 			break;
 			
 		case 1:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, 0.9, 0.9, 0.9);
+	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 1.0, 1.0, 1.0);
 			break;
 			
 		case 2:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
+	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
+	        world.spawnParticle("flame", x + 0.5D + rand.nextGaussian() / 32, y + 0.7D, z + 0.5D + rand.nextGaussian() / 32, 0, 0.02, 0);
 			break;
 			
 		case 3:
@@ -152,6 +183,7 @@ public class TECrucible extends TEInventory
     	tag.setInteger("ticksRemaining", ticksRemaining);
     	tag.setInteger("minValue", minValue);
     	tag.setInteger("maxValue", maxValue);
+    	tag.setFloat("increment", this.incrementValue);
         
         this.writeClientNBT(tag);
     }
@@ -164,6 +196,7 @@ public class TECrucible extends TEInventory
     	ticksRemaining = tag.getInteger("ticksRemaining");
     	minValue = tag.getInteger("minValue");
     	maxValue = tag.getInteger("maxValue");
+    	incrementValue = tag.getFloat("increment");
 
         this.readClientNBT(tag);
     }
@@ -174,6 +207,20 @@ public class TECrucible extends TEInventory
     	tag.setFloat("gColour", gColour);
     	tag.setFloat("bColour", bColour);
     	tag.setInteger("state", state);
+    	
+    	NBTTagList invList = new NBTTagList();
+        for (int i = 0; i < inv.length; i++)
+        {
+            if (inv[i] != null)
+            {
+                NBTTagCompound stackTag = new NBTTagCompound();
+                stackTag.setByte("Slot", (byte) i);
+                inv[i].writeToNBT(stackTag);
+                invList.appendTag(stackTag);
+            }
+        }
+
+        tag.setTag("Inventory", invList);
     }
     
     public void readClientNBT(NBTTagCompound tag)
@@ -182,6 +229,17 @@ public class TECrucible extends TEInventory
     	gColour = tag.getFloat("gColour");
     	bColour = tag.getFloat("bColour");
     	state = tag.getInteger("state");
+    	
+    	NBTTagList invList = tag.getTagList("Inventory",
+                Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < invList.tagCount(); i++)
+        {
+            NBTTagCompound stackTag = invList.getCompoundTagAt(i);
+            int slot = stackTag.getByte("Slot");
+
+            if (slot >= 0 && slot < inv.length)
+                inv[slot] = ItemStack.loadItemStackFromNBT(stackTag);
+        }
     }
 
     
@@ -211,4 +269,9 @@ public class TECrucible extends TEInventory
     {
         return stack != null ? stack.getItem() instanceof IIncense : false;
     }
+
+	public int getRSPowerOutput() 
+	{
+		return (state == 1 || state == 0) ? 0 : 15;
+	}
 }

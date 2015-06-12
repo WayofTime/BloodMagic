@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import WayofTime.alchemicalWizardry.api.bindingRegistry.UnbindingRegistry;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -48,6 +45,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.UnbindingRegistry;
 import WayofTime.alchemicalWizardry.api.compress.CompressionRegistry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
@@ -114,10 +112,12 @@ import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
+import WayofTime.alchemicalWizardry.common.items.ItemIncense;
+import WayofTime.alchemicalWizardry.common.items.ItemMailOrderCatalogue;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
-import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
+import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
 import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
@@ -144,6 +144,7 @@ import WayofTime.alchemicalWizardry.common.potion.PotionSoulHarden;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
+import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBinding;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBiomeChanger;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectContainment;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectCrafting;
@@ -169,7 +170,6 @@ import WayofTime.alchemicalWizardry.common.rituals.RitualEffectLifeConduit;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectMagnetic;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaStalling;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectOmegaTest;
-import WayofTime.alchemicalWizardry.common.rituals.RitualEffectBinding;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSpawnWard;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSphereCreator;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectSummonMeteor;
@@ -295,7 +295,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.2", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 
 public class AlchemicalWizardry
 {
@@ -386,11 +386,38 @@ public class AlchemicalWizardry
     public static boolean ritualDisabledPhantomHands;
     public static boolean ritualDisabledSphereIsland;
 
+    public static boolean potionDisableRegen;
+    public static boolean potionDisableNightVision;
+    public static boolean potionDisableFireResistance;
+    public static boolean potionDisableWaterBreathing;
+    public static boolean potionDisableMoveSpeed;
+    public static boolean potionDisableInstantHealth;
+    public static boolean potionDisablePoison;
+    public static boolean potionDisableBlindness;
+    public static boolean potionDisableWeakness;
+    public static boolean potionDisableStrength;
+    public static boolean potionDisableJumpBoost;
+    public static boolean potionDisableSlowness;
+    public static boolean potionDisableMining;
+    public static boolean potionDisableDrowning;
+    public static boolean potionDisableInvisibility;
+    public static boolean potionDisableResistance;
+    public static boolean potionDisableSaturation;
+    public static boolean potionDisableHealthBoost;
+    public static boolean potionDisableAbsorption;
+    public static boolean potionDisableBoost;
+    public static boolean potionDisableFlight;
+    public static boolean potionDisableReciprocation;
+    public static boolean potionDisablePlanarBinding;
+    public static boolean potionDisableSoulFray;
+    public static boolean potionDisableSoulHarden;
+    public static boolean potionDisableDeafness;
 
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     public static boolean isBotaniaLoaded;
     public static boolean isFMPLoaded;
+    public static boolean isPneumaticCraftLoaded;
 
     public static boolean wimpySettings;
     public static boolean respawnWithDebuff;
@@ -733,7 +760,6 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemBloodLightSigil), "btb", "sss", "bob", 'o', magicianBloodOrbStack, 'b', glowstoneBlockStack, 't', new ItemStack(Blocks.torch), 's', imbuedSlateStack));
         GameRegistry.addRecipe(new ItemStack(ModItems.itemKeyOfDiablo), " gw", "gdg", "wg ", 'w', weakBloodShardStack, 'g', goldIngotStack, 'd', diamondStack);
         GameRegistry.addRecipe(new ItemStack(ModItems.itemBloodPack), "gbg","flf","gsg",'s', blankSlateStack,'g', glassStack,'f',new ItemStack(Items.flint,1,craftingConstant),'b', emptyBucketStack, 'l', new ItemStack(Items.leather_chestplate));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemMailCatalogue), new ItemStack(Items.book), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.feather), glassStack, glassStack);
         customPotionDrowning = (new PotionDrowning(customPotionDrowningID, true, 0)).setIconIndex(0, 0).setPotionName("Drowning");
         customPotionBoost = (new PotionBoost(customPotionBoostID, false, 0)).setIconIndex(0, 0).setPotionName("Boost");
         customPotionProjProt = (new PotionProjectileProtect(customPotionProjProtID, false, 0)).setIconIndex(0, 0).setPotionName("Whirlwind");
@@ -830,7 +856,6 @@ public class AlchemicalWizardry
         blacklistAccelerators();
 
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
-        MinecraftForge.EVENT_BUS.register(new ScrollHelper());
         proxy.InitRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
@@ -1121,6 +1146,9 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.ghast_tear, 2), 100, new ItemStack[]{ghastTearStack, concentratedCatalystStack, weakBloodShardStack, new ItemStack(Blocks.soul_sand), new ItemStack(Blocks.soul_sand)}, 5);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.coal, 5), 1, new ItemStack[]{new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1), new ItemStack(Items.coal, 1, 1)}, 1);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(Items.clay_ball, 4), 5, new ItemStack[]{new ItemStack(Blocks.sand), waterBucketStack}, 2);
+        
+        ItemIncense.registerIncenseRecipes();
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockCrucible), "i i", "sis", " S ", 's', new ItemStack(Blocks.stone_slab), 'i', ironIngotStack, 'S', stoneStack);
     }
 
     @EventHandler
@@ -1196,6 +1224,10 @@ public class AlchemicalWizardry
         	long finalTime = System.nanoTime();
         	AlchemicalWizardry.logger.info("Recipe Holder initialized: took " + (finalTime - initialTime)/1000000f + "ms.");
         	
+            ModItems.itemMailCatalogue = new ItemMailOrderCatalogue().setUnlocalizedName("itemMailCatalogue");
+            GameRegistry.registerItem(ModItems.itemMailCatalogue, "itemMailCatalogue");
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemMailCatalogue), new ItemStack(Items.book), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.feather), new ItemStack(Blocks.glass, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.glass, 1, OreDictionary.WILDCARD_VALUE));
+
         	registerBMBook();
         }
 
@@ -1235,8 +1267,10 @@ public class AlchemicalWizardry
         }
         
         isBotaniaLoaded = Loader.isModLoaded("Botania");
-        
+        isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
         isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
+        
+        
 
         BloodMagicConfiguration.loadBlacklist();
 	    BloodMagicConfiguration.blacklistRituals();
@@ -1329,34 +1363,86 @@ public class AlchemicalWizardry
         }
     }
 
+    //TODO
     public static void initAlchemyPotionRecipes()
     {
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ghast_tear), Potion.regeneration.id, 450);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.golden_carrot), Potion.nightVision.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.magma_cream), Potion.fireResistance.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.water_bucket), Potion.waterBreathing.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.sugar), Potion.moveSpeed.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.speckled_melon), Potion.heal.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.spider_eye), Potion.poison.id, 450);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.dye, 1, 0), Potion.blindness.id, 450);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.fermented_spider_eye), Potion.weakness.id, 450);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.blaze_powder), Potion.damageBoost.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.aether), Potion.jump.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.clay_ball), Potion.moveSlowdown.id, 450);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.redstone), Potion.digSpeed.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.potionitem, 1, 0), AlchemicalWizardry.customPotionDrowning.id, 450);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.glass_bottle), Potion.invisibility.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.diamond), Potion.resistance.id, 2 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.poisonous_potato), Potion.field_76443_y.id, 2); //saturation
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.demonBloodShard), Potion.field_76434_w.id, 4 * 60 * 20); //health boost
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.weakBloodShard), Potion.field_76444_x.id, 4 * 60 * 20); //Absorption
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 1 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 1 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl), AlchemicalWizardry.customPotionPlanarBinding.id, 1 * 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand), AlchemicalWizardry.customPotionSoulFray.id, 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.baseItems, 1, 16), AlchemicalWizardry.customPotionSoulHarden.id, 60 * 20);
-        AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.slime_ball), AlchemicalWizardry.customPotionDeaf.id, 60 * 20);
+    	if(!AlchemicalWizardry.potionDisableRegen)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ghast_tear), Potion.regeneration.id, 450);
+    	
+    	if(!AlchemicalWizardry.potionDisableNightVision)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.golden_carrot), Potion.nightVision.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableFireResistance)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.magma_cream), Potion.fireResistance.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableWaterBreathing)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.water_bucket), Potion.waterBreathing.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableMoveSpeed)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.sugar), Potion.moveSpeed.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableInstantHealth)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.speckled_melon), Potion.heal.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisablePoison)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.spider_eye), Potion.poison.id, 450);
+        
+    	if(!AlchemicalWizardry.potionDisableBlindness)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.dye, 1, 0), Potion.blindness.id, 450);
+        
+    	if(!AlchemicalWizardry.potionDisableWeakness)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.fermented_spider_eye), Potion.weakness.id, 450);
+        
+    	if(!AlchemicalWizardry.potionDisableStrength)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.blaze_powder), Potion.damageBoost.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableJumpBoost)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.aether), Potion.jump.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableSlowness)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.clay_ball), Potion.moveSlowdown.id, 450);
+        
+    	if(!AlchemicalWizardry.potionDisableMining)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.redstone), Potion.digSpeed.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableDrowning)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.potionitem, 1, 0), AlchemicalWizardry.customPotionDrowning.id, 450);
+        
+    	if(!AlchemicalWizardry.potionDisableInvisibility)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.glass_bottle), Potion.invisibility.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableResistance)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.diamond), Potion.resistance.id, 2 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableSaturation)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.poisonous_potato), Potion.field_76443_y.id, 2); //saturation
+        
+    	if(!AlchemicalWizardry.potionDisableHealthBoost)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.demonBloodShard), Potion.field_76434_w.id, 4 * 60 * 20); //health boost
+        
+    	if(!AlchemicalWizardry.potionDisableAbsorption)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.weakBloodShard), Potion.field_76444_x.id, 4 * 60 * 20); //Absorption
+        
+    	if(!AlchemicalWizardry.potionDisableBoost)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 1 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableFlight)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 1 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableReciprocation)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisablePlanarBinding)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl), AlchemicalWizardry.customPotionPlanarBinding.id, 1 * 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableSoulFray)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand), AlchemicalWizardry.customPotionSoulFray.id, 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableSoulHarden)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.baseItems, 1, 16), AlchemicalWizardry.customPotionSoulHarden.id, 60 * 20);
+        
+    	if(!AlchemicalWizardry.potionDisableDeafness)
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.slime_ball), AlchemicalWizardry.customPotionDeaf.id, 60 * 20);
     }
 
     public static void initAltarRecipes()
@@ -1436,7 +1522,7 @@ public class AlchemicalWizardry
         
         Rituals.registerRitual("AW035PhantomHands", 1, 10000, new RitualEffectItemRouting(), "Orchestra of the Phantom Hands");
         
-        Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Birth of the Bastion");
+        Rituals.registerRitual("AW036SphereIsland", 2, 10000, new RitualEffectSphereCreator(), "Blood of the New Moon");
         //Rituals.registerRitual(1,100,new RitualEffectApiaryOverclock(),"Apiary Overclock"));
     }
 

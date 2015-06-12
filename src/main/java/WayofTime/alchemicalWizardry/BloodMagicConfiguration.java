@@ -145,6 +145,33 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledCrafting = config.get("Ritual Blacklist", "Rhythm of the Beating Anvil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledPhantomHands = config.get("Ritual Blacklist", "Orchestra of the Phantom Hands", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledSphereIsland = config.get("Ritual Blacklist", "Birth of the Bastion", false).getBoolean(false);
+		
+		AlchemicalWizardry.potionDisableRegen = config.get("Alchemy Potion Blacklist", "Regeneration", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableNightVision = config.get("Alchemy Potion Blacklist", "Night Vision", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableFireResistance = config.get("Alchemy Potion Blacklist", "Fire Resistance", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableWaterBreathing = config.get("Alchemy Potion Blacklist", "Water Breathing", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableMoveSpeed = config.get("Alchemy Potion Blacklist", "Move Speed", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableInstantHealth = config.get("Alchemy Potion Blacklist", "Instant Health", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisablePoison = config.get("Alchemy Potion Blacklist", "Poison", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableBlindness = config.get("Alchemy Potion Blacklist", "Blindness", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableWeakness = config.get("Alchemy Potion Blacklist", "Weakness", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableStrength = config.get("Alchemy Potion Blacklist", "Strength", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableJumpBoost = config.get("Alchemy Potion Blacklist", "Jump Boost", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableSlowness = config.get("Alchemy Potion Blacklist", "Slowness", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableMining = config.get("Alchemy Potion Blacklist", "Mining Speed", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableDrowning = config.get("Alchemy Potion Blacklist", "Drowning", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableInvisibility = config.get("Alchemy Potion Blacklist", "Invisibility", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableResistance = config.get("Alchemy Potion Blacklist", "Resistance", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableSaturation = config.get("Alchemy Potion Blacklist", "Saturation", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableHealthBoost = config.get("Alchemy Potion Blacklist", "Health Boost", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableAbsorption = config.get("Alchemy Potion Blacklist", "Absorption", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableBoost = config.get("Alchemy Potion Blacklist", "Boost", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableFlight = config.get("Alchemy Potion Blacklist", "Flight", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableReciprocation = config.get("Alchemy Potion Blacklist", "Reciprocation", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisablePlanarBinding = config.get("Alchemy Potion Blacklist", "Planar Binding", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableSoulFray = config.get("Alchemy Potion Blacklist", "Soul Fray", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableSoulHarden = config.get("Alchemy Potion Blacklist", "Soul Harden", false).getBoolean(false);
+	    AlchemicalWizardry.potionDisableDeafness = config.get("Alchemy Potion Blacklist", "Deafness", false).getBoolean(false);
 
         teleposerBlacklist = config.get("Teleposer Blacklist", "Blacklist", blacklist, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is: \nmodid:blockname:meta").getStringList();
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -22,6 +24,24 @@ public class RitualEffectMagnetic extends RitualEffect
     private static final int terraeDrain = 10;
     private static final int orbisTerraeDrain = 10;
 
+    public static boolean isBlockOre(Block block, int meta)
+    {
+        if (block == null)
+            return false;
+        
+        if (block instanceof BlockOre || block instanceof BlockRedstoneOre)
+            return true;
+        
+        ItemStack itemStack = new ItemStack(block, 1, meta);
+        for (int id : OreDictionary.getOreIDs(itemStack))
+        {
+            String oreName = OreDictionary.getOreName(id);
+            if (oreName.contains("ore"))
+                return true;
+        }
+        return false;
+    }
+    
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -67,6 +87,7 @@ public class RitualEffectMagnetic extends RitualEffect
                             yRep = y + j;
                             zRep = z + k;
                             replace = true;
+                            break;
                         }
                     }
                 }
@@ -96,43 +117,30 @@ public class RitualEffectMagnetic extends RitualEffect
                             Block block = world.getBlock(x + i, j, z + k);
                             int meta = world.getBlockMetadata(x + i, j, z + k);
 
-                            if (block == null)
+                            if (isBlockOre(block, meta))
                             {
-                                continue;
-                            }
+                                //Allow swapping code. This means the searched block is an ore.
+                                BlockTeleposer.swapBlocks(this, world, world, x + i, j, z + k, xRep, yRep, zRep);
+                                SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
 
-                            ItemStack itemStack = new ItemStack(block, 1, meta);
-                            int id = OreDictionary.getOreID(itemStack);
-
-                            if (id != -1)
-                            {
-                                String oreName = OreDictionary.getOreName(id);
-
-                                if (oreName.contains("ore"))
+                                if (hasPotentia)
                                 {
-                                    //Allow swapping code. This means the searched block is an ore.
-                                    BlockTeleposer.swapBlocks(this, world, world, x + i, j, z + k, xRep, yRep, zRep);
-                                    SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
-
-                                    if (hasPotentia)
-                                    {
-                                        this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
-                                    }
-
-                                    if (hasTerrae)
-                                    {
-                                        this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
-                                    }
-
-                                    if (hasOrbisTerrae)
-                                    {
-                                        this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
-                                    }
-                                    
-                                    this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
-
-                                    return;
+                                    this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                                 }
+
+                                if (hasTerrae)
+                                {
+                                    this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true);
+                                }
+
+                                if (hasOrbisTerrae)
+                                {
+                                    this.canDrainReagent(ritualStone, ReagentRegistry.orbisTerraeReagent, orbisTerraeDrain, true);
+                                }
+                                
+                                this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+
+                                return;
                             }
                             k++;
                         }
