@@ -296,6 +296,7 @@ commands.soulnetwork.get.success=There is %dLP in %s's Soul Network!
 commands.soulnetwork.noPlayer=There is no player specified
 commands.soulnetwork.noCommand=There is no command specified
 commands.soulnetwork.notACommand=That is not a valid command
+commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
 
 #Tooltips
 tooltip.activationcrystal.creativeonly=Creative Only - activates any ritual
