@@ -1,7 +1,0 @@
-{
-    "repo": "http://tehnut.info/jenkins/job/Guide-API/lastSuccessfulBuild/artifact/build/libs/",
-    "file": "Guide-API-1.7.10-1.0.1-20.jar",
-    "dev": "Guide-API-1.7.10-1.0.1-20-deobf.jar",
-    "class": "amerifrance.guideapi.GuideAPI",
-    "version": "1.0.1.20"
-}

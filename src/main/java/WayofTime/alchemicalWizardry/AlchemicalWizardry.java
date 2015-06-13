@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
+import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -1266,8 +1268,6 @@ public class AlchemicalWizardry
         isBotaniaLoaded = Loader.isModLoaded("Botania");
         isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
         isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
-        
-        
 
         BloodMagicConfiguration.loadBlacklist();
 	    BloodMagicConfiguration.blacklistRituals();
@@ -1918,5 +1918,6 @@ public class AlchemicalWizardry
         event.registerServerCommand(new CommandBind());
         event.registerServerCommand(new CommandUnbind());
         event.registerServerCommand(new CommandSN());
+        event.registerServerCommand(new CommandDownloadGAPI());
     }
 }
