@@ -78,7 +78,6 @@ public class BlockTeleposer extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TETeleposer tileEntity = (TETeleposer) world.getTileEntity(x, y, z);
         ItemStack playerItem = player.getCurrentEquippedItem();
 
         if (playerItem != null)
@@ -169,8 +168,6 @@ public class BlockTeleposer extends BlockContainer
     {
         TileEntity tileEntityI = worldI.getTileEntity(xi, yi, zi);
         TileEntity tileEntityF = worldF.getTileEntity(xf, yf, zf);
-        TileEntity tileI;
-        TileEntity tileF;
 
         NBTTagCompound nbttag1 = new NBTTagCompound();
         NBTTagCompound nbttag2 = new NBTTagCompound();

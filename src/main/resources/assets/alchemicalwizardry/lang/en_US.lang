@@ -301,6 +301,7 @@ commands.soulnetwork.get.success=There is %dLP in %s's Soul Network!
 commands.soulnetwork.noPlayer=There is no player specified
 commands.soulnetwork.noCommand=There is no command specified
 commands.soulnetwork.notACommand=That is not a valid command
+commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
 
 #Tooltips
 tooltip.activationcrystal.creativeonly=Creative Only - activates any ritual
@@ -467,3 +468,12 @@ achievement.alchemicalwizardry:firstPrick=Your First Prick!
 achievement.alchemicalwizardry:firstPrick.desc=The first drop of life into the Altar...
 achievement.alchemicalwizardry:weakOrb=Faintly Glowing Red...
 achievement.alchemicalwizardry:weakOrb.desc=This orb will suffice...for now...
+
+#G-API Downloading
+bm.versioning.getGAPI=["[BM] You don't have Guide-API installed! Install it to get it to unlock the book! [",{"text":"Download","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click this to auto-magically download the latest version","color":"red"}},"clickEvent":{"action":"run_command","value":"/bloodmagic-download-g-api"}},"]"]
+bm.versioning.startingDownload=[{"text":"Starting download of %s Please do not remove your hard disk.", "color":"orange"}]
+bm.versioning.doneDownloading=Finished downloading %s Reload your game to update.
+bm.versioning.error=An error has occurred while downloading the mod!
+bm.versioning.downloadedAlready=You have the latest version already, reload your game to update!
+bm.versioning.downloadingAlready=It's downloading! Be patient!
+bm.versioning.disabled=This feature is disabled.

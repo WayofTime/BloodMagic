@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
+import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -296,7 +298,6 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
-
 public class AlchemicalWizardry
 {
 	public static boolean parseTextFiles = false;
@@ -497,9 +498,7 @@ public class AlchemicalWizardry
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
-    {    	   
-    	
-    	
+    {
         File bmDirectory = new File("config/BloodMagic/schematics");
 
         if (!bmDirectory.exists() && bmDirectory.mkdirs())
@@ -1269,8 +1268,6 @@ public class AlchemicalWizardry
         isBotaniaLoaded = Loader.isModLoaded("Botania");
         isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
         isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
-        
-        
 
         BloodMagicConfiguration.loadBlacklist();
 	    BloodMagicConfiguration.blacklistRituals();
@@ -1921,5 +1918,6 @@ public class AlchemicalWizardry
         event.registerServerCommand(new CommandBind());
         event.registerServerCommand(new CommandUnbind());
         event.registerServerCommand(new CommandSN());
+        event.registerServerCommand(new CommandDownloadGAPI());
     }
 }

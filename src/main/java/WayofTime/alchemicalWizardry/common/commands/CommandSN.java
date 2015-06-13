@@ -71,8 +71,17 @@ public class CommandSN extends CommandBase
             }
             else if ("get".equalsIgnoreCase(astring[1]))
             {
-                int amount = SoulNetworkHandler.getCurrentEssence(owner);
-                func_152373_a(icommandsender, this, "commands.soulnetwork.get.success", amount, owner);
+                int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
+                func_152373_a(icommandsender, this, "commands.soulnetwork.get.success", currentEssence, owner);
+            }
+            else if ("fillMax".equalsIgnoreCase(astring[1]))
+            {
+                int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
+                int orbTier = SoulNetworkHandler.getCurrentMaxOrb(owner);
+                int maxForOrb = SoulNetworkHandler.getMaximumForOrbTier(orbTier);
+                int fillAmount = maxForOrb - currentEssence;
+                SoulNetworkHandler.addCurrentEssenceToMaximum(owner, fillAmount, fillAmount);
+                func_152373_a(icommandsender, this, "commands.soulnetwork.fillMax.success", owner);
             }
             else
             {
