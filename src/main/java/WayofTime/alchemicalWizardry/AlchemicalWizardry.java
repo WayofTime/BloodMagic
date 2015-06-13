@@ -296,7 +296,6 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
-
 public class AlchemicalWizardry
 {
 	public static boolean parseTextFiles = false;
@@ -497,9 +496,7 @@ public class AlchemicalWizardry
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
-    {    	   
-    	
-    	
+    {
         File bmDirectory = new File("config/BloodMagic/schematics");
 
         if (!bmDirectory.exists() && bmDirectory.mkdirs())
