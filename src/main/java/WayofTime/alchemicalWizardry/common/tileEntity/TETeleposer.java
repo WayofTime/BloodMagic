@@ -94,7 +94,7 @@ public class TETeleposer extends TEInventory
                 int zf = focusItem.zCoord(focus);
                 World worldF = focusItem.getWorld(focus);
                 int damage = (int) (0.5f * Math.sqrt((xCoord - xf) * (xCoord - xf) + (yCoord - yf + 1) * (yCoord - yf + 1) + (zCoord - zf) * (zCoord - zf)));
-                int focusLevel = ((TelepositionFocus) focusItem).getFocusLevel();
+                int focusLevel = focusItem.getFocusLevel();
                 int transportCount = 0;
                 int entityCount = 0;
 
