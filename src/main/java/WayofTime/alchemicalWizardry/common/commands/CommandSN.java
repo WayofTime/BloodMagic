@@ -13,21 +13,25 @@ public class CommandSN extends CommandBase
 {
     public CommandSN() {}
 
+    @Override
     public String getCommandName()
     {
         return "soulnetwork";
     }
 
+    @Override
     public int getRequiredPermissionLevel()
     {
         return 2;
     }
 
+    @Override
     public String getCommandUsage(ICommandSender icommandsender)
     {
         return "commands.soulnetwork.usage";
     }
 
+    @Override
     public void processCommand(ICommandSender icommandsender, String[] astring)
     {
         EntityPlayerMP targetPlayer = getPlayer(icommandsender, astring[0]);
@@ -83,6 +87,12 @@ public class CommandSN extends CommandBase
                 SoulNetworkHandler.addCurrentEssenceToMaximum(owner, fillAmount, fillAmount);
                 func_152373_a(icommandsender, this, "commands.soulnetwork.fillMax.success", owner);
             }
+            else if ("create".equalsIgnoreCase(astring[1]))
+            {
+                int orbTier = parseIntBounded(icommandsender, astring[2], 1, 6);
+                SoulNetworkHandler.setMaxOrbToMax(owner, orbTier);
+                func_152373_a(icommandsender, this, "commands.soulnetwork.create.success", owner, orbTier);
+            }
             else
             {
                 throw new CommandException("commands.soulnetwork.notACommand");
@@ -98,6 +108,7 @@ public class CommandSN extends CommandBase
         }
     }
 
+    @Override
     public List addTabCompletionOptions(ICommandSender iCommandSender, String[] astring)
     {
         if (astring.length == 1)
@@ -106,7 +117,7 @@ public class CommandSN extends CommandBase
         }
         else if (astring.length == 2)
         {
-            return getListOfStringsMatchingLastWord(astring, "add", "subtract", "fill", "empty", "get");
+            return getListOfStringsMatchingLastWord(astring, "add", "subtract", "fill", "empty", "get", "fillMax", "create");
         }
 
         return null;
@@ -117,6 +128,7 @@ public class CommandSN extends CommandBase
         return MinecraftServer.getServer().getAllUsernames();
     }
 
+    @Override
     public boolean isUsernameIndex(String[] astring, int par2)
     {
         return par2 == 0;

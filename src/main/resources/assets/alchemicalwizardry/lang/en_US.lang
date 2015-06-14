@@ -143,6 +143,7 @@ item.standardFillingAgent.name=Standard Filling Agent
 item.enhancedFillingAgent.name=Enhanced Filling Agent
 item.weakBindingAgent.name=Weak Binding Agent
 item.ritualDiviner.name=Ritual Diviner
+item.ritualDismantler.name=Ritual Dismantler
 item.sigilOfMagnetism.name=Sigil of Magnetism
 item.itemDiabloKey.name=Key of Binding
 item.energyBazooka.name=Energy Bazooka
@@ -302,6 +303,7 @@ commands.soulnetwork.noPlayer=There is no player specified
 commands.soulnetwork.noCommand=There is no command specified
 commands.soulnetwork.notACommand=That is not a valid command
 commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
+commands.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier:%d)
 
 #Tooltips
 tooltip.activationcrystal.creativeonly=Creative Only - activates any ritual
@@ -391,6 +393,7 @@ tooltip.ritualdiviner.ritualtunedto=Ritual tuned to face:
 tooltip.ritualdiviner.waterstones=Water Stones:
 tooltip.ritualdiviner.dawnstones=Dawn Stones:
 tooltip.ritualdiviner.totalStones=Total Stones:
+tooltip.dismatler.desc=You could turn this upside down?
 tooltip.sacrificialdagger.desc1=A slight draining feeling tickles your fingers
 tooltip.sacrificialdagger.desc2=Just a prick of the
 tooltip.sacrificialdagger.desc3=finger will suffice...
