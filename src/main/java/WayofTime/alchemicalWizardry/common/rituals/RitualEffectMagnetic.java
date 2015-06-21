@@ -1,11 +1,14 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -16,6 +19,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.ItemType;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
 
 public class RitualEffectMagnetic extends RitualEffect
@@ -24,15 +28,29 @@ public class RitualEffectMagnetic extends RitualEffect
     private static final int terraeDrain = 10;
     private static final int orbisTerraeDrain = 10;
 
+    private static final Map<ItemType, Boolean> oreBlockCache = new HashMap<ItemType, Boolean>();
+    
     public static boolean isBlockOre(Block block, int meta)
     {
-        if (block == null)
+        if (block == null || Item.getItemFromBlock(block) == null)
             return false;
         
         if (block instanceof BlockOre || block instanceof BlockRedstoneOre)
             return true;
         
-        ItemStack itemStack = new ItemStack(block, 1, meta);
+        ItemType type = new ItemType(block, meta);
+        Boolean result = oreBlockCache.get(type);
+        if (result == null)
+        {
+            result = computeIsItemOre(type);
+            oreBlockCache.put(type, result);
+        }
+        return result;
+    }
+    
+    private static boolean computeIsItemOre(ItemType type)
+    {
+        ItemStack itemStack = type.createStack(1);
         for (int id : OreDictionary.getOreIDs(itemStack))
         {
             String oreName = OreDictionary.getOreName(id);
@@ -75,6 +93,7 @@ public class RitualEffectMagnetic extends RitualEffect
             int zRep = 0;
             boolean replace = false;
 
+            outer:
             for (int j = 1; j <= 3; j++)
             {
                 for (int i = -1; i <= 1; i++)
@@ -87,7 +106,7 @@ public class RitualEffectMagnetic extends RitualEffect
                             yRep = y + j;
                             zRep = z + k;
                             replace = true;
-                            break;
+                            break outer;
                         }
                     }
                 }
