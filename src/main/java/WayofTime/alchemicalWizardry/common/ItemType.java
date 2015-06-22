@@ -79,6 +79,12 @@ public class ItemType
         return result;
     }
     
+    @Override
+    public String toString()
+    {
+        return item.getUnlocalizedName() + "@" + meta;
+    }
+    
     public static ItemType fromStack(ItemStack stack)
     {
         return new ItemType(stack.getItem(), stack.getItemDamage(), stack.stackTagCompound);

@@ -40,7 +40,7 @@ public class BloodMagicGuide
 		registerAlchemyBook();
 		
 		BookBuilder bmBookBuilder = new BookBuilder();
-		bmBookBuilder.setCategories(categories).setUnlocBookTitle("guide.BloodMagic.book.title").setUnlocWelcomeMessage("guide.BloodMagic.welcomeMessage").setUnlocDisplayName("guide.BloodMagic.book.name").setBookColor(new Color(190, 10, 0));
+		bmBookBuilder.setCategories(categories).setUnlocBookTitle("guide.BloodMagic.book.title").setUnlocWelcomeMessage("guide.BloodMagic.welcomeMessage").setUnlocDisplayName("guide.BloodMagic.book.name").setBookColor(new Color(190, 10, 0)).setAuthor("--Blood Magic");
 		
 //		bloodMagicGuide = new Book(categories, "guide.BloodMagic.book.title", "guide.BloodMagic.welcomeMessage", "guide.BloodMagic.book.name", new Color(190, 10, 0));
 		bloodMagicGuide = bmBookBuilder.build();

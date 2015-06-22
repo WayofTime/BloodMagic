@@ -36,6 +36,7 @@ public class CommandSN extends CommandBase
     {
         EntityPlayerMP targetPlayer = getPlayer(icommandsender, astring[0]);
         String owner = targetPlayer.getDisplayName();
+        EntityPlayerMP proxyPlayerName = getPlayer(icommandsender, astring[0]);
 
         if (astring.length >= 2 && astring.length <= 3)
         {
@@ -90,7 +91,7 @@ public class CommandSN extends CommandBase
             else if ("create".equalsIgnoreCase(astring[1]))
             {
                 int orbTier = parseIntBounded(icommandsender, astring[2], 1, 6);
-                SoulNetworkHandler.setMaxOrbToMax(owner, orbTier);
+                SoulNetworkHandler.setMaxOrbToMax(proxyPlayerName.getDisplayName(), orbTier);
                 func_152373_a(icommandsender, this, "commands.soulnetwork.create.success", owner, orbTier);
             }
             else

@@ -63,7 +63,7 @@ minecraft {
     version = config.mc_version + "-" + config.forge_version
     runDir = "run"
 	
-	replaceIn "Guide-API-Version.info"
+	replaceIn "GAPIChecker.java"
 	replace "@VERSION@", config.guideapi_version
 }
 

@@ -303,7 +303,7 @@ commands.soulnetwork.noPlayer=There is no player specified
 commands.soulnetwork.noCommand=There is no command specified
 commands.soulnetwork.notACommand=That is not a valid command
 commands.soulnetwork.fillMax.success=Successfully filled %s's Soul Network to their orb max!
-commands.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier:%d)
+commands.soulnetwork.create.success=Successfully created %s's Soul Network (Orb tier: %d)
 
 #Tooltips
 tooltip.activationcrystal.creativeonly=Creative Only - activates any ritual
