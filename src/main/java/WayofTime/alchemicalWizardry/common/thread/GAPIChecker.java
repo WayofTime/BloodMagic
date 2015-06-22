@@ -18,7 +18,7 @@ import java.util.zip.ZipFile;
 public class GAPIChecker
 {
     public static boolean doneChecking = false;
-    public static String onlineVersion = "";
+    public static String onlineVersion = "@VERSION@";
     public static boolean triedToWarnPlayer = false;
 
     public static boolean startedDownload = false;

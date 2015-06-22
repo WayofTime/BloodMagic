@@ -197,7 +197,6 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
 
         if (tileEntity instanceof TEMasterStone)
         {
-            TEMasterStone masterStone = (TEMasterStone) tileEntity;
             List<RitualComponent> ritualList = Rituals.getRitualList(this.getCurrentRitual(stack));
             if (ritualList == null)
             {

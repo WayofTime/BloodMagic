@@ -1,52 +1,12 @@
 package WayofTime.alchemicalWizardry;
 
+import WayofTime.alchemicalWizardry.common.items.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
 import WayofTime.alchemicalWizardry.common.book.ItemBMBook;
-import WayofTime.alchemicalWizardry.common.items.AWBaseItems;
-import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
-import WayofTime.alchemicalWizardry.common.items.AirScribeTool;
-import WayofTime.alchemicalWizardry.common.items.ApprenticeBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.ArchmageBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.ArmourInhibitor;
-import WayofTime.alchemicalWizardry.common.items.BlankSpell;
-import WayofTime.alchemicalWizardry.common.items.BloodShard;
-import WayofTime.alchemicalWizardry.common.items.BoundAxe;
-import WayofTime.alchemicalWizardry.common.items.BoundPickaxe;
-import WayofTime.alchemicalWizardry.common.items.BoundShovel;
-import WayofTime.alchemicalWizardry.common.items.CheatyItem;
-import WayofTime.alchemicalWizardry.common.items.CreativeDagger;
-import WayofTime.alchemicalWizardry.common.items.DaggerOfSacrifice;
-import WayofTime.alchemicalWizardry.common.items.DawnScribeTool;
-import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
-import WayofTime.alchemicalWizardry.common.items.DemonicTelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.DuskScribeTool;
-import WayofTime.alchemicalWizardry.common.items.EarthScribeTool;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyBazooka;
-import WayofTime.alchemicalWizardry.common.items.EnergyBlast;
-import WayofTime.alchemicalWizardry.common.items.EnergySword;
-import WayofTime.alchemicalWizardry.common.items.EnhancedTelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
-import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
-import WayofTime.alchemicalWizardry.common.items.ItemBloodLetterPack;
-import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
-import WayofTime.alchemicalWizardry.common.items.ItemComponents;
-import WayofTime.alchemicalWizardry.common.items.ItemDiabloKey;
-import WayofTime.alchemicalWizardry.common.items.ItemIncense;
-import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
-import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
-import WayofTime.alchemicalWizardry.common.items.LifeBucket;
-import WayofTime.alchemicalWizardry.common.items.MagicianBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.MasterBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
-import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
-import WayofTime.alchemicalWizardry.common.items.TranscendentBloodOrb;
-import WayofTime.alchemicalWizardry.common.items.WaterScribeTool;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourFire;
@@ -242,6 +202,8 @@ public class ModItems
     
     public static Item itemIncense;
 
+    public static Item ritualDismantler;
+
     public static void init()
     {
         weakBloodOrb = new EnergyBattery(5000).setUnlocalizedName("weakBloodOrb");
@@ -370,6 +332,8 @@ public class ModItems
         outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
                 
         itemIncense = new ItemIncense().setUnlocalizedName("bloodMagicIncenseItem");
+
+        ritualDismantler = new ItemRitualDismantler().setUnlocalizedName("ritualDismantler");
     }
 
     public static void registerItems()
@@ -503,5 +467,6 @@ public class ModItems
         GameRegistry.registerItem(ModItems.outputRoutingFocus, "outputRoutingFocus");
         
         GameRegistry.registerItem(ModItems.itemIncense, "bloodMagicIncenseItem");
+        GameRegistry.registerItem(ModItems.ritualDismantler, "ritualDismantler");
     }
 }

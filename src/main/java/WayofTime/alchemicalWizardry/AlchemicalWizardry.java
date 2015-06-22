@@ -1105,6 +1105,8 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockCrystalBelljar), "GGG", "GcG", "www", 'G', glassStack, 'c', concentratedCatalystStack, 'w', new ItemStack(Blocks.wooden_slab, 1, craftingConstant));
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockReagentConduit), "isi", "scs", "isi", 'c', concentratedCatalystStack, 's', stringStack, 'i', ironIngotStack);
 
+        GameRegistry.addRecipe(new ItemStack(ModItems.ritualDismantler), "a a", " b ", 'a', Blocks.redstone_torch, 'b', ModItems.itemRitualDiviner);
+
         GameRegistry.addShapelessRecipe(new ItemStack(Items.dye, 5, 15), fracturedBoneStack);
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.itemSigilOfSupression), "wtl", "wvl", "wol", 'v', new ItemStack(ModItems.voidSigil), 't', new ItemStack(ModBlocks.blockTeleposer), 'o', masterBloodOrbStack, 'l', lavaBucketStack, 'w', waterBucketStack));

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -102,6 +103,10 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
                 ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, true);
             }
 
+            return false;
+        }
+        else if (tile instanceof TESocket)
+        {
             return false;
         }
 

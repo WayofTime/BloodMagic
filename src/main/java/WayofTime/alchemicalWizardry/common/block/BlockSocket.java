@@ -85,15 +85,22 @@ public class BlockSocket extends BlockContainer
                 newItem.stackSize = 1;
                 --playerItem.stackSize;
                 tileEntity.setInventorySlotContents(0, newItem);
+                return true;
             }
-        } else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
+            else
+            {
+                return false;
+            }
+        }
+        else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
         {
             player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
             tileEntity.setInventorySlotContents(0, null);
             tileEntity.setActive();
+            return true;
         }
         world.markBlockForUpdate(x, y, z);
-        return true;
+        return false;
     }
 
     @Override
