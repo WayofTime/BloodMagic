@@ -179,7 +179,6 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
 
                         Block block = par2World.getBlock(x + i, y + j, z + k);
 
-
                         if (SpellHelper.isBlockFluid(block))
                         {
                             if (par2World.getTileEntity(x + i, y + j, z + k) != null)
@@ -210,8 +209,6 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
                 }
             }
         }
-
-        return;
     }
 
     @Override

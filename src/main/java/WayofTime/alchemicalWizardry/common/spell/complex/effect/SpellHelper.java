@@ -42,6 +42,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
@@ -259,7 +260,7 @@ public class SpellHelper
                 SpellHelper.sendParticleToPlayer(player, "mobSpell", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 1.0D, 0.371D, 0.371D);
                 break;
             case 4:
-                float f = (float) 1.0F;
+                float f = 1.0F;
                 float f1 = f * 0.6F + 0.4F;
                 float f2 = f * f * 0.7F - 0.5F;
                 float f3 = f * f * 0.6F - 0.7F;
@@ -347,7 +348,7 @@ public class SpellHelper
 
     public static boolean isBlockFluid(Block block)
     {
-        return block instanceof BlockLiquid;
+        return block instanceof IFluidBlock;
     }
 
     public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)
