@@ -106,7 +106,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 public class ClientProxy extends CommonProxy
 {
     public static int renderPass;
-    public static int altarRenderType;
 
     @Override
     public void registerPostSideObjects()

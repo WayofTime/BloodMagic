@@ -14,5 +14,5 @@ public interface IRitualStone
 	 * @param runeType
 	 * @return
 	 */
-	public boolean isRuneType(World world, int x, int y, int z, int meta, int runeType);
+	boolean isRuneType(World world, int x, int y, int z, int meta, int runeType);
 }

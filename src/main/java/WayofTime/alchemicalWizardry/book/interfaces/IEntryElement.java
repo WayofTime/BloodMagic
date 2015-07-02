@@ -7,7 +7,7 @@ public interface IEntryElement{
 	/**
 	 * In here you need to draw the element
 	 */
-	public void drawElement();
+	void drawElement();
 	
 	/**
 	 * @param mX
@@ -16,7 +16,7 @@ public interface IEntryElement{
 	 * Mouse Y Position
 	 * @return is the mouse in a element
 	 */
-	public boolean isMouseInElement(int mX, int mY);
+	boolean isMouseInElement(int mX, int mY);
 	
 	/**
 	 * This get's called when you enter the element
@@ -26,7 +26,7 @@ public interface IEntryElement{
 	 * Mouse Y Position
 	 */
 	
-	public void onMouseEnter(int mX, int mY);
+	void onMouseEnter(int mX, int mY);
 	
 	/**
 	 * This get's called when you click within the element
@@ -37,5 +37,5 @@ public interface IEntryElement{
 	 * @param type
 	 * Type of click (right, left, scroll)
 	 */
-	public void onMouseClick(int mX, int mY, int type);
+	void onMouseClick(int mX, int mY, int type);
 }

@@ -2,15 +2,15 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
 public interface IReagentContainer
 {
-    public ReagentStack getReagent();
+    ReagentStack getReagent();
 
-    public int getReagentStackAmount();
+    int getReagentStackAmount();
 
-    public int getCapacity();
+    int getCapacity();
 
-    public int fill(ReagentStack resource, boolean doFill);
+    int fill(ReagentStack resource, boolean doFill);
 
-    public ReagentStack drain(int maxDrain, boolean doDrain);
+    ReagentStack drain(int maxDrain, boolean doDrain);
 
-    public ReagentContainerInfo getInfo();
+    ReagentContainerInfo getInfo();
 }

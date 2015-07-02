@@ -6,5 +6,4 @@ public class SpellEnhancementPotency extends SpellEnhancement
     {
         super(SpellEnhancement.POTENCY);
     }
-
 }

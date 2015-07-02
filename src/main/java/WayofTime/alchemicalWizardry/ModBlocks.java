@@ -59,8 +59,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public class ModBlocks
 {
-
-    public static Block testingBlock;
     public static Block bloodStoneBrick;
     public static Block largeBloodStoneBrick;
     public static BlockAltar blockAltar;

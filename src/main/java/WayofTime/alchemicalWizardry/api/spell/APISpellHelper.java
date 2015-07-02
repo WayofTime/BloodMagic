@@ -238,12 +238,11 @@ public class APISpellHelper
         float f6 = MathHelper.sin(-f1 * 0.017453292F);
         float f7 = f4 * f5;
         float f8 = f3 * f5;
-        double d3 = range;
-        if (player instanceof EntityPlayerMP)
+//        if (player instanceof EntityPlayerMP)
         {
 //            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
         }
-        Vec3 vec31 = vec3.addVector((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
+        Vec3 vec31 = vec3.addVector((double) f7 * range, (double) f6 * range, (double) f8 * range);
         return world.func_147447_a(vec3, vec31, par3, !par3, par3);
     }
 	

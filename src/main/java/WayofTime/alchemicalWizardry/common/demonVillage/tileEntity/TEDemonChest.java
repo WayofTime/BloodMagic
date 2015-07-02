@@ -41,7 +41,7 @@ public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 	@Override
 	public void checkForAdjacentChests()
 	{
-		return;
+
 	}
 
 	@Override

@@ -6,5 +6,5 @@ import net.minecraft.world.World;
 
 public interface IAlchemyGoggles
 {
-    public boolean showIngameHUD(World world, ItemStack stack, EntityPlayer player);
+    boolean showIngameHUD(World world, ItemStack stack, EntityPlayer player);
 }

@@ -56,7 +56,7 @@ public class TEPlinth extends TEInventory
 
         for (int i = 0; i < ring1TagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) ring1TagList.getCompoundTagAt(i);
+            NBTTagCompound tag = ring1TagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < inv.length)
@@ -69,7 +69,7 @@ public class TEPlinth extends TEInventory
 
         for (int i = 0; i < ring2TagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) ring2TagList.getCompoundTagAt(i);
+            NBTTagCompound tag = ring2TagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < inv.length)
@@ -82,7 +82,7 @@ public class TEPlinth extends TEInventory
 
         for (int i = 0; i < ring3TagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) ring3TagList.getCompoundTagAt(i);
+            NBTTagCompound tag = ring3TagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < inv.length)
@@ -105,8 +105,6 @@ public class TEPlinth extends TEInventory
 
         for (int i = 0; i < ring1Inv.length; i++)
         {
-            ItemStack stack = ring1Inv[i];
-
             if (ring1Inv[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();
@@ -121,8 +119,6 @@ public class TEPlinth extends TEInventory
 
         for (int i = 0; i < ring2Inv.length; i++)
         {
-            ItemStack stack = ring2Inv[i];
-
             if (ring2Inv[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();
@@ -137,8 +133,6 @@ public class TEPlinth extends TEInventory
 
         for (int i = 0; i < ring3Inv.length; i++)
         {
-            ItemStack stack = ring3Inv[i];
-
             if (ring3Inv[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();
@@ -517,7 +511,7 @@ public class TEPlinth extends TEInventory
 
     public int[] buildIntDataList()
     {
-        int[] sortList = new int[1 * 3];
+        int[] sortList = new int[3]; //1 * 3
         int pos = 0;
 
         for (ItemStack is : inv)
@@ -565,6 +559,4 @@ public class TEPlinth extends TEInventory
         pedestalPositions.add(new PlinthComponent(-7, 2, -4, 3));
         pedestalPositions.add(new PlinthComponent(-7, 2, 4, 3));
     }
-
-
 }

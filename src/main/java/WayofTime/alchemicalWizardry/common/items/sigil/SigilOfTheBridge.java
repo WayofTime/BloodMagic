@@ -23,8 +23,10 @@ import java.util.List;
 
 public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISigil
 {
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
     private int tickDelay = 200;
 
     public SigilOfTheBridge()
@@ -141,7 +143,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive"))
         {
-            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
                 if(EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, this.getLPUsed(par1ItemStack)))
                 {
@@ -209,8 +211,6 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
 
             this.incrimentLPUSed(par1ItemStack, incremented);
         }
-
-        return;
     }
 
     public int getLPUsed(ItemStack par1ItemStack)

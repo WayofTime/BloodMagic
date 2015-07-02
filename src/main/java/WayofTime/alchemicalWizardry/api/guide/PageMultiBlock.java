@@ -63,7 +63,7 @@ public class PageMultiBlock extends PageBase
 			blockCount += perLvl; 
 		}
 		tick= (showLayer==-1?blockCount:countPerLevel[showLayer])*40;
-		int yOff = (structureHeight-1)*12+structureWidth*5+structureLength*5+16;
+//		int yOff = (structureHeight-1)*12+structureWidth*5+structureLength*5+16;
 //		pageButtons.add(new GuiButtonManualNavigation(gui, 100, x+4,y+yOff/2-5, 10,10, 4));
 //		pageButtons.add(new GuiButtonManualNavigation(gui, 101, x+4,y+yOff/2-8-16, 10,16, 3));
 //		pageButtons.add(new GuiButtonManualNavigation(gui, 102, x+4,y+yOff/2+8, 10,16, 2));
@@ -90,7 +90,7 @@ public class PageMultiBlock extends PageBase
 
 			int xHalf = (structureWidth*5 - structureLength*5);
 			int yOffPartial = (structureHeight-1)*12+structureWidth*5+structureLength*5;
-			int yOffTotal = yOffPartial+16;
+//			int yOffTotal = yOffPartial+16;
 
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			

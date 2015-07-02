@@ -16,5 +16,5 @@ public interface IHarvestHandler
      * @param meta   meta at this given location
      * @return true if successfully harvested, false if not
      */
-    public boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta);
+    boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta);
 }

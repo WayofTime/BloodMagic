@@ -61,7 +61,6 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     protected FluidStack fluidOutput;
     protected FluidStack fluidInput;
     private int progress;
-    private int hasChanged = 0;
 
     private int lockdownDuration;
     private int demonBloodDuration;
@@ -256,16 +255,6 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     public FluidStack getFluid()
     {
         return fluid;
-    }
-
-    public FluidStack getInputFluid()
-    {
-        return fluidInput;
-    }
-
-    public FluidStack getOutputFluid()
-    {
-        return fluidOutput;
     }
 
     @Override
@@ -490,7 +479,6 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             if (AlchemicalWizardry.lockdownAltar)
             {
                 List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
-                boolean hasHighRegen = false;
                 for (EntityPlayer player : list)
                 {
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
@@ -582,7 +570,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
                 if (progress >= liquidRequired * stackSize)
                 {
-                    ItemStack result = null;
+                    ItemStack result;
                     result = AltarRecipeRegistry.getItemForItemAndTier(this.getStackInSlot(0), this.upgradeLevel);
                     if (result != null)
                     {
@@ -714,7 +702,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
     public int[] buildIntDataList()
     {
-        int[] sortList = new int[1 * 3];
+        int[] sortList = new int[3]; //1 * 3
         int pos = 0;
 
         for (ItemStack is : inv)

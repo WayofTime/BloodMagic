@@ -20,7 +20,7 @@ public class EntityEarthElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityLivingBase)
         {
-            ((EntityLivingBase) target).attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+            target.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 4));
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
         }

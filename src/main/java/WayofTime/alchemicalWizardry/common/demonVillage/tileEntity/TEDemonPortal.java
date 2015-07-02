@@ -426,7 +426,7 @@ public class TEDemonPortal extends TileEntity
         	}
         }
 
-        if(this.tier < this.tierCostList.length && this.demonHouseCooldown > this.tierCostList[this.tier])
+        if(this.tier < tierCostList.length && this.demonHouseCooldown > tierCostList[this.tier])
         {
             this.tier++;
 
@@ -480,7 +480,7 @@ public class TEDemonPortal extends TileEntity
             int x = i / length;
             int z = i % length;
 
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
             GridSpace space = GridSpace.getGridFromTag(tag);
 
             area[x][z] = space;
@@ -519,8 +519,6 @@ public class TEDemonPortal extends TileEntity
         {
             for (int j = 0; j <= negZRadius + posZRadius; j++)
             {
-                int index = i + (negZRadius + posZRadius + 1) * j;
-
                 GridSpace space = area[i][j];
                 NBTTagCompound nextTag;
 
@@ -609,8 +607,6 @@ public class TEDemonPortal extends TileEntity
             default:
                 dir = ForgeDirection.NORTH;
         }
-
-        int length = 5;
 
         Int3 road = findRoadSpaceFromDirection(dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
 
@@ -988,11 +984,6 @@ public class TEDemonPortal extends TileEntity
             return 0;
         }
 
-        if (convertStarter)
-        {
-
-        }
-
         int initGridX = gridXi;
         int initGridZ = gridZi;
         int initY = yi;
@@ -1139,22 +1130,18 @@ public class TEDemonPortal extends TileEntity
         {
             this.expandAreaInPosX();
             this.setGridSpace(x, z, space);
-            return;
         } else if (x < -negXRadius)
         {
             this.expandAreaInNegX();
             this.setGridSpace(x, z, space);
-            return;
         } else if (z > posZRadius)
         {
             this.expandAreaInPosZ();
             this.setGridSpace(x, z, space);
-            return;
         } else if (z < -negZRadius)
         {
             this.expandAreaInNegZ();
             this.setGridSpace(x, z, space);
-            return;
         } else
         {
             area[x + negXRadius][z + negZRadius] = space;
@@ -1202,10 +1189,10 @@ public class TEDemonPortal extends TileEntity
         int x = 0;
         int z = 0;
 
-        GridSpace home = this.getGridSpace(x, z);
-        int yLevel = home.getYLevel();
+//        GridSpace home = this.getGridSpace(x, z);
+//        int yLevel = home.getYLevel();
 
-        GridSpaceHolder grid = this.createGSH();
+//        GridSpaceHolder grid = this.createGSH();
 
         List<ForgeDirection> directions = new ArrayList();
 
@@ -1249,9 +1236,8 @@ public class TEDemonPortal extends TileEntity
 
         ForgeDirection chosenDirection = (ForgeDirection) schemMap.keySet().toArray()[new Random().nextInt(schemMap.keySet().size())];
         DemonBuilding build = schemMap.get(chosenDirection).get(new Random().nextInt(schemMap.get(chosenDirection).size()));
-        Int3 portalSpace = build.getDoorSpace(chosenDirection);
+//        Int3 portalSpace = build.getDoorSpace(chosenDirection);
 
-        
         this.nextDemonPortalDirection = chosenDirection;
         this.nextDemonPortalName = build.getName();
 
@@ -1348,7 +1334,7 @@ public class TEDemonPortal extends TileEntity
                 dir = ForgeDirection.NORTH;
         }
 
-        Int3 space = this.findRoadSpaceFromDirection(dir, 1 * (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1);
+        Int3 space = this.findRoadSpaceFromDirection(dir, (rand.nextInt(negXRadius + negZRadius + posXRadius + posZRadius)) + 1); // Second: 1 *
 
         int x = space.xCoord;
         int z = space.zCoord;

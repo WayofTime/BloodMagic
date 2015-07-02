@@ -18,9 +18,7 @@ public class BlockDemonChest extends BlockChest implements IBlockPortalNode
 	
 	public IInventory func_149951_m(World world, int x, int y, int z)
     {
-		IInventory object = (IInventory)world.getTileEntity(x, y, z);
-        
-        return object;
+        return (IInventory)world.getTileEntity(x, y, z);
     }
 	
 	@Override

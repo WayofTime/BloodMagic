@@ -22,13 +22,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockPedestal extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon topIcon;
+    private IIcon topIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon1;
+    private IIcon sideIcon2;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private static IIcon bottomIcon;
+    private IIcon bottomIcon;
 
     public BlockPedestal()
     {
@@ -46,7 +44,6 @@ public class BlockPedestal extends BlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:ArcanePedestal");
-        this.sideIcon1 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
         this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
         this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
     }

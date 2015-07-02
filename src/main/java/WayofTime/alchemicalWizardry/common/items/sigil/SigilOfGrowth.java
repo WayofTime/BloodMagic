@@ -26,8 +26,10 @@ import java.util.List;
 
 public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
 {
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
     private int tickDelay = 100;
 
     public SigilOfGrowth()
@@ -161,7 +163,6 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
             return;
         }
 
-        EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
         if (par1ItemStack.getTagCompound() == null)
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
@@ -169,7 +170,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive"))
         {
-            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
                 if(!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
                 {
@@ -202,8 +203,6 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
                 }
             }
         }
-
-        return;
     }
 
     public static boolean applyBonemeal(ItemStack p_150919_0_, World p_150919_1_, int p_150919_2_, int p_150919_3_, int p_150919_4_, EntityPlayer player)
@@ -218,10 +217,6 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
 
         if (event.getResult() == Result.ALLOW)
         {
-            if (!p_150919_1_.isRemote)
-            {
-
-            }
             return true;
         }
 
@@ -269,7 +264,6 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
                 for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                 {
                     Block block = world.getBlock(ix, iy, iz);
-
 
                     if (block instanceof IPlantable)
                     {

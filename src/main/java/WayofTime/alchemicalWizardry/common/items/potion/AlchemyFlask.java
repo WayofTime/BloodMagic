@@ -32,8 +32,6 @@ import java.util.Map.Entry;
 
 public class AlchemyFlask extends Item
 {
-    private int maxPotionAmount = 20;
-
     public AlchemyFlask()
     {
         super();
@@ -58,7 +56,7 @@ public class AlchemyFlask extends Item
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
             {
-                NBTTagCompound nbttagcompound = (NBTTagCompound) nbttaglist.getCompoundTagAt(i);
+                NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
                 arraylist.add(AlchemyPotionHelper.readEffectFromNBT(nbttagcompound));
             }
             return arraylist;
@@ -116,7 +114,7 @@ public class AlchemyFlask extends Item
 
         if (!par2World.isRemote)
         {
-            ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
+            ArrayList<AlchemyPotionHelper> list = getEffects(par1ItemStack);
 
             if (list != null)
             {
@@ -191,7 +189,7 @@ public class AlchemyFlask extends Item
 
     public void setConcentrationOfPotion(ItemStack par1ItemStack, int potionID, int concentration)
     {
-        ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
+        ArrayList<AlchemyPotionHelper> list = getEffects(par1ItemStack);
         if (list != null)
         {
             for (AlchemyPotionHelper aph : list)
@@ -202,13 +200,13 @@ public class AlchemyFlask extends Item
                     break;
                 }
             }
-            this.setEffects(par1ItemStack, list);
+            setEffects(par1ItemStack, list);
         }
     }
 
     public void setDurationFactorOfPotion(ItemStack par1ItemStack, int potionID, int durationFactor)
     {
-        ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
+        ArrayList<AlchemyPotionHelper> list = getEffects(par1ItemStack);
         if (list != null)
         {
             for (AlchemyPotionHelper aph : list)
@@ -219,7 +217,7 @@ public class AlchemyFlask extends Item
                     break;
                 }
             }
-            this.setEffects(par1ItemStack, list);
+            setEffects(par1ItemStack, list);
         }
     }
 
@@ -241,8 +239,7 @@ public class AlchemyFlask extends Item
 
     public boolean addPotionEffect(ItemStack par1ItemStack, int potionID, int tickDuration)
     {
-        int i = 0;
-        ArrayList<AlchemyPotionHelper> list = this.getEffects(par1ItemStack);
+        ArrayList<AlchemyPotionHelper> list = getEffects(par1ItemStack);
         if (list != null)
         {
             for (AlchemyPotionHelper aph : list)
@@ -251,17 +248,15 @@ public class AlchemyFlask extends Item
                 {
                     return false;
                 }
-
-                i++;
             }
             list.add(new AlchemyPotionHelper(potionID, tickDuration, 0, 0));
-            this.setEffects(par1ItemStack, list);
+            setEffects(par1ItemStack, list);
             return true;
         } else
         {
             list = new ArrayList();
             list.add(new AlchemyPotionHelper(potionID, tickDuration, 0, 0));
-            this.setEffects(par1ItemStack, list);
+            setEffects(par1ItemStack, list);
             return true;
         }
     }
@@ -362,13 +357,7 @@ public class AlchemyFlask extends Item
 
     public boolean isPotionThrowable(ItemStack par1ItemStack)
     {
-        if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().getBoolean("throwable"))
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+        return par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().getBoolean("throwable");
     }
 
     public void setIsPotionThrowable(boolean flag, ItemStack par1ItemStack)
@@ -385,7 +374,7 @@ public class AlchemyFlask extends Item
     {
         ItemStack potionStack = new ItemStack(Items.potionitem, 1, 0);
         potionStack.setTagCompound(new NBTTagCompound());
-        ArrayList<PotionEffect> potionList = this.getPotionEffects(par1ItemStack);
+        ArrayList<PotionEffect> potionList = getPotionEffects(par1ItemStack);
 
         if (potionList == null)
         {
@@ -402,7 +391,6 @@ public class AlchemyFlask extends Item
             nbttaglist.appendTag(d);
         }
         potionStack.getTagCompound().setTag("CustomPotionEffects", nbttaglist);
-        EntityPotion entityPotion = new EntityPotion(worldObj, entityLivingBase, potionStack);
-        return entityPotion;
+        return new EntityPotion(worldObj, entityLivingBase, potionStack);
     }
 }

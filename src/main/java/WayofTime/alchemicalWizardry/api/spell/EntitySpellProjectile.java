@@ -83,7 +83,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
     @Override
     protected void entityInit()
     {
-        dataWatcher.addObject(16, Byte.valueOf((byte) 0));
+        dataWatcher.addObject(16, 0);
     }
 
     /**
@@ -200,7 +200,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
             Block var18 = worldObj.getBlock(xTile, yTile, zTile);
             int var19 = worldObj.getBlockMetadata(xTile, yTile, zTile);
 
-            if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
+//            if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
             {
                 // this.groundImpact();
                 // this.setDead();
@@ -353,7 +353,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         List<SpellEffect> spellEffectList = new LinkedList();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
 
             SpellEffect eff = SpellEffect.getEffectFromTag(tag);
             if (eff != null)
@@ -420,10 +420,10 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         byte var2 = dataWatcher.getWatchableObjectByte(16);
         if (par1)
         {
-            dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 | 1)));
+            dataWatcher.updateObject(16, var2 | 1);
         } else
         {
-            dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 & -2)));
+            dataWatcher.updateObject(16, var2 & -2);
         }
     }
 

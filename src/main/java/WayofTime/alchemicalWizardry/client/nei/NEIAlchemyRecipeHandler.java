@@ -122,7 +122,6 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(ItemStack result) {
         for (AlchemyRecipe recipe : AlchemyRecipeRegistry.recipes) {
             if (recipe == null) continue;
-            ItemStack output = recipe.getResult();
             if (NEIServerUtils.areStacksSameTypeCrafting(result, recipe.getResult())) {
                 arecipes.add(new CachedAlchemyRecipe(recipe));
             }

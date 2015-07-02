@@ -15,7 +15,7 @@ public class ItemStabilityGlyphBlock extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        String name = "";
+        String name;
 
         switch (itemstack.getItemDamage())
         {

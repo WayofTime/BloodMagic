@@ -10,8 +10,7 @@ import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal
 public class EntityDemonAIHurtByTarget extends EntityAIHurtByTarget
 {
 	boolean entityCallsForHelp;
-	private int revengeTimer;
-	
+
 	public EntityDemonAIHurtByTarget(EntityCreature demon, boolean callsForHelp) 
 	{
 		super(demon, callsForHelp);
@@ -36,7 +35,6 @@ public class EntityDemonAIHurtByTarget extends EntityAIHurtByTarget
     	}
 		
         this.taskOwner.setAttackTarget(this.taskOwner.getAITarget());
-        this.revengeTimer = this.taskOwner.func_142015_aE();
 
         if (this.entityCallsForHelp && this.taskOwner instanceof IHoardDemon)
         {

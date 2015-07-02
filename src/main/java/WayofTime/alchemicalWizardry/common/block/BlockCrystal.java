@@ -17,7 +17,9 @@ import java.util.List;
 public class BlockCrystal extends Block
 {
     //private Icon bloodRuneIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon fullIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon brickIcon;
 
 

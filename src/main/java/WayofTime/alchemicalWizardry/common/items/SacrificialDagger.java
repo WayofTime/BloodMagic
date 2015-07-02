@@ -125,7 +125,7 @@ public class SacrificialDagger extends Item
         double posY = player.posY;
         double posZ = player.posZ;
         world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-        float f = (float) 1.0F;
+        float f = 1.0F;
         float f1 = f * 0.6F + 0.4F;
         float f2 = f * f * 0.7F - 0.5F;
         float f3 = f * f * 0.6F - 0.7F;
@@ -174,7 +174,7 @@ public class SacrificialDagger extends Item
 
     public IBloodAltar getAltar(World world, int x, int y, int z)
     {
-        TileEntity tileEntity = null;
+        TileEntity tileEntity;
 
         for (int i = -2; i <= 2; i++)
         {
@@ -222,12 +222,8 @@ public class SacrificialDagger extends Item
     public boolean canUseForSacrifice(ItemStack stack)
     {
     	NBTTagCompound tag = stack.getTagCompound();
-    	if(tag == null)
-    	{
-    		return false;
-    	}
     	
-    	return tag.getBoolean("sacrifice");
+    	return tag != null && tag.getBoolean("sacrifice");
     }
     
     public void setUseForSacrifice(ItemStack stack, boolean sacrifice)
@@ -246,6 +242,6 @@ public class SacrificialDagger extends Item
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack, int pass)
     {
-        return this.canUseForSacrifice(stack) ? true : super.hasEffect(stack, pass);
+        return this.canUseForSacrifice(stack) || super.hasEffect(stack, pass);
     }
 }

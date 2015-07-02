@@ -33,7 +33,7 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     @Override
     protected void applySpellChange(SpellParadigm parad)
     {
-        return;
+
     }
 
     public boolean canInputRecieve()

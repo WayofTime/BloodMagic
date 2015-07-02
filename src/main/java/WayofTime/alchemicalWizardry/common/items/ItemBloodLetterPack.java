@@ -23,12 +23,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAltarManipulator
 {
-    private static IIcon plateIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon plateIcon;
     
-    public static int conversionRate = 100; //LP / half heart
-    public static float activationPoint = 0.5f;
-    public static int tickRate = 20;
-    public static int maxStored = 10000;
+    public int conversionRate = 100; //LP / half heart
+    public float activationPoint = 0.5f;
+    public int tickRate = 20;
+    public int maxStored = 10000;
 
     public ItemBloodLetterPack()
     {
@@ -50,8 +51,6 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
             par3List.add(StatCollector.translateToLocal("tooltip.lp.storedlp") + " " + this.getStoredLP(par1ItemStack));
         }
     }
@@ -164,7 +163,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        return;
+
     }
 
     @Override

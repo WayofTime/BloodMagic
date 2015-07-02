@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 public interface IProjectileImpactEffect
 {
-    public void onEntityImpact(Entity mop, Entity projectile);
+    void onEntityImpact(Entity mop, Entity projectile);
 
-    public void onTileImpact(World world, MovingObjectPosition mop);
+    void onTileImpact(World world, MovingObjectPosition mop);
 }

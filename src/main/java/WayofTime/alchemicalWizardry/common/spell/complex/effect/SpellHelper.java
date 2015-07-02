@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
@@ -313,12 +312,7 @@ public class SpellHelper
 
     public static boolean isFakePlayer(World world, EntityPlayer player)
     {
-        if (world.isRemote)
-        {
-            return false;
-        }
-
-        return isFakePlayer(player);
+        return !world.isRemote && isFakePlayer(player);
     }
 
 	private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
@@ -334,15 +328,12 @@ public class SpellHelper
         if (block == Blocks.stone)
         {
             world.setBlock(posX, posY, posZ, Blocks.cobblestone);
-            return;
         } else if (block == Blocks.cobblestone)
         {
             world.setBlock(posX, posY, posZ, Blocks.gravel);
-            return;
         } else if (block == Blocks.gravel)
         {
             world.setBlock(posX, posY, posZ, Blocks.sand);
-            return;
         }
     }
 
@@ -536,7 +527,7 @@ public class SpellHelper
     {
         if (stack == null)
         {
-            return stack;
+            return null;
         }
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
@@ -666,7 +657,7 @@ public class SpellHelper
     {
         if (stack == null)
         {
-            return stack;
+            return null;
         }
 
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
@@ -903,7 +894,7 @@ public class SpellHelper
 //        }
 //        else
         {
-            if (entity instanceof EntityZombie)
+//            if (entity instanceof EntityZombie)
             {
                 //par2 = par2; // Forge: Noop Warning
             }

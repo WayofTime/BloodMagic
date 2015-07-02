@@ -147,7 +147,7 @@ public class BlockAlchemicCalcinator extends BlockContainer
                 tileEntity.setInventorySlotContents(1, newItem);
             }
 
-        } else if (playerItem == null)
+        } else
         {
             if (tileEntity.getStackInSlot(1) != null)
             {

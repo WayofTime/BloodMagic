@@ -2,13 +2,13 @@ package WayofTime.alchemicalWizardry.common;
 
 public interface IDemon
 {
-    public abstract void setSummonedConditions();
+    void setSummonedConditions();
 
-    public boolean isAggro();
+    boolean isAggro();
 
-    public void setAggro(boolean aggro);
+    void setAggro(boolean aggro);
     
-    public boolean getDoesDropCrystal();
+    boolean getDoesDropCrystal();
     
-    public void setDropCrystal(boolean crystal);
+    void setDropCrystal(boolean crystal);
 }

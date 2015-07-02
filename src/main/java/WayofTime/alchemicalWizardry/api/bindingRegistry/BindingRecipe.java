@@ -15,12 +15,7 @@ public class BindingRecipe
 
     public boolean doesRequiredItemMatch(ItemStack testStack)
     {
-        if (testStack == null || this.requiredItem == null)
-        {
-            return false;
-        }
-
-        return this.requiredItem.isItemEqual(testStack);
+        return !(testStack == null || this.requiredItem == null) && this.requiredItem.isItemEqual(testStack);
     }
 
     public ItemStack getResult(ItemStack inputItem)

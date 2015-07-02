@@ -63,7 +63,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class AlchemicalWizardryEventHooks
 {
 	public static Map<String, Boolean> playerFlightBuff = new HashMap();
-	public static Map<String, Boolean> playerBoostStepHeight = new HashMap();
 	public static List<String> playersWith1Step = new ArrayList();
 
 	public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
@@ -118,8 +117,7 @@ public class AlchemicalWizardryEventHooks
 			if(prevHp > 0)
 			{
 				double originalDamage = event.ammount;
-				double initialReagentHp = prevHp;
-				
+
 				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
 				if (recalculatedAmount <= 0) return;
 				recalculatedAmount = SpellHelper.applyPotionDamageCalculations(player, event.source, recalculatedAmount); //Recalculated damage
@@ -241,7 +239,7 @@ public class AlchemicalWizardryEventHooks
 								
 								reagentAmount -= drain;
 								hasReagentChanged = true;
-								
+
 								health += addedAmount;
 								
 								hasHealthChanged = true;
@@ -378,7 +376,6 @@ public class AlchemicalWizardryEventHooks
 
 		if (event.entityLiving instanceof EntityCreeper)
 		{
-			GameRegistry d;
 			return;
 		}
 
@@ -471,7 +468,7 @@ public class AlchemicalWizardryEventHooks
 			{
 				int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionReciprocation).getAmplifier();
 				float damageRecieve = event.ammount / 2 * (i + 1);
-				((EntityLivingBase) entityAttacking).attackEntityFrom(DamageSource.generic, damageRecieve);
+				entityAttacking.attackEntityFrom(DamageSource.generic, damageRecieve);
 			}
 		}
 
@@ -527,7 +524,7 @@ public class AlchemicalWizardryEventHooks
 					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getLPPacket(SoulNetworkHandler.getCurrentEssence(ownerName), SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(ownerName))), (EntityPlayerMP)entityLiving);
 				}
 			}
-			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer) event.entityLiving).capabilities, Float.valueOf(0.1f), new String[]{"walkSpeed", "g", "field_75097_g"});
+			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer) event.entityLiving).capabilities, 0.1F, "walkSpeed", "g", "field_75097_g");
 		}
 
 		if (entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote)
@@ -557,7 +554,7 @@ public class AlchemicalWizardryEventHooks
 		{
 			int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionDrowning).getAmplifier();
 
-			if (event.entityLiving.worldObj.getWorldTime() % ((int) (20 / (i + 1))) == 0)
+			if (event.entityLiving.worldObj.getWorldTime() % (20 / (i + 1)) == 0)
 			{
 				event.entityLiving.attackEntityFrom(DamageSource.drown, 2);
 				event.entityLiving.hurtResistantTime = Math.min(event.entityLiving.hurtResistantTime, 20 / (i + 1));
@@ -569,7 +566,6 @@ public class AlchemicalWizardryEventHooks
 		if (event.entityLiving.isPotionActive(AlchemicalWizardry.customPotionBoost))
 		{
 			int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionBoost).getAmplifier();
-			EntityLivingBase entity = event.entityLiving;
 			//if(!entity.isSneaking())
 			{
 				float percentIncrease = (i + 1) * 0.05f;
@@ -600,7 +596,6 @@ public class AlchemicalWizardryEventHooks
 			AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5).expand(d0, d0, d0);
 			List list = event.entityLiving.worldObj.getEntitiesWithinAABB(Entity.class, axisalignedbb);
 			Iterator iterator = list.iterator();
-			EntityLivingBase livingEntity;
 
 			while (iterator.hasNext())
 			{
@@ -826,14 +821,9 @@ public class AlchemicalWizardryEventHooks
 	{
 		if(entity instanceof IManaBurst) {
             ItemStack lens = ((IManaBurst)entity).getSourceLens();
-            if(lens.getItemDamage()!=8 && lens.getItemDamage()!=11)
-                return false;
-            else
-                return true;
+            return !(lens.getItemDamage()!=8 && lens.getItemDamage()!=11);
         }
         else
             return false;
-
-
 	}
 }

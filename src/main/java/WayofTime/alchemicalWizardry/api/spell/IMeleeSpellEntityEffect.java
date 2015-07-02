@@ -5,5 +5,5 @@ import net.minecraft.world.World;
 
 public interface IMeleeSpellEntityEffect
 {
-    public void onEntityImpact(World world, EntityPlayer entityPlayer);
+    void onEntityImpact(World world, EntityPlayer entityPlayer);
 }

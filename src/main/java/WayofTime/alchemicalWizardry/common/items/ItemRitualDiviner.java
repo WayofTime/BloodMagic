@@ -274,7 +274,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                         }
                     } else
                     {
-                        world.playAuxSFX(0000, x, y + 1, z, 0);
+                        world.playAuxSFX(0, x, y + 1, z, 0);
                         return true;
                     }
                 }
@@ -406,7 +406,6 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     public void rotateRituals(World world, EntityPlayer player, ItemStack stack, boolean next)
     {
     	this.voidStoredLocation(stack);
-        int maxRitualID = Rituals.getNumberOfRituals();
         String currentRitualID = this.getCurrentRitual(stack);
 
         this.setCurrentRitual(stack, next? Rituals.getNextRitualKey(currentRitualID):Rituals.getPreviousRitualKey(currentRitualID));

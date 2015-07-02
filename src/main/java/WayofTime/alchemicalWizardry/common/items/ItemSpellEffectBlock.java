@@ -5,7 +5,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemSpellEffectBlock extends ItemBlock
-
 {
     public ItemSpellEffectBlock(Block par1)
     {
@@ -14,9 +13,8 @@ public class ItemSpellEffectBlock extends ItemBlock
     }
 
     public String getUnlocalizedName(ItemStack itemstack)
-
     {
-        String name = "";
+        String name;
 
         switch (itemstack.getItemDamage())
         {

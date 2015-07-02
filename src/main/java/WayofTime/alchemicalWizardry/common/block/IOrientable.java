@@ -4,11 +4,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IOrientable
 {
-    public ForgeDirection getInputDirection();
+    ForgeDirection getInputDirection();
 
-    public ForgeDirection getOutputDirection();
+    ForgeDirection getOutputDirection();
 
-    public void setInputDirection(ForgeDirection direction);
+    void setInputDirection(ForgeDirection direction);
 
-    public void setOutputDirection(ForgeDirection direction);
+    void setOutputDirection(ForgeDirection direction);
 }

@@ -17,9 +17,6 @@ import java.util.List;
 
 public class BlockSpellParadigm extends BlockOrientable
 {
-    public static final float minPos = (3f / 16f);
-    public static final float maxPos = (13f / 16f);
-
     public BlockSpellParadigm()
     {
         super();

@@ -81,7 +81,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	
 	//Mouse Position helper
 	public Point getMouse(int width, int height) {
-		Point mousepos = this.getMousePosition();
+		Point mousepos = getMousePosition();
 		int guiLeft = (width - 176) / 2;
         int guiTop = (height - 166) / 2;
         Point relMouse = new Point(mousepos.x - guiLeft, mousepos.y - guiTop);

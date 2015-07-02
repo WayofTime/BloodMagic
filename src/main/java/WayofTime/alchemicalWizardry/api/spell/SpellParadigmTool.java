@@ -30,7 +30,6 @@ public class SpellParadigmTool extends SpellParadigm
     private List<IDigAreaEffect> digAreaEffectList;
     private List<ISpecialDamageEffect> specialDamageEffectList;
 
-    private float maxDamage;
     private HashMap<String, Integer> harvestLevel;
     private HashMap<String, Float> digSpeed;
     private HashMap<String, Float> maxDamageHash;
@@ -61,8 +60,6 @@ public class SpellParadigmTool extends SpellParadigm
 
         this.toolInfoString = new HashMap();
         this.critChanceHash = new HashMap();
-
-        this.maxDamage = 5;
 
         this.harvestLevel = new HashMap();
         this.harvestLevel.put("pickaxe", -1);

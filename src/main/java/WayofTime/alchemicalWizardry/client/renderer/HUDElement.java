@@ -59,8 +59,8 @@ public class HUDElement
 
         if (itemStack != null)
         {
-            int damage = 1;
-            int maxDamage = 1;
+            int damage;
+            int maxDamage;
 
             if (showValue)
             {

@@ -25,10 +25,14 @@ import java.util.List;
 
 public class ItemSanguineArmour extends ItemArmor implements ArmourUpgrade, IGoggles, IVisDiscountGear, IRevealer, IRunicArmor, IRepairable
 {
-    private static IIcon helmetIcon;
-    private static IIcon plateIcon;
-    private static IIcon leggingsIcon;
-    private static IIcon bootsIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon helmetIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon plateIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon leggingsIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon bootsIcon;
 
     public ItemSanguineArmour(int armorType)
     {

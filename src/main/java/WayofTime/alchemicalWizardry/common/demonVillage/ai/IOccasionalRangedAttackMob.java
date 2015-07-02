@@ -4,5 +4,5 @@ import net.minecraft.entity.IRangedAttackMob;
 
 public interface IOccasionalRangedAttackMob extends IRangedAttackMob
 {
-	public boolean shouldUseRangedAttack();
+	boolean shouldUseRangedAttack();
 }

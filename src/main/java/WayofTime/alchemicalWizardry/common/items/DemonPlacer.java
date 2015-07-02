@@ -35,11 +35,6 @@ public class DemonPlacer extends Item
         this.maxStackSize = 1;
     }
 
-    public String getItemDisplayName(ItemStack par1ItemStack)
-    {
-        return "Demon Crystal";
-    }
-
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
     {

@@ -24,9 +24,10 @@ import java.util.List;
 
 public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISigil
 {
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
-    private int tickDelay = 200;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
     private int radius = 5;
     private int refresh = 100;
 
@@ -62,8 +63,8 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
     public void registerIcons(IIconRegister iconRegister)
     {
         this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_deactivated");
+        activeIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_activated");
+        passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSupression_deactivated");
     }
 
     @Override
@@ -78,10 +79,10 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
 
         if (tag.getBoolean("isActive"))
         {
-            return this.activeIcon;
+            return activeIcon;
         } else
         {
-            return this.passiveIcon;
+            return passiveIcon;
         }
     }
 
@@ -91,16 +92,18 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
     {
         if (par1 == 1)
         {
-            return this.activeIcon;
+            return activeIcon;
         } else
         {
-            return this.passiveIcon;
+            return passiveIcon;
         }
     }
 
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+        int tickDelay = 200;
+
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
             return par1ItemStack;

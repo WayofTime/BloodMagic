@@ -4,5 +4,5 @@ import net.minecraft.entity.Entity;
 
 public interface IProjectileUpdateEffect
 {
-    public void onUpdateEffect(Entity projectile);
+    void onUpdateEffect(Entity projectile);
 }

@@ -59,8 +59,6 @@ public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil
             return par1ItemStack;
         }
 
-        String ownerName = itemTag.getString("ownerName");
-
         return par1ItemStack;
     }
 

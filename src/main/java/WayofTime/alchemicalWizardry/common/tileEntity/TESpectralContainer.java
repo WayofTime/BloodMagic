@@ -32,7 +32,7 @@ public class TESpectralContainer extends TileEntity
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < inv.length)
@@ -52,8 +52,6 @@ public class TESpectralContainer extends TileEntity
 
         for (int i = 0; i < inv.length; i++)
         {
-            ItemStack stack = inv[i];
-
             if (inv[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();

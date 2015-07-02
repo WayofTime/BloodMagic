@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 
 public interface ILimitedRoutingFocus 
 {
-	public int getRoutingFocusLimit(ItemStack stack);
+	int getRoutingFocusLimit(ItemStack stack);
 	
-	public void setRoutingFocusLimit(ItemStack stack, int limit);
+	void setRoutingFocusLimit(ItemStack stack, int limit);
 }

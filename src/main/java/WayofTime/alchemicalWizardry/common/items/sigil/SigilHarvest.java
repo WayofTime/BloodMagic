@@ -22,9 +22,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon activeIcon;
+    private IIcon activeIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon passiveIcon;
+    private IIcon passiveIcon;
 
     public SigilHarvest()
     {
@@ -137,11 +137,6 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
         {
             return;
         }
-
-        if(par2World.isRemote)
-        {
-        	return;
-        }
         
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
@@ -179,8 +174,6 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
                 }
             }
         }
-
-        return;
     }
 
 	@Override
@@ -206,7 +199,6 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
                 }
             }
         }
-		
 	}
 
 	@Override

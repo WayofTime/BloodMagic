@@ -9,7 +9,7 @@ public interface IRightClickEffect
 {
     //public abstract int onRightClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder);
 
-    public abstract int onRightClickBlock(ItemStack stack, EntityLivingBase weilder, World world, MovingObjectPosition mop);
+    int onRightClickBlock(ItemStack stack, EntityLivingBase weilder, World world, MovingObjectPosition mop);
 
-    public abstract int onRightClickAir(ItemStack stack, EntityLivingBase weilder);
+    int onRightClickAir(ItemStack stack, EntityLivingBase weilder);
 }

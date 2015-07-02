@@ -17,8 +17,10 @@ import java.util.List;
 
 public class ArmourInhibitor extends EnergyItems
 {
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
     private int tickDelay = 200;
 
     public ArmourInhibitor()
@@ -110,10 +112,6 @@ public class ArmourInhibitor extends EnergyItems
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
-
-            if (!par3EntityPlayer.capabilities.isCreativeMode)
-            {
-            }
         } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
@@ -139,14 +137,12 @@ public class ArmourInhibitor extends EnergyItems
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive"))
         {
-            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
             }
 
             //TODO Do stuff
             par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 2, 0));
         }
-
-        return;
     }
 }

@@ -15,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -29,7 +28,6 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     public EnergyBattery(int damage)
     {
         super();
-        DamageSource damageSource = DamageSource.generic;
         setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         maxEssence = damage;
@@ -120,7 +118,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             double posY = player.posY;
             double posZ = player.posZ;
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            float f = (float) 1.0F;
+            float f = 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
@@ -179,12 +177,13 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
     }
 
     @Override
-    public boolean hasContainerItem()
+    public boolean hasContainerItem(ItemStack itemStack)
     {
         return true;
     }
 
     //@SideOnly(Side.SERVER)
+    @Deprecated
     public int getCurrentEssence(ItemStack par1ItemStack)
     {
         if (par1ItemStack == null)
@@ -209,8 +208,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
             worldSave.setItemData(owner, data);
         }
 
-        int currentEssence = data.currentEssence;
-        return (currentEssence);
+        return data.currentEssence;
     }
 
     @Override

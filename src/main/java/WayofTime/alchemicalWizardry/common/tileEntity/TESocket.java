@@ -104,7 +104,7 @@ public class TESocket extends TEInventory
 
     public int[] buildIntDataList()
     {
-        int[] sortList = new int[1 * 3];
+        int[] sortList = new int[3]; //1 * 3
         int pos = 0;
 
         for (ItemStack is : inv)

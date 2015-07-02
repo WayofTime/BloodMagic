@@ -17,12 +17,10 @@ public class RenderFakeBlocks
         double maxY = minY + 1;
         double maxZ = minZ + 1;
         Tessellator tessellator = Tessellator.instance;
-
         
         tessellator.startDrawingQuads();
         tessellator.setColorRGBA(255, 255, 255, 200);
 
-        
         float texMinU, texMaxU, texMinV, texMaxV;
 
         texMinU = getMinU(block, meta, 0);

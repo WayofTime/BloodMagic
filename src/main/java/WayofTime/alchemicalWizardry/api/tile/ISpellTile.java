@@ -5,7 +5,7 @@ import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
 public interface ISpellTile 
 {
-	public void modifySpellParadigm(SpellParadigm parad);	
+	void modifySpellParadigm(SpellParadigm parad);
 	
-	public boolean canInputRecieveOutput(ForgeDirection output);
+	boolean canInputRecieveOutput(ForgeDirection output);
 }

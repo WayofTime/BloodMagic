@@ -5,8 +5,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-import java.util.Random;
-
 public class EnhancedFillingAgent extends WeakFillingAgent
 {
     public EnhancedFillingAgent()
@@ -18,7 +16,6 @@ public class EnhancedFillingAgent extends WeakFillingAgent
     @Override
     public int getFilledAmountForPotionNumber(int potionEffects)
     {
-        Random rand = new Random();
         if (potionEffects == 0)
         {
             return 8;

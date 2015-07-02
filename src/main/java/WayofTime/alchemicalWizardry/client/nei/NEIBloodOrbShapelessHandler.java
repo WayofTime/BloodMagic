@@ -46,7 +46,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
 					ingredients.add(stack);
 				}else if(o instanceof List)
 				{
-					PositionedStack stack = new PositionedStack((List)o, 25 + stackorder[ingred][0] * 18, 6 + stackorder[ingred][1] * 18);
+					PositionedStack stack = new PositionedStack(o, 25 + stackorder[ingred][0] * 18, 6 + stackorder[ingred][1] * 18);
 					stack.setMaxSize(1);
 					ingredients.add(stack);
 				}

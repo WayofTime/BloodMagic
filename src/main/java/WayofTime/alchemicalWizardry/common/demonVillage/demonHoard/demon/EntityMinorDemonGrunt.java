@@ -93,10 +93,10 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 
         if (this.isTamed())
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
     
@@ -296,10 +296,10 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 
         if (par1)
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -319,7 +319,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 {
                     ItemFood itemfood = (ItemFood) itemstack.getItem();
 
-                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < this.maxTamedHealth)
+                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < maxTamedHealth)
                     {
                         if (!par1EntityPlayer.capabilities.isCreativeMode)
                         {
@@ -330,7 +330,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 
                         if (itemstack.stackSize <= 0)
                         {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -344,9 +344,9 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
-                    this.setPathToEntity((PathEntity) null);
-                    this.setTarget((Entity) null);
-                    this.setAttackTarget((EntityLivingBase) null);
+                    this.setPathToEntity(null);
+                    this.setTarget(null);
+                    this.setAttackTarget(null);
                 }
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
@@ -368,10 +368,10 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 if (this.rand.nextInt(1) == 0)
                 {
                     this.setTamed(true);
-                    this.setPathToEntity((PathEntity) null);
-                    this.setAttackTarget((EntityLivingBase) null);
+                    this.setPathToEntity(null);
+                    this.setAttackTarget(null);
                     this.aiSit.setSitting(true);
-                    this.setHealth(this.maxTamedHealth);
+                    this.setHealth(maxTamedHealth);
                     this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                     this.playTameEffect(true);
                     this.worldObj.setEntityState(this, (byte) 7);
@@ -479,9 +479,6 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         {
         	return;
         }
-        double xCoord;
-        double yCoord;
-        double zCoord;
         HolyProjectile hol = new HolyProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 15, 600);
         this.worldObj.spawnEntityInWorld(hol);
     }

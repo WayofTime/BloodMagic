@@ -27,7 +27,6 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 	public static final int sizeInv = 7;
 	
     private int progress;
-    private int progressNeeded = 100;
     private int amountUsed;
 
     private int accelerationTime;
@@ -162,13 +161,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
     public boolean containsPotionFlask()
     {
-        if (getPotionFlaskPosition() != -1)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+        return getPotionFlaskPosition() != -1;
     }
 
     public int getPotionFlaskPosition()
@@ -210,13 +203,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
     public boolean containsRegisteredPotionIngredient()
     {
-        if (getRegisteredPotionIngredientPosition() != -1)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+        return getRegisteredPotionIngredientPosition() != -1;
     }
 
     public int getRegisteredPotionIngredientPosition()
@@ -240,12 +227,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
     public boolean containsCatalyst()
     {
-        if (getCatalystPosition() != -1)
-        {
-            return true;
-        }
-
-        return false;
+        return getCatalystPosition() != -1;
     }
 
     public int getCatalystPosition()
@@ -263,12 +245,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
     public boolean containsBindingAgent()
     {
-        if (getBindingAgentPosition() != -1)
-        {
-            return true;
-        }
-
-        return false;
+        return getBindingAgentPosition() != -1;
     }
 
     public int getBindingAgentPosition()
@@ -286,12 +263,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
     public boolean containsFillingAgent()
     {
-        if (getFillingAgentPosition() != -1)
-        {
-            return true;
-        }
-
-        return false;
+        return getFillingAgentPosition() != -1;
     }
 
     public int getFillingAgentPosition()
@@ -309,12 +281,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
     public boolean containsBlankSlate()
     {
-        if (getBlankSlatePosition() != -1)
-        {
-            return true;
-        }
-
-        return false;
+        return getBlankSlatePosition() != -1;
     }
 
     public int getBlankSlatePosition()
@@ -333,6 +300,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
     @Override
     public void updateEntity()
     {
+        int progressNeeded = 100;
         long worldTime = worldObj.getWorldTime();
 
         if (worldObj.isRemote)

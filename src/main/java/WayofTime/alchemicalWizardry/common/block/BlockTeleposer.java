@@ -33,13 +33,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockTeleposer extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon topIcon;
+    private IIcon topIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon1;
+    private IIcon sideIcon2;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private static IIcon bottomIcon;
+    private IIcon bottomIcon;
 
     public BlockTeleposer()
     {
@@ -55,7 +53,6 @@ public class BlockTeleposer extends BlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Top");
-        this.sideIcon1 = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
         this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
         this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
     }
@@ -219,17 +216,15 @@ public class BlockTeleposer extends BlockContainer
             worldF.setTileEntity(xf, yf, zf, tileToSet);
         }
 
-        Block initialBlock = blockI;
-
-        if (initialBlock != null)
+        if (blockI != null)
         {
-            TileEntity tileToSet = initialBlock.createTileEntity(worldI, metaI);
+            TileEntity tileToSet = blockI.createTileEntity(worldI, metaI);
 
             worldI.setTileEntity(xi, yi, zi, tileToSet);
         }
 
         //TILES CLEARED
-        worldF.setBlock(xf, yf, zf, initialBlock, metaI, flag);
+        worldF.setBlock(xf, yf, zf, blockI, metaI, flag);
 
         if (tileEntityI != null)
         {
@@ -292,6 +287,6 @@ public class BlockTeleposer extends BlockContainer
     @Optional.Method(modid = "ForgeMultipart")
     public static void sendDescriptorOfTile(World world, TileEntity tile)
     {
-    	MultipartHelper.sendDescPacket(world, (TileMultipart)tile);
+    	MultipartHelper.sendDescPacket(world, tile);
     }
 }

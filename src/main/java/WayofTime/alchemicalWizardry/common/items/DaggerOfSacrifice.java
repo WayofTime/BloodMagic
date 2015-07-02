@@ -33,8 +33,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class DaggerOfSacrifice extends EnergyItems
 {
-    private float weaponDamage;
-
     public DaggerOfSacrifice()
     {
         super();
@@ -43,7 +41,6 @@ public class DaggerOfSacrifice extends EnergyItems
         setEnergyUsed(100);
         setFull3D();
         setMaxDamage(100);
-        weaponDamage = 1.0F;
     }
 
     @Override
@@ -183,7 +180,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
     public IBloodAltar getAltar(World world, int x, int y, int z)
     {
-        TileEntity tileEntity = null;
+        TileEntity tileEntity;
 
         for (int i = -2; i <= 2; i++)
         {
@@ -198,22 +195,7 @@ public class DaggerOfSacrifice extends EnergyItems
                         return (IBloodAltar) tileEntity;
                     }
                 }
-
-                if ((tileEntity instanceof IBloodAltar))
-                {
-                    return (IBloodAltar) tileEntity;
-                }
             }
-
-            if ((tileEntity instanceof IBloodAltar))
-            {
-                return (IBloodAltar) tileEntity;
-            }
-        }
-
-        if ((tileEntity instanceof IBloodAltar))
-        {
-            return (IBloodAltar) tileEntity;
         }
 
         return null;

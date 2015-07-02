@@ -19,7 +19,7 @@ public class EntityFireElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityLivingBase)
         {
-            ((EntityLivingBase) target).setFire(10);
+            target.setFire(10);
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
         }
     }

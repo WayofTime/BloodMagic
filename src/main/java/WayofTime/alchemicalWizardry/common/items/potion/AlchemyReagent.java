@@ -76,7 +76,6 @@ public class AlchemyReagent extends Item
         if (this == ModItems.tennebrae)
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:Tennebrae");
-            return;
         }
     }
 

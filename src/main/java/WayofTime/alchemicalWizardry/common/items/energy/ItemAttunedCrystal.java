@@ -198,7 +198,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                             return itemStack;
                         }
 
-                        int reagentLocation = -1;
+                        int reagentLocation;
 
                         reagentLocation = reagentList.indexOf(pastReagent);
 

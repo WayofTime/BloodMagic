@@ -24,11 +24,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockCrucible extends BlockContainer
 {
 	@SideOnly(Side.CLIENT)
-    private static IIcon topIcon;
+    private IIcon topIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon;
+    private IIcon sideIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon bottomIcon;
+    private IIcon bottomIcon;
     
 	public BlockCrucible() 
 	{

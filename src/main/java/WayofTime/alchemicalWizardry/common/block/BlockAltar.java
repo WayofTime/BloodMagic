@@ -26,13 +26,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockAltar extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon topIcon;
+    private IIcon topIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon1;
+    private IIcon sideIcon2;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private static IIcon bottomIcon;
+    private IIcon bottomIcon;
 
     public BlockAltar()
     {
@@ -48,7 +46,6 @@ public class BlockAltar extends BlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Top");
-        this.sideIcon1 = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_SideType1");
         this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_SideType2");
         this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Bottom");
     }
@@ -89,7 +86,7 @@ public class BlockAltar extends BlockContainer
                 int maxEssence = bloodOrb.getMaxEssence();
                 int currentEssence = bloodOrb.getCurrentEssence(stack);
                 int level = currentEssence * 15 / maxEssence;
-                return ((int) (Math.min(15, level))) % 16;
+                return Math.min(15, level) % 16;
             }
         }
 

@@ -5,5 +5,5 @@ import net.minecraft.world.World;
 
 public interface ISelfSpellEffect
 {
-    public void onSelfUse(World world, EntityPlayer player);
+    void onSelfUse(World world, EntityPlayer player);
 }

@@ -17,8 +17,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 {
-	public IIcon enchantability;
-	public IIcon enchantmentLevel;
+	@SideOnly(Side.CLIENT)
+	private IIcon enchantability;
+	@SideOnly(Side.CLIENT)
+	private IIcon enchantmentLevel;
 	
     public BlockEnchantmentGlyph()
     {
