@@ -121,22 +121,18 @@ public class GridSpaceHolder
         {
             this.expandAreaInPosX();
             this.setGridSpace(x, z, space);
-            return;
         } else if (x < -negXRadius)
         {
             this.expandAreaInNegX();
             this.setGridSpace(x, z, space);
-            return;
         } else if (z > posZRadius)
         {
             this.expandAreaInPosZ();
             this.setGridSpace(x, z, space);
-            return;
         } else if (z < -negZRadius)
         {
             this.expandAreaInNegZ();
             this.setGridSpace(x, z, space);
-            return;
         } else
         {
             area[x + negXRadius][z + negZRadius] = space;
@@ -162,8 +158,8 @@ public class GridSpaceHolder
                     if(TEDemonPortal.printDebug)
                     AlchemicalWizardry.logger.info("x: " + i + " z: " + j);
 
-                    int xOff = 0;
-                    int zOff = 0;
+                    int xOff;
+                    int zOff;
 
                     switch (dir)
                     {
@@ -211,8 +207,8 @@ public class GridSpaceHolder
                         continue;
                     }
 
-                    int xOff = 0;
-                    int zOff = 0;
+                    int xOff;
+                    int zOff;
 
                     switch (dir)
                     {
@@ -255,8 +251,8 @@ public class GridSpaceHolder
                     continue;
                 }
 
-                int xOff = 0;
-                int zOff = 0;
+                int xOff;
+                int zOff;
 
                 switch (dir)
                 {

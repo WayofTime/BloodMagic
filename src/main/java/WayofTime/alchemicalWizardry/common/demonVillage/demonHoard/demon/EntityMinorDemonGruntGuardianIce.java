@@ -38,9 +38,6 @@ public class EntityMinorDemonGruntGuardianIce extends EntityMinorDemonGruntGuard
         {
         	return;
         }
-        double xCoord;
-        double yCoord;
-        double zCoord;
         IceProjectile hol = new IceProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 20, 600);
         this.worldObj.spawnEntityInWorld(hol);
     }

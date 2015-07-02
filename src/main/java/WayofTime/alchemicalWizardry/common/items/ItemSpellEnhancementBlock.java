@@ -5,7 +5,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemSpellEnhancementBlock extends ItemBlock
-
 {
     public ItemSpellEnhancementBlock(Block par1)
     {
@@ -15,9 +14,8 @@ public class ItemSpellEnhancementBlock extends ItemBlock
     }
 
     public String getUnlocalizedName(ItemStack itemstack)
-
     {
-        String name = "";
+        String name;
 
         switch (itemstack.getItemDamage())
         {

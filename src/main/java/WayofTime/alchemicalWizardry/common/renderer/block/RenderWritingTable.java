@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -48,7 +47,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            this.modelWritingTable.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+            this.modelWritingTable.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
 
@@ -260,7 +259,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
 
                     default:
                     {
-                        return;
+
                     }
                 }
             } else
@@ -310,7 +309,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
 
                     default:
                     {
-                        return;
+
                     }
                 }
             }

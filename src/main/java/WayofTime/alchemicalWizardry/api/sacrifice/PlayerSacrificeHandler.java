@@ -95,7 +95,7 @@ public class PlayerSacrificeHandler
 
     public static IBloodAltar getAltar(World world, int x, int y, int z)
     {
-        TileEntity tileEntity = null;
+        TileEntity tileEntity;
 
         for (int i = -2; i <= 2; i++)
         {

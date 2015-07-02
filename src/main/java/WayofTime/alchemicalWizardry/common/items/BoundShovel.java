@@ -35,8 +35,10 @@ public class BoundShovel extends ItemSpade implements IBindable
     public float efficiencyOnProperMaterial = 12.0F;
     public float damageVsEntity;
 
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
 
     private int energyUsed;
 
@@ -216,7 +218,6 @@ public class BoundShovel extends ItemSpade implements IBindable
         }
 
         par1ItemStack.setItemDamage(0);
-        return;
     }
 
     public void setActivated(ItemStack par1ItemStack, boolean newActivated)
@@ -264,11 +265,7 @@ public class BoundShovel extends ItemSpade implements IBindable
      */
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
-        if (!getActivated(par1ItemStack))
-        {
-            return false;
-        }
-        return true;
+        return getActivated(par1ItemStack);
     }
 
     public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)

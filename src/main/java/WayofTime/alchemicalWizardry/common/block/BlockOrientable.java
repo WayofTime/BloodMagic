@@ -34,7 +34,6 @@ public class BlockOrientable extends BlockContainer
             return false;
         }
 
-        ForgeDirection sideClicked = ForgeDirection.getOrientation(side);
         TileEntity tile = world.getTileEntity(x, y, z);
 
         if (tile instanceof TEOrientable)

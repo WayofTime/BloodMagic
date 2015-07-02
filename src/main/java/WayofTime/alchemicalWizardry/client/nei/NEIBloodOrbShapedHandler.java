@@ -49,7 +49,7 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 						ingredients.add(stack);
 					}else if(o instanceof List)
 					{
-						PositionedStack stack = new PositionedStack((List)o, 25 + x * 18, 6 + y * 18, false);
+						PositionedStack stack = new PositionedStack(o, 25 + x * 18, 6 + y * 18, false);
 						stack.setMaxSize(1);
 						ingredients.add(stack);
 					}

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -76,13 +77,12 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
         }
 
         String ownerName = itemTag.getString("ownerName");
-        int currentEssence = EnergyItems.getCurrentEssence(ownerName);
 
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
         if (movingobjectposition == null)
         {
-            par3EntityPlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+            par3EntityPlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + SoulNetworkHandler.getCurrentEssence(ownerName) + "LP"));
 
             return par1ItemStack;
         } else
@@ -97,7 +97,7 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
 
                 if (!(tile instanceof IReagentHandler))
                 {
-                    par3EntityPlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + EnergyItems.getCurrentEssence(ownerName) + "LP"));
+                    par3EntityPlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + SoulNetworkHandler.getCurrentEssence(ownerName) + "LP"));
 
                     return par1ItemStack;
                 }

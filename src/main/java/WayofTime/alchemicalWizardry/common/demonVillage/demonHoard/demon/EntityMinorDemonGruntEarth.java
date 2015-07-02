@@ -41,9 +41,6 @@ public class EntityMinorDemonGruntEarth extends EntityMinorDemonGrunt
         {
         	return;
         }
-        double xCoord;
-        double yCoord;
-        double zCoord;
         ExplosionProjectile hol = new ExplosionProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 15, 600, false);
         this.worldObj.spawnEntityInWorld(hol);
     }

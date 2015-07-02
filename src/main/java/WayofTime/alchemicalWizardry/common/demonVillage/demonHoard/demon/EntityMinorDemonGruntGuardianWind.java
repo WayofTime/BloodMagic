@@ -55,9 +55,6 @@ public class EntityMinorDemonGruntGuardianWind extends EntityMinorDemonGruntGuar
         {
         	return;
         }
-        double xCoord;
-        double yCoord;
-        double zCoord;
         WindGustProjectile hol = new WindGustProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 20, 600);
         this.worldObj.spawnEntityInWorld(hol);
     }

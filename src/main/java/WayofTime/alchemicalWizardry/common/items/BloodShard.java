@@ -33,7 +33,6 @@ public class BloodShard extends Item implements ArmourUpgrade
         if (this.equals(ModItems.demonBloodShard))
         {
             this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonBloodShard");
-            return;
         }
     }
 

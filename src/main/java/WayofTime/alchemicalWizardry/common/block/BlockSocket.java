@@ -23,13 +23,11 @@ import java.util.Random;
 public class BlockSocket extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon topIcon;
+    private IIcon topIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon1;
+    private IIcon sideIcon2;
     @SideOnly(Side.CLIENT)
-    private static IIcon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private static IIcon bottomIcon;
+    private IIcon bottomIcon;
 
     public BlockSocket()
     {
@@ -46,7 +44,6 @@ public class BlockSocket extends BlockContainer
     public void registerBlockIcons(IIconRegister iconRegister)
     {
         this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        this.sideIcon1 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
         this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
         this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
     }

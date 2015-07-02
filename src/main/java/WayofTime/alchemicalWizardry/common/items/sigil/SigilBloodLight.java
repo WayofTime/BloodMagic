@@ -22,8 +22,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgrade, ISigil
 {
-    private int tickDelay = 100;
-
     public SigilBloodLight()
     {
         super();

@@ -114,8 +114,6 @@ public enum NewPacketHandler
             TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEOrientable)
             {
-                TEOrientable tile = (TEOrientable) te;
-
                 ((TEOrientable) te).setInputDirection(ForgeDirection.getOrientation(msg.input));
                 ((TEOrientable) te).setOutputDirection(ForgeDirection.getOrientation(msg.output));
             }
@@ -459,7 +457,7 @@ public enum NewPacketHandler
 			target.writeInt(msg.index);
 			
 			
-			switch(msg.index)
+//			switch(msg.index)
 			{
 			
 			}
@@ -472,7 +470,7 @@ public enum NewPacketHandler
 			
 			System.out.println("Packet is recieved and being decoded");
 			
-			switch(index)
+//			switch(index)
 			{
 			
 			}

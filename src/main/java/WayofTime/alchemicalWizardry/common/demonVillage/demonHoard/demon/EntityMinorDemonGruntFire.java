@@ -37,9 +37,6 @@ public class EntityMinorDemonGruntFire extends EntityMinorDemonGrunt
         {
         	return;
         }
-        double xCoord;
-        double yCoord;
-        double zCoord;
         FireProjectile hol = new FireProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 15, 600);
         this.worldObj.spawnEntityInWorld(hol);
     }

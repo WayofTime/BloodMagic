@@ -23,9 +23,9 @@ import java.util.List;
 public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISigil
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon activeIcon;
+    private IIcon activeIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon passiveIcon;
+    private IIcon passiveIcon;
 
     public SigilOfEnderSeverance()
     {

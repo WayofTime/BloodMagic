@@ -25,9 +25,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EnergySword extends ItemSword
 {
-    private NBTTagCompound data;
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
     private int energyUsed;
 
     public EnergySword()
@@ -168,7 +169,6 @@ public class EnergySword extends ItemSword
         }
 
         par1ItemStack.setItemDamage(0);
-        return;
     }
 
     public void setActivated(ItemStack par1ItemStack, boolean newActivated)

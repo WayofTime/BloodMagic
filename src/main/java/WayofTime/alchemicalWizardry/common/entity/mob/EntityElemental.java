@@ -135,15 +135,6 @@ public class EntityElemental extends EntityDemon
             this.motionY *= (double) f2;
             this.motionZ *= (double) f2;
         }
-
-        double d0 = this.posX - this.prevPosX;
-        double d1 = this.posZ - this.prevPosZ;
-        float f4 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
-
-        if (f4 > 1.0F)
-        {
-            f4 = 1.0F;
-        }
     }
 
     /**
@@ -251,7 +242,7 @@ public class EntityElemental extends EntityDemon
 
                     if (this.attackCounter >= 10)
                     {
-                        this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+                        this.worldObj.playAuxSFXAtEntity(null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
                         this.inflictEffectOnEntity(this.targetedEntity);
                         this.attackCounter = -40;
                     }
@@ -262,7 +253,7 @@ public class EntityElemental extends EntityDemon
             }
         } else
         {
-            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(this.motionX, this.motionZ)) * 180.0F / (float) Math.PI;
+            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(motionX, this.motionZ)) * 180.0F / (float) Math.PI;
 
             if (this.attackCounter > 0)
             {
@@ -277,7 +268,7 @@ public class EntityElemental extends EntityDemon
 
             if (b0 != b1)
             {
-                this.dataWatcher.updateObject(25, Byte.valueOf(b1));
+                this.dataWatcher.updateObject(25, b1);
             }
         }
     }
@@ -342,10 +333,10 @@ public class EntityElemental extends EntityDemon
         //My guess is that this will alter the max health
         if (this.isTamed())
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -378,15 +369,15 @@ public class EntityElemental extends EntityDemon
      */
     protected void updateAITick()
     {
-        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
+        this.dataWatcher.updateObject(18, this.getHealth());
     }
 
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(18, new Float(this.getHealth()));
-        this.dataWatcher.addObject(19, new Byte((byte) 0));
-        this.dataWatcher.addObject(25, Byte.valueOf((byte) 0));
+        this.dataWatcher.addObject(18, this.getHealth());
+        this.dataWatcher.addObject(19, 0);
+        this.dataWatcher.addObject(25, 0);
     }
 
     /**
@@ -503,10 +494,10 @@ public class EntityElemental extends EntityDemon
 
         if (par1)
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -540,10 +531,10 @@ public class EntityElemental extends EntityDemon
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
+            this.dataWatcher.updateObject(16, b0 | 2);
         } else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
+            this.dataWatcher.updateObject(16, b0 & -3);
         }
     }
 
@@ -551,10 +542,10 @@ public class EntityElemental extends EntityDemon
     {
         if (par1)
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 1));
+            this.dataWatcher.updateObject(19, 1);
         } else
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 0));
+            this.dataWatcher.updateObject(19, 0);
         }
     }
 
@@ -608,7 +599,6 @@ public class EntityElemental extends EntityDemon
     public void setCombatTask()
     {
         this.tasks.removeTask(this.aiAttackOnCollide);
-        ItemStack itemstack = this.getHeldItem();
         this.tasks.addTask(4, this.aiAttackOnCollide);
     }
 

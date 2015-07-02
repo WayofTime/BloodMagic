@@ -38,9 +38,6 @@ public class EntityMinorDemonGruntGuardian extends EntityMinorDemonGrunt
         {
         	return;
         }
-        double xCoord;
-        double yCoord;
-        double zCoord;
         HolyProjectile hol = new HolyProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 20, 600);
         this.worldObj.spawnEntityInWorld(hol);
     }

@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.common;
 
 public interface ICatalyst
 {
-    public abstract int getCatalystLevel();
+    int getCatalystLevel();
 
-    public abstract boolean isConcentration();
+    boolean isConcentration();
 }

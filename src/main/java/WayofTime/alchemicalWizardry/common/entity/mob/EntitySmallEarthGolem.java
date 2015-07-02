@@ -17,7 +17,6 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -63,10 +62,10 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
         //My guess is that this will alter the max health
         if (this.isTamed())
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -99,14 +98,14 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
      */
     protected void updateAITick()
     {
-        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
+        this.dataWatcher.updateObject(18, this.getHealth());
     }
 
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(18, new Float(this.getHealth()));
-        this.dataWatcher.addObject(19, new Byte((byte) 0));
+        this.dataWatcher.addObject(18, this.getHealth());
+        this.dataWatcher.addObject(19, 0);
     }
 
     /**
@@ -242,10 +241,10 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
 
         if (par1)
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -265,7 +264,7 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
                 {
                     ItemFood itemfood = (ItemFood) itemstack.getItem();
 
-                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < this.maxTamedHealth)
+                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < maxTamedHealth)
                     {
                         if (!par1EntityPlayer.capabilities.isCreativeMode)
                         {
@@ -276,7 +275,7 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
 
                         if (itemstack.stackSize <= 0)
                         {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -290,9 +289,9 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
                 {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
-                    this.setPathToEntity((PathEntity) null);
-                    this.setTarget((Entity) null);
-                    this.setAttackTarget((EntityLivingBase) null);
+                    this.setPathToEntity(null);
+                    this.setTarget(null);
+                    this.setAttackTarget(null);
                 }
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
@@ -314,10 +313,10 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
                 if (this.rand.nextInt(1) == 0)
                 {
                     this.setTamed(true);
-                    this.setPathToEntity((PathEntity) null);
-                    this.setAttackTarget((EntityLivingBase) null);
+                    this.setPathToEntity(null);
+                    this.setAttackTarget(null);
                     this.aiSit.setSitting(true);
-                    this.setHealth(this.maxTamedHealth);
+                    this.setHealth(maxTamedHealth);
                     this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                     this.playTameEffect(true);
                     this.worldObj.setEntityState(this, (byte) 7);
@@ -361,10 +360,10 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
+            this.dataWatcher.updateObject(16, b0 | 2);
         } else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
+            this.dataWatcher.updateObject(16, b0 & -3);
         }
     }
 
@@ -381,7 +380,7 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
      */
     public void setCollarColor(int par1)
     {
-        this.dataWatcher.updateObject(20, Byte.valueOf((byte) (par1 & 15)));
+        this.dataWatcher.updateObject(20, par1 & 15);
     }
 
     /**
@@ -396,10 +395,10 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
     {
         if (par1)
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 1));
+            this.dataWatcher.updateObject(19, 1);
         } else
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 0));
+            this.dataWatcher.updateObject(19, 0);
         }
     }
 
@@ -455,9 +454,6 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
      */
     public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
     {
-        double xCoord;
-        double yCoord;
-        double zCoord;
         MudProjectile hol = new MudProjectile(worldObj, this, par1EntityLivingBase, 1.8f, 0f, 3, 600, false);
         this.worldObj.spawnEntityInWorld(hol);
     }
@@ -469,7 +465,6 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
     {
         this.tasks.removeTask(this.aiAttackOnCollide);
         this.tasks.removeTask(this.aiArrowAttack);
-        ItemStack itemstack = this.getHeldItem();
         this.tasks.addTask(4, this.aiArrowAttack);
     }
 }

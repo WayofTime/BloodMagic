@@ -119,11 +119,10 @@ public class BlockSet
         {
         	int div = meta / 4;
         	int mod = meta % 4;
-        	int[] northSet = new int[]{1 + div*4, 0 + div*4, 3 + div*4, 2 + div*4};
-            int[] eastSet = new int[]{2 + div*4, 3 + div*4, 1 + div*4, 0 + div*4};
-            int[] southSet = new int[]{0 + div*4, 1 + div*4, 2 + div*4, 3 + div*4};
-            int[] westSet = new int[]{3 + div*4, 2 + div*4, 0 + div*4, 1 + div*4};
-
+        	int[] northSet = new int[]{1 + div*4, div*4, 3 + div*4, 2 + div*4}; //Second one: 0 +
+            int[] eastSet = new int[]{2 + div*4, 3 + div*4, 1 + div*4, div*4}; //Last one: 0 +
+            int[] southSet = new int[]{div*4, 1 + div*4, 2 + div*4, 3 + div*4}; //First one: 0 +
+            int[] westSet = new int[]{3 + div*4, 2 + div*4, div*4, 1 + div*4}; //Third one: 0 +
 
             switch (mod)
             {
@@ -190,11 +189,10 @@ public class BlockSet
         {
         	int div = meta / 4;
         	int mod = meta % 4;
-        	int[] northSet = new int[]{0 + div*4, 2 + div*4, 3 + div*4, 1 + div*4};
-            int[] eastSet = new int[]{1 + div*4, 3 + div*4, 0 + div*4, 2 + div*4};
-            int[] southSet = new int[]{2 + div*4, 0 + div*4, 1 + div*4, 3 + div*4};
-            int[] westSet = new int[]{3 + div*4, 1 + div*4, 2 + div*4, 0 + div*4};
-
+            int[] northSet = new int[]{div * 4, 2 + div * 4, 3 + div * 4, 1 + div * 4}; //First one: 0 +
+            int[] eastSet = new int[]{1 + div*4, 3 + div*4, div*4, 2 + div*4}; //Third one: 0 +
+            int[] southSet = new int[]{2 + div*4, div*4, 1 + div*4, 3 + div*4}; //Second one: 0 +
+            int[] westSet = new int[]{3 + div*4, 1 + div*4, 2 + div*4, div*4}; //Last one: 0 +
 
             switch (mod)
             {
@@ -215,10 +213,11 @@ public class BlockSet
         {
         	int div = meta / 4;
         	int mod = meta % 4;
-        	int[] northSet = new int[]{0 + div*4, 2 + div*4, 3 + div*4, 1 + div*4};
-            int[] eastSet = new int[]{1 + div*4, 3 + div*4, 0 + div*4, 2 + div*4};
-            int[] southSet = new int[]{2 + div*4, 0 + div*4, 1 + div*4, 3 + div*4};
-            int[] westSet = new int[]{3 + div*4, 1 + div*4, 2 + div*4, 0 + div*4};
+        	int[] northSet = new int[]{div*4, 2 + div*4, 3 + div*4, 1 + div*4}; //First one: 0 +
+            int[] eastSet = new int[]{1 + div*4, 3 + div*4, div*4, 2 + div*4}; //Third one: 0 +
+            int[] southSet = new int[]{2 + div*4, div*4, 1 + div*4, 3 + div*4}; //Second one: 0 +
+            int[] westSet = new int[]{3 + div*4, 1 + div*4, 2 + div*4, div*4}; //Last one: 0 +
+
 
 
             switch (mod)
@@ -253,7 +252,7 @@ public class BlockSet
 
     public Block getBlock()
     {
-        return this.getBlockForString(blockid);
+        return getBlockForString(blockid);
     }
 
     public static String getPairedIdForBlock(Block block)
@@ -369,6 +368,6 @@ public class BlockSet
     public boolean isContained(Block block, int defaultMeta)
     {
         Block thisBlock = this.getBlock();
-        return thisBlock == null ? false : thisBlock.equals(block) && this.metadata[0] == defaultMeta;
+        return thisBlock != null && thisBlock.equals(block) && this.metadata[0] == defaultMeta;
     }
 }

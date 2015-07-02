@@ -30,7 +30,7 @@ public class CompressionRegistry
 	 */
 	public static void registerItemThreshold(ItemStack stack, int threshold)
 	{
-		thresholdMap.put(stack, new Integer(threshold));
+		thresholdMap.put(stack, threshold);
 	}
 	
 	public static ItemStack compressInventory(ItemStack[] inv, World world)

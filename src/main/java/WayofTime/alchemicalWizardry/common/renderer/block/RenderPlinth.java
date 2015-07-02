@@ -6,7 +6,6 @@ import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -45,7 +44,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            this.modelPlinth.render((Entity) null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+            this.modelPlinth.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
             GL11.glPushMatrix();
@@ -183,7 +182,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
 
                     default:
                     {
-                        return;
+
                     }
                 }
             } else
@@ -233,7 +232,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
 
                     default:
                     {
-                        return;
+
                     }
                 }
             }

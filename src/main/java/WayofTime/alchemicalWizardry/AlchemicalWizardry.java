@@ -12,7 +12,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
-import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -511,9 +510,7 @@ public class AlchemicalWizardry
                 {
                     logger.info("I have found a zip!");
                     ZipInputStream zipStream = new ZipInputStream(in);
-                    ZipEntry entry = null;
-
-                    int extractCount = 0;
+                    ZipEntry entry;
 
                     while ((entry = zipStream.getNextEntry()) != null)
                     {
@@ -531,8 +528,6 @@ public class AlchemicalWizardry
                             out.write(buffer, 0, len);
                         }
                         out.close();
-
-                        extractCount++;
                     }
                 }
             } catch (Exception e)
@@ -548,7 +543,7 @@ public class AlchemicalWizardry
         BloodMagicConfiguration.init(new File(event.getModConfigurationDirectory(), "AWWayofTime.cfg"));
 
         //Custom config stuff goes here
-        Potion[] potionTypes = null;
+        Potion[] potionTypes;
 
         for (Field f : Potion.class.getDeclaredFields())
         {
@@ -1423,16 +1418,16 @@ public class AlchemicalWizardry
     		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.weakBloodShard), Potion.field_76444_x.id, 4 * 60 * 20); //Absorption
         
     	if(!AlchemicalWizardry.potionDisableBoost)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 1 * 60 * 20);
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 60 * 20);
         
     	if(!AlchemicalWizardry.potionDisableFlight)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 1 * 60 * 20);
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.feather), AlchemicalWizardry.customPotionFlight.id, 60 * 20); // 1 *
         
     	if(!AlchemicalWizardry.potionDisableReciprocation)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 1 * 60 * 20);
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.arrow), AlchemicalWizardry.customPotionReciprocation.id, 60 * 20); // 1 *
         
     	if(!AlchemicalWizardry.potionDisablePlanarBinding)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl), AlchemicalWizardry.customPotionPlanarBinding.id, 1 * 60 * 20);
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.ender_pearl), AlchemicalWizardry.customPotionPlanarBinding.id, 60 * 20); // 1 *
         
     	if(!AlchemicalWizardry.potionDisableSoulFray)
     		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Blocks.soul_sand), AlchemicalWizardry.customPotionSoulFray.id, 60 * 20);

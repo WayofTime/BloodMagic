@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.items;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -24,7 +25,6 @@ public class CheatyItem extends Item implements IBindable
     public CheatyItem()
     {
         super();
-        DamageSource damageSource = DamageSource.generic;
         setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
@@ -81,10 +81,10 @@ public class CheatyItem extends Item implements IBindable
 
         if (par3EntityPlayer.isSneaking())
         {
-            EnergyItems.setCurrentEssence(itemTag.getString("ownerName"), 0);
+            SoulNetworkHandler.setCurrentEssence(itemTag.getString("ownerName"), 0);
         } else
         {
-            EnergyItems.addEssenceToMaximum(itemTag.getString("ownerName"), 1000000, Integer.MAX_VALUE);
+            SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 1000000, Integer.MAX_VALUE);
         }
         return par1ItemStack;
     }
@@ -112,7 +112,7 @@ public class CheatyItem extends Item implements IBindable
             double posY = player.posY;
             double posZ = player.posZ;
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            float f = (float) 1.0F;
+            float f = 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
@@ -144,7 +144,7 @@ public class CheatyItem extends Item implements IBindable
     }
 
     @Override
-    public boolean hasContainerItem()
+    public boolean hasContainerItem(ItemStack itemStack)
     {
         return true;
     }

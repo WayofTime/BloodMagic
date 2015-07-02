@@ -1,7 +1,5 @@
 package WayofTime.alchemicalWizardry.api.soulNetwork;
 
-import java.util.UUID;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,26 +14,11 @@ import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainInContainerEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
-import com.mojang.authlib.GameProfile;
-
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class SoulNetworkHandler
 {
-    public static UUID getUUIDFromPlayer(EntityPlayer player)
-    {
-        return player.getPersistentID();
-    }
-
-    public static EntityPlayer getPlayerFromUUID(UUID uuid)
-    {
-        MinecraftServer server = MinecraftServer.getServer();
-        GameProfile gameProfile;
-        gameProfile = server.func_152358_ax().func_152652_a(uuid);
-        return null;
-    }
-    
     public static boolean syphonFromNetworkWhileInContainer(ItemStack ist, int damageToBeDone)
     {
     	String ownerName = "";
@@ -204,10 +187,6 @@ public class SoulNetworkHandler
         World world = player.worldObj;
         if (world != null)
         {
-            double posX = player.posX;
-            double posY = player.posY;
-            double posZ = player.posZ;
-
             world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         }
         

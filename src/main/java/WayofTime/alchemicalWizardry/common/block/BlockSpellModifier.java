@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-
 public class BlockSpellModifier extends BlockOrientable
 {
     public BlockSpellModifier()

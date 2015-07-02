@@ -51,7 +51,7 @@ public class BlockBloodLightSource extends Block
     {
         if (rand.nextInt(3) != 0)
         {
-            float f = (float) 1.0F;
+            float f = 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;

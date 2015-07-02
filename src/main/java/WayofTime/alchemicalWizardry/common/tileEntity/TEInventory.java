@@ -28,11 +28,6 @@ public abstract class TEInventory extends TileEntity implements IInventory
         return inv.length;
     }
 
-    public ItemStack[] getSlots()
-    {
-        return inv;
-    }
-
     @Override
     public ItemStack getStackInSlot(int slot)
     {

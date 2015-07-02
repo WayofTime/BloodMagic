@@ -17,9 +17,12 @@ import net.minecraft.world.World;
 
 public class BlockHomHeart extends BlockContainer
 {
-    public IIcon bottomIcon;
-    public IIcon topIcon;
-    public IIcon sideIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon bottomIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon sideIcon;
 
     public BlockHomHeart()
     {

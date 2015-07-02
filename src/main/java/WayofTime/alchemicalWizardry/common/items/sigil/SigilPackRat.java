@@ -23,9 +23,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class SigilPackRat extends EnergyItems implements IHolding, ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon activeIcon;
+    private IIcon activeIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon passiveIcon;
+    private IIcon passiveIcon;
 
     public SigilPackRat()
     {
@@ -165,8 +165,6 @@ public class SigilPackRat extends EnergyItems implements IHolding, ArmourUpgrade
                 }
             }
         }
-
-        return;
     }
 
 	@Override

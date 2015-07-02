@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import WayofTime.alchemicalWizardry.ModItems;
@@ -16,9 +15,6 @@ public class DemonVillageLootRegistry
 	
 	public static void init()
 	{
-		ItemStack lifeShardStack = new ItemStack(ModItems.baseItems, 1, 28);
-        ItemStack soulShardStack = new ItemStack(ModItems.baseItems, 1, 29);
-        
 		String[] tier1Strings = new String[]{ChestGenHooks.DUNGEON_CHEST, ChestGenHooks.PYRAMID_DESERT_CHEST};
 		for(String str : tier1Strings)
 		{

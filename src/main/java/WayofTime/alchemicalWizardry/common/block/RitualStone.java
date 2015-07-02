@@ -17,19 +17,19 @@ import net.minecraft.world.World;
 public class RitualStone extends Block implements IRitualStone
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon blankIcon;
+    private IIcon blankIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon waterStoneIcon;
+    private IIcon waterStoneIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon fireStoneIcon;
+    private IIcon fireStoneIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon earthStoneIcon;
+    private IIcon earthStoneIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon airStoneIcon;
+    private IIcon airStoneIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon duskStoneIcon;
+    private IIcon duskStoneIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon dawnStoneIcon;
+    private IIcon dawnStoneIcon;
 
     public RitualStone()
     {

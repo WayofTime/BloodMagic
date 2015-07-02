@@ -22,9 +22,9 @@ import java.util.List;
 public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon activeIcon;
+    private IIcon activeIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon passiveIcon;
+    private IIcon passiveIcon;
 
     public SigilOfTheFastMiner()
     {
@@ -153,8 +153,6 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, I
                 }
             }
         }
-
-        return;
     }
 
     @Override

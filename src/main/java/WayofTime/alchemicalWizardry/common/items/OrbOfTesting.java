@@ -35,7 +35,7 @@ public class OrbOfTesting extends EnergyItems
             return par1ItemStack;
         }
 
-        if (this.syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed()))
+        if (syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed()))
         {
             par3EntityPlayer.heal(1);
         }

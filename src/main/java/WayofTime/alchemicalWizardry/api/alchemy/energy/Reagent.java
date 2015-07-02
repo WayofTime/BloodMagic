@@ -47,6 +47,6 @@ public class Reagent
     @Override
     public boolean equals(Object o)
     {
-        return o instanceof Reagent ? this == o && name.equals(((Reagent) o).name) : false;
+        return o instanceof Reagent && this == o && name.equals(((Reagent) o).name);
     }
 }

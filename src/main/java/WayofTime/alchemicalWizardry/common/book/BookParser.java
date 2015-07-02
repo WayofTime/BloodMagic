@@ -29,7 +29,7 @@ public class BookParser
 	@SideOnly(Side.CLIENT)
     public static List<Entry> parseTextFile(String location)
     {
-    	File textFiles = new File("config/BloodMagic/bookDocs");
+//    	File textFiles = new File("config/BloodMagic/bookDocs");
     	ArrayList<Entry> entryList = new ArrayList();
     	//if(textFiles.exists())
     	{
@@ -138,7 +138,7 @@ public class BookParser
         				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
         				{
         					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
-            				if(list != null)
+//            				if(list != null)
             				{
                 				//System.out.println("Number of lines: " + list.size());
             				}
@@ -150,7 +150,7 @@ public class BookParser
         				{
         					lastPageWasSpecial = true;
         					boolean changePage = false;
-        					int length = word.length();
+//        					int length = word.length();
         					word = word.replace('\t', ' ');
         					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
 

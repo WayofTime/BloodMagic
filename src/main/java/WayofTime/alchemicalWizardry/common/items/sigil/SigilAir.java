@@ -18,8 +18,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilAir extends EnergyItems implements ArmourUpgrade, ISigil
 {
-    private int energyUsed;
-
     public SigilAir()
     {
         super();

@@ -129,7 +129,7 @@ public class BuildingSchematic
 
     public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
     {
-        GridSpaceHolder grid = this.createGSH(); //GridSpaceHolder is not aware of the buildings - need to use the schematic
+//        GridSpaceHolder grid = this.createGSH(); //GridSpaceHolder is not aware of the buildings - need to use the schematic
 
         List<Int3> positionList = getGriddedPositions(dir);
 

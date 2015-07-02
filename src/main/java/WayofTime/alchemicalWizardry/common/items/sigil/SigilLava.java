@@ -151,10 +151,8 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
             	return this.tryPlaceContainedLiquid(world, x, y, z, x, y, z);
             }
         }
-            
 
         return false;
-        
     }
 
     /**
@@ -224,12 +222,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
                 }
             }
 
-            if (!usedBattery)
-            {
-                return false;
-            }
-
-            return true;
+            return usedBattery;
         } else
         {
             return true;

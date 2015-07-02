@@ -17,13 +17,12 @@ public class AlchemicalWizardryFuelHandler implements IFuelHandler
     @Override
     public int getBurnTime(ItemStack fuel)
     {
-        ItemStack itemStack = fuel;
-        if (itemStack == null)
+        if (fuel == null)
         {
             return 0;
         }
 
-        Item fuelItem = itemStack.getItem();
+        Item fuelItem = fuel.getItem();
 
         if (fuelItem.equals(ModItems.lavaCrystal))
         {
@@ -34,7 +33,7 @@ public class AlchemicalWizardryFuelHandler implements IFuelHandler
                 return 200;
             } else
             {
-                NBTTagCompound tag = itemStack.getTagCompound();
+                NBTTagCompound tag = fuel.getTagCompound();
 
                 if (tag == null)
                 {

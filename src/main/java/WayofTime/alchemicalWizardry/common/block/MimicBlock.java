@@ -45,7 +45,7 @@ public class MimicBlock extends BlockContainer
 
         Block block = mimic.getBlock();
         
-        return block != null ? block.shouldSideBeRendered(world, x, y, z, side) : true;
+        return block == null || block.shouldSideBeRendered(world, x, y, z, side);
 	}
 	
 	@SideOnly(Side.CLIENT)

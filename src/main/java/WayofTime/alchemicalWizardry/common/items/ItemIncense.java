@@ -28,10 +28,6 @@ public class ItemIncense extends Item implements IIncense
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
 
-    public static int minValue;
-    public static int maxValue;
-    public static int itemDuration;
-    
     public ItemIncense()
     {
         super();
@@ -194,7 +190,7 @@ public class ItemIncense extends Item implements IIncense
 		public final float greenColour;
 		public final float blueColour;
 		
-		private EnumIncense(int minValue, int maxValue, float tickRate, int dur, float red, float green, float blue)
+		EnumIncense(int minValue, int maxValue, float tickRate, int dur, float red, float green, float blue)
 		{
 			this.minValue = minValue;
 			this.maxValue = maxValue;

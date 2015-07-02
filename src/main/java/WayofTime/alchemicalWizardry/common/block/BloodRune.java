@@ -17,10 +17,15 @@ import java.util.List;
 public class BloodRune extends Block
 {
     //private Icon bloodRuneIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon altarCapacityRuneIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon dislocationRuneIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon orbCapacityRuneIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon betterCapacityRuneIcon;
+    @SideOnly(Side.CLIENT)
     private IIcon accelerationRuneIcon;
 
     public BloodRune()

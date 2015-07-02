@@ -20,7 +20,7 @@ public class EntityHolyElemental extends EntityElemental implements IMob
     {
         if (target instanceof EntityLivingBase)
         {
-            ((EntityLivingBase) target).attackEntityFrom(DamageSource.causeMobDamage(this), 15);
+            target.attackEntityFrom(DamageSource.causeMobDamage(this), 15);
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionInhibit.id, 150, 0));
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(Potion.poison.id, 100, 1));
         }

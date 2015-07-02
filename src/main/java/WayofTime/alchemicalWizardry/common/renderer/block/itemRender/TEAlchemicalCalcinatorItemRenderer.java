@@ -18,12 +18,12 @@ public class TEAlchemicalCalcinatorItemRenderer implements IItemRenderer
     private void renderConduitItem(RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ)
     {
         GL11.glPushMatrix();
-        GL11.glTranslatef((float) translateX + 0.5F, (float) translateY + 1.5F, (float) translateZ + 0.5F);
+        GL11.glTranslatef(translateX + 0.5F, translateY + 1.5F, translateZ + 0.5F);
         ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/AlchemicalCalcinator.png");
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+        this.modelConduit.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
     }

@@ -126,12 +126,7 @@ public class Rituals
     {
         int direction = Rituals.getDirectionOfRitual(world, x, y, z, ritualID);
 
-        if (direction != -1)
-        {
-            return true;
-        }
-
-        return false;
+        return direction != -1;
     }
 
     /**
@@ -149,8 +144,8 @@ public class Rituals
             return false;
         }
 
-        Block test = null;
-        TileEntity te = null;
+        Block test;
+        TileEntity te;
 
         for (RitualComponent rc : ritual)
         {
@@ -290,11 +285,6 @@ public class Rituals
                 ritual.effect.onRitualBroken(ritualStone, method);
             }
         }    
-    }
-
-    public static int getNumberOfRituals()
-    {
-        return ritualMap.size();
     }
 
     public String getRitualName()

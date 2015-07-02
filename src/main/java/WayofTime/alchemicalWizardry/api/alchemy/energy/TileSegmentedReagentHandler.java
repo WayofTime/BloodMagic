@@ -259,7 +259,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
             return;
         }
 
-        this.attunedTankMap.put(reagent, new Integer(total));
+        this.attunedTankMap.put(reagent, total);
     }
 
     @Override

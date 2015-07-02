@@ -17,7 +17,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockStabilityGlyph extends Block implements IStabilityGlyph
 {
-	public IIcon stability1;
+    @SideOnly(Side.CLIENT)
+	private IIcon stability1;
 	
     public BlockStabilityGlyph()
     {

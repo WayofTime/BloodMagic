@@ -8,7 +8,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +33,7 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+            this.modelConduit.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
 

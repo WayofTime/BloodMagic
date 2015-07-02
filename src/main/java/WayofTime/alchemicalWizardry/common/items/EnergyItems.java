@@ -41,7 +41,7 @@ public class EnergyItems extends Item implements IBindable
             double posY = player.posY;
             double posZ = player.posZ;
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            float f = (float) 1.0F;
+            float f = 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
@@ -186,8 +186,7 @@ public class EnergyItems extends Item implements IBindable
     //Global static methods
     public static boolean checkAndSetItemOwner(ItemStack item, EntityPlayer player)
     {
-        if (SpellHelper.isFakePlayer(player)) return false;
-        return SoulNetworkHandler.checkAndSetItemPlayer(item, player);
+        return !SpellHelper.isFakePlayer(player) && SoulNetworkHandler.checkAndSetItemPlayer(item, player);
     }
 
     public static void setItemOwner(ItemStack item, String ownerName)
@@ -223,6 +222,7 @@ public class EnergyItems extends Item implements IBindable
         return item.getTagCompound().getString("ownerName");
     }
 
+    @Deprecated
     public static void drainPlayerNetwork(EntityPlayer player, int damageToBeDone)
     {
         String ownerName = SpellHelper.getUsername(player);
@@ -251,6 +251,7 @@ public class EnergyItems extends Item implements IBindable
         }
     }
 
+    @Deprecated
     public static int getCurrentEssence(String ownerName)
     {
         if (MinecraftServer.getServer() == null)
@@ -270,6 +271,7 @@ public class EnergyItems extends Item implements IBindable
         return data.currentEssence;
     }
 
+    @Deprecated
     public static void setCurrentEssence(String ownerName, int amount)
     {
         if (MinecraftServer.getServer() == null)
@@ -290,6 +292,7 @@ public class EnergyItems extends Item implements IBindable
         data.markDirty();
     }
 
+    @Deprecated
     public static void addEssenceToMaximum(String ownerName, int amount, int maximum)
     {
         if (MinecraftServer.getServer() == null)

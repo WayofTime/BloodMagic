@@ -197,9 +197,6 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil
         int range = 5;
 
         float f = 1.0F;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
         boolean flag = true;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 
@@ -391,9 +388,6 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil
     public ItemStack fillItemFromWorld(ItemStack container, World world, EntityPlayer player, boolean forceFill)
     {
         float f = 1.0F;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
         boolean flag = true;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 
@@ -574,9 +568,6 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil
         }
 
         float f = 1.0F;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
         boolean flag = false;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 
@@ -608,9 +599,6 @@ public class SigilFluid extends Item implements IFluidContainerItem, ISigil
     public ItemStack drainSelectedTank(ItemStack container, World world, EntityPlayer player)
     {
         float f = 1.0F;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
         boolean flag = false;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 

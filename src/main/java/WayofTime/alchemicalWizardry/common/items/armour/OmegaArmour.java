@@ -131,7 +131,6 @@ public abstract class OmegaArmour extends BoundArmour
             {
                 if(EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
                 {
-                	Reagent reagent = APISpellHelper.getPlayerReagentType(player);
         			float reagentAmount = APISpellHelper.getPlayerCurrentReagentAmount(player);
         			
         			reagentAmount -= itemStack.getItemDamage() * reagentDrainPerDamage;

@@ -23,8 +23,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHolding, ISigil
 {
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
     private int tickDelay = 300;
 
     public SigilOfMagnetism()
@@ -140,7 +142,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
 
         if (par1ItemStack.getTagCompound().getBoolean("isActive"))
         {
-            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par3Entity instanceof EntityPlayer)
+            if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
                 if(!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
                 {

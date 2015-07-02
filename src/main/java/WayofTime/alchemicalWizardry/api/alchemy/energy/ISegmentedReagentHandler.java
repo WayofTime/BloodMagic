@@ -4,11 +4,11 @@ import java.util.Map;
 
 public interface ISegmentedReagentHandler extends IReagentHandler
 {
-    public int getNumberOfTanks();
+    int getNumberOfTanks();
 
-    public int getTanksTunedToReagent(Reagent reagent);
+    int getTanksTunedToReagent(Reagent reagent);
 
-    public void setTanksTunedToReagent(Reagent reagent, int total);
+    void setTanksTunedToReagent(Reagent reagent, int total);
 
-    public Map<Reagent, Integer> getAttunedTankMap();
+    Map<Reagent, Integer> getAttunedTankMap();
 }

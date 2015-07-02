@@ -19,18 +19,14 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class EntityLowerGuardian extends EntityDemon
 {
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
-
     private static float maxTamedHealth = 50.0F;
     private static float maxUntamedHealth = 30.0F;
     private int attackTimer;
-    private boolean isAggro;
 
     public EntityLowerGuardian(World par1World)
     {
@@ -63,10 +59,10 @@ public class EntityLowerGuardian extends EntityDemon
         //My guess is that this will alter the max health
         if (this.isTamed())
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -99,14 +95,14 @@ public class EntityLowerGuardian extends EntityDemon
      */
     protected void updateAITick()
     {
-        this.dataWatcher.updateObject(18, Float.valueOf(this.getHealth()));
+        this.dataWatcher.updateObject(18, this.getHealth());
     }
 
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(18, new Float(this.getHealth()));
-        this.dataWatcher.addObject(19, new Byte((byte) 0));
+        this.dataWatcher.addObject(18, this.getHealth());
+        this.dataWatcher.addObject(19, 0);
     }
 
     /**
@@ -137,7 +133,6 @@ public class EntityLowerGuardian extends EntityDemon
         this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
 
         attackTimer = par1NBTTagCompound.getByte("attackTimer");
-        isAggro = par1NBTTagCompound.getBoolean("isAggro");
     }
 
     /**
@@ -264,10 +259,10 @@ public class EntityLowerGuardian extends EntityDemon
 
         if (par1)
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxTamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxTamedHealth);
         } else
         {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.maxUntamedHealth);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
 
@@ -287,7 +282,7 @@ public class EntityLowerGuardian extends EntityDemon
                 {
                     ItemFood itemfood = (ItemFood) itemstack.getItem();
 
-                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < this.maxTamedHealth)
+                    if (itemfood.isWolfsFavoriteMeat() && this.dataWatcher.getWatchableObjectFloat(18) < maxTamedHealth)
                     {
                         if (!par1EntityPlayer.capabilities.isCreativeMode)
                         {
@@ -298,7 +293,7 @@ public class EntityLowerGuardian extends EntityDemon
 
                         if (itemstack.stackSize <= 0)
                         {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -312,9 +307,9 @@ public class EntityLowerGuardian extends EntityDemon
                 {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
-                    this.setPathToEntity((PathEntity) null);
-                    this.setTarget((Entity) null);
-                    this.setAttackTarget((EntityLivingBase) null);
+                    this.setPathToEntity(null);
+                    this.setTarget(null);
+                    this.setAttackTarget(null);
                 }
 
                 this.sendSittingMessageToPlayer(par1EntityPlayer, !this.isSitting());
@@ -328,7 +323,7 @@ public class EntityLowerGuardian extends EntityDemon
 
             if (itemstack.stackSize <= 0)
             {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
             }
 
             if (!this.worldObj.isRemote)
@@ -336,10 +331,10 @@ public class EntityLowerGuardian extends EntityDemon
                 if (this.rand.nextInt(1) == 0)
                 {
                     this.setTamed(true);
-                    this.setPathToEntity((PathEntity) null);
-                    this.setAttackTarget((EntityLivingBase) null);
+                    this.setPathToEntity(null);
+                    this.setAttackTarget(null);
                     this.aiSit.setSitting(true);
-                    this.setHealth(this.maxTamedHealth);
+                    this.setHealth(maxTamedHealth);
                     this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
                     this.playTameEffect(true);
                     this.worldObj.setEntityState(this, (byte) 7);
@@ -383,10 +378,10 @@ public class EntityLowerGuardian extends EntityDemon
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 | 2)));
+            this.dataWatcher.updateObject(16, b0 | 2);
         } else
         {
-            this.dataWatcher.updateObject(16, Byte.valueOf((byte) (b0 & -3)));
+            this.dataWatcher.updateObject(16, b0 & -3);
         }
     }
 
@@ -403,7 +398,7 @@ public class EntityLowerGuardian extends EntityDemon
      */
     public void setCollarColor(int par1)
     {
-        this.dataWatcher.updateObject(20, Byte.valueOf((byte) (par1 & 15)));
+        this.dataWatcher.updateObject(20, par1 & 15);
     }
 
     /**
@@ -418,10 +413,10 @@ public class EntityLowerGuardian extends EntityDemon
     {
         if (par1)
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 1));
+            this.dataWatcher.updateObject(19, 1);
         } else
         {
-            this.dataWatcher.updateObject(19, Byte.valueOf((byte) 0));
+            this.dataWatcher.updateObject(19, 0);
         }
     }
 

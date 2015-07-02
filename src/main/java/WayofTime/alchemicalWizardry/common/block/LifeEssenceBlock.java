@@ -38,22 +38,12 @@ public class LifeEssenceBlock extends BlockFluidClassic
     @Override
     public boolean canDisplace(IBlockAccess world, int x, int y, int z)
     {
-        if (world.getBlock(x, y, z).getMaterial().isLiquid())
-        {
-            return false;
-        }
-
-        return super.canDisplace(world, x, y, z);
+        return !world.getBlock(x, y, z).getMaterial().isLiquid() && super.canDisplace(world, x, y, z);
     }
 
     @Override
     public boolean displaceIfPossible(World world, int x, int y, int z)
     {
-        if (world.getBlock(x, y, z).getMaterial().isLiquid())
-        {
-            return false;
-        }
-
-        return super.displaceIfPossible(world, x, y, z);
+        return !world.getBlock(x, y, z).getMaterial().isLiquid() && super.displaceIfPossible(world, x, y, z);
     }
 }

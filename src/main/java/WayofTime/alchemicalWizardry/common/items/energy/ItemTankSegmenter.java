@@ -23,7 +23,9 @@ import java.util.List;
 
 public class ItemTankSegmenter extends Item implements IReagentManipulator
 {
+    @SideOnly(Side.CLIENT)
     public IIcon crystalBody;
+    @SideOnly(Side.CLIENT)
     public IIcon crystalLabel;
 
     public ItemTankSegmenter()

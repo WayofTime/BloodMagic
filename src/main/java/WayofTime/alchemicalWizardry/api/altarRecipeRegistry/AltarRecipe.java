@@ -89,7 +89,7 @@ public class AltarRecipe
     				NBTBase comparedBaseTag = comparedTag.getTag(str);
     				if(comparedBaseTag instanceof NBTTagCompound)
     				{
-    					if(!this.areTagsEqual((NBTTagCompound) tag, comparedTag))
+    					if(!this.areTagsEqual(tag, comparedTag))
     					{
     						return false;
     					}

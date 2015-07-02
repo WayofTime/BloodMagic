@@ -28,7 +28,6 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectCrafting extends RitualEffect
 {
-    public static final boolean isTesting = false;
     public static final boolean limitToSingleStack = true;
     public static final int potentiaDrain = 2;
     public static final int virtusDrain = 2;
@@ -126,12 +125,11 @@ public class RitualEffectCrafting extends RitualEffect
             if (returnStack == null)
             {
             	tag.setBoolean("didLastCraftFail", true);
-            	return;
             }else
             {
             	boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
             	boolean addOutputToInputs = hasVirtus;
-            	
+
                 IInventory outputInv = null;
                 
                 List<IInventory> invList = new ArrayList();
@@ -420,7 +418,7 @@ public class RitualEffectCrafting extends RitualEffect
 //            return false;
 //        }
 
-        return stack1.getItem() == stack2.getItem() && (stack1.getItem().getHasSubtypes() ? stack1.getItemDamage() == stack2.getItemDamage() : true);
+        return stack1.getItem() == stack2.getItem() && !stack1.getItem().getHasSubtypes() || stack1.getItemDamage() == stack2.getItemDamage();
     }
 
     public boolean areItemStacksEqualWithWildcard(ItemStack recipeStack, ItemStack comparedStack)

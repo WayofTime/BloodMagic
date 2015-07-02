@@ -47,7 +47,7 @@ public class GridSpace
 
     public boolean isEmpty()
     {
-        return type == this.EMPTY;
+        return type == EMPTY;
     }
 
     public static GridSpace getGridFromTag(NBTTagCompound tag)
@@ -67,11 +67,11 @@ public class GridSpace
 
     public boolean isRoadSegment()
     {
-        return type == this.ROAD || type == this.CROSSROAD;
+        return type == ROAD || type == CROSSROAD;
     }
 
     public boolean isBuilding()
     {
-        return type == this.HOUSE;
+        return type == HOUSE;
     }
 }

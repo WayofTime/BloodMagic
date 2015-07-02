@@ -4,8 +4,8 @@ import WayofTime.alchemicalWizardry.api.Int3;
 
 public interface IHoardDemon 
 {
-	public void setPortalLocation(Int3 position);
-    public Int3 getPortalLocation();
-    public boolean thrallDemon(Int3 location);
-    public boolean isSamePortal(IHoardDemon demon);
+	void setPortalLocation(Int3 position);
+    Int3 getPortalLocation();
+    boolean thrallDemon(Int3 location);
+    boolean isSamePortal(IHoardDemon demon);
 }

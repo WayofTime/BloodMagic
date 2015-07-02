@@ -41,10 +41,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialArmor, IBindable, IRevealer, IGoggles, IRunicArmor, ILPGauge
 {
     private static int invSize = 9;
-    private static IIcon helmetIcon;
-    private static IIcon plateIcon;
-    private static IIcon leggingsIcon;
-    private static IIcon bootsIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon helmetIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon plateIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon leggingsIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon bootsIcon;
 
     public static boolean tryComplexRendering = true;
 
@@ -251,22 +255,22 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
     {
-        if (armor.equals(ModItems.boundHelmet))
+        if (armor.getItem() == ModItems.boundHelmet)
         {
             return 3;
         }
 
-        if (armor.equals(ModItems.boundPlate))
+        if (armor.getItem() == ModItems.boundPlate)
         {
             return 8;
         }
 
-        if (armor.equals(ModItems.boundLeggings))
+        if (armor.getItem() == ModItems.boundLeggings)
         {
             return 6;
         }
 
-        if (armor.equals(ModItems.boundBoots))
+        if (armor.getItem() == ModItems.boundBoots)
         {
             return 3;
         }
@@ -322,7 +326,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
-        if (this.tryComplexRendering)
+        if (tryComplexRendering)
         {
             return "alchemicalwizardry:models/armor/BloodArmour_WIP.png";
         }
@@ -372,15 +376,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        int maxBloodLevel = getMaxBloodShardLevel(itemStack);
-        ItemStack[] inv = getInternalInventory(itemStack);
-
-        if (inv != null)
-        {
-            int iSize = 0;
-            int iBlood = 0;
-        }
-
         if (!player.isPotionActive(AlchemicalWizardry.customPotionInhibit))
         {
             tickInternalInventory(itemStack, world, player, 0, false);
@@ -389,8 +384,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         this.setIsInvisible(itemStack, player.isPotionActive(Potion.invisibility.id));
 
         this.repairArmour(world, player, itemStack);
-
-        return;
     }
     
     public void repairArmour(World world, EntityPlayer player, ItemStack itemStack)
@@ -491,7 +484,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             return false;
         }
 
-        Item item = addedItemStack.getItem();
         int candidateSlot = -1;
 
         for (int i = invSize - 1; i >= 0; i--)
@@ -540,7 +532,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < invSize)
@@ -565,8 +557,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
 
         for (int i = 0; i < invSize; i++)
         {
-            ItemStack stack = inventory[i];
-
             if (inventory[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();

@@ -26,7 +26,7 @@ public class AlchemyRecipe
             return false;
         }
 
-        ItemStack[] recipe = new ItemStack[5];
+        ItemStack[] recipe;
 
         if (items.length < 5)
         {

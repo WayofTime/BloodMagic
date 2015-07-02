@@ -21,9 +21,9 @@ import java.util.List;
 public class SigilOfElementalAffinity extends EnergyItems implements ISigil
 {
     @SideOnly(Side.CLIENT)
-    private static IIcon activeIcon;
+    private IIcon activeIcon;
     @SideOnly(Side.CLIENT)
-    private static IIcon passiveIcon;
+    private IIcon passiveIcon;
 
     public SigilOfElementalAffinity()
     {
@@ -156,7 +156,5 @@ public class SigilOfElementalAffinity extends EnergyItems implements ISigil
                 }
             }
         }
-
-        return;
     }
 }

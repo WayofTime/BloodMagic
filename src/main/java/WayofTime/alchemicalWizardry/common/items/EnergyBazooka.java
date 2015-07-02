@@ -18,10 +18,11 @@ import java.util.List;
 
 public class EnergyBazooka extends EnergyItems
 {
-    private static IIcon activeIcon;
-    private static IIcon passiveIcon;
-    private static int damage;
-    private static final int maxDelay = 150;
+    @SideOnly(Side.CLIENT)
+    private IIcon activeIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon passiveIcon;
+    private int damage;
 
     public EnergyBazooka()
     {
@@ -65,6 +66,8 @@ public class EnergyBazooka extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+        final int maxDelay = 150;
+
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
@@ -84,7 +87,7 @@ public class EnergyBazooka extends EnergyItems
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            if(!this.syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed()))
+            if(!syphonBatteries(par1ItemStack, par3EntityPlayer, this.getEnergyUsed()))
             {
             	return par1ItemStack;
             }
@@ -141,7 +144,6 @@ public class EnergyBazooka extends EnergyItems
         }
 
         par1ItemStack.setItemDamage(0);
-        return;
     }
 
     @Override

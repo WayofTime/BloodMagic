@@ -6,5 +6,5 @@ import net.minecraft.world.World;
 
 public interface ISpellParadigmTile extends ISpellTile
 {
-	public void castSpell(World world, EntityPlayer entity, ItemStack spellCasterStack);
+	void castSpell(World world, EntityPlayer entity, ItemStack spellCasterStack);
 }

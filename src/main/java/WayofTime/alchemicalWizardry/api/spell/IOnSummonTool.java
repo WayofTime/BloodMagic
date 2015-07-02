@@ -6,5 +6,5 @@ import net.minecraft.world.World;
 
 public interface IOnSummonTool
 {
-    public abstract int onSummonTool(ItemStack toolStack, World world, Entity entity);
+    int onSummonTool(ItemStack toolStack, World world, Entity entity);
 }

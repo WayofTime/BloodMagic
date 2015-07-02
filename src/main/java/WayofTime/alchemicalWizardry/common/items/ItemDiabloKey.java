@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
@@ -25,7 +24,6 @@ public class ItemDiabloKey extends EnergyItems
     public ItemDiabloKey()
     {
         super();
-        DamageSource damageSource = DamageSource.generic;
         setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setEnergyUsed(1000);

@@ -29,7 +29,6 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RenderHelper
 {
-    public static boolean showEquippedItem = true;
     public static boolean enableItemName = false;
     public static boolean enabled = true;
     public static boolean showInChat = true;
@@ -62,7 +61,6 @@ public class RenderHelper
         {
             EntityPlayer player = mc.thePlayer;
             player.getEntityData();
-            World world = mc.theWorld;
             if (SpellHelper.canPlayerSeeAlchemy(player))
             {
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -254,10 +252,10 @@ public class RenderHelper
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV((double)(p_73729_1_ + 0), (double)(p_73729_2_ + p_73729_6_), (double)zLevel, (double)((float)(p_73729_3_ + 0) * f), (double)((float)(p_73729_4_ + p_73729_6_) * f1));
-        tessellator.addVertexWithUV((double)(p_73729_1_ + p_73729_5_), (double)(p_73729_2_ + p_73729_6_), (double)zLevel, (double)((float)(p_73729_3_ + p_73729_5_) * f), (double)((float)(p_73729_4_ + p_73729_6_) * f1));
-        tessellator.addVertexWithUV((double)(p_73729_1_ + p_73729_5_), (double)(p_73729_2_ + 0), (double)zLevel, (double)((float)(p_73729_3_ + p_73729_5_) * f), (double)((float)(p_73729_4_ + 0) * f1));
-        tessellator.addVertexWithUV((double)(p_73729_1_ + 0), (double)(p_73729_2_ + 0), (double)zLevel, (double)((float)(p_73729_3_ + 0) * f), (double)((float)(p_73729_4_ + 0) * f1));
+        tessellator.addVertexWithUV((double)p_73729_1_, p_73729_2_ + p_73729_6_, (double)zLevel, (p_73729_3_ * f), (p_73729_4_ + p_73729_6_) * f1);
+        tessellator.addVertexWithUV(p_73729_1_ + p_73729_5_, p_73729_2_ + p_73729_6_, (double)zLevel, (p_73729_3_ + p_73729_5_) * f, (p_73729_4_ + p_73729_6_) * f1);
+        tessellator.addVertexWithUV(p_73729_1_ + p_73729_5_, (double)p_73729_2_, (double)zLevel, (p_73729_3_ + p_73729_5_) * f, p_73729_4_ * f1);
+        tessellator.addVertexWithUV((double)p_73729_1_, (double)p_73729_2_, (double)zLevel, (double)(p_73729_3_ * f), p_73729_4_ * f1);
         tessellator.draw();
     }
     
@@ -295,10 +293,10 @@ public class RenderHelper
     {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV((double)(p_94149_1_ + 0), (double)(p_94149_2_ + p_94149_5_), (double)zLevel, (double)p_94149_3_.getMinU(), (double)p_94149_3_.getMaxV());
+        tessellator.addVertexWithUV((double)p_94149_1_, (double)(p_94149_2_ + p_94149_5_), (double)zLevel, (double)p_94149_3_.getMinU(), (double)p_94149_3_.getMaxV());
         tessellator.addVertexWithUV((double)(p_94149_1_ + p_94149_4_), (double)(p_94149_2_ + p_94149_5_), (double)zLevel, (double)p_94149_3_.getMaxU(), (double)p_94149_3_.getMaxV());
-        tessellator.addVertexWithUV((double)(p_94149_1_ + p_94149_4_), (double)(p_94149_2_ + 0), (double)zLevel, (double)p_94149_3_.getMaxU(), (double)p_94149_3_.getMinV());
-        tessellator.addVertexWithUV((double)(p_94149_1_ + 0), (double)(p_94149_2_ + 0), (double)zLevel, (double)p_94149_3_.getMinU(), (double)p_94149_3_.getMinV());
+        tessellator.addVertexWithUV((double)(p_94149_1_ + p_94149_4_), (double)p_94149_2_, (double)zLevel, (double)p_94149_3_.getMaxU(), (double)p_94149_3_.getMinV());
+        tessellator.addVertexWithUV((double)p_94149_1_, (double)p_94149_2_, (double)zLevel, (double)p_94149_3_.getMinU(), (double)p_94149_3_.getMinV());
         tessellator.draw();
     }
 
@@ -331,7 +329,7 @@ public class RenderHelper
                     e.renderToHud(xBase + prevX + (alignMode.toLowerCase().contains("right") ? e.width() : 0), yBase);
                     prevX += (e.width());
                 }
-            } else if (listMode.equalsIgnoreCase("compound"))
+            } //else if (listMode.equalsIgnoreCase("compound"))
             {
                 //TODO
             }

@@ -20,10 +20,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class OmegaArmourWind extends OmegaArmour
 {
-	private static IIcon helmetIcon;
-    private static IIcon plateIcon;
-    private static IIcon leggingsIcon;
-    private static IIcon bootsIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon helmetIcon;
+	@SideOnly(Side.CLIENT)
+    private IIcon plateIcon;
+	@SideOnly(Side.CLIENT)
+    private IIcon leggingsIcon;
+	@SideOnly(Side.CLIENT)
+    private IIcon bootsIcon;
 	
 	public OmegaArmourWind(int armorType) 
 	{

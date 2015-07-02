@@ -59,8 +59,8 @@ public class DemonBuilding
 
     public Int3 getDoorSpace(ForgeDirection dir)
     {
-        int x = 0;
-        int z = 0;
+        int x;
+        int z;
         switch (dir)
         {
             case SOUTH:

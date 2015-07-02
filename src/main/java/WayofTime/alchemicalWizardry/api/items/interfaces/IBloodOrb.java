@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.api.items.interfaces;
 
 public interface IBloodOrb
 {
-    public int getMaxEssence();
+    int getMaxEssence();
 
-    public int getOrbLevel();
+    int getOrbLevel();
 }

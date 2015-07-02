@@ -34,7 +34,7 @@ public class Vector3
     @Override
     public boolean equals(Object object)
     {
-        return object == this ? true : (object instanceof Vector3 ? canEqual(this) && this.x == ((Vector3) object).x && this.y == ((Vector3) object).y && this.z == ((Vector3) object).z : false);
+        return object == this || object instanceof Vector3 && canEqual(this) && this.x == ((Vector3) object).x && this.y == ((Vector3) object).y && this.z == ((Vector3) object).z;
     }
 
     @Override

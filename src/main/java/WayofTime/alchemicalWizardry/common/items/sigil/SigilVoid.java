@@ -85,10 +85,6 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil
         }
 
         float f = 1.0F;
-        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
-        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
-        boolean flag = this.isFull == 0;
 
         if (!world.canMineBlock(player, x, y, z))
         {
