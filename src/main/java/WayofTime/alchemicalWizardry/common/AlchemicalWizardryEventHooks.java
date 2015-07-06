@@ -116,8 +116,6 @@ public class AlchemicalWizardryEventHooks
 			float prevHp = APISpellHelper.getCurrentAdditionalHP((EntityPlayer)event.entityLiving);
 			if(prevHp > 0)
 			{
-				double originalDamage = event.ammount;
-
 				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
 				if (recalculatedAmount <= 0) return;
 				recalculatedAmount = SpellHelper.applyPotionDamageCalculations(player, event.source, recalculatedAmount); //Recalculated damage
@@ -336,7 +334,7 @@ public class AlchemicalWizardryEventHooks
 
 		String respawnRitual = "AW028SpawnWard";
 
-		Integer dimension = new Integer(event.world.provider.dimensionId);
+		int dimension = event.world.provider.dimensionId;
 		if (respawnMap.containsKey(dimension))
 		{
 			List<CoordAndRange> list = respawnMap.get(dimension);
@@ -524,7 +522,7 @@ public class AlchemicalWizardryEventHooks
 					NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getLPPacket(SoulNetworkHandler.getCurrentEssence(ownerName), SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(ownerName))), (EntityPlayerMP)entityLiving);
 				}
 			}
-			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer) event.entityLiving).capabilities, 0.1F, "walkSpeed", "g", "field_75097_g");
+//			ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, ((EntityPlayer) event.entityLiving).capabilities, 0.1F, "walkSpeed", "g", "field_75097_g");
 		}
 
 		if (entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote)

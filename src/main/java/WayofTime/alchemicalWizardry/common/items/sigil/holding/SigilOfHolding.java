@@ -301,7 +301,7 @@ public class SigilOfHolding extends EnergyItems
             return;
         }
 
-        for (int i = 0; i < invSize; i++)
+        for (int i = 0; i <= invSize; i++)
         {
             if (inv[i] == null)
             {
