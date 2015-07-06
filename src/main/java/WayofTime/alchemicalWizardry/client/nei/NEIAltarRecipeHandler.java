@@ -27,10 +27,12 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	public class CachedAltarRecipe extends CachedRecipe {
 		PositionedStack input;
+//		PositionedStack inputItems;
 		PositionedStack output;
 		int tier, lp_amount, consumption, drain;
 		
 		public CachedAltarRecipe(AltarRecipe recipe) {
+//			inputItems = new PositionedStack(recipe.input, 38, 2, false);
 			input = new PositionedStack(recipe.requiredItem, 38, 2, false);
 			output = new PositionedStack(recipe.result, 132, 32, false);
 			tier = recipe.minTier;

@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
+import WayofTime.alchemicalWizardry.common.thread.CommandDown
+loadGAPI;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
