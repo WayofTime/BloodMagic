@@ -13,8 +13,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
@@ -220,7 +219,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
         if (testRitual.equals(""))
         {
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.nothinghappened")));
+            player.addChatMessage(new ChatComponentTranslation("message.masterstone.nothinghappened"));
             return;
         }
 
@@ -228,7 +227,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         RitualActivatedEvent event = new RitualActivatedEvent(this, crystalOwner, testRitual, player, activationCrystal, crystalLevel);
         if(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
         {
-        	player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.somethingstoppedyou")));
+        	player.addChatMessage(new ChatComponentTranslation("message.masterstone.somethingstoppedyou"));
 
         	return;
         }
@@ -241,7 +240,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
         if (!testLevel)
         {
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.crystalvibrates")));
+            player.addChatMessage(new ChatComponentTranslation("message.masterstone.crystalvibrates"));
 
             return;
         }
@@ -250,7 +249,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
 
         if (currentEssence < Rituals.getCostForActivation(testRitual))
         {
-            player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.youfeelapull")));
+            player.addChatMessage(new ChatComponentTranslation("message.masterstone.youfeelapull"));
 
             return;
         }
@@ -259,7 +258,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
         {
             if (!Rituals.startRitual(this, testRitual, player))
             {
-                player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.ritualresistyou")));
+                player.addChatMessage(new ChatComponentTranslation("message.masterstone.ritualresistyou"));
 
                 return;
             } else
@@ -268,7 +267,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                 
                 if(drain > 0)
                 {
-                	player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.energyflows")));
+                	player.addChatMessage(new ChatComponentTranslation("message.masterstone.energyflows"));
                 	
                     for (int i = 0; i < 12; i++)
                     {
@@ -276,7 +275,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                     }
                 }else
                 {
-                	player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.masterstone.somethingstoppedyou")));
+                	player.addChatMessage(new ChatComponentTranslation("message.masterstone.somethingstoppedyou"));
                 	
                 	return;
                 }

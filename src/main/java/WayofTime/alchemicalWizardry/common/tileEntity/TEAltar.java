@@ -12,6 +12,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -931,9 +932,9 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
     public void sendChatInfoToPlayer(EntityPlayer player)
     {
-        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.currentessence"), this.fluid.amount)));
-        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.currenttier"), UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord))));
-        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.capacity"), this.getCapacity())));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.currentessence"), this.fluid.amount));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.currenttier"), UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord)));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.capacity"), this.getCapacity()));
     }
 
     public void sendMoreChatInfoToPlayer(EntityPlayer player)
@@ -944,9 +945,9 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.progress") + " " + progress + "LP/" + liquidRequired * stackSize + "LP"));
             player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.altar.consumptionrate") + " " + (int) (consumptionRate * (1 + consumptionMultiplier)) + "LP/t"));
         }
-        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.currentessence"), this.fluid.amount)));
-        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.inputtank"), this.fluidInput.amount)));
-        player.addChatMessage(new ChatComponentText(String.format(StatCollector.translateToLocal("message.altar.outputtank"), this.fluidOutput.amount)));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.currentessence"), this.fluid.amount));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.inputtank"), this.fluidInput.amount));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.outputtank"), this.fluidOutput.amount));
     }
 
 	@Override

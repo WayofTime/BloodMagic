@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -72,7 +72,7 @@ public class ItemDestinationClearer extends Item implements IReagentManipulator
 
                 relay.reagentTargetList.clear();
 
-                player.addChatComponentMessage(new ChatComponentText(StatCollector.translateToLocal("message.destinationclearer.cleared")));
+                player.addChatComponentMessage(new ChatComponentTranslation("message.destinationclearer.cleared"));
             }
         }
 

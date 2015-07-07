@@ -8,8 +8,7 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.Int3;
@@ -125,7 +124,7 @@ public class RitualEffectDemonPortal extends RitualEffect
     {
     	if(!checkJars(ritualStone))
     	{
-    		player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.ritualdemonportal.missingjar")));
+    		player.addChatMessage(new ChatComponentTranslation("message.ritualdemonportal.missingjar"));
     		return false;
     	}
         return true;
