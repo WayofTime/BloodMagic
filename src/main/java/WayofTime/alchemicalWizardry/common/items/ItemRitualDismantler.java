@@ -37,7 +37,8 @@ public class ItemRitualDismantler extends EnergyItems
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean x)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.dismatler.desc"));
-        par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
+        if(stack.hasTagCompound())
+        	par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
     }
 
     @Override
