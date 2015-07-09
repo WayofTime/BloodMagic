@@ -35,9 +35,9 @@ public class TESpectralBlock extends TileEntity
     {
         super.updateEntity();
 
-        if (worldObj.isRemote)
+//        if (worldObj.isRemote)
         {
-            return;
+//            return;
         }
 
         this.ticksRemaining--;
