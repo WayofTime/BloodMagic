@@ -252,7 +252,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
         }
 
         int range = 2;
-        int verticalOffset = -1;
+        int verticalOffset = -2;
 
         if (player.isSneaking())
         {

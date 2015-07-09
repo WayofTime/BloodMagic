@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import WayofTime.alchemicalWizardry.common.thread.CommandDown
-loadGAPI;
+import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -386,6 +385,8 @@ public class AlchemicalWizardry
     public static boolean ritualDisabledCrafting;
     public static boolean ritualDisabledPhantomHands;
     public static boolean ritualDisabledSphereIsland;
+
+    public static boolean displayRitualAnimation;
 
     public static boolean potionDisableRegen;
     public static boolean potionDisableNightVision;

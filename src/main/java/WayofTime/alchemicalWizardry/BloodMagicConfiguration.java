@@ -143,7 +143,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledCrafting = config.get("Ritual Blacklist", "Rhythm of the Beating Anvil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledPhantomHands = config.get("Ritual Blacklist", "Orchestra of the Phantom Hands", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledSphereIsland = config.get("Ritual Blacklist", "Birth of the Bastion", false).getBoolean(false);
-		
+
 		AlchemicalWizardry.potionDisableRegen = config.get("Alchemy Potion Blacklist", "Regeneration", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableNightVision = config.get("Alchemy Potion Blacklist", "Night Vision", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableFireResistance = config.get("Alchemy Potion Blacklist", "Fire Resistance", false).getBoolean(false);
@@ -208,6 +208,7 @@ public class BloodMagicConfiguration
 			RenderHelper.yOffset = config.get("ClientSettings", "AlchemyHUDyOffset", 2).getInt();
 			RenderHelper.lpBarX = config.get("ClientSettings", "LPHUDxOffset", 12).getInt();
 			RenderHelper.lpBarY = config.get("ClientSettings", "LPHUDyOffset", 75).getInt();
+			AlchemicalWizardry.displayRitualAnimation = config.get("ClientSettings", "Display Ritual Animation", true).getBoolean(true);
 		}
 
 		config.save();
