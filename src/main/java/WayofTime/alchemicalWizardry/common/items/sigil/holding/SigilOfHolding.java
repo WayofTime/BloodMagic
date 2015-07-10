@@ -156,6 +156,36 @@ public class SigilOfHolding extends EnergyItems
         return par1ItemStack;
     }
 
+    @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    {
+        if (checkAndSetItemOwner(stack, player))
+        {
+            int currentSlot = getCurrentItem(stack);
+            ItemStack[] inv = getInternalInventory(stack);
+
+            if (inv == null)
+            {
+                return false;
+            }
+
+            ItemStack itemUsed = inv[currentSlot];
+
+            if (itemUsed == null)
+            {
+                return false;
+            }
+
+            boolean bool = itemUsed.getItem().onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+
+            saveInventory(stack, inv);
+
+            return bool;
+        }
+
+        return false;
+    }
+
     public static int next(int mode)
     {
         int index = mode + 1;
