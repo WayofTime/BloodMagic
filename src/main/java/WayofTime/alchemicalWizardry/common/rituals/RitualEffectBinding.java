@@ -94,19 +94,19 @@ public class RitualEffectBinding extends RitualEffect
                     switch (lightningPoint)
                     {
                         case 0:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 3, z + 0));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 3, z));
                             break;
 
                         case 1:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 3, z + 0));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 3, z));
                             break;
 
                         case 2:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 0, y + 3, z + 4));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x, y + 3, z + 4));
                             break;
 
                         case 3:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 0, y + 3, z - 4));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x, y + 3, z - 4));
                             break;
 
                         case 4:
