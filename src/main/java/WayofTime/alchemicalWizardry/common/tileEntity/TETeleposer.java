@@ -3,7 +3,9 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import java.util.Iterator;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -146,7 +148,7 @@ public class TETeleposer extends TEInventory
                             entityCount = 0;
                         }
 
-                        EnergyItems.syphonWhileInContainer(focus, damage * transportCount + damage * entityCount);
+                        SoulNetworkHandler.syphonFromNetwork(focus, damage * transportCount + damage * entityCount);
                         //Teleport
 
                         if (worldF.equals(worldObj))

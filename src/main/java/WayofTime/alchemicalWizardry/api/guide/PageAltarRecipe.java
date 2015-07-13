@@ -41,8 +41,8 @@ public class PageAltarRecipe extends PageBase {
 
         guiBase.drawCenteredString(fontRenderer, StatCollector.translateToLocal("text.recipe.altar"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
-        int inputX = (1 + 1) * 20 + (guiLeft + guiBase.xSize / 7);
-        int inputY = (20) + (guiTop + guiBase.ySize / 5); //1 * 20
+        int inputX = (1 + 1) * 20 + (guiLeft + guiBase.xSize / 7) + 1;
+        int inputY = (20) + (guiTop + guiBase.ySize / 5) - 1; //1 * 20
         GuiHelper.drawItemStack(input, inputX, inputY);
         if (GuiHelper.isMouseBetween(mouseX, mouseY, inputX, inputY, 15, 15)) {
             guiBase.renderToolTip(input, mouseX, mouseY);
@@ -51,8 +51,8 @@ public class PageAltarRecipe extends PageBase {
         if (output == null) {
             output = new ItemStack(Blocks.fire);
         }
-        int outputX = (5 * 20) + (guiLeft + guiBase.xSize / 7);
-        int outputY = (20) + (guiTop + guiBase.xSize / 5); // 1 * 20
+        int outputX = (5 * 20) + (guiLeft + guiBase.xSize / 7) + 1;
+        int outputY = (20) + (guiTop + guiBase.xSize / 5) - 1; // 1 * 20
         GuiHelper.drawItemStack(output, outputX, outputY);
         if (GuiHelper.isMouseBetween(mouseX, mouseY, outputX, outputY, 15, 15)) {
             guiBase.renderToolTip(output, outputX, outputY);
