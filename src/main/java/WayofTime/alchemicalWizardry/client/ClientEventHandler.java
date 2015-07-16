@@ -66,7 +66,7 @@ public class ClientEventHandler
         if (event.phase.equals(Phase.START))
             return;
 
-//        if (!RenderHelper.onTickInGame(mcClient))
+        if (!RenderHelper.onTickInGame(mcClient))
         {
 
         }

@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -258,8 +257,8 @@ public class APISpellHelper
         if (canSilk && silkTouch)
         {
             ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-            ItemStack item = new ItemStack(block, 1, meta);
-
+            ItemStack item = createStackedBlock(block, meta);
+            
             items.add(item);
 
             return items;
@@ -267,6 +266,24 @@ public class APISpellHelper
         {
             return block.getDrops(world, x, y, z, meta, fortune);
         }
+    }
+	
+	public static ItemStack createStackedBlock(Block block, int meta)
+    {
+        int j = 0;
+        if(block == Blocks.lit_redstone_ore)
+        {
+        	block = Blocks.redstone_ore;
+        }
+        
+        Item item = Item.getItemFromBlock(block);
+
+        if (item != null && item.getHasSubtypes())
+        {
+            j = meta;
+        }
+
+        return new ItemStack(item, 1, j);
     }
 	
 	public static void spawnItemListInWorld(List<ItemStack> items, World world, float x, float y, float z)

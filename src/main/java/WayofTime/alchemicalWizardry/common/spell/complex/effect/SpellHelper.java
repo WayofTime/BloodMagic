@@ -7,13 +7,13 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -339,7 +339,7 @@ public class SpellHelper
 
     public static boolean isBlockFluid(Block block)
     {
-        return block instanceof IFluidBlock;
+        return block instanceof IFluidBlock || block instanceof BlockLiquid;
     }
 
     public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)
