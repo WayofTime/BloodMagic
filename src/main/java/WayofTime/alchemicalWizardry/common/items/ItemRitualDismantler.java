@@ -9,6 +9,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -49,14 +50,12 @@ public class ItemRitualDismantler extends EnergyItems
 
     public boolean breakRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, int x, int y, int z)
     {
-        ItemStack[] playerInventory = player.inventory.mainInventory;
         TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity instanceof TEMasterStone)
         {
             TEMasterStone masterStone = (TEMasterStone) tileEntity;
             int direction = masterStone.getDirection();
-            int freeSpace = -1;
 
             String ritualName = Rituals.checkValidRitual(world, x, y, z);
             List<RitualComponent> ritualList = Rituals.getRitualList(ritualName);
@@ -65,29 +64,21 @@ public class ItemRitualDismantler extends EnergyItems
                 return false;
             }
 
-            for (int i = 0; i < playerInventory.length; i++)
-            {
-                if (playerInventory[i] == null)
-                {
-                    freeSpace = i;
-                    break;
-                }
-            }
-
             for (RitualComponent rc : ritualList)
             {
                 if (!world.isAirBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) && world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) instanceof RitualStone)
                 {
-                    if (freeSpace >= 0)
+                    if (EnergyItems.syphonBatteries(stack, player, getEnergyUsed()) || player.capabilities.isCreativeMode)
                     {
-                        if (EnergyItems.syphonBatteries(stack, player, getEnergyUsed()) || player.capabilities.isCreativeMode)
+                        world.setBlockToAir(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
+                        EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(ModBlocks.ritualStone));
+                        if (world.isRemote)
                         {
-                            world.setBlockToAir(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
-                            player.inventory.addItemStackToInventory(new ItemStack(ModBlocks.ritualStone));
-                            if (world.isRemote)
-                            {
-                                world.playAuxSFX(2005, x, y + 1, z, 0);
-                            }
+                            world.playAuxSFX(2005, x, y + 1, z, 0);
+                        }
+                        else
+                        {
+                            world.spawnEntityInWorld(entityItem);
                         }
                     }
                 }
