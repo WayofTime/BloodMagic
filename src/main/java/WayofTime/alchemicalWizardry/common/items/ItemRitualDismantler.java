@@ -58,7 +58,8 @@ public class ItemRitualDismantler extends EnergyItems
             int direction = masterStone.getDirection();
             int freeSpace = -1;
 
-            List<RitualComponent> ritualList = Rituals.getRitualList(masterStone.getCurrentRitual());
+            String ritualName = Rituals.checkValidRitual(world, x, y, z);
+            List<RitualComponent> ritualList = Rituals.getRitualList(ritualName);
             if (ritualList == null)
             {
                 return false;
@@ -86,15 +87,13 @@ public class ItemRitualDismantler extends EnergyItems
                             if (world.isRemote)
                             {
                                 world.playAuxSFX(2005, x, y + 1, z, 0);
-
-                                return true;
                             }
                         }
-
-                        return true;
                     }
                 }
             }
+
+            return true;
         }
 
         return false;
