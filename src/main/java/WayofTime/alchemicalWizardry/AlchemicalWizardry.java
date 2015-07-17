@@ -52,6 +52,7 @@ import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.api.soulNetwork.ComplexNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.SpellEffectRegistry;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
@@ -768,6 +769,7 @@ public class AlchemicalWizardry
         customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID, true, 0).setIconIndex(0, 0).setPotionName("Fire Fuse"));
         customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID, true, 0).setIconIndex(0, 0).setPotionName("Planar Binding"));
         customPotionSoulFray = (new PotionSoulFray(customPotionSoulFrayID, true, 0).setIconIndex(0, 0).setPotionName("Soul Fray"));
+        PlayerSacrificeHandler.soulFrayId = customPotionSoulFray;
         customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID, false, 0).setIconIndex(0, 0).setPotionName("Soul Harden"));
         customPotionDeaf = (new PotionDeaf(customPotionDeafID, true, 0).setIconIndex(0, 0).setPotionName("Deafness"));
         customPotionFeatherFall = (new PotionFeatherFall(customPotionFeatherFallID, false, 0).setIconIndex(0, 0).setPotionName("Feather Fall"));

@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.api.guide;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 
@@ -18,13 +17,13 @@ public class PageRitualMultiBlock extends PageMultiBlock
 	private static ItemStack dawnStone;
 	static
 	{
-		blankStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.BLANK);
-		waterStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.WATER);
-		fireStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.FIRE);
-		earthStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.EARTH);
-		airStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.AIR);
-		duskStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DUSK);
-		dawnStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DAWN);
+//		blankStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.BLANK);
+//		waterStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.WATER);
+//		fireStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.FIRE);
+//		earthStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.EARTH);
+//		airStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.AIR);
+//		duskStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DUSK);
+//		dawnStone = new ItemStack(ModBlocks.ritualStone, 1, RitualComponent.DAWN);
 	}
 	
 	private PageRitualMultiBlock(ItemStack[][][] structure)
@@ -67,7 +66,7 @@ public class PageRitualMultiBlock extends PageMultiBlock
 			tempStructure[comp.getY() - minY][comp.getX() - minX][comp.getZ() - minZ] = getStackForRitualStone(comp.getStoneType());
 		}
 		
-		tempStructure[-minY][-minX][-minZ] = new ItemStack(ModBlocks.blockMasterStone);
+//		tempStructure[-minY][-minX][-minZ] = new ItemStack(ModBlocks.blockMasterStone);
 
 		return new PageRitualMultiBlock(tempStructure);
 	}
