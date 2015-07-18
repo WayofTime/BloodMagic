@@ -11,7 +11,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -263,12 +262,12 @@ public class EntityElemental extends EntityDemon
 
         if (!this.worldObj.isRemote)
         {
-            byte b0 = this.dataWatcher.getWatchableObjectByte(25);
+            byte b0 = this.dataWatcher.getWatchableObjectByte(16);
             byte b1 = (byte) (this.attackCounter > 10 ? 1 : 0);
 
             if (b0 != b1)
             {
-                this.dataWatcher.updateObject(25, b1);
+                this.dataWatcher.updateObject(16, Byte.valueOf(b1));
             }
         }
     }
@@ -422,14 +421,6 @@ public class EntityElemental extends EntityDemon
     }
 
     /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId()
-    {
-        return -1;
-    }
-
-    /**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
@@ -536,30 +527,6 @@ public class EntityElemental extends EntityDemon
         {
             this.dataWatcher.updateObject(16, b0 & -3);
         }
-    }
-
-    public void func_70918_i(boolean par1)
-    {
-        if (par1)
-        {
-            this.dataWatcher.updateObject(19, 1);
-        } else
-        {
-            this.dataWatcher.updateObject(19, 0);
-        }
-    }
-
-    /**
-     * Returns true if the mob is currently able to mate with the specified mob.
-     */
-    public boolean canMateWith(EntityAnimal par1EntityAnimal)
-    {
-        return false;
-    }
-
-    public boolean func_70922_bv()
-    {
-        return this.dataWatcher.getWatchableObjectByte(19) == 1;
     }
 
     /**
