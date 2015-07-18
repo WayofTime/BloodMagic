@@ -6,15 +6,12 @@ import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemFood;
@@ -126,7 +123,6 @@ public class EntityBoulderFist extends EntityDemon
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
     }
 
     /**
@@ -171,14 +167,6 @@ public class EntityBoulderFist extends EntityDemon
     protected float getSoundVolume()
     {
         return 0.4F;
-    }
-
-    /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId()
-    {
-        return -1;
     }
 
     /**
@@ -310,7 +298,7 @@ public class EntityBoulderFist extends EntityDemon
 
             if (itemstack.stackSize <= 0)
             {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
             }
 
             if (!this.worldObj.isRemote)
@@ -373,54 +361,6 @@ public class EntityBoulderFist extends EntityDemon
     }
 
     /**
-     * Return this wolf's collar color.
-     */
-    public int getCollarColor()
-    {
-        return this.dataWatcher.getWatchableObjectByte(20) & 15;
-    }
-
-    /**
-     * Set this wolf's collar color.
-     */
-    public void setCollarColor(int par1)
-    {
-        this.dataWatcher.updateObject(20, par1 & 15);
-    }
-
-    /**
-     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-     */
-    public EntityWolf spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-    {
-        return null;
-    }
-
-    public void func_70918_i(boolean par1)
-    {
-        if (par1)
-        {
-            this.dataWatcher.updateObject(19, 1);
-        } else
-        {
-            this.dataWatcher.updateObject(19, 0);
-        }
-    }
-
-    /**
-     * Returns true if the mob is currently able to mate with the specified mob.
-     */
-    public boolean canMateWith(EntityAnimal par1EntityAnimal)
-    {
-        return false;
-    }
-
-    public boolean func_70922_bv()
-    {
-        return this.dataWatcher.getWatchableObjectByte(19) == 1;
-    }
-
-    /**
      * Determines if an entity can be despawned, used on idle far away entities
      */
     protected boolean canDespawn()
@@ -448,11 +388,6 @@ public class EntityBoulderFist extends EntityDemon
         {
             return false;
         }
-    }
-
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
-    {
-        return this.spawnBabyAnimal(par1EntityAgeable);
     }
 
     /**
