@@ -17,7 +17,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 public class ClientEventHandler
 {
     private Minecraft mcClient = FMLClientHandler.instance().getClient();
-
+    
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
     {

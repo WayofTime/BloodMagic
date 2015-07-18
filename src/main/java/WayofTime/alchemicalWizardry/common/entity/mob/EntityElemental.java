@@ -1,9 +1,7 @@
 package WayofTime.alchemicalWizardry.common.entity.mob;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,8 +19,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModItems;
 
 public class EntityElemental extends EntityDemon
 {
@@ -144,12 +142,6 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
-    @SideOnly(Side.CLIENT)
-    public boolean func_110182_bF()
-    {
-        return this.dataWatcher.getWatchableObjectByte(25) != 0;
-    }
-
     protected void updateEntityActionState()
     {
         if (this.getHealth() <= this.getMaxHealth() / 2.0f && worldObj.rand.nextInt(200) == 0)
@@ -259,17 +251,6 @@ public class EntityElemental extends EntityDemon
                 --this.attackCounter;
             }
         }
-
-        if (!this.worldObj.isRemote)
-        {
-            byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-            byte b1 = (byte) (this.attackCounter > 10 ? 1 : 0);
-
-            if (b0 != b1)
-            {
-                this.dataWatcher.updateObject(16, Byte.valueOf(b1));
-            }
-        }
     }
 
     /**
@@ -317,7 +298,6 @@ public class EntityElemental extends EntityDemon
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
-        this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
 
         this.setCombatTask();
     }
@@ -353,14 +333,6 @@ public class EntityElemental extends EntityDemon
     public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
     {
         super.setAttackTarget(par1EntityLivingBase);
-
-        if (par1EntityLivingBase == null)
-        {
-            this.setAngry(false);
-        } else if (!this.isTamed())
-        {
-            this.setAngry(true);
-        }
     }
 
     /**
@@ -376,7 +348,6 @@ public class EntityElemental extends EntityDemon
         super.entityInit();
         this.dataWatcher.addObject(18, this.getHealth());
         this.dataWatcher.addObject(19, 0);
-        this.dataWatcher.addObject(25, 0);
     }
 
     /**
@@ -503,30 +474,6 @@ public class EntityElemental extends EntityDemon
     public boolean isBreedingItem(ItemStack par1ItemStack)
     {
         return false;
-    }
-
-    /**
-     * Determines whether this wolf is angry or not.
-     */
-    public boolean isAngry()
-    {
-        return (this.dataWatcher.getWatchableObjectByte(16) & 2) != 0;
-    }
-
-    /**
-     * Sets whether this wolf is angry or not.
-     */
-    public void setAngry(boolean par1)
-    {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-
-        if (par1)
-        {
-            this.dataWatcher.updateObject(16, b0 | 2);
-        } else
-        {
-            this.dataWatcher.updateObject(16, b0 & -3);
-        }
     }
 
     /**
