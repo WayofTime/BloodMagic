@@ -109,7 +109,6 @@ public class EntityBoulderFist extends EntityDemon
     {
         super.entityInit();
         this.dataWatcher.addObject(18, this.getHealth());
-        this.dataWatcher.addObject(19, 0);
     }
 
     /**
@@ -126,7 +125,7 @@ public class EntityBoulderFist extends EntityDemon
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setByte("CollarColor", (byte) this.getCollarColor());
+        
     }
 
     /**
@@ -396,28 +395,12 @@ public class EntityBoulderFist extends EntityDemon
         return null;
     }
 
-    public void func_70918_i(boolean par1)
-    {
-        if (par1)
-        {
-            this.dataWatcher.updateObject(19, 1);
-        } else
-        {
-            this.dataWatcher.updateObject(19, 0);
-        }
-    }
-
     /**
      * Returns true if the mob is currently able to mate with the specified mob.
      */
     public boolean canMateWith(EntityAnimal par1EntityAnimal)
     {
         return false;
-    }
-
-    public boolean func_70922_bv()
-    {
-        return this.dataWatcher.getWatchableObjectByte(19) == 1;
     }
 
     /**
