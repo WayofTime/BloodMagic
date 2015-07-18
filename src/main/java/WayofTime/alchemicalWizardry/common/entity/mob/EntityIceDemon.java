@@ -17,9 +17,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemFood;
@@ -179,14 +177,6 @@ public class EntityIceDemon extends EntityDemon implements IRangedAttackMob
     protected float getSoundVolume()
     {
         return 0.4F;
-    }
-
-    /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId()
-    {
-        return -1;
     }
 
     /**
@@ -402,54 +392,6 @@ public class EntityIceDemon extends EntityDemon implements IRangedAttackMob
     }
 
     /**
-     * Return this wolf's collar color.
-     */
-    public int getCollarColor()
-    {
-        return this.dataWatcher.getWatchableObjectByte(20) & 15;
-    }
-
-    /**
-     * Set this wolf's collar color.
-     */
-    public void setCollarColor(int par1)
-    {
-        this.dataWatcher.updateObject(20, par1 & 15);
-    }
-
-    /**
-     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-     */
-    public EntityWolf spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-    {
-        return null;
-    }
-
-    public void func_70918_i(boolean par1)
-    {
-        if (par1)
-        {
-            this.dataWatcher.updateObject(19, 1);
-        } else
-        {
-            this.dataWatcher.updateObject(19, 0);
-        }
-    }
-
-    /**
-     * Returns true if the mob is currently able to mate with the specified mob.
-     */
-    public boolean canMateWith(EntityAnimal par1EntityAnimal)
-    {
-        return false;
-    }
-
-    public boolean func_70922_bv()
-    {
-        return this.dataWatcher.getWatchableObjectByte(19) == 1;
-    }
-
-    /**
      * Determines if an entity can be despawned, used on idle far away entities
      */
     protected boolean canDespawn()
@@ -476,11 +418,6 @@ public class EntityIceDemon extends EntityDemon implements IRangedAttackMob
         {
             return false;
         }
-    }
-
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
-    {
-        return this.spawnBabyAnimal(par1EntityAgeable);
     }
 
     /**
