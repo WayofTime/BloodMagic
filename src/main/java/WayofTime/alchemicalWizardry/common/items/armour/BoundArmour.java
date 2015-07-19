@@ -57,6 +57,12 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         setMaxDamage(1000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
+    
+    @Override
+    public boolean isItemTool(ItemStack stack)
+    {
+        return false;
+    }
 
     ModelBiped model1 = null;
     ModelBiped model2 = null;

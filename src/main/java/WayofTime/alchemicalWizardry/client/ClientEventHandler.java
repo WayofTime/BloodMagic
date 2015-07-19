@@ -1,8 +1,11 @@
 package WayofTime.alchemicalWizardry.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.sound.SoundEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -13,10 +16,37 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientEventHandler
 {
-    private Minecraft mcClient = FMLClientHandler.instance().getClient();
+    private Minecraft mc = FMLClientHandler.instance().getClient();
+    
+    public static ResourceLocation currentPlayerTexture = null;
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public void renderPOVArmour(RenderHandEvent event)
+    {
+    	if (this.mc.gameSettings.thirdPersonView == 0 && !this.mc.renderViewEntity.isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.enableEverythingIsScrewedUpMode())
+    	{
+    		currentPlayerTexture = ((AbstractClientPlayer) mc.thePlayer).getLocationSkin();
+        	ClientUtils.renderPlayerArmourInPOV(mc.thePlayer, event.partialTicks);
+    	}
+    }
+    
+//  @SubscribeEvent(priority = EventPriority.LOWEST) 
+//  public void onPlayerRenderTick(RenderPlayerEvent.Pre event)
+//  {
+//  	ModelBiped model = ((BoundArmour)ModItems.boundPlate).getArmorModel(event.entityPlayer, new ItemStack(ModItems.boundPlate), 2);
+//  	String texture = ((BoundArmour)ModItems.boundPlate).getArmorTexture(new ItemStack(ModItems.boundPlate), event.entityPlayer, 2, "");
+//  	
+//  	ResourceLocation resourcelocation = new ResourceLocation(texture);
+//  	event.renderer.modelBipedMain.bipedBody.addChild(model.bipedBody);
+//  	Minecraft.getMinecraft().renderEngine.bindTexture(resourcelocation);
+//
+//  }
     
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
@@ -66,7 +96,7 @@ public class ClientEventHandler
         if (event.phase.equals(Phase.START))
             return;
 
-        if (!RenderHelper.onTickInGame(mcClient))
+        if (!RenderHelper.onTickInGame(mc))
         {
 
         }
