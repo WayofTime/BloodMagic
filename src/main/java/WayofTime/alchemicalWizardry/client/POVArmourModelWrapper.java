@@ -32,19 +32,16 @@ public class POVArmourModelWrapper extends ModelRenderer
     @Override
     public void render(float partialTicks) 
     {
-//        if (ClientEventHandler.currentEvent != null && ClientEventHandler.currentPartsData != null && ClientEventHandler.currentPlayerTexture != null) 
-        {
-//            PartInfo info = ClientEventHandler.currentPartsData.getPartInfo(partType);
-//            if (info != null && info.hasPart) 
-            {
-            	GL11.glPushMatrix();
-//            	GL11.glTranslated(0.3, -.1, 0);
-            	Minecraft.getMinecraft().renderEngine.bindTexture(resource);
-                armModel.render(partialTicks);
+    	GL11.glPushMatrix();
+//    	GL11.glTranslated(0.3, -.1, 0);
+    	Minecraft.getMinecraft().renderEngine.bindTexture(resource);
+    	armModel.rotateAngleX = this.rotateAngleX;
+    	armModel.rotateAngleY = this.rotateAngleY;
+    	armModel.rotateAngleZ = this.rotateAngleZ;
+        armModel.render(partialTicks);
 
-                GL11.glPopMatrix();
-                Minecraft.getMinecraft().renderEngine.bindTexture(ClientEventHandler.currentPlayerTexture);
-            }
-        }
+        GL11.glPopMatrix();
+        Minecraft.getMinecraft().renderEngine.bindTexture(ClientEventHandler.currentPlayerTexture);
+
     }
 }

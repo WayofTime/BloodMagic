@@ -217,13 +217,21 @@ public class ClientUtils
 		float f = 1.0F;
         GL11.glColor3f(f, f, f);
         
+        GL11.glPushMatrix();
         ModelRenderer mRenderer = new POVArmourModelWrapper(renderer.modelBipedMain);
-//        renderer.modelBipedMain.onGround = 0.0F;
-//        mRenderer.rotateAngleX = 1;
-        GL11.glTranslatef(-0.3f, -0.25f, 0);
+        renderer.modelBipedMain.onGround = 0.0F;
+        renderer.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+        renderer.modelBipedMain.bipedRightArm.render(0.0625F);
+        
+        GL11.glPushMatrix();
+//        GL11.glTranslatef(-0.3f, -0.25f, 0);
+        mRenderer.rotateAngleX = renderer.modelBipedMain.bipedRightArm.rotateAngleX;
+        mRenderer.rotateAngleY = renderer.modelBipedMain.bipedRightArm.rotateAngleY;
+        mRenderer.rotateAngleZ = renderer.modelBipedMain.bipedRightArm.rotateAngleZ;
         mRenderer.render(0.0625F);
+        GL11.glPopMatrix();
+        GL11.glPopMatrix();
 //        renderer.modelBipedMain.bipedRightArm.addChild(new POVArmourModelWrapper(renderer.modelBipedMain));
-//        renderer.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
 //        renderer.modelBipedMain.bipedRightArm.render(0.0625F);
 	}
 }
