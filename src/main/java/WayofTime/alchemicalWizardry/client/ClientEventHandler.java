@@ -29,10 +29,12 @@ public class ClientEventHandler
     @SubscribeEvent
     public void renderPOVArmour(RenderHandEvent event)
     {
-    	if (this.mc.gameSettings.thirdPersonView == 0 && !this.mc.renderViewEntity.isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.enableEverythingIsScrewedUpMode())
+//    	if (this.mc.thePlayer.worldObj.isRemote && this.mc.gameSettings.thirdPersonView == 0 && !this.mc.renderViewEntity.isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.enableEverythingIsScrewedUpMode())
     	{
     		currentPlayerTexture = ((AbstractClientPlayer) mc.thePlayer).getLocationSkin();
-        	ClientUtils.renderPlayerArmourInPOV(mc.thePlayer, event.partialTicks);
+    		
+//    		if(mc.thePlayer.isAirBorne)
+    			ClientUtils.renderPlayerArmourInPOV(mc.thePlayer, event.partialTicks);
     	}
     }
     

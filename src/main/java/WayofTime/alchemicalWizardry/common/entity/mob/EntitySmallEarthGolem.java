@@ -103,7 +103,6 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
     {
         super.entityInit();
         this.dataWatcher.addObject(18, this.getHealth());
-        this.dataWatcher.addObject(19, 0);
     }
 
     /**

@@ -115,7 +115,6 @@ public class EntityIceDemon extends EntityDemon implements IRangedAttackMob
     {
         super.entityInit();
         this.dataWatcher.addObject(18, this.getHealth());
-        this.dataWatcher.addObject(19, 0);
     }
 
     /**

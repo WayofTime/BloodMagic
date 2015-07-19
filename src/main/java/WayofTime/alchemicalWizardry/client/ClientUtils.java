@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
@@ -26,11 +27,11 @@ public class ClientUtils
 		float f1 = 1.0f;//this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTickTime;
         EntityClientPlayerMP entityclientplayermp = mc.thePlayer;
         float f2 = entityclientplayermp.prevRotationPitch + (entityclientplayermp.rotationPitch - entityclientplayermp.prevRotationPitch) * partialTickTime;
-        GL11.glPushMatrix();
-        GL11.glRotatef(f2, 1.0F, 0.0F, 0.0F);
-        GL11.glRotatef(entityclientplayermp.prevRotationYaw + (entityclientplayermp.rotationYaw - entityclientplayermp.prevRotationYaw) * partialTickTime, 0.0F, 1.0F, 0.0F);
+//        GL11.glPushMatrix();
+        GL11.glRotatef(180 - (entityclientplayermp.prevRotationYaw + (entityclientplayermp.rotationYaw - entityclientplayermp.prevRotationYaw) * partialTickTime), 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-f2, 1.0F, 0.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
-        GL11.glPopMatrix();
+//        GL11.glPopMatrix();
         EntityPlayerSP entityplayersp = (EntityPlayerSP)entityclientplayermp;
         float f3 = entityplayersp.prevRenderArmPitch + (entityplayersp.renderArmPitch - entityplayersp.prevRenderArmPitch) * partialTickTime;
         float f4 = entityplayersp.prevRenderArmYaw + (entityplayersp.renderArmYaw - entityplayersp.prevRenderArmYaw) * partialTickTime;
@@ -212,12 +213,17 @@ public class ClientUtils
 	}
 	
 	public static void renderFirstPersonArm(RenderPlayer renderer, EntityPlayer player)
-	{
+	{		
 		float f = 1.0F;
         GL11.glColor3f(f, f, f);
-        renderer.modelBipedMain.onGround = 0.0F;
-        renderer.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-        renderer.modelBipedMain.bipedRightArm.addChild(new POVArmourModelWrapper(renderer.modelBipedMain));
-        renderer.modelBipedMain.bipedRightArm.render(0.0625F);
+        
+        ModelRenderer mRenderer = new POVArmourModelWrapper(renderer.modelBipedMain);
+//        renderer.modelBipedMain.onGround = 0.0F;
+//        mRenderer.rotateAngleX = 1;
+        GL11.glTranslatef(-0.3f, -0.25f, 0);
+        mRenderer.render(0.0625F);
+//        renderer.modelBipedMain.bipedRightArm.addChild(new POVArmourModelWrapper(renderer.modelBipedMain));
+//        renderer.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+//        renderer.modelBipedMain.bipedRightArm.render(0.0625F);
 	}
 }

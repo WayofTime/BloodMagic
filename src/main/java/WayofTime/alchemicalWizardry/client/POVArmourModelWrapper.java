@@ -38,7 +38,7 @@ public class POVArmourModelWrapper extends ModelRenderer
 //            if (info != null && info.hasPart) 
             {
             	GL11.glPushMatrix();
-            	GL11.glTranslated(0.3, -.1, 0);
+//            	GL11.glTranslated(0.3, -.1, 0);
             	Minecraft.getMinecraft().renderEngine.bindTexture(resource);
                 armModel.render(partialTicks);
 
