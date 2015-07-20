@@ -33,7 +33,6 @@ public class ClientEventHandler
     	{
     		currentPlayerTexture = ((AbstractClientPlayer) mc.thePlayer).getLocationSkin();
     		
-//    		if(mc.thePlayer.isAirBorne)
 			ClientUtils.renderPlayerArmourInPOV(mc.thePlayer, event.partialTicks);
 			event.setCanceled(true);
     	}
