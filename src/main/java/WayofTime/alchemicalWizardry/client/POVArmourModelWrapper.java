@@ -22,10 +22,10 @@ public class POVArmourModelWrapper extends ModelRenderer
     public POVArmourModelWrapper(ModelBase model) 
     {
         super(model);
-        ItemStack plateStack = new ItemStack(ModItems.boundPlate);
-        ModelBiped bipedModel = ((BoundArmour)ModItems.boundPlate).getArmorModel(Minecraft.getMinecraft().thePlayer, plateStack, 1);
+        ItemStack plateStack = new ItemStack(ModItems.boundPlateFire);
+        ModelBiped bipedModel = ((BoundArmour)ModItems.boundPlateFire).getArmorModel(Minecraft.getMinecraft().thePlayer, plateStack, 1);
         armModel = bipedModel.bipedRightArm;
-        resource = new ResourceLocation(((BoundArmour)ModItems.boundPlate).getArmorTexture(plateStack, Minecraft.getMinecraft().thePlayer, 1, "POV"));
+        resource = new ResourceLocation(((BoundArmour)ModItems.boundPlateFire).getArmorTexture(plateStack, Minecraft.getMinecraft().thePlayer, 1, "POV"));
         addBox(0, 0, 0, 0, 0, 0); //Adds in a blank box as it's required in certain cases such as rendering arrows in entities
     }
 
