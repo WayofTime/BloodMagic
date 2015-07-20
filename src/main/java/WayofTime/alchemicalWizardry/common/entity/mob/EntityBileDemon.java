@@ -359,10 +359,10 @@ public class EntityBileDemon extends EntityDemon
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, b0 | 2);
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
         } else
         {
-            this.dataWatcher.updateObject(16, b0 & -3);
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
         }
     }
 
