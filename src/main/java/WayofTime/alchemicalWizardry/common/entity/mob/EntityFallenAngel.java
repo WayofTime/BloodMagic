@@ -267,7 +267,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
 
                         if (itemstack.stackSize <= 0)
                         {
-                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
                         }
 
                         return true;
@@ -297,7 +297,7 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
 
             if (itemstack.stackSize <= 0)
             {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
             }
 
             if (!this.worldObj.isRemote)
@@ -353,10 +353,10 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
 
         if (par1)
         {
-            this.dataWatcher.updateObject(16, b0 | 2);
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 | 2)));
         } else
         {
-            this.dataWatcher.updateObject(16, b0 & -3);
+            this.dataWatcher.updateObject(16, Byte.valueOf((byte)(b0 & -3)));
         }
     }
 
