@@ -285,7 +285,12 @@ public class ItemSpellMultiTool extends Item
 
         if (toolClass == null || toolClass.equals(""))
         {
-            return 1.0f;
+        	toolClass = getToolClassOfMaterial(block.getMaterial());
+        	
+        	if(toolClass == "")
+        	{
+                return 1.0f;
+        	}
         }
         {
             if (stack.hasTagCompound())
@@ -300,6 +305,26 @@ public class ItemSpellMultiTool extends Item
         }
 
         return 1.0f;
+    }
+    
+    public String getToolClassOfMaterial(Material mat)
+    {
+        if(mat == Material.iron || mat == Material.anvil || mat == Material.rock)
+        {
+        	return "pickaxe";
+        }
+
+        if(mat == Material.wood || mat == Material.plants || mat == Material.vine)
+        {
+        	return "axe";
+        }
+        
+        if(mat == Material.ground || mat == Material.grass)
+        {
+        	return "shovel";
+        }
+    	
+    	return "";
     }
 
     @Override
