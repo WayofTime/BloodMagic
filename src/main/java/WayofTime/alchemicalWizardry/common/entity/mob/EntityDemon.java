@@ -61,7 +61,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {

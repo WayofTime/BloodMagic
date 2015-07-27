@@ -427,6 +427,7 @@ public class AlchemicalWizardry
     public static boolean lockdownAltar;
     public static boolean causeHungerWithRegen;
     public static boolean causeHungerChatMessage = true;
+    public static boolean disableBoundToolsRightClick;
 
     public static List<Class> wellBlacklist;
 

@@ -121,6 +121,7 @@ public class EnergySword extends ItemSword
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+        super.onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
         if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
