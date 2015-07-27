@@ -106,6 +106,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.causeHungerChatMessage = config.get("WimpySettings", "causeHungerChatMessage", true).getBoolean();
 //		AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
 		AlchemicalWizardry.lockdownAltar = false;
+		AlchemicalWizardry.disableBoundToolsRightClick = config.get("WimpySettings", "disableBoundToolsRightClick", false).getBoolean(false);
 
 		AlchemicalWizardry.ritualDisabledWater = config.get("Ritual Blacklist", "Ritual of the Full Spring", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledLava = config.get("Ritual Blacklist", "Serenade of the Nether", false).getBoolean(false);
