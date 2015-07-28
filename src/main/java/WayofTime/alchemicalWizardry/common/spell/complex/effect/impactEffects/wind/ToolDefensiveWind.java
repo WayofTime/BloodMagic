@@ -7,7 +7,6 @@ import net.minecraft.util.Vec3;
 
 public class ToolDefensiveWind extends LeftClickEffect
 {
-
     public ToolDefensiveWind(int power, int potency, int cost)
     {
         super(power, potency, cost);

@@ -497,7 +497,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
                 ReagentStack remainingStack = resource.copy();
                 remainingStack.amount = maxFill - totalFill;
 
-                boolean doesReagentMatch = tanks[i].getReagent() == null ? false : tanks[i].getReagent().isReagentEqual(remainingStack);
+                boolean doesReagentMatch = tanks[i].getReagent() != null && tanks[i].getReagent().isReagentEqual(remainingStack);
 
                 if (doesReagentMatch)
                 {
@@ -650,7 +650,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone
             return;
         }
 
-        this.attunedTankMap.put(reagent, new Integer(total));
+        this.attunedTankMap.put(reagent, total);
     }
 
     @Override

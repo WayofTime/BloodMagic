@@ -6,7 +6,6 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -21,8 +20,6 @@ public class ProjectileEnvironmentalWind extends ProjectileUpdateEffect
     @Override
     public void onUpdateEffect(Entity projectile)
     {
-        Vec3 posVec = SpellHelper.getEntityBlockVector(projectile);
-
         int horizRange = this.powerUpgrades + 1;
         int vertRange = 1 * this.potencyUpgrades + 1;
 

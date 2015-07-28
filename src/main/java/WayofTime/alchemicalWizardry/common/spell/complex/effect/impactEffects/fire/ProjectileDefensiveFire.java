@@ -22,8 +22,8 @@ public class ProjectileDefensiveFire extends ProjectileImpactEffect
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-        int horizRange = (int) ((this.powerUpgrades));
-        int vertRange = (int) ((this.powerUpgrades));
+        int horizRange = this.powerUpgrades;
+        int vertRange = this.powerUpgrades;
 
         int posX = mop.blockX;
         int posY = mop.blockY;

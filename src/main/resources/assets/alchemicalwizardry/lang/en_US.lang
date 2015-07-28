@@ -499,6 +499,8 @@ achievement.alchemicalwizardry:ritualDiviner=Ritual Making
 achievement.alchemicalwizardry:ritualDiviner.desc=Craft a Ritual Diviner
 achievement.alchemicalwizardry:masterOrb=Getting Very Strong
 achievement.alchemicalwizardry:masterOrb.desc=Pickup a Master Orb
+achievement.alchemicalwizardry:demonSpawn=Demon Spawn
+achievement.alchemicalwizardry:demonSpawn.desc=Summon and slay a demon/elemental
 achievement.alchemicalwizardry:phantomBridgeSigil=Walking In Mid-Air
 achievement.alchemicalwizardry:phantomBridgeSigil.desc=Make the Sigil of the Phantom Bridge
 achievement.alchemicalwizardry:teleposer=Teleposed!
@@ -507,11 +509,12 @@ achievement.alchemicalwizardry:suppressionSigil=Suppress!
 achievement.alchemicalwizardry:suppressionSigil.desc=Create a Suppression Sigil
 achievement.alchemicalwizardry:archmageOrb=Too Strong
 achievement.alchemicalwizardry:archmageOrb.desc=Pickup an Archmage Orb
+achievement.alchemicalwizardry:energyBazooka=BOOM!!!
+achievement.alchemicalwizardry:energyBazooka.desc=Create the all powerful, Energy Bazooka!!
 achievement.alchemicalwizardry:demons=Demon Hunter
 achievement.alchemicalwizardry:demons.desc=Kill a Demon
 achievement.alchemicalwizardry:trancsendentOrb=OVERPOWERED
 achievement.alchemicalwizardry:trancsendentOrb.desc=Pickup a Transcendent Blood Orb
-
 
 #G-API Downloading
 bm.versioning.getGAPI=["[BM] You don't have Guide-API installed! Install it to get it to unlock the book! [",{"text":"Download","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click this to auto-magically download the latest version","color":"red"}},"clickEvent":{"action":"run_command","value":"/bloodmagic-download-g-api"}},"]"]

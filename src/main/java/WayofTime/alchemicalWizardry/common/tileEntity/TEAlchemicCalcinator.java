@@ -25,9 +25,6 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
     protected int bufferTransferRate = 20;
 
-    private int lpPerTick = 10;
-    private int ticksPerReagent = 200;
-
     public int progress;
 
     public TEAlchemicCalcinator()
@@ -54,7 +51,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound savedTag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
 
             if (savedTag.getBoolean("Empty"))
             {
@@ -83,7 +80,6 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < inv.length; i++)
         {
-            ItemStack stack = inv[i];
             NBTTagCompound savedTag = new NBTTagCompound();
 
             if (inv[i] != null)
@@ -126,6 +122,8 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
     public void tickProgress()
     {
+        int lpPerTick = 10;
+        int ticksPerReagent = 200;
         ItemStack reagentItemStack = this.getStackInSlot(1);
         if (reagentItemStack == null)
         {
@@ -163,7 +161,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
             SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
         }
 
-        if (progress >= this.ticksPerReagent)
+        if (progress >= ticksPerReagent)
         {
             progress = 0;
             this.bufferTank.fill(possibleReagent, true);
@@ -198,7 +196,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < invTagList.tagCount(); i++)
         {
-            NBTTagCompound savedTag = (NBTTagCompound) invTagList.getCompoundTagAt(i);
+            NBTTagCompound savedTag = invTagList.getCompoundTagAt(i);
 
             if (savedTag.getBoolean("Empty"))
             {
@@ -233,7 +231,6 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < inv.length; i++)
         {
-            ItemStack stack = inv[i];
             NBTTagCompound savedTag = new NBTTagCompound();
 
             if (inv[i] != null)

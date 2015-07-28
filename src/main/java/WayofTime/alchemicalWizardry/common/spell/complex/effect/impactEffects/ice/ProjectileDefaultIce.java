@@ -17,15 +17,12 @@ public class ProjectileDefaultIce extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        return;
+
     }
 
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-        int horizRadius = this.powerUpgrades + 1;
-        int vertRadius = this.potencyUpgrades;
-
         ForgeDirection sideHit = ForgeDirection.getOrientation(mop.sideHit);
 
         int posX = mop.blockX + sideHit.offsetX;

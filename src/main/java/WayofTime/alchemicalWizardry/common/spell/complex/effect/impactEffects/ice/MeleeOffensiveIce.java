@@ -27,9 +27,7 @@ public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect
         int posY = (int) (blockVector.yCoord);
         int posZ = (int) (blockVector.zCoord);
 
-        double yVel = 1 * (0.3 * this.powerUpgrades + 0.90);
-
-        entity.motionY = yVel;
+        entity.motionY = 1 * (0.3 * this.powerUpgrades + 0.90);
 
         for (int i = 0; i < 2; i++)
         {

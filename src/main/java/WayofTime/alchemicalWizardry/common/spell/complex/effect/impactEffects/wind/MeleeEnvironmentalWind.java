@@ -29,7 +29,7 @@ public class MeleeEnvironmentalWind extends MeleeSpellCenteredWorldEffect
             if (entity instanceof EntityItem)
             {
                 ((EntityItem) entity).delayBeforeCanPickup = 0;
-                entity.onCollideWithPlayer((EntityPlayer) player);
+                entity.onCollideWithPlayer(player);
             }
         }
     }

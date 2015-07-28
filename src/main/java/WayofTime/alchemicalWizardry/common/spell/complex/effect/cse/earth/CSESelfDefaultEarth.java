@@ -17,7 +17,6 @@ public class CSESelfDefaultEarth extends ComplexSpellEffect
 	public CSESelfDefaultEarth(int power, int cost, int potency)
 	{
 		this();
-		
 		this.powerEnhancement = power;
 		this.costEnhancement = cost;
 		this.potencyEnhancement = potency;

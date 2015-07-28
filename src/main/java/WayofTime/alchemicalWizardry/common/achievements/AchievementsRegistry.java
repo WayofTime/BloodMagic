@@ -36,6 +36,7 @@ public class AchievementsRegistry
         craftinglist.add(ModItems.itemRitualDiviner);
         craftinglist.add(ModItems.sigilOfTheBridge);
         craftinglist.add(ModItems.itemSigilOfSupression);
+        craftinglist.add(ModItems.energyBazooka);
     }
 
     public static void addBlocksToCraftingList()

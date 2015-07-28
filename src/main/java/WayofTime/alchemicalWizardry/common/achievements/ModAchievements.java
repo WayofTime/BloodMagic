@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.achievements;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 import WayofTime.alchemicalWizardry.ModItems;
@@ -26,6 +27,7 @@ public class ModAchievements
     public static Achievement complexSpells;
     public static Achievement ritualDiviner;
     public static Achievement masterOrb;
+    public static Achievement demonSpawn;
     public static Achievement phantomBridgeSigil;
     public static Achievement teleposer;
     public static Achievement suppressionSigil;
@@ -52,12 +54,13 @@ public class ModAchievements
         complexSpells = new AchievementsMod("complexSpells", 1, -4, ModItems.itemComplexSpellCrystal, magicianOrb);
         ritualDiviner = new AchievementsMod("ritualDiviner", 1, -3, ModItems.itemRitualDiviner, magicianOrb);
         masterOrb = new AchievementsMod("masterOrb", -2, -1, ModItems.masterBloodOrb, boundBlade);
+        demonSpawn = new AchievementsMod("demonSpawn", -3, -2, ModItems.demonPlacer, masterOrb);
         phantomBridgeSigil = new AchievementsMod("phantomBridgeSigil", 6, -1, ModItems.sigilOfTheBridge, masterOrb);
         teleposer = new AchievementsMod("teleposer", -4, -1, ModBlocks.blockTeleposer, masterOrb);
         suppressionSigil = new AchievementsMod("suppressionSigil", 6, -2, ModItems.itemSigilOfSupression, masterOrb);
         archmageOrb = new AchievementsMod("archmageOrb", -1, 2, ModItems.archmageBloodOrb, masterOrb);
         energyBazooka = new AchievementsMod("energyBazooka", -3, 2, ModItems.energyBazooka, archmageOrb);
-        demons = new AchievementsMod("demons", 0, 3, ModItems.demonPlacer, archmageOrb).setSpecial();
+        demons = new AchievementsMod("demons", 0, 3, new ItemStack(ModItems.baseItems, 1, 29), archmageOrb).setSpecial();
         transcendentOrb = new AchievementsMod("trancsendentOrb", 0, 5, ModItems.transcendentBloodOrb, demons);
 
         alchemicalWizardryPage = new AchievementPage("Blood Magic", AchievementsMod.achievements.toArray(new Achievement[AchievementsMod.achievements.size()]));

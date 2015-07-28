@@ -19,8 +19,8 @@ public class ProjectileOffensiveEarth extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        int horizRange = (int) (this.powerUpgrades);
-        int vertDepth = (int) (3 * this.potencyUpgrades + 1);
+        int horizRange = this.powerUpgrades;
+        int vertDepth = 3 * this.potencyUpgrades + 1;
 
         Vec3 blockVector = SpellHelper.getEntityBlockVector(mop);
 
