@@ -812,6 +812,12 @@ public class AlchemicalWizardryEventHooks
 	{
 		EntityLivingBase entityLiving = event.entityLiving;
 
+		if (entityLiving instanceof IDemon && event.source.getEntity() instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer) event.source.getEntity();
+
+			player.addStat(ModAchievements.demonSpawn, 1);
+		}
         if (entityLiving instanceof IHoardDemon && event.source.getEntity() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.source.getEntity();
