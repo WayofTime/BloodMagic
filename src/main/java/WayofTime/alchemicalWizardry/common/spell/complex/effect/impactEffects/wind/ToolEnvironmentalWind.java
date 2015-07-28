@@ -22,9 +22,8 @@ public class ToolEnvironmentalWind extends OnBreakBlockEffect
     public int onBlockBroken(ItemStack container, World world, EntityPlayer player, Block block, int meta, int x, int y, int z, ForgeDirection sideBroken)
     {
         double vertRange = 0.5 + (this.powerUpgrades * this.powerUpgrades + this.powerUpgrades) / 2;
-        double horizRange = vertRange;
 
-        List<EntityItem> itemList = SpellHelper.getItemsInRange(world, x + 0.5f, y + 0.5f, z + 0.5f, horizRange, vertRange);
+        List<EntityItem> itemList = SpellHelper.getItemsInRange(world, x + 0.5f, y + 0.5f, z + 0.5f, vertRange, vertRange);
 
         for (EntityItem entity : itemList)
         {
@@ -37,5 +36,4 @@ public class ToolEnvironmentalWind extends OnBreakBlockEffect
 
         return 0;
     }
-
 }

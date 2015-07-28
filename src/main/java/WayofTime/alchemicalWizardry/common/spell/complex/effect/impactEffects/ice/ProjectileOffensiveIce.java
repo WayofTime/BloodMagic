@@ -27,6 +27,6 @@ public class ProjectileOffensiveIce extends ProjectileImpactEffect
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-        return;
+
     }
 }

@@ -17,7 +17,6 @@ public class CSESelfDefensiveEarth extends ComplexSpellEffect
 	public CSESelfDefensiveEarth(int power, int cost, int potency)
 	{
 		this();
-		
 		this.powerEnhancement = power;
 		this.costEnhancement = cost;
 		this.potencyEnhancement = potency;

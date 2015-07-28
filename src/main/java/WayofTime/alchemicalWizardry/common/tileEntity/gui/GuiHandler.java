@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.ContainerHolding;
@@ -52,8 +51,6 @@ public class GuiHandler implements IGuiHandler
     {
         TileEntity tileEntity;
         
-        ItemStack held = player.getHeldItem();
-
         switch (id)
         {
             case 0:

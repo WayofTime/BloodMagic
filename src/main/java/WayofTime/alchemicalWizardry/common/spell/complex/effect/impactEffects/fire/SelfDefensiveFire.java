@@ -18,8 +18,8 @@ public class SelfDefensiveFire extends SelfSpellEffect
     @Override
     public void onSelfUse(World world, EntityPlayer player)
     {
-        int horizRange = (int) (this.powerUpgrades);
-        int vertDepth = (int) (3 * this.potencyUpgrades + 1);
+        int horizRange = this.powerUpgrades;
+        int vertDepth = 3 * this.potencyUpgrades + 1;
 
         Vec3 blockVector = SpellHelper.getEntityBlockVector(player);
 

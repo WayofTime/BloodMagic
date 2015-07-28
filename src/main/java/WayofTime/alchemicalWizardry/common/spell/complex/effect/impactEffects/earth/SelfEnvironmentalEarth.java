@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.e
 import java.util.List;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;

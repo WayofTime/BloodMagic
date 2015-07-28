@@ -55,7 +55,7 @@ public class TEMimicBlock extends TileEntity
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < inv.length)
@@ -76,8 +76,6 @@ public class TEMimicBlock extends TileEntity
 
         for (int i = 0; i < inv.length; i++)
         {
-            ItemStack stack = inv[i];
-
             if (inv[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();
@@ -194,8 +192,7 @@ public class TEMimicBlock extends TileEntity
     	{
     		if (item.getItem() instanceof ItemBlock)
 	        {
-	            Block block = ((ItemBlock) item.getItem()).field_150939_a;
-	            return block;
+	            return ((ItemBlock) item.getItem()).field_150939_a;
 	        }
     	}
     	return null;

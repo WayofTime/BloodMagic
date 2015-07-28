@@ -37,7 +37,6 @@ public class DigAreaEffect implements IDigAreaEffect
         int x = blockPos.blockX;
         int y = blockPos.blockY;
         int z = blockPos.blockZ;
-        ForgeDirection sidehit = ForgeDirection.getOrientation(blockPos.sideHit);
 
         for (int xPos = x - 1; xPos <= x + 1; xPos++)
         {
@@ -82,12 +81,10 @@ public class DigAreaEffect implements IDigAreaEffect
                         isEffective = true;
                     }
 
-
                     if (localBlock.getMaterial().isToolNotRequired())
                     {
                         isEffective = true;
                     }
-
 
                     if (!player.capabilities.isCreativeMode)
                     {

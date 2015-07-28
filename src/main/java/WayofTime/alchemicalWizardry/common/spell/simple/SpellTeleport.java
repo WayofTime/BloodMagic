@@ -4,9 +4,7 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -45,7 +43,6 @@ public class SpellTeleport extends HomSpell
 
         par2World.spawnEntityInWorld(new TeleportProjectile(par2World, par3EntityPlayer, 8, true));
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-        EntityEnderman g;
         return par1ItemStack;
     }
 
@@ -108,7 +105,7 @@ public class SpellTeleport extends HomSpell
         if (!par2World.isRemote)
         {
             int d0 = 3;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (par3EntityPlayer.posX + 1), (par3EntityPlayer.posY + 2), (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
             List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             Iterator iterator = list.iterator();
 
@@ -146,14 +143,14 @@ public class SpellTeleport extends HomSpell
         double z = entityLiving.posZ;
         Random rand = new Random();
         double d0 = x + (rand.nextDouble() - 0.5D) * distance;
-        double d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
+        double d1 = y + (rand.nextInt((int) distance) - (distance) / 2);
         double d2 = z + (rand.nextDouble() - 0.5D) * distance;
         int i = 0;
 
         while (!SpellTeleport.teleportTo(entityLiving, d0, d1, d2, x, y, z) && i < 100)
         {
             d0 = x + (rand.nextDouble() - 0.5D) * distance;
-            d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
+            d1 = y + (rand.nextInt((int) distance) - (distance) / 2);
             d2 = z + (rand.nextDouble() - 0.5D) * distance;
             i++;
         }
@@ -175,9 +172,6 @@ public class SpellTeleport extends HomSpell
             return false;
         }
 
-        double d3 = lastX;
-        double d4 = lastY;
-        double d5 = lastZ;
         SpellTeleport.moveEntityViaTeleport(entityLiving, event.targetX, event.targetY, event.targetZ);
         boolean flag = false;
         int i = MathHelper.floor_double(entityLiving.posX);
@@ -216,7 +210,7 @@ public class SpellTeleport extends HomSpell
 
         if (!flag)
         {
-            SpellTeleport.moveEntityViaTeleport(entityLiving, d3, d4, d5);
+            SpellTeleport.moveEntityViaTeleport(entityLiving, lastX, lastY, lastZ);
             return false;
         } else
         {
@@ -228,9 +222,9 @@ public class SpellTeleport extends HomSpell
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (entityLiving.posX - d3) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double d8 = d4 + (entityLiving.posY - d4) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double d9 = d5 + (entityLiving.posZ - d5) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double d7 = lastX + (entityLiving.posX - lastX) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double d8 = lastY + (entityLiving.posY - lastY) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
+                double d9 = lastZ + (entityLiving.posZ - lastZ) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
                 entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
             return true;
@@ -252,7 +246,7 @@ public class SpellTeleport extends HomSpell
                     {
                         if (entityLiving.isRiding())
                         {
-                            entityLiving.mountEntity((Entity) null);
+                            entityLiving.mountEntity(null);
                         }
                         entityLiving.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
                     }

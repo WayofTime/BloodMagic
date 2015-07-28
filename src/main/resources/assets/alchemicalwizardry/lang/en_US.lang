@@ -516,7 +516,6 @@ achievement.alchemicalwizardry:demons.desc=Kill a Demon
 achievement.alchemicalwizardry:trancsendentOrb=OVERPOWERED
 achievement.alchemicalwizardry:trancsendentOrb.desc=Pickup a Transcendent Blood Orb
 
-
 #G-API Downloading
 bm.versioning.getGAPI=["[BM] You don't have Guide-API installed! Install it to get it to unlock the book! [",{"text":"Download","color":"red","hoverEvent":{"action":"show_text","value":{"text":"Click this to auto-magically download the latest version","color":"red"}},"clickEvent":{"action":"run_command","value":"/bloodmagic-download-g-api"}},"]"]
 bm.versioning.startingDownload=[{"text":"Starting download of %s Please do not remove your hard disk.", "color":"orange"}]

@@ -284,7 +284,7 @@ public class ModItems
         energyBazooka = new EnergyBazooka().setUnlocalizedName("energyBazooka");
         itemBloodLightSigil = new SigilBloodLight().setUnlocalizedName("bloodLightSigil");
         itemComplexSpellCrystal = new ItemComplexSpellCrystal().setUnlocalizedName("itemComplexSpellCrystal");
-        bucketLife = (new LifeBucket(ModBlocks.blockLifeEssence)).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
+        bucketLife = new LifeBucket(ModBlocks.blockLifeEssence).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
         itemSigilOfEnderSeverance = (new SigilOfEnderSeverance()).setUnlocalizedName("itemSigilOfEnderSeverance");
         baseItems = new ItemComponents().setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase().setUnlocalizedName("baseAlchemyItems");

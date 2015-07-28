@@ -106,8 +106,7 @@ public class SpellWindGust extends HomSpell
         {
             EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getDefensiveEnergy());
         }
-        
-        int distance = 3;
+
         double yaw = par3EntityPlayer.rotationYaw / 180 * Math.PI;
         double pitch = par3EntityPlayer.rotationPitch / 180 * Math.PI;
         double wantedVelocity = 5;
@@ -147,7 +146,7 @@ public class SpellWindGust extends HomSpell
         }
 
         int d0 = 3;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (par3EntityPlayer.posX + 1), (par3EntityPlayer.posY + 2), (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
         double xCoord = par3EntityPlayer.posX;

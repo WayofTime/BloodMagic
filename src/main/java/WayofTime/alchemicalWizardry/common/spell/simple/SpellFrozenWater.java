@@ -168,9 +168,6 @@ public class SpellFrozenWater extends HomSpell
         }
 
         int radius = 3;
-        int posX = (int) par3EntityPlayer.posX;
-        int posY = (int) par3EntityPlayer.posY;
-        int posZ = (int) par3EntityPlayer.posZ;
 
         for (int i = -radius; i <= radius; i++)
         {

@@ -92,7 +92,7 @@ public class SpellFireBurst extends HomSpell
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         int d0 = 2;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (par3EntityPlayer.posX + 1), (par3EntityPlayer.posY + 2), (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
@@ -128,7 +128,6 @@ public class SpellFireBurst extends HomSpell
         }
 
         par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-        World worldObj = par2World;
 
         for (int i = -1; i <= 1; i++)
         {
@@ -136,11 +135,11 @@ public class SpellFireBurst extends HomSpell
             {
                 for (int k = -1; k <= 1; k++)
                 {
-                    if (worldObj.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k))
+                    if (par2World.isAirBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k))
                     {
-                        if (worldObj.rand.nextFloat() < 0.8F)
+                        if (par2World.rand.nextFloat() < 0.8F)
                         {
-                            worldObj.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Blocks.fire);
+                            par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Blocks.fire);
                         }
                     }
                 }

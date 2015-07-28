@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 
 public class SelfOffensiveEarth extends SelfSpellEffect
 {
-
     public SelfOffensiveEarth(int power, int potency, int cost)
     {
         super(power, potency, cost);
