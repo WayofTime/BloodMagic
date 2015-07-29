@@ -7,11 +7,8 @@ import WayofTime.alchemicalWizardry.common.ArmourComponent;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,31 +17,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArmourForge extends Block
+public class BlockArmourForge extends Block
 {
-    public static List<ArmourComponent> helmetList = new ArrayList();
-    public static List<ArmourComponent> plateList = new ArrayList();
-    public static List<ArmourComponent> leggingsList = new ArrayList();
-    public static List<ArmourComponent> bootsList = new ArrayList();
+    public List<ArmourComponent> helmetList = new ArrayList();
+    public List<ArmourComponent> plateList = new ArrayList();
+    public List<ArmourComponent> leggingsList = new ArrayList();
+    public List<ArmourComponent> bootsList = new ArrayList();
 
-    public ArmourForge()
+    public BlockArmourForge()
     {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("armourForge");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SoulForge");
     }
 
     @Override

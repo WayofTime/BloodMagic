@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class RitualStone extends Block implements IRitualStone
+public class BlockRitualStone extends Block implements IRitualStone
 {
     @SideOnly(Side.CLIENT)
     private IIcon blankIcon;
@@ -31,7 +31,7 @@ public class RitualStone extends Block implements IRitualStone
     @SideOnly(Side.CLIENT)
     private IIcon dawnStoneIcon;
 
-    public RitualStone()
+    public BlockRitualStone()
     {
         super(Material.iron);
         setHardness(2.0F);

@@ -1,26 +1,28 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
-public class BlockSocket extends BlockContainer
+public class BlockChemistrySet extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
     private IIcon topIcon;
@@ -29,23 +31,20 @@ public class BlockSocket extends BlockContainer
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
 
-    public BlockSocket()
+    public BlockChemistrySet()
     {
-        super(Material.rock);
+        super(Material.wood);
         setHardness(2.0F);
         setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("bloodSocket");
-        //func_111022_d("AlchemicalWizardry:blocks");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister)
     {
-        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
-        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodSocket");
+        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:AlchemicChemistrySet");
+        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_SideType2");
+        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Bottom");
     }
 
     @Override
@@ -64,40 +63,18 @@ public class BlockSocket extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float what, float these, float are)
     {
-        TESocket tileEntity = (TESocket) world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {
             return false;
         }
 
-        ItemStack playerItem = player.getCurrentEquippedItem();
-        if (tileEntity.getStackInSlot(0) == null && playerItem != null)
-        {
-            if (playerItem.getItem() instanceof ArmourUpgrade)
-            {
-                ItemStack newItem = playerItem.copy();
-                newItem.stackSize = 1;
-                --playerItem.stackSize;
-                tileEntity.setInventorySlotContents(0, newItem);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else if (tileEntity.getStackInSlot(0) != null && playerItem == null)
-        {
-            player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
-            tileEntity.setInventorySlotContents(0, null);
-            tileEntity.setActive();
-            return true;
-        }
-        world.markBlockForUpdate(x, y, z);
-        return false;
+        //code to open gui explained later
+        player.openGui(AlchemicalWizardry.instance, 0, world, x, y, z);
+        return true;
     }
 
     @Override
@@ -128,7 +105,9 @@ public class BlockSocket extends BlockContainer
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                EntityItem entityItem = new EntityItem(world,
+                        x + rx, y + ry, z + rz,
+                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {
@@ -148,6 +127,44 @@ public class BlockSocket extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TESocket();
+        return new TEWritingTable();
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean hasTileEntity()
+    {
+        return true;
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    {
+        this.setBlockBounds(0.4375F, 0.0F, 0.4375F, 0.5625F, 0.9375F, 0.5625F);
+        super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+        this.setBlockBoundsForItemRender();
+        super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+    }
+
+    public void setBlockBoundsForItemRender()
+    {
+        this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
     }
 }

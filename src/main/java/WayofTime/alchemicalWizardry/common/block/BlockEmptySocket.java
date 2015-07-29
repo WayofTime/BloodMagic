@@ -7,21 +7,27 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class LargeBloodStoneBrick extends Block
+public class BlockEmptySocket extends Block
 {
-    public LargeBloodStoneBrick()
+    public BlockEmptySocket()
     {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("largeBloodStoneBrick");
+        this.setBlockName("emptySocket");
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister)
     {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:LargeBloodStoneBrick");
+        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:EmptySocket");
     }
 }

@@ -14,7 +14,7 @@ import net.minecraft.util.IIcon;
 
 import java.util.List;
 
-public class BloodRune extends Block
+public class BlockBloodRune extends Block
 {
     //private Icon bloodRuneIcon;
     @SideOnly(Side.CLIENT)
@@ -28,7 +28,7 @@ public class BloodRune extends Block
     @SideOnly(Side.CLIENT)
     private IIcon accelerationRuneIcon;
 
-    public BloodRune()
+    public BlockBloodRune()
     {
         super(Material.iron);
         this.setBlockName("bloodRune");

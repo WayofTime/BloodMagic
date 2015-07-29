@@ -16,9 +16,9 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ImperfectRitualStone extends Block
+public class BlockImperfectRitualStone extends Block
 {
-    public ImperfectRitualStone()
+    public BlockImperfectRitualStone()
     {
         super(Material.iron);
         setHardness(2.0F);

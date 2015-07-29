@@ -21,9 +21,9 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class MimicBlock extends BlockContainer
+public class BlockMimic extends BlockContainer
 {
-	public MimicBlock() 
+	public BlockMimic()
 	{
 		super(Material.water);
 		setHardness(2.0F);
@@ -151,7 +151,7 @@ public class MimicBlock extends BlockContainer
                     break;
             }
 
-            MimicBlock.addHitEffect(TE, target, xOffset, yOffset, zOffset, null, effectRenderer);
+            BlockMimic.addHitEffect(TE, target, xOffset, yOffset, zOffset, null, effectRenderer);
 
             return true;
 

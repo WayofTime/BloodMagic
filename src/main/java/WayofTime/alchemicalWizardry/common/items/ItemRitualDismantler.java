@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.common.block.RitualStone;
+import WayofTime.alchemicalWizardry.common.block.BlockRitualStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -75,7 +75,7 @@ public class ItemRitualDismantler extends EnergyItems
 
             for (RitualComponent rc : ritualList)
             {
-                if (!world.isAirBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) && world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) instanceof RitualStone)
+                if (!world.isAirBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) && world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) instanceof BlockRitualStone)
                 {
                     if (freeSpace >= 0)
                     {

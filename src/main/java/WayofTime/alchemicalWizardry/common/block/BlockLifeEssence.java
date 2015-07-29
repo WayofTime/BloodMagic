@@ -10,9 +10,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
-public class LifeEssenceBlock extends BlockFluidClassic
+public class BlockLifeEssence extends BlockFluidClassic
 {
-    public LifeEssenceBlock()
+    public BlockLifeEssence()
     {
         super(AlchemicalWizardry.lifeEssenceFluid, Material.water);
         AlchemicalWizardry.lifeEssenceFluid.setBlock(this);
