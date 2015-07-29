@@ -51,12 +51,12 @@ repositories {
 }
 
 dependencies {
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.99:dev"
-    compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":dev"
-    compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
-	compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
-	compile "codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev"
-	compile "info.amerifrance.guideapi:Guide-API:" + config.mc_version + "-" + config.guideapi_version + ":deobf"
+//    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.99:dev"
+//    compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":dev"
+//    compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
+//	compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
+//	compile "codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev"
+//	compile "info.amerifrance.guideapi:Guide-API:" + config.mc_version + "-" + config.guideapi_version + ":deobf"
 }
 
 minecraft {

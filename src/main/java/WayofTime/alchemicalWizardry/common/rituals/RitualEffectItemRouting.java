@@ -10,6 +10,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.Int3;
@@ -33,10 +34,8 @@ public class RitualEffectItemRouting extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (world.getWorldTime() % 20 != 0)
         {

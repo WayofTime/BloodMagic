@@ -1,17 +1,20 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.IFluidBlock;
+import WayofTime.alchemicalWizardry.ModBlocks;
 
-public class TESpectralContainer extends TileEntity
+public class TESpectralContainer extends TileEntity implements IUpdatePlayerListBox
 {
     private ItemStack[] inv;
 
@@ -66,10 +69,8 @@ public class TESpectralContainer extends TileEntity
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-
         this.ticksRemaining--;
 
         if (this.ticksRemaining <= 0)
@@ -78,22 +79,23 @@ public class TESpectralContainer extends TileEntity
         }
     }
 
-    public static boolean createSpectralBlockAtLocation(World world, int x, int y, int z, int duration)
+    public static boolean createSpectralBlockAtLocation(World world, BlockPos pos, int duration)
     {
-        Block block = world.getBlock(x, y, z);
+    	IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
 
         if (block == null)
         {
             return false;
         }
 
-        if (world.getTileEntity(x, y, z) == null || block instanceof IFluidBlock)
+        if (world.getTileEntity(pos) == null || block instanceof IFluidBlock)
         {
-            int meta = world.getBlockMetadata(x, y, z);
+            int meta = block.getMetaFromState(state);
             ItemStack item = new ItemStack(block, 1, meta);
 
-            world.setBlock(x, y, z, ModBlocks.blockSpectralContainer);
-            TileEntity tile = world.getTileEntity(x, y, z);
+            world.setBlockState(pos, ModBlocks.blockSpectralContainer.getDefaultState());
+            TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TESpectralContainer)
             {
                 ((TESpectralContainer) tile).setContainedItem(item);
@@ -130,18 +132,18 @@ public class TESpectralContainer extends TileEntity
         {
             if (item.getItem() instanceof ItemBlock)
             {
-                Block block = ((ItemBlock) item.getItem()).field_150939_a;
+                Block block = ((ItemBlock) item.getItem()).getBlock();
                 int meta = item.getItemDamage();
 
                 if (block != null)
                 {
-                    this.worldObj.setBlock(xCoord, yCoord, zCoord, block, meta, 6);
+                    this.worldObj.setBlockState(pos, block.getStateFromMeta(meta), 6);
                 }
             }
 
         } else
         {
-            this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+            this.worldObj.setBlockToAir(pos);
         }
     }
 }

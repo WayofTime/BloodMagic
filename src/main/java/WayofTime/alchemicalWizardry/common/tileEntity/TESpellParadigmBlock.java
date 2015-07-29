@@ -2,8 +2,8 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmProjectile;
@@ -15,7 +15,7 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
 {
     public SpellParadigm getSpellParadigm()
     {
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        int meta = this.getBlockMetadata();
         switch (meta)
         {
             case 0:
@@ -68,14 +68,14 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     }
 
     @Override
-    public void setInputDirection(ForgeDirection direction)
+    public void setInputDirection(EnumFacing direction)
     {
 
     }
 
     @Override
-    public ForgeDirection getInputDirection()
+    public EnumFacing getInputDirection()
     {
-        return ForgeDirection.UNKNOWN;
+        return EnumFacing.WEST;
     }
 }

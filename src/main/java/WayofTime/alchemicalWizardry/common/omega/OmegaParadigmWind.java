@@ -33,7 +33,7 @@ public class OmegaParadigmWind extends OmegaParadigm
 	{
 		if(world.getWorldTime() % 100 == 0 && !world.isRemote && player.posY > 128 && player.getHealth() < player.getMaxHealth())
 		{
-			player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, player.posY > 128 + 64 ? 1 : 0, true));
+			player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, player.posY > 128 + 64 ? 1 : 0, true, false));
 		}
 		
 		player.fallDistance = 0;

@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.util.BlockPos;
 import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.Vec3;
 
 public class ProjectileEnvironmentalIce extends ProjectileUpdateEffect
 {
@@ -16,14 +16,10 @@ public class ProjectileEnvironmentalIce extends ProjectileUpdateEffect
     @Override
     public void onUpdateEffect(Entity projectile)
     {
-        Vec3 posVec = SpellHelper.getEntityBlockVector(projectile);
-
+    	BlockPos pos = projectile.getPosition();
+    	
         int horizRange = this.powerUpgrades + 1;
         int vertRange = this.potencyUpgrades + 1;
-
-        int posX = (int) (posVec.xCoord);
-        int posY = (int) (posVec.yCoord);
-        int posZ = (int) (posVec.zCoord);
 
         for (int i = -horizRange; i <= horizRange; i++)
         {
@@ -31,7 +27,7 @@ public class ProjectileEnvironmentalIce extends ProjectileUpdateEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                    SpellHelper.freezeWaterBlock(projectile.worldObj, posX + i, posY + j, posZ + k);
+                    SpellHelper.freezeWaterBlock(projectile.worldObj, pos.add(i, j, k));
                 }
             }
         }

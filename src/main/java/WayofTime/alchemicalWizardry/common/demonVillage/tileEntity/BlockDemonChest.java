@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
@@ -12,14 +12,9 @@ public class BlockDemonChest extends BlockChest implements IBlockPortalNode
 	public BlockDemonChest() 
 	{
 		super(0);
-		this.setHardness(2.5F).setStepSound(soundTypeWood).setBlockName("demonChest");
+		this.setHardness(2.5F).setStepSound(soundTypeWood).setUnlocalizedName("demonChest");
 		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 	}
-	
-	public IInventory func_149951_m(World world, int x, int y, int z)
-    {
-        return (IInventory)world.getTileEntity(x, y, z);
-    }
 	
 	@Override
     public TileEntity createNewTileEntity(World var1, int var2)
@@ -28,18 +23,18 @@ public class BlockDemonChest extends BlockChest implements IBlockPortalNode
     }
 	
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		TileEntity tile = world.getTileEntity(x, y, z);
+		TileEntity tile = world.getTileEntity(pos);
 		if(tile instanceof TEDemonChest)
 		{
 			((TEDemonChest) tile).notifyPortalOfInteraction();
 		}
-		super.breakBlock(world, x, y, z, block, meta);
+		super.breakBlock(world, pos, state);
 	}
 	
 	@Override
-	public boolean canPlaceBlockAt(World p_149742_1_, int p_149742_2_, int p_149742_3_, int p_149742_4_)
+	public boolean canPlaceBlockAt(World world, BlockPos pos)
 	{
 		return true;
 	}

@@ -10,6 +10,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -29,10 +30,8 @@ public class RitualEffectLeap extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         double range = 2.0;
 

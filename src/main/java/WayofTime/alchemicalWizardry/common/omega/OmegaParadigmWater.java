@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -35,14 +36,14 @@ public class OmegaParadigmWater extends OmegaParadigm
 	@Override
 	public void onUpdate(World world, EntityPlayer player, ItemStack stack)
 	{
-		player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 3, 0, true));
-		player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionAmphibian.id, 3, 0, true));
+		player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 3, 0, true, false));
+		player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionAmphibian.id, 3, 0, true, false));
 		
 		if(world.getWorldTime() % 100 == 0 && !world.isRemote)
 		{
 			if(player.isInWater() && player.getHealth() < player.getMaxHealth())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, 0, true));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, 0, true, false));
 			}
 		}
 	}
@@ -52,7 +53,7 @@ public class OmegaParadigmWater extends OmegaParadigm
 	{
 		if(entity instanceof EntityLivingBase)
 		{
-			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 1, true));
+			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 100, 1, true, false));
 		}
 		return true;
 	}
@@ -74,7 +75,7 @@ public class OmegaParadigmWater extends OmegaParadigm
 			{
 				for(int k=-range; k<=range; k++)
 				{
-					TEMimicBlock.createMimicBlockAtLocation(world, x+i, y+j, z+k, 300, Blocks.water, 0, ReagentRegistry.aquasalusReagent);
+					TEMimicBlock.createMimicBlockAtLocation(world, new BlockPos(x+i, y+j, z+k), 300, Blocks.water.getDefaultState(), ReagentRegistry.aquasalusReagent);
 				}
 			}
 		}

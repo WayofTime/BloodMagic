@@ -102,7 +102,7 @@ public abstract class OmegaArmour extends BoundArmour
 			
 			if(this.storeDimensionID())
 			{
-				this.setDimensionIDStored(itemStack, world.provider.dimensionId);
+				this.setDimensionIDStored(itemStack, world.provider.getDimensionId());
 			}
 			
 			if(this.storeYLevel())

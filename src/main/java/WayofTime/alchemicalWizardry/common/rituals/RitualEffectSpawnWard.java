@@ -6,6 +6,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.CoordAndRange;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -20,10 +21,8 @@ public class RitualEffectSpawnWard extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -33,7 +32,7 @@ public class RitualEffectSpawnWard extends RitualEffect
             int horizRange = 32;
             int vertRange = 32;
 
-            int dimension = world.provider.dimensionId;
+            int dimension = world.provider.getDimensionId();
 
             if (AlchemicalWizardryEventHooks.respawnMap.containsKey(new Integer(dimension)))
             {

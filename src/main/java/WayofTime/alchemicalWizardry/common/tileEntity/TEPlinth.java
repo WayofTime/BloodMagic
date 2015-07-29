@@ -10,7 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
@@ -20,7 +22,7 @@ import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.PlinthComponent;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 
-public class TEPlinth extends TEInventory
+public class TEPlinth extends TEInventory implements IUpdatePlayerListBox
 {
 	public static final int sizeInv = 1;
 
@@ -149,7 +151,7 @@ public class TEPlinth extends TEInventory
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return "TEPlinth";
     }
@@ -162,10 +164,8 @@ public class TEPlinth extends TEInventory
 
     //Logic for the actual block is under here
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-
         if (worldObj.isRemote)
         {
             return;
@@ -251,7 +251,7 @@ public class TEPlinth extends TEInventory
 
                     if (entity != null)
                     {
-                        entity.setPosition(xCoord + 0.5, yCoord + 1, zCoord + 0.5);
+                        entity.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
                         worldObj.spawnEntityInWorld(entity);
 
                         if (entity instanceof IDemon)
@@ -266,7 +266,7 @@ public class TEPlinth extends TEInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
                     }
                 }
@@ -284,12 +284,13 @@ public class TEPlinth extends TEInventory
             {
                 if (i < 6 && pc.getRing() == ring)
                 {
-                    TileEntity tileEntity = worldObj.getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                	BlockPos newPos = pos.add(pc.xOffset, pc.yOffset, pc.zOffset);
+                    TileEntity tileEntity = worldObj.getTileEntity(newPos);
 
                     if (tileEntity instanceof TEPedestal)
                     {
                         ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
-                        worldObj.markBlockForUpdate(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                        worldObj.markBlockForUpdate(newPos);
                         i++;
                     }
                 }
@@ -302,12 +303,13 @@ public class TEPlinth extends TEInventory
             {
                 if (i < 6 && pc.getRing() == ring)
                 {
-                    TileEntity tileEntity = worldObj.getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                	BlockPos newPos = pos.add(pc.zOffset, pc.yOffset, pc.xOffset);
+                    TileEntity tileEntity = worldObj.getTileEntity(newPos);
 
                     if (tileEntity instanceof TEPedestal)
                     {
                         ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
-                        worldObj.markBlockForUpdate(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                        worldObj.markBlockForUpdate(newPos);
                         i++;
                     }
                 }
@@ -330,7 +332,8 @@ public class TEPlinth extends TEInventory
             {
                 if (i < 6 && pc.getRing() == ring)
                 {
-                    TileEntity tileEntity = worldObj.getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                	BlockPos newPos = pos.add(pc.xOffset, pc.yOffset, pc.zOffset);
+                    TileEntity tileEntity = worldObj.getTileEntity(newPos);
 
                     if (tileEntity instanceof TEPedestal)
                     {
@@ -365,7 +368,7 @@ public class TEPlinth extends TEInventory
                                     ((TEPedestal) tileEntity).setInventorySlotContents(0, null);
                                 }
                                 ((TEPedestal) tileEntity).onItemDeletion();
-                                worldObj.markBlockForUpdate(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                                worldObj.markBlockForUpdate(newPos);
                                 return true;
                             }
                         }
@@ -382,7 +385,8 @@ public class TEPlinth extends TEInventory
             {
                 if (i < 6 && pc.getRing() == ring)
                 {
-                    TileEntity tileEntity = worldObj.getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                	BlockPos newPos = pos.add(pc.zOffset, pc.yOffset, pc.xOffset);
+                    TileEntity tileEntity = worldObj.getTileEntity(newPos);
 
                     if (tileEntity instanceof TEPedestal)
                     {
@@ -413,7 +417,7 @@ public class TEPlinth extends TEInventory
                             {
                                 ((TEPedestal) tileEntity).decrStackSize(0, 1);
                                 ((TEPedestal) tileEntity).onItemDeletion();
-                                worldObj.markBlockForUpdate(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                                worldObj.markBlockForUpdate(newPos);
                                 return true;
                             }
                         }
@@ -439,7 +443,8 @@ public class TEPlinth extends TEInventory
             {
                 if (i < 6 && pc.getRing() == ring)
                 {
-                    TileEntity tileEntity = worldObj.getTileEntity(xCoord + pc.xOffset, yCoord + pc.yOffset, zCoord + pc.zOffset);
+                	BlockPos newPos = pos.add(pc.xOffset, pc.yOffset, pc.zOffset);
+                    TileEntity tileEntity = worldObj.getTileEntity(newPos);
 
                     if (tileEntity instanceof TEPedestal)
                     {
@@ -456,7 +461,8 @@ public class TEPlinth extends TEInventory
             {
                 if (i < 6 && pc.getRing() == ring)
                 {
-                    TileEntity tileEntity = worldObj.getTileEntity(xCoord + pc.zOffset, yCoord + pc.yOffset, zCoord + pc.xOffset);
+                	BlockPos newPos = pos.add(pc.zOffset, pc.yOffset, pc.xOffset);
+                    TileEntity tileEntity = worldObj.getTileEntity(newPos);
 
                     if (tileEntity instanceof TEPedestal)
                     {

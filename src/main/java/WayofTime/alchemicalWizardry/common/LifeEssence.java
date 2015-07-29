@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 
 public class LifeEssence extends Fluid
 {
@@ -19,7 +18,7 @@ public class LifeEssence extends Fluid
     }
 
     @Override
-    public String getLocalizedName(FluidStack fluidStack)
+    public String getLocalizedName()
     {
         return "Life Essence";
     }

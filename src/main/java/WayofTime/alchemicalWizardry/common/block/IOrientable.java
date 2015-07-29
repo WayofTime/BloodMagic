@@ -1,14 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public interface IOrientable
 {
-    ForgeDirection getInputDirection();
+    EnumFacing getInputDirection();
 
-    ForgeDirection getOutputDirection();
+    EnumFacing getOutputDirection();
 
-    void setInputDirection(ForgeDirection direction);
+    void setInputDirection(EnumFacing direction);
 
-    void setOutputDirection(ForgeDirection direction);
+    void setOutputDirection(EnumFacing direction);
 }

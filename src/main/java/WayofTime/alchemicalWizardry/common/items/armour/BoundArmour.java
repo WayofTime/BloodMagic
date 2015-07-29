@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -56,12 +57,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         super(ItemArmor.ArmorMaterial.GOLD, 0, armorType);
         setMaxDamage(1000);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
-    
-    @Override
-    public boolean isItemTool(ItemStack stack)
-    {
-        return false;
     }
 
     ModelBiped model1 = null;

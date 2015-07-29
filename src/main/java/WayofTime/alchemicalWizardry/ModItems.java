@@ -158,7 +158,7 @@ public class ModItems
     public static Item itemSeerSigil;
     public static Item itemCombinationalCatalyst;
 
-    public static Item customTool;
+    public static ItemSpellMultiTool customTool;
 
     public static Item itemAttunedCrystal;
     public static Item itemTankSegmenter;
@@ -284,14 +284,14 @@ public class ModItems
         energyBazooka = new EnergyBazooka().setUnlocalizedName("energyBazooka");
         itemBloodLightSigil = new SigilBloodLight().setUnlocalizedName("bloodLightSigil");
         itemComplexSpellCrystal = new ItemComplexSpellCrystal().setUnlocalizedName("itemComplexSpellCrystal");
-        bucketLife = new LifeBucket(ModBlocks.blockLifeEssence).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
+        bucketLife = (new LifeBucket(ModBlocks.blockLifeEssence)).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
         itemSigilOfEnderSeverance = (new SigilOfEnderSeverance()).setUnlocalizedName("itemSigilOfEnderSeverance");
         baseItems = new ItemComponents().setUnlocalizedName("baseItems");
         baseAlchemyItems = new ItemAlchemyBase().setUnlocalizedName("baseAlchemyItems");
         itemSigilOfSupression = new SigilOfSupression().setUnlocalizedName("itemSigilOfSupression");
         itemFluidSigil = new SigilFluid().setUnlocalizedName("itemFluidSigil");
         itemSeerSigil = new SigilSeer().setUnlocalizedName("itemSeerSigil");
-        customTool = new ItemSpellMultiTool().setUnlocalizedName("multiTool");
+        customTool = (ItemSpellMultiTool)(new ItemSpellMultiTool().setUnlocalizedName("multiTool"));
         
         SpellParadigmTool.customTool = customTool;
         

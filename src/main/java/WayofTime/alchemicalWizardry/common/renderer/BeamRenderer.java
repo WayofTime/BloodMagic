@@ -1,12 +1,15 @@
 package WayofTime.alchemicalWizardry.common.renderer;
 
-import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 
 public class BeamRenderer
 {
@@ -53,7 +56,7 @@ public class BeamRenderer
 
     protected static void bindTexture(ResourceLocation p_147499_1_)
     {
-        TextureManager texturemanager = TileEntityRendererDispatcher.instance.field_147553_e;
+        TextureManager texturemanager = TileEntityRendererDispatcher.instance.renderEngine;
 
         if (texturemanager != null)
         {
@@ -74,7 +77,7 @@ public class BeamRenderer
 
         GL11.glPushMatrix();
         float f1 = 1.0f;
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
         BeamRenderer.bindTexture(field_110629_a);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
@@ -87,9 +90,10 @@ public class BeamRenderer
 
 
         GL11.glDepthMask(false);
+        WorldRenderer wr = tessellator.getWorldRenderer();
 
-        tessellator.startDrawingQuads();
-        tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
+        wr.startDrawingQuads();
+        wr.func_178961_b(colourRed, colourGreen, colourBlue, colourIntensity);
 
         double inside = -(this.size / 2d);
         double outside = 1.0d - (0.50d - this.size / 2d) - 0.5d;
@@ -116,24 +120,24 @@ public class BeamRenderer
 
         double offset = 0;
 
-        tessellator.setBrightness(240);
+//        tessellator.setBrightness(240);
         float s = 1F / 16F;
-        tessellator.addVertexWithUV(d26, d18, d19, d28, d30);
-        tessellator.addVertexWithUV(offset, d18, d19, d28, d29);
-        tessellator.addVertexWithUV(offset, d20, d21, d27, d29);
-        tessellator.addVertexWithUV(d26, d20, d21, d27, d30);
-        tessellator.addVertexWithUV(d26, d24, d25, d28, d30);
-        tessellator.addVertexWithUV(offset, d24, d25, d28, d29);
-        tessellator.addVertexWithUV(offset, d22, d23, d27, d29);
-        tessellator.addVertexWithUV(d26, d22, d23, d27, d30);
-        tessellator.addVertexWithUV(d26, d20, d21, d28, d30);
-        tessellator.addVertexWithUV(offset, d20, d21, d28, d29);
-        tessellator.addVertexWithUV(offset, d24, d25, d27, d29);
-        tessellator.addVertexWithUV(d26, d24, d25, d27, d30);
-        tessellator.addVertexWithUV(d26, d22, d23, d28, d30);
-        tessellator.addVertexWithUV(offset, d22, d23, d28, d29);
-        tessellator.addVertexWithUV(offset, d18, d19, d27, d29);
-        tessellator.addVertexWithUV(d26, d18, d19, d27, d30);
+        wr.addVertexWithUV(d26, d18, d19, d28, d30);
+        wr.addVertexWithUV(offset, d18, d19, d28, d29);
+        wr.addVertexWithUV(offset, d20, d21, d27, d29);
+        wr.addVertexWithUV(d26, d20, d21, d27, d30);
+        wr.addVertexWithUV(d26, d24, d25, d28, d30);
+        wr.addVertexWithUV(offset, d24, d25, d28, d29);
+        wr.addVertexWithUV(offset, d22, d23, d27, d29);
+        wr.addVertexWithUV(d26, d22, d23, d27, d30);
+        wr.addVertexWithUV(d26, d20, d21, d28, d30);
+        wr.addVertexWithUV(offset, d20, d21, d28, d29);
+        wr.addVertexWithUV(offset, d24, d25, d27, d29);
+        wr.addVertexWithUV(d26, d24, d25, d27, d30);
+        wr.addVertexWithUV(d26, d22, d23, d28, d30);
+        wr.addVertexWithUV(offset, d22, d23, d28, d29);
+        wr.addVertexWithUV(offset, d18, d19, d27, d29);
+        wr.addVertexWithUV(d26, d18, d19, d27, d30);
 
         tessellator.draw();
         GL11.glDepthMask(true);

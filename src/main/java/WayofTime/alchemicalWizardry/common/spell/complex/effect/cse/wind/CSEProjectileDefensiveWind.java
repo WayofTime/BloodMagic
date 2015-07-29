@@ -40,6 +40,6 @@ public class CSEProjectileDefensiveWind extends ComplexSpellEffect
 	@Override
 	public int getCostOfEffect() 
 	{
-        return (100 * (this.potencyEnhancement + 1));
+        return (int) (100 * (this.potencyEnhancement + 1));
 	}
 }

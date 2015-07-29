@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.api.harvest;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 
 public class HarvestRegistry
 {
@@ -15,14 +17,14 @@ public class HarvestRegistry
         handlerList.add(handler);
     }
 
-    public static boolean harvestBlock(World world, int xCoord, int yCoord, int zCoord)
+    public static boolean harvestBlock(World world, BlockPos pos)
     {
-        Block block = world.getBlock(xCoord, yCoord, zCoord);
-        int meta = world.getBlockMetadata(xCoord, yCoord, zCoord);
+    	IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
 
         for (IHarvestHandler handler : handlerList)
         {
-            if (handler.harvestAndPlant(world, xCoord, yCoord, zCoord, block, meta))
+            if (handler.harvestAndPlant(world, pos, block, state))
             {
                 return true;
             }

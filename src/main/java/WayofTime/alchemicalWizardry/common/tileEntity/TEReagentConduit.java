@@ -1,12 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.ColourAndCoords;
-import WayofTime.alchemicalWizardry.api.Int3;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,18 +13,26 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.ColourAndCoords;
+import WayofTime.alchemicalWizardry.api.Int3;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.TileSegmentedReagentHandler;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-public class TEReagentConduit extends TileSegmentedReagentHandler
+public class TEReagentConduit extends TileSegmentedReagentHandler implements IUpdatePlayerListBox
 {
     public List<ColourAndCoords> destinationList; //These are offsets
     public Map<Reagent, List<Int3>> reagentTargetList;
@@ -253,7 +260,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
         if (!worldObj.isRemote)
         {
@@ -270,7 +277,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
                 this.updateColourList();
             }
 
-            if (affectedByRedstone && worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
+            if (affectedByRedstone && worldObj.isBlockPowered(pos)) //isBlockBeingIndirectlyPowered()
             {
                 return;
             }
@@ -286,7 +293,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
                         break;
                     }
 
-                    ReagentStack maxDrainAmount = this.drain(ForgeDirection.UNKNOWN, new ReagentStack(entry.getKey(), this.tickRate - totalTransfered), false);
+                    ReagentStack maxDrainAmount = this.drain(EnumFacing.UP, new ReagentStack(entry.getKey(), this.tickRate - totalTransfered), false);
 
                     if (maxDrainAmount == null)
                     {
@@ -300,28 +307,26 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
                         continue;
                     }
 
-                    int x = xCoord + coord.xCoord;
-                    int y = yCoord + coord.yCoord;
-                    int z = zCoord + coord.zCoord;
+                    BlockPos newPos = pos.add(coord.xCoord, coord.yCoord, coord.zCoord);
 
-                    TileEntity tile = worldObj.getTileEntity(x, y, z);
+                    TileEntity tile = worldObj.getTileEntity(newPos);
                     if (tile instanceof IReagentHandler)
                     {
-                        int amount = Math.min(((IReagentHandler) tile).fill(ForgeDirection.UNKNOWN, maxDrainAmount, false), amountLeft);
+                        int amount = Math.min(((IReagentHandler) tile).fill(EnumFacing.UP, maxDrainAmount, false), amountLeft);
                         if (amount > 0)
                         {
                             amountLeft -= amount;
                             totalTransfered += amount;
 
-                            ReagentStack stack = this.drain(ForgeDirection.UNKNOWN, new ReagentStack(entry.getKey(), amount), true);
-                            ((IReagentHandler) tile).fill(ForgeDirection.UNKNOWN, stack, true);
+                            ReagentStack stack = this.drain(EnumFacing.UP, new ReagentStack(entry.getKey(), amount), true);
+                            ((IReagentHandler) tile).fill(EnumFacing.UP, stack, true);
                         }
                     }
                 }
             }
         } else
         {
-            if (affectedByRedstone && worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
+            if (affectedByRedstone && worldObj.isBlockPowered(pos))
             {
                 return;
             }
@@ -348,16 +353,17 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
         {
             for (ColourAndCoords colourSet : this.destinationList)
             {
-                if (!(worldObj.getTileEntity(xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord) instanceof IReagentHandler))
+            	BlockPos newPos = pos.add(colourSet.xCoord, colourSet.yCoord, colourSet.zCoord);
+                if (!(worldObj.getTileEntity(newPos) instanceof IReagentHandler))
                 {
                     continue;
                 }
-                EntityParticleBeam beam = new EntityParticleBeam(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
+                EntityParticleBeam beam = new EntityParticleBeam(worldObj, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                 double velocity = Math.sqrt(Math.pow(colourSet.xCoord, 2) + Math.pow(colourSet.yCoord, 2) + Math.pow(colourSet.zCoord, 2));
                 double wantedVel = 0.3d;
                 beam.setVelocity(wantedVel * colourSet.xCoord / velocity, wantedVel * colourSet.yCoord / velocity, wantedVel * colourSet.zCoord / velocity);
                 beam.setColour(colourSet.colourRed / 255f, colourSet.colourGreen / 255f, colourSet.colourBlue / 255f);
-                beam.setDestination(xCoord + colourSet.xCoord, yCoord + colourSet.yCoord, zCoord + colourSet.zCoord);
+                beam.setDestination(pos.getX() + colourSet.xCoord, pos.getY() + colourSet.yCoord, pos.getZ() + colourSet.zCoord);
                 worldObj.spawnEntityInWorld(beam);
             }
         }
@@ -375,7 +381,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
         if (newList != null && !newList.equals(destinationList))
         {
             this.destinationList = newList;
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
     }
 
@@ -421,7 +427,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
 
     public boolean addDestinationViaActual(int red, int green, int blue, int intensity, int x, int y, int z)
     {
-        return this.addDestinationViaOffset(red, green, blue, intensity, x - this.xCoord, y - this.yCoord, z - this.zCoord);
+        return this.addDestinationViaOffset(red, green, blue, intensity, x - pos.getX(), y - pos.getY(), z - pos.getZ());
     }
 
     @Override
@@ -429,14 +435,14 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeClientNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 90210, nbttagcompound);
+        return new S35PacketUpdateTileEntity(pos, 90210, nbttagcompound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
     {
         super.onDataPacket(net, packet);
-        readClientNBT(packet.func_148857_g());
+        readClientNBT(packet.getNbtCompound());
     }
 
     public boolean addReagentDestinationViaOffset(Reagent reagent, int xOffset, int yOffset, int zOffset)
@@ -490,7 +496,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
 
     public boolean addReagentDestinationViaActual(Reagent reagent, int x, int y, int z)
     {
-        return (this.addReagentDestinationViaOffset(reagent, x - xCoord, y - yCoord, z - zCoord));
+        return (this.addReagentDestinationViaOffset(reagent, x - pos.getX(), y - pos.getY(), z - pos.getZ()));
     }
 
     public boolean removeReagentDestinationViaOffset(Reagent reagent, int xOffset, int yOffset, int zOffset)
@@ -510,15 +516,15 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
 
     public boolean removeReagentDestinationViaActual(Reagent reagent, int x, int y, int z)
     {
-        return this.removeReagentDestinationViaOffset(reagent, x - xCoord, y - yCoord, z - zCoord);
+        return this.removeReagentDestinationViaOffset(reagent, x - pos.getX(), y - pos.getY(), z - pos.getZ());
     }
 
     @Override
-    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
+    public int fill(EnumFacing from, ReagentStack resource, boolean doFill)
     {
         if (doFill && !worldObj.isRemote)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
             hasChanged = 2;
         }
 
@@ -526,11 +532,11 @@ public class TEReagentConduit extends TileSegmentedReagentHandler
     }
 
     @Override
-    public ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain)
+    public ReagentStack drain(EnumFacing from, ReagentStack resource, boolean doDrain)
     {
         if (doDrain && !worldObj.isRemote)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
             hasChanged = 2;
         }
 

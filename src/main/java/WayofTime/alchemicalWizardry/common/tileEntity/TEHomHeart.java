@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpell;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
@@ -71,73 +72,25 @@ public class TEHomHeart extends TileEntity
 
     public HomSpell getSpell()
     {
-        TileEntity tileEntity = worldObj.getTileEntity(xCoord - 1, yCoord, zCoord);
+    	for(EnumFacing face : EnumFacing.HORIZONTALS)
+    	{
+    		TileEntity tileEntity = worldObj.getTileEntity(pos.offset(face));
 
-        if (tileEntity instanceof TEAltar)
-        {
-            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
-
-            if (itemStack != null)
+            if (tileEntity instanceof TEAltar)
             {
-                HomSpell spell = HomSpellRegistry.getSpellForItemStack(itemStack);
+                ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
 
-                if (spell != null)
+                if (itemStack != null)
                 {
-                    return spell;
+                    HomSpell spell = HomSpellRegistry.getSpellForItemStack(itemStack);
+
+                    if (spell != null)
+                    {
+                        return spell;
+                    }
                 }
             }
-        }
-
-        tileEntity = worldObj.getTileEntity(xCoord + 1, yCoord, zCoord);
-
-        if (tileEntity instanceof TEAltar)
-        {
-            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
-
-            if (itemStack != null)
-            {
-                HomSpell spell = HomSpellRegistry.getSpellForItemStack(itemStack);
-
-                if (spell != null)
-                {
-                    return spell;
-                }
-            }
-        }
-
-        tileEntity = worldObj.getTileEntity(xCoord, yCoord, zCoord - 1);
-
-        if (tileEntity instanceof TEAltar)
-        {
-            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
-
-            if (itemStack != null)
-            {
-                HomSpell spell = HomSpellRegistry.getSpellForItemStack(itemStack);
-
-                if (spell != null)
-                {
-                    return spell;
-                }
-            }
-        }
-
-        tileEntity = worldObj.getTileEntity(xCoord, yCoord, zCoord + 1);
-
-        if (tileEntity instanceof TEAltar)
-        {
-            ItemStack itemStack = ((TEAltar) tileEntity).getStackInSlot(0);
-
-            if (itemStack != null)
-            {
-                HomSpell spell = HomSpellRegistry.getSpellForItemStack(itemStack);
-
-                if (spell != null)
-                {
-                    return spell;
-                }
-            }
-        }
+    	}
 
         return null;
     }
@@ -146,11 +99,11 @@ public class TEHomHeart extends TileEntity
     {
         //TODO change so that it works with a Tile Entity for a custom head or whatnot
 
-        TileEntity tileEntity = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+        TileEntity tileEntity = worldObj.getTileEntity(pos.offsetUp());
 
         if (tileEntity instanceof TileEntitySkull)
         {
-            int skullType = ((TileEntitySkull) tileEntity).func_145904_a();
+            int skullType = ((TileEntitySkull) tileEntity).getSkullType();
 
             switch (skullType)
             {

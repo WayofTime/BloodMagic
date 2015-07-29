@@ -1,5 +1,14 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -7,14 +16,6 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectWellOfSuffering extends RitualEffect
 {
@@ -31,10 +32,8 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (world.getWorldTime() % this.timeDelay != 0)
         {
@@ -50,9 +49,10 @@ public class RitualEffectWellOfSuffering extends RitualEffect
             {
                 for (int k = -10; k <= 10; k++)
                 {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
+                	BlockPos newPos = pos.add(i, j, k);
+                    if (world.getTileEntity(newPos) instanceof IBloodAltar)
                     {
-                        tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
+                        tileAltar = (IBloodAltar) world.getTileEntity(newPos);
                         testFlag = true;
                     }
                 }
@@ -68,7 +68,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
 
         int d0 = 10;
         int vertRange = hasPotentia ? 20 : 10;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y, (double) z, (double) (x + 1), (double) (y + 1), (double) (z + 1)).expand(d0, vertRange, d0);
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(d0, vertRange, d0);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
         int entityCount = 0;

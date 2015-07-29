@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,13 +12,17 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TECrucible extends TEInventory
+public class TECrucible extends TEInventory implements IUpdatePlayerListBox
 {
 	private int radius = 5;
 	
@@ -45,7 +50,7 @@ public class TECrucible extends TEInventory
 	}
 	
 	@Override
-	public void updateEntity()
+	public void update()
 	{
 		if(worldObj.isRemote)
 			return;
@@ -81,7 +86,7 @@ public class TECrucible extends TEInventory
 
 		if(ticksRemaining > 0)
 		{
-			List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, radius, radius);
+			List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(worldObj, pos.getX(), pos.getY(), pos.getZ(), radius, radius);
 			
 			if(playerList != null && !playerList.isEmpty())
 			{
@@ -114,7 +119,7 @@ public class TECrucible extends TEInventory
 				if(state != 0)
 				{
 					state = 0;
-					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+					worldObj.markBlockForUpdate(pos);
 					updateNeighbors();
 				}
 			}
@@ -123,14 +128,14 @@ public class TECrucible extends TEInventory
 			if(state != 0)
 			{
 				state = 0;
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				worldObj.markBlockForUpdate(pos);
 				updateNeighbors();
 			}
 		}
 		
 		if(stateChanged)
 		{
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			worldObj.markBlockForUpdate(pos);
 
 			updateNeighbors();
 		}
@@ -138,18 +143,13 @@ public class TECrucible extends TEInventory
 	
 	private void updateNeighbors()
 	{
-		Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
-        block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
-        block = worldObj.getBlock(xCoord - 1, yCoord, zCoord);
-        block.onNeighborBlockChange(worldObj, xCoord - 1, yCoord, zCoord, block);
-        block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-        block.onNeighborBlockChange(worldObj, xCoord, yCoord + 1, zCoord, block);
-        block = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
-        block.onNeighborBlockChange(worldObj, xCoord, yCoord - 1, zCoord, block);
-        block = worldObj.getBlock(xCoord, yCoord, zCoord + 1);
-        block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord + 1, block);
-        block = worldObj.getBlock(xCoord, yCoord, zCoord - 1);
-        block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block); 
+		for(EnumFacing facing : EnumFacing.VALUES)
+    	{
+    		BlockPos newPos = pos.offset(facing);
+    		IBlockState state = worldObj.getBlockState(newPos);
+    		Block block = state.getBlock();
+    		block.onNeighborBlockChange(worldObj, newPos, state, this.getBlockType());
+    	}
 	}
 	
 	public void spawnClientParticle(World world, int x, int y, int z, Random rand)
@@ -157,16 +157,16 @@ public class TECrucible extends TEInventory
 		switch(state)
 		{
 		case 0:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
+	        world.spawnParticle(EnumParticleTypes.REDSTONE, x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
 			break;
 			
 		case 1:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 1.0, 1.0, 1.0);
+	        world.spawnParticle(EnumParticleTypes.REDSTONE, x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 1.0, 1.0, 1.0);
 			break;
 			
 		case 2:
-	        world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
-	        world.spawnParticle("flame", x + 0.5D + rand.nextGaussian() / 32, y + 0.7D, z + 0.5D + rand.nextGaussian() / 32, 0, 0.02, 0);
+	        world.spawnParticle(EnumParticleTypes.REDSTONE, x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
+	        world.spawnParticle(EnumParticleTypes.FLAME, x + 0.5D + rand.nextGaussian() / 32, y + 0.7D, z + 0.5D + rand.nextGaussian() / 32, 0, 0.02, 0);
 			break;
 			
 		case 3:
@@ -248,18 +248,18 @@ public class TECrucible extends TEInventory
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeClientNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 90210, nbttagcompound);
+        return new S35PacketUpdateTileEntity(pos, 90210, nbttagcompound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
     {
         super.onDataPacket(net, packet);
-        readClientNBT(packet.func_148857_g());        
+        readClientNBT(packet.getNbtCompound());        
     }
 
 	@Override
-	public String getInventoryName() 
+	public String getName() 
 	{
 		return "TECrucible";
 	}

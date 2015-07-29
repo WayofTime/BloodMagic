@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.client;
 
+import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
@@ -50,6 +50,7 @@ import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEnhancement
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderWritingTable;
+import WayofTime.alchemicalWizardry.common.renderer.block.ShaderHelper;
 import WayofTime.alchemicalWizardry.common.renderer.block.TEAltarRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAlchemicalCalcinatorItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAltarItemRenderer;
@@ -84,7 +85,6 @@ import WayofTime.alchemicalWizardry.common.renderer.model.ModelWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBazookaMainProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
-import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
@@ -159,10 +159,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellParadigmBlock.class, new RenderSpellParadigmBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellModifierBlock.class, new RenderSpellModifierBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TEReagentConduit.class, new RenderReagentConduit());
-        if (AlchemicalWizardry.displayRitualAnimation)
-        {
-            ClientRegistry.bindTileEntitySpecialRenderer(TEMasterStone.class, new RenderMasterStone());
-        }
+        ClientRegistry.bindTileEntitySpecialRenderer(TEMasterStone.class, new RenderMasterStone());
         ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicCalcinator.class, new RenderAlchemicCalcinator());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBellJar.class, new RenderCrystalBelljar());
 
@@ -174,6 +171,7 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier), new TESpellModifierBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAlchemicCalcinator), new TEAlchemicalCalcinatorItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockCrystalBelljar), new TEBellJarItemRenderer());
+        ShaderHelper.initShaders();
     }
 
     @Override

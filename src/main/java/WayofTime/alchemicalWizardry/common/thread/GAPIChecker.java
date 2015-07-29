@@ -1,19 +1,24 @@
 package WayofTime.alchemicalWizardry.common.thread;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.*;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class GAPIChecker
 {
@@ -103,7 +108,7 @@ public class GAPIChecker
             if (event.phase == TickEvent.Phase.END && Minecraft.getMinecraft().thePlayer != null && !triedToWarnPlayer)
             {
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                IChatComponent component = IChatComponent.Serializer.func_150699_a(StatCollector.translateToLocal("bm.versioning.getGAPI"));
+                IChatComponent component = IChatComponent.Serializer.jsonToComponent(StatCollector.translateToLocal("bm.versioning.getGAPI"));
                 player.addChatComponentMessage(component);
             }
 

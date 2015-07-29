@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon;
 
-import WayofTime.alchemicalWizardry.api.Int3;
+import net.minecraft.util.BlockPos;
 
 public interface IHoardDemon 
 {
-	void setPortalLocation(Int3 position);
-    Int3 getPortalLocation();
-    boolean thrallDemon(Int3 location);
+	void setPortalLocation(BlockPos position);
+    BlockPos getPortalLocation();
+    boolean thrallDemon(BlockPos location);
     boolean isSamePortal(IHoardDemon demon);
 }

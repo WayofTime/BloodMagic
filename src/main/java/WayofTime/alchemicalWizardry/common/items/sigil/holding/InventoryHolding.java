@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IChatComponent;
 
 import java.util.UUID;
 
@@ -136,13 +137,13 @@ public class InventoryHolding implements IInventory
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return "SigilOfHolding";
     }
 
     @Override
-    public boolean hasCustomInventoryName()
+    public boolean hasCustomName()
     {
         return false;
     }
@@ -166,13 +167,13 @@ public class InventoryHolding implements IInventory
     }
 
     @Override
-    public void openInventory()
+    public void openInventory(EntityPlayer player)
     {
         // NOOP
     }
 
     @Override
-    public void closeInventory()
+    public void closeInventory(EntityPlayer player)
     {
         // NOOP
     }
@@ -224,7 +225,7 @@ public class InventoryHolding implements IInventory
 
     public static boolean hasTag(ItemStack itemStack, String keyName)
     {
-        return itemStack != null && itemStack.stackTagCompound != null && itemStack.stackTagCompound.hasKey(keyName);
+        return itemStack != null && itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(keyName);
     }
 
     public static boolean hasUUID(ItemStack itemStack)
@@ -246,7 +247,7 @@ public class InventoryHolding implements IInventory
 
     private static void initNBTTagCompound(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
             itemStack.setTagCompound(new NBTTagCompound());
         }
@@ -256,6 +257,36 @@ public class InventoryHolding implements IInventory
     {
         initNBTTagCompound(itemStack);
 
-        itemStack.stackTagCompound.setLong(keyName, keyValue);
+        itemStack.getTagCompound().setLong(keyName, keyValue);
     }
+
+	@Override
+	public IChatComponent getDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getField(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
 }

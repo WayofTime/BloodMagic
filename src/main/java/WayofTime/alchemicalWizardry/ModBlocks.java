@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry;
 
 import net.minecraft.block.Block;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.block.BlockAltar;
@@ -49,7 +50,6 @@ import WayofTime.alchemicalWizardry.common.items.ItemSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemSpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.items.ItemStabilityGlyphBlock;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * Created with IntelliJ IDEA.

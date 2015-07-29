@@ -35,25 +35,25 @@ public class OmegaParadigmFire extends OmegaParadigm
 			boolean isInLava = player.isInsideOfMaterial(Material.lava);
 			if(player.isBurning() && player.getHealth() < player.getMaxHealth())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, isInLava ? 1 : 0, true));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, isInLava ? 1 : 0, true, false));
 			}
 			
 			if(player.isBurning())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, isInLava ? 400 : 200, isInLava ? 1 : 0, true));
+				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, isInLava ? 400 : 200, isInLava ? 1 : 0, true, false));
 			}
 			
 			if(player.isInWater())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 200, 2, true));
-				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2, true));
-				player.addPotionEffect(new PotionEffect(Potion.weakness.id, 200, 1, true));
+				player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 200, 2, true, false));
+				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2, true, false));
+				player.addPotionEffect(new PotionEffect(Potion.weakness.id, 200, 1, true, false));
 			}
 		}
 		
 		if(player.isBurning())
 		{
-			player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 200, 0, true));
+			player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 200, 0, true, false));
 		}
 	}
 	

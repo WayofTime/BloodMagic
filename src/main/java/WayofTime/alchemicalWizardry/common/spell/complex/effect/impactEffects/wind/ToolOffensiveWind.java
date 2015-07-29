@@ -16,7 +16,7 @@ public class ToolOffensiveWind extends LeftClickEffect
     @Override
     public int onLeftClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder)
     {
-        attacked.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, (100 * (2 * this.powerUpgrades + 1) * (1 / (this.potencyUpgrades + 1))), this.potencyUpgrades));
+        attacked.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, (int) (100 * (2 * this.powerUpgrades + 1) * (1 / (this.potencyUpgrades + 1))), this.potencyUpgrades));
 
         return (int) (100 * (0.5 * this.potencyUpgrades + 1) * (this.powerUpgrades + 1) * Math.pow(0.85, costUpgrades));
     }

@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 public class TileReagentHandler extends TileEntity implements IReagentHandler
 {
@@ -25,13 +25,13 @@ public class TileReagentHandler extends TileEntity implements IReagentHandler
 
     /* IReagentHandler */
     @Override
-    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
+    public int fill(EnumFacing from, ReagentStack resource, boolean doFill)
     {
         return tank.fill(resource, doFill);
     }
 
     @Override
-    public ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain)
+    public ReagentStack drain(EnumFacing from, ReagentStack resource, boolean doDrain)
     {
         if (resource == null || !resource.isReagentEqual(tank.getReagent()))
         {
@@ -41,25 +41,25 @@ public class TileReagentHandler extends TileEntity implements IReagentHandler
     }
 
     @Override
-    public ReagentStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+    public ReagentStack drain(EnumFacing from, int maxDrain, boolean doDrain)
     {
         return tank.drain(maxDrain, doDrain);
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Reagent reagent)
+    public boolean canFill(EnumFacing from, Reagent reagent)
     {
         return true;
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Reagent reagent)
+    public boolean canDrain(EnumFacing from, Reagent reagent)
     {
         return true;
     }
 
     @Override
-    public ReagentContainerInfo[] getContainerInfo(ForgeDirection from)
+    public ReagentContainerInfo[] getContainerInfo(EnumFacing from)
     {
         return new ReagentContainerInfo[]{tank.getInfo()};
     }

@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilOfHolding extends EnergyItems
 {
-    private static int invSize = 5;
+    private static int invSize = 4;
 
     private static final String NBT_CURRENT_SIGIL = "CurrentSigil";
 
@@ -83,7 +83,7 @@ public class SigilOfHolding extends EnergyItems
                 par3List.add(StatCollector.translateToLocal("tooltip.item.currentitem") + " " + item.getDisplayName());
             }
 
-            for (int i = 0; i < invSize; i++)
+            for (int i = 0; i <= invSize; i++)
             {
                 if (inv[i] != null)
                 {
@@ -156,41 +156,11 @@ public class SigilOfHolding extends EnergyItems
         return par1ItemStack;
     }
 
-    @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
-    {
-        if (checkAndSetItemOwner(stack, player))
-        {
-            int currentSlot = getCurrentItem(stack);
-            ItemStack[] inv = getInternalInventory(stack);
-
-            if (inv == null)
-            {
-                return false;
-            }
-
-            ItemStack itemUsed = inv[currentSlot];
-
-            if (itemUsed == null)
-            {
-                return false;
-            }
-
-            boolean bool = itemUsed.getItem().onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
-
-            saveInventory(stack, inv);
-
-            return bool;
-        }
-
-        return false;
-    }
-
     public static int next(int mode)
     {
         int index = mode + 1;
 
-        if (index >= invSize)
+        if (index >= invSize + 1)
         {
             index = 0;
         }
@@ -212,10 +182,10 @@ public class SigilOfHolding extends EnergyItems
 
     private static void initModeTag(ItemStack itemStack)
     {
-        if (itemStack.stackTagCompound == null)
+        if (itemStack.getTagCompound() == null)
         {
-            itemStack.stackTagCompound = new NBTTagCompound();
-            itemStack.stackTagCompound.setInteger(NBT_CURRENT_SIGIL, invSize);
+            itemStack.getTagCompound() = new NBTTagCompound();
+            itemStack.getTagCompound().setInteger(NBT_CURRENT_SIGIL, invSize);
         }
     }
 
@@ -239,7 +209,7 @@ public class SigilOfHolding extends EnergyItems
         if (itemStack != null && itemStack.getItem() instanceof SigilOfHolding)
         {
             initModeTag(itemStack);
-            int currentSigil = itemStack.stackTagCompound.getInteger(NBT_CURRENT_SIGIL);
+            int currentSigil = itemStack.getTagCompound().getInteger(NBT_CURRENT_SIGIL);
             currentSigil = MathHelper.clamp_int(currentSigil, 0, invSize);
             return currentSigil;
         }
@@ -270,7 +240,7 @@ public class SigilOfHolding extends EnergyItems
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
-            if (slot >= 0 && slot < invSize)
+            if (slot >= 0 && slot <= invSize)
             {
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
@@ -290,7 +260,7 @@ public class SigilOfHolding extends EnergyItems
 
         NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i < invSize; i++)
+        for (int i = 0; i <= invSize; i++)
         {
             if (inventory[i] != null)
             {
@@ -309,7 +279,7 @@ public class SigilOfHolding extends EnergyItems
         if (itemStack != null && itemStack.getItem() instanceof SigilOfHolding)
         {
             initModeTag(itemStack);
-            itemStack.stackTagCompound.setInteger(NBT_CURRENT_SIGIL, mode);
+            itemStack.getTagCompound().setInteger(NBT_CURRENT_SIGIL, mode);
         }
     }
 
@@ -331,7 +301,7 @@ public class SigilOfHolding extends EnergyItems
             return;
         }
 
-        for (int i = 0; i < invSize; i++)
+        for (int i = 0; i <= invSize; i++)
         {
             if (inv[i] == null)
             {

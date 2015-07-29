@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -35,16 +36,14 @@ public class RitualEffectCrushing extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (world.getWorldTime() % 10 != 5)
         {
             return;
         }
 
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
         TileEntity tile = world.getTileEntity(x, y + 1, z);
         IInventory tileEntity;
 

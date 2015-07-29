@@ -5,7 +5,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
@@ -22,7 +23,7 @@ import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEWritingTable extends TEInventory implements ISidedInventory
+public class TEWritingTable extends TEInventory implements ISidedInventory, IUpdatePlayerListBox
 {
 	public static final int sizeInv = 7;
 	
@@ -59,7 +60,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return "aw.TEWritingTable";
     }
@@ -298,7 +299,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
         int progressNeeded = 100;
         long worldTime = worldObj.getWorldTime();
@@ -322,7 +323,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                     if (worldTime % 4 == 0)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                        SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                     }
 
                     if (progress >= progressNeeded)
@@ -337,7 +338,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                             if (worldObj != null)
                             {
-                                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                                worldObj.markBlockForUpdate(pos);
                             }
 
                             return;
@@ -353,7 +354,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                             if (worldObj != null)
                             {
-                                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                                worldObj.markBlockForUpdate(pos);
                             }
 
                             return;
@@ -374,7 +375,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
                     }
                 }
@@ -386,7 +387,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                     if (worldTime % 4 == 0)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                        SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                     }
 
                     if (progress >= progressNeeded)
@@ -401,7 +402,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                             if (worldObj != null)
                             {
-                                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                                worldObj.markBlockForUpdate(pos);
                             }
 
                             return;
@@ -417,7 +418,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                             if (worldObj != null)
                             {
-                                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                                worldObj.markBlockForUpdate(pos);
                             }
 
                             return;
@@ -429,7 +430,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
                             this.setInventorySlotContents(6, flaskStack);
                         } else
                         {
-                            worldObj.createExplosion(null, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 2, false);
+                            worldObj.createExplosion(null, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 2, false);
                         }
 
                         this.decrStackSize(this.getPotionFlaskPosition(), 1);
@@ -439,7 +440,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
                     }
                 }
@@ -452,7 +453,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                 }
 
                 if (progress >= progressNeeded)
@@ -466,7 +467,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
 
                         return;
@@ -479,7 +480,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                     if (worldObj != null)
                     {
-                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        worldObj.markBlockForUpdate(pos);
                     }
                 }
             }
@@ -491,7 +492,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                 }
 
                 if (progress >= progressNeeded)
@@ -505,7 +506,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
 
                         return;
@@ -520,7 +521,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                     if (worldObj != null)
                     {
-                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        worldObj.markBlockForUpdate(pos);
                     }
                 }
             }
@@ -533,7 +534,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                 }
 
                 if (progress >= progressNeeded)
@@ -547,7 +548,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
 
                         return;
@@ -564,7 +565,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                         if (worldObj != null)
                         {
-                            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                            worldObj.markBlockForUpdate(pos);
                         }
                     }
                 }
@@ -584,7 +585,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                 if (worldObj != null)
                 {
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    worldObj.markBlockForUpdate(pos);
                 }
             }
 
@@ -599,7 +600,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                 }
 
                 progress += acceleration;
@@ -620,14 +621,14 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                     if (worldObj != null)
                     {
-                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        worldObj.markBlockForUpdate(pos);
                     }
                 }
             } else if (getStackInSlot(6).getItem() == getResultingItemStack().getItem() && getResultingItemStack().stackSize <= (getStackInSlot(6).getMaxStackSize() - getStackInSlot(6).stackSize))
             {
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                 }
 
                 if (!SoulNetworkHandler.syphonFromNetworkWhileInContainer(getStackInSlot(0), amountUsed * acceleration))
@@ -655,7 +656,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 
                     if (worldObj != null)
                     {
-                        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                        worldObj.markBlockForUpdate(pos);
                     }
                 }
             }
@@ -737,10 +738,9 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
     }
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int side) 
+	public int[] getSlotsForFace(EnumFacing facing)
 	{
-		ForgeDirection dir = ForgeDirection.getOrientation(side);
-		switch(dir)
+		switch(facing)
 		{
 		case DOWN:
 			return new int[]{6};
@@ -750,13 +750,13 @@ public class TEWritingTable extends TEInventory implements ISidedInventory
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack, int side) 
+	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing facing) 
 	{
 		return slot != 6;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack stack, int side) 
+	public boolean canExtractItem(int slot, ItemStack stack, EnumFacing facing) 
 	{
 		return slot == 6;
 	}

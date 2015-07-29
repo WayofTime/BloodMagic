@@ -6,11 +6,12 @@ import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RightClickTunnel extends RightClickEffect
 {
@@ -35,17 +36,17 @@ public class RightClickTunnel extends RightClickEffect
 
         List<Vec3> vectorLine = new LinkedList();
 
-        double initialX = mop.blockX;
-        double initialY = mop.blockY;
-        double initialZ = mop.blockZ;
-        ForgeDirection sidehit = ForgeDirection.getOrientation(mop.sideHit);
-        ForgeDirection opposite = sidehit.getOpposite();
+        double initialX = mop.func_178782_a().getX();
+        double initialY = mop.func_178782_a().getY();
+        double initialZ = mop.func_178782_a().getZ();
+        EnumFacing sidehit = mop.field_178784_b;
+        EnumFacing opposite = sidehit.getOpposite();
 
         double initialLength = this.getRandomVectorLength();
 
-        Vec3 initialVector = SpellHelper.createVec3(opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
+        Vec3 initialVector = new Vec3(opposite.getFrontOffsetX() * initialLength, opposite.getFrontOffsetY() * initialLength, opposite.getFrontOffsetZ() * initialLength);
 
-        Vec3 lastVec = SpellHelper.createVec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
+        Vec3 lastVec = new Vec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
         vectorLine.add(initialVector);
 
         double currentLength = lastVec.lengthVector();
@@ -64,10 +65,8 @@ public class RightClickTunnel extends RightClickEffect
             tempVec = tempVec.normalize();
 
             double length = Math.min(this.getRandomVectorLength(), totalLength - currentLength);
-
-            tempVec.xCoord = tempVec.xCoord * length;
-            tempVec.yCoord = tempVec.yCoord * length;
-            tempVec.zCoord = tempVec.zCoord * length;
+            
+            tempVec = new Vec3(tempVec.xCoord * length, tempVec.yCoord * length, tempVec.zCoord * length);
 
             vectorLine.add(tempVec);
 
@@ -128,6 +127,7 @@ public class RightClickTunnel extends RightClickEffect
 
     public void destroySphereOfMundane(World world, double x, double y, double z, int radius)
     {
+    	BlockPos pos = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
         for (int i = -radius; i <= radius; i++)
         {
             for (int j = -radius; j <= radius; j++)
@@ -139,29 +139,27 @@ public class RightClickTunnel extends RightClickEffect
                         continue;
                     }
 
-                    int newX = (int) (i + x + 0.5);
-                    int newY = (int) (j + y + 0.5);
-                    int newZ = (int) (k + z + 0.5);
+                    BlockPos newPos = pos.add(i, j, k);
 
-                    this.destroyMunadeAt(world, newX, newY, newZ);
+                    this.destroyMunadeAt(world, newPos);
                 }
             }
         }
     }
 
-    public void destroyMunadeAt(World world, int x, int y, int z)
+    public void destroyMunadeAt(World world, BlockPos pos)
     {
-        world.setBlockToAir(x, y, z);
+        world.setBlockToAir(pos);
     }
 
     public void travelVector(Vec3 vector, World world, double x, double y, double z)
     {
         double vecLength = vector.lengthVector();
 
-        Vec3 normVec = SpellHelper.createVec3(vector.xCoord, vector.yCoord, vector.zCoord);
+        Vec3 normVec = new Vec3(vector.xCoord, vector.yCoord, vector.zCoord);
         normVec = normVec.normalize();
 
-        Vec3 prevVec = SpellHelper.createVec3(0, 0, 0);
+        Vec3 prevVec = new Vec3(0, 0, 0);
         double distanceTravelled = 0;
 
         while (distanceTravelled < vecLength)

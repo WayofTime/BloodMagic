@@ -76,7 +76,7 @@ public class EnergyItems extends Item implements IBindable
                 double posY = player.posY;
                 double posZ = player.posZ;
 
-                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
+                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
                 world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
             }
         }

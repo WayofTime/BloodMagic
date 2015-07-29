@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
 import net.minecraft.nbt.NBTTagCompound;
-import WayofTime.alchemicalWizardry.api.Int3;
+import net.minecraft.util.BlockPos;
 
 /**
  * This class is used to pass ritual-specific data into the RitualEffect from the containing Master Ritual Stone. This is basically used as auxillarary storage,
@@ -10,33 +10,27 @@ import WayofTime.alchemicalWizardry.api.Int3;
  */
 public class LocalRitualStorage 
 {
-	public int xCoord;
-	public int yCoord;
-	public int zCoord;
+	public BlockPos coords;
 		
 	public void writeToNBT(NBTTagCompound tag) 
 	{
-		tag.setInteger("xCoord", xCoord);
-		tag.setInteger("yCoord", yCoord);
-		tag.setInteger("zCoord", zCoord);
+		tag.setInteger("xCoord", coords.getX());
+		tag.setInteger("yCoord", coords.getY());
+		tag.setInteger("zCoord", coords.getZ());
 	}
 
 	public void readFromNBT(NBTTagCompound tag) 
 	{
-		this.xCoord = tag.getInteger("xCoord");
-		this.yCoord = tag.getInteger("yCoord");
-		this.zCoord = tag.getInteger("zCoord");
+		this.coords = new BlockPos(tag.getInteger("xCoord"), tag.getInteger("yCoord"), tag.getInteger("zCoord"));
 	}
 	
-	public Int3 getLocation()
+	public BlockPos getLocation()
 	{
-		return new Int3(xCoord, yCoord, zCoord);
+		return coords;
 	}
 	
-	public void setLocation(Int3 location)
+	public void setLocation(BlockPos location)
 	{
-		this.xCoord = location.xCoord;
-		this.yCoord = location.yCoord;
-		this.zCoord = location.zCoord;
+		this.coords = location;
 	}
 }

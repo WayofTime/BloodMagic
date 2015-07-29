@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 import java.util.Iterator;
@@ -67,7 +68,7 @@ public class SpellHolyBlast extends HomSpell
         double yCoord = par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance;
         double zCoord = par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance;
         float d0 = 0.5f;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance), par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance, par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance, par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1, par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB(par3EntityPlayer.posX - 0.5 + Math.sin(yaw) * Math.cos(pitch) * (-distance), par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance, par3EntityPlayer.posZ - 0.5 + Math.cos(yaw) * Math.cos(pitch) * distance, par3EntityPlayer.posX + Math.sin(yaw) * Math.cos(pitch) * (-distance) + 0.5, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight() + Math.sin(-pitch) * distance + 1, par3EntityPlayer.posZ + Math.cos(yaw) * Math.cos(pitch) * distance + 0.5).expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
@@ -96,7 +97,7 @@ public class SpellHolyBlast extends HomSpell
 
         for (int i = 0; i < 5; i++)
         {
-            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + itemRand.nextFloat() - itemRand.nextFloat(), yCoord + itemRand.nextFloat() - itemRand.nextFloat(), zCoord + itemRand.nextFloat() - itemRand.nextFloat(), 1.0F, 1.0F, 1.0F);
+            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB, xCoord + itemRand.nextFloat() - itemRand.nextFloat(), yCoord + itemRand.nextFloat() - itemRand.nextFloat(), zCoord + itemRand.nextFloat() - itemRand.nextFloat(), 1.0F, 1.0F, 1.0F);
         }
 
         return par1ItemStack;
@@ -140,7 +141,7 @@ public class SpellHolyBlast extends HomSpell
         }
 
         int d0 = 3;
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, (par3EntityPlayer.posX + 1), (par3EntityPlayer.posY + 2), (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB((double) par3EntityPlayer.posX, (double) par3EntityPlayer.posY, (double) par3EntityPlayer.posZ, (double) (par3EntityPlayer.posX + 1), (double) (par3EntityPlayer.posY + 2), (double) (par3EntityPlayer.posZ + 1)).expand(d0, d0, d0);
         List list = par3EntityPlayer.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
         Iterator iterator = list.iterator();
 
@@ -172,7 +173,7 @@ public class SpellHolyBlast extends HomSpell
 
         for (int i = 0; i < 20; i++)
         {
-            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + itemRand.nextFloat() - itemRand.nextFloat(), yCoord + itemRand.nextFloat() - itemRand.nextFloat(), zCoord + itemRand.nextFloat() - itemRand.nextFloat(), 1.0F, 1.0F, 1.0F);
+            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB, xCoord + itemRand.nextFloat() - itemRand.nextFloat(), yCoord + itemRand.nextFloat() - itemRand.nextFloat(), zCoord + itemRand.nextFloat() - itemRand.nextFloat(), 1.0F, 1.0F, 1.0F);
         }
 
         return par1ItemStack;

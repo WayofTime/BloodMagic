@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
+
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.ItemManipulator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -9,14 +10,17 @@ import net.minecraft.item.ItemStack;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class ToolOffensiveEarth extends ItemManipulator
 {
     public static Block[] mundaneList = new Block[]{Blocks.stone, Blocks.cobblestone, Blocks.sand, Blocks.gravel, Blocks.netherrack, Blocks.dirt};
+
 
     public ToolOffensiveEarth(int power, int potency, int cost)
     {
         super(power, potency, cost);
     }
+
 
     @Override
     public List<ItemStack> handleItemsOnBlockBroken(ItemStack toolStack, List<ItemStack> itemList)
@@ -25,7 +29,7 @@ public class ToolOffensiveEarth extends ItemManipulator
 
         for (ItemStack stack : itemList)
         {
-            if (stack != null && stack.getItem() instanceof ItemBlock && !this.isMundaneBlock(((ItemBlock) stack.getItem()).field_150939_a))
+            if (stack != null && stack.getItem() instanceof ItemBlock && !this.isMundaneBlock(((ItemBlock) stack.getItem()).getBlock()))
             {
                 newList.add(stack);
             }
@@ -44,6 +48,7 @@ public class ToolOffensiveEarth extends ItemManipulator
                 return true;
             }
         }
+
 
         return false;
     }

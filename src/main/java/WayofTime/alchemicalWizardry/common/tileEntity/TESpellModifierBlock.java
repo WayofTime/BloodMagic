@@ -13,7 +13,7 @@ public class TESpellModifierBlock extends TESpellBlock
 
     public ComplexSpellModifier getSpellModifier()
     {
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        int meta = this.getBlockMetadata();
         switch (meta)
         {
             case 0:

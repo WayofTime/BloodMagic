@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 
 public class MeleeDefaultIce extends ExtrapolatedMeleeEntityEffect
 {
+
     public MeleeDefaultIce(int power, int potency, int cost)
     {
         super(power, potency, cost);

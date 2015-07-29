@@ -21,7 +21,7 @@ public class SelfDefensiveEarth extends SelfSpellEffect
         int pot = 2 * this.potencyUpgrades + 1;
         int duration = 20 * 60 * (this.powerUpgrades + 1);
 
-        player.addPotionEffect(new PotionEffect(Potion.field_76434_w.id, duration, pot));
+        player.addPotionEffect(new PotionEffect(Potion.field_180152_w.id, duration, pot));
         player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, duration, pot));
     }
 }

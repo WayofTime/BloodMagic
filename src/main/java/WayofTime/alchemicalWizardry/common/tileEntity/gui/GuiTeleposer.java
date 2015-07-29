@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
+import net.minecraft.client.gui.inventory.GuiBrewingStand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

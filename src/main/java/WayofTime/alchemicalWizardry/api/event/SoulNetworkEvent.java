@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api.event;
 
-import cpw.mods.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.Event;
+
 
 public class SoulNetworkEvent extends Event
 {

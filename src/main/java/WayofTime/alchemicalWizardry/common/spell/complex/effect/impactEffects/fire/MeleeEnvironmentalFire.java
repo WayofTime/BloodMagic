@@ -1,9 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class MeleeEnvironmentalFire extends MeleeSpellCenteredWorldEffect
 {
@@ -14,7 +15,7 @@ public class MeleeEnvironmentalFire extends MeleeSpellCenteredWorldEffect
     }
 
     @Override
-    public void onCenteredWorldEffect(EntityPlayer player, World world, int posX, int posY, int posZ)
+    public void onCenteredWorldEffect(EntityPlayer player, World world, BlockPos pos)
     {
         int radius = this.potencyUpgrades;
 
@@ -24,7 +25,8 @@ public class MeleeEnvironmentalFire extends MeleeSpellCenteredWorldEffect
             {
                 for (int k = -radius; k <= radius; k++)
                 {
-                    SpellHelper.evaporateWaterBlock(world, posX + i, posY + j, posZ + k);
+                	BlockPos newPos = pos.add(i, j, k);
+                    SpellHelper.evaporateWaterBlock(world, newPos);
                 }
             }
         }

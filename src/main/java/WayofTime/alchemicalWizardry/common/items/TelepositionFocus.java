@@ -1,17 +1,18 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TelepositionFocus extends EnergyItems
 {
@@ -110,6 +111,11 @@ public class TelepositionFocus extends EnergyItems
         {
             return 0;
         }
+    }
+    
+    public BlockPos getBlockPos(ItemStack stack)
+    {
+    	return new BlockPos(xCoord(stack), yCoord(stack), zCoord(stack));
     }
 
     public int getFocusLevel()

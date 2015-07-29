@@ -177,4 +177,10 @@ public class ShapelessBloodOrbRecipe implements IRecipe
     {
         return this.input;
     }
+    
+    @Override
+	public ItemStack[] func_179532_b(InventoryCrafting inventory) 
+	{
+		return new ItemStack[1];
+	}
 }

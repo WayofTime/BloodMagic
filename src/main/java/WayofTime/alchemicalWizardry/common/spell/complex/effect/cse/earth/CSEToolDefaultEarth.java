@@ -29,7 +29,9 @@ public class CSEToolDefaultEarth extends ComplexSpellEffect
 		{
 			String toolClass = "pickaxe";
 
+
 	        float digSpeed = 7.0f;
+
 
 	        switch (this.powerEnhancement)
 	        {
@@ -50,7 +52,9 @@ public class CSEToolDefaultEarth extends ComplexSpellEffect
 	                break;
 	        }
 
+
 	        ((SpellParadigmTool)parad).setDigSpeed(toolClass, digSpeed);
+
 
 	        int hlvl = this.potencyEnhancement + 2;
 	        ((SpellParadigmTool)parad).setHarvestLevel(toolClass, hlvl);

@@ -6,13 +6,14 @@ import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class DigAreaTunnel extends DigAreaEffect
 {
@@ -33,19 +34,17 @@ public class DigAreaTunnel extends DigAreaEffect
 
         List<Vec3> vectorLine = new LinkedList();
 
-        double initialX = blockPos.blockX;
-        double initialY = blockPos.blockY;
-        double initialZ = blockPos.blockZ;
-        ForgeDirection sidehit = ForgeDirection.getOrientation(blockPos.sideHit);
-        ForgeDirection opposite = sidehit.getOpposite();
-
-        AlchemicalWizardry.logger.info(opposite.toString());
+        double initialX = blockPos.func_178782_a().getX();
+        double initialY = blockPos.func_178782_a().getY();
+        double initialZ = blockPos.func_178782_a().getZ();
+        EnumFacing sidehit = blockPos.field_178784_b;
+        EnumFacing opposite = sidehit.getOpposite();
 
         double initialLength = this.getRandomVectorLength();
 
-        Vec3 initialVector = SpellHelper.createVec3(opposite.offsetX * initialLength, opposite.offsetY * initialLength, opposite.offsetZ * initialLength);
+        Vec3 initialVector = new Vec3(opposite.getFrontOffsetX() * initialLength, opposite.getFrontOffsetY() * initialLength, opposite.getFrontOffsetZ() * initialLength);
 
-        Vec3 lastVec = SpellHelper.createVec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
+        Vec3 lastVec = new Vec3(initialVector.xCoord, initialVector.yCoord, initialVector.zCoord);
         vectorLine.add(initialVector);
 
         double currentLength = lastVec.lengthVector();
@@ -65,9 +64,7 @@ public class DigAreaTunnel extends DigAreaEffect
 
             double length = Math.min(this.getRandomVectorLength(), totalLength - currentLength);
 
-            tempVec.xCoord = tempVec.xCoord * length;
-            tempVec.yCoord = tempVec.yCoord * length;
-            tempVec.zCoord = tempVec.zCoord * length;
+            tempVec = new Vec3(tempVec.xCoord * length, tempVec.yCoord * length, tempVec.zCoord * length);
 
             vectorLine.add(tempVec);
 
@@ -122,6 +119,7 @@ public class DigAreaTunnel extends DigAreaEffect
 
     public void destroySphereOfMundane(World world, double x, double y, double z, int radius)
     {
+    	BlockPos pos = new BlockPos(MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
         for (int i = -radius; i <= radius; i++)
         {
             for (int j = -radius; j <= radius; j++)
@@ -133,29 +131,27 @@ public class DigAreaTunnel extends DigAreaEffect
                         continue;
                     }
 
-                    int newX = (int) (i + x + 0.5);
-                    int newY = (int) (j + y + 0.5);
-                    int newZ = (int) (k + z + 0.5);
+                    BlockPos newPos = pos.add(i, j, k);
 
-                    this.destroyMunadeAt(world, newX, newY, newZ);
+                    this.destroyMunadeAt(world, newPos);
                 }
             }
         }
     }
 
-    public void destroyMunadeAt(World world, int x, int y, int z)
+    public void destroyMunadeAt(World world, BlockPos pos)
     {
-        world.setBlockToAir(x, y, z);
+        world.setBlockToAir(pos);
     }
 
     public void travelVector(Vec3 vector, World world, double x, double y, double z)
     {
         double vecLength = vector.lengthVector();
         AlchemicalWizardry.logger.info(vecLength);
-        Vec3 normVec = SpellHelper.createVec3(vector.xCoord, vector.yCoord, vector.zCoord);
+        Vec3 normVec = new Vec3(vector.xCoord, vector.yCoord, vector.zCoord);
         normVec = normVec.normalize();
 
-        Vec3 prevVec = SpellHelper.createVec3(0, 0, 0);
+        Vec3 prevVec = new Vec3(0, 0, 0);
         double distanceTravelled = 0;
 
         while (distanceTravelled < vecLength)

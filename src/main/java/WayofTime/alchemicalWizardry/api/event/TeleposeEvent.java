@@ -1,56 +1,52 @@
 package WayofTime.alchemicalWizardry.api.event;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.eventhandler.Cancelable;
-import cpw.mods.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import net.minecraftforge.fml.common.eventhandler.Event;
+
 
 /** Fired when a teleposer attempts to transpose two blocks. Use this to perform special cleanup or compensation,
 or cancel it entirely to prevent the transposition. */
 @Cancelable
-public class TeleposeEvent extends Event {
+public class TeleposeEvent extends Event 
+{
   
   public final World initialWorld;
-  public final int initialX;
-  public final int initialY;
-  public final int initialZ;
+  public final BlockPos initialPos;
   
   public final Block initialBlock;
-  public final int initialMetadata;
+  public final IBlockState initialState;
   
   public final World finalWorld;
-  public final int finalX;
-  public final int finalY;
-  public final int finalZ;
+  public final BlockPos finalPos;
   
   public final Block finalBlock;
-  public final int finalMetadata;
+  public final IBlockState finalState;
   
-  public TeleposeEvent(World wi, int xi, int yi, int zi, Block bi, int mi, World wf, int xf, int yf, int zf, Block bf, int mf) {
+  public TeleposeEvent(World wi, BlockPos posi, IBlockState statei, World wf, BlockPos posf, IBlockState statef) {
     initialWorld = wi;
-    initialX = xi;
-    initialY = yi;
-    initialZ = zi;
+    initialPos = posi;
     
-    initialBlock = bi;
-    initialMetadata = mi;
-    
+    initialState = statei;
+    initialBlock = initialState.getBlock();
+
     finalWorld = wf;
-    finalX = xf;
-    finalY = yf;
-    finalZ = zf;
+    finalPos = posf;
     
-    finalBlock = bf;
-    finalMetadata = mf;
+    finalState = statef;
+    finalBlock = finalState.getBlock();
   }
   
   public TileEntity getInitialTile() {
-    return initialWorld.getTileEntity(initialX, initialY, initialZ);
+    return initialWorld.getTileEntity(initialPos);
   }
   
   public TileEntity getFinalTile() {
-    return finalWorld.getTileEntity(finalX, finalY, finalZ);
+    return finalWorld.getTileEntity(finalPos);
   }
 
 }

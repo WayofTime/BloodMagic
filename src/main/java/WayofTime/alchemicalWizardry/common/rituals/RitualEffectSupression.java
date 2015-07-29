@@ -1,5 +1,16 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -7,15 +18,6 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectSupression extends RitualEffect
 {
@@ -28,12 +30,11 @@ public class RitualEffectSupression extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
-        Block blockish = world.getBlock(x, y - 1, z);
+        IBlockState stateish = world.getBlockState(pos.offsetDown());
+        Block blockish = stateish.getBlock();
 
         boolean hasAquasalus = this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
         boolean hasAether = this.canDrainReagent(ritualStone, ReagentRegistry.aetherReagent, aetherDrain, false);
@@ -74,16 +75,19 @@ public class RitualEffectSupression extends RitualEffect
                         {
                             continue;
                         }
-
-                        Block block = world.getBlock(x + i, y + j, z + k);
+                        
+                        BlockPos newPos = pos.add(i, j, k);
+                        IBlockState state = world.getBlockState(newPos);
+                        
+                        Block block = state.getBlock();
 
 
                         if (SpellHelper.isBlockFluid(block))
                         {
-                            TESpectralContainer.createSpectralBlockAtLocation(world, x + i, y + j, z + k, 3 * masterRadius);
+                            TESpectralContainer.createSpectralBlockAtLocation(world, newPos, 3 * masterRadius);
                         } else
                         {
-                            TileEntity tile = world.getTileEntity(x + i, y + j, z + k);
+                            TileEntity tile = world.getTileEntity(newPos);
                             if (tile instanceof TESpectralContainer)
                             {
                                 ((TESpectralContainer) tile).resetDuration(3 * masterRadius);

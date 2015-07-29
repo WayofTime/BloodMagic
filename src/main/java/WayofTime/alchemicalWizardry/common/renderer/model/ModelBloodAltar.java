@@ -2,8 +2,9 @@ package WayofTime.alchemicalWizardry.common.renderer.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
@@ -57,21 +58,22 @@ public class ModelBloodAltar extends ModelBase
         GL11.glPopMatrix();
     }
     
-    public void renderBloodLevel(IIcon icon)
+    public void renderBloodLevel(TextureAtlasSprite icon)
     {
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer wr = tessellator.getWorldRenderer();
 
         double minU = (double) icon.getInterpolatedU(0);
         double maxU = (double) icon.getInterpolatedU(16);
         double minV = (double) icon.getInterpolatedV(0);
         double maxV = (double) icon.getInterpolatedV(16);
 
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0, 1, 0);
-        tessellator.addVertexWithUV(1, 0, 1, maxU, maxV);
-        tessellator.addVertexWithUV(1, 0, 0, maxU, minV);
-        tessellator.addVertexWithUV(0, 0, 0, minU, minV);
-        tessellator.addVertexWithUV(0, 0, 1, minU, maxV);
+        wr.startDrawingQuads();
+        wr.func_178980_d(0, 1, 0); //setNormal
+        wr.addVertexWithUV(1, 0, 1, maxU, maxV);
+        wr.addVertexWithUV(1, 0, 0, maxU, minV);
+        wr.addVertexWithUV(0, 0, 0, minU, minV);
+        wr.addVertexWithUV(0, 0, 1, minU, maxV);
         tessellator.draw();
     }
 }

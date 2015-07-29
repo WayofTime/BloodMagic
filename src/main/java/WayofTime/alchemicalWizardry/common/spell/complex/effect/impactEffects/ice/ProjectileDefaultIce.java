@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 
 public class ProjectileDefaultIce extends ProjectileImpactEffect
 {
@@ -17,21 +18,21 @@ public class ProjectileDefaultIce extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-
+        return;
     }
 
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-        ForgeDirection sideHit = ForgeDirection.getOrientation(mop.sideHit);
+        int horizRadius = this.powerUpgrades + 1;
+        int vertRadius = this.potencyUpgrades;
 
-        int posX = mop.blockX + sideHit.offsetX;
-        int posY = mop.blockY + sideHit.offsetY;
-        int posZ = mop.blockZ + sideHit.offsetZ;
+        EnumFacing sideHit = mop.field_178784_b;
 
-        if (world.isAirBlock(posX, posY, posZ))
+        BlockPos newPos = mop.func_178782_a().add(sideHit.getDirectionVec());
+        if (world.isAirBlock(newPos))
         {
-            world.setBlock(posX, posY, posZ, Blocks.ice);
+            world.setBlockState(newPos, Blocks.ice.getDefaultState());
         }
     }
 }

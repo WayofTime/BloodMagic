@@ -9,13 +9,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import WayofTime.alchemicalWizardry.api.event.AddToNetworkEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainInContainerEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
-import cpw.mods.fml.common.eventhandler.Event;
-import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class SoulNetworkHandler
 {
@@ -396,7 +396,7 @@ public class SoulNetworkHandler
 
     public static String getUsername(EntityPlayer player)
     {
-        return player.getCommandSenderName();
+        return player.getName();
     }
 
     public static EntityPlayer getPlayerForUsername(String str)
@@ -405,7 +405,7 @@ public class SoulNetworkHandler
         {
             return null;
         }
-        return MinecraftServer.getServer().getConfigurationManager().func_152612_a(str);
+        return MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(str);
     }
 
     public static void causeNauseaToPlayer(ItemStack stack)

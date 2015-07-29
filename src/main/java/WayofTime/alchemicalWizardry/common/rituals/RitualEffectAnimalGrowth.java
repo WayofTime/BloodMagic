@@ -11,6 +11,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -28,10 +29,8 @@ public class RitualEffectAnimalGrowth extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (world.getWorldTime() % 20 != 0)
         {
@@ -40,7 +39,7 @@ public class RitualEffectAnimalGrowth extends RitualEffect
 
         double range = 2;
 
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 3), (double) (z + 1)).expand(range, 0, range);
+        AxisAlignedBB axisalignedbb = new AxisAlignedBB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 3), (double) (z + 1)).expand(range, 0, range);
         List<EntityAgeable> list = world.getEntitiesWithinAABB(EntityAgeable.class, axisalignedbb);
 
         int entityCount = 0;

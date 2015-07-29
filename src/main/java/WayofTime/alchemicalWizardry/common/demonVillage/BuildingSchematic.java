@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
@@ -52,7 +54,7 @@ public class BuildingSchematic
         blockList.add(set);
     }
 
-    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, boolean populateInventories)
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, EnumFacing dir, boolean populateInventories)
     {
         for (BlockSet set : blockList)
         {
@@ -86,7 +88,7 @@ public class BuildingSchematic
         return new Int3(gridX, doorY, gridZ);
     }
 
-    public List<Int3> getGriddedPositions(ForgeDirection dir)
+    public List<Int3> getGriddedPositions(EnumFacing dir)
     {
         List<Int3> positionList = new ArrayList();
 
@@ -127,7 +129,7 @@ public class BuildingSchematic
         return positionList;
     }
 
-    public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
+    public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, EnumFacing dir)
     {
 //        GridSpaceHolder grid = this.createGSH(); //GridSpaceHolder is not aware of the buildings - need to use the schematic
 
@@ -137,10 +139,12 @@ public class BuildingSchematic
         {
             for (Int3 pos : positionList)
             {
-                Block block = world.getBlock(xCoord + pos.xCoord, yCoord + i, zCoord + pos.zCoord);
+            	BlockPos newPos = new BlockPos(xCoord + pos.xCoord, yCoord + i, zCoord + pos.zCoord);
+            	IBlockState state = world.getBlockState(newPos);
+                Block block = state.getBlock();
                 if (block != ModBlocks.blockDemonPortal)
                 {
-                    world.setBlockToAir(xCoord + pos.xCoord, yCoord + i, zCoord + pos.zCoord);
+                    world.setBlockToAir(newPos);
                 }
             }
         }

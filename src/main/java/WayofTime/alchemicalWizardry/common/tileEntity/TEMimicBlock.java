@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -18,7 +21,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 
-public class TEMimicBlock extends TileEntity
+public class TEMimicBlock extends TileEntity implements IUpdatePlayerListBox
 {
     private ItemStack[] inv;
     public Reagent reagent;
@@ -37,14 +40,14 @@ public class TEMimicBlock extends TileEntity
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeToNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound);
+        return new S35PacketUpdateTileEntity(pos, -999, nbttagcompound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
     {
         super.onDataPacket(net, packet);
-        readFromNBT(packet.func_148857_g());
+        readFromNBT(packet.getNbtCompound());
     }
 
     @Override
@@ -55,7 +58,7 @@ public class TEMimicBlock extends TileEntity
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
             if (slot >= 0 && slot < inv.length)
@@ -76,6 +79,8 @@ public class TEMimicBlock extends TileEntity
 
         for (int i = 0; i < inv.length; i++)
         {
+            ItemStack stack = inv[i];
+
             if (inv[i] != null)
             {
                 NBTTagCompound tag = new NBTTagCompound();
@@ -91,10 +96,8 @@ public class TEMimicBlock extends TileEntity
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-
         this.ticksRemaining--;
 
         if (this.ticksRemaining <= 0)
@@ -103,34 +106,35 @@ public class TEMimicBlock extends TileEntity
         }
     }
 
-    public static boolean createMimicBlockAtLocation(World world, int x, int y, int z, int duration, Block block, int meta, Reagent reagent)
+    public static boolean createMimicBlockAtLocation(World world, BlockPos pos, int duration, IBlockState state, Reagent reagent)
     {
+    	Block block = state.getBlock();
         if (block == null)
         {
             return false;
         }
 
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(pos);
         
-        if (tileEntity == null && world.isAirBlock(x, y, z))
+        if (tileEntity == null && world.isAirBlock(pos))
         {
-            ItemStack item = new ItemStack(block, 1, meta);
+            ItemStack item = new ItemStack(block, 1, block.getMetaFromState(state));
 
-            world.setBlock(x, y, z, ModBlocks.blockMimic);
-            TileEntity tile = world.getTileEntity(x, y, z);
+            world.setBlockState(pos, ModBlocks.blockMimic.getDefaultState());
+            TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TEMimicBlock)
             {
                 ((TEMimicBlock) tile).setContainedItem(item);
                 ((TEMimicBlock) tile).setDuration(duration);
                 ((TEMimicBlock) tile).reagent = reagent;
-                world.markBlockForUpdate(x, y, z);
+                world.markBlockForUpdate(pos);
                 return true;
             }
         }else
         {
         	if(tileEntity instanceof TEMimicBlock)
         	{
-        		if(((TEMimicBlock) tileEntity).getBlock() == block && ((TEMimicBlock) tileEntity).getMetaOfMimic() == meta)
+        		if(((TEMimicBlock) tileEntity).getBlock() == block)
         		{
         			((TEMimicBlock) tileEntity).ticksRemaining = Math.max(duration, ((TEMimicBlock) tileEntity).ticksRemaining);
         		}
@@ -181,7 +185,7 @@ public class TEMimicBlock extends TileEntity
 //
 //        } else
         {
-            this.worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+            this.worldObj.setBlockToAir(pos);
         }
     }
     
@@ -192,7 +196,8 @@ public class TEMimicBlock extends TileEntity
     	{
     		if (item.getItem() instanceof ItemBlock)
 	        {
-	            return ((ItemBlock) item.getItem()).field_150939_a;
+	            Block block = ((ItemBlock) item.getItem()).getBlock();
+	            return block;
 	        }
     	}
     	return null;
@@ -207,6 +212,17 @@ public class TEMimicBlock extends TileEntity
     	}
     	
     	return 0;
+    }
+    
+    public IBlockState getStateOfMimic()
+    {
+    	Block block = this.getBlock();
+    	if(block == null)
+    	{
+    		return null;
+    	}
+    	
+    	return block.getStateFromMeta(getMetaOfMimic());
     }
     
 	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)

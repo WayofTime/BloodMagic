@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,18 +22,25 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
@@ -53,13 +58,7 @@ import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 import WayofTime.alchemicalWizardry.common.omega.ReagentRegenConfiguration;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+
 
 public class AlchemicalWizardryEventHooks
 {
@@ -117,7 +116,7 @@ public class AlchemicalWizardryEventHooks
 			float prevHp = APISpellHelper.getCurrentAdditionalHP((EntityPlayer)event.entityLiving);
 			if(prevHp > 0)
 			{
-				float recalculatedAmount = ArmorProperties.ApplyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
+				float recalculatedAmount = ArmorProperties.applyArmor(player, player.inventory.armorInventory, event.source, event.ammount);
 				if (recalculatedAmount <= 0) return;
 				recalculatedAmount = SpellHelper.applyPotionDamageCalculations(player, event.source, recalculatedAmount); //Recalculated damage
 				
@@ -335,7 +334,7 @@ public class AlchemicalWizardryEventHooks
 
 		String respawnRitual = "AW028SpawnWard";
 
-		int dimension = event.world.provider.dimensionId;
+		int dimension = event.world.provider.getDimensionId();
 		if (respawnMap.containsKey(dimension))
 		{
 			List<CoordAndRange> list = respawnMap.get(dimension);
@@ -344,7 +343,7 @@ public class AlchemicalWizardryEventHooks
 			{
 				for (CoordAndRange coords : list)
 				{
-					TileEntity tile = event.world.getTileEntity(coords.xCoord, coords.yCoord, coords.zCoord);
+					TileEntity tile = event.world.getTileEntity(coords.getPos());
 
 					if (tile instanceof TEMasterStone && ((TEMasterStone) tile).isRunning && ((TEMasterStone) tile).getCurrentRitual().equals(respawnRitual))
 					{
@@ -388,7 +387,7 @@ public class AlchemicalWizardryEventHooks
 			{
 				for (CoordAndRange coords : list)
 				{
-					TileEntity tile = event.world.getTileEntity(coords.xCoord, coords.yCoord, coords.zCoord);
+					TileEntity tile = event.world.getTileEntity(coords.getPos());
 
 					if (tile instanceof TEMasterStone && ((TEMasterStone) tile).isRunning && ((TEMasterStone) tile).getCurrentRitual().equals(forceSpawnRitual))
 					{
@@ -508,10 +507,10 @@ public class AlchemicalWizardryEventHooks
 		double y = entityLiving.posY;
 		double z = entityLiving.posZ;
 
-		Vec3 blockVector = SpellHelper.getEntityBlockVector(entityLiving);
-		int xPos = (int) (blockVector.xCoord);
-		int yPos = (int) (blockVector.yCoord);
-		int zPos = (int) (blockVector.zCoord);
+		BlockPos blockVector = entityLiving.getPosition();
+		int xPos = blockVector.getX();
+		int yPos = blockVector.getY();
+		int zPos = blockVector.getZ();
 
 		if (entityLiving instanceof EntityPlayer)
 		{
@@ -592,7 +591,7 @@ public class AlchemicalWizardryEventHooks
 			int posY = (int) Math.round(entity.posY);
 			int posZ = (int) Math.round(entity.posZ - 0.5f);
 			int d0 = (int) ((i + 1) * 2.5);
-			AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5).expand(d0, d0, d0);
+			AxisAlignedBB axisalignedbb = new AxisAlignedBB(posX - 0.5, posY - 0.5, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5).expand(d0, d0, d0);
 			List list = event.entityLiving.worldObj.getEntitiesWithinAABB(Entity.class, axisalignedbb);
 			Iterator iterator = list.iterator();
 
@@ -697,7 +696,7 @@ public class AlchemicalWizardryEventHooks
 
 		if (entityLiving.isPotionActive(AlchemicalWizardry.customPotionFlameCloak))
 		{
-			entityLiving.worldObj.spawnParticle("flame", x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0, 0.06d, 0);
+			entityLiving.worldObj.spawnParticle(EnumParticleTypes.FLAME, x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0, 0.06d, 0);
 
 			int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFlameCloak).getAmplifier();
 			double range = i * 0.5;
@@ -718,7 +717,7 @@ public class AlchemicalWizardryEventHooks
 		if (entityLiving.isPotionActive(AlchemicalWizardry.customPotionIceCloak))
 		{
 			if (entityLiving.worldObj.getWorldTime() % 2 == 0)
-				entityLiving.worldObj.spawnParticle("reddust", x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0x74, 0xbb, 0xfb);
+				entityLiving.worldObj.spawnParticle(EnumParticleTypes.REDSTONE, x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0x74, 0xbb, 0xfb);
 
 			int r = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionIceCloak).getAmplifier();
 			int horizRange = r + 1;
@@ -732,7 +731,7 @@ public class AlchemicalWizardryEventHooks
 					{
 						for (int j = -vertRange - 1; j <= vertRange - 1; j++)
 						{
-							SpellHelper.freezeWaterBlock(entityLiving.worldObj, xPos + i, yPos + j, zPos + k);
+							SpellHelper.freezeWaterBlock(entityLiving.worldObj, new BlockPos(xPos + i, yPos + j, zPos + k));
 						}
 					}
 				}
@@ -741,7 +740,7 @@ public class AlchemicalWizardryEventHooks
 
 		if (entityLiving.isPotionActive(AlchemicalWizardry.customPotionHeavyHeart))
 		{
-			entityLiving.worldObj.spawnParticle("flame", x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0, 0.06d, 0);
+			entityLiving.worldObj.spawnParticle(EnumParticleTypes.FLAME, x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0, 0.06d, 0);
 
 			int i = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionHeavyHeart).getAmplifier();
 			double decrease = 0.025 * (i + 1);
@@ -759,7 +758,7 @@ public class AlchemicalWizardryEventHooks
 
 		if (entityLiving.isPotionActive(AlchemicalWizardry.customPotionFireFuse))
 		{
-			entityLiving.worldObj.spawnParticle("flame", x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0, 0.06d, 0);
+			entityLiving.worldObj.spawnParticle(EnumParticleTypes.FLAME, x + SpellHelper.gaussian(1), y - 1.3 + SpellHelper.gaussian(0.3), z + SpellHelper.gaussian(1), 0, 0.06d, 0);
 
 			int r = event.entityLiving.getActivePotionEffect(AlchemicalWizardry.customPotionFireFuse).getAmplifier();
 			int radius = r + 1;
@@ -791,7 +790,7 @@ public class AlchemicalWizardryEventHooks
                     meta = 0;
 
                 if (block != null)
-                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
+                    if ((block == event.initialBlock || block == event.finalBlock) && (meta == event.initialBlock.getMetaFromState(event.initialState) || meta == event.finalBlock.getMetaFromState(event.finalState) || meta == OreDictionary.WILDCARD_VALUE))
                         event.setCanceled(true);
 
             // If the block uses shorthand syntax: modid:blockname
@@ -801,30 +800,11 @@ public class AlchemicalWizardryEventHooks
                 int meta = 0;
 
                 if (block != null)
-                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
+                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialBlock.getMetaFromState(event.initialState) || meta == event.finalBlock.getMetaFromState(event.finalState) || meta == OreDictionary.WILDCARD_VALUE))
                         event.setCanceled(true);
             }
         }
     }
-
-	@SubscribeEvent
-	public void onEntityDeath(LivingDeathEvent event)
-	{
-		EntityLivingBase entityLiving = event.entityLiving;
-
-		if (entityLiving instanceof IDemon && event.source.getEntity() instanceof EntityPlayer)
-		{
-			EntityPlayer player = (EntityPlayer) event.source.getEntity();
-
-			player.addStat(ModAchievements.demonSpawn, 1);
-		}
-        if (entityLiving instanceof IHoardDemon && event.source.getEntity() instanceof EntityPlayer)
-        {
-            EntityPlayer player = (EntityPlayer) event.source.getEntity();
-
-            player.addStat(ModAchievements.demons, 1);
-        }
-	}
 
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {

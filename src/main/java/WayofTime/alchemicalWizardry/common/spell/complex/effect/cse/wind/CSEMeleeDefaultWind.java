@@ -17,6 +17,7 @@ public class CSEMeleeDefaultWind extends ComplexSpellEffect
 	public CSEMeleeDefaultWind(int power, int cost, int potency)
 	{
 		this();
+		
 		this.powerEnhancement = power;
 		this.costEnhancement = cost;
 		this.potencyEnhancement = potency;

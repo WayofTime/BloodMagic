@@ -95,7 +95,7 @@ public class DaggerOfSacrifice extends EnergyItems
 
             for (int i = 0; i < 8; i++)
             {
-                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
+                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 1, posX, posY, posZ);
             }
 
             par2EntityLivingBase.setHealth(-1);

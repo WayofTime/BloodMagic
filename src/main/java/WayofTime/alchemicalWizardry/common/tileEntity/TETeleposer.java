@@ -3,13 +3,14 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import java.util.Iterator;
 import java.util.List;
 
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
@@ -17,7 +18,7 @@ import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TETeleposer extends TEInventory
+public class TETeleposer extends TEInventory implements IUpdatePlayerListBox
 {
 	public static final int sizeInv = 1;
 	
@@ -59,7 +60,7 @@ public class TETeleposer extends TEInventory
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return "TETeleposer";
     }
@@ -72,16 +73,14 @@ public class TETeleposer extends TEInventory
 
     //Logic for the actual block is under here
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-
         if (worldObj.isRemote)
         {
             return;
         }
 
-        int currentInput = worldObj.getBlockPowerInput(xCoord, yCoord, zCoord);
+        int currentInput = worldObj.getStrongPower(pos);
 
         if (previousInput == 0 && currentInput != 0)
         {
@@ -93,18 +92,20 @@ public class TETeleposer extends TEInventory
                 int xf = focusItem.xCoord(focus);
                 int yf = focusItem.yCoord(focus);
                 int zf = focusItem.zCoord(focus);
+                BlockPos posF = focusItem.getBlockPos(focus);
+                
                 World worldF = focusItem.getWorld(focus);
-                int damage = (int) (0.5f * Math.sqrt((xCoord - xf) * (xCoord - xf) + (yCoord - yf + 1) * (yCoord - yf + 1) + (zCoord - zf) * (zCoord - zf)));
+                int damage = (int) (0.5f * Math.sqrt(pos.distanceSq(posF)));
                 int focusLevel = focusItem.getFocusLevel();
                 int transportCount = 0;
                 int entityCount = 0;
 
-                if (worldF != null && worldF.getTileEntity(xf, yf, zf) instanceof TETeleposer && !worldF.getTileEntity(xf, yf, zf).equals(this))
+                if (worldF != null && worldF.getTileEntity(posF) instanceof TETeleposer && !worldF.getTileEntity(posF).equals(this))
                 {
                     //Prime the teleportation
                     int d0 = focusLevel - 1;
-                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getBoundingBox((double) this.xCoord-0.5, (double) this.yCoord + d0 + 0.5, (double) this.zCoord-0.5, (double) (this.xCoord + 0.5), (double) (this.yCoord + 1.5 + d0), (double) (this.zCoord + 0.5)).expand(d0, d0, d0);
-                    axisalignedbb1.maxY = Math.min((double) this.worldObj.getHeight(), this.yCoord + 2 + d0 + d0);
+                    AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(pos.add(0, 1, 0), pos.add(1, 2, 1)).expand(d0, d0, d0);
+//                    axisalignedbb1.maxY = Math.min((double) this.worldObj.getHeight(), pos.getY() + 2 + d0 + d0);
                     List list1 = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb1);
                     Iterator iterator1 = list1.iterator();
                     EntityLivingBase entityplayer1;
@@ -115,7 +116,7 @@ public class TETeleposer extends TEInventory
                         entityCount++;
                     }
 
-                    AxisAlignedBB axisalignedbb2 = AxisAlignedBB.getBoundingBox(xf-0.5, yf + d0 + 0.5, zf-0.5, xf + 0.5, yf + 1.5 + d0, zf+0.5).expand(d0, d0, d0);
+                    AxisAlignedBB axisalignedbb2 = new AxisAlignedBB(xf-0.5, yf + d0 + 0.5, zf-0.5, xf + 0.5, yf + 1.5 + d0, zf+0.5).expand(d0, d0, d0);
                     List list2 = worldF.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb2);
                     Iterator iterator2 = list2.iterator();
                     EntityLivingBase entityplayer2;
@@ -134,7 +135,7 @@ public class TETeleposer extends TEInventory
                                 for (int j = -(focusLevel - 1); j <= (focusLevel - 1); j++)
                                 {
                                     {
-                                        if (BlockTeleposer.swapBlocks(this, worldObj, worldF, xCoord + i, yCoord + 1 + k, zCoord + j, xf + i, yf + 1 + k, zf + j))
+                                        if (BlockTeleposer.swapBlocks(this, worldObj, worldF, pos.add(i, 1 + k, j), posF.add(i, 1 + k, j)))
                                         {
                                             transportCount++;
                                         }
@@ -147,7 +148,7 @@ public class TETeleposer extends TEInventory
                             entityCount = 0;
                         }
 
-                        SoulNetworkHandler.syphonFromNetwork(focus, damage * transportCount + damage * entityCount);
+                        EnergyItems.syphonWhileInContainer(focus, damage * transportCount + damage * entityCount);
                         //Teleport
 
                         if (worldF.equals(worldObj))
@@ -159,14 +160,14 @@ public class TETeleposer extends TEInventory
                             {
                                 entityplayer1 = (EntityLivingBase) iterator1.next();
                                 entityplayer1.worldObj = worldF;
-                                entityplayer1.setPositionAndUpdate(entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf);
+                                entityplayer1.setPositionAndUpdate(entityplayer1.posX - pos.getX() + xf, entityplayer1.posY - pos.getY() + yf, entityplayer1.posZ - pos.getZ() + zf);
                             }
 
                             while (iterator2.hasNext())
                             {
                                 entityplayer2 = (EntityLivingBase) iterator2.next();
                                 entityplayer2.worldObj = worldF;
-                                entityplayer2.setPositionAndUpdate(entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf);
+                                entityplayer2.setPositionAndUpdate(entityplayer2.posX + pos.getX() - xf, entityplayer2.posY + pos.getY() - yf, entityplayer2.posZ + pos.getZ() - zf);
                             }
                         }else
                         {
@@ -176,17 +177,17 @@ public class TETeleposer extends TEInventory
                             while (iterator1.hasNext())
                             {
                                 entityplayer1 = (EntityLivingBase) iterator1.next();
-                            	SpellHelper.teleportEntityToDim(worldObj, worldF.provider.dimensionId, entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf, entityplayer1);
+                            	SpellHelper.teleportEntityToDim(worldObj, worldF.provider.getDimensionId(), entityplayer1.posX - pos.getX() + xf, entityplayer1.posY - pos.getY() + yf, entityplayer1.posZ - pos.getZ() + zf, entityplayer1);
 //                                entityplayer1.worldObj = worldF;
-//                                entityplayer1.setPositionAndUpdate(entityplayer1.posX - this.xCoord + xf, entityplayer1.posY - this.yCoord + yf, entityplayer1.posZ - this.zCoord + zf);
+//                                entityplayer1.setPositionAndUpdate(entityplayer1.posX - pos.getX() + xf, entityplayer1.posY - pos.getY() + yf, entityplayer1.posZ - pos.getZ() + zf);
                             }
 
                             while (iterator2.hasNext())
                             {
                                 entityplayer2 = (EntityLivingBase) iterator2.next();
-                                SpellHelper.teleportEntityToDim(worldF, worldObj.provider.dimensionId, entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf, entityplayer2);
+                                SpellHelper.teleportEntityToDim(worldF, worldObj.provider.getDimensionId(), entityplayer2.posX + pos.getX() - xf, entityplayer2.posY + pos.getY() - yf, entityplayer2.posZ + pos.getZ() - zf, entityplayer2);
 //                                entityplayer2.worldObj = worldF;
-//                                entityplayer2.setPositionAndUpdate(entityplayer2.posX + this.xCoord - xf, entityplayer2.posY + this.yCoord - yf, entityplayer2.posZ + this.zCoord - zf);
+//                                entityplayer2.setPositionAndUpdate(entityplayer2.posX + pos.getX() - xf, entityplayer2.posY + pos.getY() - yf, entityplayer2.posZ + pos.getZ() - zf);
                             }
                         }
                     }

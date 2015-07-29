@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -27,10 +28,8 @@ public class RitualEffectBinding extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -47,7 +46,7 @@ public class RitualEffectBinding extends RitualEffect
             if (ritualStone.getVar1() == 0)
             {
                 int d0 = 0;
-                AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
+                AxisAlignedBB axisalignedbb = new AxisAlignedBB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
                 List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
                 Iterator iterator = list.iterator();
                 EntityItem item;
@@ -78,7 +77,7 @@ public class RitualEffectBinding extends RitualEffect
 
                     if (world.rand.nextInt(10) == 0)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
+                        SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.getDimensionId(), 1, x, y, z);
                     }
                 }
 
@@ -94,19 +93,19 @@ public class RitualEffectBinding extends RitualEffect
                     switch (lightningPoint)
                     {
                         case 0:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 3, z));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 3, z + 0));
                             break;
 
                         case 1:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 3, z));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 3, z + 0));
                             break;
 
                         case 2:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x, y + 3, z + 4));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x + 0, y + 3, z + 4));
                             break;
 
                         case 3:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x, y + 3, z - 4));
+                            world.addWeatherEffect(new EntityLightningBolt(world, x + 0, y + 3, z - 4));
                             break;
 
                         case 4:

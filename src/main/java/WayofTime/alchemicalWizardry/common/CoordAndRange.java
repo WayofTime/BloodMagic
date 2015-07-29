@@ -1,5 +1,7 @@
 package WayofTime.alchemicalWizardry.common;
 
+import net.minecraft.util.BlockPos;
+
 public class CoordAndRange
 {
     public int xCoord;
@@ -8,6 +10,11 @@ public class CoordAndRange
     public int horizRadius;
     public int vertRadius;
 
+    public CoordAndRange(BlockPos pos, int horiz, int vert)
+    {
+    	this(pos.getX(), pos.getY(), pos.getZ(), horiz, vert);
+    }
+    
     public CoordAndRange(int x, int y, int z, int horiz, int vert)
     {
         this.xCoord = x;
@@ -15,6 +22,11 @@ public class CoordAndRange
         this.zCoord = z;
         this.horizRadius = horiz;
         this.vertRadius = vert;
+    }
+    
+    public BlockPos getPos()
+    {
+    	return new BlockPos(xCoord, yCoord, zCoord);
     }
 
     @Override

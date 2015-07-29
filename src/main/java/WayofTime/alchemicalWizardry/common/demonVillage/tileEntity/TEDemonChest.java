@@ -1,16 +1,17 @@
 package WayofTime.alchemicalWizardry.common.demonVillage.tileEntity;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import WayofTime.alchemicalWizardry.api.Int3;
+import net.minecraft.util.BlockPos;
 
 public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 {
-	public Int3 portalLocation = new Int3(0,0,0);
+	public BlockPos portalLocation = BlockPos.ORIGIN;
 	
 	@Override
-	public String getInventoryName()
+	public String getName()
     {
         return "Demon's Chest";
     }
@@ -20,21 +21,24 @@ public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 	{
 		super.readFromNBT(tag);
 		NBTTagCompound portalTag = tag.getCompoundTag("portalLocation");
-		portalLocation = Int3.readFromNBT(portalTag);
+		portalLocation = new BlockPos(portalTag.getInteger("xCoord"), portalTag.getInteger("yCoord"), portalTag.getInteger("zCoord"));
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound tag)
 	{
 		super.writeToNBT(tag);
-		NBTTagCompound portalTag = portalLocation.writeToNBT(new NBTTagCompound());
+		NBTTagCompound portalTag = new NBTTagCompound();
+		portalTag.setInteger("xCoord", portalLocation.getX());
+		portalTag.setInteger("yCoord", portalLocation.getY());
+		portalTag.setInteger("zCoord", portalLocation.getZ());
 		tag.setTag("portalLocation", portalTag);
 	}
 	
 	@Override
-	public void openInventory()
+	public void openInventory(EntityPlayer player)
 	{
-		super.openInventory();
+		super.openInventory(player);
 		this.notifyPortalOfInteraction();
 	}
 	
@@ -49,13 +53,13 @@ public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 	{
 		if(teDemonPortal != null)
 		{
-			portalLocation = new Int3(teDemonPortal.xCoord, teDemonPortal.yCoord, teDemonPortal.zCoord);
+			portalLocation = teDemonPortal.getPos();
 		}
 	}
 	
 	public TEDemonPortal getDemonPortal()
 	{
-		TileEntity tile = worldObj.getTileEntity(portalLocation.xCoord, portalLocation.yCoord, portalLocation.zCoord);
+		TileEntity tile = worldObj.getTileEntity(portalLocation);
 		if(tile instanceof TEDemonPortal)
 		{
 			return (TEDemonPortal)tile;
@@ -71,6 +75,6 @@ public class TEDemonChest extends TileEntityChest implements ITilePortalNode
 			return;
 		}
 		
-		portal.notifyDemons(xCoord, yCoord, zCoord, 50);
+		portal.notifyDemons(pos.getX(), pos.getY(), pos.getZ(), 50);
 	}
 }

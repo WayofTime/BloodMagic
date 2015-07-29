@@ -1,18 +1,21 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.common.demonVillage.BuildingSchematic;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class TESchematicSaver extends TileEntity
 {
@@ -35,14 +38,15 @@ public class TESchematicSaver extends TileEntity
             {
                 for (int k = -negZ + 1; k <= posZ - 1; k++)
                 {
-                    int meta = worldObj.getBlockMetadata(xCoord + i, yCoord + j, zCoord + k);
-                    Block block = worldObj.getBlock(xCoord + i, yCoord + j, zCoord + k);
+                	BlockPos newPos = pos.add(i, j, k);
+                	IBlockState state = worldObj.getBlockState(newPos);
+                    Block block = state.getBlock();
+                    int meta = block.getMetaFromState(state);
 
-                    if (!block.isAir(worldObj, xCoord + i, yCoord + j, zCoord + k))
+                    if (!block.isAir(worldObj, newPos))
                     {
                         schematic.addBlockWithMeta(block, meta, i, j, k);
                     }
-
                 }
             }
 
@@ -70,7 +74,7 @@ public class TESchematicSaver extends TileEntity
         int i = 1;
         while (i < 100)
         {
-            if (targetBlock == (worldObj.getBlock(xCoord, yCoord + i, zCoord)))
+            if (targetBlock == (worldObj.getBlockState(pos.add(0, i, 0)).getBlock()))
             {
                 return i;
             }
@@ -85,7 +89,7 @@ public class TESchematicSaver extends TileEntity
         int i = 1;
         while (i < 100)
         {
-            if (targetBlock == (worldObj.getBlock(xCoord, yCoord - i, zCoord)))
+            if (targetBlock == (worldObj.getBlockState(pos.add(0, -i, 0)).getBlock()))
             {
                 return i;
             }
@@ -100,7 +104,7 @@ public class TESchematicSaver extends TileEntity
         int i = 1;
         while (i < 100)
         {
-            if (targetBlock == (worldObj.getBlock(xCoord + i, yCoord, zCoord)))
+            if (targetBlock == (worldObj.getBlockState(pos.add(i, 0, 0)).getBlock()))
             {
                 return i;
             }
@@ -115,7 +119,7 @@ public class TESchematicSaver extends TileEntity
         int i = 1;
         while (i < 100)
         {
-            if (targetBlock == (worldObj.getBlock(xCoord - i, yCoord, zCoord)))
+            if (targetBlock == (worldObj.getBlockState(pos.add(-i, 0, 0)).getBlock()))
             {
                 return i;
             }
@@ -130,7 +134,7 @@ public class TESchematicSaver extends TileEntity
         int i = 1;
         while (i < 100)
         {
-            if (targetBlock == (worldObj.getBlock(xCoord, yCoord, zCoord + i)))
+            if (targetBlock == (worldObj.getBlockState(pos.add(0, 0, i)).getBlock()))
             {
                 return i;
             }
@@ -145,7 +149,7 @@ public class TESchematicSaver extends TileEntity
         int i = 1;
         while (i < 100)
         {
-            if (targetBlock == (worldObj.getBlock(xCoord, yCoord, zCoord - i)))
+            if (targetBlock == (worldObj.getBlockState(pos.add(0, 0, -i)).getBlock()))
             {
                 return i;
             }

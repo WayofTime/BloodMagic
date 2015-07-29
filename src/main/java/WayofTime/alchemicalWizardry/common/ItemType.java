@@ -53,7 +53,7 @@ public class ItemType
     public ItemStack createStack(int count)
     {
         ItemStack result = new ItemStack(item, count, meta);
-        result.stackTagCompound = nbtTag;
+        result.setTagCompound(nbtTag);
         return result;
     }
     
@@ -87,7 +87,7 @@ public class ItemType
     
     public static ItemType fromStack(ItemStack stack)
     {
-        return new ItemType(stack.getItem(), stack.getItemDamage(), stack.stackTagCompound);
+        return new ItemType(stack.getItem(), stack.getItemDamage(), stack.getTagCompound());
     }
     
 }
