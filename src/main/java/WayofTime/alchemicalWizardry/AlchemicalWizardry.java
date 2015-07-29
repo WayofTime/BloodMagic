@@ -288,6 +288,8 @@ import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 public class AlchemicalWizardry
 {
+    public static String MODID = "AWWayofTime"; //Temporary
+
 	public static boolean parseTextFiles = false;
 	
     public static boolean doMeteorsDestroyBlocks = true;

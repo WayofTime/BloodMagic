@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry;
 
+import WayofTime.alchemicalWizardry.client.BlockRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -171,6 +172,8 @@ public class ModBlocks
             GameRegistry.registerBlock(block, unlocalizedName);
         }
 
+        BlockRenderer.registerBlock(block);
+
         return block;
     }
 
@@ -190,6 +193,8 @@ public class ModBlocks
         {
             GameRegistry.registerBlock(block, itemBlockClass, unlocalizedName);
         }
+
+        BlockRenderer.registerBlock(block);
 
         return block;
     }
