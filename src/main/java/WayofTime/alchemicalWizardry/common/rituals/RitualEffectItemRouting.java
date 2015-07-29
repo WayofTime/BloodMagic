@@ -11,8 +11,8 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.RoutingFocusParadigm;
 import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
@@ -48,7 +48,8 @@ public class RitualEffectItemRouting extends RitualEffect
         for(int i=0; i<4; i++) //Check output foci chests, return if none available
         {
         	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
-        	TileEntity outputFocusInv = world.getTileEntity(x + outputFocusChest.xCoord, y + outputFocusChest.yCoord, z + outputFocusChest.zCoord);
+        	BlockPos newPos = pos.add(outputFocusChest.xCoord, outputFocusChest.yCoord, outputFocusChest.zCoord);
+        	TileEntity outputFocusInv = world.getTileEntity(newPos);
         	if(outputFocusInv instanceof IInventory)
         	{
         		outputList.add((IInventory)outputFocusInv);
@@ -68,7 +69,7 @@ public class RitualEffectItemRouting extends RitualEffect
 				RoutingFocusParadigm parad = new RoutingFocusParadigm();
 				
 				TileEntity outputChest = null; //Destination
-				ForgeDirection inputDirection;
+				EnumFacing inputDirection;
 				
 				{        				    					
 					IInventory outputChestInventory = null;
@@ -108,9 +109,9 @@ public class RitualEffectItemRouting extends RitualEffect
 								continue;
 							}
 							inputDirection = posAndFacing.facing;
-							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord)))
+							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.getPos())))
 							{
-								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
+								outputChest = world.getTileEntity(new BlockPos(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord));
 								if(outputChest instanceof IInventory)
 								{
 									outputChestInventory = (IInventory)outputChest;
@@ -123,7 +124,7 @@ public class RitualEffectItemRouting extends RitualEffect
 					        for(int i=0; i<4; i++)
 					        {
 					        	Int3 inputFocusChest = this.getInputBufferChestLocation(i);
-					        	TileEntity inputFocusInv = world.getTileEntity(x + inputFocusChest.xCoord, y + inputFocusChest.yCoord, z + inputFocusChest.zCoord);
+					        	TileEntity inputFocusInv = world.getTileEntity(pos.add(inputFocusChest.xCoord, inputFocusChest.yCoord, inputFocusChest.zCoord));
 					        	if(inputFocusInv instanceof IInventory)
 					        	{
 					        		for(int ji=0; ji<((IInventory) inputFocusInv).getSizeInventory(); ji++) //Iterate through foci inventory
@@ -132,15 +133,15 @@ public class RitualEffectItemRouting extends RitualEffect
 					        			if(inputFocusStack != null && inputFocusStack.getItem() instanceof InputRoutingFocus)
 					        			{
 					        				InputRoutingFocus inputFocus = (InputRoutingFocus)inputFocusStack.getItem();
-					        				TileEntity inputChest = world.getTileEntity(inputFocus.xCoord(inputFocusStack), inputFocus.yCoord(inputFocusStack), inputFocus.zCoord(inputFocusStack));
+					        				TileEntity inputChest = world.getTileEntity(new BlockPos(inputFocus.xCoord(inputFocusStack), inputFocus.yCoord(inputFocusStack), inputFocus.zCoord(inputFocusStack)));
 					        				if(inputChest instanceof IInventory)
 					        				{
 					        					IInventory inputChestInventory = (IInventory)inputChest;
-					        					ForgeDirection syphonDirection = inputFocus.getSetDirection(inputFocusStack);
+					        					EnumFacing syphonDirection = inputFocus.getSetDirection(inputFocusStack);
 					        					boolean[] canSyphonList = new boolean[inputChestInventory.getSizeInventory()];
 					        					if(inputChest instanceof ISidedInventory)
 					        					{
-					        						int[] validSlots = ((ISidedInventory) inputChest).getAccessibleSlotsFromSide(syphonDirection.ordinal());
+					        						int[] validSlots = ((ISidedInventory) inputChest).getSlotsForFace(syphonDirection);
 					        						for(int in : validSlots)
 					        						{
 					        							canSyphonList[in] = true;
@@ -158,7 +159,7 @@ public class RitualEffectItemRouting extends RitualEffect
 					        						if(canSyphonList[ni])
 					        						{
 					        							ItemStack syphonedStack = inputChestInventory.getStackInSlot(ni); //Has a syphoned item linked, next need to find a destination
-					        							if(syphonedStack == null || (inputChestInventory instanceof ISidedInventory && !((ISidedInventory)inputChestInventory).canExtractItem(ni, syphonedStack, syphonDirection.ordinal())))
+					        							if(syphonedStack == null || (inputChestInventory instanceof ISidedInventory && !((ISidedInventory)inputChestInventory).canExtractItem(ni, syphonedStack, syphonDirection)))
 					        							{
 					        								continue;
 					        							}

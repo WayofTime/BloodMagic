@@ -8,10 +8,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
@@ -41,18 +42,18 @@ public class RoutingFocus extends Item
 //	
 //	public void cycleDirection(ItemStack itemStack)
 //	{
-//		ForgeDirection dir = this.getSetDirection(itemStack);
+//		EnumFacing dir = this.getSetDirection(itemStack);
 //		int direction = dir.ordinal();
 //		direction++;
-//		if(direction >= ForgeDirection.VALID_DIRECTIONS.length)
+//		if(direction >= EnumFacing.VALID_DIRECTIONS.length)
 //		{
 //			direction = 0;
 //		}
 //		
-//		this.setSetDirection(itemStack, ForgeDirection.getOrientation(direction));
+//		this.setSetDirection(itemStack, EnumFacing.getOrientation(direction));
 //	}
 	
-	public ForgeDirection getSetDirection(ItemStack itemStack)
+	public EnumFacing getSetDirection(ItemStack itemStack)
 	{
 		if(!itemStack.hasTagCompound())
 		{
@@ -61,10 +62,10 @@ public class RoutingFocus extends Item
 		
 		NBTTagCompound tag = itemStack.getTagCompound();
 		
-		return ForgeDirection.getOrientation(tag.getInteger("direction"));
+		return EnumFacing.getFront(tag.getInteger("direction"));
 	}
 	
-	public void setSetDirection(ItemStack itemStack, ForgeDirection dir)
+	public void setSetDirection(ItemStack itemStack, EnumFacing dir)
 	{
 		if(!itemStack.hasTagCompound())
 		{
@@ -96,14 +97,14 @@ public class RoutingFocus extends Item
 	}
     
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		if(world.isRemote)
 		{
 			return false;
 		}
 		
-		TileEntity tile = world.getTileEntity(x, y, z);
+		TileEntity tile = world.getTileEntity(pos);
 		if(tile instanceof IInventory)
 		{
 			if(player.isSneaking())
@@ -111,7 +112,7 @@ public class RoutingFocus extends Item
 				if(this instanceof ILimitedRoutingFocus)
 				{
 					int pastAmount = ((ILimitedRoutingFocus)this).getRoutingFocusLimit(stack);
-					int amount = SpellHelper.getNumberOfItemsInInventory((IInventory)tile, ForgeDirection.getOrientation(side));
+					int amount = SpellHelper.getNumberOfItemsInInventory((IInventory)tile, side);
 					if(amount != pastAmount)
 					{
 						((ILimitedRoutingFocus)this).setRoutingFocusLimit(stack, amount);
@@ -120,8 +121,8 @@ public class RoutingFocus extends Item
 				}
 			}
 			
-			this.setCoordinates(stack, x, y, z);
-			this.setSetDirection(stack, ForgeDirection.getOrientation(side));
+			this.setCoordinates(stack, pos);
+			this.setSetDirection(stack, side);
 			
 			return true;
 		}
@@ -129,7 +130,7 @@ public class RoutingFocus extends Item
 		return true;
 	}
 	
-	public void setCoordinates(ItemStack itemStack, int x, int y, int z)
+	public void setCoordinates(ItemStack itemStack, BlockPos pos)
 	{
 		if(!itemStack.hasTagCompound())
 		{
@@ -138,9 +139,9 @@ public class RoutingFocus extends Item
 		
 		NBTTagCompound tag = itemStack.getTagCompound();
 		
-		tag.setInteger("xCoord", x);
-		tag.setInteger("yCoord", y);
-		tag.setInteger("zCoord", z);
+		tag.setInteger("xCoord", pos.getX());
+		tag.setInteger("yCoord", pos.getY());
+		tag.setInteger("zCoord", pos.getZ());
 	}
 
     public int xCoord(ItemStack itemStack)

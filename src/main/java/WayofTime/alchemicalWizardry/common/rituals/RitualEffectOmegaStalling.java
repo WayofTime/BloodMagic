@@ -34,16 +34,16 @@ public class RitualEffectOmegaStalling extends RitualEffect
             return;
         }
         
-        TileEntity tile = world.getTileEntity(x, y + 5, z);
+        TileEntity tile = world.getTileEntity(pos.offsetUp(5));
         if(tile instanceof TileEntityBeacon)
         {
-        	int levels = ((TileEntityBeacon) tile).getLevels();
+        	int levels = ((TileEntityBeacon) tile).getField(0);
         	if(levels >= 4)
         	{
         		int horizontalRadius = 100;
                 int verticalRadius = 100;
                 
-                List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizontalRadius, verticalRadius);
+                List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, horizontalRadius, verticalRadius);
                 
                 for(EntityPlayer player : playerList)
                 {

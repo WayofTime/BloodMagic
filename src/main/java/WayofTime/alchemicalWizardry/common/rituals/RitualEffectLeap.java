@@ -35,7 +35,7 @@ public class RitualEffectLeap extends RitualEffect
 
         double range = 2.0;
 
-        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, range);
 
         if (livingList == null)
         {

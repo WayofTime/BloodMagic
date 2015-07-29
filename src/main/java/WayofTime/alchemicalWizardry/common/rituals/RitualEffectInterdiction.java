@@ -37,7 +37,7 @@ public class RitualEffectInterdiction extends RitualEffect
         {
             int d0 = 5;
 
-            List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
+            List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, d0, d0);
             boolean flag = false;
 
             boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
@@ -47,9 +47,9 @@ public class RitualEffectInterdiction extends RitualEffect
             {
                 if (!((!hasOffensa && entityLiving instanceof EntityPlayer) && (SpellHelper.getUsername((EntityPlayer) entityLiving).equals(owner))))
                 {
-                    double xDif = entityLiving.posX - x;
-                    double yDif = entityLiving.posY - (y + 1);
-                    double zDif = entityLiving.posZ - z;
+                    double xDif = entityLiving.posX - (pos.getX() - 0.5);
+                    double yDif = entityLiving.posY - ((pos.getY() - 0.5) + 1);
+                    double zDif = entityLiving.posZ - (pos.getZ() - 0.5);
                     entityLiving.motionX = 0.1 * xDif;
                     entityLiving.motionY = 0.1 * yDif;
                     entityLiving.motionZ = 0.1 * zDif;
@@ -77,7 +77,7 @@ public class RitualEffectInterdiction extends RitualEffect
 
                 int horizontalRadius = 5;
                 int verticalRadius = 5;
-                List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(horizontalRadius, verticalRadius, horizontalRadius));
+                List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(horizontalRadius, verticalRadius, horizontalRadius));
 
                 if (itemList != null)
                 {
@@ -85,9 +85,9 @@ public class RitualEffectInterdiction extends RitualEffect
 
                     for (EntityItem entity : itemList)
                     {
-                        double xDif = entity.posX - x;
-                        double yDif = entity.posY - (y + 1);
-                        double zDif = entity.posZ - z;
+                    	double xDif = entity.posX - (pos.getX() - 0.5);
+                        double yDif = entity.posY - ((pos.getY() - 0.5) + 1);
+                        double zDif = entity.posZ - (pos.getZ() - 0.5);
                         entity.motionX = 0.1 * xDif;
                         entity.motionY = 0.1 * yDif;
                         entity.motionZ = 0.1 * zDif;
