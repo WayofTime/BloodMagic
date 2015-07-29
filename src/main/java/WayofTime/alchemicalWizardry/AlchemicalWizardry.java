@@ -50,10 +50,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import thaumcraft.api.ItemApi;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -287,7 +283,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
-import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
@@ -1149,39 +1144,39 @@ public class AlchemicalWizardry
                 GameRegistry.registerItem(ModItems.sanguinePants, "sanguinePants");
                 GameRegistry.registerItem(ModItems.sanguineBoots, "sanguineBoots");
 
-                ItemStack itemGoggles = ItemApi.getItem("itemGoggles", 0);
-                Item itemThaumChest = GameRegistry.findItem("Thaumcraft", "ItemChestplateThaumium");
-                Item itemThaumLeggings = GameRegistry.findItem("Thaumcraft", "ItemLeggingsThaumium");
-                Item itemThaumBoots = GameRegistry.findItem("Thaumcraft", "ItemBootsThaumium");
-
-                AspectList aspectList = new AspectList();
-                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
-
-                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineHelmet), aspectList);
-                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineRobe), aspectList);
-                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguinePants), aspectList);
-                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineBoots), aspectList);
-
-
-                if (itemGoggles != null)
-                {
-                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineHelmet), itemGoggles);
-                }
-
-                if (itemThaumChest != null)
-                {
-                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineRobe), new ItemStack(itemThaumChest));
-                }
-
-                if (itemThaumLeggings != null)
-                {
-                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguinePants), new ItemStack(itemThaumLeggings));
-                }
-
-                if (itemThaumBoots != null)
-                {
-                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineBoots), new ItemStack(itemThaumBoots));
-                }
+//                ItemStack itemGoggles = ItemApi.getItem("itemGoggles", 0);
+//                Item itemThaumChest = GameRegistry.findItem("Thaumcraft", "ItemChestplateThaumium");
+//                Item itemThaumLeggings = GameRegistry.findItem("Thaumcraft", "ItemLeggingsThaumium");
+//                Item itemThaumBoots = GameRegistry.findItem("Thaumcraft", "ItemBootsThaumium");
+//
+//                AspectList aspectList = new AspectList();
+//                aspectList.add(Aspect.ARMOR, 5).add(Aspect.MAGIC, 5);
+//
+//                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineHelmet), aspectList);
+//                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineRobe), aspectList);
+//                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguinePants), aspectList);
+//                ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineBoots), aspectList);
+//
+//
+//                if (itemGoggles != null)
+//                {
+//                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineHelmet), itemGoggles);
+//                }
+//
+//                if (itemThaumChest != null)
+//                {
+//                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineRobe), new ItemStack(itemThaumChest));
+//                }
+//
+//                if (itemThaumLeggings != null)
+//                {
+//                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguinePants), new ItemStack(itemThaumLeggings));
+//                }
+//
+//                if (itemThaumBoots != null)
+//                {
+//                    BindingRegistry.registerRecipe(new ItemStack(ModItems.sanguineBoots), new ItemStack(itemThaumBoots));
+//                }
 
                 //LogHelper.log(Level.INFO, "Loaded RP2 World addon");
             } catch (Exception e)
@@ -1231,11 +1226,11 @@ public class AlchemicalWizardry
             AlchemicalWizardry.logger.info("Loaded Harvestcraft Handlers!");
         }
         
-        if(Loader.isModLoaded("MineTweaker3")) 
-        {
-            MineTweakerIntegration.register();
-            AlchemicalWizardry.logger.info("Loaded MineTweaker 3 Integration");
-        }
+//        if(Loader.isModLoaded("MineTweaker3")) 
+//        {
+//            MineTweakerIntegration.register();
+//            AlchemicalWizardry.logger.info("Loaded MineTweaker 3 Integration");
+//        }
         
 //        if(Loader.isModLoaded("AgriCraft"))
 //        {
@@ -1264,7 +1259,7 @@ public class AlchemicalWizardry
     @Optional.Method(modid = "guideapi")
     public static void registerBMBook()
     {
-    	BloodMagicGuide.registerGuide();
+//    	BloodMagicGuide.registerGuide();
     }
 
     public static void blacklistAccelerators()

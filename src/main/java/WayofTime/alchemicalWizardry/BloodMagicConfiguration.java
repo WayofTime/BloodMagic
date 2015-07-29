@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
@@ -16,8 +18,6 @@ import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 
 /**
  * Created with IntelliJ IDEA.

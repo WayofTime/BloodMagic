@@ -1,6 +1,8 @@
 package WayofTime.alchemicalWizardry.common;
 
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.entity.mob.BookEntityItem;
@@ -22,8 +24,6 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy
 {

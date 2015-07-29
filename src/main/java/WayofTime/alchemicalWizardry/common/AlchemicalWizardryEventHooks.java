@@ -42,7 +42,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -817,11 +816,11 @@ public class AlchemicalWizardryEventHooks
 	@Optional.Method(modid = "Botania")
 	private boolean isManaBurst(Entity entity)
 	{
-		if(entity instanceof IManaBurst) {
-            ItemStack lens = ((IManaBurst)entity).getSourceLens();
-            return !(lens.getItemDamage()!=8 && lens.getItemDamage()!=11);
-        }
-        else
+//		if(entity instanceof IManaBurst) {
+//            ItemStack lens = ((IManaBurst)entity).getSourceLens();
+//            return !(lens.getItemDamage()!=8 && lens.getItemDamage()!=11);
+//        }
+//        else
             return false;
 	}
 }
