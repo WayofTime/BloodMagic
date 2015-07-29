@@ -50,10 +50,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import thaumcraft.api.ItemApi;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
+//import thaumcraft.api.ItemApi;
+//import thaumcraft.api.ThaumcraftApi;
+//import thaumcraft.api.aspects.Aspect;
+//import thaumcraft.api.aspects.AspectList;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemicalPotionCreationHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -848,7 +848,6 @@ public class AlchemicalWizardry
 
         ItemStack strengthenedCatalystStackCrafted = new ItemStack(ModItems.baseAlchemyItems, 2, 3);
         ItemStack fracturedBoneStackCrafted = new ItemStack(ModItems.baseAlchemyItems, 4, 5);
-
         //TODO NEW RECIPES!
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(ModItems.weakBindingAgent), 10, new ItemStack[]{simpleCatalystStack, simpleCatalystStack, new ItemStack(Items.clay_ball)}, 2);
         AlchemyRecipeRegistry.registerRecipe(new ItemStack(ModItems.standardBindingAgent), 15, new ItemStack[]{new ItemStack(ModItems.weakBindingAgent), sanctusStack, new ItemStack(ModItems.crystallos)}, 3);
@@ -886,7 +885,6 @@ public class AlchemicalWizardry
         AlchemyRecipeRegistry.registerRecipe(virtusStack, 20, new ItemStack[]{redstoneStack, new ItemStack(Items.coal), strengthenedCatalystStack, redstoneStack, gunpowderStack}, 3);
         AlchemyRecipeRegistry.registerRecipe(reductusStack, 20, new ItemStack[]{redstoneStack, goldIngotStack, strengthenedCatalystStack, new ItemStack(Blocks.soul_sand), new ItemStack(Items.carrot)}, 3);
         AlchemyRecipeRegistry.registerRecipe(potentiaStack, 20, new ItemStack[]{glowstoneDustStack, strengthenedCatalystStack, lapisStack, lapisStack, new ItemStack(Items.quartz)}, 3);
-
 
         HomSpellRegistry.registerBasicSpell(new ItemStack(Items.flint_and_steel), new SpellFireBurst());
         HomSpellRegistry.registerBasicSpell(new ItemStack(Blocks.ice), new SpellFrozenWater());
@@ -938,8 +936,6 @@ public class AlchemicalWizardry
         EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianWind.class, "MinorDemonGruntGuardianWind", 41, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianIce.class, "MinorDemonGruntGuardianIce", 42, this, 80, 3, true);
         EntityRegistry.registerModEntity(EntityMinorDemonGruntGuardianEarth.class, "MinorDemonGruntGuardianEarth", 43, this, 80, 3, true);
-
-
 
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.standardBindingAgent), 1, 3, this.standardBindingAgentDungeonChance / 5));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ModItems.mundanePowerCatalyst), 1, 1, this.mundanePowerCatalystDungeonChance / 5));
@@ -1133,7 +1129,7 @@ public class AlchemicalWizardry
     {
     	proxy.registerPostSideObjects();
         //TODO Thaumcraft Integration
-        if (Loader.isModLoaded("Thaumcraft"))
+/*        if (Loader.isModLoaded("Thaumcraft"))
         {
             isThaumcraftLoaded = true;
 
@@ -1161,7 +1157,6 @@ public class AlchemicalWizardry
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineRobe), aspectList);
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguinePants), aspectList);
                 ThaumcraftApi.registerObjectTag(new ItemStack(ModItems.sanguineBoots), aspectList);
-
 
                 if (itemGoggles != null)
                 {
@@ -1242,7 +1237,8 @@ public class AlchemicalWizardry
 //        	HarvestRegistry.registerHarvestHandler(new AgriCraftCropHarvestHandler());
 //        	AlchemicalWizardry.logger.info("Loaded AgriCraft Handlers!");
 //        }
-        
+*/
+        isThaumcraftLoaded = Loader.isModLoaded("Thaumcraft"); //this is temp.
         isBotaniaLoaded = Loader.isModLoaded("Botania");
         isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
         isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
@@ -1261,12 +1257,12 @@ public class AlchemicalWizardry
 //	    this.createItemTextureFiles();
     }
     
-    @Optional.Method(modid = "guideapi")
+/*    @Optional.Method(modid = "guideapi")
     public static void registerBMBook()
     {
     	BloodMagicGuide.registerGuide();
     }
-
+*/
     public static void blacklistAccelerators()
     {
         if (Loader.isModLoaded("Torcherino"))
