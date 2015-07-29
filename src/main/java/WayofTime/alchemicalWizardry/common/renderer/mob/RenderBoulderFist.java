@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.renderer.mob;
 
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityBoulderFist;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -12,7 +13,7 @@ public class RenderBoulderFist extends RenderLiving
 
     public RenderBoulderFist(ModelBase par1ModelBase, float par2)
     {
-        super(par1ModelBase, par2);
+        super(Minecraft.getMinecraft().getRenderManager(), par1ModelBase, par2);
     }
 
     public ResourceLocation func_110832_a(EntityBoulderFist par1EntityBoulderFist)

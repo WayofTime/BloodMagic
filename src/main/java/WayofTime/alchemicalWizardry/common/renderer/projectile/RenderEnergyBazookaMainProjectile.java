@@ -1,16 +1,24 @@
 package WayofTime.alchemicalWizardry.common.renderer.projectile;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelEnergyBazookaMainProjectile;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelEnergyBazookaMainProjectile;
+
 public class RenderEnergyBazookaMainProjectile extends Render
 {
-    public ModelBase model = new ModelEnergyBazookaMainProjectile();
+    public RenderEnergyBazookaMainProjectile() 
+    {
+		super(Minecraft.getMinecraft().getRenderManager());
+	}
+
+	public ModelBase model = new ModelEnergyBazookaMainProjectile();
     private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/EnergyBazookaMainProjectile.png");
     private float scale = 1.0f;
 
