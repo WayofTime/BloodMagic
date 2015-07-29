@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
@@ -22,19 +23,11 @@ public class RenderPedestal extends TileEntitySpecialRenderer
 
     public RenderPedestal()
     {
-        customRenderItem = new RenderItem()
-        {
-            @Override
-            public boolean shouldBob()
-            {
-                return false;
-            }
-        };
-        customRenderItem.setRenderManager(RenderManager.instance);
+        customRenderItem = Minecraft.getMinecraft().getRenderItem();
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
         if (tileEntity instanceof TEPedestal)
         {
@@ -54,7 +47,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
                 float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
-                EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
+                EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorld());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
                 float displacement = 0.2F;
@@ -68,7 +61,7 @@ public class RenderPedestal extends TileEntitySpecialRenderer
                 }
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
                 GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F);
-                customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+                customRenderItem.func_175043_b(ghostEntityItem.getEntityItem()); //renderItemModel
             }
 
             GL11.glPopMatrix();
@@ -93,52 +86,17 @@ public class RenderPedestal extends TileEntitySpecialRenderer
         {
             if (itemStack.getItem() instanceof ItemBlock)
             {
-                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
-                {
-                    case 1:
-                        return 0.90F;
-
-                    case 2:
-                        return 0.90F;
-
-                    case 3:
-                        return 0.90F;
-
-                    case 4:
-                        return 0.90F;
-
-                    case 5:
-                        return 0.80F;
-
-                    default:
-                        return 0.90F;
-                }
+                return 0.9f;
             } else
             {
-                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
-                {
-                    case 1:
-                        return 0.65F;
-
-                    case 2:
-                        return 0.65F;
-
-                    case 3:
-                        return 0.65F;
-
-                    case 4:
-                        return 0.65F;
-
-                    default:
-                        return 0.65F;
-                }
+                return 0.65f;
             }
         }
 
         return scaleFactor;
     }
 
-    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection)
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, EnumFacing forgeDirection)
     {
         if (ghostItemStack != null)
         {
@@ -179,11 +137,6 @@ public class RenderPedestal extends TileEntitySpecialRenderer
                     case WEST:
                     {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.5F, (float) z + 0.5F);
-                        return;
-                    }
-
-                    case UNKNOWN:
-                    {
                         return;
                     }
 
@@ -229,11 +182,6 @@ public class RenderPedestal extends TileEntitySpecialRenderer
                     case WEST:
                     {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.4F, (float) z + 0.5F);
-                        return;
-                    }
-
-                    case UNKNOWN:
-                    {
                         return;
                     }
 

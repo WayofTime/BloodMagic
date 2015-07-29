@@ -2,7 +2,6 @@ package WayofTime.alchemicalWizardry.common.renderer.block;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
@@ -22,19 +21,11 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
 
     public TEAltarRenderer()
     {
-        customRenderItem = new RenderItem()
-        {
-            @Override
-            public boolean shouldBob()
-            {
-                return false;
-            }
-        };
-        customRenderItem.setRenderManager(RenderManager.instance);
+        customRenderItem = Minecraft.getMinecraft().getRenderItem();
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
         modelBloodAltar.renderBloodAltar((TEAltar) tileEntity, d0, d1, d2);
         modelBloodAltar.renderBloodLevel((TEAltar) tileEntity, d0, d1, d2);
@@ -48,7 +39,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
             {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
                 float rotationAngle = Minecraft.getMinecraft().gameSettings.fancyGraphics ? (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) : 0;
-                EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
+                EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorld());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
                 float displacement = 0.2F;
@@ -62,7 +53,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
                 }
                 GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
                 GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F);
-                customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+                customRenderItem.func_175043_b(ghostEntityItem.getEntityItem()); //renderItemModel
             }
 
             GL11.glPopMatrix();
@@ -77,45 +68,10 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
         {
             if (itemStack.getItem() instanceof ItemBlock)
             {
-                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
-                {
-                    case 1:
-                        return 0.90F;
-
-                    case 2:
-                        return 0.90F;
-
-                    case 3:
-                        return 0.90F;
-
-                    case 4:
-                        return 0.90F;
-
-                    case 5:
-                        return 0.80F;
-
-                    default:
-                        return 0.90F;
-                }
+                return 0.9f;
             } else
             {
-                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
-                {
-                    case 1:
-                        return 0.65F;
-
-                    case 2:
-                        return 0.65F;
-
-                    case 3:
-                        return 0.65F;
-
-                    case 4:
-                        return 0.65F;
-
-                    default:
-                        return 0.65F;
-                }
+                return 0.65f;
             }
         }
 
