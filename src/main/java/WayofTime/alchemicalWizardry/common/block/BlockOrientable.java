@@ -1,13 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockOrientable extends BlockContainer
 {
@@ -16,7 +17,6 @@ public class BlockOrientable extends BlockContainer
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BlockOrientable extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         //Right-click orients the output face. Shift-right-click orients the input face.
         if (world.isRemote)
@@ -34,20 +34,20 @@ public class BlockOrientable extends BlockContainer
             return false;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
 
         if (tile instanceof TEOrientable)
         {
             TEOrientable newTile = (TEOrientable) tile;
             if (player.isSneaking())
             {
-                int nextSide = TEOrientable.getIntForForgeDirection(newTile.getInputDirection()) + 1;
+                int nextSide = TEOrientable.getIntForEnumFacing(newTile.getInputDirection()) + 1;
 
                 if (nextSide > 5)
                 {
                     nextSide = 0;
                 }
-                if (ForgeDirection.getOrientation(nextSide) == newTile.getOutputDirection())
+                if (EnumFacing.getFront(nextSide) == newTile.getOutputDirection())
                 {
                     nextSide++;
                     if (nextSide > 5)
@@ -56,16 +56,16 @@ public class BlockOrientable extends BlockContainer
                     }
                 }
 
-                newTile.setInputDirection(ForgeDirection.getOrientation(nextSide));
+                newTile.setInputDirection(EnumFacing.getFront(nextSide));
             } else
             {
-                int nextSide = TEOrientable.getIntForForgeDirection(newTile.getOutputDirection()) + 1;
+                int nextSide = TEOrientable.getIntForEnumFacing(newTile.getOutputDirection()) + 1;
 
                 if (nextSide > 5)
                 {
                     nextSide = 0;
                 }
-                if (ForgeDirection.getOrientation(nextSide) == newTile.getInputDirection())
+                if (EnumFacing.getFront(nextSide) == newTile.getInputDirection())
                 {
                     nextSide++;
                     if (nextSide > 5)
@@ -74,17 +74,17 @@ public class BlockOrientable extends BlockContainer
                     }
                 }
 
-                newTile.setOutputDirection(ForgeDirection.getOrientation(nextSide));
+                newTile.setOutputDirection(EnumFacing.getFront(nextSide));
             }
         }
 
-        world.markBlockForUpdate(x, y, z);
+        world.markBlockForUpdate(blockPos);
         return true;
     }
 
     @Override
-    public int damageDropped(int metadata)
+    public int damageDropped(IBlockState blockState)
     {
-        return metadata;
+        return blockState.getBlock().damageDropped(blockState);
     }
 }

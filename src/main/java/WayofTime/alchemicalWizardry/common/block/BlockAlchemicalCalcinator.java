@@ -1,43 +1,36 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockAlchemicCalcinator extends BlockContainer
+public class BlockAlchemicalCalcinator extends BlockContainer
 {
-    public BlockAlchemicCalcinator()
+    public BlockAlchemicalCalcinator()
     {
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("alchemicCalcinator");
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return new TEAlchemicCalcinator();
-    }
-
-    @Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
     }
 
     @Override
@@ -53,7 +46,7 @@ public class BlockAlchemicCalcinator extends BlockContainer
     }
 
     @Override
-    public boolean hasTileEntity()
+    public boolean hasTileEntity(IBlockState blockState)
     {
         return true;
     }
@@ -65,16 +58,16 @@ public class BlockAlchemicCalcinator extends BlockContainer
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        dropItems(world, x, y, z);
-        super.breakBlock(world, x, y, z, par5, par6);
+        dropItems(world, blockPos);
+        super.breakBlock(world, blockPos, blockState);
     }
 
-    private void dropItems(World world, int x, int y, int z)
+    private void dropItems(World world, BlockPos blockPos)
     {
         Random rand = new Random();
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(blockPos);
 
         if (!(tileEntity instanceof IInventory))
         {
@@ -92,9 +85,7 @@ public class BlockAlchemicCalcinator extends BlockContainer
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world,
-                        x + rx, y + ry, z + rz,
-                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                EntityItem entityItem = new EntityItem(world, blockPos.getX() + rx, blockPos.getY() + ry, blockPos.getZ() + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {
@@ -112,9 +103,9 @@ public class BlockAlchemicCalcinator extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TEAlchemicCalcinator tileEntity = (TEAlchemicCalcinator) world.getTileEntity(x, y, z);
+        TEAlchemicCalcinator tileEntity = (TEAlchemicCalcinator) world.getTileEntity(blockPos);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -160,7 +151,7 @@ public class BlockAlchemicCalcinator extends BlockContainer
             }
         }
 
-        tileEntity.getWorldObj().markBlockForUpdate(x, y, z);
+        tileEntity.getWorld().markBlockForUpdate(blockPos);
 
         return true;
     }

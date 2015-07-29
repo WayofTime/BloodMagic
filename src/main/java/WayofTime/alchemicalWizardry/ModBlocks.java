@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.alchemicalWizardry.common.block.BlockArmourForge;
-import WayofTime.alchemicalWizardry.common.block.BlockAlchemicCalcinator;
+import WayofTime.alchemicalWizardry.common.block.BlockAlchemicalCalcinator;
 import WayofTime.alchemicalWizardry.common.block.BlockAltar;
 import WayofTime.alchemicalWizardry.common.block.BlockBelljar;
 import WayofTime.alchemicalWizardry.common.block.BlockBloodLightSource;
@@ -126,7 +126,7 @@ public class ModBlocks
         blockSpellTable = registerBlock(new BlockSpellTable(), "spell_table");
         blockPedestal = registerBlock(new BlockPedestal(), "pedestal");
         blockPlinth = registerBlock(new BlockPlinth(), "plinth");
-        blockConduit = registerBlock(new BlockConduit(), "conduit");
+        blockConduit = registerBlock(new BlockConduit(), "spell_conduit");
         blockBloodLight = registerBlock(new BlockBloodLightSource(), "blood_light");
         blockSpellEffect = registerBlock(new BlockSpellEffect(), "spell_effect");
         blockSpellParadigm = registerBlock(new BlockSpellParadigm(), ItemSpellParadigmBlock.class, "spell_paradigm");
@@ -136,7 +136,7 @@ public class ModBlocks
         blockDemonPortal = registerBlock(new BlockDemonPortal(), "demon_portal");
         blockBuildingSchematicSaver = registerBlock(new BlockSchematicSaver(), "schematic_saver");
         blockReagentConduit = registerBlock(new BlockReagentConduit(), "reagent_conduit");
-        blockAlchemicalCalcinator = registerBlock(new BlockAlchemicCalcinator(), "alchemical_calcinator");
+        blockAlchemicalCalcinator = registerBlock(new BlockAlchemicalCalcinator(), "alchemical_calcinator");
         blockCrystalBelljar = registerBlock(new BlockBelljar(), ItemBlockCrystalBelljar.class, "belljar");
         blockDemonChest = registerBlock(new BlockDemonChest(), "demon_chest");
         blockCrystal = registerBlock(new BlockCrystal(), ItemCrystalBlock.class, "crystal_block");
@@ -145,14 +145,15 @@ public class ModBlocks
         blockLifeEssence = registerBlock(new BlockLifeEssence(), "life_essence");
         blockEnchantmentGlyph = registerBlock(new BlockEnchantmentGlyph(), ItemEnchantmentGlyphBlock.class, "enchantment_glyph");
         blockStabilityGlyph = registerBlock(new BlockStabilityGlyph(), ItemStabilityGlyphBlock.class, "stability_glyph");
-        blockCrucible = registerBlock(new BlockIncenseCrucible(), "incense_cruicible");
+        blockCrucible = registerBlock(new BlockIncenseCrucible(), "incense_crucible");
     }
 
     public static Block registerBlock(Block block, String unlocalizedName)
     {
+        //TODO Insert Model Code here
         block.setUnlocalizedName(unlocalizedName);
 
-//        if (!)
+//        if (!) //creative tab blacklist
         {
             block.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         }

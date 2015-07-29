@@ -225,14 +225,14 @@ public class TEMimicBlock extends TileEntity implements IUpdatePlayerListBox
     	return block.getStateFromMeta(getMetaOfMimic());
     }
     
-	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
+	public boolean getBlockEffectWhileInside(Entity entity, BlockPos blockPos)
 	{
 		if(reagent != null)
 		{
 			OmegaParadigm paradigm = OmegaRegistry.getParadigmForReagent(reagent);
 			if(paradigm != null)
 			{
-				return paradigm.getBlockEffectWhileInside(entity, x, y, z);
+				return paradigm.getBlockEffectWhileInside(entity, blockPos);
 			}
 		}
 		

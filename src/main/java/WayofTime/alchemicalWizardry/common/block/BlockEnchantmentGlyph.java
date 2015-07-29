@@ -4,55 +4,22 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.omega.IEnchantmentGlyph;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 {
-	@SideOnly(Side.CLIENT)
-	private IIcon enchantability;
-	@SideOnly(Side.CLIENT)
-	private IIcon enchantmentLevel;
-	
     public BlockEnchantmentGlyph()
     {
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("enchantmentGlyph");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:LargeBloodStoneBrick");
-        this.enchantability = iconRegister.registerIcon("AlchemicalWizardry:GlyphEnchantability");
-        this.enchantmentLevel = iconRegister.registerIcon("AlchemicalWizardry:GlyphEnchantmentLevel");
-    }
-    
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        switch (meta)
-        {
-            case 0:
-                return enchantability;
-            case 1:
-                return enchantmentLevel;
-            default:
-                return this.blockIcon;
-        }
     }
 
 	@Override
@@ -92,7 +59,8 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 			return 0;	
 		}
 	}	
-	
+
+    @Override
 	@SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
@@ -101,10 +69,10 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 			par3List.add(new ItemStack(par1, 1, i));
 		}
     }
-	
-	@Override
-    public int damageDropped(int metadata)
+
+    @Override
+    public int damageDropped(IBlockState blockState)
     {
-        return metadata;
+        return blockState.getBlock().damageDropped(blockState);
     }
 }

@@ -17,63 +17,26 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+//import net.minecraftforge.fml.common.Optional;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import codechicken.multipart.MultipartHelper;
-import codechicken.multipart.TileMultipart;
-
+//import codechicken.multipart.MultipartHelper;
+//import codechicken.multipart.TileMultipart;
 
 public class BlockTeleposer extends BlockContainer
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
-
     public BlockTeleposer()
     {
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setUnlocalizedName("bloodTeleposer");
     }
-
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public void registerBlockIcons(IIconRegister iconRegister)
-//    {
-//        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Top");
-//        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
-//        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
-//    }
-//
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public IIcon getIcon(int side, int meta)
-//    {
-//        switch (side)
-//        {
-//            case 0:
-//                return bottomIcon;
-//            case 1:
-//                return topIcon;
-//            default:
-//                return sideIcon2;
-//        }
-//    }
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
@@ -232,17 +195,17 @@ public class BlockTeleposer extends BlockContainer
         {
             TileEntity newTileEntityI = TileEntity.createAndLoadEntity(nbttag1);
             
-            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
+//            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
         	{
-        		newTileEntityI = createMultipartFromNBT(worldF, nbttag1);
+//        		newTileEntityI = createMultipartFromNBT(worldF, nbttag1);
         	}
                         
             worldF.setTileEntity(posf, newTileEntityI);
             
             newTileEntityI.setPos(posf);
-            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
+//           if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
         	{
-            	sendDescriptorOfTile(worldF, newTileEntityI);
+//            	sendDescriptorOfTile(worldF, newTileEntityI);
         	} 
         }
 
@@ -251,30 +214,30 @@ public class BlockTeleposer extends BlockContainer
         if (tileEntityF != null)
         {        	
             TileEntity newTileEntityF = TileEntity.createAndLoadEntity(nbttag2);
-            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
+//            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
         	{
-        		newTileEntityF = createMultipartFromNBT(worldI, nbttag2);
+//        		newTileEntityF = createMultipartFromNBT(worldI, nbttag2);
         	}
             
             worldI.setTileEntity(posi, newTileEntityF);
             
             newTileEntityF.setPos(posi);
             
-            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
+//            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
         	{
-            	sendDescriptorOfTile(worldI, newTileEntityF);
+//            	sendDescriptorOfTile(worldI, newTileEntityF);
         	} 
         }
 
         return true;
     }
     
-    @Optional.Method(modid = "ForgeMultipart")
+/*    @Optional.Method(modid = "ForgeMultipart")
     public static boolean isMultipart(TileEntity tile)
     {
     	return tile instanceof TileMultipart;
     }
-    
+
     @Optional.Method(modid = "ForgeMultipart")
     public static TileEntity createMultipartFromNBT(World world, NBTTagCompound tag)
     {
@@ -286,4 +249,5 @@ public class BlockTeleposer extends BlockContainer
     {
     	MultipartHelper.sendDescPacket(world, tile);
     }
+    */
 }

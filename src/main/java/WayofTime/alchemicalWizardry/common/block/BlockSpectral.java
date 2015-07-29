@@ -1,19 +1,20 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Facing;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -22,20 +23,11 @@ public class BlockSpectral extends BlockContainer
     public BlockSpectral()
     {
         super(Material.rock);
-        this.setBlockName("spectralBlock");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SpectralBlock");
     }
 
     @Override
     public boolean isOpaqueCube()
     {
-        Block d;
         return false;
     }
 
@@ -45,12 +37,13 @@ public class BlockSpectral extends BlockContainer
         return 0;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_)
+    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, BlockPos blockPos, EnumFacing side)
     {
-        Block block = p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_);
+        Block block = p_149646_1_.getBlockState(blockPos).getBlock();
 
-        if (p_149646_1_.getBlockMetadata(p_149646_2_, p_149646_3_, p_149646_4_) != p_149646_1_.getBlockMetadata(p_149646_2_ - Facing.offsetsXForSide[p_149646_5_], p_149646_3_ - Facing.offsetsYForSide[p_149646_5_], p_149646_4_ - Facing.offsetsZForSide[p_149646_5_]))
+        if (p_149646_1_.getBlockState(blockPos) != p_149646_1_.getBlockState(blockPos.add(-side.getFrontOffsetX(), -side.getFrontOffsetY(), -side.getFrontOffsetZ())))
         {
             return true;
         }
@@ -60,20 +53,11 @@ public class BlockSpectral extends BlockContainer
             return false;
         }
 
-        return block != this && super.shouldSideBeRendered(p_149646_1_, p_149646_2_, p_149646_3_, p_149646_4_, p_149646_5_);
-    }
-
-    @SideOnly(Side.CLIENT)
-    /**
-     * Returns which pass should this block be rendered on. 0 for solids and 1 for alpha
-     */
-    public int getRenderBlockPass()
-    {
-        return 1;
+        return block != this && super.shouldSideBeRendered(p_149646_1_, blockPos, side);
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (player.isSneaking())
         {
@@ -86,7 +70,7 @@ public class BlockSpectral extends BlockContainer
         {
             if (playerItem.getItem() instanceof ItemBlock)
             {
-                world.setBlock(x, y, z, ((ItemBlock) (playerItem.getItem())).field_150939_a, playerItem.getItemDamage(), 3);
+                world.addBlockEvent(blockPos, ((ItemBlock) playerItem.getItem()).getBlock(), playerItem.getItemDamage(), 3);
 
                 if (!player.capabilities.isCreativeMode)
                 {

@@ -3,15 +3,18 @@ package WayofTime.alchemicalWizardry.common.block;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -20,7 +23,6 @@ public class BlockSpellParadigm extends BlockOrientable
     public BlockSpellParadigm()
     {
         super();
-        this.setBlockName("blockSpellParadigm");
     }
 
     @Override
@@ -29,8 +31,8 @@ public class BlockSpellParadigm extends BlockOrientable
         return new TESpellParadigmBlock();
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
@@ -49,7 +51,7 @@ public class BlockSpellParadigm extends BlockOrientable
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         ItemStack stack = player.getCurrentEquippedItem();
 
@@ -61,24 +63,18 @@ public class BlockSpellParadigm extends BlockOrientable
             }
 
             NBTTagCompound itemTag = stack.getTagCompound();
-            itemTag.setInteger("xCoord", x);
-            itemTag.setInteger("yCoord", y);
-            itemTag.setInteger("zCoord", z);
+            itemTag.setInteger("xCoord", blockPos.getX());
+            itemTag.setInteger("yCoord", blockPos.getY());
+            itemTag.setInteger("zCoord", blockPos.getZ());
             itemTag.setInteger("dimensionId", world.provider.getDimensionId());
             return true;
         }
 
-        return super.onBlockActivated(world, x, y, z, player, side, what, these, are);
+        return super.onBlockActivated(world, blockPos, state, player, side, hitX, hitY, hitZ);
     }
 
     @Override
     public boolean isOpaqueCube()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock()
     {
         return false;
     }
