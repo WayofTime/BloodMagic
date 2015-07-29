@@ -1,10 +1,13 @@
 package WayofTime.alchemicalWizardry.client;
 
-import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.client.renderer.RitualDivinerRender;
@@ -85,6 +88,7 @@ import WayofTime.alchemicalWizardry.common.renderer.model.ModelWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBazookaMainProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
+import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
@@ -98,10 +102,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ClientProxy extends CommonProxy
 {

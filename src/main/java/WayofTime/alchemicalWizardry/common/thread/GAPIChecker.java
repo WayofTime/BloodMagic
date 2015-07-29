@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.FMLInjectionData;
 
 public class GAPIChecker
 {
@@ -34,7 +35,7 @@ public class GAPIChecker
     public void init()
     {
         FMLCommonHandler.instance().bus().register(this);
-        File mcDir = (File)cpw.mods.fml.relauncher.FMLInjectionData.data()[6];
+        File mcDir = (File)FMLInjectionData.data()[6];
 
         this.modsDir = new File(mcDir, "mods");
 

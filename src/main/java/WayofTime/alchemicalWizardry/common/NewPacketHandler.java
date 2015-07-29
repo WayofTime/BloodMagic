@@ -19,6 +19,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
+import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
+import net.minecraftforge.fml.common.network.FMLOutboundHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -33,13 +40,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
-import cpw.mods.fml.common.network.FMLOutboundHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public enum NewPacketHandler
 {

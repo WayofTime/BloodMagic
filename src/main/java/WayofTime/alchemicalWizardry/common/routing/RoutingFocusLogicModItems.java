@@ -2,8 +2,8 @@ package WayofTime.alchemicalWizardry.common.routing;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameData;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
-import cpw.mods.fml.common.registry.GameData;
 
 public class RoutingFocusLogicModItems extends RoutingFocusLogic
 {

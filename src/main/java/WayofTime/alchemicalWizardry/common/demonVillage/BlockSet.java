@@ -17,13 +17,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.UniqueIdentifier;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IBlockPortalNode;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.ITilePortalNode;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BlockSet
 {

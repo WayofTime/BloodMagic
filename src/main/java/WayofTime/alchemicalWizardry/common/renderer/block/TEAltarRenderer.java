@@ -8,7 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 import org.lwjgl.opengl.GL11;
 
@@ -122,7 +122,7 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
         return scaleFactor;
     }
 
-    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection)
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, EnumFacing forgeDirection)
     {
         if (ghostItemStack != null)
         {
@@ -163,11 +163,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
                     case WEST:
                     {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.5F, (float) z + 0.5F);
-                        return;
-                    }
-
-                    case UNKNOWN:
-                    {
                         return;
                     }
 
@@ -213,11 +208,6 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
                     case WEST:
                     {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.4F, (float) z + 0.5F);
-                        return;
-                    }
-
-                    case UNKNOWN:
-                    {
                         return;
                     }
 

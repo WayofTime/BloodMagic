@@ -19,6 +19,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
@@ -29,8 +31,6 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.TileSegmentedReagentHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class TEReagentConduit extends TileSegmentedReagentHandler implements IUpdatePlayerListBox
 {
