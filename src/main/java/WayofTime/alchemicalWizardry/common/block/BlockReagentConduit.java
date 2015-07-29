@@ -2,14 +2,13 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockReagentConduit extends BlockContainer
 {
@@ -18,15 +17,6 @@ public class BlockReagentConduit extends BlockContainer
         super(Material.cloth);
         setHardness(2.0F);
         setResistance(5.0F);
-        this.setBlockName("blockReagentConduit");
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SimpleTransCircle");
     }
 
     @Override
@@ -42,19 +32,13 @@ public class BlockReagentConduit extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return super.onBlockActivated(world, x, y, z, player, side, what, these, are);
+        return super.onBlockActivated(world, blockPos, state, player, side, hitX, hitY, hitZ);
     }
 
     @Override
     public boolean isOpaqueCube()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock()
     {
         return false;
     }

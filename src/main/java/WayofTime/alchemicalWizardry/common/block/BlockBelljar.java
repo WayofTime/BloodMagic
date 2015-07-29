@@ -3,8 +3,10 @@ package WayofTime.alchemicalWizardry.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,15 +15,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBelljar extends BlockContainer
 {
@@ -30,8 +32,6 @@ public class BlockBelljar extends BlockContainer
         super(Material.glass);
         setHardness(2.0F);
         setResistance(5.0F);
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("crystalBelljar");
     }
 
     
@@ -73,9 +73,9 @@ public class BlockBelljar extends BlockContainer
     }
     
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack stack)
+    public void onBlockPlacedBy(World world, BlockPos blockPos, IBlockState blockState, EntityLivingBase entityLiving, ItemStack stack)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
 
         if (tile instanceof TEBellJar)
         {
@@ -94,12 +94,6 @@ public class BlockBelljar extends BlockContainer
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-
-    @Override
     public int getRenderType()
     {
         return -1;
@@ -112,7 +106,7 @@ public class BlockBelljar extends BlockContainer
     }
 
     @Override
-    public boolean hasTileEntity()
+    public boolean hasTileEntity(IBlockState blockState)
     {
         return true;
     }
@@ -124,9 +118,9 @@ public class BlockBelljar extends BlockContainer
     }
 
     @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
+    public int getComparatorInputOverride(World world, BlockPos blockPos)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof TEBellJar)
         {
             return ((TEBellJar) tile).getRSPowerOutput();
@@ -135,18 +129,18 @@ public class BlockBelljar extends BlockContainer
     }
 
     @Override
-    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
+    public void onBlockHarvested(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
     {
-        this.dropBlockAsItem(world, x, y, z, meta, 0);
-        super.onBlockHarvested(world, x, y, z, meta, player);
+        this.dropBlockAsItem(world, blockPos, blockState, 0);
+        super.onBlockHarvested(world, blockPos, blockState, player);
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos blockPos, IBlockState blockState, int fortune)
     {
-        ArrayList<ItemStack> list = new ArrayList();
+        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
 
         if (tile instanceof TEBellJar)
         {

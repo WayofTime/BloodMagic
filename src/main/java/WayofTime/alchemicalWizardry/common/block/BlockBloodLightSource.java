@@ -1,12 +1,12 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -18,18 +18,10 @@ public class BlockBloodLightSource extends Block
     public BlockBloodLightSource()
     {
         super(Material.cloth);
-        this.setBlockName("blockBloodLightSource");
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:BlockBloodLight");
-    }
-
-    @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    public int getLightValue(IBlockAccess world, BlockPos blockPos)
     {
         return 15;
     }
@@ -41,13 +33,7 @@ public class BlockBloodLightSource extends Block
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-
-    @Override
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+    public void randomDisplayTick(World world, BlockPos blockPos, IBlockState blockState, Random rand)
     {
         if (rand.nextInt(3) != 0)
         {
@@ -55,13 +41,12 @@ public class BlockBloodLightSource extends Block
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
             float f3 = f * f * 0.6F - 0.7F;
-            world.spawnParticle("reddust", x + 0.5D + rand.nextGaussian() / 8, y + 0.5D, z + 0.5D + rand.nextGaussian() / 8, f1, f2, f3);
+            world.spawnParticle(EnumParticleTypes.REDSTONE, blockPos.getX() + 0.5D + rand.nextGaussian() / 8, blockPos.getY() + 0.5D, blockPos.getZ() + 0.5D + rand.nextGaussian() / 8, f1, f2, f3);
         }
     }
 
     @Override
-
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(World par1World, BlockPos blockPos, IBlockState blockState, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
     {
         this.setBlockBounds(0.40F, 0.40F, 0.40F, 0.60F, 0.60F, 0.60F);
     }

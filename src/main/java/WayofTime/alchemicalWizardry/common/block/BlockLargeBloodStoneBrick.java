@@ -1,11 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 
 public class BlockLargeBloodStoneBrick extends Block
 {
@@ -14,14 +10,5 @@ public class BlockLargeBloodStoneBrick extends Block
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setBlockName("largeBloodStoneBrick");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:LargeBloodStoneBrick");
     }
 }

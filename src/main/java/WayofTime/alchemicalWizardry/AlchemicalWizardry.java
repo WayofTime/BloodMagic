@@ -122,7 +122,7 @@ import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
 import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
-import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
+//import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
@@ -282,7 +282,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
-import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
+//import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
@@ -560,7 +560,6 @@ public class AlchemicalWizardry
         FluidRegistry.registerFluid(lifeEssenceFluid);
 
         ModBlocks.init();
-        ModBlocks.registerBlocksInPre();
         ModItems.init();
         ModItems.registerItems();
 
@@ -656,7 +655,7 @@ public class AlchemicalWizardry
         ItemStack largeBloodStoneBrickStack = new ItemStack(ModBlocks.largeBloodStoneBrick);
         ItemStack bloodStoneBrickStackCrafted = new ItemStack(ModBlocks.bloodStoneBrick, 4);
         ItemStack growthSigilStack = new ItemStack(ModItems.growthSigil);
-        ItemStack blockHomHeartStack = new ItemStack(ModBlocks.blockHomHeart);
+        ItemStack blockHomHeartStack = new ItemStack(ModBlocks.blockSpellTable);
         ItemStack redWoolStack = new ItemStack(Blocks.wool, 1, 14);
         ItemStack simpleCatalystStack = new ItemStack(ModItems.simpleCatalyst);
         ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
@@ -795,7 +794,7 @@ public class AlchemicalWizardry
         ModBlocks.bloodStoneBrick.setHarvestLevel("pickaxe", 0);
         ModBlocks.largeBloodStoneBrick.setHarvestLevel("pickaxe", 0);
         ModBlocks.blockWritingTable.setHarvestLevel("pickaxe", 1);
-        ModBlocks.blockHomHeart.setHarvestLevel("pickaxe", 1);
+        ModBlocks.blockSpellTable.setHarvestLevel("pickaxe", 1);
         ModBlocks.blockPedestal.setHarvestLevel("pickaxe", 2);
         ModBlocks.blockPlinth.setHarvestLevel("pickaxe", 2);
         ModBlocks.blockTeleposer.setHarvestLevel("pickaxe", 2);
@@ -1068,7 +1067,7 @@ public class AlchemicalWizardry
         GameRegistry.addRecipe(new ItemStack(ModItems.itemTankSegmenter), "gqi", " rq", "q g", 'q', quartzRodStack, 'i', ironIngotStack, 'r', strengthenedCatalystStack, 'g', goldIngotStack);
         GameRegistry.addRecipe(new ItemStack(ModItems.itemDestinationClearer), "qcq", "c c", "qcq", 'q', quartzRodStack, 'c', simpleCatalystStack);
 
-        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockAlchemicCalcinator), "pgp", "gsg", "ccc", 'p', crackedRunicPlateStack, 'g', glassStack, 's', strengthenedCatalystStack, 'c', cobblestoneStack);
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.blockAlchemicalCalcinator), "pgp", "gsg", "ccc", 'p', crackedRunicPlateStack, 'g', glassStack, 's', strengthenedCatalystStack, 'c', cobblestoneStack);
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockCrystalBelljar), "GGG", "GcG", "www", 'G', glassStack, 'c', concentratedCatalystStack, 'w', new ItemStack(Blocks.wooden_slab, 1, craftingConstant));
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockReagentConduit), "isi", "scs", "isi", 'c', concentratedCatalystStack, 's', stringStack, 'i', ironIngotStack);
 

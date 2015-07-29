@@ -24,23 +24,21 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class TECrucible extends TEInventory implements IUpdatePlayerListBox
 {
-	private int radius = 5;
+	private float rColour;
+	private float gColour;
+	private float bColour;
+
+	private int ticksRemaining = 0;
+	private int minValue = 0;
+	private int maxValue = 0;
+	private float incrementValue = 0;
 	
-	public float rColour;
-	public float gColour;
-	public float bColour;
-	
-	public int ticksRemaining = 0;
-	public int minValue = 0;
-	public int maxValue = 0;
-	public float incrementValue = 0;
-	
-	public int state = 0; //0 is when it gives off gray particles, 1 is when it gives off white particles (player can't use this incense anymore), 2 is the normal colour of the incense, 3 means no particles (it is out)
+	private int state = 0; //0 is when it gives off gray particles, 1 is when it gives off white particles (player can't use this incense anymore), 2 is the normal colour of the incense, 3 means no particles (it is out)
 	
 	public TECrucible() 
 	{
 		super(1);
-		float f = (float) 1.0F;
+		float f = 1.0F;
         float f1 = f * 0.6F + 0.4F;
         float f2 = f * f * 0.7F - 0.5F;
         float f3 = f * f * 0.6F - 0.7F;
@@ -52,15 +50,16 @@ public class TECrucible extends TEInventory implements IUpdatePlayerListBox
 	@Override
 	public void update()
 	{
-		if(worldObj.isRemote)
-			return;
-		
+		int radius = 5;
+
+		if (worldObj.isRemote) return;
+
 		boolean stateChanged = false;
 		
-		if(ticksRemaining <= 0)
+		if (ticksRemaining <= 0)
 		{
 			ItemStack stack = this.getStackInSlot(0);
-			if(stack != null && stack.getItem() instanceof IIncense)
+			if (stack != null && stack.getItem() instanceof IIncense)
 			{
 				IIncense incense = (IIncense)stack.getItem();
 				
@@ -152,21 +151,21 @@ public class TECrucible extends TEInventory implements IUpdatePlayerListBox
     	}
 	}
 	
-	public void spawnClientParticle(World world, int x, int y, int z, Random rand)
+	public void spawnClientParticle(World world, BlockPos blockPos, Random rand)
 	{
 		switch(state)
 		{
 		case 0:
-	        world.spawnParticle(EnumParticleTypes.REDSTONE, x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
+	        world.spawnParticle(EnumParticleTypes.REDSTONE, blockPos.getX() + 0.5D + rand.nextGaussian() / 8, blockPos.getY() + 0.7D, blockPos.getZ() + 0.5D + rand.nextGaussian() / 8, 0.15, 0.15, 0.15);
 			break;
 			
 		case 1:
-	        world.spawnParticle(EnumParticleTypes.REDSTONE, x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, 1.0, 1.0, 1.0);
+	        world.spawnParticle(EnumParticleTypes.REDSTONE, blockPos.getX() + 0.5D + rand.nextGaussian() / 8, blockPos.getY() + 0.7D, blockPos.getZ() + 0.5D + rand.nextGaussian() / 8, 1.0, 1.0, 1.0);
 			break;
 			
 		case 2:
-	        world.spawnParticle(EnumParticleTypes.REDSTONE, x + 0.5D + rand.nextGaussian() / 8, y + 0.7D, z + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
-	        world.spawnParticle(EnumParticleTypes.FLAME, x + 0.5D + rand.nextGaussian() / 32, y + 0.7D, z + 0.5D + rand.nextGaussian() / 32, 0, 0.02, 0);
+	        world.spawnParticle(EnumParticleTypes.REDSTONE, blockPos.getX() + 0.5D + rand.nextGaussian() / 8, blockPos.getY() + 0.7D, blockPos.getZ() + 0.5D + rand.nextGaussian() / 8, rColour, gColour, bColour);
+	        world.spawnParticle(EnumParticleTypes.FLAME, blockPos.getX() + 0.5D + rand.nextGaussian() / 32, blockPos.getY() + 0.7D, blockPos.getZ() + 0.5D + rand.nextGaussian() / 32, 0, 0.02, 0);
 			break;
 			
 		case 3:

@@ -2,48 +2,36 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 import WayofTime.alchemicalWizardry.common.tileEntity.TECrucible;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockIncenseCrucible extends BlockContainer
 {
-	@SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon sideIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
-    
 	public BlockIncenseCrucible()
 	{
 		super(Material.anvil);
 		this.setHardness(2.0f);
 		this.setResistance(1.5f);
-		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-		this.setBlockName("blockCrucible");
 		this.setBlockBounds(0.3125F, 0.0F, 0.3125F, 0.6875F, 0.625F, 0.6875F);
 	}
 	
 	@Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TECrucible tileEntity = (TECrucible) world.getTileEntity(x, y, z);
+        TECrucible tileEntity = (TECrucible) world.getTileEntity(blockPos);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -63,32 +51,8 @@ public class BlockIncenseCrucible extends BlockContainer
 //            player.inventory.addItemStackToInventory(tileEntity.getStackInSlot(0));
 //            tileEntity.setInventorySlotContents(0, null);
         }
-        world.markBlockForUpdate(x, y, z);
+        world.markBlockForUpdate(blockPos);
         return true;
-    }
-	
-	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:Crucible_Top");
-        this.sideIcon = iconRegister.registerIcon("AlchemicalWizardry:Crucible_Side");
-        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:Crucible_Bottom");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        switch (side)
-        {
-            case 0:
-                return bottomIcon;
-            case 1:
-                return topIcon;
-            default:
-                return sideIcon;
-        }
     }
 	
 //	@Override
@@ -98,19 +62,13 @@ public class BlockIncenseCrucible extends BlockContainer
 //    }
 	
 	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
+	public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos blockPos)
     {
         this.setBlockBounds(0.3125F, 0.0F, 0.3125F, 0.6875F, 0.625F, 0.6875F);        
     }
 	
 	@Override
     public boolean isOpaqueCube()
-	{
-		return false;
-	}
-	
-	@Override
-	public boolean renderAsNormalBlock()
 	{
 		return false;
 	}
@@ -122,20 +80,20 @@ public class BlockIncenseCrucible extends BlockContainer
 	}
 	
 	@Override
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+    public void randomDisplayTick(World world, BlockPos blockPos, IBlockState blockState, Random rand)
     {
         if (rand.nextInt(3) != 0)
         {
-        	TECrucible tile = (TECrucible)world.getTileEntity(x, y, z);
-            tile.spawnClientParticle(world, x, y, z, rand);
+        	TECrucible tile = (TECrucible)world.getTileEntity(blockPos);
+            tile.spawnClientParticle(world, blockPos, rand);
         }
     }
 	
 	@Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        dropItems(world, x, y, z);
-        super.breakBlock(world, x, y, z, par5, par6);
+        dropItems(world, blockPos);
+        super.breakBlock(world, blockPos, blockState);
     }
 	
 	@Override
@@ -145,9 +103,9 @@ public class BlockIncenseCrucible extends BlockContainer
     }
 
     @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
+    public int getComparatorInputOverride(World world, BlockPos blockPos)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof TECrucible)
         {
             return ((TECrucible) tile).getRSPowerOutput();
@@ -155,10 +113,10 @@ public class BlockIncenseCrucible extends BlockContainer
         return 15;
     }
 
-    private void dropItems(World world, int x, int y, int z)
+    private void dropItems(World world, BlockPos blockPos)
     {
         Random rand = new Random();
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(blockPos);
 
         if (!(tileEntity instanceof IInventory))
         {
@@ -176,9 +134,7 @@ public class BlockIncenseCrucible extends BlockContainer
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world,
-                        x + rx, y + ry, z + rz,
-                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                EntityItem entityItem = new EntityItem(world, blockPos.getX() + rx, blockPos.getY() + ry, blockPos.getZ() + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {

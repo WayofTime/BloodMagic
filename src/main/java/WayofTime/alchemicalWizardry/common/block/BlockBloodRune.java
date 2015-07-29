@@ -1,52 +1,24 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class BlockBloodRune extends Block
 {
-    //private Icon bloodRuneIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon altarCapacityRuneIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon dislocationRuneIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon orbCapacityRuneIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon betterCapacityRuneIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon accelerationRuneIcon;
-
     public BlockBloodRune()
     {
         super(Material.iron);
-        this.setBlockName("bloodRune");
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:BlankRune");
-        this.altarCapacityRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:AltarCapacityRune");
-        this.dislocationRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:DislocationRune");
-        this.orbCapacityRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:OrbCapacityRune");
-        this.betterCapacityRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:BetterCapacityRune");
-        this.accelerationRuneIcon = iconRegister.registerIcon("AlchemicalWizardry:AccelerationRune");
     }
 
     public int getRuneEffect(int metaData)
@@ -75,6 +47,7 @@ public class BlockBloodRune extends Block
         return 0;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
 
     /**
@@ -97,36 +70,8 @@ public class BlockBloodRune extends Block
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
+    public int damageDropped(IBlockState blockState)
     {
-        switch (meta)
-        {
-            case 0:
-                return blockIcon;
-
-            case 1:
-                return altarCapacityRuneIcon;
-
-            case 2:
-                return dislocationRuneIcon;
-
-            case 3:
-                return this.orbCapacityRuneIcon;
-
-            case 4:
-                return this.betterCapacityRuneIcon;
-
-            case 5:
-            	return this.accelerationRuneIcon;
-            default:
-                return blockIcon;
-        }
-    }
-
-    @Override
-    public int damageDropped(int metadata)
-    {
-        return metadata;
+        return blockState.getBlock().damageDropped(blockState);
     }
 }

@@ -2,12 +2,9 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -24,13 +22,6 @@ import java.util.Random;
 
 public class BlockChemistrySet extends BlockContainer
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon topIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon sideIcon2;
-    @SideOnly(Side.CLIENT)
-    private IIcon bottomIcon;
-
     public BlockChemistrySet()
     {
         super(Material.wood);
@@ -39,33 +30,9 @@ public class BlockChemistrySet extends BlockContainer
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:AlchemicChemistrySet");
-        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_SideType2");
-        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Bottom");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        switch (side)
-        {
-            case 0:
-                return bottomIcon;
-            case 1:
-                return topIcon;
-            default:
-                return sideIcon2;
-        }
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int metadata, float what, float these, float are)
-    {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(blockPos);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -73,21 +40,21 @@ public class BlockChemistrySet extends BlockContainer
         }
 
         //code to open gui explained later
-        player.openGui(AlchemicalWizardry.instance, 0, world, x, y, z);
+        player.openGui(AlchemicalWizardry.instance, 0, world, blockPos.getX(), blockPos.getY(), blockPos.getZ());
         return true;
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        dropItems(world, x, y, z);
-        super.breakBlock(world, x, y, z, par5, par6);
+        dropItems(world, blockPos);
+        super.breakBlock(world, blockPos, blockState);
     }
 
-    private void dropItems(World world, int x, int y, int z)
+    private void dropItems(World world, BlockPos blockPos)
     {
         Random rand = new Random();
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(blockPos);
 
         if (!(tileEntity instanceof IInventory))
         {
@@ -105,9 +72,7 @@ public class BlockChemistrySet extends BlockContainer
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world,
-                        x + rx, y + ry, z + rz,
-                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                EntityItem entityItem = new EntityItem(world, blockPos.getX() + rx, blockPos.getY() + ry, blockPos.getZ() + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {
@@ -131,12 +96,6 @@ public class BlockChemistrySet extends BlockContainer
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-
-    @Override
     public int getRenderType()
     {
         return -1;
@@ -149,20 +108,21 @@ public class BlockChemistrySet extends BlockContainer
     }
 
     @Override
-    public boolean hasTileEntity()
+    public boolean hasTileEntity(IBlockState blockState)
     {
         return true;
     }
 
     @Override
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity)
     {
         this.setBlockBounds(0.4375F, 0.0F, 0.4375F, 0.5625F, 0.9375F, 0.5625F);
-        super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+        super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
         this.setBlockBoundsForItemRender();
-        super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
+        super.addCollisionBoxesToList(worldIn, pos, state, mask, list, collidingEntity);
     }
 
+    @Override
     public void setBlockBoundsForItemRender()
     {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);

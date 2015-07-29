@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -132,7 +133,7 @@ public class OmegaParadigm
 		
 	}
 	
-	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
+	public boolean getBlockEffectWhileInside(Entity entity, BlockPos blockPos)
 	{
 		return false;
 	}
