@@ -129,17 +129,20 @@ public class OmegaStructureHandler
                     	indTally++;
                     }
                                         
-                    Block block = world.getBlock(x - range + i, y - range + j, z - range + k);
-                    int meta = world.getBlockMetadata(x - range + i, y - range + j, z - range + k);    
+                    BlockPos newPos = pos.add(i - range, j - range, k - range);
+                    
+                    IBlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
+                    int meta = block.getMetaFromState(state);
                     
                     if(block instanceof IEnchantmentGlyph)
                     {
-                    	tally += ((IEnchantmentGlyph)block).getAdditionalStabilityForFaceCount(world, x-range+i, y-range+j, z-range+k, meta, indTally);
-                    	enchantability += ((IEnchantmentGlyph)block).getEnchantability(world, x-range+i, y-range+j, z-range+k, meta);
-                    	enchantmentLevel += ((IEnchantmentGlyph)block).getEnchantmentLevel(world, x-range+i, y-range+j, z-range+k, meta);
+                    	tally += ((IEnchantmentGlyph)block).getAdditionalStabilityForFaceCount(world, newPos, meta, indTally);
+                    	enchantability += ((IEnchantmentGlyph)block).getEnchantability(world, newPos, meta);
+                    	enchantmentLevel += ((IEnchantmentGlyph)block).getEnchantmentLevel(world, newPos, meta);
                     }else if(block instanceof IStabilityGlyph)
                     {
-                    	tally += ((IStabilityGlyph)block).getAdditionalStabilityForFaceCount(world, x-range+i, y-range+j, z-range+k, meta, indTally);
+                    	tally += ((IStabilityGlyph)block).getAdditionalStabilityForFaceCount(world, newPos, meta, indTally);
                     }else
                     {
                         tally += indTally;
@@ -151,8 +154,8 @@ public class OmegaStructureHandler
 		return new OmegaStructureParameters(tally, enchantability, enchantmentLevel);
 	}
 	
-	public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim)
+	public static OmegaStructureParameters getStructureStabilityFactor(World world, BlockPos pos, int expLim)
 	{
-        return getStructureStabilityFactor(world, x, y, z, expLim, new Int3(0, 0, 0));
+        return getStructureStabilityFactor(world, pos, expLim, new Int3(0, 0, 0));
 	}
 }

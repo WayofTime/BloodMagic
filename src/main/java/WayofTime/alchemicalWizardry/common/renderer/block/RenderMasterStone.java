@@ -1,15 +1,15 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
 import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
 
 public class RenderMasterStone extends TileEntitySpecialRenderer
 {
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
         if (tileEntity instanceof TEMasterStone)
         {

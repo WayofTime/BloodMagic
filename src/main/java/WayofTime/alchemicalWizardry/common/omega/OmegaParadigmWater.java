@@ -49,7 +49,7 @@ public class OmegaParadigmWater extends OmegaParadigm
 	}
 	
 	@Override
-	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
+	public boolean getBlockEffectWhileInside(Entity entity, BlockPos pos)
 	{
 		if(entity instanceof EntityLivingBase)
 		{
