@@ -1,12 +1,13 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,7 +16,6 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class TEBellJarItemRenderer implements IItemRenderer
 {
@@ -24,7 +24,7 @@ public class TEBellJarItemRenderer implements IItemRenderer
     private ResourceLocation mainResource = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
-    private void renderConduitItem(RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ)
+    private void renderConduitItem(ItemStack item, float translateX, float translateY, float translateZ)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) translateX + 0.5F, (float) translateY + 1.5F, (float) translateZ + 0.5F);
@@ -67,7 +67,7 @@ public class TEBellJarItemRenderer implements IItemRenderer
     private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity)
     {
         GL11.glPushMatrix();
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(resourceLocation);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
@@ -79,12 +79,13 @@ public class TEBellJarItemRenderer implements IItemRenderer
 
         GL11.glDepthMask(false);
 
-        tessellator.startDrawingQuads();
-        tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
+        WorldRenderer wr = tessellator.getWorldRenderer();
+        wr.startDrawingQuads();
+        wr.func_178961_b(colourRed, colourGreen, colourBlue, colourIntensity);
 
         GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
 
-        tessellator.setBrightness(240);
+        wr.func_178963_b(240);
 
         double x1 = -4d / 16d;
         double x2 = 4d / 16d;
@@ -98,26 +99,26 @@ public class TEBellJarItemRenderer implements IItemRenderer
         double resy1 = 1.0d;
         double resy2 = 1.0d;
 
-        tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y1, z1, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z1, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
-        tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x1, y1, z2, resx2, resy1);
-        tessellator.addVertexWithUV(x1, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
-        tessellator.addVertexWithUV(x1, y1, z2, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z2, resx1, resy2);
-        tessellator.addVertexWithUV(x2, y1, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x2, y2, z1, resx1, resy2);
-        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y2, z1, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z2, resx1, resy2);
+        wr.addVertexWithUV(x1, y1, z1, resx1, resy1);
+        wr.addVertexWithUV(x2, y1, z1, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z1, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z1, resx1, resy2);
+        wr.addVertexWithUV(x1, y1, z1, resx1, resy1);
+        wr.addVertexWithUV(x1, y1, z2, resx2, resy1);
+        wr.addVertexWithUV(x1, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z1, resx1, resy2);
+        wr.addVertexWithUV(x1, y1, z2, resx1, resy1);
+        wr.addVertexWithUV(x2, y1, z2, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z2, resx1, resy2);
+        wr.addVertexWithUV(x2, y1, z1, resx1, resy1);
+        wr.addVertexWithUV(x2, y1, z2, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x2, y2, z1, resx1, resy2);
+        wr.addVertexWithUV(x1, y2, z1, resx1, resy1);
+        wr.addVertexWithUV(x2, y2, z1, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z2, resx1, resy2);
         tessellator.draw();
 
         GL11.glDepthMask(true);
@@ -164,16 +165,16 @@ public class TEBellJarItemRenderer implements IItemRenderer
         switch (type)
         {
             case ENTITY:
-                renderConduitItem((RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);
+                renderConduitItem(item, -0.5f, -0.5f, -0.5f);
                 break;
             case EQUIPPED:
-                renderConduitItem((RenderBlocks) data[0], item, -0.4f, 0.50f, 0.35f);
+                renderConduitItem(item, -0.4f, 0.50f, 0.35f);
                 break;
             case EQUIPPED_FIRST_PERSON:
-                renderConduitItem((RenderBlocks) data[0], item, -0.4f, 0.50f, 0.35f);
+                renderConduitItem(item, -0.4f, 0.50f, 0.35f);
                 break;
             case INVENTORY:
-                renderConduitItem((RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);
+                renderConduitItem(item, -0.5f, -0.5f, -0.5f);
                 break;
             default:
         }
