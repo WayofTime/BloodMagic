@@ -17,10 +17,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IThrowableEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 //Shamelessly ripped off from x3n0ph0b3
 public class EnergyBlastProjectile extends Entity implements IProjectile, IThrowableEntity
