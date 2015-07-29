@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.client;
 
-import net.minecraft.client.settings.KeyBinding;
 
 public class KeyBindings 
 {

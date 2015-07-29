@@ -86,7 +86,7 @@ public class ThreadDownloadGAPI extends Thread
         }
     }
 
-    private void sendError()
+	private void sendError()
     {
         if (Minecraft.getMinecraft().thePlayer != null)
         {

@@ -611,7 +611,6 @@ public class AlchemicalWizardry
         ItemStack glassStack = new ItemStack(Blocks.glass, 1, craftingConstant);
         ItemStack ironIngotStack = new ItemStack(Items.iron_ingot);
         ItemStack diamondStack = new ItemStack(Items.diamond, 1, craftingConstant);
-        ItemStack woolStack = new ItemStack(Blocks.wool);
         ItemStack goldNuggetStack = new ItemStack(Items.gold_nugget);
         ItemStack stoneStack = new ItemStack(Blocks.stone, 1, craftingConstant);
         ItemStack redstoneStack = new ItemStack(Items.redstone);
@@ -622,9 +621,7 @@ public class AlchemicalWizardry
         ItemStack magmaCreamStack = new ItemStack(Items.magma_cream);
         ItemStack stringStack = new ItemStack(Items.string);
         ItemStack obsidianStack = new ItemStack(Blocks.obsidian);
-        ItemStack diamondSwordStack = new ItemStack(Items.diamond_sword);
         ItemStack goldIngotStack = new ItemStack(Items.gold_ingot);
-        ItemStack cauldronStack = new ItemStack(Blocks.cauldron);
         ItemStack furnaceStack = new ItemStack(Blocks.furnace);
         ItemStack sugarStack = new ItemStack(Items.sugar);
         ItemStack featherStack = new ItemStack(Items.feather);
@@ -636,7 +633,6 @@ public class AlchemicalWizardry
         ItemStack saplingStack = new ItemStack(Blocks.sapling);
         ItemStack reedStack = new ItemStack(Items.reeds);
         ItemStack blankSlateStack = new ItemStack(ModItems.blankSlate, 1, craftingConstant);
-        ItemStack weakBloodOrbStackCrafted = new ItemStack(ModItems.weakBloodOrb);
         ItemStack reinforcedSlateStack = new ItemStack(ModItems.reinforcedSlate, 1, craftingConstant);
         ItemStack weakBloodOrbStack = new ItemStack(ModItems.weakBloodOrb, 1, craftingConstant);
         ItemStack imbuedSlateStack = new ItemStack(ModItems.imbuedSlate, 1, craftingConstant);
@@ -649,23 +645,16 @@ public class AlchemicalWizardry
         ItemStack airSigilStack = new ItemStack(ModItems.airSigil);
         ItemStack lavaCrystalStackCrafted = new ItemStack(ModItems.lavaCrystal);
         ItemStack lavaCrystalStack = new ItemStack(ModItems.lavaCrystal);
-        ItemStack energySwordStack = new ItemStack(ModItems.energySword);
-        ItemStack energyBlasterStack = new ItemStack(ModItems.energyBlaster);
         ItemStack sacrificialDaggerStack = new ItemStack(ModItems.sacrificialDagger);
         ItemStack bloodAltarStack = new ItemStack(ModBlocks.blockAltar, 1, 0);
         ItemStack bloodRuneCraftedStack = new ItemStack(ModBlocks.bloodRune, 1);
         ItemStack bloodRuneStack = new ItemStack(ModBlocks.bloodRune);
         ItemStack speedRuneStack = new ItemStack(ModBlocks.speedRune);
-        ItemStack efficiencyRuneStack = new ItemStack(ModBlocks.efficiencyRune);
         ItemStack runeOfSacrificeStack = new ItemStack(ModBlocks.runeOfSacrifice);
         ItemStack runeOfSelfSacrificeStack = new ItemStack(ModBlocks.runeOfSelfSacrifice);
         ItemStack miningSigilStackCrafted = new ItemStack(ModItems.sigilOfTheFastMiner);
         ItemStack divinationSigilStackCrafted = new ItemStack(ModItems.divinationSigil);
         ItemStack seerSigilStackCrafted = new ItemStack(ModItems.itemSeerSigil);
-        ItemStack waterScribeToolStack = new ItemStack(ModItems.waterScribeTool);
-        ItemStack fireScribeToolStack = new ItemStack(ModItems.fireScribeTool);
-        ItemStack earthScribeToolStack = new ItemStack(ModItems.earthScribeTool);
-        ItemStack airScribeToolStack = new ItemStack(ModItems.airScribeTool);
         ItemStack ritualStoneStackCrafted = new ItemStack(ModBlocks.ritualStone, 4);
         ItemStack ritualStoneStack = new ItemStack(ModBlocks.ritualStone);
         ItemStack masterRitualStoneStack = new ItemStack(ModBlocks.blockMasterStone);
@@ -684,7 +673,6 @@ public class AlchemicalWizardry
         ItemStack growthSigilStack = new ItemStack(ModItems.growthSigil);
         ItemStack blockHomHeartStack = new ItemStack(ModBlocks.blockHomHeart);
         ItemStack redWoolStack = new ItemStack(Blocks.wool, 1, 14);
-        ItemStack zombieHead = new ItemStack(Items.skull, 1, 2);
         ItemStack simpleCatalystStack = new ItemStack(ModItems.simpleCatalyst);
         ItemStack duskRitualDivinerStack = new ItemStack(ModItems.itemRitualDiviner);
         ((ItemRitualDiviner) duskRitualDivinerStack.getItem()).setMaxRuneDisplacement(duskRitualDivinerStack, 1);
@@ -1023,7 +1011,6 @@ public class AlchemicalWizardry
         
         ItemStack magicalesCraftedCableStack = new ItemStack(ModItems.baseItems, 5, 2);
         ItemStack crackedRunicPlateStackCrafted = new ItemStack(ModItems.baseItems, 2, 15);
-        ItemStack runicPlateStackCrafted = new ItemStack(ModItems.baseItems, 2, 16);
 
         GameRegistry.addRecipe(quartzRodStack, "qqq", 'q', new ItemStack(Items.quartz));
         GameRegistry.addRecipe(emptyCoreStack, "gig", "nrn", "gig", 'n', goldIngotStack, 'i', ironIngotStack, 'g', glassStack, 'r', simpleCatalystStack);
