@@ -7,10 +7,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.omega.IStabilityGlyph;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.alchemicalWizardry.common.omega.IStabilityGlyph;
 
 public class BlockStabilityGlyph extends Block implements IStabilityGlyph
 {
@@ -22,7 +23,7 @@ public class BlockStabilityGlyph extends Block implements IStabilityGlyph
     }
 
 	@Override
-	public int getAdditionalStabilityForFaceCount(World world, int x, int y, int z, int meta, int faceCount) 
+	public int getAdditionalStabilityForFaceCount(World world, BlockPos pos, int meta, int faceCount) 
 	{
 		switch(meta)
 		{
