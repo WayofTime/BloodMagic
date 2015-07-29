@@ -1,6 +1,9 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.Int3;
@@ -14,7 +17,7 @@ public class OmegaStructureHandler
 		return true;
 	}
 	
-	public static OmegaStructureParameters getStructureStabilityFactor(World world, int x, int y, int z, int expLim, Int3 offset)
+	public static OmegaStructureParameters getStructureStabilityFactor(World world, BlockPos pos, int expLim, Int3 offset)
 	{
 		int range = expLim;
 
@@ -46,107 +49,33 @@ public class OmegaStructureHandler
                     {
                         if (boolList[i][j][k] == 1)
                         {
-                            if (i - 1 >= 0 && !(boolList[i - 1][j][k] == 1 || boolList[i - 1][j][k] == -1))
-                            {
-                                Block block = world.getBlock(x - range + i - 1, y - range + j, z - range + k);
-                                if (world.isAirBlock(x - range + i - 1, y - range + j, z - range + k) || block == ModBlocks.blockSpectralContainer)
-                                {
-                                	if(i - 1 == 0) //One of the found air blocks is at the range boundary, and thus the container is incomplete
-                                	{
-                                		return emptyParam;
-                                	}
-                                    boolList[i - 1][j][k] = 1;
-                                    isReady = false;
-                                }else
-                                {
-                                	boolList[i - 1][j][k] = -1;
-                                }
-                            }
-
-                            if (j - 1 >= 0 && !(boolList[i][j - 1][k] == 1 || boolList[i][j - 1][k] == -1))
-                            {
-                                Block block = world.getBlock(x - range + i, y - range + j - 1, z - range + k);
-                                if (world.isAirBlock(x - range + i, y - range + j - 1, z - range + k) || block == ModBlocks.blockSpectralContainer)
-                                {
-                                	if(j - 1 == 0)
-                                	{
-                                		return emptyParam;
-                                	}
-                                    boolList[i][j - 1][k] = 1;
-                                    isReady = false;
-                                }else
-                                {
-                                	boolList[i][j - 1][k] = -1;
-                                }
-                            }
-
-                            if (k - 1 >= 0 && !(boolList[i][j][k - 1] == 1 || boolList[i][j][k - 1] == -1))
-                            {
-                                Block block = world.getBlock(x - range + i, y - range + j, z - range + k - 1);
-                                if (world.isAirBlock(x - range + i, y - range + j, z - range + k - 1) || block == ModBlocks.blockSpectralContainer)
-                                {
-                                	if(k - 1 == 0)
-                                	{
-                                		return emptyParam;
-                                	}
-                                    boolList[i][j][k - 1] = 1;
-                                    isReady = false;
-                                }else
-                                {
-                                	boolList[i][j][k - 1] = -1;
-                                }
-                            }
-
-                            if (i + 1 <= 2 * range && !(boolList[i + 1][j][k] == 1 || boolList[i + 1][j][k] == -1))
-                            {
-                                Block block = world.getBlock(x - range + i + 1, y - range + j, z - range + k);
-                                if (world.isAirBlock(x - range + i + 1, y - range + j, z - range + k) || block == ModBlocks.blockSpectralContainer)
-                                {
-                                	if(i + 1 == range * 2)
-                                	{
-                                		return emptyParam;
-                                	}
-                                    boolList[i + 1][j][k] = 1;
-                                    isReady = false;
-                                }else
-                                {
-                                	boolList[i + 1][j][k] = -1;
-                                }
-                            }
-
-                            if (j + 1 <= 2 * range && !(boolList[i][j + 1][k] == 1 || boolList[i][j + 1][k] == -1))
-                            {
-                                Block block = world.getBlock(x - range + i, y - range + j + 1, z - range + k);
-                                if (world.isAirBlock(x - range + i, y - range + j + 1, z - range + k) || block == ModBlocks.blockSpectralContainer)
-                                {
-                                	if(j + 1 == range * 2)
-                                	{
-                                		return emptyParam;
-                                	}
-                                    boolList[i][j + 1][k] = 1;
-                                    isReady = false;
-                                }else
-                                {
-                                	boolList[i][j + 1][k] = -1;
-                                }
-                            }
-
-                            if (k + 1 <= 2 * range && !(boolList[i][j][k + 1] == 1 || boolList[i][j][k + 1] == -1))
-                            {
-                                Block block = world.getBlock(x - range + i, y - range + j, z - range + k + 1);
-                                if (world.isAirBlock(x - range + i, y - range + j, z - range + k + 1) || block == ModBlocks.blockSpectralContainer)
-                                {
-                                	if(k + 1 == range * 2)
-                                	{
-                                		return emptyParam;
-                                	}
-                                    boolList[i][j][k + 1] = 1;
-                                    isReady = false;
-                                }else
-                                {
-                                	boolList[i][j][k + 1] = -1;
-                                }
-                            }
+                        	BlockPos position = pos.add(i - range, j - range, k - range);
+                        	
+                        	for(EnumFacing face : EnumFacing.VALUES)
+                        	{
+                        		int iP = i + face.getFrontOffsetX();
+                        		int jP = j + face.getFrontOffsetY();
+                        		int kP = k + face.getFrontOffsetZ();
+                        		
+                        		if(iP >= 0 && iP <= 2 * range && jP >= 0 && jP <= 2 * range && kP >= 0 && kP <= 2 * range && !(boolList[iP][jP][kP] == 1 || boolList[iP][jP][kP] == -1))
+                        		{
+                            		BlockPos newPos = position.add(face.getDirectionVec());
+                            		IBlockState state = world.getBlockState(newPos);
+                            		Block block = state.getBlock();
+                            		if (world.isAirBlock(newPos) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                            			if(iP == 0 && iP == 2 * range && jP == 0 && jP == 2 * range && kP == 0 && kP == 2 * range)
+                            			{
+                            				return emptyParam;
+                            			}
+                                        boolList[iP][jP][kP] = 1;
+                                        isReady = false;
+                                    }else
+                                    {
+                                    	boolList[iP][jP][kP] = -1;
+                                    }
+                        		}
+                        	}
                         }
                     }
                 }
