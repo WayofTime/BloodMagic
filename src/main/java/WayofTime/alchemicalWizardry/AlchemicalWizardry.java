@@ -300,7 +300,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 public class AlchemicalWizardry
 {
-	public static boolean parseTextFiles = false;
+	public static boolean parseTextFiles = false; 
 	
     public static boolean doMeteorsDestroyBlocks = true;
     public static String[] diamondMeteorArray;
