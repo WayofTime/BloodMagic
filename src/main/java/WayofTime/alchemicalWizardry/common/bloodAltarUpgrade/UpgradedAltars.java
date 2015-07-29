@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.IFadedRune;
-import WayofTime.alchemicalWizardry.common.block.BloodRune;
+import WayofTime.alchemicalWizardry.common.block.BlockBloodRune;
 
 public class UpgradedAltars
 {
@@ -46,7 +46,7 @@ public class UpgradedAltars
         	
             if (ac.isBloodRune())
             {
-                if (!(block instanceof BloodRune))
+                if (!(block instanceof BlockBloodRune))
                 {
                     return false;
                 }
@@ -85,14 +85,14 @@ public class UpgradedAltars
                 Block testBlock = state.getBlock();
                 int meta = testBlock.getMetaFromState(state);
                 
-                if (testBlock instanceof BloodRune)
+                if (testBlock instanceof BlockBloodRune)
                 {
                     if (testBlock instanceof IFadedRune && altarTier > ((IFadedRune)testBlock).getAltarTierLimit(meta))
                     {
                         return UpgradedAltars.getUpgrades(world, pos, ((IFadedRune)testBlock).getAltarTierLimit(meta));
                     }
                     
-                    switch (((BloodRune) testBlock).getRuneEffect(meta))
+                    switch (((BlockBloodRune) testBlock).getRuneEffect(meta))
                     {
                         case 1:
                             upgrades.addSpeedUpgrade();

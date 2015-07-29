@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class SpectralBlock extends BlockContainer
+public class BlockSpectral extends BlockContainer
 {
-    public SpectralBlock()
+    public BlockSpectral()
     {
         super(Material.rock);
         this.setBlockName("spectralBlock");

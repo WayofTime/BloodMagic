@@ -3,29 +3,25 @@ package WayofTime.alchemicalWizardry.common.block;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 
-public class SpeedRune extends BloodRune
+public class BlockBloodStoneBrick extends Block
 {
-    public SpeedRune()
+    public BlockBloodStoneBrick()
     {
-        super();
-        this.setBlockName("speedRune");
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("bloodStoneBrick");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister)
     {
-        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:SpeedRune");
-    }
-
-    @Override
-    public int getRuneEffect(int metaData)
-    {
-        return 1;
+        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodStoneBrick");
     }
 }

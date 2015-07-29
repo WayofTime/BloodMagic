@@ -15,7 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockHomHeart extends BlockContainer
+public class BlockSpellTable extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
@@ -24,7 +24,7 @@ public class BlockHomHeart extends BlockContainer
     @SideOnly(Side.CLIENT)
     private IIcon sideIcon;
 
-    public BlockHomHeart()
+    public BlockSpellTable()
     {
         super(Material.rock);
         setHardness(2.0F);

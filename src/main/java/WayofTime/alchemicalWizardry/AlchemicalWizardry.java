@@ -33,7 +33,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
@@ -83,7 +82,7 @@ import WayofTime.alchemicalWizardry.common.ModLivingDropsEvent;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
-import WayofTime.alchemicalWizardry.common.block.ArmourForge;
+import WayofTime.alchemicalWizardry.common.block.BlockArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
@@ -117,18 +116,14 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntityShadeElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
-import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
-import WayofTime.alchemicalWizardry.common.harvest.PamHarvestCompatRegistry;
 import WayofTime.alchemicalWizardry.common.items.ItemIncense;
-import WayofTime.alchemicalWizardry.common.items.ItemMailOrderCatalogue;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.items.forestry.ItemBloodFrame;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.HoldingPacketHandler;
-import WayofTime.alchemicalWizardry.common.items.thaumcraft.ItemSanguineArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmEarth;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWater;
@@ -586,7 +581,7 @@ public class AlchemicalWizardry
     {
         int craftingConstant = OreDictionary.WILDCARD_VALUE;
 
-        ModBlocks.registerBlocksInInit();
+        ModBlocks.init();
         //blocks
 
         proxy.registerRenderers();
@@ -810,7 +805,7 @@ public class AlchemicalWizardry
 
         //Gui registration
         UpgradedAltars.loadAltars();
-        ArmourForge.initializeRecipes();
+        BlockArmourForge.initializeRecipes();
         TEPlinth.initialize();
 
         initAlchemyPotionRecipes();

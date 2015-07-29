@@ -21,7 +21,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TECrucible;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockCrucible extends BlockContainer
+public class BlockIncenseCrucible extends BlockContainer
 {
 	@SideOnly(Side.CLIENT)
     private IIcon topIcon;
@@ -30,7 +30,7 @@ public class BlockCrucible extends BlockContainer
     @SideOnly(Side.CLIENT)
     private IIcon bottomIcon;
     
-	public BlockCrucible() 
+	public BlockIncenseCrucible()
 	{
 		super(Material.anvil);
 		this.setHardness(2.0f);
