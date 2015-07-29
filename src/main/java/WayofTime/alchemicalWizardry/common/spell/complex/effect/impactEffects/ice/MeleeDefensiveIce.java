@@ -1,12 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.MeleeSpellWorldEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.spell.MeleeSpellWorldEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class MeleeDefensiveIce extends MeleeSpellWorldEffect
 {
@@ -18,29 +18,30 @@ public class MeleeDefensiveIce extends MeleeSpellWorldEffect
     @Override
     public void onWorldEffect(World world, EntityPlayer entityPlayer)
     {
-        ForgeDirection look = SpellHelper.getCompassDirectionForLookVector(entityPlayer.getLookVec());
+        EnumFacing look = SpellHelper.getCompassDirectionForLookVector(entityPlayer.getLookVec());
 
         int width = this.powerUpgrades;
         int height = this.powerUpgrades + 2;
 
-        int xOffset = look.offsetX;
-        int zOffset = look.offsetZ;
+        int xOffset = look.getFrontOffsetX();
+        int zOffset = look.getFrontOffsetZ();
 
         int range = this.potencyUpgrades + 1;
 
-        Vec3 lookVec = SpellHelper.getEntityBlockVector(entityPlayer);
+        BlockPos pos = entityPlayer.getPosition();
 
-        int xStart = (int) (lookVec.xCoord) + range * xOffset;
-        int zStart = (int) (lookVec.zCoord) + range * zOffset;
-        int yStart = (int) (lookVec.yCoord);
+        int xStart = pos.getX() + range * xOffset;
+        int zStart = pos.getZ() + range * zOffset;
+        int yStart = pos.getY();
 
         for (int i = -width; i <= width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                if (world.isAirBlock(xStart + i * (zOffset), yStart + j, zStart + i * (xOffset)))
+            	BlockPos newPos = new BlockPos(xStart + i * (zOffset), yStart + j, zStart + i * (xOffset));
+                if (world.isAirBlock(newPos))
                 {
-                    world.setBlock(xStart + i * (zOffset), yStart + j, zStart + i * (xOffset), Blocks.ice);
+                    world.setBlockState(newPos, Blocks.ice.getDefaultState());
                 }
             }
         }

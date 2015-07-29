@@ -18,7 +18,7 @@ public class DemonVillageLootRegistry
 		String[] tier1Strings = new String[]{ChestGenHooks.DUNGEON_CHEST, ChestGenHooks.PYRAMID_DESERT_CHEST};
 		for(String str : tier1Strings)
 		{
-			WeightedRandomChestContent[] contents = ChestGenHooks.getItems(str, new Random());
+			List<WeightedRandomChestContent> contents = ChestGenHooks.getItems(str, new Random());
 			if(contents != null)
 			{
 				for(WeightedRandomChestContent content : contents)
@@ -34,16 +34,6 @@ public class DemonVillageLootRegistry
 	
 	public static void populateChest(IInventory tile, int tier)
 	{
-		WeightedRandomChestContent.generateChestContents(new Random(), toArray(list1), tile, tile.getSizeInventory() / 3);
-	}
-	
-	public static WeightedRandomChestContent[] toArray(List<WeightedRandomChestContent> aList)
-	{
-		int size = aList.size();
-		WeightedRandomChestContent[] contents = new WeightedRandomChestContent[size];
-		
-		contents = aList.toArray(contents);
-		
-		return contents;
+		WeightedRandomChestContent.generateChestContents(new Random(), list1, tile, tile.getSizeInventory() / 3);
 	}
 }

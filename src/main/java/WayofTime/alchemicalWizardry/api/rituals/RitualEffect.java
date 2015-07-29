@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 
@@ -40,13 +40,13 @@ public abstract class RitualEffect
 
         ReagentStack reagentStack = new ReagentStack(reagent, amount);
 
-        ReagentStack stack = ritualStone.drain(ForgeDirection.UNKNOWN, reagentStack, false);
+        ReagentStack stack = ritualStone.drain(EnumFacing.UP, reagentStack, false);
 
         if (stack != null && stack.amount >= amount)
         {
             if (doDrain)
             {
-                ritualStone.drain(ForgeDirection.UNKNOWN, reagentStack, true);
+                ritualStone.drain(EnumFacing.UP, reagentStack, true);
             }
 
             return true;

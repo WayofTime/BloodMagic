@@ -64,7 +64,7 @@ public class CheatyItem extends Item implements IBindable
             double posY = par3EntityPlayer.posY;
             double posZ = par3EntityPlayer.posZ;
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 4, posX, posY, posZ);
+            SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
         }
 
         if (par3EntityPlayer.worldObj.isRemote)

@@ -1,9 +1,11 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
 
 public class CactusReedHarvestHandler implements IHarvestHandler
 {
@@ -13,19 +15,19 @@ public class CactusReedHarvestHandler implements IHarvestHandler
     }
 
     @Override
-    public boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta)
+    public boolean harvestAndPlant(World world, BlockPos pos, Block block, IBlockState state)
     {
         if (!this.canHandleBlock(block))
         {
             return false;
         }
 
-        if (world.getBlock(xCoord, yCoord - 1, zCoord) != block || world.getBlock(xCoord, yCoord - 2, zCoord) != block)
+        if (world.getBlockState(pos.offsetDown(1)).getBlock() != block || world.getBlockState(pos.offsetDown(2)).getBlock() != block)
         {
             return false;
         }
 
-        world.func_147480_a(xCoord, yCoord, zCoord, true);
+        world.destroyBlock(pos, true);
 
         return true;
     }

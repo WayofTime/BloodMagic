@@ -151,7 +151,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
         if (shootingEntity == null)
         {
-            List players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(posX - 1, posY - 1, posZ - 1, posX + 1, posY + 1, posZ + 1));
+            List players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(posX - 1, posY - 1, posZ - 1, posX + 1, posY + 1, posZ + 1));
             Iterator i = players.iterator();
             double closestDistance = Double.MAX_VALUE;
             EntityPlayer closestPlayer = null;

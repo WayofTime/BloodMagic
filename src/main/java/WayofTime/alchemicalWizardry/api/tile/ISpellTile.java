@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.api.tile;
 
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 
 public interface ISpellTile 
 {
 	void modifySpellParadigm(SpellParadigm parad);
 	
-	boolean canInputRecieveOutput(ForgeDirection output);
+	boolean canInputRecieveOutput(EnumFacing output);
 }

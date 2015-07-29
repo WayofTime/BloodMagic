@@ -39,7 +39,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
         if (tileEntity instanceof TEAlchemicCalcinator)
         {

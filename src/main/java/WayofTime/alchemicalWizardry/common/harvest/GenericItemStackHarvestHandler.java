@@ -1,17 +1,18 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import java.util.List;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
 
 public class GenericItemStackHarvestHandler implements IHarvestHandler
 {
-
     public Block harvestBlock;
     public int harvestMeta;
     public ItemStack harvestItem;
@@ -30,15 +31,15 @@ public class GenericItemStackHarvestHandler implements IHarvestHandler
         return block == harvestBlock;
     }
 
-    public int getHarvestMeta(Block block)
+    public int getHarvestMeta()
     {
         return harvestMeta;
     }
 
     @Override
-    public boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta)
+    public boolean harvestAndPlant(World world, BlockPos pos, Block block, IBlockState state)
     {
-        if (!this.canHandleBlock(block) || meta != this.getHarvestMeta(block))
+        if (!this.canHandleBlock(block) || block.getMetaFromState(state) != this.getHarvestMeta())
         {
             return false;
         }
@@ -47,14 +48,14 @@ public class GenericItemStackHarvestHandler implements IHarvestHandler
 
         if (seed == null)
         {
-            world.func_147480_a(xCoord, yCoord, zCoord, true);
+            world.destroyBlock(pos, true);
 
             return true;
         } else
         {
             int fortune = 0;
 
-            List<ItemStack> list = block.getDrops(world, xCoord, yCoord, zCoord, meta, fortune);
+            List<ItemStack> list = block.getDrops(world, pos, state, fortune);
             boolean foundAndRemovedSeed = false;
 
             for (ItemStack stack : list)
@@ -85,16 +86,15 @@ public class GenericItemStackHarvestHandler implements IHarvestHandler
 
             if (foundAndRemovedSeed)
             {
-                int plantMeta = seed.getPlantMetadata(world, xCoord, yCoord, zCoord);
-                Block plantBlock = seed.getPlant(world, xCoord, yCoord, zCoord);
+                IBlockState plantState = seed.getPlant(world, pos);
 
-                world.func_147480_a(xCoord, yCoord, zCoord, false);
+                world.destroyBlock(pos, false);
 
-                world.setBlock(xCoord, yCoord, zCoord, plantBlock, plantMeta, 3);
+                world.setBlockState(pos, plantState, 3);
 
                 for (ItemStack stack : list)
                 {
-                    EntityItem itemEnt = new EntityItem(world, xCoord, yCoord, zCoord, stack);
+                    EntityItem itemEnt = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 
                     world.spawnEntityInWorld(itemEnt);
                 }

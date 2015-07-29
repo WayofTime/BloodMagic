@@ -1,17 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool;
 
-import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
-import WayofTime.alchemicalWizardry.api.spell.IDigAreaEffect;
-import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
+import WayofTime.alchemicalWizardry.api.spell.IDigAreaEffect;
 
 public class DigAreaEffect implements IDigAreaEffect
 {
@@ -34,9 +31,10 @@ public class DigAreaEffect implements IDigAreaEffect
             return 0;
         }
 
-        int x = blockPos.blockX;
-        int y = blockPos.blockY;
-        int z = blockPos.blockZ;
+        int x = blockPos.func_178782_a().getX(); //BlockPos
+        int y = blockPos.func_178782_a().getY();
+        int z = blockPos.func_178782_a().getZ();
+        EnumFacing sidehit = blockPos.field_178784_b;
 
         for (int xPos = x - 1; xPos <= x + 1; xPos++)
         {
@@ -44,85 +42,15 @@ public class DigAreaEffect implements IDigAreaEffect
             {
                 for (int zPos = z - 1; zPos <= z + 1; zPos++)
                 {
-                    this.breakBlock(container, world, player, blockHardness, xPos, yPos, zPos, itemTool);
+                	BlockPos newPos = new BlockPos(xPos, yPos, zPos);
+                    ModItems.customTool.onBlockStartBreak(container, newPos, player);
                 }
             }
         }
 
         return 0;
     }
-
-    public void breakBlock(ItemStack container, World world, EntityPlayer player, float blockHardness, int x, int y, int z, ItemSpellMultiTool itemTool)
-    {
-        int hlvl = -1;
-        Block localBlock = world.getBlock(x, y, z);
-        int localMeta = world.getBlockMetadata(x, y, z);
-        String toolClass = localBlock.getHarvestTool(localMeta);
-        if (toolClass != null && itemTool.getHarvestLevel(container, toolClass) != -1)
-            hlvl = localBlock.getHarvestLevel(localMeta);
-        int toolLevel = itemTool.getHarvestLevel(container, toolClass);
-
-        float localHardness = localBlock == null ? Float.MAX_VALUE : localBlock.getBlockHardness(world, x, y, z);
-
-        if (hlvl <= toolLevel && localHardness - this.getHardnessDifference() <= blockHardness)
-        {
-            boolean cancelHarvest = false;
-
-            if (!cancelHarvest)
-            {
-                if (localBlock != null && !(localHardness < 0))
-                {
-                    boolean isEffective = false;
-
-                    String localToolClass = itemTool.getToolClassForMaterial(localBlock.getMaterial());
-
-                    if (localToolClass != null && itemTool.getHarvestLevel(container, toolClass) >= localBlock.getHarvestLevel(localMeta))
-                    {
-                        isEffective = true;
-                    }
-
-                    if (localBlock.getMaterial().isToolNotRequired())
-                    {
-                        isEffective = true;
-                    }
-
-                    if (!player.capabilities.isCreativeMode)
-                    {
-                        if (isEffective)
-                        {
-                            if (localBlock.removedByPlayer(world, player, x, y, z))
-                            {
-                                localBlock.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
-                            }
-                            localBlock.onBlockHarvested(world, x, y, z, localMeta, player);
-                            if (localHardness > 0f)
-                                itemTool.onBlockDestroyed(container, world, localBlock, x, y, z, player);
-
-                            List<ItemStack> items = SpellHelper.getItemsFromBlock(world, localBlock, x, y, z, localMeta, itemTool.getSilkTouch(container), itemTool.getFortuneLevel(container));
-
-                            SpellParadigmTool parad = itemTool.loadParadigmFromStack(container);
-                            items = parad.handleItemList(container, items);
-
-                            if (!world.isRemote)
-                            {
-                                SpellHelper.spawnItemListInWorld(items, world, x + 0.5f, y + 0.5f, z + 0.5f);
-                            }
-
-                            world.func_147479_m(x, y, z);
-                        } else
-                        {
-                        }
-
-                    } else
-                    {
-                        world.setBlockToAir(x, y, z);
-                        world.func_147479_m(x, y, z);
-                    }
-                }
-            }
-        }
-    }
-
+    
     public float getHardnessDifference()
     {
         return 1.5f;

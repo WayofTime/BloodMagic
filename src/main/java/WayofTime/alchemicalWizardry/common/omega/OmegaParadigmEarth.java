@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -35,13 +34,13 @@ public class OmegaParadigmEarth extends OmegaParadigm
 		{
 			if(player.posY < 50 && player.getHealth() < player.getMaxHealth())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, 0, true));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, 0, true, false));
 			}
 		}
 		
 		if(player.posY > 100)
 		{
-			player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, 200, 0, true));
+			player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionHeavyHeart.id, 200, 0, true, false));
 		}
 	}
 	

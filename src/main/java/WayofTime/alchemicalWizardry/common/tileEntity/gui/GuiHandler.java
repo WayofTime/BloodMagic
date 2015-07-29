@@ -1,8 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.ContainerHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.GuiHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.InventoryHolding;
@@ -10,7 +13,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
-import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -19,11 +21,12 @@ public class GuiHandler implements IGuiHandler
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
     {
         TileEntity tileEntity;
+        BlockPos pos = new BlockPos(x, y, z);
 
         switch (id)
         {
             case 0:
-                tileEntity = world.getTileEntity(x, y, z);
+                tileEntity = world.getTileEntity(pos);
 
                 if (tileEntity instanceof TEWritingTable)
                 {
@@ -31,7 +34,7 @@ public class GuiHandler implements IGuiHandler
                 }
 
             case 1:
-                tileEntity = world.getTileEntity(x, y, z);
+                tileEntity = world.getTileEntity(pos);
 
                 if (tileEntity instanceof TETeleposer)
                 {
@@ -50,11 +53,14 @@ public class GuiHandler implements IGuiHandler
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
     {
         TileEntity tileEntity;
-        
+        BlockPos pos = new BlockPos(x, y, z);
+
+        ItemStack held = player.getHeldItem();
+
         switch (id)
         {
             case 0:
-                tileEntity = world.getTileEntity(x, y, z);
+                tileEntity = world.getTileEntity(pos);
 
                 if (tileEntity instanceof TEWritingTable)
                 {
@@ -64,7 +70,7 @@ public class GuiHandler implements IGuiHandler
                 break;
 
             case 1:
-                tileEntity = world.getTileEntity(x, y, z);
+                tileEntity = world.getTileEntity(pos);
 
                 if (tileEntity instanceof TETeleposer)
                 {

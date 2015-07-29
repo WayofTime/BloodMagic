@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.renderer;
 
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
@@ -48,7 +49,7 @@ public class AlchemyCircleRenderer extends MRSRenderer
 
         GL11.glPushMatrix();
         float f1 = 1.0f;
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
         this.bindTexture(resourceLocation);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
@@ -61,22 +62,23 @@ public class AlchemyCircleRenderer extends MRSRenderer
 
 //        GL11.glDepthMask(false);
 
-        tessellator.startDrawingQuads();
-        tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
+        WorldRenderer wr = tessellator.getWorldRenderer();
+        wr.startDrawingQuads();
+        wr.func_178961_b(colourRed, colourGreen, colourBlue, colourIntensity);
 
         GL11.glTranslated(x + 0.5 + xOffset, y + 0.5 + (yOffset - initialY) * (tile.getRunningTime() / 100d) + initialY, z + 0.5 + zOffset);
 
         float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
         GL11.glRotatef(rotationAngle, 0F, 1F, 0F); //Rotate on planar axis
-        tessellator.setBrightness(240);
+//        tessellator.setBrightness(240);
 
         double finalRadius = (radius) * (tile.getRunningTime() / 100d);
 
-        tessellator.addVertexWithUV(-finalRadius, 0, -finalRadius, 0.0d, 0.0d);
-        tessellator.addVertexWithUV(finalRadius, 0, -finalRadius, 1.0d, 0.0d);
-        tessellator.addVertexWithUV(finalRadius, 0, finalRadius, 1.0d, 1.0d);
-        tessellator.addVertexWithUV(-finalRadius, 0, finalRadius, 0.0d, 1.0d);
+        wr.addVertexWithUV(-finalRadius, 0, -finalRadius, 0.0d, 0.0d);
+        wr.addVertexWithUV(finalRadius, 0, -finalRadius, 1.0d, 0.0d);
+        wr.addVertexWithUV(finalRadius, 0, finalRadius, 1.0d, 1.0d);
+        wr.addVertexWithUV(-finalRadius, 0, finalRadius, 0.0d, 1.0d);
 
         tessellator.draw();
 

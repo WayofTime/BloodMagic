@@ -37,7 +37,7 @@ public class TESpellEnhancementBlock extends TESpellBlock
 
     public SpellEnhancement getSpellEnhancement()
     {
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        int meta = this.getBlockMetadata();
         switch (meta)
         {
             case 0:
@@ -64,7 +64,7 @@ public class TESpellEnhancementBlock extends TESpellBlock
 
     public int getLimit()
     {
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        int meta = this.getBlockMetadata();
         switch (meta)
         {
             case 0:
@@ -103,7 +103,7 @@ public class TESpellEnhancementBlock extends TESpellBlock
 
     public int enhancementType() //0 is power, 1 is cost, 2 is potency
     {
-        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        int meta = this.getBlockMetadata();
         switch (meta)
         {
             case 0:

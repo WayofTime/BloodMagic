@@ -7,14 +7,16 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
@@ -337,12 +339,12 @@ public class SpellParadigmTool extends SpellParadigm
         return total;
     }
 
-    public int onBreakBlock(ItemStack container, World world, EntityPlayer player, Block block, int meta, int x, int y, int z, ForgeDirection sideBroken)
+    public int onBreakBlock(ItemStack container, World world, EntityPlayer player, Block block, IBlockState state, BlockPos pos, EnumFacing sideBroken)
     {
         int total = 0;
         for (IOnBreakBlock effect : this.breakBlockEffectList)
         {
-            total += effect.onBlockBroken(container, world, player, block, meta, x, y, z, sideBroken);
+            total += effect.onBlockBroken(container, world, player, block, state, pos, sideBroken);
         }
 
         return total;

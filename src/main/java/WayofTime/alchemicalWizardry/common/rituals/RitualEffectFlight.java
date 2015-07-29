@@ -10,6 +10,7 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -27,14 +28,12 @@ public class RitualEffectFlight extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         int range = 20;
         int verticalRange = 30;
-        AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
+        AxisAlignedBB axis = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
         axis.maxY = 256;
         axis.minY = 0;
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, axis);

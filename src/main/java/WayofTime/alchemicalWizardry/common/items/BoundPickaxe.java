@@ -131,11 +131,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             return par1ItemStack;
         }
 
-        if (AlchemicalWizardry.disableBoundToolsRightClick)
-        {
-            return par1ItemStack;
-        }
-
         if (par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionInhibit))
         {
             return par1ItemStack;

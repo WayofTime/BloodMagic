@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -31,10 +33,8 @@ public class RitualEffectSphereCreator extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
 //        boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
@@ -48,7 +48,7 @@ public class RitualEffectSphereCreator extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-        	TileEntity tile = world.getTileEntity(x, y+1, z);
+        	TileEntity tile = world.getTileEntity(pos.offsetUp());
         	if(!(tile instanceof IInventory))
         	{
         		return;
@@ -107,8 +107,8 @@ public class RitualEffectSphereCreator extends RitualEffect
         		k = Math.min(radius, Math.max(-radius, lastPos.zCoord));
         	}
         	
-        	int yP = y + negYOffset;
-        	int yN = y - negYOffset;
+        	int yP = negYOffset;
+        	int yN = -negYOffset;
         	
         	boolean incrementNext = false;
         	
@@ -131,21 +131,25 @@ public class RitualEffectSphereCreator extends RitualEffect
                     		return;
                     	}
                     	
-                    	Block blk = world.getBlock(x + i, yP + j, z + k);
+                    	BlockPos pPos = pos.add(i, j + yP, k);
+                    	BlockPos nPos = pos.add(i, j + yN, k);
+                    	
+                    	IBlockState state = world.getBlockState(pPos);
+                    	Block blk = state.getBlock();
 
-                        if (world.isAirBlock(x + i, yN + j, z + k) || (!world.isAirBlock(x + i, yP + j, z + k) && !SpellHelper.isBlockFluid(blk)))
+                        if (world.isAirBlock(nPos) || (!world.isAirBlock(pPos) && !SpellHelper.isBlockFluid(blk)))
                         {
                         	
                         	k++;
                             continue;
                         }
 
-                        if(BlockTeleposer.swapBlocks(this, world, world, x + i, yN + j, z + k, x + i, yP + j, z + k, false, 2))
+                        if(BlockTeleposer.swapBlocks(this, world, world, nPos, pPos, false, 2))
                         {
                             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
                             if(this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, true))
                         	{
-                        		world.setBlock(x + i, yN + j, z + k, Blocks.dirt, 0, 2);
+                        		world.setBlockState(nPos, Blocks.dirt.getDefaultState(), 2);
                         	}
                         }
                         

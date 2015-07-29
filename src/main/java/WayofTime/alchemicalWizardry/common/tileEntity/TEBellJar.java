@@ -5,10 +5,13 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.Constants;
 
 public class TEBellJar extends TEReagentConduit
@@ -36,7 +39,7 @@ public class TEBellJar extends TEReagentConduit
 
     public static ReagentContainerInfo[] getContainerInfoFromItem(ItemStack stack)
     {
-        if (stack != null && stack.getItem() instanceof ItemBlock && ModBlocks.blockCrystalBelljar == ((ItemBlock) stack.getItem()).field_150939_a)
+        if (stack != null && stack.getItem() instanceof ItemBlock && ModBlocks.blockCrystalBelljar == ((ItemBlock) stack.getItem()).getBlock())
         {
             NBTTagCompound tag = stack.getTagCompound();
             if (tag != null)
@@ -98,24 +101,19 @@ public class TEBellJar extends TEReagentConduit
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-
+    	super.update();
+    	
         if (hasChanged == 1)
         {
-            Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
-            block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
-            block = worldObj.getBlock(xCoord - 1, yCoord, zCoord);
-            block.onNeighborBlockChange(worldObj, xCoord - 1, yCoord, zCoord, block);
-            block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-            block.onNeighborBlockChange(worldObj, xCoord, yCoord + 1, zCoord, block);
-            block = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
-            block.onNeighborBlockChange(worldObj, xCoord, yCoord - 1, zCoord, block);
-            block = worldObj.getBlock(xCoord, yCoord, zCoord + 1);
-            block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord + 1, block);
-            block = worldObj.getBlock(xCoord, yCoord, zCoord - 1);
-            block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block);
+        	for(EnumFacing facing : EnumFacing.VALUES)
+        	{
+        		BlockPos newPos = pos.offset(facing);
+        		IBlockState state = worldObj.getBlockState(newPos);
+        		Block block = state.getBlock();
+        		block.onNeighborBlockChange(worldObj, newPos, state, this.getBlockType());
+        	}
         }
     }
 }

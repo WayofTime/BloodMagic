@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
 
 public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
 {
@@ -15,7 +17,7 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
     }
 
     @Override
-    public void onCenteredWorldEffect(EntityPlayer player, World world, int posX, int posY, int posZ)
+    public void onCenteredWorldEffect(EntityPlayer player, World world, BlockPos pos)
     {
         int radius = this.potencyUpgrades;
 
@@ -25,17 +27,18 @@ public class MeleeDefaultEarth extends MeleeSpellCenteredWorldEffect
             {
                 for (int k = -radius; k <= radius; k++)
                 {
-                    if (!world.isAirBlock(posX + i, posY + j, posZ + k) && world.getTileEntity(posX + i, posY + j, posZ + k) == null)
+                	BlockPos newPos = pos.add(i, j, k);
+                    if (!world.isAirBlock(newPos) && world.getTileEntity(newPos) == null)
                     {
-                        Block block = world.getBlock(posX + i, posY + j, posZ + k);
+                    	IBlockState state = world.getBlockState(newPos);
+                        Block block = state.getBlock();
 
-                        if (block.getBlockHardness(world, posX + i, posY + j, posZ + k) == -1)
+                        if (block.getBlockHardness(world, newPos) == -1)
                         {
                             continue;
                         }
-                        int meta = world.getBlockMetadata(posX + i, posY + j, posZ + k);
 
-                        EntityFallingBlock entity = new EntityFallingBlock(world, posX + i + 0.5f, posY + j + 0.5f, posZ + k + 0.5f, block, meta);
+                        EntityFallingBlock entity = new EntityFallingBlock(world, newPos.getX() + 0.5f, newPos.getY() + 0.5f, newPos.getZ() + 0.5f, state);
                         world.spawnEntityInWorld(entity);
                     }
                 }

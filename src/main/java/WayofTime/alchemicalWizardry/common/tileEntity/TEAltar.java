@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,11 +11,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidEvent;
@@ -34,7 +37,7 @@ import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.AltarUpgradeCompone
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, IBloodAltar
+public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, IBloodAltar, IUpdatePlayerListBox
 {
     public static final int sizeInv = 1;
     
@@ -246,7 +249,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return "TEAltar";
     }
@@ -339,7 +342,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             return 0;
         }
 
-        if (resource.getFluidID() != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).getFluidID())
+        if (resource.getFluid() != (new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 1)).getFluid())
         {
             return 0;
         }
@@ -364,7 +367,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.amount));
             if (tile != null)
             {
-                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this));
+                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluidInput, tile.getWorld(), tile.getPos(), this, fluidInput.amount));
             }
 
             return fluidInput.amount;
@@ -388,7 +391,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
         if (tile != null)
         {
-            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluidInput, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this));
+            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluidInput, tile.getWorld(), tile.getPos(), this, fluidInput.amount));
         }
 
         return filled;
@@ -422,7 +425,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
             if (this != null)
             {
-                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(fluidOutput, this.worldObj, this.xCoord, this.yCoord, this.zCoord, this));
+                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(fluidOutput, this.worldObj, this.pos, this, fluidOutput.amount));
             }
         }
 
@@ -433,7 +436,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
         if (worldObj != null)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
 
         return stack;
@@ -441,13 +444,13 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
     //Logic for the actual block is under here
     @Override
-    public void updateEntity()
+    public void update()
     {
     	this.decrementDemonBlood();
     	
     	if(this.hasDemonBlood() && !worldObj.isRemote)
     	{
-    		SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+    		SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
     	}
     	
         if (this.lockdownDuration > 0)
@@ -463,23 +466,18 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
         if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0)
         {
             {
-                Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
-                block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
-                block = worldObj.getBlock(xCoord - 1, yCoord, zCoord);
-                block.onNeighborBlockChange(worldObj, xCoord - 1, yCoord, zCoord, block);
-                block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
-                block.onNeighborBlockChange(worldObj, xCoord, yCoord + 1, zCoord, block);
-                block = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
-                block.onNeighborBlockChange(worldObj, xCoord, yCoord - 1, zCoord, block);
-                block = worldObj.getBlock(xCoord, yCoord, zCoord + 1);
-                block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord + 1, block);
-                block = worldObj.getBlock(xCoord, yCoord, zCoord - 1);
-                block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block);
+            	for(EnumFacing facing : EnumFacing.VALUES)
+            	{
+            		BlockPos newPos = pos.offset(facing);
+            		IBlockState state = worldObj.getBlockState(newPos);
+            		Block block = state.getBlock();
+            		block.onNeighborBlockChange(worldObj, newPos, state, this.getBlockType());
+            	}
             }
 
             if (AlchemicalWizardry.lockdownAltar)
             {
-                List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, 15, 15);
+                List<EntityPlayer> list = SpellHelper.getPlayersInRange(worldObj, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 15, 15);
                 for (EntityPlayer player : list)
                 {
                     PotionEffect regenEffect = player.getActivePotionEffect(Potion.regeneration);
@@ -566,7 +564,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
                 }
 
                 if (progress >= liquidRequired * stackSize)
@@ -583,7 +581,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
                     for (int i = 0; i < 8; i++)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
+                        SpellHelper.sendIndexedParticleToAllAround(worldObj, pos.getX(), pos.getY(), pos.getZ(), 20, worldObj.provider.getDimensionId(), 4, pos.getX() + 0.5f, pos.getY() + 1.0f, pos.getZ() + 0.5f);
                     }
                     this.isActive = false;
                 }
@@ -593,7 +591,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
                 if (worldTime % 2 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 2, pos);
                 }
             }
         } else
@@ -630,13 +628,13 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
                 if (worldTime % 4 == 0)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 3, pos);
                 }
             }
         }
         if (worldObj != null)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
     }
 
@@ -728,7 +726,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     {
         if (worldObj != null)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
 
         this.checkAndSetAltar();
@@ -760,7 +758,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     public void checkAndSetAltar()
     {
         boolean checkUpgrade = true;
-        int upgradeState = UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord);
+        int upgradeState = UpgradedAltars.isAltarValid(worldObj, pos);
 
         if (upgradeState <= 1)
         {
@@ -777,7 +775,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             return;
         }
 
-        AltarUpgradeComponent upgrades = UpgradedAltars.getUpgrades(worldObj, xCoord, yCoord, zCoord, upgradeState);
+        AltarUpgradeComponent upgrades = UpgradedAltars.getUpgrades(worldObj, pos, upgradeState);
 
         if (upgrades == null)
         {
@@ -823,7 +821,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             this.fluidInput.amount = this.bufferCapacity;
         }
 
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        worldObj.markBlockForUpdate(pos);
     }
 
     @Override
@@ -833,7 +831,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     }
 
     @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
     {
         //TODO
         if (resource == null)
@@ -851,7 +849,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
     {
         if (resource == null)
         {
@@ -867,26 +865,26 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxEmpty, boolean doDrain)
+    public FluidStack drain(EnumFacing from, int maxEmpty, boolean doDrain)
     {
         return this.drain(maxEmpty, doDrain);
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid)
+    public boolean canFill(EnumFacing from, Fluid fluid)
     {
         //I changed this, since fluidstack != fluid... :p dunno if it was a accident? so you might wanna check this
         return this.fluidInput != null && this.fluid.getFluid().equals(fluidInput.getFluid());
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid)
+    public boolean canDrain(EnumFacing from, Fluid fluid)
     {
         return true;
     }
 
     @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from)
+    public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
         FluidTank compositeTank = new FluidTank(capacity);
         compositeTank.setFluid(fluid);
@@ -903,7 +901,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[1] = 0;
         } else
         {
-            sortList[0] = this.fluid.getFluidID();
+            sortList[0] = this.fluid.fluidID;
             sortList[1] = this.fluid.amount;
         }
 
@@ -913,7 +911,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[3] = 0;
         } else
         {
-            sortList[2] = this.fluidInput.getFluidID();
+            sortList[2] = this.fluidInput.fluidID;
             sortList[3] = this.fluidInput.amount;
         }
 
@@ -923,7 +921,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[5] = 0;
         } else
         {
-            sortList[4] = this.fluidOutput.getFluidID();
+            sortList[4] = this.fluidOutput.fluidID;
             sortList[5] = this.fluidOutput.amount;
         }
 
@@ -933,7 +931,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
     public void sendChatInfoToPlayer(EntityPlayer player)
     {
         player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.currentessence"), this.fluid.amount));
-        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.currenttier"), UpgradedAltars.isAltarValid(worldObj, xCoord, yCoord, zCoord)));
+        player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.currenttier"), UpgradedAltars.isAltarValid(worldObj, pos)));
         player.addChatMessage(new ChatComponentTranslation(String.format("message.altar.capacity"), this.getCapacity()));
     }
 

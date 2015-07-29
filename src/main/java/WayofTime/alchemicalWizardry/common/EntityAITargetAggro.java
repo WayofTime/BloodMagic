@@ -9,7 +9,7 @@ public class EntityAITargetAggro extends EntityAINearestAttackableTarget
 
     public EntityAITargetAggro(EntityDemon par1EntityDemon, Class par2Class, int par3, boolean par4)
     {
-        super(par1EntityDemon, par2Class, par3, par4);
+        super(par1EntityDemon, par2Class, par4);
         this.theCreature = par1EntityDemon;
     }
 

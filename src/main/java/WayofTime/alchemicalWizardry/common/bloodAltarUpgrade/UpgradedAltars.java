@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.IFadedRune;
@@ -19,11 +21,11 @@ public class UpgradedAltars
     public static List<AltarComponent> sixthTierAltar = new ArrayList();
     public static int highestAltar = 6;
 
-    public static int isAltarValid(World world, int x, int y, int z)
+    public static int isAltarValid(World world, BlockPos pos)
     {
         for (int i = highestAltar; i >= 2; i--)
         {
-            if (checkAltarIsValid(world, x, y, z, i))
+            if (checkAltarIsValid(world, pos, i))
             {
                 return i;
             }
@@ -32,144 +34,37 @@ public class UpgradedAltars
         return 1;
     }
 
-    public static boolean checkAltarIsValid(World world, int x, int y, int z, int altarTier)
+    public static boolean checkAltarIsValid(World world, BlockPos pos, int altarTier)
     {
-        switch (altarTier)
+        List<AltarComponent> list = UpgradedAltars.getAltarUpgradeListForTier(altarTier);
+
+        for (AltarComponent ac : list)
         {
-            case 1:
-                return true;
-
-            case 2:
-                for (AltarComponent ac : secondTierAltar)
+        	BlockPos newPos = pos.add(ac.getX(), ac.getY(), ac.getZ());
+        	IBlockState state = world.getBlockState(newPos);
+        	Block block = state.getBlock();
+        	
+            if (ac.isBloodRune())
+            {
+                if (!(block instanceof BloodRune))
                 {
-                    if (ac.isBloodRune())
-                    {
-                        Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (!(testBlock instanceof BloodRune))
-                        {
-                            return false;
-                        }
-                    } else
-                    {
-                        Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-                        int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
-                        {
-                            return false;
-                        }
-                    }
+                    return false;
                 }
+            } else
+            {
+                int metadata = block.getMetaFromState(state);
 
-                return true;
-
-            case 3:
-                for (AltarComponent ac : thirdTierAltar)
+                if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(newPos)))
                 {
-                    if (ac.isBloodRune())
-                    {
-                        Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (!(testBlock instanceof BloodRune))
-                        {
-                            return false;
-                        }
-                    } else
-                    {
-                        Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-                        int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
-                        {
-                            return false;
-                        }
-                    }
+                    return false;
                 }
-
-                return true;
-
-            case 4:
-                for (AltarComponent ac : fourthTierAltar)
-                {
-                    if (ac.isBloodRune())
-                    {
-                        Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (!(testBlock instanceof BloodRune))
-                        {
-                            return false;
-                        }
-                    } else
-                    {
-                        Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-                        int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                return true;
-
-            case 5:
-                for (AltarComponent ac : fifthTierAltar)
-                {
-                    if (ac.isBloodRune())
-                    {
-                        Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (!(testBlock instanceof BloodRune))
-                        {
-                            return false;
-                        }
-                    } else
-                    {
-                        Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-                        int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                return true;
-                
-            case 6:
-                for (AltarComponent ac : sixthTierAltar)
-                {
-                    if (ac.isBloodRune())
-                    {
-                        Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (!(testBlock instanceof BloodRune))
-                        {
-                            return false;
-                        }
-                    } else
-                    {
-                        Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-                        int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-
-                        if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                return true;
-
-            default:
-                return false;
+            }
         }
+
+        return true;
     }
 
-    public static AltarUpgradeComponent getUpgrades(World world, int x, int y, int z, int altarTier)
+    public static AltarUpgradeComponent getUpgrades(World world, BlockPos pos, int altarTier)
     {
     	if(world.isRemote)
     	{
@@ -180,18 +75,21 @@ public class UpgradedAltars
 
         for (AltarComponent ac : list)
         {
+        	BlockPos newPos = pos.add(ac.getX(), ac.getY(), ac.getZ());
+
             if (ac.isUpgradeSlot())
             {
                 //Currently checks the getRuneEffect.
                 //TODO Change so that it uses the metadata instead, with the BlockID.
-                Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
-                int meta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+            	IBlockState state = world.getBlockState(newPos);
+                Block testBlock = state.getBlock();
+                int meta = testBlock.getMetaFromState(state);
                 
                 if (testBlock instanceof BloodRune)
                 {
                     if (testBlock instanceof IFadedRune && altarTier > ((IFadedRune)testBlock).getAltarTierLimit(meta))
                     {
-                        return UpgradedAltars.getUpgrades(world, x, y, z, ((IFadedRune)testBlock).getAltarTierLimit(meta));
+                        return UpgradedAltars.getUpgrades(world, pos, ((IFadedRune)testBlock).getAltarTierLimit(meta));
                     }
                     
                     switch (((BloodRune) testBlock).getRuneEffect(meta))

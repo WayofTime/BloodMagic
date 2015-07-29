@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
 import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
 import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
-import cpw.mods.fml.common.eventhandler.Event;
 
 public class Rituals
 {
@@ -95,11 +97,11 @@ public class Rituals
         }
     }
 
-    public static String checkValidRitual(World world, int x, int y, int z)
+    public static String checkValidRitual(World world, BlockPos pos)
     {
         for (String key : ritualMap.keySet())
         {
-            if (checkRitualIsValid(world, x, y, z, key))
+            if (checkRitualIsValid(world, pos, key))
             {
                 return key;
             }
@@ -122,9 +124,9 @@ public class Rituals
         return false;
     }
 
-    public static boolean checkRitualIsValid(World world, int x, int y, int z, String ritualID)
+    public static boolean checkRitualIsValid(World world, BlockPos pos, String ritualID)
     {
-        int direction = Rituals.getDirectionOfRitual(world, x, y, z, ritualID);
+        int direction = Rituals.getDirectionOfRitual(world, pos, ritualID);
 
         return direction != -1;
     }
@@ -135,7 +137,7 @@ public class Rituals
      * 3 - SOUTH
      * 4 - WEST
      */
-    public static boolean checkDirectionOfRitualValid(World world, int x, int y, int z, String ritualID, int direction)
+    public static boolean checkDirectionOfRitualValid(World world, BlockPos pos, String ritualID, int direction)
     {
         List<RitualComponent> ritual = Rituals.getRitualList(ritualID);
 
@@ -144,15 +146,18 @@ public class Rituals
             return false;
         }
 
+        IBlockState testState;
         Block test;
         TileEntity te;
 
         for (RitualComponent rc : ritual)
         {
-            test = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
-            te = world.getTileEntity(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
+        	BlockPos newPos = pos.add(rc.getX(direction), rc.getY(), rc.getZ(direction));
+            testState = world.getBlockState(newPos);
+            test = testState.getBlock();
+            te = world.getTileEntity(newPos);
 
-            if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x + rc.getX(direction), y, z+ rc.getZ(direction), world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)), rc.getStoneType()))
+            if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, newPos, testState, rc.getStoneType()))
                     && !(te instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
             {
                 return false;
@@ -162,11 +167,11 @@ public class Rituals
         return true;
     }
 
-    public static int getDirectionOfRitual(World world, int x, int y, int z, String ritualID)
+    public static int getDirectionOfRitual(World world, BlockPos pos, String ritualID)
     {
         for (int i = 1; i <= 4; i++)
         {
-            if (Rituals.checkDirectionOfRitualValid(world, x, y, z, ritualID, i))
+            if (Rituals.checkDirectionOfRitualValid(world, pos, ritualID, i))
             {
                 return i;
             }

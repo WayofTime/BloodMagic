@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -28,6 +27,21 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
@@ -52,7 +66,6 @@ import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.ShapedBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
-import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.api.soulNetwork.ComplexNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.SpellEffectRegistry;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmMelee;
@@ -72,10 +85,6 @@ import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.alchemy.CombinedPotionRegistry;
 import WayofTime.alchemicalWizardry.common.block.ArmourForge;
 import WayofTime.alchemicalWizardry.common.bloodAltarUpgrade.UpgradedAltars;
-import WayofTime.alchemicalWizardry.common.book.BloodMagicGuide;
-import WayofTime.alchemicalWizardry.common.commands.CommandBind;
-import WayofTime.alchemicalWizardry.common.commands.CommandSN;
-import WayofTime.alchemicalWizardry.common.commands.CommandUnbind;
 import WayofTime.alchemicalWizardry.common.compress.AdvancedCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.BaseCompressionHandler;
 import WayofTime.alchemicalWizardry.common.compress.StorageBlockCraftingManager;
@@ -109,7 +118,6 @@ import WayofTime.alchemicalWizardry.common.entity.mob.EntitySmallEarthGolem;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWaterElemental;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityWingedFireDemon;
 import WayofTime.alchemicalWizardry.common.guide.RecipeHolder;
-import WayofTime.alchemicalWizardry.common.harvest.AgriCraftCropHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.BloodMagicHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.CactusReedHarvestHandler;
 import WayofTime.alchemicalWizardry.common.harvest.GourdHarvestHandler;
@@ -280,22 +288,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
 import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+
 
 @Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 public class AlchemicalWizardry
@@ -387,8 +380,6 @@ public class AlchemicalWizardry
     public static boolean ritualDisabledPhantomHands;
     public static boolean ritualDisabledSphereIsland;
 
-    public static boolean displayRitualAnimation;
-
     public static boolean potionDisableRegen;
     public static boolean potionDisableNightVision;
     public static boolean potionDisableFireResistance;
@@ -427,7 +418,6 @@ public class AlchemicalWizardry
     public static boolean lockdownAltar;
     public static boolean causeHungerWithRegen;
     public static boolean causeHungerChatMessage = true;
-    public static boolean disableBoundToolsRightClick;
 
     public static List<Class> wellBlacklist;
 
@@ -448,7 +438,7 @@ public class AlchemicalWizardry
     };
 
     public static ToolMaterial bloodBoundToolMaterial = EnumHelper.addToolMaterial("BoundBlood", 4, 1000, 12.0f, 8.0f, 50);
-    public static ArmorMaterial sanguineArmourArmourMaterial = EnumHelper.addArmorMaterial("SanguineArmour", 33, new int[]{3, 8, 6, 3}, 30);
+    public static ArmorMaterial sanguineArmourArmourMaterial = EnumHelper.addArmorMaterial("SanguineArmour", "test", 33, new int[]{3, 8, 6, 3}, 30);
 
     //Dungeon loot chances
     public static int standardBindingAgentDungeonChance;
@@ -758,7 +748,6 @@ public class AlchemicalWizardry
         customPotionFireFuse = (new PotionFireFuse(customPotionFireFuseID, true, 0).setIconIndex(0, 0).setPotionName("Fire Fuse"));
         customPotionPlanarBinding = (new PotionPlanarBinding(customPotionPlanarBindingID, true, 0).setIconIndex(0, 0).setPotionName("Planar Binding"));
         customPotionSoulFray = (new PotionSoulFray(customPotionSoulFrayID, true, 0).setIconIndex(0, 0).setPotionName("Soul Fray"));
-        PlayerSacrificeHandler.soulFrayId = customPotionSoulFray;
         customPotionSoulHarden = (new PotionSoulHarden(customPotionSoulHardenID, false, 0).setIconIndex(0, 0).setPotionName("Soul Harden"));
         customPotionDeaf = (new PotionDeaf(customPotionDeafID, true, 0).setIconIndex(0, 0).setPotionName("Deafness"));
         customPotionFeatherFall = (new PotionFeatherFall(customPotionFeatherFallID, false, 0).setIconIndex(0, 0).setPotionName("Feather Fall"));
@@ -1225,11 +1214,11 @@ public class AlchemicalWizardry
 
         	ModItems.itemBloodFrame = new ItemBloodFrame().setUnlocalizedName("bloodFrame");
         	
-        	ItemStack provenFrame = GameRegistry.findItemStack("Forestry", "frameImpregnated", 1);
+        	Item provenFrame = GameRegistry.findItem("Forestry", "frameImpregnated");
         	
         	if(provenFrame !=null)
         	{
-        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), provenFrame, 3, 30000, 20, 20, false);
+        		AltarRecipeRegistry.registerAltarRecipe(new ItemStack(ModItems.itemBloodFrame), new ItemStack(provenFrame, 1), 3, 30000, 20, 20, false);
         	}
         } else
         {
@@ -1248,11 +1237,11 @@ public class AlchemicalWizardry
             AlchemicalWizardry.logger.info("Loaded MineTweaker 3 Integration");
         }
         
-        if(Loader.isModLoaded("AgriCraft"))
-        {
-        	HarvestRegistry.registerHarvestHandler(new AgriCraftCropHarvestHandler());
-        	AlchemicalWizardry.logger.info("Loaded AgriCraft Handlers!");
-        }
+//        if(Loader.isModLoaded("AgriCraft"))
+//        {
+//        	HarvestRegistry.registerHarvestHandler(new AgriCraftCropHarvestHandler());
+//        	AlchemicalWizardry.logger.info("Loaded AgriCraft Handlers!");
+//        }
         
         isBotaniaLoaded = Loader.isModLoaded("Botania");
         isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
@@ -1401,13 +1390,13 @@ public class AlchemicalWizardry
     		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.diamond), Potion.resistance.id, 2 * 60 * 20);
         
     	if(!AlchemicalWizardry.potionDisableSaturation)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.poisonous_potato), Potion.field_76443_y.id, 2); //saturation
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(Items.poisonous_potato), Potion.saturation.id, 2); //saturation
         
     	if(!AlchemicalWizardry.potionDisableHealthBoost)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.demonBloodShard), Potion.field_76434_w.id, 4 * 60 * 20); //health boost
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.demonBloodShard), Potion.field_180152_w.id, 4 * 60 * 20); //health boost
         
     	if(!AlchemicalWizardry.potionDisableAbsorption)
-    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.weakBloodShard), Potion.field_76444_x.id, 4 * 60 * 20); //Absorption
+    		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.weakBloodShard), Potion.absorption.id, 4 * 60 * 20); //Absorption
         
     	if(!AlchemicalWizardry.potionDisableBoost)
     		AlchemicalPotionCreationHandler.addPotion(new ItemStack(ModItems.terrae), AlchemicalWizardry.customPotionBoost.id, 60 * 20);
@@ -1730,7 +1719,7 @@ public class AlchemicalWizardry
 //    			
 //                InputStream input = AlchemicalWizardry.class.getResourceAsStream("/assets/alchemicalwizardryBooks/books/book.txt");
 //
-//        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(true);
+//        		Minecraft.getMinecraft().fontRendererObj.setUnicodeFlag(true);
 //                
 //                if(input != null)
 //                {
@@ -1806,9 +1795,9 @@ public class AlchemicalWizardry
 //        				
 //        				strLine = strLine.replace('', '"').replace('','"').replace("", "...").replace('', '\'').replace('', '-');
 //        				
-//        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRenderer != null)
+//        				if(Minecraft.getMinecraft() != null && Minecraft.getMinecraft().fontRendererObj != null)
 //        				{
-//        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strLine, 110);
+//        					List list = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(strLine, 110);
 //            				if(list != null)
 //            				{
 //                				System.out.println("Number of lines: " + list.size());
@@ -1822,7 +1811,7 @@ public class AlchemicalWizardry
 //        					boolean changePage = false;
 //        					int length = word.length();
 //        					word = word.replace('\t', ' ');
-//        					List list = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
+//        					List list = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(strings[currentPage] + " " + word, 110);
 //
 //        					if(list.size() > maxLines)
 //        					{
@@ -1853,8 +1842,8 @@ public class AlchemicalWizardry
 //        					}
 //        				}
 //        				
-//        				int currentLines = Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage], 110).size();
-//        				while(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(strings[currentPage] + " ", 110).size() <= currentLines)
+//        				int currentLines = Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(strings[currentPage], 110).size();
+//        				while(Minecraft.getMinecraft().fontRendererObj.listFormattedStringToWidth(strings[currentPage] + " ", 110).size() <= currentLines)
 //        				{
 //        					{
 //            					strings[currentPage] = strings[currentPage] + " ";
@@ -1889,7 +1878,7 @@ public class AlchemicalWizardry
 ////        			
 //                }
 //                
-//        		Minecraft.getMinecraft().fontRenderer.setUnicodeFlag(false);
+//        		Minecraft.getMinecraft().fontRendererObj.setUnicodeFlag(false);
 //
 //			} catch (FileNotFoundException e) {
 //				// TODO Auto-generated catch block
@@ -1901,12 +1890,12 @@ public class AlchemicalWizardry
 //    	}
 //    }
     
-    @Mod.EventHandler
-    public void initCommands(FMLServerStartingEvent event)
-    {
-        event.registerServerCommand(new CommandBind());
-        event.registerServerCommand(new CommandUnbind());
-        event.registerServerCommand(new CommandSN());
-        event.registerServerCommand(new CommandDownloadGAPI());
-    }
+//    @Mod.EventHandler
+//    public void initCommands(FMLServerStartingEvent event)
+//    {
+//        event.registerServerCommand(new CommandBind());
+//        event.registerServerCommand(new CommandUnbind());
+//        event.registerServerCommand(new CommandSN());
+//        event.registerServerCommand(new CommandDownloadGAPI());
+//    }
 }

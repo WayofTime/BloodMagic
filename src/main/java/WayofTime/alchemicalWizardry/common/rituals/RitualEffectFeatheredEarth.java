@@ -8,6 +8,7 @@ import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -27,10 +28,8 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (ritualStone.getCooldown() > 0)
         {
@@ -47,7 +46,7 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
 
         int range = this.getHorizontalRangeForReagent(hasTerrae, hasOrbisTerrae);
         int verticalRange = hasAether ? 60 : 30;
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range));
         int entityCount = 0;
         boolean flag = false;
 

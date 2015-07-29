@@ -1,10 +1,12 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.world.World;
 
 public class GenericPamSeedlessFruitHarvestHandler implements IHarvestHandler
 {
@@ -45,22 +47,22 @@ public class GenericPamSeedlessFruitHarvestHandler implements IHarvestHandler
         return block == harvestBlock;
     }
 
-    public int getHarvestMeta(Block block)
+    public int getHarvestMeta()
     {
         return harvestMeta;
     }
 
     @Override
-    public boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta)
+    public boolean harvestAndPlant(World world, BlockPos pos, Block block, IBlockState state)
     {
-        if (!this.canHandleBlock(block) || meta != this.getHarvestMeta(block))
+        if (!this.canHandleBlock(block) || block.getMetaFromState(state) != this.getHarvestMeta())
         {
             return false;
         }
 
-        world.func_147480_a(xCoord, yCoord, zCoord, true);
+        world.destroyBlock(pos, true);
 
-        world.setBlock(xCoord, yCoord, zCoord, harvestBlock, resetMeta, 3);
+        world.setBlockState(pos, harvestBlock.getStateFromMeta(resetMeta), 3);
 
         return true;
     }

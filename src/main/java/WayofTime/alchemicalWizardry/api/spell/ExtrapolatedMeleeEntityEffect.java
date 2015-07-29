@@ -35,7 +35,7 @@ public abstract class ExtrapolatedMeleeEntityEffect implements IMeleeSpellEntity
         double y = entityPlayer.posY + entityPlayer.getEyeHeight() + lookVec.yCoord;
         double z = entityPlayer.posZ + lookVec.zCoord;
 
-        List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x - 0.5f, y - 0.5f, z - 0.5f, x + 0.5f, y + 0.5f, z + 0.5f).expand(radius, radius, radius));
+        List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x - 0.5f, y - 0.5f, z - 0.5f, x + 0.5f, y + 0.5f, z + 0.5f).expand(radius, radius, radius));
         int hit = 0;
 
         if (entities != null)

@@ -16,6 +16,7 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -32,10 +33,8 @@ public class RitualEffectUnbinding extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -43,13 +42,17 @@ public class RitualEffectUnbinding extends RitualEffect
         } else
         {
             int d0 = 0;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
+            AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(d0, d0, d0);
             List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
             Iterator iterator = list.iterator();
             EntityItem item;
 
             boolean drain = false;
 
+            int x = pos.getX();
+            int y = pos.getY();
+            int z = pos.getZ();
+            
             while (iterator.hasNext())
             {
                 item = (EntityItem) iterator.next();
@@ -142,7 +145,7 @@ public class RitualEffectUnbinding extends RitualEffect
 
         if (world.rand.nextInt(10) == 0)
         {
-            SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 1, x, y, z);
+            SpellHelper.sendIndexedParticleToAllAround(world, pos, 20, world.provider.getDimensionId(), 1, pos);
         }
     }
 

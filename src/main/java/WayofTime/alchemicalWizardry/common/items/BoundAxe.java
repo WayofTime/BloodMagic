@@ -117,18 +117,13 @@ public class BoundAxe extends ItemAxe implements IBindable
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
             return par1ItemStack;
         }
-
+        
         if (par2World.isRemote)
         {
             return par1ItemStack;
         }
 
         if (!getActivated(par1ItemStack) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
-        {
-            return par1ItemStack;
-        }
-
-        if (AlchemicalWizardry.disableBoundToolsRightClick)
         {
             return par1ItemStack;
         }

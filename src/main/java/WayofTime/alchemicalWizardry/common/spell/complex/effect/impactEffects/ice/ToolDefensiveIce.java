@@ -1,18 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.SummonToolEffect;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.SummonToolEffect;
 
 public class ToolDefensiveIce extends SummonToolEffect
 {
@@ -36,22 +36,19 @@ public class ToolDefensiveIce extends SummonToolEffect
             }
         }
 
-        Vec3 blockVec = SpellHelper.getEntityBlockVector(entity);
+        BlockPos pos = entity.getPosition();
 
-        int x = (int) (blockVec.xCoord);
-        int y = (int) (blockVec.yCoord);
-        int z = (int) (blockVec.zCoord);
-
-        for (int posX = x - horizRadius; posX <= x + horizRadius; posX++)
+        for (int x = -horizRadius; x <= horizRadius; x++)
         {
-            for (int posY = y - vertRadius; posY <= y + vertRadius; posY++)
+            for (int y = -vertRadius; y <= vertRadius; y++)
             {
-                for (int posZ = z - horizRadius; posZ <= z + horizRadius; posZ++)
+                for (int z = -horizRadius; z <= horizRadius; z++)
                 {
-                    SpellHelper.freezeWaterBlock(world, posX, posY, posZ);
-                    if (world.isSideSolid(posX, posY, posZ, ForgeDirection.UP) && world.isAirBlock(posX, posY + 1, posZ))
+                	BlockPos newPos = pos.add(x, y, z);
+                    SpellHelper.freezeWaterBlock(world, newPos);
+                    if (world.isSideSolid(newPos, EnumFacing.UP) && world.isAirBlock(newPos.offsetUp()))
                     {
-                        world.setBlock(posX, posY + 1, posZ, Blocks.snow_layer);
+                        world.setBlockState(newPos.offsetUp(), Blocks.snow_layer.getDefaultState());
                     }
                 }
             }

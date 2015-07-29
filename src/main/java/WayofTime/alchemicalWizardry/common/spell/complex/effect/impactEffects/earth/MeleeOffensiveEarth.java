@@ -1,9 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class MeleeOffensiveEarth extends MeleeSpellCenteredWorldEffect
 {
@@ -14,7 +15,7 @@ public class MeleeOffensiveEarth extends MeleeSpellCenteredWorldEffect
     }
 
     @Override
-    public void onCenteredWorldEffect(EntityPlayer player, World world, int posX, int posY, int posZ)
+    public void onCenteredWorldEffect(EntityPlayer player, World world, BlockPos pos)
     {
         int radius = this.potencyUpgrades;
 
@@ -24,7 +25,8 @@ public class MeleeOffensiveEarth extends MeleeSpellCenteredWorldEffect
             {
                 for (int k = -radius; k <= radius; k++)
                 {
-                    SpellHelper.smashBlock(world, posX + i, posY + j, posZ + k);
+                	BlockPos newPos = pos.add(i, j, k);
+                    SpellHelper.smashBlock(world, newPos);
                 }
             }
         }

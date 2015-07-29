@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.achievements;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 
@@ -33,25 +32,13 @@ public class AchievementTrigger
     {
         for (Item item : AchievementsRegistry.craftinglist)
         {
-            if (event.crafting != null)
+            if (event.crafting != null && event.crafting.getItem() == item)
             {
-                if (event.crafting.getItem() == item)
-                {
-                    Achievement achievement = AchievementsRegistry.getAchievementForItem(event.crafting.getItem());
+                Achievement achievement = AchievementsRegistry.getAchievementForItem(event.crafting.getItem());
 
-                    if (achievement != null)
-                    {
-                        event.player.addStat(achievement, 1);
-                    }
-                }
-                if (event.crafting.getItem() instanceof ItemBlock)
+                if (achievement != null)
                 {
-                    Achievement achievement = AchievementsRegistry.getAchievementForBlock(((ItemBlock) event.crafting.getItem()).field_150939_a);
-
-                    if (achievement != null)
-                    {
-                        event.player.addStat(achievement, 1);
-                    }
+                    event.player.addStat(achievement, 1);
                 }
             }
         }

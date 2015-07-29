@@ -223,7 +223,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                             return itemStack;
                         }
 
-                        if (dimension != world.provider.dimensionId || Math.abs(coords.xCoord - x) > maxDistance || Math.abs(coords.yCoord - y) > maxDistance || Math.abs(coords.zCoord - z) > maxDistance)
+                        if (dimension != world.provider.getDimensionId() || Math.abs(coords.xCoord - x) > maxDistance || Math.abs(coords.yCoord - y) > maxDistance || Math.abs(coords.zCoord - z) > maxDistance)
                         {
                             player.addChatComponentMessage(new ChatComponentTranslation("message.attunedcrystal.error.toofar"));
                             return itemStack;
@@ -261,7 +261,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                         world.markBlockForUpdate(coords.xCoord, coords.yCoord, coords.zCoord);
                     } else
                     {
-                        int dimension = world.provider.dimensionId;
+                        int dimension = world.provider.getDimensionId();
 
                         this.setDimension(itemStack, dimension);
                         this.setCoordinates(itemStack, new Int3(x, y, z));

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -98,7 +100,7 @@ public class ItemSpellMultiTool extends Item
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player)
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
     {
         if (player.worldObj.isRemote)
         {
@@ -109,23 +111,23 @@ public class ItemSpellMultiTool extends Item
             return false;
 
         World world = player.worldObj;
-        Block block = player.worldObj.getBlock(x, y, z);
-        int meta = world.getBlockMetadata(x, y, z);
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
         if (block == null || block == Blocks.air)
             return false;
         int hlvl = -1;
-        float blockHardness = block.getBlockHardness(world, x, y, z);
+        float blockHardness = block.getBlockHardness(world, pos);
 
         MovingObjectPosition mop = APISpellHelper.raytraceFromEntity(world, player, true, 5.0D);
 
-        Block localBlock = world.getBlock(x, y, z);
-        int localMeta = world.getBlockMetadata(x, y, z);
-        String toolClass = block.getHarvestTool(meta);
+        IBlockState localState = world.getBlockState(pos);
+        Block localBlock = state.getBlock();
+        String toolClass = block.getHarvestTool(state);
         if (toolClass != null && this.getHarvestLevel(stack, toolClass) != -1)
-            hlvl = block.getHarvestLevel(meta);
+            hlvl = block.getHarvestLevel(state);
         int toolLevel = this.getHarvestLevel(stack, toolClass);
 
-        float localHardness = localBlock == null ? Float.MAX_VALUE : localBlock.getBlockHardness(world, x, y, z);
+        float localHardness = localBlock == null ? Float.MAX_VALUE : localBlock.getBlockHardness(world, pos);
 
         if (hlvl <= toolLevel && localHardness - 1.5 <= blockHardness)
         {
@@ -139,7 +141,7 @@ public class ItemSpellMultiTool extends Item
 
                     String localToolClass = this.getToolClassForMaterial(localBlock.getMaterial());
 
-                    if (localToolClass != null && this.getHarvestLevel(stack, toolClass) >= localBlock.getHarvestLevel(localMeta))
+                    if (localToolClass != null && this.getHarvestLevel(stack, toolClass) >= localBlock.getHarvestLevel(localState))
                     {
                         isEffective = true;
                     }
@@ -154,31 +156,31 @@ public class ItemSpellMultiTool extends Item
                     {
                         if (isEffective)
                         {
-                            if (localBlock.removedByPlayer(world, player, x, y, z, true))
+                            if (localBlock.removedByPlayer(world, pos, player, true))
                             {
-                                localBlock.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
+                                localBlock.onBlockDestroyedByPlayer(world, pos, localState);
                             }
-                            localBlock.onBlockHarvested(world, x, y, z, localMeta, player);
+                            localBlock.onBlockHarvested(world, pos, localState, player);
                             if (blockHardness > 0f)
-                                onBlockDestroyed(stack, world, localBlock, x, y, z, player);
+                                onBlockDestroyed(stack, world, localBlock, pos, player);
 
-                            List<ItemStack> items = APISpellHelper.getItemsFromBlock(world, localBlock, x, y, z, localMeta, this.getSilkTouch(stack), this.getFortuneLevel(stack));
+                            List<ItemStack> items = APISpellHelper.getItemsFromBlock(world, pos, localBlock, localState, this.getSilkTouch(stack), this.getFortuneLevel(stack));
 
                             SpellParadigmTool parad = this.loadParadigmFromStack(stack);
                             List<ItemStack> newItems = parad.handleItemList(stack, items);
 
                             if (!world.isRemote)
                             {
-                                APISpellHelper.spawnItemListInWorld(newItems, world, x + 0.5f, y + 0.5f, z + 0.5f);
+                                APISpellHelper.spawnItemListInWorld(newItems, world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
                             }
 
-                            world.func_147479_m(x, y, z);
+                            world.markBlockForUpdate(pos);
 
                             int cost = 0;
 
                             cost += parad.digSurroundingArea(stack, world, player, mop, localToolClass, localHardness, toolLevel, this);
 
-                            cost += parad.onBreakBlock(stack, world, player, localBlock, localMeta, x, y, z, ForgeDirection.getOrientation(mop.sideHit));
+                            cost += parad.onBreakBlock(stack, world, player, localBlock, localState, pos, mop.field_178784_b);
 
                             if (cost > 0)
                             {
@@ -186,14 +188,14 @@ public class ItemSpellMultiTool extends Item
                             }
                         } else
                         {
-                            world.setBlockToAir(x, y, z);
-                            world.func_147479_m(x, y, z);
+                            world.setBlockToAir(pos);
+                            world.markBlockForUpdate(pos);
                         }
 
                     } else
                     {
-                        world.setBlockToAir(x, y, z);
-                        world.func_147479_m(x, y, z);
+                        world.setBlockToAir(pos);
+                        world.markBlockForUpdate(pos);
                     }
                 }
             }
@@ -279,18 +281,14 @@ public class ItemSpellMultiTool extends Item
     }
 
     @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta)
+    public float getDigSpeed(ItemStack stack, IBlockState state)
     {
-        String toolClass = block.getHarvestTool(meta);
+    	Block block = state.getBlock();
+        String toolClass = block.getHarvestTool(state);
 
         if (toolClass == null || toolClass.equals(""))
         {
-        	toolClass = getToolClassOfMaterial(block.getMaterial());
-        	
-        	if(toolClass == "")
-        	{
-                return 1.0f;
-        	}
+            return 1.0f;
         }
         {
             if (stack.hasTagCompound())
@@ -305,26 +303,6 @@ public class ItemSpellMultiTool extends Item
         }
 
         return 1.0f;
-    }
-    
-    public String getToolClassOfMaterial(Material mat)
-    {
-        if(mat == Material.iron || mat == Material.anvil || mat == Material.rock)
-        {
-        	return "pickaxe";
-        }
-
-        if(mat == Material.wood || mat == Material.plants || mat == Material.vine)
-        {
-        	return "axe";
-        }
-        
-        if(mat == Material.ground || mat == Material.grass)
-        {
-        	return "shovel";
-        }
-    	
-    	return "";
     }
 
     @Override

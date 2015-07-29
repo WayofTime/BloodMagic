@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.demonVillage.ai;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.tileentity.TileEntity;
-import WayofTime.alchemicalWizardry.api.Int3;
+import net.minecraft.util.BlockPos;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
@@ -20,14 +20,14 @@ public class EntityDemonAIHurtByTarget extends EntityAIHurtByTarget
 	@Override
 	public void startExecuting()
     {
-		Int3 portalPosition = ((IHoardDemon)this.taskOwner).getPortalLocation();
+		BlockPos portalPosition = ((IHoardDemon)this.taskOwner).getPortalLocation();
     	if(portalPosition == null)
     	{
     		super.startExecuting();
     		return;
     	}
     	
-    	TileEntity portal = this.taskOwner.worldObj.getTileEntity(portalPosition.xCoord, portalPosition.yCoord, portalPosition.zCoord);
+    	TileEntity portal = this.taskOwner.worldObj.getTileEntity(portalPosition);
     	
     	if((this.taskOwner.getAITarget() instanceof IHoardDemon && portalPosition.equals(((IHoardDemon)this.taskOwner.getAITarget()).getPortalLocation())))
     	{
@@ -45,7 +45,7 @@ public class EntityDemonAIHurtByTarget extends EntityAIHurtByTarget
         	}
         	
 //            double d0 = this.getTargetDistance();
-//            List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.taskOwner.getClass(), AxisAlignedBB.getBoundingBox(this.taskOwner.posX, this.taskOwner.posY, this.taskOwner.posZ, this.taskOwner.posX + 1.0D, this.taskOwner.posY + 1.0D, this.taskOwner.posZ + 1.0D).expand(d0, 10.0D, d0));
+//            List list = this.taskOwner.worldObj.getEntitiesWithinAABB(this.taskOwner.getClass(), new AxisAlignedBB(this.taskOwner.posX, this.taskOwner.posY, this.taskOwner.posZ, this.taskOwner.posX + 1.0D, this.taskOwner.posY + 1.0D, this.taskOwner.posZ + 1.0D).expand(d0, 10.0D, d0));
 //            Iterator iterator = list.iterator();
 //
 //            while (iterator.hasNext())

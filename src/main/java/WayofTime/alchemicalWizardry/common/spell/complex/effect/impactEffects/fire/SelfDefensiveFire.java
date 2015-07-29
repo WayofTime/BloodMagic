@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 
 public class SelfDefensiveFire extends SelfSpellEffect
 {
@@ -18,14 +17,10 @@ public class SelfDefensiveFire extends SelfSpellEffect
     @Override
     public void onSelfUse(World world, EntityPlayer player)
     {
-        int horizRange = this.powerUpgrades;
-        int vertDepth = 3 * this.potencyUpgrades + 1;
+        int horizRange = (int) (this.powerUpgrades);
+        int vertDepth = (int) (3 * this.potencyUpgrades + 1);
 
-        Vec3 blockVector = SpellHelper.getEntityBlockVector(player);
-
-        int posX = (int) (blockVector.xCoord);
-        int posY = (int) (blockVector.yCoord);
-        int posZ = (int) (blockVector.zCoord);
+        BlockPos pos = player.getPosition();
 
         for (int i = -horizRange; i <= horizRange; i++)
         {
@@ -33,9 +28,11 @@ public class SelfDefensiveFire extends SelfSpellEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                    if (world.isAirBlock(posX + i, posY + j, posZ + k))
+                	BlockPos newPos = pos.add(i, j, k);
+                	
+                    if (world.isAirBlock(newPos))
                     {
-                        world.setBlock(posX + i, posY + j, posZ + k, Blocks.flowing_lava, 7, 3);
+                        world.setBlockState(newPos, Blocks.flowing_lava.getStateFromMeta(7));
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +7,7 @@ import java.util.regex.Pattern;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
@@ -34,13 +34,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
@@ -53,37 +54,33 @@ import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class SpellHelper
+public class SpellHelper extends APISpellHelper
 {
     public static Random rand = new Random();
     public static final double root2 = Math.sqrt(2);
 
     public static boolean canEntityBeSeen(Entity entity, Entity entity2)
     {
-        return entity.worldObj.rayTraceBlocks(SpellHelper.createVec3(entity.posX, entity.posY, entity.posZ), SpellHelper.createVec3(entity2.posX, entity2.posY, entity2.posZ), false) == null;
-    }
-
-    public static Vec3 createVec3(double x, double y, double z)
-    {
-    	return APISpellHelper.createVec3(x, y, z);
+        return entity.worldObj.rayTraceBlocks(new Vec3(entity.posX, entity.posY, entity.posZ), new Vec3(entity2.posX, entity2.posY, entity2.posZ), false) == null;
     }
     
-    public static void smeltBlockInWorld(World world, int posX, int posY, int posZ)
+    public static void smeltBlockInWorld(World world, BlockPos pos)
     {
-        FurnaceRecipes recipes = FurnaceRecipes.smelting();
+        FurnaceRecipes recipes = FurnaceRecipes.instance();
 
-        Block block = world.getBlock(posX, posY, posZ);
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
         if (block == null)
         {
             return;
         }
 
-        int meta = world.getBlockMetadata(posX, posY, posZ);
-
+        int meta = block.getMetaFromState(state);
+        
         ItemStack smeltedStack = recipes.getSmeltingResult(new ItemStack(block, 1, meta));
         if (smeltedStack != null && smeltedStack.getItem() instanceof ItemBlock)
         {
-            world.setBlock(posX, posY, posZ, ((ItemBlock) (smeltedStack.getItem())).field_150939_a, smeltedStack.getItemDamage(), 3);
+            world.setBlockState(pos, ((ItemBlock) (smeltedStack.getItem())).block.getStateFromMeta(smeltedStack.getItemDamage()), 3);
         }
     }
 
@@ -142,22 +139,22 @@ public class SpellHelper
 
     public static List<Entity> getEntitiesInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
     {
-        return world.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
+        return world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
     }
 
     public static List<EntityLivingBase> getLivingEntitiesInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
     {
-        return world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
+        return world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
     }
 
     public static List<EntityItem> getItemsInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
     {
-        return world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
+        return world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
     }
 
     public static List<EntityPlayer> getPlayersInRange(World world, double posX, double posY, double posZ, double horizontalRadius, double verticalRadius)
     {
-        return world.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
+        return world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(horizontalRadius, verticalRadius, horizontalRadius));
     }
 
     public static double gaussian(double d)
@@ -165,62 +162,54 @@ public class SpellHelper
         return d * ((rand.nextFloat() - 0.5D));
     }
 
-    public static Vec3 getEntityBlockVector(Entity entity)
-    {
-        int posX = (int) Math.round(entity.posX - 0.5f);
-        int posY = (int) entity.posY;
-        int posZ = (int) Math.round(entity.posZ - 0.5f);
-
-        return entity.getLookVec().createVectorHelper(posX, posY, posZ);
-    }
-
-    public static ForgeDirection getDirectionForLookVector(Vec3 lookVec)
+    public static EnumFacing getDirectionForLookVector(Vec3 lookVec)
     {
         double distance = lookVec.lengthVector();
 
         if (lookVec.yCoord > distance * 0.9)
         {
-            return ForgeDirection.UP;
+            return EnumFacing.UP;
         }
         if (lookVec.yCoord < distance * -0.9)
         {
-            return ForgeDirection.DOWN;
+            return EnumFacing.DOWN;
         }
 
         return getCompassDirectionForLookVector(lookVec);
     }
 
-    public static ForgeDirection getCompassDirectionForLookVector(Vec3 lookVec)
+    public static EnumFacing getCompassDirectionForLookVector(Vec3 lookVec)
     {
         double radius = Math.sqrt(Math.pow(lookVec.xCoord, 2) + Math.pow(lookVec.zCoord, 2));
 
         if (lookVec.zCoord > radius * 1 / root2)
         {
-            return ForgeDirection.SOUTH;
+            return EnumFacing.SOUTH;
         }
         if (lookVec.zCoord < -radius * 1 / root2)
         {
-            return ForgeDirection.NORTH;
+            return EnumFacing.NORTH;
         }
         if (lookVec.xCoord > radius * 1 / root2)
         {
-            return ForgeDirection.EAST;
+            return EnumFacing.EAST;
         }
         if (lookVec.xCoord < -radius * 1 / root2)
         {
-            return ForgeDirection.WEST;
+            return EnumFacing.WEST;
         }
 
-        return ForgeDirection.EAST;
+        return EnumFacing.EAST;
     }
 
-    public static boolean freezeWaterBlock(World world, int posX, int posY, int posZ)
+    public static boolean freezeWaterBlock(World world, BlockPos pos)
     {
-        Block block = world.getBlock(posX, posY, posZ);
+    	IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
 
         if (block == Blocks.water || block == Blocks.flowing_water)
         {
-            world.setBlock(posX, posY, posZ, Blocks.ice);
+            world.setBlockState(pos, Blocks.ice.getDefaultState());
             return true;
         }
 
@@ -237,11 +226,11 @@ public class SpellHelper
         return SoulNetworkHandler.getPlayerForUsername(str);
     }
 
-    public static void sendParticleToPlayer(EntityPlayer player, String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
+    public static void sendParticleToPlayer(EntityPlayer player, EnumParticleTypes type, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
     {
         if (player instanceof EntityPlayerMP)
         {
-            NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getParticlePacket(str, xCoord, yCoord, zCoord, xVel, yVel, zVel), (EntityPlayerMP) player);
+            NewPacketHandler.INSTANCE.sendTo(NewPacketHandler.getParticlePacket(type, xCoord, yCoord, zCoord, xVel, yVel, zVel), (EntityPlayerMP) player);
         }
     }
 
@@ -250,13 +239,13 @@ public class SpellHelper
         switch (index)
         {
             case 1:
-                SpellHelper.sendParticleToPlayer(player, "mobSpell", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 0.5117D, 0.0117D, 0.0117D);
+                SpellHelper.sendParticleToPlayer(player, EnumParticleTypes.SPELL_MOB, xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 0.5117D, 0.0117D, 0.0117D);
                 break;
             case 2:
-                SpellHelper.sendParticleToPlayer(player, "reddust", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 0.82D, 0.941D, 0.91D);
+                SpellHelper.sendParticleToPlayer(player, EnumParticleTypes.REDSTONE, xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 0.82D, 0.941D, 0.91D);
                 break;
             case 3:
-                SpellHelper.sendParticleToPlayer(player, "mobSpell", xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 1.0D, 0.371D, 0.371D);
+                SpellHelper.sendParticleToPlayer(player, EnumParticleTypes.SPELL_MOB, xCoord + 0.5D + rand.nextGaussian() / 8, yCoord + 1.1D, zCoord + 0.5D + rand.nextGaussian() / 8, 1.0D, 0.371D, 0.371D);
                 break;
             case 4:
                 float f = 1.0F;
@@ -266,13 +255,13 @@ public class SpellHelper
 
                 for (int l = 0; l < 8; ++l)
                 {
-                    SpellHelper.sendParticleToPlayer(player, "reddust", xCoord + Math.random() - Math.random(), yCoord + Math.random() - Math.random(), zCoord + Math.random() - Math.random(), f1, f2, f3);
+                    SpellHelper.sendParticleToPlayer(player, EnumParticleTypes.REDSTONE, xCoord + Math.random() - Math.random(), yCoord + Math.random() - Math.random(), zCoord + Math.random() - Math.random(), f1, f2, f3);
                 }
                 break;
         }
     }
 
-    public static void sendParticleToAllAround(World world, double xPos, double yPos, double zPos, int radius, int dimension, String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
+    public static void sendParticleToAllAround(World world, double xPos, double yPos, double zPos, int radius, int dimension, EnumParticleTypes type, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
     {
         List<EntityPlayer> entities = SpellHelper.getPlayersInRange(world, xPos, yPos, zPos, radius, radius);
 
@@ -283,7 +272,7 @@ public class SpellHelper
 
         for (EntityPlayer player : entities)
         {
-            SpellHelper.sendParticleToPlayer(player, str, xCoord, yCoord, zCoord, xVel, yVel, zVel);
+            SpellHelper.sendParticleToPlayer(player, type, xCoord, yCoord, zCoord, xVel, yVel, zVel);
         }
     }
 
@@ -301,7 +290,12 @@ public class SpellHelper
             SpellHelper.sendIndexedParticleToPlayer(player, index, xCoord, yCoord, zCoord);
         }
     }
-
+    
+    public static void sendIndexedParticleToAllAround(World world, BlockPos pos1, int radius, int dimension, int index, BlockPos coordPos)
+    {
+    	sendIndexedParticleToAllAround(world, pos1.getX(), pos1.getY(), pos1.getZ(), radius, dimension, index, coordPos.getX(), coordPos.getY(), coordPos.getZ());
+    }
+    
     public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ)
     {
         if (player instanceof EntityPlayerMP)
@@ -321,19 +315,20 @@ public class SpellHelper
         return player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(SpellHelper.getUsername(player)).matches();
     }
 
-    public static void smashBlock(World world, int posX, int posY, int posZ)
+    public static void smashBlock(World world, BlockPos pos)
     {
-        Block block = world.getBlock(posX, posY, posZ);
+    	IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
 
         if (block == Blocks.stone)
         {
-            world.setBlock(posX, posY, posZ, Blocks.cobblestone);
+            world.setBlockState(pos, Blocks.cobblestone.getDefaultState());
         } else if (block == Blocks.cobblestone)
         {
-            world.setBlock(posX, posY, posZ, Blocks.gravel);
+            world.setBlockState(pos, Blocks.gravel.getDefaultState());
         } else if (block == Blocks.gravel)
         {
-            world.setBlock(posX, posY, posZ, Blocks.sand);
+            world.setBlockState(pos, Blocks.sand.getDefaultState());
         }
     }
 
@@ -342,67 +337,58 @@ public class SpellHelper
         return block instanceof IFluidBlock || block instanceof BlockLiquid;
     }
 
-    public static void evaporateWaterBlock(World world, int posX, int posY, int posZ)
+    public static void evaporateWaterBlock(World world, BlockPos pos)
     {
-        Block block = world.getBlock(posX, posY, posZ);
+    	IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
 
         if (block == Blocks.water || block == Blocks.flowing_water)
         {
-            world.setBlockToAir(posX, posY, posZ);
+            world.setBlockToAir(pos);
         }
     }
 
     public static ItemStack getDustForOre(ItemStack item)
     {
-        String oreName = OreDictionary.getOreName(OreDictionary.getOreID(item));
-
-        if (oreName.contains("ore"))
-        {
-            String lowercaseOre = oreName.toLowerCase();
-            boolean isAllowed = false;
-
-            for (String str : AlchemicalWizardry.allowedCrushedOresArray)
+    	int [] oreIds = OreDictionary.getOreIDs(item);
+        
+    	for(int id : oreIds)
+    	{
+    		String oreName = OreDictionary.getOreName(id);
+    		
+    		if (oreName.contains("ore"))
             {
-                String testStr = str.toLowerCase();
+                String lowercaseOre = oreName.toLowerCase();
+                boolean isAllowed = false;
 
-                if (lowercaseOre.contains(testStr))
+                for (String str : AlchemicalWizardry.allowedCrushedOresArray)
                 {
-                    isAllowed = true;
-                    break;
+                    String testStr = str.toLowerCase();
+
+                    if (lowercaseOre.contains(testStr))
+                    {
+                        isAllowed = true;
+                        break;
+                    }
+                }
+
+                if (!isAllowed)
+                {
+                    return null;
+                }
+
+                String dustName = oreName.replace("ore", "dust");
+
+                List<ItemStack> items = OreDictionary.getOres(dustName);
+
+                if (items != null && items.size() >= 1)
+                {
+                    return (items.get(0).copy());
                 }
             }
-
-            if (!isAllowed)
-            {
-                return null;
-            }
-
-            String dustName = oreName.replace("ore", "dust");
-
-            ArrayList<ItemStack> items = OreDictionary.getOres(dustName);
-
-            if (items != null && items.size() >= 1)
-            {
-                return (items.get(0).copy());
-            }
-        }
+    	}
 
         return null;
-    }
-
-    public static List<ItemStack> getItemsFromBlock(World world, Block block, int x, int y, int z, int meta, boolean silkTouch, int fortune)
-    {
-        return APISpellHelper.getItemsFromBlock(world, block, x, y, z, meta, silkTouch, fortune);
-    }
-
-    public static void spawnItemListInWorld(List<ItemStack> items, World world, float x, float y, float z)
-    {
-        APISpellHelper.spawnItemListInWorld(items, world, x, y, z);
-    }
-
-    public static MovingObjectPosition raytraceFromEntity(World world, Entity player, boolean par3, double range)
-    {
-        return APISpellHelper.raytraceFromEntity(world, player, par3, range);
     }
 
     public static String getNumeralForInt(int num)
@@ -523,7 +509,7 @@ public class SpellHelper
         return returned;
     }
 
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir)
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir)
     {
         if (stack == null)
         {
@@ -534,10 +520,10 @@ public class SpellHelper
         
         if(inventory instanceof ISidedInventory)
         {
-        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	int[] array = ((ISidedInventory)inventory).getSlotsForFace(dir);
         	for(int in : array)
         	{
-        		canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
+        		canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory)inventory).canInsertItem(in, stack, dir);
         	}
         }else
         {
@@ -568,12 +554,12 @@ public class SpellHelper
     }
     
     
-    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir)
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir)
     {
     	return canInsertStackFullyIntoInventory(stack, inventory, dir, false, 0);
     }
     
-    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir, boolean fillToLimit, int limit)
+    public static boolean canInsertStackFullyIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, boolean fillToLimit, int limit)
     {
         if (stack == null)
         {
@@ -586,10 +572,10 @@ public class SpellHelper
         
         if(inventory instanceof ISidedInventory)
         {
-        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	int[] array = ((ISidedInventory)inventory).getSlotsForFace(dir);
         	for(int in : array)
         	{
-        		canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
+        		canBeInserted[in] = inventory.isItemValidForSlot(in, stack) && ((ISidedInventory)inventory).canInsertItem(in, stack, dir);
         	}
         }else
         {
@@ -653,7 +639,7 @@ public class SpellHelper
         return false;
     }
     
-    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, ForgeDirection dir, int limit)
+    public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, int limit)
     {
         if (stack == null)
         {
@@ -664,10 +650,10 @@ public class SpellHelper
         
         if(inventory instanceof ISidedInventory)
         {
-        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	int[] array = ((ISidedInventory)inventory).getSlotsForFace(dir);
         	for(int in : array)
         	{
-        		canBeInserted[in] = ((ISidedInventory)inventory).canInsertItem(in, stack, dir.ordinal());
+        		canBeInserted[in] = ((ISidedInventory)inventory).canInsertItem(in, stack, dir);
         	}
         }else
         {
@@ -725,13 +711,13 @@ public class SpellHelper
         return stack;
     }
     
-    public static int getNumberOfItemsInInventory(IInventory inventory, ForgeDirection dir)
+    public static int getNumberOfItemsInInventory(IInventory inventory, EnumFacing dir)
     {
         boolean[] canBeInserted = new boolean[inventory.getSizeInventory()];
 
     	if(inventory instanceof ISidedInventory)
         {
-        	int[] array = ((ISidedInventory)inventory).getAccessibleSlotsFromSide(dir.ordinal());
+        	int[] array = ((ISidedInventory)inventory).getSlotsForFace(dir);
         	for(int in : array)
         	{
         		canBeInserted[in] = true;
@@ -762,12 +748,13 @@ public class SpellHelper
     	return amountOfItems;
     }
 
-    public static boolean hydrateSoil(World world, int x, int y, int z)
+    public static boolean hydrateSoil(World world, BlockPos pos)
     {
-        Block block = world.getBlock(x, y, z);
-        if (block == Blocks.dirt || block == Blocks.grass || (block == Blocks.farmland && world.getBlockMetadata(x, y, z) == 0))
+    	IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+        if (block == Blocks.dirt || block == Blocks.grass || (block == Blocks.farmland && block.getMetaFromState(state) == 0))
         {
-            world.setBlock(x, y, z, Blocks.farmland, 15, 2);
+            world.setBlockState(pos, Blocks.farmland.getStateFromMeta(7), 2);
 
             return true;
         }
@@ -826,8 +813,8 @@ public class SpellHelper
                         ServerConfigurationManager config = player.mcServer.getConfigurationManager();
                         oldWorld.playSoundEffect(player.posX, player.posY, player.posZ, "mob.endermen.portal", 1.0F, 1.0F);
                         player.closeScreen();
-                        player.dimension = newWorldServer.provider.dimensionId;
-                        player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.difficultySetting, newWorldServer.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
+                        player.dimension = newWorldServer.provider.getDimensionId();
+                        player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.getDifficulty(), newWorldServer.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
                         oldWorldServer.removeEntity(player);
                         player.isDead = false;
                         player.setLocationAndAngles(d, e, f, player.rotationYaw, player.rotationPitch);
@@ -847,7 +834,7 @@ public class SpellHelper
                             player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), potion.next()));
                         }
                         player.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
-                        FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldWorldServer.provider.dimensionId, player.dimension);
+                        FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldWorldServer.provider.getDimensionId(), player.dimension);
                         player.timeUntilPortal = 150;
                     }
                     player.worldObj.theProfiler.endSection();
@@ -927,7 +914,7 @@ public class SpellHelper
     
     public static float applySpecialProtection(EntityLivingBase entity, DamageSource source, float damage)
     {
-    	ItemStack[] armour = entity.getLastActiveItems();
+    	ItemStack[] armour = entity.getInventory();
     	
     	if(armour == null)
     	{

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -230,7 +232,7 @@ public class APISpellHelper
         if (!world.isRemote && player instanceof EntityPlayer)
             d1 += 1.62D;
         double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
-        Vec3 vec3 = APISpellHelper.createVec3(d0, d1, d2);
+        Vec3 vec3 = new Vec3(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
         float f4 = MathHelper.sin(-f2 * 0.017453292F - (float) Math.PI);
         float f5 = -MathHelper.cos(-f1 * 0.017453292F);
@@ -242,48 +244,25 @@ public class APISpellHelper
 //            d3 = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double) f7 * range, (double) f6 * range, (double) f8 * range);
-        return world.func_147447_a(vec3, vec31, par3, !par3, par3);
+        return world.rayTraceBlocks(vec3, vec31, par3, !par3, par3);
     }
 	
-	public static Vec3 createVec3(double x, double y, double z)
-	{
-		return Vec3.createVectorHelper(x, y, z);
-	}
-	
-	public static List<ItemStack> getItemsFromBlock(World world, Block block, int x, int y, int z, int meta, boolean silkTouch, int fortune)
+	public static List<ItemStack> getItemsFromBlock(World world, BlockPos pos, Block block, IBlockState state, boolean silkTouch, int fortune)
     {
-        boolean canSilk = block.canSilkHarvest(world, null, x, y, z, meta);
+        boolean canSilk = block.canSilkHarvest(world, pos, state, null); //Null player
 
         if (canSilk && silkTouch)
         {
             ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-            ItemStack item = createStackedBlock(block, meta);
-            
+            ItemStack item = new ItemStack(block, 1, block.getMetaFromState(state));
+
             items.add(item);
 
             return items;
         } else
         {
-            return block.getDrops(world, x, y, z, meta, fortune);
+            return block.getDrops(world, pos, state, fortune);
         }
-    }
-	
-	public static ItemStack createStackedBlock(Block block, int meta)
-    {
-        int j = 0;
-        if(block == Blocks.lit_redstone_ore)
-        {
-        	block = Blocks.redstone_ore;
-        }
-        
-        Item item = Item.getItemFromBlock(block);
-
-        if (item != null && item.getHasSubtypes())
-        {
-            j = meta;
-        }
-
-        return new ItemStack(item, 1, j);
     }
 	
 	public static void spawnItemListInWorld(List<ItemStack> items, World world, float x, float y, float z)
@@ -291,7 +270,7 @@ public class APISpellHelper
         for (ItemStack stack : items)
         {
             EntityItem itemEntity = new EntityItem(world, x, y, z, stack);
-            itemEntity.delayBeforeCanPickup = 10;
+            itemEntity.setDefaultPickupDelay();
             world.spawnEntityInWorld(itemEntity);
         }
     }

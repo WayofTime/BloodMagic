@@ -1,10 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class ProjectileDefensiveFire extends ProjectileImpactEffect
 {
@@ -22,12 +23,10 @@ public class ProjectileDefensiveFire extends ProjectileImpactEffect
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-        int horizRange = this.powerUpgrades;
-        int vertRange = this.powerUpgrades;
+        int horizRange = (int) ((this.powerUpgrades));
+        int vertRange = (int) ((this.powerUpgrades));
 
-        int posX = mop.blockX;
-        int posY = mop.blockY;
-        int posZ = mop.blockZ;
+        BlockPos pos = mop.func_178782_a();
 
         for (int i = -horizRange; i <= horizRange; i++)
         {
@@ -35,9 +34,11 @@ public class ProjectileDefensiveFire extends ProjectileImpactEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                    if (!world.isAirBlock(posX + i, posY + j, posZ + k))
+                	BlockPos newPos = pos.add(i, j, k);
+                	
+                    if (!world.isAirBlock(newPos))
                     {
-                        SpellHelper.smeltBlockInWorld(world, posX + i, posY + j, posZ + k);
+                        SpellHelper.smeltBlockInWorld(world, newPos);
                     }
                 }
             }

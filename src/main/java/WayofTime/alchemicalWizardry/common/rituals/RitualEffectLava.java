@@ -1,5 +1,21 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -8,20 +24,6 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectLava extends RitualEffect
 {
@@ -37,11 +39,8 @@ public class RitualEffectLava extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
-
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (this.canDrainReagent(ritualStone, ReagentRegistry.offensaReagent, offensaDrain, false) && SoulNetworkHandler.canSyphonFromOnlyNetwork(owner, fireFuseCost))
         {
@@ -49,7 +48,7 @@ public class RitualEffectLava extends RitualEffect
             boolean drainReductus = world.getWorldTime() % 100 == 0;
 
             int range = 5;
-            List<EntityLivingBase> entityList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
+            List<EntityLivingBase> entityList = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, range);
             EntityPlayer player = SpellHelper.getPlayerForUsername(owner);
 
             for (EntityLivingBase entity : entityList)
@@ -76,9 +75,11 @@ public class RitualEffectLava extends RitualEffect
             }
         }
 
-        Block block = world.getBlock(x, y + 1, z);
+        BlockPos newPos = pos.offsetUp();
+        IBlockState state = world.getBlockState(newPos);
+        Block block = state.getBlock();
 
-        if (world.isAirBlock(x, y + 1, z) && !(block instanceof BlockSpectralContainer))
+        if (world.isAirBlock(newPos) && !(block instanceof BlockSpectralContainer))
         {
             if (currentEssence < this.getCostPerRefresh())
             {
@@ -87,10 +88,10 @@ public class RitualEffectLava extends RitualEffect
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                    SpellHelper.sendIndexedParticleToAllAround(world, pos, 20, world.provider.getDimensionId(), 3, pos);
                 }
 
-                world.setBlock(x, y + 1, z, Blocks.lava, 0, 3);
+                world.setBlockState(newPos, Blocks.lava.getDefaultState());
                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
             }
         } else
@@ -100,13 +101,13 @@ public class RitualEffectLava extends RitualEffect
             {
                 return;
             }
-            TileEntity tile = world.getTileEntity(x, y + 1, z);
+            TileEntity tile = world.getTileEntity(newPos);
             if (tile instanceof IFluidHandler)
             {
-                int amount = ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), false);
+                int amount = ((IFluidHandler) tile).fill(EnumFacing.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), false);
                 if (amount >= 1000)
                 {
-                    ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), true);
+                    ((IFluidHandler) tile).fill(EnumFacing.DOWN, new FluidStack(FluidRegistry.LAVA, 1000), true);
 
                     this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
 

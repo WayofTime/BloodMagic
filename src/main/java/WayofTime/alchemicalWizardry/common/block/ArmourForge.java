@@ -157,7 +157,7 @@ public class ArmourForge extends Block
 
                 for (int i = 0; i < 8; i++)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, world.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, world.provider.getDimensionId(), 1, xCoord, yCoord, zCoord);
                 }
 
                 if (itemStack != null)

@@ -20,7 +20,7 @@ public class ToolDefaultFire extends ItemManipulator
         LinkedList<ItemStack> newList = new LinkedList();
         for (ItemStack item : itemList)
         {
-            ItemStack newItem = FurnaceRecipes.smelting().getSmeltingResult(item);
+            ItemStack newItem = FurnaceRecipes.instance().getSmeltingResult(item);
             if (newItem != null)
             {
                 newList.add(newItem);
@@ -32,5 +32,4 @@ public class ToolDefaultFire extends ItemManipulator
 
         return newList;
     }
-
 }

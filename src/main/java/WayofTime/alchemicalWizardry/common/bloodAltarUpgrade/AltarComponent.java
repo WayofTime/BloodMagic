@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 
 public class AltarComponent
 {
@@ -46,6 +47,11 @@ public class AltarComponent
     public int getMetadata()
     {
         return metadata;
+    }
+    
+    public IBlockState getBlockState()
+    {
+    	return block.getStateFromMeta(getMetadata());
     }
 
     public boolean isBloodRune()

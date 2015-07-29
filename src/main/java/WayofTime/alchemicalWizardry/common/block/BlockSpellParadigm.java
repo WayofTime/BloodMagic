@@ -64,7 +64,7 @@ public class BlockSpellParadigm extends BlockOrientable
             itemTag.setInteger("xCoord", x);
             itemTag.setInteger("yCoord", y);
             itemTag.setInteger("zCoord", z);
-            itemTag.setInteger("dimensionId", world.provider.dimensionId);
+            itemTag.setInteger("dimensionId", world.provider.getDimensionId());
             return true;
         }
 

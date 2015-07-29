@@ -1,7 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -20,11 +22,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class DemonPlacer extends Item
 {
@@ -75,8 +74,6 @@ public class DemonPlacer extends Item
                     ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
                 }
 
-                
-                
                 if (!par2EntityPlayer.capabilities.isCreativeMode)
                 {
                     --par1ItemStack.stackSize;
@@ -165,16 +162,12 @@ public class DemonPlacer extends Item
                 entityliving.renderYawOffset = entityliving.rotationYaw;
                 if (entityliving instanceof EntityDemon)
                 {
-                	Entity owner = SpellHelper.getPlayerForUsername(DemonPlacer.getOwnerName(itemStack));
-                	if(owner != null)
-                	{
-                		((EntityDemon) entityliving).func_152115_b(owner.getPersistentID().toString());
+                    ((EntityDemon) entityliving).func_152115_b(DemonPlacer.getOwnerName(itemStack));
 
-                        if (!DemonPlacer.getOwnerName(itemStack).equals(""))
-                        {
-                            ((EntityDemon) entityliving).setTamed(true);
-                        }
-                	} 
+                    if (!DemonPlacer.getOwnerName(itemStack).equals(""))
+                    {
+                        ((EntityDemon) entityliving).setTamed(true);
+                    }
                 }
 
                 par0World.spawnEntityInWorld(entity);

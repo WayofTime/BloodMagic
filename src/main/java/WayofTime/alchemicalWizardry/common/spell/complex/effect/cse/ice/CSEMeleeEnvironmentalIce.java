@@ -41,6 +41,6 @@ public class CSEMeleeEnvironmentalIce extends ComplexSpellEffect
 	@Override
 	public int getCostOfEffect() 
 	{
-        return (int) (20 * (0.5 * potencyEnhancement + 1) * 1 * Math.pow(0.85, costEnhancement)); //where the lone 1 is: (0 * potencyEnhancement + 1)
+        return (int) (20 * (0.5 * potencyEnhancement + 1) * (0 * powerEnhancement + 1) * Math.pow(0.85, costEnhancement));
 	}
 }

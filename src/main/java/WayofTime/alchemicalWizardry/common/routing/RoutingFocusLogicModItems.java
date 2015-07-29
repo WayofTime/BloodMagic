@@ -22,7 +22,7 @@ public class RoutingFocusLogicModItems extends RoutingFocusLogic
 	
 	public String getModID(Item itm)
 	{
-		String str = GameData.getItemRegistry().getNameForObject(itm);
+		String str = (String) GameData.getItemRegistry().getNameForObject(itm);
 		if(!str.isEmpty())
 		{
 			String[] strs = str.split(":");

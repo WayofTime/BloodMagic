@@ -1,12 +1,5 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,15 +8,27 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
+public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory, IUpdatePlayerListBox
 {
     protected ItemStack[] inv;
     protected ReagentContainer bufferTank = new ReagentContainer(Reagent.REAGENT_SIZE * 2);
 
     protected int bufferTransferRate = 20;
+
+    private int lpPerTick = 10;
+    private int ticksPerReagent = 200;
 
     public int progress;
 
@@ -51,7 +56,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
+            NBTTagCompound savedTag = (NBTTagCompound) tagList.getCompoundTagAt(i);
 
             if (savedTag.getBoolean("Empty"))
             {
@@ -80,6 +85,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < inv.length; i++)
         {
+            ItemStack stack = inv[i];
             NBTTagCompound savedTag = new NBTTagCompound();
 
             if (inv[i] != null)
@@ -97,9 +103,9 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
+        super.update();
 
         if (!worldObj.isRemote)
         {
@@ -111,19 +117,17 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     public void moveBufferToMain()
     {
         ReagentStack amountStack = this.bufferTank.drain(bufferTransferRate, false);
-        int drainAmount = this.fill(ForgeDirection.UNKNOWN, amountStack, false);
+        int drainAmount = this.fill(EnumFacing.UP, amountStack, false);
 
         if (drainAmount > 0)
         {
             ReagentStack drainedStack = this.bufferTank.drain(drainAmount, true);
-            this.fill(ForgeDirection.UNKNOWN, drainedStack, true);
+            this.fill(EnumFacing.UP, drainedStack, true);
         }
     }
 
     public void tickProgress()
     {
-        int lpPerTick = 10;
-        int ticksPerReagent = 200;
         ItemStack reagentItemStack = this.getStackInSlot(1);
         if (reagentItemStack == null)
         {
@@ -158,10 +162,10 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         if (worldObj.getWorldTime() % 4 == 0)
         {
-            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+            SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
         }
 
-        if (progress >= ticksPerReagent)
+        if (progress >= this.ticksPerReagent)
         {
             progress = 0;
             this.bufferTank.fill(possibleReagent, true);
@@ -196,7 +200,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < invTagList.tagCount(); i++)
         {
-            NBTTagCompound savedTag = invTagList.getCompoundTagAt(i);
+            NBTTagCompound savedTag = (NBTTagCompound) invTagList.getCompoundTagAt(i);
 
             if (savedTag.getBoolean("Empty"))
             {
@@ -231,6 +235,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < inv.length; i++)
         {
+            ItemStack stack = inv[i];
             NBTTagCompound savedTag = new NBTTagCompound();
 
             if (inv[i] != null)
@@ -252,14 +257,14 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeClientNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound);
+        return new S35PacketUpdateTileEntity(pos, -999, nbttagcompound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
     {
         super.onDataPacket(net, packet);
-        readClientNBT(packet.func_148857_g());
+        readClientNBT(packet.getNbtCompound());
     }
 
     @Override
@@ -284,7 +289,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
             stack.stackSize = getInventoryStackLimit();
         }
 
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        worldObj.markBlockForUpdate(pos);
     }
 
     @Override
@@ -333,27 +338,27 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     @Override
     public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+        return worldObj.getTileEntity(pos) == this && pos.distanceSqToCenter(player.posX, player.posY, player.posZ) < 64;
     }
 
     @Override
-    public void openInventory()
+    public void openInventory(EntityPlayer player)
     {
     }
 
     @Override
-    public void closeInventory()
+    public void closeInventory(EntityPlayer player)
     {
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return "AlchemicCalcinator";
     }
 
     @Override
-    public boolean hasCustomInventoryName()
+    public boolean hasCustomName()
     {
         return false;
     }
@@ -365,13 +370,43 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
+    public int fill(EnumFacing from, ReagentStack resource, boolean doFill)
     {
         if (doFill && !worldObj.isRemote)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
 
         return super.fill(from, resource, doFill);
     }
+
+	@Override
+	public IChatComponent getDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getField(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
 }

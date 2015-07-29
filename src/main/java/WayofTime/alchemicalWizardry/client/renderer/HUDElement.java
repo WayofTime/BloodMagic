@@ -29,7 +29,7 @@ public class HUDElement
     public boolean showDamageOverlay = false;
     public boolean showItemCount = false;
 
-    static RenderItem itemRenderer = new RenderItem();
+    static RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
 
     public HUDElement(ItemStack itemStack, int iconW, int iconH, int padW, int value)
     {
@@ -54,8 +54,8 @@ public class HUDElement
 
     private void initSize()
     {
-        elementH = enableItemName ? Math.max(Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT * 2, iconH) :
-                Math.max(mc.fontRenderer.FONT_HEIGHT, iconH);
+        elementH = enableItemName ? Math.max(Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT * 2, iconH) :
+                Math.max(mc.fontRendererObj.FONT_HEIGHT, iconH);
 
         if (itemStack != null)
         {
@@ -65,7 +65,7 @@ public class HUDElement
             if (showValue)
             {
                 maxDamage = itemStack.getMaxDamage() + 1;
-                damage = maxDamage - itemStack.getItemDamageForDisplay();
+                damage = maxDamage - itemStack.getItemDamage();
 
                 boolean showSpecialValue = true;
                 boolean showValue = false;
@@ -88,17 +88,17 @@ public class HUDElement
                             (damage * 100 / maxDamage) + "%";
             }
 
-            itemDamageW = mc.fontRenderer.getStringWidth(HUDUtils.stripCtrl(itemDamage));
+            itemDamageW = mc.fontRendererObj.getStringWidth(HUDUtils.stripCtrl(itemDamage));
             elementW = padW + iconW + padW + itemDamageW + offset;
 
             if (enableItemName)
             {
                 itemName = itemStack.getDisplayName();
                 elementW = padW + iconW + padW +
-                        Math.max(mc.fontRenderer.getStringWidth(HUDUtils.stripCtrl(itemName)), itemDamageW);
+                        Math.max(mc.fontRendererObj.getStringWidth(HUDUtils.stripCtrl(itemName)), itemDamageW);
             }
 
-            itemNameW = mc.fontRenderer.getStringWidth(HUDUtils.stripCtrl(itemName));
+            itemNameW = mc.fontRendererObj.getStringWidth(HUDUtils.stripCtrl(itemName));
         }
     }
 
@@ -114,27 +114,27 @@ public class HUDElement
         boolean toRight = true;
         if (toRight)
         {
-            itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), itemStack, x - (iconW + padW), y);
-            HUDUtils.renderItemOverlayIntoGUI(mc.fontRenderer, itemStack, x - (iconW + padW), y, showDamageOverlay, showItemCount);
+            itemRenderer.func_180450_b(itemStack, x - (iconW + padW), y);
+            HUDUtils.renderItemOverlayIntoGUI(mc.fontRendererObj, itemStack, x - (iconW + padW), y, showDamageOverlay, showItemCount);
 
             RenderHelper.disableStandardItemLighting();
             GL11.glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
             GL11.glDisable(GL11.GL_BLEND);
 
-            mc.fontRenderer.drawStringWithShadow(itemName + "\247r", x - (padW + iconW + padW) - itemNameW, y, 0xffffff);
-            mc.fontRenderer.drawStringWithShadow(itemDamage + "\247r", x - (padW + iconW + padW) - itemDamageW,
+            mc.fontRendererObj.drawString(itemName + "\247r", x - (padW + iconW + padW) - itemNameW, y, 0xffffff);
+            mc.fontRendererObj.drawString(itemDamage + "\247r", x - (padW + iconW + padW) - itemDamageW,
                     y + (enableItemName ? elementH / 2 : elementH / 4), 0xffffff);
         } else
         {
-            itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), itemStack, x, y);
-            HUDUtils.renderItemOverlayIntoGUI(mc.fontRenderer, itemStack, x, y, showDamageOverlay, showItemCount);
+            itemRenderer.func_180450_b(itemStack, x, y);
+            HUDUtils.renderItemOverlayIntoGUI(mc.fontRendererObj, itemStack, x, y, showDamageOverlay, showItemCount);
 
             RenderHelper.disableStandardItemLighting();
             GL11.glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
             GL11.glDisable(GL11.GL_BLEND);
 
-            mc.fontRenderer.drawStringWithShadow(itemName + "\247r", x + iconW + padW, y, 0xffffff);
-            mc.fontRenderer.drawStringWithShadow(itemDamage + "\247r", x + iconW + padW,
+            mc.fontRendererObj.drawString(itemName + "\247r", x + iconW + padW, y, 0xffffff);
+            mc.fontRendererObj.drawString(itemDamage + "\247r", x + iconW + padW,
                     y + (enableItemName ? elementH / 2 : elementH / 4), 0xffffff);
         }
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

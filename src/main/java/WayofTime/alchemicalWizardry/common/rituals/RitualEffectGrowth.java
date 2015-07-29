@@ -7,6 +7,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraft.block.IGrowable;
@@ -27,10 +28,8 @@ public class RitualEffectGrowth extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorld();
-        int x = ritualStone.getXCoord();
-        int y = ritualStone.getYCoord();
-        int z = ritualStone.getZCoord();
+        World world = ritualStone.getWorldObj();
+        BlockPos pos = ritualStone.getPosition();
 
         if (currentEssence < this.getCostPerRefresh() * 9)
         {
@@ -77,7 +76,7 @@ public class RitualEffectGrowth extends RitualEffect
                     if (block instanceof IPlantable || block instanceof IGrowable)
                     {
                         {
-                            SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                            SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.getDimensionId(), 3, x, y, z);
                             block.updateTick(world, x + i, y + 2, z + j, world.rand);
                             flag++;
                         }

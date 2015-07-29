@@ -1,12 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.api.spell.ExtrapolatedMeleeEntityEffect;
 
 public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect
 {
@@ -21,19 +20,19 @@ public class MeleeOffensiveIce extends ExtrapolatedMeleeEntityEffect
     @Override
     protected boolean entityEffect(World world, Entity entity, EntityPlayer entityPlayer)
     {
-        Vec3 blockVector = SpellHelper.getEntityBlockVector(entity);
+    	BlockPos pos = entityPlayer.getPosition();
 
-        int posX = (int) (blockVector.xCoord);
-        int posY = (int) (blockVector.yCoord);
-        int posZ = (int) (blockVector.zCoord);
 
-        entity.motionY = 1 * (0.3 * this.powerUpgrades + 0.90);
+        double yVel = 1 * (0.3 * this.powerUpgrades + 0.90);
+
+        entity.motionY = yVel;
 
         for (int i = 0; i < 2; i++)
         {
-            if (world.isAirBlock(posX, posY + i, posZ))
+        	BlockPos newPos = pos.offsetUp(i);
+            if (world.isAirBlock(newPos))
             {
-                world.setBlock(posX, posY + i, posZ, Blocks.ice);
+                world.setBlockState(newPos, Blocks.ice.getDefaultState());
             }
         }
 

@@ -1,7 +1,16 @@
 package WayofTime.alchemicalWizardry.client.renderer;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.lwjgl.opengl.GL11;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -11,13 +20,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+
 
 /*
  *  Created in Scala by Alex-Hawks
@@ -30,22 +33,24 @@ public class RitualDivinerRender
     public void render(RenderWorldLastEvent event)
     {
         Minecraft minecraft = Minecraft.getMinecraft();
-        EntityClientPlayerMP player = minecraft.thePlayer;
+        EntityPlayer player = minecraft.thePlayer;
         World world = player.worldObj;
 
         if (minecraft.objectMouseOver == null || minecraft.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK)
         {
             return;
         }
+        
+        BlockPos pos = minecraft.objectMouseOver.func_178782_a();
 
-        TileEntity tileEntity = world.getTileEntity(minecraft.objectMouseOver.blockX, minecraft.objectMouseOver.blockY, minecraft.objectMouseOver.blockZ);
+        TileEntity tileEntity = world.getTileEntity(pos);
 
         if (!(tileEntity instanceof IMasterRitualStone))
         {
             return;
         }
 
-        Vector3 vec3 = new Vector3(minecraft.objectMouseOver.blockX, minecraft.objectMouseOver.blockY, minecraft.objectMouseOver.blockZ);
+        Vector3 vec3 = new Vector3(pos.getX(), pos.getY(), pos.getZ());
         double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
         double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
         double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
@@ -71,7 +76,7 @@ public class RitualDivinerRender
                 double minY = vX.y - posY;
                 double minZ = vX.z - posZ;
 
-                if (!world.getBlock(vX.x, vX.y, vX.z).isOpaqueCube())
+                if (!world.getBlockState(new BlockPos(vX.x, vX.y, vX.z)).getBlock().isOpaqueCube())
                 {
                     RenderFakeBlocks.drawFakeBlock(vX, ModBlocks.ritualStone, ritualComponent.getStoneType(), minX, minY, minZ, world);
                 }
