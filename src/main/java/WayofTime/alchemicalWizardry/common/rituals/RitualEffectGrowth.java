@@ -1,19 +1,20 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import net.minecraft.block.Block;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
-import net.minecraft.block.IGrowable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RitualEffectGrowth extends RitualEffect
 {
@@ -55,7 +56,8 @@ public class RitualEffectGrowth extends RitualEffect
                     {
                         if (this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false))
                         {
-                            if (SpellHelper.hydrateSoil(world, x + i, y + 1, z + j))
+                        	BlockPos newPos = pos.add(i, 1, j);
+                            if (SpellHelper.hydrateSoil(world, newPos))
                             {
                                 this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
                             }
@@ -71,13 +73,15 @@ public class RitualEffectGrowth extends RitualEffect
             {
                 for (int j = -range; j <= range; j++)
                 {
-                    Block block = world.getBlock(x + i, y + 2, z + j);
+                	BlockPos newPos = pos.add(i, 2, j);
+                	IBlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
 
                     if (block instanceof IPlantable || block instanceof IGrowable)
                     {
                         {
-                            SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.getDimensionId(), 3, x, y, z);
-                            block.updateTick(world, x + i, y + 2, z + j, world.rand);
+                            SpellHelper.sendIndexedParticleToAllAround(world, pos, 20, world.provider.getDimensionId(), 3, pos);
+                            block.updateTick(world, newPos, state, world.rand);
                             flag++;
                         }
                     }

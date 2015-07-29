@@ -50,9 +50,10 @@ public class RitualEffectFeatheredKnife extends RitualEffect
             {
                 for (int k = -10; k <= 10; k++)
                 {
-                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
+                	BlockPos newPos = pos.add(i, k, j);
+                    if (world.getTileEntity(newPos) instanceof IBloodAltar)
                     {
-                        tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
+                        tileAltar = (IBloodAltar) world.getTileEntity(newPos);
                         testFlag = true;
                     }
                 }
@@ -68,10 +69,9 @@ public class RitualEffectFeatheredKnife extends RitualEffect
 
         double range = hasReductus ? 8 : 15;
         double vertRange = hasReductus ? 8 : 20;
-        List<EntityPlayer> list = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, range, vertRange);
+        List<EntityPlayer> list = SpellHelper.getPlayersInRange(world, pos.getX(), pos.getY(), pos.getZ(), range, vertRange);
 
         int entityCount = 0;
-        boolean flag = false;
 
         if (currentEssence < this.getCostPerRefresh() * list.size())
         {

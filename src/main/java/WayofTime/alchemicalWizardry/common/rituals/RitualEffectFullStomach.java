@@ -38,7 +38,7 @@ public class RitualEffectFullStomach extends RitualEffect
         double horizRange = 16;
         double vertRange = 16;
 
-        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizRange, vertRange);
+        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, horizRange, vertRange);
 
         if (playerList == null)
         {
@@ -50,14 +50,14 @@ public class RitualEffectFullStomach extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            TileEntity tile = world.getTileEntity(x, y + 1, z);
+            TileEntity tile = world.getTileEntity(pos.offsetUp());
             IInventory inventory = null;
             if (tile instanceof IInventory)
             {
                 inventory = (IInventory) tile;
             } else
             {
-                tile = world.getTileEntity(x, y - 1, z);
+                tile = world.getTileEntity(pos.offsetDown());
                 if (tile instanceof IInventory)
                 {
                     inventory = (IInventory) tile;
@@ -81,8 +81,8 @@ public class RitualEffectFullStomach extends RitualEffect
                         {
                             ItemFood foodItem = (ItemFood) stack.getItem();
 
-                            int regularHeal = foodItem.func_150905_g(stack);
-                            float saturatedHeal = foodItem.func_150906_h(stack) * regularHeal * 2.0f;
+                            int regularHeal = foodItem.getHealAmount(stack);
+                            float saturatedHeal = foodItem.getSaturationModifier(stack) * regularHeal * 2.0f;
 
                             if (saturatedHeal + satLevel <= 20)
                             {

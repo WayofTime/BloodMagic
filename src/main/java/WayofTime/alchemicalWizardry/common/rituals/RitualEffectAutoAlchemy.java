@@ -8,8 +8,8 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -44,7 +44,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
 
             int flag = 0;
 
-            TileEntity topEntity = world.getTileEntity(x, y + 1, z);
+            TileEntity topEntity = world.getTileEntity(pos.offsetUp());
             if (!(topEntity instanceof IBloodAltar) || !(topEntity instanceof IBloodAltar))
             {
                 return;
@@ -65,10 +65,10 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                 IInventory inputInv1 = null;
                 IInventory inputInv2 = null;
 
-                TileEntity northEntity = world.getTileEntity(x, y, z - 1);
-                TileEntity southEntity = world.getTileEntity(x, y, z + 1);
-                TileEntity eastEntity = world.getTileEntity(x + 1, y, z);
-                TileEntity westEntity = world.getTileEntity(x - 1, y, z);
+                TileEntity northEntity = world.getTileEntity(pos.offsetNorth());
+                TileEntity southEntity = world.getTileEntity(pos.offsetSouth());
+                TileEntity eastEntity = world.getTileEntity(pos.offsetEast());
+                TileEntity westEntity = world.getTileEntity(pos.offsetWest());
 
                 if (northEntity instanceof TEWritingTable)
                 {
@@ -271,7 +271,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                                     continue;
                                 }
                                 
-                            	if(!inputInv1.isItemValidForSlot(j, curItem) || (inputInv1 instanceof ISidedInventory && !((ISidedInventory) inputInv1).canExtractItem(j, curItem, ForgeDirection.DOWN.ordinal())))
+                            	if(!inputInv1.isItemValidForSlot(j, curItem) || (inputInv1 instanceof ISidedInventory && !((ISidedInventory) inputInv1).canExtractItem(j, curItem, EnumFacing.DOWN)))
                             	{
                             		continue;
                             	}
@@ -385,10 +385,11 @@ public class RitualEffectAutoAlchemy extends RitualEffect
 
             if (flag > 0)
             {
-                world.markBlockForUpdate(x, y, z + 1);
-                world.markBlockForUpdate(x, y, z - 1);
-                world.markBlockForUpdate(x + 1, y, z);
-                world.markBlockForUpdate(x - 1, y, z);
+            	for(EnumFacing face : EnumFacing.HORIZONTALS)
+            	{
+            		world.markBlockForUpdate(pos.offset(face));
+            	}
+            	
                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * flag);
             }
         }

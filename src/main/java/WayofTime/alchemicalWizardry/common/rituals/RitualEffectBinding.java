@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +13,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectBinding extends RitualEffect
 {
@@ -46,7 +46,7 @@ public class RitualEffectBinding extends RitualEffect
             if (ritualStone.getVar1() == 0)
             {
                 int d0 = 0;
-                AxisAlignedBB axisalignedbb = new AxisAlignedBB((double) x, (double) y + 1, (double) z, (double) (x + 1), (double) (y + 2), (double) (z + 1)).expand(d0, d0, d0);
+                AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.offsetUp(), pos.add(1, 2, 1)).expand(d0, d0, d0);
                 List list = world.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
                 Iterator iterator = list.iterator();
                 EntityItem item;
@@ -66,7 +66,7 @@ public class RitualEffectBinding extends RitualEffect
                     {
                         ritualStone.setVar1(BindingRegistry.getIndexForItem(itemStack) + 1);
                         itemStack.stackSize--;
-                        world.addWeatherEffect(new EntityLightningBolt(world, x, y + 1, z));
+                        world.addWeatherEffect(new EntityLightningBolt(world, pos.getX(), pos.getY() + 1, pos.getZ()));
                         ritualStone.setCooldown(ritualStone.getCooldown() - 1);
                         if(itemStack.stackSize <= 0)
                         {
@@ -77,7 +77,7 @@ public class RitualEffectBinding extends RitualEffect
 
                     if (world.rand.nextInt(10) == 0)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.getDimensionId(), 1, x, y, z);
+                        SpellHelper.sendIndexedParticleToAllAround(world, pos, 20, world.provider.getDimensionId(), 1, pos);
                     }
                 }
 
@@ -90,40 +90,8 @@ public class RitualEffectBinding extends RitualEffect
                 {
                     int lightningPoint = world.rand.nextInt(8);
 
-                    switch (lightningPoint)
-                    {
-                        case 0:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 3, z + 0));
-                            break;
-
-                        case 1:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 3, z + 0));
-                            break;
-
-                        case 2:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 0, y + 3, z + 4));
-                            break;
-
-                        case 3:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 0, y + 3, z - 4));
-                            break;
-
-                        case 4:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 3, y + 3, z + 3));
-                            break;
-
-                        case 5:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x - 3, y + 3, z + 3));
-                            break;
-
-                        case 6:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x + 3, y + 3, z - 3));
-                            break;
-
-                        case 7:
-                            world.addWeatherEffect(new EntityLightningBolt(world, x - 3, y + 3, z - 3));
-                            break;
-                    }
+                    BlockPos newPos = getPositionForLightning(pos, lightningPoint);
+                    world.addWeatherEffect(new EntityLightningBolt(world, newPos.getX(), newPos.getY(), newPos.getZ()));
                 }
 
                 if (ritualStone.getCooldown() <= 0)
@@ -133,7 +101,7 @@ public class RitualEffectBinding extends RitualEffect
 
                     if (spawnedItem != null)
                     {
-                        EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, spawnedItem.copy());
+                        EntityItem newItem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, spawnedItem.copy());
                         world.spawnEntityInWorld(newItem);
                     }
 
@@ -143,6 +111,39 @@ public class RitualEffectBinding extends RitualEffect
         }
     }
 
+    public BlockPos getPositionForLightning(BlockPos pos, int lightning)
+    {
+    	switch (lightning)
+        {
+            case 0:
+            	return pos.add(4, 3, 0);
+
+            case 1:
+            	return pos.add(-4, 3, 0);
+
+            case 2:
+            	return pos.add(0, 3, 4);
+
+            case 3:
+            	return pos.add(0, 3, -4);
+
+            case 4:
+            	return pos.add(3, 3, 3);
+
+            case 5:
+            	return pos.add(-3, 3, 3);
+
+            case 6:
+            	return pos.add(-3, 3, -3);
+
+            case 7:
+            	return pos.add(3, 3, -3);
+            	
+            default:
+            	return pos.add(0, 3, 0);
+        }
+    }
+    
     @Override
     public int getCostPerRefresh()
     {

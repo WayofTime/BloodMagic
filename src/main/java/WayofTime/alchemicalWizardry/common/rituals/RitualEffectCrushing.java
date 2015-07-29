@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -12,8 +13,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -44,7 +45,7 @@ public class RitualEffectCrushing extends RitualEffect
             return;
         }
 
-        TileEntity tile = world.getTileEntity(x, y + 1, z);
+        TileEntity tile = world.getTileEntity(pos.offsetUp());
         IInventory tileEntity;
 
         if (tile instanceof IInventory)
@@ -107,30 +108,32 @@ public class RitualEffectCrushing extends RitualEffect
                 {
                     for (int k = -1; k <= 1; k++)
                     {
-                        Block block = world.getBlock(x + i, y + j, z + k);
-                        int meta = world.getBlockMetadata(x + i, y + j, z + k);
-                        if(block.getBlockHardness(world, x + i, y + j, z + k) == -1)
+                    	BlockPos newPos = pos.add(i, j, k);
+                    	IBlockState state = world.getBlockState(newPos);
+                        Block block = state.getBlock();
+                        
+                        if(block.getBlockHardness(world, newPos) == -1)
                         {
                         	continue;
                         }
 
-                        if (block != null && !world.isAirBlock(x + i, y + j, z + k))
+                        if (block != null && !world.isAirBlock(newPos))
                         {
                             if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)) || SpellHelper.isBlockFluid(block))
                             {
                                 continue;
                             }
 
-                            if (isSilkTouch && block.canSilkHarvest(world, null, x + i, y + j, z + k, meta))
+                            if (isSilkTouch && block.canSilkHarvest(world, newPos, state, null))
                             {
-                                ItemStack item = new ItemStack(block, 1, meta);
+                                ItemStack item = new ItemStack(block, 1, block.getMetaFromState(state));
                                 ItemStack copyStack = item.copyItemStack(item);
 
-                                SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
+                                SpellHelper.insertStackIntoInventory(copyStack, tileEntity, EnumFacing.DOWN);
 
                                 if (copyStack.stackSize > 0)
                                 {
-                                    world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+                                    world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5, copyStack));
                                 }
 
                                 if (hasCrystallos)
@@ -139,7 +142,7 @@ public class RitualEffectCrushing extends RitualEffect
                                 }
                             } else
                             {
-                                ArrayList<ItemStack> itemDropList = block.getDrops(world, x + i, y + j, z + k, meta, fortuneLevel);
+                                List<ItemStack> itemDropList = block.getDrops(world, newPos, state, fortuneLevel);
 
                                 if (itemDropList != null)
                                 {
@@ -156,10 +159,10 @@ public class RitualEffectCrushing extends RitualEffect
                                             this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, true);
                                         }
 
-                                        SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
+                                        SpellHelper.insertStackIntoInventory(copyStack, tileEntity, EnumFacing.DOWN);
                                         if (copyStack.stackSize > 0)
                                         {
-                                            world.spawnEntityInWorld(new EntityItem(world, x + 0.4, y + 2, z + 0.5, copyStack));
+                                            world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5, copyStack));
                                         }  
                                     }
                                     
@@ -177,8 +180,8 @@ public class RitualEffectCrushing extends RitualEffect
                                     }
                                 }
                             }
-                            world.setBlockToAir(x + i, y + j, z + k);
-                            world.playSoundEffect(x + i, y + j, z + k, "mob.endermen.portal", 1.0F, 1.0F);
+                            world.setBlockToAir(newPos);
+                            world.playSoundEffect(newPos.getX(), newPos.getY(), newPos.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
 
                             SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
 
@@ -197,7 +200,7 @@ public class RitualEffectCrushing extends RitualEffect
             Item item = stack.getItem();
             if (item instanceof ItemBlock)
             {
-                Block block = ((ItemBlock) item).field_150939_a;
+                Block block = ((ItemBlock) item).getBlock();
 
                 if (block == Blocks.cobblestone || block == Blocks.stone)
                 {
@@ -221,7 +224,7 @@ public class RitualEffectCrushing extends RitualEffect
             Item item = stack.getItem();
             if (item instanceof ItemBlock)
             {
-                Block block = ((ItemBlock) item).field_150939_a;
+                Block block = ((ItemBlock) item).getBlock();
 
                 if (hasIncendium)
                 {
@@ -238,65 +241,6 @@ public class RitualEffectCrushing extends RitualEffect
             return copyStack;
         }
         return stack;
-    }
-
-    public boolean isSilkTouch(World world, int x, int y, int z)
-    {
-        int index = 0;
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
-                int index1 = Math.abs(i);
-                int index2 = Math.abs(j);
-
-                if ((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2))
-                {
-                    Block block = world.getBlock(x + i, y + 1, z + j);
-                    if (block == Blocks.gold_block)
-                    {
-                        index++;
-                    }
-                }
-            }
-        }
-
-        return index >= 12;
-    }
-
-    public int getFortuneLevel(World world, int x, int y, int z)
-    {
-        int index = 0;
-        for (int i = -2; i <= 2; i++)
-        {
-            for (int j = -2; j <= 2; j++)
-            {
-                int index1 = Math.abs(i);
-                int index2 = Math.abs(j);
-
-                if ((index1 == 2 && (index2 == 2 || index2 == 1)) || (index1 == 1 && index2 == 2))
-                {
-                    Block block = world.getBlock(x + i, y + 1, z + j);
-                    if (block == Blocks.emerald_block || block == Blocks.diamond_block)
-                    {
-                        index++;
-                    }
-                }
-            }
-        }
-
-        if (index >= 12)
-        {
-            return 3;
-        } else if (index >= 8)
-        {
-            return 2;
-        } else if (index >= 4)
-        {
-            return 1;
-        }
-
-        return 0;
     }
 
     @Override

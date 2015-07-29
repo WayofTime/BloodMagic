@@ -32,10 +32,10 @@ public class RitualEffectFlight extends RitualEffect
         BlockPos pos = ritualStone.getPosition();
 
         int range = 20;
-        int verticalRange = 30;
-        AxisAlignedBB axis = new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
-        axis.maxY = 256;
-        axis.minY = 0;
+        int verticalRange = 70;
+        AxisAlignedBB axis = new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(range, verticalRange, range);
+//        axis.maxY = 256;
+//        axis.minY = 0;
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, axis);
         int entityCount = 0;
 

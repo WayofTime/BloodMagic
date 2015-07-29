@@ -1,18 +1,18 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fall damage in the area of effect
 {
@@ -33,6 +33,10 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
 
         if (ritualStone.getCooldown() > 0)
         {
+        	int x = pos.getX();
+        	int y = pos.getY();
+        	int z = pos.getZ();
+        	
             world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 5, z + 4));
             world.addWeatherEffect(new EntityLightningBolt(world, x + 4, y + 5, z - 4));
             world.addWeatherEffect(new EntityLightningBolt(world, x - 4, y + 5, z - 4));
@@ -46,14 +50,11 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
 
         int range = this.getHorizontalRangeForReagent(hasTerrae, hasOrbisTerrae);
         int verticalRange = hasAether ? 60 : 30;
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(range, verticalRange, range));
         int entityCount = 0;
         boolean flag = false;
 
-        for (EntityLivingBase entity : entities)
-        {
-            entityCount++;
-        }
+        entityCount += entities.size();
 
         if (currentEssence < this.getCostPerRefresh() * entityCount)
         {
