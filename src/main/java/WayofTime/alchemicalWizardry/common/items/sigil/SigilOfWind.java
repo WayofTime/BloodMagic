@@ -1,30 +1,21 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 
-import java.util.List;
-
-public class SigilOfWind extends EnergyItems implements ArmourUpgrade, ISigil
+public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigil
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
-
     public SigilOfWind()
     {
         super();
@@ -40,7 +31,7 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade, ISigil
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+            if (this.getActivated(par1ItemStack))
             {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
@@ -49,47 +40,6 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade, ISigil
             }
 
             par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WindSigil_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:WindSigil_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:WindSigil_deactivated");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
-        {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (par1 == 1)
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
         }
     }
 
@@ -107,13 +57,13 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade, ISigil
         }
 
         NBTTagCompound tag = par1ItemStack.getTagCompound();
-        tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
+        this.setActivated(par1ItemStack, !(this.getActivated(par1ItemStack)));
 
-        if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+        if (this.getActivated(par1ItemStack) && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
-            par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 2, 1));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 2, 1, true, false));
         } else
         {
             par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage());
@@ -148,7 +98,7 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade, ISigil
             {
                 if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
-                	par1ItemStack.getTagCompound().setBoolean("isActive", false);
+                	this.setActivated(par1ItemStack, false);
                 }
             }
         }
