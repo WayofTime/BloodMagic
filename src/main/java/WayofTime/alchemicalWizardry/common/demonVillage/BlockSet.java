@@ -40,7 +40,7 @@ public class BlockSet
     {
         this.blockid = blockid;
         this.metadata = new int[4];
-        positions = new ArrayList();
+        positions = new ArrayList<Int3>();
     }
 
     public BlockSet(Block block)

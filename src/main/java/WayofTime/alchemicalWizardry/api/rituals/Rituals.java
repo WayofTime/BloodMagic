@@ -26,8 +26,8 @@ public class Rituals
 
     public final MRSRenderer customRenderer;
 
-    public static Map<String, Rituals> ritualMap = new HashMap();
-    public static List<String> keyList = new LinkedList();
+    public static Map<String, Rituals> ritualMap = new HashMap<String, Rituals>();
+    public static List<String> keyList = new LinkedList<String>();
 
     public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer)
     {

@@ -209,7 +209,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             return 3;
         }
 
-        if (armor.getItem() == ModItems.boundPlate)
+        if (armor.getItem() == ModItems.boundChestplate)
         {
             return 8;
         }
@@ -284,7 +284,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         {
             if (this.getIsInvisible(stack))
             {
-                if (this == ModItems.boundHelmet || this == ModItems.boundPlate || this == ModItems.boundBoots)
+                if (this == ModItems.boundHelmet || this == ModItems.boundChestplate || this == ModItems.boundBoots)
                 {
                     return "alchemicalwizardry:models/armor/boundArmour_invisible_layer_1.png";
                 }
@@ -296,7 +296,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             }
         }
 
-        if (this == ModItems.boundHelmet || this == ModItems.boundPlate || this == ModItems.boundBoots)
+        if (this == ModItems.boundHelmet || this == ModItems.boundChestplate || this == ModItems.boundBoots)
         {
             return "alchemicalwizardry:models/armor/boundArmour_layer_1.png";
         }

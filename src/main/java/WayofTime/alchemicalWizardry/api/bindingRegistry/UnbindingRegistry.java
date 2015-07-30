@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UnbindingRegistry
 {
-    public static List<UnbindingRecipe> unbindingRecipes = new LinkedList();
+    public static List<UnbindingRecipe> unbindingRecipes = new LinkedList<UnbindingRecipe>();
 
     public static void addAllUnbindingRecipesFromBinding()
     {

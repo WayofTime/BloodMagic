@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,7 +22,6 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class RitualEffectDemonPortal extends RitualEffect
 {
@@ -136,7 +136,7 @@ public class RitualEffectDemonPortal extends RitualEffect
     	
     	for(Int3 pos : jarLocations)
     	{
-    		if(!(ritualStone.getWorldObj().getTileEntity(position.add(pos.xCoord, pos.yCoord, pos.zCoord)) instanceof TEBellJar))
+    		if(!(ritualStone.getWorldObj().getTileEntity(position.add(pos.xCoord, pos.yCoord, pos.zCoord)) instanceof TEBelljar))
     		{
     			return false;
     		}
@@ -148,7 +148,7 @@ public class RitualEffectDemonPortal extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> demonRitual = new ArrayList();
+        ArrayList<RitualComponent> demonRitual = new ArrayList<RitualComponent>();
         this.addParallelRunes(demonRitual, 3, 0, RitualComponent.FIRE);
         this.addParallelRunes(demonRitual, 5, 0, RitualComponent.FIRE);
         this.addCornerRunes(demonRitual, 2, 0, RitualComponent.AIR);

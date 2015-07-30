@@ -82,7 +82,7 @@ public class RitualEffectHealing extends RitualEffect
                 if (livingEntity.getHealth() + 0.1f < livingEntity.getMaxHealth())
                 {
                     PotionEffect effect = livingEntity.getActivePotionEffect(Potion.regeneration);
-                    if (effect == null || (effect != null && effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay))
+                    if (effect == null || (effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay))
                     {
                         if (!hasVirtus || (this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false)))
                         {
@@ -128,7 +128,7 @@ public class RitualEffectHealing extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> healingRitual = new ArrayList();
+        ArrayList<RitualComponent> healingRitual = new ArrayList<RitualComponent>();
         healingRitual.add(new RitualComponent(4, 0, 0, RitualComponent.AIR));
         healingRitual.add(new RitualComponent(5, 0, -1, RitualComponent.AIR));
         healingRitual.add(new RitualComponent(5, 0, 1, RitualComponent.AIR));

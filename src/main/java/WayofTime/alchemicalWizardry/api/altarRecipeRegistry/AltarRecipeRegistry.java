@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 
 public class AltarRecipeRegistry
 {
-    public static List<AltarRecipe> altarRecipes = new LinkedList();
-    public static Map<Integer, ItemStack> orbMap = new HashMap();
+    public static List<AltarRecipe> altarRecipes = new LinkedList<AltarRecipe>();
+    public static Map<Integer, ItemStack> orbMap = new HashMap<Integer, ItemStack>();
 
     public static void registerAltarRecipe(ItemStack result, ItemStack requiredItem, int minTier, int liquidRequired, int consumptionRate, int drainRate, boolean canBeFilled)
     {

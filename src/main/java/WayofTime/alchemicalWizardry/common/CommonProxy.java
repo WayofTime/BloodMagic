@@ -33,38 +33,16 @@ public class CommonProxy
         // Nothing here as the server doesn't render graphics!
     }
     
-    public void registerPostSideObjects()
-    {
-    	
-    }
+    public void registerPostSideObjects() {}
 
-    public void registerEntities()
-    {
-    }
+    public void registerEntities() {}
 
     public World getClientWorld()
     {
         return null;
     }
 
-    public void registerActions()
-    {
-    }
-
-    public void registerEvents()
-    {
-    }
-
-    public void registerSoundHandler()
-    {
-        // Nothing here as this is a server side proxy
-    }
-
-    public void registerTileEntities()
-    {
-        GameRegistry.registerTileEntity(TEAltar.class, "containerAltar");
-        GameRegistry.registerTileEntity(TEMasterStone.class, "containerMasterStone");
-    }
+    public void registerEvents() {}
 
     public void registerEntityTrackers()
     {
@@ -88,12 +66,5 @@ public class CommonProxy
         EntityRegistry.registerModEntity(BookEntityItem.class, "bookEntityItem", 17, AlchemicalWizardry.instance, 120, 3, true);
     }
 
-    public void registerTickHandlers()
-    {
-    }
-
-    public void InitRendering()
-    {
-        // TODO Auto-generated method stub
-    }
+    public void initRendering() {}
 }

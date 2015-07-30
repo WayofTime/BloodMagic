@@ -22,9 +22,6 @@ public class EntityShade extends EntityDemon
 {
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
-    private static float maxTamedHealth = 50.0F;
-    private static float maxUntamedHealth = 100.0F;
-
     public EntityShade(World par1World)
     {
         super(par1World, AlchemicalWizardry.entityShadeID);
@@ -56,6 +53,8 @@ public class EntityShade extends EntityDemon
         super.applyEntityAttributes();
         //This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
+        float maxTamedHealth = 50.0F;
+        float maxUntamedHealth = 100.0F;
 
         //My guess is that this will alter the max health
         if (this.isTamed())

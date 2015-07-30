@@ -34,9 +34,9 @@ public class RitualEffectSpawnWard extends RitualEffect
 
             int dimension = world.provider.getDimensionId();
 
-            if (AlchemicalWizardryEventHooks.respawnMap.containsKey(new Integer(dimension)))
+            if (AlchemicalWizardryEventHooks.respawnMap.containsKey(dimension))
             {
-                List<CoordAndRange> list = AlchemicalWizardryEventHooks.respawnMap.get(new Integer(dimension));
+                List<CoordAndRange> list = AlchemicalWizardryEventHooks.respawnMap.get(dimension);
                 if (list != null)
                 {
                     if (!list.contains(new CoordAndRange(pos, horizRange, vertRange)))
@@ -55,15 +55,15 @@ public class RitualEffectSpawnWard extends RitualEffect
                     }
                 } else
                 {
-                    list = new LinkedList();
+                    list = new LinkedList<CoordAndRange>();
                     list.add(new CoordAndRange(pos, horizRange, vertRange));
-                    AlchemicalWizardryEventHooks.respawnMap.put(new Integer(dimension), list);
+                    AlchemicalWizardryEventHooks.respawnMap.put(dimension, list);
                 }
             } else
             {
-                List<CoordAndRange> list = new LinkedList();
+                List<CoordAndRange> list = new LinkedList<CoordAndRange>();
                 list.add(new CoordAndRange(pos, horizRange, vertRange));
-                AlchemicalWizardryEventHooks.respawnMap.put(new Integer(dimension), list);
+                AlchemicalWizardryEventHooks.respawnMap.put(dimension, list);
             }
 
 
@@ -80,7 +80,7 @@ public class RitualEffectSpawnWard extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> wardRitualRitual = new ArrayList();
+        ArrayList<RitualComponent> wardRitualRitual = new ArrayList<RitualComponent>();
 
         for (int i = 2; i <= 4; i++)
         {

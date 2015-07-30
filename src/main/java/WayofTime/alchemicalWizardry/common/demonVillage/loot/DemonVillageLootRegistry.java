@@ -11,7 +11,7 @@ import WayofTime.alchemicalWizardry.ModItems;
 
 public class DemonVillageLootRegistry 
 {
-	public static ArrayList<WeightedRandomChestContent> list1 = new ArrayList();
+	public static ArrayList<WeightedRandomChestContent> list1 = new ArrayList<WeightedRandomChestContent>();
 	
 	public static void init()
 	{

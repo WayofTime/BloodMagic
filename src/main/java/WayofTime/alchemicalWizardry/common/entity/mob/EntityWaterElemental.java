@@ -14,6 +14,7 @@ public class EntityWaterElemental extends EntityElemental implements IMob
         super(world, AlchemicalWizardry.entityWaterElementalID);
     }
 
+    @Override
     public void inflictEffectOnEntity(Entity target)
     {
         if (target instanceof EntityLivingBase)

@@ -25,9 +25,6 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 25, 25, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
-    private static float maxTamedHealth = 20.0F;
-    private static float maxUntamedHealth = 10.0F;
-
     public EntitySmallEarthGolem(World par1World)
     {
         super(par1World, AlchemicalWizardry.entitySmallEarthGolemID);
@@ -58,6 +55,8 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
         super.applyEntityAttributes();
         //This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.40000001192092896D);
+        float maxTamedHealth = 20.0F;
+        float maxUntamedHealth = 10.0F;
 
         //My guess is that this will alter the max health
         if (this.isTamed())
@@ -68,7 +67,8 @@ public class EntitySmallEarthGolem extends EntityDemon implements IRangedAttackM
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxUntamedHealth);
         }
     }
-    
+
+    @Override
     /**
      * Attack the specified entity using a ranged attack.
      */

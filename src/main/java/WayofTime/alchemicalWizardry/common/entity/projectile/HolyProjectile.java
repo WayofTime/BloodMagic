@@ -52,7 +52,7 @@ public class HolyProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        } //else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
 
@@ -72,7 +72,7 @@ public class HolyProjectile extends EnergyBlastProjectile
             {
                 if (((EntityLivingBase) mop).isEntityUndead())
                 {
-                    doDamage((int) (projectileDamage * 2), mop);
+                    doDamage(projectileDamage * 2, mop);
                 } else
                 {
                     doDamage(projectileDamage, mop);

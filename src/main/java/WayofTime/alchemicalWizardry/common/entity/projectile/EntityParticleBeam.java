@@ -34,7 +34,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
     public EntityLivingBase shootingEntity;
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;
-    private int ricochetCounter = 0;
     private boolean scheduledForDeath = false;
     protected int projectileDamage;
 
@@ -109,7 +108,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
             double d4 = d0 / d3;
             double d5 = d2 / d3;
             this.setLocationAndAngles(par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
-            float f4 = (float) d3 * 0.2F;
             this.setThrowableHeading(d0, d1, d2, par4, par5);
         }
 

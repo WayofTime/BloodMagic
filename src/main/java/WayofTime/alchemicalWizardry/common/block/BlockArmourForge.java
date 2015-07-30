@@ -68,7 +68,7 @@ public class BlockArmourForge extends Block
         {
             case 0:
                 list = plateList;
-                armourPiece = new ItemStack(ModItems.boundPlate, 1, 0);
+                armourPiece = new ItemStack(ModItems.boundChestplate, 1, 0);
                 break;
 
             case 1:

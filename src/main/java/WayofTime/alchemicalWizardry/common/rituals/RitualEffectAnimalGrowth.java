@@ -133,7 +133,7 @@ public class RitualEffectAnimalGrowth extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> animalGrowthRitual = new ArrayList();
+        ArrayList<RitualComponent> animalGrowthRitual = new ArrayList<RitualComponent>();
         animalGrowthRitual.add(new RitualComponent(0, 0, 2, RitualComponent.DUSK));
         animalGrowthRitual.add(new RitualComponent(2, 0, 0, RitualComponent.DUSK));
         animalGrowthRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));

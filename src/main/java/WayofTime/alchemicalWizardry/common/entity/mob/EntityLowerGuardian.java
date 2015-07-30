@@ -19,10 +19,6 @@ import WayofTime.alchemicalWizardry.common.EntityAITargetAggro;
 
 public class EntityLowerGuardian extends EntityDemon
 {
-    private static float maxTamedHealth = 50.0F;
-    private static float maxUntamedHealth = 30.0F;
-    private int attackTimer;
-
     public EntityLowerGuardian(World par1World)
     {
         super(par1World, AlchemicalWizardry.entityLowerGuardianID);
@@ -41,7 +37,6 @@ public class EntityLowerGuardian extends EntityDemon
         this.targetTasks.addTask(4, new EntityAITargetAggro(this, EntityPlayer.class, 0, false));
         this.setAggro(false);
         this.setTamed(false);
-        attackTimer = 0;
     }
 
     @Override
@@ -50,6 +45,8 @@ public class EntityLowerGuardian extends EntityDemon
         super.applyEntityAttributes();
         //This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
+        float maxTamedHealth = 50.0F;
+        float maxUntamedHealth = 30.0F;
 
         //My guess is that this will alter the max health
         if (this.isTamed())
@@ -61,8 +58,10 @@ public class EntityLowerGuardian extends EntityDemon
         }
     }
 
-    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
+/*    public EntityAgeable createChild(EntityAgeable par1EntityAgeable)
     {
         return this.spawnBabyAnimal(par1EntityAgeable);
     }
+    I don't know what this method changed to
+    */
 }

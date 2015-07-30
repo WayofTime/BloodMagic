@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -27,7 +26,7 @@ public class RenderConduit extends TileEntitySpecialRenderer
             FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            this.modelConduit.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileConduit.getInputDirection(), tileConduit.getOutputDirection());
+            this.modelConduit.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, tileConduit.getInputDirection(), tileConduit.getOutputDirection());
             GL11.glPopMatrix();
             GL11.glPopMatrix();
         }

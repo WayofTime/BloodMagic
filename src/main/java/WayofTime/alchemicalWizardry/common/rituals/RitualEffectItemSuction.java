@@ -21,8 +21,6 @@ public class RitualEffectItemSuction extends RitualEffect
 {
     public static final int reductusDrain = 1;
 
-    public static final int timeDelayMin = 60;
-
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -61,8 +59,6 @@ public class RitualEffectItemSuction extends RitualEffect
 
             if (itemDropList != null)
             {
-                int invSize = tileEntity.getSizeInventory();
-
                 for (EntityItem itemEntity : itemDropList)
                 {
 //                    hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
@@ -70,7 +66,6 @@ public class RitualEffectItemSuction extends RitualEffect
 //                    {
 //                        continue;
 //                    }
-                    ItemStack item = itemEntity.getEntityItem();
                     ItemStack copyStack = itemEntity.getEntityItem().copy();
 
                     int pastAmount = copyStack.stackSize;
@@ -100,7 +95,6 @@ public class RitualEffectItemSuction extends RitualEffect
             if (count > 0)
             {
                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * Math.min(count, 100));
-                return;
             }
         }
     }
@@ -114,7 +108,7 @@ public class RitualEffectItemSuction extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> suctionRitual = new ArrayList();
+        ArrayList<RitualComponent> suctionRitual = new ArrayList<RitualComponent>();
         suctionRitual.add(new RitualComponent(2, 0, 0, RitualComponent.AIR));
         suctionRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.AIR));
         suctionRitual.add(new RitualComponent(0, 0, 2, RitualComponent.AIR));

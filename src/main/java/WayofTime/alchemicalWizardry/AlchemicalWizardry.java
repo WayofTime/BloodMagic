@@ -563,7 +563,6 @@ public class AlchemicalWizardry
 
         ModBlocks.init();
         ModItems.init();
-        ModItems.registerItems();
 
         RecipeSorter.register("AWWayofTime:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
         RecipeSorter.register("AWWayofTime:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
@@ -828,7 +827,7 @@ public class AlchemicalWizardry
         blacklistAccelerators();
 
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
-        proxy.InitRendering();
+        proxy.initRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         ItemStack gunpowderStack = new ItemStack(Items.gunpowder);
@@ -1535,10 +1534,10 @@ public class AlchemicalWizardry
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 7), new ReagentStack(ReagentRegistry.reductusReagent, 1000));
         ReagentRegistry.registerItemAndReagent(new ItemStack(ModItems.baseAlchemyItems, 1, 8), new ReagentStack(ReagentRegistry.potentiaReagent, 1000));
         
-        OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater((OmegaArmour)ModItems.boundHelmetWater, (OmegaArmour)ModItems.boundPlateWater, (OmegaArmour)ModItems.boundLeggingsWater, (OmegaArmour)ModItems.boundBootsWater));
-        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth((OmegaArmour)ModItems.boundHelmetEarth, (OmegaArmour)ModItems.boundPlateEarth, (OmegaArmour)ModItems.boundLeggingsEarth, (OmegaArmour)ModItems.boundBootsEarth));
-        OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind((OmegaArmour)ModItems.boundHelmetWind, (OmegaArmour)ModItems.boundPlateWind, (OmegaArmour)ModItems.boundLeggingsWind, (OmegaArmour)ModItems.boundBootsWind));
-        OmegaRegistry.registerParadigm(ReagentRegistry.incendiumReagent, new OmegaParadigmFire((OmegaArmour)ModItems.boundHelmetFire, (OmegaArmour)ModItems.boundPlateFire, (OmegaArmour)ModItems.boundLeggingsFire, (OmegaArmour)ModItems.boundBootsFire));
+        OmegaRegistry.registerParadigm(ReagentRegistry.aquasalusReagent, new OmegaParadigmWater((OmegaArmour)ModItems.boundHelmetWater, (OmegaArmour)ModItems.boundChestplateWater, (OmegaArmour)ModItems.boundLeggingsWater, (OmegaArmour)ModItems.boundBootsWater));
+        OmegaRegistry.registerParadigm(ReagentRegistry.terraeReagent, new OmegaParadigmEarth((OmegaArmour)ModItems.boundHelmetEarth, (OmegaArmour)ModItems.boundChestplateEarth, (OmegaArmour)ModItems.boundLeggingsEarth, (OmegaArmour)ModItems.boundBootsEarth));
+        OmegaRegistry.registerParadigm(ReagentRegistry.aetherReagent, new OmegaParadigmWind((OmegaArmour)ModItems.boundHelmetWind, (OmegaArmour)ModItems.boundChestplateWind, (OmegaArmour)ModItems.boundLeggingsWind, (OmegaArmour)ModItems.boundBootsWind));
+        OmegaRegistry.registerParadigm(ReagentRegistry.incendiumReagent, new OmegaParadigmFire((OmegaArmour)ModItems.boundHelmetFire, (OmegaArmour)ModItems.boundChestplateFire, (OmegaArmour)ModItems.boundLeggingsFire, (OmegaArmour)ModItems.boundBootsFire));
 
     }
     

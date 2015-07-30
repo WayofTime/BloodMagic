@@ -35,7 +35,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
         World world = ritualStone.getWorldObj();
         BlockPos pos = ritualStone.getPosition();
 
-        if (world.getWorldTime() % this.timeDelay != 0)
+        if (world.getWorldTime() % timeDelay != 0)
         {
             return;
         }
@@ -95,7 +95,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
                 	
                 	
                     entityCount++;
-                    tileAltar.sacrificialDaggerCall(this.amount * (hasTennebrae ? 2 : 1) * (hasOffensa ? 2 : 1), true);
+                    tileAltar.sacrificialDaggerCall(amount * (hasTennebrae ? 2 : 1) * (hasOffensa ? 2 : 1), true);
                 }
             }
 
@@ -117,7 +117,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList();
+        ArrayList<RitualComponent> wellOfSufferingRitual = new ArrayList<RitualComponent>();
         wellOfSufferingRitual.add(new RitualComponent(1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.FIRE));
         wellOfSufferingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.FIRE));

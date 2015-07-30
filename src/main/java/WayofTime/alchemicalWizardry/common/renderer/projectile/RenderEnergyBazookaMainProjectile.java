@@ -20,11 +20,11 @@ public class RenderEnergyBazookaMainProjectile extends Render
 
 	public ModelBase model = new ModelEnergyBazookaMainProjectile();
     private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/EnergyBazookaMainProjectile.png");
-    private float scale = 1.0f;
 
     @Override
     public void doRender(Entity entity, double d0, double d1, double d2, float f, float f1)
     {
+        float scale = 1.0f;
         GL11.glPushMatrix();
         GL11.glTranslatef((float) d0, (float) d1, (float) d2);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

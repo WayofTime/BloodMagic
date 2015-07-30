@@ -44,7 +44,6 @@ public class RitualEffectContainment extends RitualEffect
             List<Entity> entityList = SpellHelper.getEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, d0, d0);
             boolean flag = false;
             boolean hasCrepitous = this.canDrainReagent(ritualStone, ReagentRegistry.crepitousReagent, crepitousDrain, false);
-            boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
             boolean hasMagicales = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
 
             for (Entity entity : entityList)
@@ -108,7 +107,7 @@ public class RitualEffectContainment extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> containmentRitual = new ArrayList();
+        ArrayList<RitualComponent> containmentRitual = new ArrayList<RitualComponent>();
         containmentRitual.add(new RitualComponent(1, 0, 0, 3));
         containmentRitual.add(new RitualComponent(-1, 0, 0, 3));
         containmentRitual.add(new RitualComponent(0, 0, 1, 3));

@@ -252,7 +252,7 @@ public class ItemSpellMultiTool extends Item
 
     public Set<String> getToolClasses(ItemStack stack)
     {
-        Set<String> set = new HashSet();
+        Set<String> set = new HashSet<String>();
 
         if (this.getHarvestLevel(stack, "pickaxe") > -1)
         {
@@ -369,7 +369,7 @@ public class ItemSpellMultiTool extends Item
 
         MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
-        int cost = 0;
+        int cost;
 
         if (mop != null && mop.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK))
         {
@@ -549,10 +549,7 @@ public class ItemSpellMultiTool extends Item
 
     public void setDuration(ItemStack container, World world, int duration)
     {
-        if (world.isRemote)
-        {
-            return;
-        } else
+        if (!world.isRemote)
         {
             World overWorld = DimensionManager.getWorld(0);
             long worldtime = overWorld.getTotalWorldTime();
@@ -632,10 +629,10 @@ public class ItemSpellMultiTool extends Item
 
         NBTTagList tagList = tagiest.getTagList("Effects", Constants.NBT.TAG_COMPOUND);
 
-        List<SpellEffect> spellEffectList = new LinkedList();
+        List<SpellEffect> spellEffectList = new LinkedList<SpellEffect>();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
 
             SpellEffect eff = SpellEffect.getEffectFromTag(tag);
             if (eff != null)
@@ -729,10 +726,10 @@ public class ItemSpellMultiTool extends Item
 
         NBTTagList tagList = tagiest.getTagList("ToolTips", Constants.NBT.TAG_COMPOUND);
 
-        List<String> toolTipList = new LinkedList();
+        List<String> toolTipList = new LinkedList<String>();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = tagList.getCompoundTagAt(i);
 
             String str = tag.getString("tip");
             if (str != null)

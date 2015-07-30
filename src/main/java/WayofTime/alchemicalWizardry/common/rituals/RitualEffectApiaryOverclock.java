@@ -57,7 +57,7 @@ public class RitualEffectApiaryOverclock extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> apiaryRitual = new ArrayList();
+        ArrayList<RitualComponent> apiaryRitual = new ArrayList<RitualComponent>();
         apiaryRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         apiaryRitual.add(new RitualComponent(1, 0, 1, RitualComponent.DUSK));
         apiaryRitual.add(new RitualComponent(1, 0, -1, RitualComponent.DUSK));

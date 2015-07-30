@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -15,7 +16,6 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class RenderCrystalBelljar extends TileEntitySpecialRenderer
 {
@@ -23,13 +23,12 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
 
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
-
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
-        if (tileEntity instanceof TEBellJar)
+        if (tileEntity instanceof TEBelljar)
         {
-            TEBellJar tileAltar = (TEBellJar) tileEntity;
+            TEBelljar tileAltar = (TEBelljar) tileEntity;
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
@@ -57,15 +56,12 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
     private void renderTankContents(double x, double y, double z, int colourRed, int colourGreen, int colourBlue, int colourIntensity)
     {
         GL11.glPushMatrix();
-        float f1 = 1.0f;
         Tessellator tessellator = Tessellator.getInstance();
         this.bindTexture(resourceLocation);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_CULL_FACE);
-        float f2 = 0;
-        float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDepthMask(false);

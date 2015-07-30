@@ -135,7 +135,7 @@ public class RitualEffectFeatheredKnife extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> featheredKnifeRitual = new ArrayList();
+        ArrayList<RitualComponent> featheredKnifeRitual = new ArrayList<RitualComponent>();
         featheredKnifeRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         featheredKnifeRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
         featheredKnifeRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));

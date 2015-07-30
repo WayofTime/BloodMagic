@@ -303,13 +303,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     }
 
     /**
-     * Sets the amount of knockback the arrow applies when it hits a mob.
-     */
-    public void setKnockbackStrength(int par1)
-    {
-    }
-
-    /**
      * If returns false, the item will not inflict any damage against entities.
      */
     @Override
@@ -318,6 +311,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         return false;
     }
 
+    @Override
     /**
      * Whether the arrow has a stream of critical hit particles flying behind
      * it.
@@ -335,6 +329,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         }
     }
 
+    @Override
     /**
      * Whether the arrow has a stream of critical hit particles flying behind
      * it.
@@ -345,6 +340,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         return (var1 & 1) != 0;
     }
 
+    @Override
     public void onImpact(MovingObjectPosition mop)
     {
         if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mop.entityHit != null)
@@ -362,6 +358,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         }
     }
 
+    @Override
     public void onImpact(Entity mop)
     {
         if (mop == shootingEntity && ticksInAir > 3)
@@ -383,6 +380,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         return rand.nextInt(6) + 1;
     }
 
+    @Override
     protected void spawnHitParticles(EnumParticleTypes type, int i)
     {
         for (int particles = 0; particles < i; particles++)
@@ -391,11 +389,13 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         }
     }
 
+    @Override
     public void doDamage(int i, Entity mop)
     {
         mop.attackEntityFrom(this.getDamageSource(), i);
     }
 
+    @Override
     public DamageSource getDamageSource()
     {
         return DamageSource.causeMobDamage(shootingEntity);
@@ -406,11 +406,13 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         this.ricochet(sideHit);
     }
 
+    @Override
     public double smallGauss(double d)
     {
         return (worldObj.rand.nextFloat() - 0.5D) * d;
     }
 
+    @Override
     public double gaussian(double d)
     {
         return d + d * ((rand.nextFloat() - 0.5D) / 4);

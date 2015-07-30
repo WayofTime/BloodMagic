@@ -14,11 +14,11 @@ import WayofTime.alchemicalWizardry.common.block.BlockBloodRune;
 
 public class UpgradedAltars
 {
-    public static List<AltarComponent> secondTierAltar = new ArrayList();
-    public static List<AltarComponent> thirdTierAltar = new ArrayList();
-    public static List<AltarComponent> fourthTierAltar = new ArrayList();
-    public static List<AltarComponent> fifthTierAltar = new ArrayList();
-    public static List<AltarComponent> sixthTierAltar = new ArrayList();
+    public static List<AltarComponent> secondTierAltar = new ArrayList<AltarComponent>();
+    public static List<AltarComponent> thirdTierAltar = new ArrayList<AltarComponent>();
+    public static List<AltarComponent> fourthTierAltar = new ArrayList<AltarComponent>();
+    public static List<AltarComponent> fifthTierAltar = new ArrayList<AltarComponent>();
+    public static List<AltarComponent> sixthTierAltar = new ArrayList<AltarComponent>();
     public static int highestAltar = 6;
 
     public static int isAltarValid(World world, BlockPos pos)

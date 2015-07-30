@@ -34,9 +34,9 @@ public class RitualEffectVeilOfEvil extends RitualEffect
 
             int dimension = world.provider.getDimensionId();
 
-            if (AlchemicalWizardryEventHooks.forceSpawnMap.containsKey(new Integer(dimension)))
+            if (AlchemicalWizardryEventHooks.forceSpawnMap.containsKey(dimension))
             {
-                List<CoordAndRange> list = AlchemicalWizardryEventHooks.forceSpawnMap.get(new Integer(dimension));
+                List<CoordAndRange> list = AlchemicalWizardryEventHooks.forceSpawnMap.get(dimension);
                 if (list != null)
                 {
                     if (!list.contains(new CoordAndRange(pos, horizRange, vertRange)))
@@ -57,15 +57,15 @@ public class RitualEffectVeilOfEvil extends RitualEffect
                     }
                 } else
                 {
-                    list = new LinkedList();
+                    list = new LinkedList<CoordAndRange>();
                     list.add(new CoordAndRange(pos, horizRange, vertRange));
-                    AlchemicalWizardryEventHooks.forceSpawnMap.put(new Integer(dimension), list);
+                    AlchemicalWizardryEventHooks.forceSpawnMap.put(dimension, list);
                 }
             } else
             {
-                List<CoordAndRange> list = new LinkedList();
+                List<CoordAndRange> list = new LinkedList<CoordAndRange>();
                 list.add(new CoordAndRange(pos, horizRange, vertRange));
-                AlchemicalWizardryEventHooks.forceSpawnMap.put(new Integer(dimension), list);
+                AlchemicalWizardryEventHooks.forceSpawnMap.put(dimension, list);
             }
 
 
@@ -82,7 +82,7 @@ public class RitualEffectVeilOfEvil extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> veilRitual = new ArrayList();
+        ArrayList<RitualComponent> veilRitual = new ArrayList<RitualComponent>();
 
         veilRitual.add(new RitualComponent(1, 0, 2, RitualComponent.DUSK));
         veilRitual.add(new RitualComponent(2, 0, 1, RitualComponent.DUSK));

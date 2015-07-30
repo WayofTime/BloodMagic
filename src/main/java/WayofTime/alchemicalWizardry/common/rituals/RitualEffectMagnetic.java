@@ -172,7 +172,6 @@ public class RitualEffectMagnetic extends RitualEffect
                 
                 j = pos.getY() - 1;
                 this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
-                return;
             }
         }
     }
@@ -204,7 +203,7 @@ public class RitualEffectMagnetic extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> magneticRitual = new ArrayList();
+        ArrayList<RitualComponent> magneticRitual = new ArrayList<RitualComponent>();
         magneticRitual.add(new RitualComponent(1, 0, 1, RitualComponent.EARTH));
         magneticRitual.add(new RitualComponent(1, 0, -1, RitualComponent.EARTH));
         magneticRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.EARTH));

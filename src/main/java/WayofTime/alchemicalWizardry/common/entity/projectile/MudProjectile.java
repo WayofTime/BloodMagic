@@ -60,7 +60,7 @@ public class MudProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        }// else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
 

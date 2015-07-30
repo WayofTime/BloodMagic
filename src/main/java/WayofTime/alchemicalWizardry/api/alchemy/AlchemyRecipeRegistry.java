@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AlchemyRecipeRegistry
 {
-    public static List<AlchemyRecipe> recipes = new ArrayList();
+    public static List<AlchemyRecipe> recipes = new ArrayList<AlchemyRecipe>();
 
     public static void registerRecipe(ItemStack output, int amountNeeded, ItemStack[] recipe, int bloodOrbLevel)
     {

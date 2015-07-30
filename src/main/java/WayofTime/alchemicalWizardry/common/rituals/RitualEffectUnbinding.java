@@ -84,7 +84,7 @@ public class RitualEffectUnbinding extends RitualEffect
                 if (itemStack.getItem() == ModItems.boundHelmet)
                 {
                     ritualStone.setVar1(5);
-                } else if (itemStack.getItem() == ModItems.boundPlate)
+                } else if (itemStack.getItem() == ModItems.boundChestplate)
                 {
                     ritualStone.setVar1(8);
                 } else if (itemStack.getItem() == ModItems.boundLeggings)
@@ -166,7 +166,7 @@ public class RitualEffectUnbinding extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> unbindingRitual = new ArrayList();
+        ArrayList<RitualComponent> unbindingRitual = new ArrayList<RitualComponent>();
         unbindingRitual.add(new RitualComponent(-2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(0, 0, 2, 4));

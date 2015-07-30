@@ -19,11 +19,11 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
 
-public class EnergySword extends ItemSword
+public class BoundBlade extends ItemSword
 {
     private int energyUsed;
 
-    public EnergySword()
+    public BoundBlade()
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
         this.maxStackSize = 1;

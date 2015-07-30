@@ -134,7 +134,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
                     //If target is integer, then we should be check the blood orb value of the item instead
                     if (next instanceof Integer)
                     {
-                        if (slot != null && slot.getItem() instanceof IBloodOrb)
+                        if (slot.getItem() instanceof IBloodOrb)
                         {
                             IBloodOrb orb = (IBloodOrb) slot.getItem();
                             if (orb.getOrbLevel() < (Integer) next)

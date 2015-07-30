@@ -208,7 +208,7 @@ public class RitualEffectLeap extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> leapingRitual = new ArrayList();
+        ArrayList<RitualComponent> leapingRitual = new ArrayList<RitualComponent>();
         leapingRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
         leapingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.AIR));
         leapingRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.AIR));

@@ -18,8 +18,8 @@ import java.util.List;
 
 public class RitualEffectJumping extends RitualEffect
 {
-    public static final int aetherDrain = 10;
-    public static final int terraeDrain = 10;
+    public final int aetherDrain = 10;
+    public final int terraeDrain = 10;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -98,7 +98,7 @@ public class RitualEffectJumping extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> jumpingRitual = new ArrayList();
+        ArrayList<RitualComponent> jumpingRitual = new ArrayList<RitualComponent>();
 
         for (int i = -1; i <= 1; i++)
         {

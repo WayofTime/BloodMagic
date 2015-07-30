@@ -159,7 +159,7 @@ public class RitualEffectBinding extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> boundSoulRitual = new ArrayList();
+        ArrayList<RitualComponent> boundSoulRitual = new ArrayList<RitualComponent>();
         boundSoulRitual.add(new RitualComponent(3, 0, 0, 2));
         boundSoulRitual.add(new RitualComponent(-3, 0, 0, 2));
         boundSoulRitual.add(new RitualComponent(0, 0, 3, 2));

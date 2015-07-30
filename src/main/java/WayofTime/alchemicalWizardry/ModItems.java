@@ -28,7 +28,7 @@ import WayofTime.alchemicalWizardry.common.items.EarthScribeTool;
 import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import WayofTime.alchemicalWizardry.common.items.EnergyBazooka;
 import WayofTime.alchemicalWizardry.common.items.EnergyBlast;
-import WayofTime.alchemicalWizardry.common.items.EnergySword;
+import WayofTime.alchemicalWizardry.common.items.BoundBlade;
 import WayofTime.alchemicalWizardry.common.items.EnhancedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
 import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
@@ -94,6 +94,8 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilVoid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilWater;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 
+import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Pokefenn
@@ -131,7 +133,7 @@ public class ModItems
     public static Item boundAxe;
     public static Item boundShovel;
     public static Item boundHelmet;
-    public static Item boundPlate;
+    public static Item boundChestplate;
     public static Item boundLeggings;
     public static Item boundBoots;
     public static Item weakBloodShard;
@@ -216,22 +218,22 @@ public class ModItems
     public static Item itemAssassinSigil;
     
     public static Item boundHelmetWater;
-    public static Item boundPlateWater;
+    public static Item boundChestplateWater;
     public static Item boundLeggingsWater;
     public static Item boundBootsWater;
     
     public static Item boundHelmetEarth;
-    public static Item boundPlateEarth;
+    public static Item boundChestplateEarth;
     public static Item boundLeggingsEarth;
     public static Item boundBootsEarth;
     
     public static Item boundHelmetWind;
-    public static Item boundPlateWind;
+    public static Item boundChestplateWind;
     public static Item boundLeggingsWind;
     public static Item boundBootsWind;
     
     public static Item boundHelmetFire;
-    public static Item boundPlateFire;
+    public static Item boundChestplateFire;
     public static Item boundLeggingsFire;
     public static Item boundBootsFire;
     
@@ -244,269 +246,159 @@ public class ModItems
 
     public static Item ritualDismantler;
 
+    public static ArrayList<String> itemsNotToBeRegistered = new ArrayList<String>();
+
     public static void init()
     {
-        weakBloodOrb = new EnergyBattery(5000).setUnlocalizedName("weakBloodOrb");
-        apprenticeBloodOrb = new ApprenticeBloodOrb(25000).setUnlocalizedName("apprenticeBloodOrb");
-        magicianBloodOrb = new MagicianBloodOrb(150000).setUnlocalizedName("magicianBloodOrb");
-        masterBloodOrb = new MasterBloodOrb(1000000).setUnlocalizedName("masterBloodOrb");
-        archmageBloodOrb = new ArchmageBloodOrb(10000000).setUnlocalizedName("archmageBloodOrb");
-        transcendentBloodOrb = new TranscendentBloodOrb(30000000).setUnlocalizedName("transcendentBloodOrb");
-        energyBlaster = new EnergyBlast().setUnlocalizedName("energyBlast");
-        energySword = new EnergySword().setUnlocalizedName("energySword");
-        lavaCrystal = new LavaCrystal().setUnlocalizedName("lavaCrystal");
-        waterSigil = new SigilWater().setUnlocalizedName("waterSigil");
-        lavaSigil = new SigilLava().setUnlocalizedName("lavaSigil");
-        voidSigil = new SigilVoid().setUnlocalizedName("voidSigil");
-        blankSlate = new AWBaseItems().setUnlocalizedName("blankSlate");
-        reinforcedSlate = new AWBaseItems().setUnlocalizedName("reinforcedSlate");
-        sacrificialDagger = new SacrificialDagger().setUnlocalizedName("sacrificialDagger");
-        daggerOfSacrifice = new DaggerOfSacrifice().setUnlocalizedName("daggerOfSacrifice");
-        airSigil = new SigilAir().setUnlocalizedName("airSigil");
-        sigilOfTheFastMiner = new SigilOfTheFastMiner().setUnlocalizedName("sigilOfTheFastMiner");
-        sigilOfElementalAffinity = new SigilOfElementalAffinity().setUnlocalizedName("sigilOfElementalAffinity");
-        sigilOfHaste = new SigilOfHaste().setUnlocalizedName("sigilOfHaste");
-        sigilOfHolding = new SigilOfHolding().setUnlocalizedName("sigilOfHolding");
-        divinationSigil = new SigilDivination().setUnlocalizedName("divinationSigil");
-        waterScribeTool = new WaterScribeTool().setUnlocalizedName("waterScribeTool");
-        fireScribeTool = new FireScribeTool().setUnlocalizedName("fireScribeTool");
-        earthScribeTool = new EarthScribeTool().setUnlocalizedName("earthScribeTool");
-        airScribeTool = new AirScribeTool().setUnlocalizedName("airScribeTool");
-        activationCrystal = new ActivationCrystal();
-        boundPickaxe = new BoundPickaxe().setUnlocalizedName("boundPickaxe");
-        boundAxe = new BoundAxe().setUnlocalizedName("boundAxe");
-        boundShovel = new BoundShovel().setUnlocalizedName("boundShovel");
-        boundHelmet = new BoundArmour(0).setUnlocalizedName("boundHelmet");
-        boundPlate = new BoundArmour(1).setUnlocalizedName("boundPlate");
-        boundLeggings = new BoundArmour(2).setUnlocalizedName("boundLeggings");
-        boundBoots = new BoundArmour(3).setUnlocalizedName("boundBoots");
-        weakBloodShard = new BloodShard().setUnlocalizedName("weakBloodShard");
-        growthSigil = new SigilOfGrowth().setUnlocalizedName("growthSigil");
-        blankSpell = new BlankSpell().setUnlocalizedName("blankSpell");
-        alchemyFlask = new AlchemyFlask().setUnlocalizedName("alchemyFlask");
-        standardBindingAgent = new StandardBindingAgent().setUnlocalizedName("standardBindingAgent");
-        mundanePowerCatalyst = new MundanePowerCatalyst().setUnlocalizedName("mundanePowerCatalyst");
-        averagePowerCatalyst = new AveragePowerCatalyst().setUnlocalizedName("averagePowerCatalyst");
-        greaterPowerCatalyst = new GreaterPowerCatalyst().setUnlocalizedName("greaterPowerCatalyst");
-        mundaneLengtheningCatalyst = new MundaneLengtheningCatalyst().setUnlocalizedName("mundaneLengtheningCatalyst");
-        averageLengtheningCatalyst = new AverageLengtheningCatalyst().setUnlocalizedName("averageLengtheningCatalyst");
-        greaterLengtheningCatalyst = new GreaterLengtheningCatalyst().setUnlocalizedName("greaterLengtheningCatalyst");
-        incendium = new AlchemyReagent().setUnlocalizedName("incendium");
-        magicales = new AlchemyReagent().setUnlocalizedName("magicales");
-        sanctus = new AlchemyReagent().setUnlocalizedName("sanctus");
-        aether = new AlchemyReagent().setUnlocalizedName("aether");
-        simpleCatalyst = new AlchemyReagent().setUnlocalizedName("simpleCatalyst");
-        crepitous = new AlchemyReagent().setUnlocalizedName("crepitous");
-        crystallos = new AlchemyReagent().setUnlocalizedName("crystallos");
-        terrae = new AlchemyReagent().setUnlocalizedName("terrae");
-        aquasalus = new AlchemyReagent().setUnlocalizedName("aquasalus");
-        tennebrae = new AlchemyReagent().setUnlocalizedName("tennebrae");
-        demonBloodShard = new BloodShard().setUnlocalizedName("demonBloodShard");
-        sigilOfWind = new SigilOfWind().setUnlocalizedName("sigilOfWind");
-        telepositionFocus = new TelepositionFocus(1).setUnlocalizedName("telepositionFocus");
-        enhancedTelepositionFocus = new EnhancedTelepositionFocus().setUnlocalizedName("enhancedTelepositionFocus");
-        reinforcedTelepositionFocus = new ReinforcedTelepositionFocus().setUnlocalizedName("reinforcedTelepositionFocus");
-        demonicTelepositionFocus = new DemonicTelepositionFocus().setUnlocalizedName("demonicTelepositionFocus");
-        imbuedSlate = new AWBaseItems().setUnlocalizedName("imbuedSlate");
-        demonicSlate = new AWBaseItems().setUnlocalizedName("demonicSlate");
-        duskScribeTool = new DuskScribeTool().setUnlocalizedName("duskScribeTool");
-        sigilOfTheBridge = new SigilOfTheBridge().setUnlocalizedName("sigilOfTheBridge");
-        armourInhibitor = new ArmourInhibitor().setUnlocalizedName("armourInhibitor");
-        creativeFiller = new CheatyItem().setUnlocalizedName("cheatyItem");
-        demonPlacer = new DemonPlacer().setUnlocalizedName("demonPlacer");
-        creativeDagger = new CreativeDagger().setUnlocalizedName("creativeDagger");
-        weakFillingAgent = new WeakFillingAgent().setUnlocalizedName("weakFillingAgent");
-        standardFillingAgent = new StandardFillingAgent().setUnlocalizedName("standardFillingAgent");
-        enhancedFillingAgent = new EnhancedFillingAgent().setUnlocalizedName("enhancedFillingAgent");
-        weakBindingAgent = new WeakBindingAgent().setUnlocalizedName("weakBindingAgent");
-        itemRitualDiviner = new ItemRitualDiviner().setUnlocalizedName("ritualDiviner");
-        sigilOfMagnetism = new SigilOfMagnetism().setUnlocalizedName("sigilOfMagnetism");
-        itemKeyOfDiablo = new ItemDiabloKey().setUnlocalizedName("itemDiabloKey");
-        energyBazooka = new EnergyBazooka().setUnlocalizedName("energyBazooka");
-        itemBloodLightSigil = new SigilBloodLight().setUnlocalizedName("bloodLightSigil");
-        itemComplexSpellCrystal = new ItemComplexSpellCrystal().setUnlocalizedName("itemComplexSpellCrystal");
-        bucketLife = (new LifeBucket(ModBlocks.blockLifeEssence)).setUnlocalizedName("bucketLife").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
-        itemSigilOfEnderSeverance = (new SigilOfEnderSeverance()).setUnlocalizedName("itemSigilOfEnderSeverance");
-        baseItems = new ItemComponents().setUnlocalizedName("baseItems");
-        baseAlchemyItems = new ItemAlchemyBase().setUnlocalizedName("baseAlchemyItems");
-        itemSigilOfSupression = new SigilOfSupression().setUnlocalizedName("itemSigilOfSupression");
-        itemFluidSigil = new SigilFluid().setUnlocalizedName("itemFluidSigil");
-        itemSeerSigil = new SigilSeer().setUnlocalizedName("itemSeerSigil");
-        customTool = (ItemSpellMultiTool)(new ItemSpellMultiTool().setUnlocalizedName("multiTool"));
+        weakBloodOrb = registerItem(new EnergyBattery(5000), "weak_blood_orb");
+        apprenticeBloodOrb = registerItem(new ApprenticeBloodOrb(25000), "apprentice_blood_orb");
+        magicianBloodOrb = registerItem(new MagicianBloodOrb(150000), "magician_blood_orb");
+        masterBloodOrb = registerItem(new MasterBloodOrb(1000000), "master_blood_orb");
+        archmageBloodOrb = registerItem(new ArchmageBloodOrb(10000000), "archmage_blood_orb");
+        transcendentBloodOrb = registerItem(new TranscendentBloodOrb(30000000), "transcendent_blood_orb");
+        energyBlaster = registerItem(new EnergyBlast(), "energy_blaster");
+        energySword = registerItem(new BoundBlade(), "bound_blade");
+        lavaCrystal = registerItem(new LavaCrystal(), "lava_crystal");
+        waterSigil = registerItem(new SigilWater(), "water_sigil");
+        lavaSigil = registerItem(new SigilLava(), "lava_sigil");
+        voidSigil = registerItem(new SigilVoid(), "void_sigil");
+        blankSlate = registerItem(new AWBaseItems(), "blank_slate");
+        reinforcedSlate = registerItem(new AWBaseItems(), "reinforced_slate");
+        sacrificialDagger = registerItem(new SacrificialDagger(), "sacrificial_agger");
+        daggerOfSacrifice = registerItem(new DaggerOfSacrifice(), "dagger_of_sacrifice");
+        airSigil = registerItem(new SigilAir(), "air_sigil");
+        sigilOfTheFastMiner = registerItem(new SigilOfTheFastMiner(), "sigil_of_the_fast_miner");
+        sigilOfElementalAffinity = registerItem(new SigilOfElementalAffinity(), "sigil_of_elemental_affinity");
+        sigilOfHaste = registerItem(new SigilOfHaste(), "sigil_of_haste");
+        sigilOfHolding = registerItem(new SigilOfHolding(), "sigil_of_holding");
+        divinationSigil = registerItem(new SigilDivination(), "divination_sigil");
+        waterScribeTool = registerItem(new WaterScribeTool(), "water_scribe_tool");
+        fireScribeTool = registerItem(new FireScribeTool(), "fire_scribe_tool");
+        earthScribeTool = registerItem(new EarthScribeTool(), "earth_scribe_tool");
+        airScribeTool = registerItem(new AirScribeTool(), "air_scribe_tool");
+        activationCrystal = registerItem(new ActivationCrystal(), "activation_crystal");
+        boundPickaxe = registerItem(new BoundPickaxe(), "bound_pickaxe");
+        boundAxe = registerItem(new BoundAxe(), "bound_axe");
+        boundShovel = registerItem(new BoundShovel(), "bound_shovel");
+        boundHelmet = registerItem(new BoundArmour(0), "bound_helmet");
+        boundChestplate = registerItem(new BoundArmour(1), "bound_chestplate");
+        boundLeggings = registerItem(new BoundArmour(2), "bound_leggings");
+        boundBoots = registerItem(new BoundArmour(3), "bound_boots");
+        weakBloodShard = registerItem(new BloodShard(), "weak_blood_shard");
+        growthSigil = registerItem(new SigilOfGrowth(), "growth_sigil");
+        blankSpell = registerItem(new BlankSpell(), "blank_spell");
+        alchemyFlask = registerItem(new AlchemyFlask(), "alchemy_flask");
+        standardBindingAgent = registerItem(new StandardBindingAgent(), "standard_binding_agent");
+        mundanePowerCatalyst = registerItem(new MundanePowerCatalyst(), "mundane_power_catalyst");
+        averagePowerCatalyst = registerItem(new AveragePowerCatalyst(), "average_power_catalyst");
+        greaterPowerCatalyst = registerItem(new GreaterPowerCatalyst(), "greater_power_catalyst");
+        mundaneLengtheningCatalyst = registerItem(new MundaneLengtheningCatalyst(), "mundane_lengthening_catalyst");
+        averageLengtheningCatalyst = registerItem(new AverageLengtheningCatalyst(), "average_lengthening_catalyst");
+        greaterLengtheningCatalyst = registerItem(new GreaterLengtheningCatalyst(), "greater_lengthening_catalyst");
+        incendium = registerItem(new AlchemyReagent(), "incendium");
+        magicales = registerItem(new AlchemyReagent(), "magicales");
+        sanctus = registerItem(new AlchemyReagent(), "sanctus");
+        aether = registerItem(new AlchemyReagent(), "aether");
+        simpleCatalyst = registerItem(new AlchemyReagent(), "simple_catalyst");
+        crepitous = registerItem(new AlchemyReagent(), "crepitous");
+        crystallos = registerItem(new AlchemyReagent(), "crystallos");
+        terrae = registerItem(new AlchemyReagent(), "terrae");
+        aquasalus = registerItem(new AlchemyReagent(), "aquasalus");
+        tennebrae = registerItem(new AlchemyReagent(), "tennebrae");
+        demonBloodShard = registerItem(new BloodShard(), "demon_blood_shard");
+        sigilOfWind = registerItem(new SigilOfWind(), "sigil_of_wind");
+        telepositionFocus = registerItem(new TelepositionFocus(1), "teleposition_focus");
+        enhancedTelepositionFocus = registerItem(new EnhancedTelepositionFocus(), "enhanced_teleposition_focus");
+        reinforcedTelepositionFocus = registerItem(new ReinforcedTelepositionFocus(), "reinforced_teleposition_focus");
+        demonicTelepositionFocus = registerItem(new DemonicTelepositionFocus(), "demonic_teleposition_focus");
+        imbuedSlate = registerItem(new AWBaseItems(), "imbued_slate");
+        demonicSlate = registerItem(new AWBaseItems(), "demonic_slate");
+        duskScribeTool = registerItem(new DuskScribeTool(), "dusk_scribe_tool");
+        sigilOfTheBridge = registerItem(new SigilOfTheBridge(), "sigil_of_the_bridge");
+        armourInhibitor = registerItem(new ArmourInhibitor(), "armour_inhibitor");
+        creativeFiller = registerItem(new CheatyItem(), "creative_orb");
+        demonPlacer = registerItem(new DemonPlacer(), "demon_placer");
+        creativeDagger = registerItem(new CreativeDagger(), "creative_dagger");
+        weakFillingAgent = registerItem(new WeakFillingAgent(), "weak_filling_agent");
+        standardFillingAgent = registerItem(new StandardFillingAgent(), "standard_filling_agent");
+        enhancedFillingAgent = registerItem(new EnhancedFillingAgent(), "enhanced_filling_agent");
+        weakBindingAgent = registerItem(new WeakBindingAgent(), "weak_binding_agent");
+        itemRitualDiviner = registerItem(new ItemRitualDiviner(), "ritual_diviner");
+        sigilOfMagnetism = registerItem(new SigilOfMagnetism(), "sigil_of_magnetism");
+        itemKeyOfDiablo = registerItem(new ItemDiabloKey(), "key_of_binding");
+        energyBazooka = registerItem(new EnergyBazooka(), "energy_bazooka");
+        itemBloodLightSigil = registerItem(new SigilBloodLight(), "blood_light_sigil");
+        itemComplexSpellCrystal = registerItem(new ItemComplexSpellCrystal(), "complex_spell_crystal");
+        bucketLife = registerItem(new LifeBucket(ModBlocks.blockLifeEssence), "bucket_life").setContainerItem(Items.bucket).setCreativeTab(CreativeTabs.tabMisc);
+        itemSigilOfEnderSeverance = registerItem(new SigilOfEnderSeverance(), "sigil_of_ender_severance");
+        baseItems = registerItem(new ItemComponents(), "base_items");
+        baseAlchemyItems = registerItem(new ItemAlchemyBase(), "base_alchemy_items");
+        itemSigilOfSupression = registerItem(new SigilOfSupression(), "sigil_of_suppression");
+        itemFluidSigil = registerItem(new SigilFluid(), "fluid_sigil");
+        itemSeerSigil = registerItem(new SigilSeer(), "sigil_of_sight");
+        customTool = (ItemSpellMultiTool) registerItem(new ItemSpellMultiTool(), "multi_tool");
         
         SpellParadigmTool.customTool = customTool;
         
-        itemCombinationalCatalyst = new CombinationalCatalyst().setUnlocalizedName("itemCombinationalCatalyst");
-        itemAttunedCrystal = new ItemAttunedCrystal().setUnlocalizedName("itemAttunedCrystal");
-        itemTankSegmenter = new ItemTankSegmenter().setUnlocalizedName("itemTankSegmenter");
-        itemDestinationClearer = new ItemDestinationClearer().setUnlocalizedName("destinationClearer");
+        itemCombinationalCatalyst = registerItem(new CombinationalCatalyst(), "combinational_catalyst");
+        itemAttunedCrystal = registerItem(new ItemAttunedCrystal(), "attuned_crystal");
+        itemTankSegmenter = registerItem(new ItemTankSegmenter(), "tank_segmenter");
+        itemDestinationClearer = registerItem(new ItemDestinationClearer(), "destination_clearer");
         
-        dawnScribeTool = new DawnScribeTool().setUnlocalizedName("dawnScribeTool");
+        dawnScribeTool = registerItem(new DawnScribeTool(), "dawn_scribe_tool");
         
-        itemBloodPack = new ItemBloodLetterPack().setUnlocalizedName("itemBloodPack");
-        itemHarvestSigil = new SigilHarvest().setUnlocalizedName("itemHarvestSigil");
-        itemCompressionSigil = new SigilPackRat().setUnlocalizedName("itemCompressionSigil");
-        itemAssassinSigil = new SigilOfTheAssassin().setUnlocalizedName("itemAssassinSigil");
+        itemBloodPack = registerItem(new ItemBloodLetterPack(), "blood_pack");
+        itemHarvestSigil = registerItem(new SigilHarvest(), "harvest_sigil");
+        itemCompressionSigil = registerItem(new SigilPackRat(), "compression_sigil");
+        itemAssassinSigil = registerItem(new SigilOfTheAssassin(), "assassin_sigil");
         
-        boundHelmetWater = new OmegaArmourWater(0).setUnlocalizedName("boundHelmetWater");
-        boundPlateWater = new OmegaArmourWater(1).setUnlocalizedName("boundPlateWater");
-        boundLeggingsWater = new OmegaArmourWater(2).setUnlocalizedName("boundLeggingsWater");
-        boundBootsWater = new OmegaArmourWater(3).setUnlocalizedName("boundBootsWater");
+        boundHelmetWater = registerItem(new OmegaArmourWater(0), "bound_helmet_water");
+        boundChestplateWater = registerItem(new OmegaArmourWater(1), "bound_chestplate_water");
+        boundLeggingsWater = registerItem(new OmegaArmourWater(2), "bound_leggings_water");
+        boundBootsWater = registerItem(new OmegaArmourWater(3), "bound_boots_water");
         
-        boundHelmetEarth = new OmegaArmourEarth(0).setUnlocalizedName("boundHelmetEarth");
-        boundPlateEarth = new OmegaArmourEarth(1).setUnlocalizedName("boundPlateEarth");
-        boundLeggingsEarth = new OmegaArmourEarth(2).setUnlocalizedName("boundLeggingsEarth");
-        boundBootsEarth = new OmegaArmourEarth(3).setUnlocalizedName("boundBootsEarth");
+        boundHelmetEarth = registerItem(new OmegaArmourEarth(0), "bound_helmet_earth");
+        boundChestplateEarth = registerItem(new OmegaArmourEarth(1), "bound_chestplate_earth");
+        boundLeggingsEarth = registerItem(new OmegaArmourEarth(2), "bound_leggings_earth");
+        boundBootsEarth = registerItem(new OmegaArmourEarth(3), "bound_boots_earth");
         
-        boundHelmetWind = new OmegaArmourWind(0).setUnlocalizedName("boundHelmetWind");
-        boundPlateWind = new OmegaArmourWind(1).setUnlocalizedName("boundPlateWind");
-        boundLeggingsWind = new OmegaArmourWind(2).setUnlocalizedName("boundLeggingsWind");
-        boundBootsWind = new OmegaArmourWind(3).setUnlocalizedName("boundBootsWind");
+        boundHelmetWind = registerItem(new OmegaArmourWind(0), "bound_helmet_wind");
+        boundChestplateWind = registerItem(new OmegaArmourWind(1), "bound_chestplate_wind");
+        boundLeggingsWind = registerItem(new OmegaArmourWind(2), "bound_leggings_wind");
+        boundBootsWind = registerItem(new OmegaArmourWind(3), "bound_boots_wind");
         
-        boundHelmetFire = new OmegaArmourFire(0).setUnlocalizedName("boundHelmetFire");
-        boundPlateFire = new OmegaArmourFire(1).setUnlocalizedName("boundPlateFire");
-        boundLeggingsFire = new OmegaArmourFire(2).setUnlocalizedName("boundLeggingsFire");
-        boundBootsFire = new OmegaArmourFire(3).setUnlocalizedName("boundBootsFire");
+        boundHelmetFire = registerItem(new OmegaArmourFire(0), "bound_helmet_fire");
+        boundChestplateFire = registerItem(new OmegaArmourFire(1), "bound_chestplate_fire");
+        boundLeggingsFire = registerItem(new OmegaArmourFire(2), "bound_leggings_fire");
+        boundBootsFire = registerItem(new OmegaArmourFire(3), "bound_boots_fire");
         
-        inputRoutingFocus = new InputRoutingFocus().setUnlocalizedName("inputRoutingFocus");
-        outputRoutingFocus = new OutputRoutingFocus().setUnlocalizedName("outputRoutingFocus");
+        inputRoutingFocus = registerItem(new InputRoutingFocus(), "input_routing_focus");
+        outputRoutingFocus = registerItem(new OutputRoutingFocus(), "output_routing_focus");
                 
-        itemIncense = new ItemIncense().setUnlocalizedName("bloodMagicIncenseItem");
+        itemIncense = registerItem(new ItemIncense(), "incense");
 
-        ritualDismantler = new ItemRitualDismantler().setUnlocalizedName("ritualDismantler");
+        ritualDismantler = registerItem(new ItemRitualDismantler(), "ritual_dismantler");
     }
 
-    public static void registerItems()
+    public static Item registerItem(Item item, String unlocalizedName)
     {
-        GameRegistry.registerItem(ModItems.weakBloodOrb, "weakBloodOrb");
-        GameRegistry.registerItem(ModItems.apprenticeBloodOrb, "apprenticeBloodOrb");
-        GameRegistry.registerItem(ModItems.magicianBloodOrb, "magicianBloodOrb");
-        GameRegistry.registerItem(ModItems.energyBlaster, "energyBlaster");
+        item.setUnlocalizedName(unlocalizedName);
+        item.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        itemsNotToBeRegistered.clear();
 
-        GameRegistry.registerItem(ModItems.energySword, "energySword");
-        GameRegistry.registerItem(ModItems.lavaCrystal, "lavaCrystal");
-        GameRegistry.registerItem(ModItems.waterSigil, "waterSigil");
-        GameRegistry.registerItem(ModItems.lavaSigil, "lavaSigil");
-        GameRegistry.registerItem(ModItems.voidSigil, "voidSigil");
-        GameRegistry.registerItem(ModItems.blankSlate, "blankSlate");
-        GameRegistry.registerItem(ModItems.reinforcedSlate, "reinforcedSlate");
-        GameRegistry.registerItem(ModItems.sacrificialDagger, "sacrificialKnife");
-        GameRegistry.registerItem(ModItems.daggerOfSacrifice, "daggerOfSacrifice");
-        GameRegistry.registerItem(ModItems.airSigil, "airSigil");
-        GameRegistry.registerItem(ModItems.sigilOfTheFastMiner, "sigilOfTheFastMiner");
-        GameRegistry.registerItem(ModItems.sigilOfElementalAffinity, "sigilOfElementalAffinity");
-        GameRegistry.registerItem(ModItems.sigilOfHaste, "sigilOfHaste");
-        GameRegistry.registerItem(ModItems.sigilOfHolding, "sigilOfHolding");
-        GameRegistry.registerItem(ModItems.divinationSigil, "divinationSigil");
-        GameRegistry.registerItem(ModItems.waterScribeTool, "waterScribeTool");
-        GameRegistry.registerItem(ModItems.fireScribeTool, "fireScribeTool");
-        GameRegistry.registerItem(ModItems.earthScribeTool, "earthScribeTool");
-        GameRegistry.registerItem(ModItems.airScribeTool, "airScribeTool");
-        GameRegistry.registerItem(ModItems.activationCrystal, "activationCrystal");
-        GameRegistry.registerItem(ModItems.boundPickaxe, "boundPickaxe");
-        GameRegistry.registerItem(ModItems.boundAxe, "boundAxe");
-        GameRegistry.registerItem(ModItems.boundShovel, "boundShovel");
-        GameRegistry.registerItem(ModItems.boundHelmet, "boundHelmet");
-        GameRegistry.registerItem(ModItems.boundPlate, "boundPlate");
-        GameRegistry.registerItem(ModItems.boundLeggings, "boundLeggings");
-        GameRegistry.registerItem(ModItems.boundBoots, "boundBoots");
-        GameRegistry.registerItem(ModItems.weakBloodShard, "weakBloodShard");
-        GameRegistry.registerItem(ModItems.growthSigil, "growthSigil");
-        GameRegistry.registerItem(ModItems.blankSpell, "blankSpell");
-        GameRegistry.registerItem(ModItems.masterBloodOrb, "masterBloodOrb");
-        GameRegistry.registerItem(ModItems.alchemyFlask, "alchemyFlask");
-        GameRegistry.registerItem(ModItems.standardBindingAgent, "standardBindingAgent");
-        GameRegistry.registerItem(ModItems.mundanePowerCatalyst, "mundanePowerCatalyst");
-        GameRegistry.registerItem(ModItems.averagePowerCatalyst, "averagePowerCatalyst");
-        GameRegistry.registerItem(ModItems.greaterPowerCatalyst, "greaterPowerCatalyst");
-        GameRegistry.registerItem(ModItems.mundaneLengtheningCatalyst, "mundaneLengtheningCatalyst");
-        GameRegistry.registerItem(ModItems.averageLengtheningCatalyst, "averageLengtheningCatalyst");
-        GameRegistry.registerItem(ModItems.greaterLengtheningCatalyst, "greaterLengtheningCatalyst");
-        GameRegistry.registerItem(ModItems.incendium, "incendium");
-        GameRegistry.registerItem(ModItems.magicales, "magicales");
-        GameRegistry.registerItem(ModItems.sanctus, "sanctus");
-        GameRegistry.registerItem(ModItems.aether, "aether");
-        GameRegistry.registerItem(ModItems.simpleCatalyst, "simpleCatalyst");
-        GameRegistry.registerItem(ModItems.crepitous, "crepitous");
-        GameRegistry.registerItem(ModItems.crystallos, "crystallos");
-        GameRegistry.registerItem(ModItems.terrae, "terrae");
-        GameRegistry.registerItem(ModItems.aquasalus, "aquasalus");
-        GameRegistry.registerItem(ModItems.tennebrae, "tennebrae");
-        GameRegistry.registerItem(ModItems.demonBloodShard, "demonBloodShard");
-        GameRegistry.registerItem(ModItems.archmageBloodOrb, "archmageBloodOrb");
-        GameRegistry.registerItem(ModItems.transcendentBloodOrb, "transcendentBloodOrb");
-        GameRegistry.registerItem(ModItems.sigilOfWind, "sigilOfWind");
-        GameRegistry.registerItem(ModItems.telepositionFocus, "telepositionFocus");
-        GameRegistry.registerItem(ModItems.enhancedTelepositionFocus, "enhancedTelepositionFocus");
-        GameRegistry.registerItem(ModItems.reinforcedTelepositionFocus, "reinforcedTelepositionFocus");
-        GameRegistry.registerItem(ModItems.demonicTelepositionFocus, "demonicTelepositionFocus");
-        GameRegistry.registerItem(ModItems.imbuedSlate, "imbuedSlate");
-        GameRegistry.registerItem(ModItems.demonicSlate, "demonicSlate");
-        GameRegistry.registerItem(ModItems.duskScribeTool, "duskScribeTool");
-        GameRegistry.registerItem(ModItems.sigilOfTheBridge, "sigilOfTheBridge");
-        GameRegistry.registerItem(ModItems.armourInhibitor, "armourInhibitor");
-        GameRegistry.registerItem(ModItems.creativeFiller, "creativeFiller");
-        GameRegistry.registerItem(ModItems.demonPlacer, "demonPlacer");
-        GameRegistry.registerItem(ModItems.creativeDagger, "creativeDagger");
+        for (String unlocName : BloodMagicConfiguration.itemsToBeDisabled)
+        {
+            if (unlocName.equals(unlocalizedName))
+            {
+                itemsNotToBeRegistered.add(unlocName);
+            }
+        }
 
-        GameRegistry.registerItem(ModItems.weakFillingAgent, "weakFillingAgent");
-        GameRegistry.registerItem(ModItems.standardFillingAgent, "standardFillingAgent");
-        GameRegistry.registerItem(ModItems.enhancedFillingAgent, "enhancedFillingAgent");
-        GameRegistry.registerItem(ModItems.weakBindingAgent, "weakBindingAgent");
-        GameRegistry.registerItem(ModItems.itemRitualDiviner, "itemRitualDiviner");
-        GameRegistry.registerItem(ModItems.sigilOfMagnetism, "sigilOfMagnetism");
-        GameRegistry.registerItem(ModItems.itemKeyOfDiablo, "itemKeyOfDiablo");
-        GameRegistry.registerItem(ModItems.energyBazooka, "energyBazooka");
-        GameRegistry.registerItem(ModItems.itemBloodLightSigil, "itemBloodLightSigil");
-        GameRegistry.registerItem(ModItems.itemComplexSpellCrystal, "itemComplexSpellCrystal");
-        GameRegistry.registerItem(ModItems.itemSigilOfSupression, "sigilOfSupression");
-        GameRegistry.registerItem(ModItems.itemSigilOfEnderSeverance, "sigilOfEnderSeverance");
-        GameRegistry.registerItem(ModItems.itemFluidSigil, "fluidSigil");
-        GameRegistry.registerItem(ModItems.itemSeerSigil, "seerSigil");
+        if (!itemsNotToBeRegistered.contains(unlocalizedName))
+        {
+            GameRegistry.registerItem(item, unlocalizedName);
+        }
 
-        GameRegistry.registerItem(ModItems.customTool, "customTool");
-
-        GameRegistry.registerItem(ModItems.bucketLife, "bucketLife");
-        GameRegistry.registerItem(ModItems.itemCombinationalCatalyst, "itemCombinationalCatalyst");
-
-        GameRegistry.registerItem(ModItems.itemAttunedCrystal, "itemAttunedCrystal");
-        GameRegistry.registerItem(ModItems.itemTankSegmenter, "itemTankSegmenter");
-        GameRegistry.registerItem(ModItems.itemDestinationClearer, "itemDestinationClearer");
-        
-        GameRegistry.registerItem(ModItems.baseItems, "bloodMagicBaseItems");
-        GameRegistry.registerItem(ModItems.baseAlchemyItems, "bloodMagicBaseAlchemyItems");
-        
-        GameRegistry.registerItem(ModItems.dawnScribeTool, "dawnScribeTool");
-        
-        GameRegistry.registerItem(ModItems.itemBloodPack, "itemBloodPack");
-        GameRegistry.registerItem(ModItems.itemHarvestSigil, "itemHarvestSigil");
-        GameRegistry.registerItem(ModItems.itemCompressionSigil, "itemCompressionSigil");
-        GameRegistry.registerItem(ModItems.itemAssassinSigil, "itemAssassinSigil");
-        
-        GameRegistry.registerItem(ModItems.boundHelmetWater, "boundHelmetWater");
-        GameRegistry.registerItem(ModItems.boundPlateWater, "boundPlateWater");
-        GameRegistry.registerItem(ModItems.boundLeggingsWater, "boundLeggingsWater");
-        GameRegistry.registerItem(ModItems.boundBootsWater, "boundBootsWater");
-        
-        GameRegistry.registerItem(ModItems.boundHelmetEarth, "boundHelmetEarth");
-        GameRegistry.registerItem(ModItems.boundPlateEarth, "boundPlateEarth");
-        GameRegistry.registerItem(ModItems.boundLeggingsEarth, "boundLeggingsEarth");
-        GameRegistry.registerItem(ModItems.boundBootsEarth, "boundBootsEarth");
-        
-        GameRegistry.registerItem(ModItems.boundHelmetWind, "boundHelmetWind");
-        GameRegistry.registerItem(ModItems.boundPlateWind, "boundPlateWind");
-        GameRegistry.registerItem(ModItems.boundLeggingsWind, "boundLeggingsWind");
-        GameRegistry.registerItem(ModItems.boundBootsWind, "boundBootsWind");
-        
-        GameRegistry.registerItem(ModItems.boundHelmetFire, "boundHelmetFire");
-        GameRegistry.registerItem(ModItems.boundPlateFire, "boundPlateFire");
-        GameRegistry.registerItem(ModItems.boundLeggingsFire, "boundLeggingsFire");
-        GameRegistry.registerItem(ModItems.boundBootsFire, "boundBootsFire");
-        
-        GameRegistry.registerItem(ModItems.inputRoutingFocus, "inputRoutingFocus");
-        GameRegistry.registerItem(ModItems.outputRoutingFocus, "outputRoutingFocus");
-        
-        GameRegistry.registerItem(ModItems.itemIncense, "bloodMagicIncenseItem");
-        GameRegistry.registerItem(ModItems.ritualDismantler, "ritualDismantler");
+        return item;
     }
 }

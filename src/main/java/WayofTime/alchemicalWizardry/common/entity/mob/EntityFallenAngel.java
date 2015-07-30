@@ -25,9 +25,6 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
-    private static float maxTamedHealth = 50.0F;
-    private static float maxUntamedHealth = 50.0F;
-
     public EntityFallenAngel(World par1World)
     {
         super(par1World, AlchemicalWizardry.entityFallenAngelID);
@@ -60,6 +57,8 @@ public class EntityFallenAngel extends EntityDemon implements IRangedAttackMob
         super.applyEntityAttributes();
         //This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
+        float maxTamedHealth = 50.0F;
+        float maxUntamedHealth = 50.0F;
 
         //My guess is that this will alter the max health
         if (this.isTamed())

@@ -45,19 +45,20 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    public int courseChangeCooldown;
+//    public int courseChangeCooldown;
     public double waypointX;
     public double waypointY;
     public double waypointZ;
-    private Entity targetedEntity;
+/*    private Entity targetedEntity;
 
     /**
      * Cooldown time between target loss and new target aquirement.
-     */
+
     private int aggroCooldown;
     public int prevAttackCounter;
     public int attackCounter;
-
+*/
+    @Override
     /**
      * The explosion radius of spawned fireballs.
      */
@@ -69,18 +70,7 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    protected void fall(float par1)
-    {
-    }
-
-    /**
-     * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
-     * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
-     */
-    protected void updateFallState(double par1, boolean par3)
-    {
-    }
-
+    @Override
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
      */
@@ -140,6 +130,7 @@ public class EntityElemental extends EntityDemon
         this.limbSwing += this.limbSwingAmount;
     }
 
+    @Override
     /**
      * returns true if this entity is by a ladder, false otherwise
      */
@@ -177,6 +168,7 @@ public class EntityElemental extends EntityDemon
         return true;
     }
 
+    @Override
     /**
      * Will return how many at most can spawn in a chunk at once.
      */
@@ -185,6 +177,7 @@ public class EntityElemental extends EntityDemon
         return 1;
     }
 
+    @Override
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
@@ -193,6 +186,7 @@ public class EntityElemental extends EntityDemon
         super.writeEntityToNBT(par1NBTTagCompound);
     }
 
+    @Override
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
@@ -221,6 +215,7 @@ public class EntityElemental extends EntityDemon
         }
     }
 
+    @Override
     /**
      * Returns true if the newer Entity AI code should be run
      */
@@ -229,6 +224,7 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
+    @Override
     /**
      * Sets the active target the Task system uses for tracking
      */
@@ -245,6 +241,7 @@ public class EntityElemental extends EntityDemon
         }
     }
 
+    @Override
     /**
      * main AI tick function, replaces updateEntityActionState
      */
@@ -253,6 +250,7 @@ public class EntityElemental extends EntityDemon
         this.dataWatcher.updateObject(18, this.getHealth());
     }
 
+    @Override
     protected void entityInit()
     {
         super.entityInit();
@@ -261,6 +259,7 @@ public class EntityElemental extends EntityDemon
         this.dataWatcher.addObject(25, 0);
     }
 
+    @Override
     /**
      * Plays step sound at given x, y, z for the entity
      */
@@ -269,6 +268,7 @@ public class EntityElemental extends EntityDemon
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
 
+    @Override
     /**
      * Returns the sound this mob makes while it's alive.
      */
@@ -278,6 +278,7 @@ public class EntityElemental extends EntityDemon
         return "none";
     }
 
+    @Override
     /**
      * Returns the sound this mob makes when it is hurt.
      */
@@ -286,6 +287,7 @@ public class EntityElemental extends EntityDemon
         return "none";
     }
 
+    @Override
     /**
      * Returns the sound this mob makes on death.
      */
@@ -294,6 +296,7 @@ public class EntityElemental extends EntityDemon
         return "none";
     }
 
+    @Override
     /**
      * Returns the volume for the sounds this mob makes.
      */
@@ -302,6 +305,7 @@ public class EntityElemental extends EntityDemon
         return 0.4F;
     }
 
+    @Override
     /**
      * Returns the item ID for the item the mob drops on death.
      */
@@ -310,6 +314,7 @@ public class EntityElemental extends EntityDemon
         return -1;
     }
 
+    @Override
     /**
      * Called to update the entity's position/logic.
      */
@@ -323,11 +328,13 @@ public class EntityElemental extends EntityDemon
         }
     }
 
+    @Override
     public float getEyeHeight()
     {
         return this.height * 0.8F;
     }
 
+    @Override
     /**
      * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
      * use in wolves.
@@ -337,6 +344,7 @@ public class EntityElemental extends EntityDemon
         return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
     }
 
+    @Override
     /**
      * Called when the entity is attacked.
      */
@@ -359,12 +367,14 @@ public class EntityElemental extends EntityDemon
         }
     }
 
+    @Override
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         int i = this.isTamed() ? 6 : 7;
         return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
 
+    @Override
     public void setTamed(boolean par1)
     {
         super.setTamed(par1);
@@ -378,10 +388,7 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    /**
-     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-     */
-
+    @Override
     /**
      * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
      * the animal type)
@@ -391,6 +398,7 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
+    @Override
     /**
      * Determines whether this wolf is angry or not.
      */
@@ -399,6 +407,7 @@ public class EntityElemental extends EntityDemon
         return (this.dataWatcher.getWatchableObjectByte(16) & 2) != 0;
     }
 
+    @Override
     /**
      * Sets whether this wolf is angry or not.
      */
@@ -426,6 +435,7 @@ public class EntityElemental extends EntityDemon
         }
     }
 
+    @Override
     /**
      * Returns true if the mob is currently able to mate with the specified mob.
      */
@@ -434,11 +444,13 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
+    @Override
     public boolean func_70922_bv()
     {
         return this.dataWatcher.getWatchableObjectByte(19) == 1;
     }
 
+    @Override
     /**
      * Determines if an entity can be despawned, used on idle far away entities
      */

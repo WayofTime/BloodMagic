@@ -21,8 +21,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
 
-
-/*
+/**
  *  Created in Scala by Alex-Hawks
  *  Translated and implemented by Arcaratus
  */

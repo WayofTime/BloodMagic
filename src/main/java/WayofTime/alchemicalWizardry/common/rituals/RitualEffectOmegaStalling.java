@@ -72,7 +72,7 @@ public class RitualEffectOmegaStalling extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> omegaRitual = new ArrayList();
+        ArrayList<RitualComponent> omegaRitual = new ArrayList<RitualComponent>();
         
         this.addCornerRunes(omegaRitual, 1, 0, RitualComponent.FIRE);
         this.addOffsetRunes(omegaRitual, 2, 1, 0, RitualComponent.DUSK);

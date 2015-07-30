@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-//Shamelessly ripped off from x3n0ph0b3
+//Shamelessly ripped off from x3n0ph0b3 //Shame!
 public class EnergyBlastProjectile extends Entity implements IProjectile, IThrowableEntity
 {
     protected int xTile = -1;
@@ -39,8 +39,6 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     public EntityLivingBase shootingEntity;
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;
-    private int ricochetCounter = 0;
-    private boolean scheduledForDeath = false;
     protected int projectileDamage;
 
     public EnergyBlastProjectile(World par1World)
@@ -114,7 +112,6 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
             double d4 = d0 / d3;
             double d5 = d2 / d3;
             this.setLocationAndAngles(par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
-            float f4 = (float) d3 * 0.2F;
             this.setThrowableHeading(d0, d1, d2, par4, par5);
         }
 
@@ -261,6 +258,7 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
             double var7 = 0.0D;
             Iterator var9 = var6.iterator();
             float var11;
+            boolean scheduledForDeath = false;
 
             while (var9.hasNext())
             {
@@ -356,13 +354,6 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     protected boolean canTriggerWalking()
     {
         return false;
-    }
-
-    /**
-     * Sets the amount of knockback the arrow applies when it hits a mob.
-     */
-    public void setKnockbackStrength(int par1)
-    {
     }
 
     /**
@@ -483,6 +474,5 @@ public class EnergyBlastProjectile extends Entity implements IProjectile, IThrow
     {
         if (entity instanceof EntityLivingBase)
             this.shootingEntity = (EntityLivingBase) entity;
-
     }
 }

@@ -41,7 +41,7 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazooka
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
-import WayofTime.alchemicalWizardry.common.renderer.block.RenderAlchemicCalcinator;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderAlchemicalCalcinator;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderConduit;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderCrystalBelljar;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderMasterStone;
@@ -52,9 +52,8 @@ import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEffectBlock
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellParadigmBlock;
-import WayofTime.alchemicalWizardry.common.renderer.block.RenderWritingTable;
-import WayofTime.alchemicalWizardry.common.renderer.block.ShaderHelper;
-import WayofTime.alchemicalWizardry.common.renderer.block.TEAltarRenderer;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderChemistrySet;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderAltar;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAlchemicalCalcinatorItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAltarItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEBellJarItemRenderer;
@@ -149,10 +148,10 @@ public class ClientProxy extends CommonProxy
 
         MinecraftForge.EVENT_BUS.register(new RitualDivinerRender());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TEAltar.class, new TEAltarRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEAltar.class, new RenderAltar());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new RenderPedestal());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPlinth.class, new RenderPlinth());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEChemistrySet.class, new RenderWritingTable());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEChemistrySet.class, new RenderChemistrySet());
         ClientRegistry.bindTileEntitySpecialRenderer(TEConduit.class, new RenderConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEffectBlock.class, new RenderSpellEffectBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEnhancementBlock.class, new RenderSpellEnhancementBlock());
@@ -160,7 +159,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellModifierBlock.class, new RenderSpellModifierBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TEReagentConduit.class, new RenderReagentConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TEMasterStone.class, new RenderMasterStone());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicalCalcinator.class, new RenderAlchemicCalcinator());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicalCalcinator.class, new RenderAlchemicalCalcinator());
         ClientRegistry.bindTileEntitySpecialRenderer(TEBelljar.class, new RenderCrystalBelljar());
 
         //Item Renderer stuff
@@ -181,7 +180,7 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void InitRendering()
+    public void initRendering()
     {
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAltar), new TEAltarItemRenderer());
     }

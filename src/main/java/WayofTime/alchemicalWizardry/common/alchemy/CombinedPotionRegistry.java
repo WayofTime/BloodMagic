@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CombinedPotionRegistry
 {
-    public static List<CombinedPotionComponent> potionList = new ArrayList();
+    public static List<CombinedPotionComponent> potionList = new ArrayList<CombinedPotionComponent>();
 
     public static void registerCombinedPotionRecipe(Potion result, Potion pot1, Potion pot2)
     {

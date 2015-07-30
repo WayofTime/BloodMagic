@@ -111,7 +111,7 @@ public class RitualEffectGrowth extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> growthRitual = new ArrayList();
+        ArrayList<RitualComponent> growthRitual = new ArrayList<RitualComponent>();
         growthRitual.add(new RitualComponent(1, 0, 0, 1));
         growthRitual.add(new RitualComponent(-1, 0, 0, 1));
         growthRitual.add(new RitualComponent(0, 0, 1, 1));
