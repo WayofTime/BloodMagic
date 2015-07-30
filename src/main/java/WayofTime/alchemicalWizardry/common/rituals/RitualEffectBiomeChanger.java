@@ -215,8 +215,6 @@ public class RitualEffectBiomeChanger extends RitualEffect
                 }
             }
 
-            boolean wantsSnow = false;
-            boolean wantsRain = true;
             int biomeID = 1;
             BiomeGenBase[] biomeList = BiomeGenBase.getBiomeGenArray();
             int iteration = 0;
@@ -290,7 +288,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> biomeChangerRitual = new ArrayList();
+        ArrayList<RitualComponent> biomeChangerRitual = new ArrayList<RitualComponent>();
         biomeChangerRitual.add(new RitualComponent(1, 0, -2, RitualComponent.AIR));
         biomeChangerRitual.add(new RitualComponent(1, 0, -3, RitualComponent.AIR));
         biomeChangerRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));

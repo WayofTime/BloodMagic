@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 
 public class RoutingFocusParadigm 
 {
-	public List<RoutingFocusLogic> logicList = new LinkedList();
+	public List<RoutingFocusLogic> logicList = new LinkedList<RoutingFocusLogic>();
 	
-	public List<RoutingFocusPosAndFacing> locationList = new LinkedList();
+	public List<RoutingFocusPosAndFacing> locationList = new LinkedList<RoutingFocusPosAndFacing>();
 	
 	public int maximumAmount = 0;
 	

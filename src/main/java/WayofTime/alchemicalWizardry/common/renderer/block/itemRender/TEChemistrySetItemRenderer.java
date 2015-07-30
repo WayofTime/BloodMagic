@@ -8,15 +8,15 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelChemistrySet;
 
-public class TEWritingTableItemRenderer implements IItemRenderer
+public class TEChemistrySetItemRenderer implements IItemRenderer
 {
-    private ModelWritingTable model;
+    private ModelChemistrySet model;
 
-    public TEWritingTableItemRenderer()
+    public TEChemistrySetItemRenderer()
     {
-        model = new ModelWritingTable();
+        model = new ModelChemistrySet();
     }
 
     @Override

@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.api;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 
-
 public class Int3
 {
     public int xCoord;

@@ -103,7 +103,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> meteorRitual = new ArrayList();
+        ArrayList<RitualComponent> meteorRitual = new ArrayList<RitualComponent>();
         meteorRitual.add(new RitualComponent(2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(0, 0, 2, RitualComponent.FIRE));

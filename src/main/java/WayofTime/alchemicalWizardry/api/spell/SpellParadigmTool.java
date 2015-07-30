@@ -49,31 +49,31 @@ public class SpellParadigmTool extends SpellParadigm
 
     public SpellParadigmTool()
     {
-        this.leftClickEffectList = new LinkedList();
-        this.rightClickEffectList = new LinkedList();
-        this.toolUpdateEffectList = new LinkedList();
-        this.toolSummonEffectList = new LinkedList();
-        this.toolBanishEffectList = new LinkedList();
-        this.breakBlockEffectList = new LinkedList();
-        this.itemManipulatorEffectList = new LinkedList();
-        this.digAreaEffectList = new LinkedList();
-        this.specialDamageEffectList = new LinkedList();
-        this.durationHash = new HashMap();
+        this.leftClickEffectList = new LinkedList<ILeftClickEffect>();
+        this.rightClickEffectList = new LinkedList<IRightClickEffect>();
+        this.toolUpdateEffectList = new LinkedList<IToolUpdateEffect>();
+        this.toolSummonEffectList = new LinkedList<IOnSummonTool>();
+        this.toolBanishEffectList = new LinkedList<IOnBanishTool>();
+        this.breakBlockEffectList = new LinkedList<IOnBreakBlock>();
+        this.itemManipulatorEffectList = new LinkedList<IItemManipulator>();
+        this.digAreaEffectList = new LinkedList<IDigAreaEffect>();
+        this.specialDamageEffectList = new LinkedList<ISpecialDamageEffect>();
+        this.durationHash = new HashMap<String, Integer>();
 
-        this.toolInfoString = new HashMap();
-        this.critChanceHash = new HashMap();
+        this.toolInfoString = new HashMap<String, String>();
+        this.critChanceHash = new HashMap<String, Float>();
 
-        this.harvestLevel = new HashMap();
+        this.harvestLevel = new HashMap<String, Integer>();
         this.harvestLevel.put("pickaxe", -1);
         this.harvestLevel.put("shovel", -1);
         this.harvestLevel.put("axe", -1);
 
-        this.digSpeed = new HashMap();
+        this.digSpeed = new HashMap<String, Float>();
         this.digSpeed.put("pickaxe", 1.0f);
         this.digSpeed.put("shovel", 1.0f);
         this.digSpeed.put("axe", 1.0f);
 
-        this.maxDamageHash = new HashMap();
+        this.maxDamageHash = new HashMap<String, Float>();
         this.maxDamageHash.put("default", 5.0f);
 
         this.fortuneLevel = 0;
@@ -356,8 +356,7 @@ public class SpellParadigmTool extends SpellParadigm
 
         for (IItemManipulator eff : this.itemManipulatorEffectList)
         {
-            List<ItemStack> newHeldList = eff.handleItemsOnBlockBroken(toolStack, heldList);
-            heldList = newHeldList;
+            heldList = eff.handleItemsOnBlockBroken(toolStack, heldList);
         }
 
         return heldList;
@@ -465,7 +464,7 @@ public class SpellParadigmTool extends SpellParadigm
 
     public float getAddedDamageForEntity(Entity entity)
     {
-        HashMap<String, Float> hash = new HashMap();
+        HashMap<String, Float> hash = new HashMap<String, Float>();
 
         for (ISpecialDamageEffect effect : this.specialDamageEffectList)
         {

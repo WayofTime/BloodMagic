@@ -10,8 +10,8 @@ import java.util.List;
 
 public class AchievementsRegistry
 {
-    public final static List<Item> craftinglist = new ArrayList();
-    public final static List<Item> pickupList = new ArrayList();
+    public final static List<Item> craftinglist = new ArrayList<Item>();
+    public final static List<Item> pickupList = new ArrayList<Item>();
 
     public static void init()
     {

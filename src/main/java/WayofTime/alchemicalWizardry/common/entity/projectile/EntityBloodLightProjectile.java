@@ -11,7 +11,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 
-
 public class EntityBloodLightProjectile extends EnergyBlastProjectile
 {
     public EntityBloodLightProjectile(World par1World)

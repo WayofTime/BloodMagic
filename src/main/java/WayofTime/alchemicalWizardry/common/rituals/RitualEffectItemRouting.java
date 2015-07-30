@@ -1,10 +1,7 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -19,21 +16,17 @@ import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectItemRouting extends RitualEffect
 {
-	Random rand = new Random();
-	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
 
-        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
         World world = ritualStone.getWorldObj();
         BlockPos pos = ritualStone.getPosition();
 
@@ -42,9 +35,7 @@ public class RitualEffectItemRouting extends RitualEffect
             return;
         }
                 
-        Map<Int3, IInventory> tileMap = new HashMap();
-                
-        List<IInventory> outputList = new ArrayList();
+        List<IInventory> outputList = new ArrayList<IInventory>();
         for(int i=0; i<4; i++) //Check output foci chests, return if none available
         {
         	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
@@ -64,7 +55,7 @@ public class RitualEffectItemRouting extends RitualEffect
         for(IInventory outputFocusInventory : outputList)
 		{
 			{        				    				
-				OutputRoutingFocus outputFocus;;
+				OutputRoutingFocus outputFocus;
 				
 				RoutingFocusParadigm parad = new RoutingFocusParadigm();
 				
@@ -168,7 +159,7 @@ public class RitualEffectItemRouting extends RitualEffect
         				    								
     				    								if(parad.doesItemMatch(keyStack, syphonedStack))
     				    								{
-    				    									ItemStack newStack = null;
+    				    									ItemStack newStack;
     				    									if(parad.maximumAmount <= 0)
     				    									{
         				    									newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
@@ -181,9 +172,7 @@ public class RitualEffectItemRouting extends RitualEffect
     				    										continue;
     				    									}
     				    									
-    				    									int numberSyphoned = size - newStack.stackSize;
-    				    									
-    				            							if(newStack != null && newStack.stackSize <= 0)
+    				            							if(newStack.stackSize <= 0)
     				            							{
         				            							size = newStack.stackSize;
     				            								newStack = null;
@@ -246,7 +235,7 @@ public class RitualEffectItemRouting extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> omegaRitual = new ArrayList();
+        ArrayList<RitualComponent> omegaRitual = new ArrayList<RitualComponent>();
         
         this.addCornerRunes(omegaRitual, 1, 0, RitualComponent.BLANK);
         this.addOffsetRunes(omegaRitual, 2, 1, 0, RitualComponent.FIRE);
@@ -256,6 +245,4 @@ public class RitualEffectItemRouting extends RitualEffect
 
         return omegaRitual;
     }
-    
-    
 }

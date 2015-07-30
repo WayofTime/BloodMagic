@@ -9,7 +9,6 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemFood;
@@ -183,6 +182,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         }
     }
 
+    @Override
     /**
      * main AI tick function, replaces updateEntityActionState
      */
@@ -191,6 +191,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         this.dataWatcher.updateObject(18, this.getHealth());
     }
 
+    @Override
     protected void entityInit()
     {
         super.entityInit();
@@ -207,6 +208,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
 
+    @Override
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
@@ -217,6 +219,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         par1NBTTagCompound.setByte("attackTimer", (byte) attackTimer);
     }
 
+    @Override
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
@@ -228,6 +231,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         attackTimer = par1NBTTagCompound.getByte("attackTimer");
     }
 
+    @Override
     /**
      * Returns the sound this mob makes while it's alive.
      */
@@ -236,6 +240,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return "none";
     }
 
+    @Override
     /**
      * Returns the sound this mob makes when it is hurt.
      */
@@ -244,6 +249,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return "mob.irongolem.hit";
     }
 
+    @Override
     /**
      * Returns the sound this mob makes on death.
      */
@@ -252,6 +258,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return "mob.irongolem.death";
     }
 
+    @Override
     /**
      * Returns the volume for the sounds this mob makes.
      */
@@ -273,6 +280,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return attackTimer;
     }
 
+    @Override
     /**
      * Called to update the entity's position/logic.
      */
@@ -281,11 +289,13 @@ public class EntityDemon extends EntityTameable implements IDemon
         super.onUpdate();
     }
 
+    @Override
     public float getEyeHeight()
     {
         return this.height * 0.8F;
     }
 
+    @Override
     /**
      * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
      * use in wolves.
@@ -295,6 +305,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
     }
 
+    @Override
     /**
      * Called when the entity is attacked.
      */
@@ -317,6 +328,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         }
     }
 
+    @Override
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         this.attackTimer = 10;
@@ -332,6 +344,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return flag;
     }
 
+    @Override
     public void setTamed(boolean par1)
     {
         super.setTamed(par1);
@@ -402,7 +415,7 @@ public class EntityDemon extends EntityTameable implements IDemon
 
             if (itemstack.stackSize <= 0)
             {
-                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
             }
 
             if (!this.worldObj.isRemote)
@@ -463,41 +476,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         }
     }
 
-    /**
-     * Return this wolf's collar color.
-     */
-    public int getCollarColor()
-    {
-        return this.dataWatcher.getWatchableObjectByte(20) & 15;
-    }
-
-    /**
-     * Set this wolf's collar color.
-     */
-    public void setCollarColor(int par1)
-    {
-        this.dataWatcher.updateObject(20, par1 & 15);
-    }
-
-    /**
-     * This function is used when two same-species animals in 'love mode' breed to generate the new baby animal.
-     */
-    public EntityWolf spawnBabyAnimal(EntityAgeable par1EntityAgeable)
-    {
-        return null;
-    }
-
-    public void func_70918_i(boolean par1)
-    {
-        if (par1)
-        {
-            this.dataWatcher.updateObject(19, 1);
-        } else
-        {
-            this.dataWatcher.updateObject(19, 0);
-        }
-    }
-
+    @Override
     /**
      * Returns true if the mob is currently able to mate with the specified mob.
      */
@@ -511,6 +490,7 @@ public class EntityDemon extends EntityTameable implements IDemon
         return this.dataWatcher.getWatchableObjectByte(19) == 1;
     }
 
+    @Override
     /**
      * Determines if an entity can be despawned, used on idle far away entities
      */

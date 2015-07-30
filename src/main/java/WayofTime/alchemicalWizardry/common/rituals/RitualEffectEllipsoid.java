@@ -192,7 +192,7 @@ public class RitualEffectEllipsoid extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> ellipsoidRitual = new ArrayList();
+        ArrayList<RitualComponent> ellipsoidRitual = new ArrayList<RitualComponent>();
 
         ellipsoidRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.DUSK));
         ellipsoidRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.DUSK));

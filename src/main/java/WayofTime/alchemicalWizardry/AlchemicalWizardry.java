@@ -828,7 +828,7 @@ public class AlchemicalWizardry
         blacklistAccelerators();
 
         MinecraftForge.EVENT_BUS.register(new ModLivingDropsEvent());
-        proxy.InitRendering();
+        proxy.initRendering();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         ItemStack gunpowderStack = new ItemStack(Items.gunpowder);

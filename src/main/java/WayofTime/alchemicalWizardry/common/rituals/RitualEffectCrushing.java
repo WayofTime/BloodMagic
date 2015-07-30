@@ -82,7 +82,6 @@ public class RitualEffectCrushing extends RitualEffect
         boolean hasVirtus = this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false);
         boolean hasIncendium = this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
 
-        boolean isSilkTouch = hasCrystallos;
         int fortuneLevel = 0;
         if (hasOrbisTerrae)
         {
@@ -117,17 +116,17 @@ public class RitualEffectCrushing extends RitualEffect
                         	continue;
                         }
 
-                        if (block != null && !world.isAirBlock(newPos))
+                        if (!world.isAirBlock(newPos))
                         {
                             if ((block.equals(ModBlocks.ritualStone) || block.equals(ModBlocks.blockMasterStone)) || SpellHelper.isBlockFluid(block))
                             {
                                 continue;
                             }
 
-                            if (isSilkTouch && block.canSilkHarvest(world, newPos, state, null))
+                            if (hasCrystallos && block.canSilkHarvest(world, newPos, state, null))
                             {
                                 ItemStack item = new ItemStack(block, 1, block.getMetaFromState(state));
-                                ItemStack copyStack = item.copyItemStack(item);
+                                ItemStack copyStack = ItemStack.copyItemStack(item);
 
                                 SpellHelper.insertStackIntoInventory(copyStack, tileEntity, EnumFacing.DOWN);
 
@@ -151,7 +150,7 @@ public class RitualEffectCrushing extends RitualEffect
                                     for (ItemStack item : itemDropList)
                                     {
                                         hasIncendium = hasIncendium && this.canDrainReagent(ritualStone, ReagentRegistry.incendiumReagent, incendiumDrain, false);
-                                        ItemStack copyStack = item.copyItemStack(item);
+                                        ItemStack copyStack = ItemStack.copyItemStack(item);
 
                                         if (this.usesIncendium(copyStack))
                                         {
@@ -206,9 +205,6 @@ public class RitualEffectCrushing extends RitualEffect
                 {
                     return true;
                 }
-            } else
-            {
-
             }
         }
         return false;
@@ -233,9 +229,6 @@ public class RitualEffectCrushing extends RitualEffect
                         copyStack = new ItemStack(Blocks.netherrack, stackSize, 0);
                     }
                 }
-            } else
-            {
-
             }
 
             return copyStack;
@@ -252,7 +245,7 @@ public class RitualEffectCrushing extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> crushingRitual = new ArrayList();
+        ArrayList<RitualComponent> crushingRitual = new ArrayList<RitualComponent>();
         crushingRitual.add(new RitualComponent(0, 0, 1, RitualComponent.EARTH));
         crushingRitual.add(new RitualComponent(1, 0, 0, RitualComponent.EARTH));
         crushingRitual.add(new RitualComponent(0, 0, -1, RitualComponent.EARTH));

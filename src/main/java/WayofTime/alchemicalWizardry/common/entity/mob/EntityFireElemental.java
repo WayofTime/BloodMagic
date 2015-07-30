@@ -15,6 +15,7 @@ public class EntityFireElemental extends EntityElemental implements IMob
         this.isImmuneToFire = true;
     }
 
+    @Override
     public void inflictEffectOnEntity(Entity target)
     {
         if (target instanceof EntityLivingBase)

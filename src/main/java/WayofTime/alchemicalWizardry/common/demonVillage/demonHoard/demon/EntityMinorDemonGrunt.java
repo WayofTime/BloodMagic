@@ -513,6 +513,6 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 		BlockPos position = demon.getPortalLocation();
 		TileEntity portal = worldObj.getTileEntity(this.demonPortal);
 		
-		return portal instanceof TEDemonPortal ? portal == worldObj.getTileEntity(position) : false;
+		return portal instanceof TEDemonPortal && portal == worldObj.getTileEntity(position);
 	}
 }

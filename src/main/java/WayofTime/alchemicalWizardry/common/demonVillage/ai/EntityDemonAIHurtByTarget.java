@@ -36,7 +36,7 @@ public class EntityDemonAIHurtByTarget extends EntityAIHurtByTarget
 		
         this.taskOwner.setAttackTarget(this.taskOwner.getAITarget());
 
-        if (this.entityCallsForHelp && this.taskOwner instanceof IHoardDemon)
+        if (this.entityCallsForHelp)
         {
         	
         	if(portal instanceof TEDemonPortal)

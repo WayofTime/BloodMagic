@@ -25,9 +25,6 @@ public class EntityWingedFireDemon extends EntityDemon implements IRangedAttackM
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 40, 40, 15.0F);
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
-    private static float maxTamedHealth = 100.0F;
-    private static float maxUntamedHealth = 200.0F;
-
     public EntityWingedFireDemon(World par1World)
     {
         super(par1World, AlchemicalWizardry.entityWingedFireDemonID);
@@ -60,6 +57,8 @@ public class EntityWingedFireDemon extends EntityDemon implements IRangedAttackM
         super.applyEntityAttributes();
         //This line affects the speed of the monster
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
+        float maxTamedHealth = 100.0F;
+        float maxUntamedHealth = 200.0F;
 
         //My guess is that this will alter the max health
         if (this.isTamed())
@@ -73,6 +72,7 @@ public class EntityWingedFireDemon extends EntityDemon implements IRangedAttackM
         //this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(10.0D);
     }
 
+    @Override
     /**
      * Attack the specified entity using a ranged attack.
      */

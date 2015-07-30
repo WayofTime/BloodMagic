@@ -23,7 +23,7 @@ import com.google.gson.GsonBuilder;
 public class ComplexNetworkHandler 
 {
 	public static String fileName = "config/BloodMagic/soulnetworkKeys";
-	static HashMap<UUID, String> keyMap = new HashMap();
+	static HashMap<UUID, String> keyMap = new HashMap<UUID, String>();
 	public static UUID getUUIDFromPlayer(EntityPlayer player)
     {
         return player.getPersistentID();
@@ -70,9 +70,8 @@ public class ComplexNetworkHandler
             try
             {
                 br = new BufferedReader(new FileReader(save));
-                HashMap schema = gson.fromJson(br, keyMap.getClass());
-                
-                keyMap = schema;
+
+                keyMap = gson.fromJson(br, keyMap.getClass());
                 
                 if(keyMap != null)
                 {
@@ -86,7 +85,6 @@ public class ComplexNetworkHandler
                 e.printStackTrace();
             }
     	}
-    	
     	else
     	{
     		keyMap = null;

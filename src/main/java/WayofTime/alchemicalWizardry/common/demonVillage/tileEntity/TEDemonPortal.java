@@ -66,9 +66,9 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
 
     public static int[] tierCostList = new int[]{1500};
     
-    public Set<IHoardDemon> hoardList = new HashSet();
+    public Set<IHoardDemon> hoardList = new HashSet<IHoardDemon>();
 
-    public static List<DemonBuilding> buildingList = new ArrayList();
+    public static List<DemonBuilding> buildingList = new ArrayList<DemonBuilding>();
     public Random rand = new Random();
     private GridSpace[][] area;
 
@@ -168,7 +168,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
     {
     	float totalChance = 0;
 
-    	Map<String, Float> map = new HashMap();
+    	Map<String, Float> map = new HashMap<String, Float>();
     	map.put("roadChance", this.getRoadChance());
     	map.put("houseChance", this.getHouseChance());
     	map.put("demonPortalChance", this.getDemonPortalChance());
@@ -661,7 +661,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
 
     public List<EnumFacing> findValidExtentionDirection(int x, int z)
     {
-        List<EnumFacing> directions = new LinkedList();
+        List<EnumFacing> directions = new LinkedList<EnumFacing>();
 
         if (this.getGridSpace(x, z) == null || !this.getGridSpace(x, z).isRoadSegment())
         {
@@ -1197,7 +1197,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
 
 //        GridSpaceHolder grid = this.createGSH();
 
-        List<EnumFacing> directions = new ArrayList();
+        List<EnumFacing> directions = new ArrayList<EnumFacing>();
 
         for (int i = 2; i < 6; i++)
         {
@@ -1210,7 +1210,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
             return 0;
         }
 
-        HashMap<EnumFacing, List<DemonBuilding>> schemMap = new HashMap();
+        HashMap<EnumFacing, List<DemonBuilding>> schemMap = new HashMap<EnumFacing, List<DemonBuilding>>();
 
         for (EnumFacing nextDir : directions)
         {
@@ -1226,7 +1226,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
                     schemMap.get(nextDir).add(build);
                 } else
                 {
-                    schemMap.put(nextDir, new ArrayList());
+                    schemMap.put(nextDir, new ArrayList<DemonBuilding>());
                     schemMap.get(nextDir).add(build);
                 }
             }
@@ -1353,7 +1353,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
             return 0;
         }
 
-        List<EnumFacing> directions = new ArrayList();
+        List<EnumFacing> directions = new ArrayList<EnumFacing>();
 
         for (int i = 2; i < 6; i++)
         {
@@ -1369,7 +1369,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
             return 0;
         }
 
-        HashMap<EnumFacing, List<DemonBuilding>> schemMap = new HashMap();
+        HashMap<EnumFacing, List<DemonBuilding>> schemMap = new HashMap<EnumFacing, List<DemonBuilding>>();
 
         for (EnumFacing nextDir : directions)
         {
@@ -1390,7 +1390,7 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
                         schemMap.get(nextDir).add(build);
                     } else
                     {
-                        schemMap.put(nextDir, new ArrayList());
+                        schemMap.put(nextDir, new ArrayList<DemonBuilding>());
                         schemMap.get(nextDir).add(build);
                     }
                 } else
@@ -1418,10 +1418,6 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
         build.setAllGridSpaces(x + xOff, z + zOff, yLevel, chosenDirection.getOpposite(), GridSpace.HOUSE, grid);
         this.loadGSH(grid);
         
-        DemonVillagePath path = new DemonVillagePath(pos.getX() + (x) * 5, yLevel, pos.getZ() + (z) * 5, chosenDirection, 2);
-
-        Int3AndBool temp = path.constructFullPath(this, worldObj, this.getRoadStepClearance());
-
         return build.getNumberOfGridSpaces();
     }
 
@@ -1451,11 +1447,6 @@ public class TEDemonPortal extends TileEntity implements IUpdatePlayerListBox
 
     public void createRoad(int xi, int yi, int zi, EnumFacing dir, int length, boolean doesNotDrop)
     {
-        int curX = xi;
-        int curY = yi;
-        int curZ = zi;
-        int roadRadius = this.getRoadRadius();
-
         if (dir.getFrontOffsetY() != 0)
         {
             return;

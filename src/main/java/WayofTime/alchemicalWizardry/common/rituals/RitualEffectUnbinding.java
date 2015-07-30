@@ -166,7 +166,7 @@ public class RitualEffectUnbinding extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> unbindingRitual = new ArrayList();
+        ArrayList<RitualComponent> unbindingRitual = new ArrayList<RitualComponent>();
         unbindingRitual.add(new RitualComponent(-2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(0, 0, 2, 4));

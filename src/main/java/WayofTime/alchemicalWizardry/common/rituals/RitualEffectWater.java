@@ -193,7 +193,7 @@ public class RitualEffectWater extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> waterRitual = new ArrayList();
+        ArrayList<RitualComponent> waterRitual = new ArrayList<RitualComponent>();
         waterRitual.add(new RitualComponent(-1, 0, 1, 1));
         waterRitual.add(new RitualComponent(-1, 0, -1, 1));
         waterRitual.add(new RitualComponent(1, 0, -1, 1));

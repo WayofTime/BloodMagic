@@ -30,7 +30,7 @@ public class BuildingSchematic
     public BuildingSchematic(String name)
     {
         this.name = name;
-        blockList = new ArrayList();
+        blockList = new ArrayList<BlockSet>();
         this.doorX = 0;
         this.doorZ = 0;
         this.doorY = 0;
@@ -90,7 +90,7 @@ public class BuildingSchematic
 
     public List<Int3> getGriddedPositions(EnumFacing dir)
     {
-        List<Int3> positionList = new ArrayList();
+        List<Int3> positionList = new ArrayList<Int3>();
 
         for (BlockSet blockSet : blockList)
         {

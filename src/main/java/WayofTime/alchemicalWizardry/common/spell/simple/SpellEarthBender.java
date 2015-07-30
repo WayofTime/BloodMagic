@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.spell.simple;
 
 import java.util.Random;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -78,7 +79,7 @@ public class SpellEarthBender extends HomSpell
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getDefensiveEnergy());
+            SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, this.getDefensiveEnergy());
         }
 
         double xCoord = player.posX;
@@ -144,7 +145,7 @@ public class SpellEarthBender extends HomSpell
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getEnvironmentalEnergy());
+            SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, this.getEnvironmentalEnergy());
         }
 
         int range = 3;

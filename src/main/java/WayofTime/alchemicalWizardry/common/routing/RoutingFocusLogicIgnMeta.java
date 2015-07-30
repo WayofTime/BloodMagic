@@ -8,6 +8,6 @@ public class RoutingFocusLogicIgnMeta extends RoutingFocusLogic
 	@Override
 	public boolean getDefaultMatch(ItemStack keyStack, ItemStack checkedStack)
 	{
-		return (keyStack != null ? checkedStack != null && keyStack.getItem() == checkedStack.getItem() : false);
+		return keyStack != null && checkedStack != null && keyStack.getItem() == checkedStack.getItem();
 	}
 }

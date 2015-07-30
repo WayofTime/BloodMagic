@@ -84,7 +84,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                         {
                             if (shootingEntity.isRiding())
                             {
-                                shootingEntity.mountEntity((Entity) null);
+                                shootingEntity.mountEntity(null);
                             }
                             shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
                         }
@@ -118,7 +118,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                             {
                                 if (shootingEntity.isRiding())
                                 {
-                                    shootingEntity.mountEntity((Entity) null);
+                                    shootingEntity.mountEntity(null);
                                 }
 
                                 shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);

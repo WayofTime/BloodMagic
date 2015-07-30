@@ -17,8 +17,6 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
 public class EntityBileDemon extends EntityDemon
 {
-
-
     public EntityBileDemon(World par1World)
     {
         super(par1World, AlchemicalWizardry.entityBileDemonID);

@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 
 public class ReagentRegistry
 {
-    public static Map<String, Reagent> reagentList = new HashMap();
-    public static Map<ItemStack, ReagentStack> itemToReagentMap = new HashMap();
+    public static Map<String, Reagent> reagentList = new HashMap<String, Reagent>();
+    public static Map<ItemStack, ReagentStack> itemToReagentMap = new HashMap<ItemStack, ReagentStack>();
 
     public static Reagent sanctusReagent;
     public static Reagent incendiumReagent;

@@ -17,10 +17,7 @@ public abstract class RitualEffect
         return true;
     }
 
-    public void onRitualBroken(IMasterRitualStone ritualStone, RitualBreakMethod method)
-    {
-
-    }
+    public void onRitualBroken(IMasterRitualStone ritualStone, RitualBreakMethod method) {}
 
     public abstract int getCostPerRefresh();
 

@@ -10,9 +10,9 @@ import org.lwjgl.opengl.GL11;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 
-public class GuiWritingTable extends GuiContainer
+public class GuiChemistrySet extends GuiContainer
 {
-    public GuiWritingTable(InventoryPlayer inventoryPlayer, TEChemistrySet tileEntity)
+    public GuiChemistrySet(InventoryPlayer inventoryPlayer, TEChemistrySet tileEntity)
     {
         super(new ContainerWritingTable(inventoryPlayer, tileEntity));
         xSize = 176;

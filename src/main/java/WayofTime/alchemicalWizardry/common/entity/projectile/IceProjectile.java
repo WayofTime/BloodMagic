@@ -54,7 +54,7 @@ public class IceProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        }// else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
         this.setDead();
@@ -71,9 +71,9 @@ public class IceProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                if (((EntityLivingBase) mop).isImmuneToFire())
+                if (mop.isImmuneToFire())
                 {
-                    doDamage((int) (projectileDamage * 2), mop);
+                    doDamage(projectileDamage * 2, mop);
                     ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2));
                 } else
                 {

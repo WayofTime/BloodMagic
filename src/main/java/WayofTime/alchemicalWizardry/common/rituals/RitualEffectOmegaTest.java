@@ -67,7 +67,7 @@ public class RitualEffectOmegaTest extends RitualEffect
         
         Reagent reagent = null;
         
-        Map<Reagent, Integer> reagentMap = new HashMap();
+        Map<Reagent, Integer> reagentMap = new HashMap<Reagent, Integer>();
     	for(int i=0; i<4; i++)
     	{
     		Int3 jarLoc = this.getJarLocation(i);
@@ -133,7 +133,7 @@ public class RitualEffectOmegaTest extends RitualEffect
     			
     			if(!isTesting)
     			{
-    				int drainLeft = this.drainTotal;
+    				int drainLeft = drainTotal;
     				for(int i = 0; i < 4; i++)
     				{
     					if(drainLeft <= 0)
@@ -173,7 +173,7 @@ public class RitualEffectOmegaTest extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> omegaRitual = new ArrayList();
+        ArrayList<RitualComponent> omegaRitual = new ArrayList<RitualComponent>();
         this.addCornerRunes(omegaRitual, 1, 0, RitualComponent.DUSK);
         this.addCornerRunes(omegaRitual, 2, 0, RitualComponent.DUSK);
         this.addCornerRunes(omegaRitual, 3, 0, RitualComponent.BLANK);

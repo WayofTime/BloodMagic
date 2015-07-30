@@ -45,10 +45,10 @@ public class EntitySpellProjectile extends Entity implements IProjectile
     //Custom variables
     private int maxRicochet = 0;
     private float damage = 1;
-    public List<IProjectileImpactEffect> impactList = new ArrayList();
+    public List<IProjectileImpactEffect> impactList = new ArrayList<IProjectileImpactEffect>();
     private boolean penetration = false;
-    public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
-    public List<SpellEffect> spellEffectList = new LinkedList();
+    public List<IProjectileUpdateEffect> updateEffectList = new ArrayList<IProjectileUpdateEffect>();
+    public List<SpellEffect> spellEffectList = new LinkedList<SpellEffect>();
     private int blocksBroken = 0;
 
     public EntitySpellProjectile(World par1World)
@@ -323,7 +323,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 
         NBTTagList tagList = par1NBTTagCompound.getTagList("Effects", Constants.NBT.TAG_COMPOUND);
 
-        List<SpellEffect> spellEffectList = new LinkedList();
+        List<SpellEffect> spellEffectList = new LinkedList<SpellEffect>();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);

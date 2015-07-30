@@ -123,7 +123,7 @@ public class RitualEffectSupression extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> supressionRitual = new ArrayList();
+        ArrayList<RitualComponent> supressionRitual = new ArrayList<RitualComponent>();
         supressionRitual.add(new RitualComponent(2, 0, 2, RitualComponent.WATER));
         supressionRitual.add(new RitualComponent(2, 0, -2, RitualComponent.WATER));
         supressionRitual.add(new RitualComponent(-2, 0, 2, RitualComponent.WATER));

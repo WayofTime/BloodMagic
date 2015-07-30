@@ -95,7 +95,7 @@ public class RitualEffectFlight extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> flightRitual = new ArrayList();
+        ArrayList<RitualComponent> flightRitual = new ArrayList<RitualComponent>();
         flightRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         flightRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
         flightRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));

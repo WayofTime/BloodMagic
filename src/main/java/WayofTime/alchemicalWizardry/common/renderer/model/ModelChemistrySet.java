@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelWritingTable extends ModelBase
+public class ModelChemistrySet extends ModelBase
 {
     //fields
     ModelRenderer base;
@@ -21,7 +21,7 @@ public class ModelWritingTable extends ModelBase
     ModelRenderer input3;
     ModelRenderer Shape1;
 
-    public ModelWritingTable()
+    public ModelChemistrySet()
     {
         textureWidth = 64;
         textureHeight = 64;

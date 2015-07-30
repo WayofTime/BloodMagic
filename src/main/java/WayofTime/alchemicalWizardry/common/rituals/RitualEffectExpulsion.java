@@ -163,14 +163,14 @@ public class RitualEffectExpulsion extends RitualEffect
         double z = entityLiving.posZ;
         Random rand = new Random();
         double d0 = x + (rand.nextDouble() - 0.5D) * distance;
-        double d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
+        double d1 = y + (rand.nextInt((int) distance) - (distance) / 2);
         double d2 = z + (rand.nextDouble() - 0.5D) * distance;
         int i = 0;
 
         while (!teleportTo(entityLiving, d0, d1, d2, x, y, z) && i < 100)
         {
             d0 = x + (rand.nextDouble() - 0.5D) * distance;
-            d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
+            d1 = y + (rand.nextInt((int) distance) - (distance) / 2);
             d2 = z + (rand.nextDouble() - 0.5D) * distance;
             i++;
         }
@@ -192,9 +192,6 @@ public class RitualEffectExpulsion extends RitualEffect
             return false;
         }
 
-        double d3 = lastX;
-        double d4 = lastY;
-        double d5 = lastZ;
         SpellTeleport.moveEntityViaTeleport(entityLiving, event.targetX, event.targetY, event.targetZ);
         boolean flag = false;
         
@@ -237,7 +234,7 @@ public class RitualEffectExpulsion extends RitualEffect
 
         if (!flag)
         {
-            SpellTeleport.moveEntityViaTeleport(entityLiving, d3, d4, d5);
+            SpellTeleport.moveEntityViaTeleport(entityLiving, lastX, lastY, lastZ);
             return false;
         } else
         {
@@ -249,9 +246,9 @@ public class RitualEffectExpulsion extends RitualEffect
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = d3 + (entityLiving.posX - d3) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double d8 = d4 + (entityLiving.posY - d4) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double d9 = d5 + (entityLiving.posZ - d5) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double d7 = lastX + (entityLiving.posX - lastX) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double d8 = lastY + (entityLiving.posY - lastY) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
+                double d9 = lastZ + (entityLiving.posZ - lastZ) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
                 entityLiving.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
             return true;
@@ -262,7 +259,7 @@ public class RitualEffectExpulsion extends RitualEffect
     {
         if (entityLiving instanceof EntityPlayer)
         {
-            if (entityLiving != null && entityLiving instanceof EntityPlayerMP)
+            if (entityLiving instanceof EntityPlayerMP)
             {
                 EntityPlayerMP entityplayermp = (EntityPlayerMP) entityLiving;
 
@@ -274,7 +271,7 @@ public class RitualEffectExpulsion extends RitualEffect
                     {
                         if (entityLiving.isRiding())
                         {
-                            entityLiving.mountEntity((Entity) null);
+                            entityLiving.mountEntity(null);
                         }
                         entityLiving.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
                     }
@@ -289,7 +286,7 @@ public class RitualEffectExpulsion extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> expulsionRitual = new ArrayList();
+        ArrayList<RitualComponent> expulsionRitual = new ArrayList<RitualComponent>();
         expulsionRitual.add(new RitualComponent(2, 0, 2, RitualComponent.EARTH));
         expulsionRitual.add(new RitualComponent(2, 0, 1, RitualComponent.EARTH));
         expulsionRitual.add(new RitualComponent(1, 0, 2, RitualComponent.EARTH));

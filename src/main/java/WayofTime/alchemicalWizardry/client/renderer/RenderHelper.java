@@ -167,7 +167,7 @@ public class RenderHelper
 
     private static List<HUDElement> getHUDElements(Minecraft mc)
     {
-        List<HUDElement> elements = new ArrayList();
+        List<HUDElement> elements = new ArrayList<HUDElement>();
 
         MovingObjectPosition movingobjectposition = mc.objectMouseOver;
         World world = mc.theWorld;

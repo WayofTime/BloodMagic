@@ -25,8 +25,8 @@ public class SpellParadigmProjectile extends SpellParadigm
         this.damageSource = DamageSource.generic;
         this.damage = 1;
         this.cost = 0;
-        this.impactList = new ArrayList();
-        this.updateEffectList = new ArrayList();
+        this.impactList = new ArrayList<IProjectileImpactEffect>();
+        this.updateEffectList = new ArrayList<IProjectileUpdateEffect>();
         this.penetration = false;
         this.ricochetMax = 0;
         this.isSilkTouch = false;

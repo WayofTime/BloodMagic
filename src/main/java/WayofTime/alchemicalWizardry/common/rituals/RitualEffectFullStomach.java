@@ -113,7 +113,7 @@ public class RitualEffectFullStomach extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> fullRitual = new ArrayList();
+        ArrayList<RitualComponent> fullRitual = new ArrayList<RitualComponent>();
         fullRitual.add(new RitualComponent(0, 0, 3, RitualComponent.FIRE));
         fullRitual.add(new RitualComponent(0, 0, -3, RitualComponent.FIRE));
         fullRitual.add(new RitualComponent(3, 0, 0, RitualComponent.FIRE));

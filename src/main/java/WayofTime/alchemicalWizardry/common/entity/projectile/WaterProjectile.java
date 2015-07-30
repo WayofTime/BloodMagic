@@ -49,7 +49,7 @@ public class WaterProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        }// else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
 
@@ -66,7 +66,7 @@ public class WaterProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                if (((EntityLivingBase) mop).isImmuneToFire())
+                if (mop.isImmuneToFire())
                 {
                     doDamage(projectileDamage * 2, mop);
                     ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 1));

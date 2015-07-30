@@ -98,7 +98,7 @@ public class RitualEffectCrafting extends RitualEffect
             		{
             			if(((IInventory) inv).getSizeInventory() <= slotDesignation || !((IInventory) inv).isItemValidForSlot(slotDesignation, ((IInventory) inv).getStackInSlot(slotDesignation)))
             			{
-            				continue;
+
             			}else
             			{
             				ItemStack invStack = ((IInventory) inv).getStackInSlot(slotDesignation);
@@ -131,7 +131,7 @@ public class RitualEffectCrafting extends RitualEffect
 
                 IInventory outputInv = null;
                 
-                List<IInventory> invList = new ArrayList();
+                List<IInventory> invList = new ArrayList<IInventory>();
 
                 TileEntity northEntity = world.getTileEntity(pos.add(0, -1, -2));
                 TileEntity southEntity = world.getTileEntity(pos.add(0, -1, 2));
@@ -250,7 +250,7 @@ public class RitualEffectCrafting extends RitualEffect
                 		invList.add(outputInv);
                 	}
                 	
-                	Map<Integer, Map<Integer, Integer>> syphonMap = new HashMap(); //Inventory, Slot, how much claimed
+                	Map<Integer, Map<Integer, Integer>> syphonMap = new HashMap<Integer, Map<Integer, Integer>>(); //Inventory, Slot, how much claimed
                 	
                 	for(int n = 0; n < recipe.length; n++) //Look for the correct items
                 	{
@@ -299,7 +299,7 @@ public class RitualEffectCrafting extends RitualEffect
                 					Map<Integer, Integer> slotMap = syphonMap.get(i);
                 					if(slotMap == null)
                 					{
-                						slotMap = new HashMap();
+                						slotMap = new HashMap<Integer, Integer>();
                 						syphonMap.put(i, slotMap);
                 					}
                 					
@@ -389,7 +389,7 @@ public class RitualEffectCrafting extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> autoCraftingRitual = new ArrayList();
+        ArrayList<RitualComponent> autoCraftingRitual = new ArrayList<RitualComponent>();
 
         this.addCornerRunes(autoCraftingRitual, 1, 1, RitualComponent.EARTH);
         this.addParallelRunes(autoCraftingRitual, 1, 1, RitualComponent.EARTH);

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicalCalcinator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -19,16 +20,15 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 
-public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
+public class RenderAlchemicalCalcinator extends TileEntitySpecialRenderer
 {
     private final RenderItem customRenderItem;
     private ModelAlchemicalCalcinator modelConduit = new ModelAlchemicalCalcinator();
 
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
 
-    public RenderAlchemicCalcinator()
+    public RenderAlchemicalCalcinator()
     {
         customRenderItem = Minecraft.getMinecraft().getRenderItem();
     }
@@ -36,9 +36,9 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
-        if (tileEntity instanceof TEAlchemicCalcinator)
+        if (tileEntity instanceof TEAlchemicalCalcinator)
         {
-            TEAlchemicCalcinator tileAltar = (TEAlchemicCalcinator) tileEntity;
+            TEAlchemicalCalcinator tileAltar = (TEAlchemicalCalcinator) tileEntity;
 
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);

@@ -123,7 +123,7 @@ public class RitualEffectInterdiction extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> interdictionRitual = new ArrayList();
+        ArrayList<RitualComponent> interdictionRitual = new ArrayList<RitualComponent>();
         interdictionRitual.add(new RitualComponent(1, 0, 0, 4));
         interdictionRitual.add(new RitualComponent(-1, 0, 0, 4));
         interdictionRitual.add(new RitualComponent(0, 0, 1, 4));

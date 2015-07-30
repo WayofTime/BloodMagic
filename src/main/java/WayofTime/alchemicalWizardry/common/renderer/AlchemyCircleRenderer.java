@@ -2,7 +2,6 @@ package WayofTime.alchemicalWizardry.common.renderer;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -48,15 +47,12 @@ public class AlchemyCircleRenderer extends MRSRenderer
         }
 
         GL11.glPushMatrix();
-        float f1 = 1.0f;
         Tessellator tessellator = Tessellator.getInstance();
         this.bindTexture(resourceLocation);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_CULL_FACE);
-        float f2 = 0;
-        float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
 //        GL11.glEnable(GL11.GL_BLEND);
 //        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 

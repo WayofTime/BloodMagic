@@ -5,5 +5,5 @@ import net.minecraft.world.World;
 
 public interface IStabilityGlyph 
 {
-	public int getAdditionalStabilityForFaceCount(World world, BlockPos pos, int meta, int faceCount);
+	int getAdditionalStabilityForFaceCount(World world, BlockPos pos, int meta, int faceCount);
 }

@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -55,8 +54,6 @@ public class GuiHandler implements IGuiHandler
         TileEntity tileEntity;
         BlockPos pos = new BlockPos(x, y, z);
 
-        ItemStack held = player.getHeldItem();
-
         switch (id)
         {
             case 0:
@@ -64,7 +61,7 @@ public class GuiHandler implements IGuiHandler
 
                 if (tileEntity instanceof TEChemistrySet)
                 {
-                    return new GuiWritingTable(player.inventory, (TEChemistrySet) tileEntity);
+                    return new GuiChemistrySet(player.inventory, (TEChemistrySet) tileEntity);
                 }
 
                 break;
