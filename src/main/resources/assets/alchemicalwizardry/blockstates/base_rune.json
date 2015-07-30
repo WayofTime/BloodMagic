@@ -1,0 +1,44 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"all": "alchemicalwizardry:blocks/BlankRune"
+		},
+		"model": "cube_all",
+		"uvlock": true
+	},
+	"variants": {
+		"rune": {
+			0: {
+				"textures": {
+					"all": "alchemicalwizardry:blocks/AltarCapacityRune"
+				}
+			},
+			1: {
+				"textures": {
+					"all": "alchemicalwizardry:blocks/AltarCapacityRune"
+				}
+			},
+			2: {
+				"textures": {
+					"all": "alchemicalwizardry:blocks/DislocationRune"
+				}
+			},
+			3: {
+				"textures": {
+					"all": "alchemicalwizardry:blocks/OrbCapacityRune"
+				}
+			},
+			4: {
+				"textures": {
+					"all": "alchemicalwizardry:blocks/BetterCapacityRune"
+				}
+			},
+			5: {
+				"textures": {
+					"all": "alchemicalwizardry:blocks/AccelerationRune"
+				}
+			}
+		}
+	}
+}

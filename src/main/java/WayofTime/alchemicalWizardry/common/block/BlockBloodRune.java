@@ -1,24 +1,48 @@
 package WayofTime.alchemicalWizardry.common.block;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.ModBlocks;
 
 public class BlockBloodRune extends Block
 {
+	public static final PropertyInteger INTEGER = PropertyInteger.create("rune", 0, 5);
+	
     public BlockBloodRune()
     {
         super(Material.iron);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(INTEGER, Integer.valueOf(0)));
         setHardness(2.0F);
         setResistance(5.0F);
+    }
+    
+    @Override
+    protected BlockState createBlockState()
+    {
+        return new BlockState(this, new IProperty[] {INTEGER});
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(INTEGER, Integer.valueOf(meta));
+    }
+    
+    @Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((Integer)state.getValue(INTEGER)).intValue();
     }
 
     public int getRuneEffect(int metaData)
