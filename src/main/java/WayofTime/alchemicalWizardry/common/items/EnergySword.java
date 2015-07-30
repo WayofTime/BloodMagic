@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,21 +13,14 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class EnergySword extends ItemSword
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
     private int energyUsed;
 
     public EnergySword()
@@ -49,34 +41,6 @@ public class EnergySword extends ItemSword
     public int getEnergyUsed()
     {
         return this.energyUsed;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundSword_activated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundSword_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
-        {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
     }
     
     private OmegaParadigm getOmegaParadigmOfWeilder(EntityPlayer player)
@@ -171,28 +135,14 @@ public class EnergySword extends ItemSword
         par1ItemStack.setItemDamage(0);
     }
 
-    public void setActivated(ItemStack par1ItemStack, boolean newActivated)
+    public void setActivated(ItemStack stack, boolean newActivated)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        itemTag.setBoolean("isActive", newActivated);
+        stack.setItemDamage(newActivated ? 1 : 0);
     }
 
-    public boolean getActivated(ItemStack par1ItemStack)
+    public boolean getActivated(ItemStack stack)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        return itemTag.getBoolean("isActive");
+        return stack.getItemDamage() == 1;
     }
 
     public float func_82803_g()
@@ -224,7 +174,7 @@ public class EnergySword extends ItemSword
     }
 
     @Override
-    public float func_150893_a(ItemStack par1ItemStack, Block par2Block)
+    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
         if (par2Block == Blocks.web)
         {

@@ -1,12 +1,14 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.fml.client.FMLClientHandler;
+
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
 
 public class TEWritingTableItemRenderer implements IItemRenderer
 {

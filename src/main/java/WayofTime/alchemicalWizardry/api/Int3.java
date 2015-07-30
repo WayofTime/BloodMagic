@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.api;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 
 
 public class Int3
@@ -9,6 +10,11 @@ public class Int3
     public int yCoord;
     public int zCoord;
 
+    public Int3(BlockPos pos)
+    {
+    	this(pos.getX(), pos.getY(), pos.getZ());
+    }
+    
     public Int3(int xCoord, int yCoord, int zCoord)
     {
         this.xCoord = xCoord;

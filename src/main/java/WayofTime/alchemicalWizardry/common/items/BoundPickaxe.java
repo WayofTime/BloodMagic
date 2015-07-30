@@ -1,10 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,11 +12,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.ItemType;
@@ -26,17 +25,10 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 public class BoundPickaxe extends ItemPickaxe implements IBindable
 {
     public float efficiencyOnProperMaterial = 12.0F;
     public float damageVsEntity;
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
 
     private int energyUsed;
 
@@ -61,14 +53,14 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.boundpickaxe.desc1"));
         par3List.add(StatCollector.translateToLocal("tooltip.boundpickaxe.desc2"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(stack.getTagCompound() == null))
         {
-            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+            if (stack.getTagCompound().getBoolean("isActive"))
             {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
@@ -76,75 +68,44 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.deactivated"));
             }
 
-            if (!par1ItemStack.getTagCompound().getString("ownerName").equals(""))
+            if (!stack.getTagCompound().getString("ownerName").equals(""))
             {
-                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+                par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
             }
         }
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer par3EntityPlayer)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundPickaxe_activated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundPickaxe_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
+        if (!EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
-        {
-            this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
-            par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
-            return par1ItemStack;
+            this.setActivated(stack, !getActivated(stack));
+            stack.getTagCompound().setInteger("worldTimeDelay", (int) (world.getWorldTime() - 1) % 200);
+            return stack;
         }
         
-        if (par2World.isRemote)
+        if (world.isRemote)
         {
-            return par1ItemStack;
+            return stack;
         }
 
-        if (!getActivated(par1ItemStack) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        if (!getActivated(stack) || SpellHelper.isFakePlayer(world, par3EntityPlayer))
         {
-            return par1ItemStack;
+            return stack;
         }
 
         if (par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionInhibit))
         {
-            return par1ItemStack;
+            return stack;
         }
         
-        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 10000))
+        if(!EnergyItems.syphonBatteries(stack, par3EntityPlayer, 10000))
         {
-        	return par1ItemStack;
+        	return stack;
         }
 
-        Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
-        int posX = (int) (blockVec.xCoord);
-        int posY = (int) (blockVec.yCoord);
-        int posZ = (int) (blockVec.zCoord);
+        BlockPos pos = par3EntityPlayer.getPosition();
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
@@ -152,43 +113,44 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         
         for (int i = -5; i <= 5; i++)
         {
-            for (int j = -5; j <= 5; j++)
+            for (int j = 0; j <= 10; j++)
             {
                 for (int k = -5; k <= 5; k++)
                 {
-                    Block block = par2World.getBlock(posX + i, posY + j, posZ + k);
-                    int meta = par2World.getBlockMetadata(posX + i, posY + j, posZ + k);
+                	BlockPos newPos = pos.add(i, j, k);
+                	IBlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
 
-                    if (block != null && block.getBlockHardness(par2World, posX + i, posY + j, posZ + k) != -1)
+                    if (block != null)
                     {
-                        float str = func_150893_a(par1ItemStack, block);
+                        float str = getStrVsBlock(stack, block);
 
-                        if (str > 1.1f && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k))
+                        if (str > 1.1f && world.canMineBlockBody(par3EntityPlayer, newPos))
                         {
-                            if (silkTouch && block.canSilkHarvest(par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta))
+                            if (silkTouch && block.canSilkHarvest(world, newPos, state, par3EntityPlayer))
                             {
-                                dropMultiset.add(new ItemType(block, meta));
+                                dropMultiset.add(new ItemType(block, block.getMetaFromState(state)));
                             } else
                             {
-                                ArrayList<ItemStack> itemDropList = block.getDrops(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
+                                List<ItemStack> itemDropList = block.getDrops(world, newPos, state, fortuneLvl);
 
                                 if (itemDropList != null)
                                 {
-                                    for (ItemStack stack : itemDropList)
-                                        dropMultiset.add(ItemType.fromStack(stack), stack.stackSize);
+                                    for (ItemStack stacky : itemDropList)
+                                        dropMultiset.add(ItemType.fromStack(stacky), stacky.stackSize);
                                 }
                             }
 
-                            par2World.setBlockToAir(posX + i, posY + j, posZ + k);
+                            world.setBlockToAir(newPos);
                         }
                     }
                 }
             }
         }
         
-        dropMultisetStacks(dropMultiset, par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ);
+        BoundPickaxe.dropMultisetStacks(dropMultiset, world, pos.getX(), pos.getY() + par3EntityPlayer.getEyeHeight(), pos.getZ());
         
-        return par1ItemStack;
+        return stack;
     }
     
     public static void dropMultisetStacks(Multiset<ItemType> dropMultiset, World world, double x, double y, double z)
@@ -212,7 +174,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     }
 
     @Override
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void onUpdate(ItemStack stack, World world, Entity par3Entity, int par4, boolean par5)
     {
         if (!(par3Entity instanceof EntityPlayer))
         {
@@ -221,47 +183,33 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
 
         EntityPlayer par3EntityPlayer = (EntityPlayer) par3Entity;
 
-        if (par1ItemStack.getTagCompound() == null)
+        if (stack.getTagCompound() == null)
         {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
+            stack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par2World.getWorldTime() % 200 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (world.getWorldTime() % 200 == stack.getTagCompound().getInteger("worldTimeDelay") && stack.getTagCompound().getBoolean("isActive"))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20))
+                if(!EnergyItems.syphonBatteries(stack, par3EntityPlayer, 20))
                 {
-                	this.setActivated(par1ItemStack, false);
+                	this.setActivated(stack, false);
                 }
             }
         }
 
-        par1ItemStack.setItemDamage(0);
+        stack.setItemDamage(0);
     }
 
-    public void setActivated(ItemStack par1ItemStack, boolean newActivated)
+    public void setActivated(ItemStack stack, boolean newActivated)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        itemTag.setBoolean("isActive", newActivated);
+        stack.setItemDamage(newActivated ? 1 : 0);
     }
 
-    public boolean getActivated(ItemStack par1ItemStack)
+    public boolean getActivated(ItemStack stack)
     {
-        if (!par1ItemStack.hasTagCompound())
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        return itemTag.getBoolean("isActive");
+        return stack.getItemDamage() == 1;
     }
 
     /**
@@ -269,34 +217,23 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
      * sword
      */
     @Override
-    public float func_150893_a(ItemStack par1ItemStack, Block par2Block) //getStrVsBlock
+    public float getStrVsBlock(ItemStack stack, Block par2Block) //getStrVsBlock
     {
-        if (!getActivated(par1ItemStack))
+        if (!getActivated(stack))
         {
             return 0.0F;
         }
 
-        return super.func_150893_a(par1ItemStack, par2Block);
+        return super.getStrVsBlock(stack, par2Block);
     }
 
     /**
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
      */
-    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
-        return getActivated(par1ItemStack);
-    }
-
-    @Override
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, Block par3, int par4, int par5, int par6, EntityLivingBase par7EntityLivingBase)
-    {
-
-        if (par7EntityLivingBase instanceof EntityPlayer)
-        {
-            EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par7EntityLivingBase, getEnergyUsed());
-        }
-        return true;
+        return getActivated(stack);
     }
 
     @SideOnly(Side.CLIENT)
@@ -322,19 +259,19 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
      * FORGE: Overridden to allow custom tool effectiveness
      */
     @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta)
+    public float getDigSpeed(ItemStack stack, IBlockState state)
     {
         if (!getActivated(stack))
         {
             return 0.0F;
         }
 
-        if (ForgeHooks.isToolEffective(stack, block, meta))
+        for (String type : getToolClasses(stack))
         {
-            return efficiencyOnProperMaterial;
+            if (state.getBlock().isToolEffective(type, state))
+                return efficiencyOnProperMaterial;
         }
-
-        return func_150893_a(stack, block);
+        return super.getDigSpeed(stack, state);
     }
 
     @Override

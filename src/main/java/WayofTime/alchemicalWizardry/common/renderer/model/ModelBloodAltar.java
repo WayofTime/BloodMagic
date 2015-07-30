@@ -17,16 +17,16 @@ public class ModelBloodAltar extends ModelBase
 {
 	private static final ResourceLocation altar_texture = new ResourceLocation("alchemicalwizardry:textures/models/altar.png");
 	
-    private IModelCustom modelBloodAltar;
+//    private IModelCustom modelBloodAltar;
 
     public ModelBloodAltar()
     {
-        modelBloodAltar = AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
+//        modelBloodAltar = AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
     }
 
     public void renderBloodAltar()
     {
-        modelBloodAltar.renderAll();
+//        modelBloodAltar.renderAll();
     }
 
     public void renderBloodAltar(TEAltar altar, double x, double y, double z)

@@ -11,8 +11,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -49,7 +49,7 @@ public class RitualEffectOmegaTest extends RitualEffect
             return;
         }
 
-        OmegaStructureParameters param = OmegaStructureHandler.getStructureStabilityFactor(world, x, y, z, 5, new Int3(0,1,0));
+        OmegaStructureParameters param = OmegaStructureHandler.getStructureStabilityFactor(world, pos, 5, new Int3(0,1,0));
         int stab = param.stability;
         int enchantability = param.enchantability;
         int enchantmentLevel = param.enchantmentLevel;
@@ -63,7 +63,7 @@ public class RitualEffectOmegaTest extends RitualEffect
         
         double range = 0.5;
 
-        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 1.5, z + 0.5, range, range);
+        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, range, range);
         
         Reagent reagent = null;
         
@@ -71,11 +71,12 @@ public class RitualEffectOmegaTest extends RitualEffect
     	for(int i=0; i<4; i++)
     	{
     		Int3 jarLoc = this.getJarLocation(i);
-    		TileEntity tile = world.getTileEntity(x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord);
+    		BlockPos newPos = pos.add(jarLoc.xCoord, jarLoc.yCoord, jarLoc.zCoord);
+    		TileEntity tile = world.getTileEntity(newPos);
     		if(tile instanceof IReagentHandler)
     		{
     			IReagentHandler container = (IReagentHandler)tile;
-    			ReagentContainerInfo[] containerInfoArray = container.getContainerInfo(ForgeDirection.UP);
+    			ReagentContainerInfo[] containerInfoArray = container.getContainerInfo(EnumFacing.UP);
     			if(containerInfoArray == null)
     			{
     				continue;
@@ -122,7 +123,7 @@ public class RitualEffectOmegaTest extends RitualEffect
         for(EntityPlayer player : playerList)
         {        	
         	OmegaParadigm waterParadigm = OmegaRegistry.getParadigmForReagent(reagent);
-        	if(waterParadigm != null && waterParadigm.convertPlayerArmour(player, x, y, z, stab, affinity, enchantability, enchantmentLevel))
+        	if(waterParadigm != null && waterParadigm.convertPlayerArmour(player, pos.getX(), pos.getY(), pos.getZ(), stab, affinity, enchantability, enchantmentLevel))
         	{
         		APISpellHelper.setPlayerCurrentReagentAmount(player, tickDuration);
             	APISpellHelper.setPlayerMaxReagentAmount(player, tickDuration);
@@ -140,16 +141,17 @@ public class RitualEffectOmegaTest extends RitualEffect
     						break;
     					}
     					Int3 jarLoc = this.getJarLocation(i);
-    		    		TileEntity tile = world.getTileEntity(x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord);
+    		    		BlockPos newPos = pos.add(jarLoc.xCoord, jarLoc.yCoord, jarLoc.zCoord);
+    		    		TileEntity tile = world.getTileEntity(newPos);
     		    		if(tile instanceof IReagentHandler)
     		    		{
     		    			IReagentHandler container = (IReagentHandler)tile;
-    		    			ReagentStack drained = container.drain(ForgeDirection.UP, new ReagentStack(reagent, drainLeft), true);
+    		    			ReagentStack drained = container.drain(EnumFacing.UP, new ReagentStack(reagent, drainLeft), true);
     		    			if(drained != null)
     		    			{
         		    			drainLeft -= drained.amount;
-        		    			world.markBlockForUpdate(x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord);
-        		    			world.addWeatherEffect(new EntityLightningBolt(world, x + jarLoc.xCoord, y + jarLoc.yCoord, z + jarLoc.zCoord));
+        		    			world.markBlockForUpdate(newPos);
+        		    			world.addWeatherEffect(new EntityLightningBolt(world, newPos.getX(), newPos.getY(), newPos.getZ()));
     		    			}
     		    		}
     				}

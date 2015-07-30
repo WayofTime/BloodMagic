@@ -8,10 +8,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.omega.IEnchantmentGlyph;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.alchemicalWizardry.common.omega.IEnchantmentGlyph;
 
 public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 {
@@ -23,7 +24,7 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
     }
 
 	@Override
-	public int getAdditionalStabilityForFaceCount(World world, int x, int y, int z, int meta, int faceCount) 
+	public int getAdditionalStabilityForFaceCount(World world, BlockPos pos, int meta, int faceCount) 
 	{
 		switch(meta)
 		{
@@ -37,7 +38,7 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 	}
 
 	@Override
-	public int getEnchantability(World world, int x, int y, int z, int meta) 
+	public int getEnchantability(World world, BlockPos pos, int meta) 
 	{
 		switch(meta)
 		{
@@ -49,7 +50,7 @@ public class BlockEnchantmentGlyph extends Block implements IEnchantmentGlyph
 	}
 
 	@Override
-	public int getEnchantmentLevel(World world, int x, int y, int z, int meta) 
+	public int getEnchantmentLevel(World world, BlockPos pos, int meta) 
 	{
 		switch(meta)
 		{

@@ -1,20 +1,20 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
+
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 
 public class RenderWritingTable extends TileEntitySpecialRenderer
 {
@@ -23,23 +23,15 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
 
     public RenderWritingTable()
     {
-        customRenderItem = new RenderItem()
-        {
-            @Override
-            public boolean shouldBob()
-            {
-                return false;
-            }
-        };
-        customRenderItem.setRenderManager(RenderManager.instance);
+        customRenderItem = Minecraft.getMinecraft().getRenderItem();
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int a)
     {
-        if (tileEntity instanceof TEChemistrySet)
+        if (tileEntity instanceof TEWritingTable)
         {
-            TEChemistrySet tileAltar = (TEChemistrySet) tileEntity;
+            TEWritingTable tileAltar = (TEWritingTable) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
@@ -59,7 +51,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
                 {
                     float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(i));
                     float rotationAngle = Minecraft.getMinecraft().gameSettings.fancyGraphics ? (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) : 0;
-                    EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
+                    EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorld());
                     ghostEntityItem.hoverStart = 0.0F;
                     ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(i));
                     float displacementX = getXDisplacementForSlot(i);
@@ -75,7 +67,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
                     }
                     GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
                     GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F);
-                    customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+                    customRenderItem.func_175043_b(ghostEntityItem.getEntityItem()); //renderItemModel
                 }
 
                 GL11.glPopMatrix();
@@ -91,45 +83,10 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
         {
             if (itemStack.getItem() instanceof ItemBlock)
             {
-                switch (customRenderItem.getMiniBlockCount(itemStack, (byte) 1))
-                {
-                    case 1:
-                        return 0.90F * scaleFactor;
-
-                    case 2:
-                        return 0.90F * scaleFactor;
-
-                    case 3:
-                        return 0.90F * scaleFactor;
-
-                    case 4:
-                        return 0.90F * scaleFactor;
-
-                    case 5:
-                        return 0.80F * scaleFactor;
-
-                    default:
-                        return 0.90F * scaleFactor;
-                }
+                return 0.9f * scaleFactor;
             } else
             {
-                switch (customRenderItem.getMiniItemCount(itemStack, (byte) 1))
-                {
-                    case 1:
-                        return 0.65F * scaleFactor;
-
-                    case 2:
-                        return 0.65F * scaleFactor;
-
-                    case 3:
-                        return 0.65F * scaleFactor;
-
-                    case 4:
-                        return 0.65F * scaleFactor;
-
-                    default:
-                        return 0.65F * scaleFactor;
-                }
+            	return 0.65F * scaleFactor;
             }
         }
 
@@ -208,7 +165,7 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
         }
     }
 
-    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, ForgeDirection forgeDirection)
+    private void translateGhostItemByOrientation(ItemStack ghostItemStack, double x, double y, double z, EnumFacing forgeDirection)
     {
         if (ghostItemStack != null)
         {
@@ -249,11 +206,6 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
                     case WEST:
                     {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.5F, (float) z + 0.5F);
-                        return;
-                    }
-
-                    case UNKNOWN:
-                    {
                         return;
                     }
 
@@ -299,11 +251,6 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
                     case WEST:
                     {
                         GL11.glTranslatef((float) x + 0.70F, (float) y + 0.4F, (float) z + 0.5F);
-                        return;
-                    }
-
-                    case UNKNOWN:
-                    {
                         return;
                     }
 

@@ -1,33 +1,29 @@
 package WayofTime.alchemicalWizardry.common.items.energy;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.energy.*;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.LinkedList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.LinkedList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
+import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 
 public class ItemTankSegmenter extends Item implements IReagentManipulator
 {
-    @SideOnly(Side.CLIENT)
-    public IIcon crystalBody;
-    @SideOnly(Side.CLIENT)
-    public IIcon crystalLabel;
-
     public ItemTankSegmenter()
     {
         super();
@@ -65,62 +61,6 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.crystalBody = iconRegister.registerIcon("AlchemicalWizardry:TankSegmenter1");
-        this.crystalLabel = iconRegister.registerIcon("AlchemicalWizardry:TankSegmenter2");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int pass)
-    {
-        switch (pass)
-        {
-            case 0:
-                return 256 * (256 * 255 + 255) + 255;
-            case 1:
-                Reagent reagent = this.getReagent(stack);
-                if (reagent != null)
-                {
-                    return (reagent.getColourRed() * 256 * 256 + reagent.getColourGreen() * 256 + reagent.getColourBlue());
-                }
-                break;
-        }
-
-        return 256 * (256 * 255 + 255) + 255;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses()
-    {
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderPasses(int meta)
-    {
-        return 2;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(ItemStack stack, int pass)
-    {
-        switch (pass)
-        {
-            case 0:
-                return this.crystalBody;
-            case 1:
-                return this.crystalLabel;
-        }
-        return this.itemIcon;
-    }
-
-    @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
     {
         if (world.isRemote)
@@ -136,10 +76,8 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                int x = movingobjectposition.blockX;
-                int y = movingobjectposition.blockY;
-                int z = movingobjectposition.blockZ;
-                TileEntity tile = world.getTileEntity(x, y, z);
+                BlockPos pos = movingobjectposition.func_178782_a();
+                TileEntity tile = world.getTileEntity(pos);
                 if (!(tile instanceof ISegmentedReagentHandler))
                 {
                     return itemStack;
@@ -148,7 +86,7 @@ public class ItemTankSegmenter extends Item implements IReagentManipulator
 
                 if (player.isSneaking())
                 {
-                    ReagentContainerInfo[] infos = reagentHandler.getContainerInfo(ForgeDirection.UNKNOWN);
+                    ReagentContainerInfo[] infos = reagentHandler.getContainerInfo(EnumFacing.UP);
                     if (infos != null)
                     {
                         List<Reagent> reagentList = new LinkedList();

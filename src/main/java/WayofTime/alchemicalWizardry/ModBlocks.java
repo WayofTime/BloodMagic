@@ -108,7 +108,7 @@ public class ModBlocks
     public static void init()
     {
         blockAltar = (BlockAltar) registerBlock(new BlockAltar(), "altar");
-        bloodRune = (BlockBloodRune) registerBlock(new BlockBloodRune(), ItemBloodRuneBlock.class, ModBlocks.bloodRune.getUnlocalizedName());
+        bloodRune = (BlockBloodRune) registerBlock(new BlockBloodRune(), ItemBloodRuneBlock.class, "base_rune");
         speedRune = (BlockSpeedRune) registerBlock(new BlockSpeedRune(), "speed_rune");
         efficiencyRune = (BlockEfficiencyRune) registerBlock(new BlockEfficiencyRune(), "efficiency_rune");
         runeOfSacrifice = (BlockRuneOfSacrifice) registerBlock(new BlockRuneOfSacrifice(), "sacrifice_rune");

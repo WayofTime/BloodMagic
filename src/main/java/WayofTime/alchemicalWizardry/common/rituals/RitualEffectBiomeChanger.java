@@ -1,13 +1,10 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,12 +16,17 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 
 public class RitualEffectBiomeChanger extends RitualEffect
 {
@@ -43,7 +45,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
 
             if (world.rand.nextInt(15) == 0)
             {
-                world.addWeatherEffect(new EntityLightningBolt(world, x - 1 + world.rand.nextInt(3), y + 1, z - 1 + world.rand.nextInt(3)));
+                world.addWeatherEffect(new EntityLightningBolt(world, pos.getX() - 1 + world.rand.nextInt(3), pos.getY() + 1, pos.getZ() - 1 + world.rand.nextInt(3)));
             }
 
             return;
@@ -89,49 +91,25 @@ public class RitualEffectBiomeChanger extends RitualEffect
                     {
                         if (boolList[i][j])
                         {
-                            if (i - 1 >= 0 && !boolList[i - 1][j])
-                            {
-                                Block block = world.getBlock(x - range + i - 1, y + 1, z - range + j);
-
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
-                                {
-                                    boolList[i - 1][j] = true;
-                                    isReady = false;
-                                }
-                            }
-
-                            if (j - 1 >= 0 && !boolList[i][j - 1])
-                            {
-                                Block block = world.getBlock(x - range + i, y + 1, z - range + j - 1);
-
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
-                                {
-                                    boolList[i][j - 1] = true;
-                                    isReady = false;
-                                }
-                            }
-
-                            if (i + 1 <= 2 * range && !boolList[i + 1][j])
-                            {
-                                Block block = world.getBlock(x - range + i + 1, y + 1, z - range + j);
-
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
-                                {
-                                    boolList[i + 1][j] = true;
-                                    isReady = false;
-                                }
-                            }
-
-                            if (j + 1 <= 2 * range && !boolList[i][j + 1])
-                            {
-                                Block block = world.getBlock(x - range + i, y + 1, z - range + j + 1);
-
-                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
-                                {
-                                    boolList[i][j + 1] = true;
-                                    isReady = false;
-                                }
-                            }
+                        	BlockPos position = pos.add(i - range, 1, j - range);
+                        	
+                        	for(EnumFacing face : EnumFacing.HORIZONTALS)
+                        	{
+                        		int iP = i + face.getFrontOffsetX();
+                        		int jP = j + face.getFrontOffsetY();
+                        		
+                        		if(iP >= 0 && iP <= 2 * range && jP >= 0 && jP <= 2 * range && !boolList[iP][jP])
+                        		{
+                            		BlockPos newPos = position.add(face.getDirectionVec());
+                            		IBlockState state = world.getBlockState(newPos);
+                            		Block block = state.getBlock();
+                            		if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
+                                    {
+                                        boolList[iP][jP] = true;
+                                        isReady = false;
+                                    }
+                        		}
+                        	}
                         }
                     }
                 }
@@ -151,7 +129,8 @@ public class RitualEffectBiomeChanger extends RitualEffect
                     }
 
                     boolean isItemConsumed = false;
-                    TileEntity tileEntity = world.getTileEntity(x + i, y, z + j);
+                    BlockPos newPos = pos.add(i, 0, j);
+                    TileEntity tileEntity = world.getTileEntity(newPos);
 
                     if (!(tileEntity instanceof TEPlinth))
                     {
@@ -169,7 +148,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                         {
                             if (itemTest instanceof ItemBlock)
                             {
-                                Block item = ((ItemBlock) itemTest).field_150939_a;
+                                Block item = ((ItemBlock) itemTest).getBlock();
                                 if (item == (Blocks.sand))
                                 {
                                     humidity -= 0.1f;
@@ -230,8 +209,8 @@ public class RitualEffectBiomeChanger extends RitualEffect
                     if (isItemConsumed)
                     {
                         tilePlinth.setInventorySlotContents(0, null);
-                        world.markBlockForUpdate(x + i, y, z + j);
-                        world.addWeatherEffect(new EntityLightningBolt(world, x + i, y + 1, z + j));
+                        world.markBlockForUpdate(newPos);
+                        world.addWeatherEffect(new EntityLightningBolt(world, newPos.getX(), newPos.getY() + 1, newPos.getZ()));
                     }
                 }
             }
@@ -269,10 +248,11 @@ public class RitualEffectBiomeChanger extends RitualEffect
                 {
                     if (boolList[i][j])
                     {
-                        Chunk chunk = world.getChunkFromBlockCoords(x - range + i, z - range + j);
+                    	BlockPos newPos = pos.add(i - range, 0, j - range);
+                        Chunk chunk = world.getChunkFromBlockCoords(newPos);
                         byte[] byteArray = chunk.getBiomeArray();
-                        int moduX = (x - range + i) % 16;
-                        int moduZ = (z - range + j) % 16;
+                        int moduX = (newPos.getX()) % 16;
+                        int moduZ = (newPos.getZ()) % 16;
 
                         if (moduX < 0)
                         {

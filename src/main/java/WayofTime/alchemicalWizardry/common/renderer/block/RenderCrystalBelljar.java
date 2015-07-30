@@ -1,18 +1,21 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.FMLClientHandler;
+
+import org.lwjgl.opengl.GL11;
+
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
-import cpw.mods.fml.client.FMLClientHandler;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
-import org.lwjgl.opengl.GL11;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class RenderCrystalBelljar extends TileEntitySpecialRenderer
 {
@@ -22,11 +25,11 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
 
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
+    public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
-        if (tileEntity instanceof TEBelljar)
+        if (tileEntity instanceof TEBellJar)
         {
-            TEBelljar tileAltar = (TEBelljar) tileEntity;
+            TEBellJar tileAltar = (TEBellJar) tileEntity;
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
@@ -37,7 +40,7 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
             GL11.glPopMatrix();
             GL11.glPopMatrix();
 
-            ReagentContainerInfo[] info = tileAltar.getContainerInfo(ForgeDirection.UNKNOWN);
+            ReagentContainerInfo[] info = tileAltar.getContainerInfo(EnumFacing.UP);
             if (info.length >= 1 && info[0] != null)
             {
                 ReagentStack reagentStack = info[0].reagent;
@@ -55,7 +58,7 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
     {
         GL11.glPushMatrix();
         float f1 = 1.0f;
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
         this.bindTexture(resourceLocation);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
@@ -66,10 +69,11 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDepthMask(false);
-        tessellator.startDrawingQuads();
-        tessellator.setColorRGBA(colourRed, colourGreen, colourBlue, colourIntensity);
+        WorldRenderer wr = tessellator.getWorldRenderer();
+        wr.startDrawingQuads();
+        wr.func_178961_b(colourRed, colourGreen, colourBlue, colourIntensity); //setColourRGBA
         GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
-        tessellator.setBrightness(240);
+        wr.func_178963_b(240); //setBrightness
 
         double x1 = -4d / 16d;
         double x2 = 4d / 16d;
@@ -83,26 +87,26 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
         double resy1 = 1.0d;
         double resy2 = 1.0d;
 
-        tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y1, z1, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z1, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
-        tessellator.addVertexWithUV(x1, y1, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x1, y1, z2, resx2, resy1);
-        tessellator.addVertexWithUV(x1, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy2);
-        tessellator.addVertexWithUV(x1, y1, z2, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z2, resx1, resy2);
-        tessellator.addVertexWithUV(x2, y1, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y1, z2, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x2, y2, z1, resx1, resy2);
-        tessellator.addVertexWithUV(x1, y2, z1, resx1, resy1);
-        tessellator.addVertexWithUV(x2, y2, z1, resx2, resy1);
-        tessellator.addVertexWithUV(x2, y2, z2, resx2, resy2);
-        tessellator.addVertexWithUV(x1, y2, z2, resx1, resy2);
+        wr.addVertexWithUV(x1, y1, z1, resx1, resy1);
+        wr.addVertexWithUV(x2, y1, z1, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z1, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z1, resx1, resy2);
+        wr.addVertexWithUV(x1, y1, z1, resx1, resy1);
+        wr.addVertexWithUV(x1, y1, z2, resx2, resy1);
+        wr.addVertexWithUV(x1, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z1, resx1, resy2);
+        wr.addVertexWithUV(x1, y1, z2, resx1, resy1);
+        wr.addVertexWithUV(x2, y1, z2, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z2, resx1, resy2);
+        wr.addVertexWithUV(x2, y1, z1, resx1, resy1);
+        wr.addVertexWithUV(x2, y1, z2, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x2, y2, z1, resx1, resy2);
+        wr.addVertexWithUV(x1, y2, z1, resx1, resy1);
+        wr.addVertexWithUV(x2, y2, z1, resx2, resy1);
+        wr.addVertexWithUV(x2, y2, z2, resx2, resy2);
+        wr.addVertexWithUV(x1, y2, z2, resx1, resy2);
         tessellator.draw();
 
         GL11.glDepthMask(true);

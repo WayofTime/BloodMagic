@@ -2,30 +2,23 @@ package WayofTime.alchemicalWizardry.common.items.routing;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitDefault;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitGlobal;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitIgnMeta;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitMatchNBT;
 import WayofTime.alchemicalWizardry.common.routing.RoutingFocusLogicLimitModItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingFocus
-{
-	IIcon modItemIcon;
-	IIcon ignMetaIcon;
-	IIcon matchNBTIcon;
-	IIcon globalIcon;
-	
+{	
 	public OutputRoutingFocus()
 	{
 		super();
@@ -44,36 +37,6 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
             	par3List.add(StatCollector.translateToLocal("tooltip.routingFocus.limit") + " " + limit);
         	}
         }
-    }
-	
-	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocus");
-        this.modItemIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusModItems");
-        this.ignMetaIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusIgnMeta");
-        this.matchNBTIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusMatchNBT");
-        this.globalIcon = iconRegister.registerIcon("AlchemicalWizardry:OutputRoutingFocusGlobal");
-    }
-	
-	@SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int damage)
-    {
-		switch(damage)
-		{
-		case 0:
-			return this.itemIcon;
-		case 1:
-			return this.modItemIcon;
-		case 2:
-			return this.ignMetaIcon;
-		case 3:
-			return this.matchNBTIcon;
-		case 4:
-			return this.globalIcon;
-		}
-        return this.itemIcon;
     }
 	
 	@Override

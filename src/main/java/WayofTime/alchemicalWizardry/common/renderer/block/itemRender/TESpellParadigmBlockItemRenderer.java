@@ -1,22 +1,21 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
 
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelSpellParadigmBlock;
-import cpw.mods.fml.client.FMLClientHandler;
 
 public class TESpellParadigmBlockItemRenderer implements IItemRenderer
 {
     private ModelSpellParadigmBlock modelSpellBlock = new ModelSpellParadigmBlock();
 
-    private void renderConduitItem(RenderBlocks render, ItemStack item, float translateX, float translateY, float translateZ)
+    private void renderConduitItem(ItemStack item, float translateX, float translateY, float translateZ)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) translateX + 0.5F, (float) translateY + 1.5F, (float) translateZ + 0.5F);
@@ -24,7 +23,7 @@ public class TESpellParadigmBlockItemRenderer implements IItemRenderer
         FMLClientHandler.instance().getClient().renderEngine.bindTexture(test);
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.modelSpellBlock.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, ForgeDirection.DOWN, ForgeDirection.UP);
+        this.modelSpellBlock.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, EnumFacing.DOWN, EnumFacing.UP);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
     }
@@ -65,16 +64,16 @@ public class TESpellParadigmBlockItemRenderer implements IItemRenderer
         switch (type)
         {
             case ENTITY:
-                renderConduitItem((RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);
+                renderConduitItem(item, -0.5f, -0.5f, -0.5f);
                 break;
             case EQUIPPED:
-                renderConduitItem((RenderBlocks) data[0], item, -0.4f, 0.50f, 0.35f);
+                renderConduitItem(item, -0.4f, 0.50f, 0.35f);
                 break;
             case EQUIPPED_FIRST_PERSON:
-                renderConduitItem((RenderBlocks) data[0], item, -0.4f, 0.50f, 0.35f);
+                renderConduitItem(item, -0.4f, 0.50f, 0.35f);
                 break;
             case INVENTORY:
-                renderConduitItem((RenderBlocks) data[0], item, -0.5f, -0.5f, -0.5f);
+                renderConduitItem(item, -0.5f, -0.5f, -0.5f);
                 break;
             default:
         }

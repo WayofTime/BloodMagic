@@ -8,8 +8,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -32,7 +32,7 @@ public class RitualEffectItemSuction extends RitualEffect
         World world = ritualStone.getWorldObj();
         BlockPos pos = ritualStone.getPosition();
         
-        TileEntity tile = world.getTileEntity(x, y + 1, z);
+        TileEntity tile = world.getTileEntity(pos.offsetUp());
         IInventory tileEntity;
 
         if (tile instanceof IInventory)
@@ -53,7 +53,7 @@ public class RitualEffectItemSuction extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, x + 0.5f, y + 0.5f, z + 0.5f, 10, 10);
+            List<EntityItem> itemDropList = SpellHelper.getItemsInRange(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 10, 10);
 
             boolean hasReductus = this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
 
@@ -65,16 +65,16 @@ public class RitualEffectItemSuction extends RitualEffect
 
                 for (EntityItem itemEntity : itemDropList)
                 {
-                    hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
-                    if (hasReductus && itemEntity.age < this.timeDelayMin)
-                    {
-                        continue;
-                    }
+//                    hasReductus = hasReductus && this.canDrainReagent(ritualStone, ReagentRegistry.reductusReagent, reductusDrain, false);
+//                    if (hasReductus && itemEntity.age < this.timeDelayMin)
+//                    {
+//                        continue;
+//                    }
                     ItemStack item = itemEntity.getEntityItem();
                     ItemStack copyStack = itemEntity.getEntityItem().copy();
 
                     int pastAmount = copyStack.stackSize;
-                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity, ForgeDirection.DOWN);
+                    ItemStack newStack = SpellHelper.insertStackIntoInventory(copyStack, tileEntity, EnumFacing.DOWN);
 
                     if (newStack != null && newStack.stackSize < pastAmount)
                     {

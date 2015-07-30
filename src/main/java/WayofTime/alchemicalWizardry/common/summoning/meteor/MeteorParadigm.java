@@ -38,10 +38,8 @@ public class MeteorParadigm
         }
     }
 
-    public void createMeteorImpact(World world, int x, int y, int z, boolean[] flags)
-    {
-    	BlockPos pos = new BlockPos(x, y, z);
-    	
+    public void createMeteorImpact(World world, BlockPos pos, boolean[] flags)
+    {    	
         boolean hasTerrae = false;
         boolean hasOrbisTerrae = false;
         boolean hasCrystallos = false;
@@ -70,7 +68,7 @@ public class MeteorParadigm
             chance += 100;
         }
 
-        world.createExplosion(null, x, y, z, newRadius * 4, AlchemicalWizardry.doMeteorsDestroyBlocks);
+        world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), newRadius * 4, AlchemicalWizardry.doMeteorsDestroyBlocks);
 
         float iceChance = hasCrystallos ? 1 : 0;
         float soulChance = hasIncendium ? 1 : 0;

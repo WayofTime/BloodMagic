@@ -1,21 +1,20 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.block.BlockRitualStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-
-import java.util.List;
 
 public class ItemRitualDismantler extends EnergyItems
 {
@@ -27,13 +26,6 @@ public class ItemRitualDismantler extends EnergyItems
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ritual_dismantler");
-    }
-
-    @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean x)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.dismatler.desc"));
@@ -42,15 +34,15 @@ public class ItemRitualDismantler extends EnergyItems
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return EnergyItems.checkAndSetItemOwner(stack, player) && breakRitualStoneAtMasterStone(stack, player, world, x, y, z);
+        return EnergyItems.checkAndSetItemOwner(stack, player) && breakRitualStoneAtMasterStone(stack, player, world, pos);
     }
 
-    public boolean breakRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, int x, int y, int z)
+    public boolean breakRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, BlockPos pos)
     {
         ItemStack[] playerInventory = player.inventory.mainInventory;
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        TileEntity tileEntity = world.getTileEntity(pos);
 
         if (tileEntity instanceof TEMasterStone)
         {
@@ -75,17 +67,18 @@ public class ItemRitualDismantler extends EnergyItems
 
             for (RitualComponent rc : ritualList)
             {
-                if (!world.isAirBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) && world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)) instanceof BlockRitualStone)
+            	BlockPos newPos = pos.add(rc.getX(direction), rc.getY(), rc.getZ(direction));
+                if (!world.isAirBlock(newPos) && world.getBlockState(newPos).getBlock() instanceof BlockRitualStone)
                 {
                     if (freeSpace >= 0)
                     {
                         if (EnergyItems.syphonBatteries(stack, player, getEnergyUsed()) || player.capabilities.isCreativeMode)
                         {
-                            world.setBlockToAir(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
+                            world.setBlockToAir(newPos);
                             player.inventory.addItemStackToInventory(new ItemStack(ModBlocks.ritualStone));
                             if (world.isRemote)
                             {
-                                world.playAuxSFX(2005, x, y + 1, z, 0);
+                                world.playAuxSFX(2005, pos.offsetUp(), 0);
 
                                 return true;
                             }

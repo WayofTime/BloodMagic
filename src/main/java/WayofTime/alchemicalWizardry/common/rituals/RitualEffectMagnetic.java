@@ -8,6 +8,7 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -87,9 +88,7 @@ public class RitualEffectMagnetic extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            int xRep = 0;
-            int yRep = 0;
-            int zRep = 0;
+            BlockPos posRep = null;
             boolean replace = false;
 
             outer:
@@ -99,11 +98,10 @@ public class RitualEffectMagnetic extends RitualEffect
                 {
                     for (int k = -1; k <= 1; k++)
                     {
-                        if ((!replace) && world.isAirBlock(x + i, y + j, z + k))
+                    	BlockPos newPos = pos.add(i, j, k);
+                        if ((!replace) && world.isAirBlock(newPos))
                         {
-                            xRep = x + i;
-                            yRep = y + j;
-                            zRep = z + k;
+                            posRep = newPos;
                             replace = true;
                             break outer;
                         }
@@ -115,7 +113,7 @@ public class RitualEffectMagnetic extends RitualEffect
             {
             	Int3 lastPos = this.getLastPosition(ritualStone.getCustomRitualTag());
             	
-            	int j = y - 1;
+            	int j = pos.getY() - 1;
             	int i = 0;
             	int k = 0;
             	
@@ -132,13 +130,14 @@ public class RitualEffectMagnetic extends RitualEffect
                     {
                         while(k <= radius)
                         {
-                            Block block = world.getBlock(x + i, j, z + k);
-                            int meta = world.getBlockMetadata(x + i, j, z + k);
+                        	BlockPos newPos = new BlockPos(pos.getX() + i, j, pos.getZ() + k);
+                        	IBlockState state = world.getBlockState(newPos);
+                            Block block = state.getBlock();
 
-                            if (isBlockOre(block, meta))
+                            if (isBlockOre(block, block.getMetaFromState(state)))
                             {
                                 //Allow swapping code. This means the searched block is an ore.
-                                BlockTeleposer.swapBlocks(this, world, world, x + i, j, z + k, xRep, yRep, zRep);
+                                BlockTeleposer.swapBlocks(this, world, world, newPos, posRep);
                                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
 
                                 if (hasPotentia)
@@ -171,7 +170,7 @@ public class RitualEffectMagnetic extends RitualEffect
                     return;
                 }
                 
-                j = y - 1;
+                j = pos.getY() - 1;
                 this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
                 return;
             }

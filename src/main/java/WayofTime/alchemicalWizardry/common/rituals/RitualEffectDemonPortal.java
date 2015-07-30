@@ -21,7 +21,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class RitualEffectDemonPortal extends RitualEffect
 {
@@ -67,7 +67,7 @@ public class RitualEffectDemonPortal extends RitualEffect
         			{
         				if(rand.nextInt(10) == 0)
         				{
-        					this.createRandomLightning(world, x, y, z);
+        					this.createRandomLightning(world, pos.getX(), pos.getY(), pos.getZ());
         				}
         				reagentAmount += drainAmount;
         				
@@ -81,9 +81,9 @@ public class RitualEffectDemonPortal extends RitualEffect
         	
         	if(reagentsFulfilled && checkCreatePortal(ritualStone))
         	{
-        		world.setBlock(x, y+1, z, ModBlocks.blockDemonPortal);
+        		world.setBlockState(pos.offsetUp(), ModBlocks.blockDemonPortal.getDefaultState());
         		
-        		TEDemonPortal portal = (TEDemonPortal) world.getTileEntity(x, y + 1, z);
+        		TEDemonPortal portal = (TEDemonPortal) world.getTileEntity(pos.offsetUp());
         		portal.start();
         		
         		ritualStone.setActive(false);
@@ -95,11 +95,12 @@ public class RitualEffectDemonPortal extends RitualEffect
 
     public boolean checkCreatePortal(IMasterRitualStone ritualStone)
     {
-    	TileEntity entity = ritualStone.getWorld().getTileEntity(ritualStone.getXCoord(), ritualStone.getYCoord() + 1, ritualStone.getZCoord());
+    	BlockPos pos = ritualStone.getPosition();
+    	TileEntity entity = ritualStone.getWorldObj().getTileEntity(pos.offsetUp());
     	if(entity instanceof IBloodAltar)
     	{
     		IBloodAltar altar = (IBloodAltar)entity;
-    		if(altar.hasDemonBlood() && ritualStone.getWorld().isAirBlock(ritualStone.getXCoord(), ritualStone.getYCoord() + 2, ritualStone.getZCoord()))
+    		if(altar.hasDemonBlood() && ritualStone.getWorldObj().isAirBlock(pos.offsetUp(2)))
     		{
     			return true;
     		}
@@ -131,13 +132,11 @@ public class RitualEffectDemonPortal extends RitualEffect
     
     public boolean checkJars(IMasterRitualStone ritualStone)
     {
-    	int x = ritualStone.getXCoord();
-    	int y = ritualStone.getYCoord();
-    	int z = ritualStone.getZCoord();
+    	BlockPos position = ritualStone.getPosition();
     	
     	for(Int3 pos : jarLocations)
     	{
-    		if(!(ritualStone.getWorld().getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord) instanceof TEBelljar))
+    		if(!(ritualStone.getWorldObj().getTileEntity(position.add(pos.xCoord, pos.yCoord, pos.zCoord)) instanceof TEBellJar))
     		{
     			return false;
     		}

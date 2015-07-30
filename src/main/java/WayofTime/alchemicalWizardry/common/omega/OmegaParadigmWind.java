@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -37,12 +36,6 @@ public class OmegaParadigmWind extends OmegaParadigm
 		}
 		
 		player.fallDistance = 0;
-	}
-	
-	@Override
-	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
-	{
-		return true;
 	}
 	
 	@Override

@@ -1,25 +1,20 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import java.util.List;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
 public class ItemComponents extends Item
 {
     private static final String[] ITEM_NAMES = new String[]{"QuartzRod", "EmptyCore", "MagicalesCable", "WoodBrace", "StoneBrace", "ProjectileCore", "SelfCore", "MeleeCore", "ParadigmBackPlate", "OutputCable", "FlameCore", "IcyCore", "GustCore", "EarthenCore", "InputCable", "CrackedRunicPlate", "RunicPlate", "ScribedRunicPlate", "DefaultCore", "OffensiveCore", "DefensiveCore", "EnvironmentalCore", "PowerCore", "CostCore", "PotencyCore", "ObsidianBrace", "ToolCore", "EtherealSlate", "LifeShard", "SoulShard", "SoulRunicPlate", "LifeBrace", "EnderShard"};
-
-    @SideOnly(Side.CLIENT)
-    private IIcon[] icons;
 
     public ItemComponents()
     {
@@ -27,18 +22,6 @@ public class ItemComponents extends Item
         this.maxStackSize = 64;
         this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        icons = new IIcon[ITEM_NAMES.length];
-
-        for (int i = 0; i < ITEM_NAMES.length; ++i)
-        {
-            icons[i] = iconRegister.registerIcon("AlchemicalWizardry:" + "baseItem" + ITEM_NAMES[i]);
-        }
     }
 
     @Override
@@ -53,14 +36,6 @@ public class ItemComponents extends Item
         //This is what will do all the localisation things on the alchemy components so you dont have to set it :D
         int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ITEM_NAMES.length - 1);
         return ("" + "item.bloodMagicBaseItem." + ITEM_NAMES[meta]);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int meta)
-    {
-        int j = MathHelper.clamp_int(meta, 0, ITEM_NAMES.length - 1);
-        return icons[j];
     }
 
     @Override

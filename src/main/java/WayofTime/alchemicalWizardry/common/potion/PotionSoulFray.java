@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.potion;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class PotionSoulFray extends Potion
 {
     public PotionSoulFray(int par1, boolean par2, int par3)
     {
-        super(par1, par2, par3);
+        super(par1, new ResourceLocation("speed"),par2, par3);
     }
 
     @Override
