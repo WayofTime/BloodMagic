@@ -44,23 +44,23 @@ public class OutputRoutingFocus extends RoutingFocus implements ILimitedRoutingF
 	{
 		String addedString = "";
 		
-		switch(itemStack.getItemDamage())
+		switch (itemStack.getItemDamage())
 		{
-		case 0:
-			addedString = "default";
-			break;
-		case 1:
-			addedString = "modItem";
-			break;
-		case 2:
-			addedString = "ignMeta";
-			break;
-		case 3:
-			addedString = "matchNBT";
-			break;
-		case 4:
-			addedString = "global";
-			break;
+			case 0:
+				addedString = "default";
+				break;
+			case 1:
+				addedString = "modItem";
+				break;
+			case 2:
+				addedString = "ignMeta";
+				break;
+			case 3:
+				addedString = "matchNBT";
+				break;
+			case 4:
+				addedString = "global";
+				break;
 		}
 		
 		return super.getUnlocalizedName() + "." + addedString;

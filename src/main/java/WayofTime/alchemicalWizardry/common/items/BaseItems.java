@@ -6,15 +6,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
-public class AWBaseItems extends Item
+public class BaseItems extends Item
 {
-    public AWBaseItems()
+    public BaseItems()
     {
         super();
-        setMaxStackSize(64);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override

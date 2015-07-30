@@ -16,11 +16,11 @@ import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgrade, ISigil
+public class SigilBloodLight extends BindableItems implements IHolding, ArmourUpgrade, ISigil
 {
     public SigilBloodLight()
     {
@@ -51,7 +51,7 @@ public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgr
     @Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
-        if(!EnergyItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer) || !EnergyItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
+        if(!BindableItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer) || !BindableItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
         {
         	return true;
         }
@@ -97,7 +97,7 @@ public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgr
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -107,7 +107,7 @@ public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgr
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed() * 5))
+        if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed() * 5))
         {
         	return par1ItemStack;
         }

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 
 public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigil
 {
@@ -46,7 +46,7 @@ public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigi
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -59,7 +59,7 @@ public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigi
         NBTTagCompound tag = par1ItemStack.getTagCompound();
         this.setActivated(par1ItemStack, !(this.getActivated(par1ItemStack)));
 
-        if (this.getActivated(par1ItemStack) && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+        if (this.getActivated(par1ItemStack) && BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
@@ -96,7 +96,7 @@ public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigi
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	this.setActivated(par1ItemStack, false);
                 }

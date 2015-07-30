@@ -9,10 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
 
-public class EnergyBazooka extends EnergyItems
+public class EnergyBazooka extends BindableItems
 {
     private int damage;
 
@@ -20,7 +19,6 @@ public class EnergyBazooka extends EnergyItems
     {
         super();
         setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setFull3D();
         setMaxDamage(250);
         this.setEnergyUsed(20000);
@@ -32,7 +30,7 @@ public class EnergyBazooka extends EnergyItems
     {
         final int maxDelay = 150;
 
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
@@ -100,7 +98,7 @@ public class EnergyBazooka extends EnergyItems
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50))
                 {
                 	this.setActivated(par1ItemStack, false);
                 }

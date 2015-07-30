@@ -21,7 +21,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
@@ -29,13 +28,12 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 import com.google.common.collect.Multimap;
 
-public class DaggerOfSacrifice extends EnergyItems
+public class DaggerOfSacrifice extends BindableItems
 {
     public DaggerOfSacrifice()
     {
         super();
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setMaxStackSize(1);
         setEnergyUsed(100);
         setFull3D();
         setMaxDamage(100);
@@ -128,9 +126,9 @@ public class DaggerOfSacrifice extends EnergyItems
     }
 
     @Override
-    public Multimap getItemAttributeModifiers()
+    public Multimap getAttributeModifiers(ItemStack itemStack)
     {
-        Multimap multimap = super.getItemAttributeModifiers();
+        Multimap multimap = super.getAttributeModifiers(itemStack);
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(4186465, 46565), "Tool modifier", 1.0d, 0));
         return multimap;
     }

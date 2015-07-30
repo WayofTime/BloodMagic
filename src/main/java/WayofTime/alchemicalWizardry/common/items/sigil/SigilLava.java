@@ -22,8 +22,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.Orb;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -82,7 +82,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (world.isRemote || !BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return false;
         }
@@ -98,7 +98,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, false);
 
-            if (amount > 0 && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+            if (amount > 0 && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
                 ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, true);
             }
@@ -146,7 +146,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
                 return false;
             }
 
-            if(this.canPlaceContainedLiquid(world, x, y, z, x, y, z) && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+            if(this.canPlaceContainedLiquid(world, x, y, z, x, y, z) && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
             	return this.tryPlaceContainedLiquid(world, x, y, z, x, y, z);
             }
@@ -212,7 +212,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
                 {
                     continue;
                 }
-                if (stack.getItem() instanceof EnergyBattery && !usedBattery)
+                if (stack.getItem() instanceof Orb && !usedBattery)
                 {
                     if (stack.getItemDamage() <= stack.getMaxDamage() - damageToBeDone)
                     {

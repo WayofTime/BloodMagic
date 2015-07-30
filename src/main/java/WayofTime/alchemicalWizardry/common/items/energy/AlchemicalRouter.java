@@ -15,7 +15,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -25,16 +24,13 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 
-public class ItemAttunedCrystal extends Item implements IReagentManipulator
+public class AlchemicalRouter extends Item implements IReagentManipulator
 {
-    public static final int maxDistance = 6;
-    
-    public ItemAttunedCrystal()
+    public AlchemicalRouter()
     {
         super();
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
     }
 
     @Override
@@ -115,7 +111,7 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                     ReagentContainerInfo[] infos = relay.getContainerInfo(EnumFacing.UP);
                     if (infos != null)
                     {
-                        List<Reagent> reagentList = new LinkedList();
+                        List<Reagent> reagentList = new LinkedList<Reagent>();
                         for (ReagentContainerInfo info : infos)
                         {
                             if (info != null)
@@ -162,6 +158,8 @@ public class ItemAttunedCrystal extends Item implements IReagentManipulator
                         {
                             return itemStack;
                         }
+
+                        final int maxDistance = 6;
 
                         if (dimension != world.provider.getDimensionId() || Math.abs(coords.xCoord - pos.getX()) > maxDistance || Math.abs(coords.yCoord - pos.getY()) > maxDistance || Math.abs(coords.zCoord - pos.getZ()) > maxDistance)
                         {

@@ -35,10 +35,9 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     public BoundPickaxe()
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
         this.efficiencyOnProperMaterial = 12.0F;
         this.damageVsEntity = 5;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setEnergyUsed(5);
     }
 
@@ -78,7 +77,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(stack, !getActivated(stack));
             stack.getTagCompound().setInteger("worldTimeDelay", (int) (world.getWorldTime() - 1) % 200);
@@ -100,7 +99,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
             return stack;
         }
         
-        if(!EnergyItems.syphonBatteries(stack, par3EntityPlayer, 10000))
+        if(!BindableItems.syphonBatteries(stack, par3EntityPlayer, 10000))
         {
         	return stack;
         }
@@ -192,7 +191,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(stack, par3EntityPlayer, 20))
+                if(!BindableItems.syphonBatteries(stack, par3EntityPlayer, 20))
                 {
                 	this.setActivated(stack, false);
                 }

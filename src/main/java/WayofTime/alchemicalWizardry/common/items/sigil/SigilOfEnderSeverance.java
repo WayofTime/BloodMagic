@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISigil
+public class SigilOfEnderSeverance extends BindableItems implements IHolding, ISigil
 {
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
@@ -98,7 +98,7 @@ public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISig
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -118,7 +118,7 @@ public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISig
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	tag.setBoolean("isActive", false);
                 }
@@ -161,7 +161,7 @@ public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISig
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }

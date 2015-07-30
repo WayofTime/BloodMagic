@@ -13,18 +13,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class ItemDiabloKey extends EnergyItems
+public class KeyOfBinding extends BindableItems
 {
-    public ItemDiabloKey()
+    public KeyOfBinding()
     {
         super();
         setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setEnergyUsed(1000);
         this.hasSubtypes = true;
     }
@@ -42,7 +40,7 @@ public class ItemDiabloKey extends EnergyItems
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         World world = par3EntityPlayer.worldObj;
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer instanceof FakePlayer || par3EntityPlayer instanceof EntityPlayerMP)
         {
             return par1ItemStack;
         }
@@ -85,14 +83,14 @@ public class ItemDiabloKey extends EnergyItems
 
             Item item = itemStack.getItem();
 
-            if (item instanceof ItemDiabloKey)
+            if (item instanceof KeyOfBinding)
             {
                 continue;
             }
 
             if (item instanceof IBindable)
             {
-                EnergyItems.checkAndSetItemOwner(itemStack, ownerName);
+                BindableItems.checkAndSetItemOwner(itemStack, ownerName);
             }
         }
 
@@ -105,7 +103,7 @@ public class ItemDiabloKey extends EnergyItems
     {
         list.add(new ItemStack(ModItems.itemKeyOfDiablo));
         ItemStack boundKey = new ItemStack(ModItems.itemKeyOfDiablo);
-        EnergyItems.checkAndSetItemOwner(boundKey, "Server-wide Soul Network");
+        BindableItems.checkAndSetItemOwner(boundKey, "Server-wide Soul Network");
         list.add(boundKey);
     }
 }

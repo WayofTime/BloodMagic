@@ -11,16 +11,13 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
-public class ArmourInhibitor extends EnergyItems
+public class ArmourInhibitor extends BindableItems
 {
-    private int tickDelay = 200;
-
     public ArmourInhibitor()
     {
         super();
         this.maxStackSize = 1;
         setEnergyUsed(0);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -46,7 +43,9 @@ public class ArmourInhibitor extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        int tickDelay = 200;
+
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
@@ -88,7 +87,7 @@ public class ArmourInhibitor extends EnergyItems
 
         if (stack.getTagCompound().getBoolean("isActive"))
         {
-            if (world.getWorldTime() % tickDelay == stack.getTagCompound().getInteger("worldTimeDelay"))
+//            if (world.getWorldTime() % tickDelay == stack.getTagCompound().getInteger("worldTimeDelay"))
             {
             }
 

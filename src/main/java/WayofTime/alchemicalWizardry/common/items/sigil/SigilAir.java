@@ -13,10 +13,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import codechicken.lib.render.TextureUtils.IIconRegister;
 
-public class SigilAir extends EnergyItems implements ArmourUpgrade, ISigil
+public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
 {
     public SigilAir()
     {
@@ -48,7 +48,7 @@ public class SigilAir extends EnergyItems implements ArmourUpgrade, ISigil
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -75,7 +75,7 @@ public class SigilAir extends EnergyItems implements ArmourUpgrade, ISigil
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+            if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
             {
             	if(!par2World.isRemote)
             	{

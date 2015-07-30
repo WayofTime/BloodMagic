@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-
 public class WeakBindingAgent extends StandardBindingAgent
 {
     public WeakBindingAgent()

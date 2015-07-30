@@ -2,6 +2,7 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,16 +11,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
 
-public class BlankSpell extends EnergyItems
+public class BlankSpell extends BindableItems
 {
     public BlankSpell()
     {
         super();
         this.setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -44,7 +42,7 @@ public class BlankSpell extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
@@ -58,15 +56,15 @@ public class BlankSpell extends EnergyItems
                 NBTTagCompound itemTag = stack.getTagCompound();
                 TileEntity tileEntity = newWorld.getTileEntity(new BlockPos(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord")));
 
-                if (tileEntity instanceof TEHomHeart)
+                if (tileEntity instanceof TESpellTable)
                 {
-                    TEHomHeart homHeart = (TEHomHeart) tileEntity;
+                    TESpellTable homHeart = (TESpellTable) tileEntity;
 
-                    if (homHeart.canCastSpell(stack, world, player))
+                    if (homHeart.canCastSpell())
                     {
-                    	if(EnergyItems.syphonBatteries(stack, player, homHeart.getCostForSpell()))
+                    	if(BindableItems.syphonBatteries(stack, player, homHeart.getCostForSpell()))
                     	{
-                            EnergyItems.syphonBatteries(stack, player, homHeart.castSpell(stack, world, player));
+                            BindableItems.syphonBatteries(stack, player, homHeart.castSpell(stack, world, player));
                     	}
                     } else
                     {

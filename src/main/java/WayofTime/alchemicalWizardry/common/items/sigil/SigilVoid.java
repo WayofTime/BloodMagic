@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -79,7 +79,7 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote || !EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (world.isRemote || !BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return false;
         }
@@ -96,7 +96,7 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil
         {
             FluidStack amount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(side), 1000, false);
 
-            if (amount != null && amount.amount > 0 && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+            if (amount != null && amount.amount > 0 && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
                 ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(side), 1000, true);
                 return true;
@@ -140,7 +140,7 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil
             return false;
         }
 
-        if (SpellHelper.isBlockFluid(world.getBlock(x, y, z)) && EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+        if (SpellHelper.isBlockFluid(world.getBlock(x, y, z)) && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
         {
             world.setBlockToAir(x, y, z);
             return true;

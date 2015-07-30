@@ -7,17 +7,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
-public class LavaCrystal extends EnergyItems
+public class LavaCrystal extends BindableItems
 {
     public LavaCrystal()
     {
         super();
         setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        setUnlocalizedName("lavaCrystal");
         setEnergyUsed(25);
     }
 
@@ -27,24 +24,22 @@ public class LavaCrystal extends EnergyItems
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        {
-            syphonWhileInContainer(itemStack, this.getEnergyUsed());
-            ItemStack copiedStack = itemStack.copy();
-            copiedStack.setItemDamage(copiedStack.getItemDamage());
-            copiedStack.stackSize = 1;
-            return copiedStack;
-        }
+        SoulNetworkHandler.syphonFromNetwork(itemStack, this.getEnergyUsed());
+        ItemStack copiedStack = itemStack.copy();
+        copiedStack.setItemDamage(copiedStack.getItemDamage());
+        copiedStack.stackSize = 1;
+        return copiedStack;
     }
 
     @Override
-    public boolean hasContainerItem()
+    public boolean hasContainerItem(ItemStack itemStack)
     {
         return true;
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         return par1ItemStack;
     }
 

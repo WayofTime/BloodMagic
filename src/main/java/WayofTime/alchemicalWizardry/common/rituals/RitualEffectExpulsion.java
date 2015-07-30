@@ -6,7 +6,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -25,7 +24,7 @@ import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
 
@@ -79,7 +78,7 @@ public class RitualEffectExpulsion extends RitualEffect
                         for (int i = 0; i < inventoryTile.getSizeInventory(); i++)
                         {
                             ItemStack stack = inventoryTile.getStackInSlot(i);
-                            if (stack != null && stack.getItem() instanceof IBindable && EnergyItems.getOwnerName(stack).equals(playerString))
+                            if (stack != null && stack.getItem() instanceof IBindable && BindableItems.getOwnerName(stack).equals(playerString))
                             {
                                 test = true;
                             }

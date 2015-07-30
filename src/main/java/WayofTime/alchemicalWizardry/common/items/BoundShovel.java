@@ -33,10 +33,9 @@ public class BoundShovel extends ItemSpade implements IBindable
     public BoundShovel()
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
         this.efficiencyOnProperMaterial = 12.0F;
         this.damageVsEntity = 5;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setEnergyUsed(5);
     }
 
@@ -75,7 +74,7 @@ public class BoundShovel extends ItemSpade implements IBindable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(stack, !getActivated(stack));
             stack.getTagCompound().setInteger("worldTimeDelay", (int) (world.getWorldTime() - 1) % 200);
@@ -97,7 +96,7 @@ public class BoundShovel extends ItemSpade implements IBindable
             return stack;
         }
         
-        if(!EnergyItems.syphonBatteries(stack, par3EntityPlayer, 10000))
+        if(!BindableItems.syphonBatteries(stack, par3EntityPlayer, 10000))
         {
         	return stack;
         }
@@ -168,7 +167,7 @@ public class BoundShovel extends ItemSpade implements IBindable
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20))
                 {
                 	this.setActivated(par1ItemStack, false);
                 }

@@ -14,7 +14,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
@@ -22,14 +21,13 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 
-public class ItemTankSegmenter extends Item implements IReagentManipulator
+public class AlchemicalSegmenter extends Item implements IReagentManipulator
 {
-    public ItemTankSegmenter()
+    public AlchemicalSegmenter()
     {
         super();
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
     }
 
     @Override

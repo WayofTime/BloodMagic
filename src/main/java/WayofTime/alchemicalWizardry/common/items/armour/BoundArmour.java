@@ -27,7 +27,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ILPGauge;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
 
@@ -43,7 +43,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     {
         super(ItemArmor.ArmorMaterial.GOLD, 0, armorType);
         setMaxDamage(1000);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     ModelBiped model1 = null;
@@ -139,7 +138,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot)
     {
-        double armourReduction = 0.0;
+        double armourReduction;
 
         int f = 0;
         int h = 0;
@@ -232,7 +231,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     {
         if (entity instanceof EntityPlayer)
         {
-            EnergyItems.checkAndSetItemOwner(stack, (EntityPlayer) entity);
+            BindableItems.checkAndSetItemOwner(stack, (EntityPlayer) entity);
 
             if (((EntityPlayer) entity).capabilities.isCreativeMode)
             {
@@ -313,7 +312,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         return super.onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
     }
 
@@ -339,11 +338,11 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
     {
     	if (itemStack.getItemDamage() > 0)
         {
-            EnergyItems.checkAndSetItemOwner(itemStack, player);
+            BindableItems.checkAndSetItemOwner(itemStack, player);
 
             if (!player.capabilities.isCreativeMode)
             {
-                if(EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
+                if(BindableItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
                 {
             	   itemStack.setItemDamage(0);
                 }
@@ -380,7 +379,7 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
                 {
                     if (getUpgradeCostMultiplier(par1ItemStack) > 0.02f)
                     {
-                        EnergyItems.syphonBatteries(par1ItemStack, par3Entity, (int) (((ArmourUpgrade) inv[i].getItem()).getEnergyForTenSeconds() * getUpgradeCostMultiplier(par1ItemStack)));
+                        BindableItems.syphonBatteries(par1ItemStack, par3Entity, (int) (((ArmourUpgrade) inv[i].getItem()).getEnergyForTenSeconds() * getUpgradeCostMultiplier(par1ItemStack)));
                     }
                 }
             }
@@ -442,7 +441,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
             if (nextItem == null)
             {
                 candidateSlot = i;
-                continue;
             }
         }
 

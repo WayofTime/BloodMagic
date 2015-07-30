@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralContainer;
 import cpw.mods.fml.relauncher.Side;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISigil
+public class SigilOfSupression extends BindableItems implements ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
@@ -104,7 +104,7 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
     {
         int tickDelay = 200;
 
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
         {
             return par1ItemStack;
         }
@@ -129,7 +129,7 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	tag.setBoolean("isActive", false);
                 }
@@ -206,7 +206,7 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }

@@ -10,44 +10,46 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class CheatyItem extends Item implements IBindable
+public class Orb extends Item implements ArmourUpgrade, IBindable, IBloodOrb
 {
-    public CheatyItem()
+    private int maxEssence;
+    protected int orbLevel;
+
+    public Orb(int damage)
     {
         super();
         setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        maxEssence = damage;
+        orbLevel = 1;
     }
 
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        par3List.add(StatCollector.translateToLocal("tooltip.mode.creative"));
-        par3List.add(StatCollector.translateToLocal("tooltip.cheatyitem.desc1"));
-        par3List.add(StatCollector.translateToLocal("tooltip.cheatyitem.desc2"));
-
+        par3List.add(StatCollector.translateToLocal("tooltip.energybattery.desc"));
         if (!(par1ItemStack.getTagCompound() == null))
         {
             par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        World world = par3EntityPlayer.worldObj;
-
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer instanceof FakePlayer)
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
             return par1ItemStack;
         }
 
+        World world = par3EntityPlayer.worldObj;
+        
         if (world != null)
         {
             double posX = par3EntityPlayer.posX;
@@ -56,26 +58,30 @@ public class CheatyItem extends Item implements IBindable
             world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
             SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
         }
-
-        if (par3EntityPlayer.worldObj.isRemote)
-        {
-            return par1ItemStack;
-        }
-
         NBTTagCompound itemTag = par1ItemStack.getTagCompound();
 
+        if(SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        {
+        	return par1ItemStack;
+        }
+        
         if (itemTag == null || itemTag.getString("ownerName").equals(""))
         {
             return par1ItemStack;
         }
 
-        if (par3EntityPlayer.isSneaking())
+        if (world.isRemote)
         {
-            SoulNetworkHandler.setCurrentEssence(itemTag.getString("ownerName"), 0);
-        } else
-        {
-            SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 1000000, Integer.MAX_VALUE);
+            return par1ItemStack;
         }
+        
+        if(itemTag.getString("ownerName").equals(SpellHelper.getUsername(par3EntityPlayer)))
+        {
+        	SoulNetworkHandler.setMaxOrbToMax(itemTag.getString("ownerName"), this.orbLevel);
+        }
+
+        SoulNetworkHandler.addCurrentEssenceToMaximum(itemTag.getString("ownerName"), 200, this.getMaxEssence());
+        BindableItems.hurtPlayer(par3EntityPlayer, 200);
         return par1ItemStack;
     }
 
@@ -127,6 +133,31 @@ public class CheatyItem extends Item implements IBindable
         }
     }
 
+    public int getMaxEssence()
+    {
+        return this.maxEssence;
+    }
+
+    public int getOrbLevel()
+    {
+        return orbLevel;
+    }
+
+    @Override
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
+
+    @Override
+    public boolean isUpgrade()
+    {
+        return false;
+    }
+
+    @Override
+    public int getEnergyForTenSeconds()
+    {
+        return 0;
+    }
+
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
@@ -139,6 +170,8 @@ public class CheatyItem extends Item implements IBindable
         return true;
     }
 
+    //@SideOnly(Side.SERVER)
+    @Deprecated
     public int getCurrentEssence(ItemStack par1ItemStack)
     {
         if (par1ItemStack == null)
@@ -163,7 +196,6 @@ public class CheatyItem extends Item implements IBindable
             worldSave.setItemData(owner, data);
         }
 
-        int currentEssence = data.currentEssence;
-        return (currentEssence);
+        return data.currentEssence;
     }
 }

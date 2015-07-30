@@ -29,8 +29,7 @@ public class SacrificialDagger extends Item
     public SacrificialDagger()
     {
         super();
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setMaxStackSize(1);
         setFull3D();
     }
 

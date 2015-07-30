@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
 
 public abstract class OmegaArmour extends BoundArmour
@@ -40,7 +40,7 @@ public abstract class OmegaArmour extends BoundArmour
 	protected boolean storeYLevel = false;
 	protected boolean storeSeesSky = false;
 	
-	protected List<Enchantment> illegalEnchantmentList = new LinkedList();
+	protected List<Enchantment> illegalEnchantmentList = new LinkedList<Enchantment>();
 	
 	public float reagentDrainPerDamage = 0.1f;
 	
@@ -129,7 +129,7 @@ public abstract class OmegaArmour extends BoundArmour
         {
             if (!player.capabilities.isCreativeMode)
             {
-                if(EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
+                if(BindableItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
                 {
         			float reagentAmount = APISpellHelper.getPlayerCurrentReagentAmount(player);
         			
@@ -176,7 +176,7 @@ public abstract class OmegaArmour extends BoundArmour
 			}
 		}
 		
-		Map<Enchantment, Map<Integer, Integer>> map = new HashMap();
+		Map<Enchantment, Map<Integer, Integer>> map = new HashMap<Enchantment, Map<Integer, Integer>>();
 		
 		for(Object obj : enchantList)
 		{
@@ -184,7 +184,7 @@ public abstract class OmegaArmour extends BoundArmour
             
             if(!map.containsKey(enchantmentdata.enchantmentobj))
             {
-            	map.put(enchantmentdata.enchantmentobj, new HashMap());
+            	map.put(enchantmentdata.enchantmentobj, new HashMap<Integer, Integer>());
             }
             
             Map<Integer, Integer> numMap = map.get(enchantmentdata.enchantmentobj);
@@ -308,9 +308,8 @@ public abstract class OmegaArmour extends BoundArmour
 		}
 		
 		NBTTagCompound tag = omegaTag.getCompoundTag("armour");
-		ItemStack armourStack = ItemStack.loadItemStackFromNBT(tag);
-		
-		return armourStack;
+
+		return ItemStack.loadItemStackFromNBT(tag);
 	}
 	
 	@Override

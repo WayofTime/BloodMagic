@@ -12,7 +12,6 @@ public class ItemMailOrderCatalogue extends Item
 	public ItemMailOrderCatalogue()
 	{
 		super();
-		this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 	}
 	
 	@Override

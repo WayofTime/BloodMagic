@@ -20,14 +20,14 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 
-public class DemonPlacer extends Item
+public class DemonCrystal extends Item
 {
-    public DemonPlacer()
+    public DemonCrystal()
     {
         super();
         this.setHasSubtypes(true);
         this.setCreativeTab(CreativeTabs.tabMisc);
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
     }
 
     /**
@@ -56,7 +56,7 @@ public class DemonPlacer extends Item
                 d0 = 0.5D;
             }
 
-            String demonName = DemonPlacer.getDemonString(stack);
+            String demonName = DemonCrystal.getDemonString(stack);
             Entity entity = spawnCreature(world, demonName, (double)pos.getX() + 0.5D, (double)pos.getY() + d0, (double)pos.getZ() + 0.5D, stack);
 
             if (entity != null)
@@ -88,7 +88,7 @@ public class DemonPlacer extends Item
         {
             entity = SummoningRegistry.getEntityWithID(par0World, par1);
 
-            if (entity != null && entity instanceof EntityLivingBase)
+            if (entity != null)
             {
                 EntityLiving entityliving = (EntityLiving) entity;
                 entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
@@ -96,9 +96,9 @@ public class DemonPlacer extends Item
                 entityliving.renderYawOffset = entityliving.rotationYaw;
                 if (entityliving instanceof EntityDemon)
                 {
-                    ((EntityDemon) entityliving).func_152115_b(DemonPlacer.getOwnerName(itemStack));
+                    ((EntityDemon) entityliving).func_152115_b(DemonCrystal.getOwnerName(itemStack));
 
-                    if (!DemonPlacer.getOwnerName(itemStack).equals(""))
+                    if (!DemonCrystal.getOwnerName(itemStack).equals(""))
                     {
                         ((EntityDemon) entityliving).setTamed(true);
                     }

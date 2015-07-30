@@ -10,16 +10,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 
-public class ItemComplexSpellCrystal extends EnergyItems
+public class ItemComplexSpellCrystal extends BindableItems
 {
     public ItemComplexSpellCrystal()
     {
         super();
-        this.setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setMaxStackSize(1);
     }
 
     @Override
@@ -44,7 +42,7 @@ public class ItemComplexSpellCrystal extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }

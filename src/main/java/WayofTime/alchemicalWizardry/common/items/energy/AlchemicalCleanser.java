@@ -11,17 +11,15 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 
-public class ItemDestinationClearer extends Item implements IReagentManipulator
+public class AlchemicalCleanser extends Item implements IReagentManipulator
 {
-    public ItemDestinationClearer()
+    public AlchemicalCleanser()
     {
         super();
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
     }
 
     @Override

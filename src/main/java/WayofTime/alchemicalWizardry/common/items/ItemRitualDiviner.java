@@ -24,7 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IRitualDiviner;
@@ -34,17 +33,16 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
-public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
+public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
 {
     private int maxMetaData;
 
     public ItemRitualDiviner()
     {
         super();
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
         setEnergyUsed(100);
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.maxMetaData = 4;
+        setMaxDamage(4);
         this.hasSubtypes = true;
     }
 
@@ -163,7 +161,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player)) return false;
+        if (!BindableItems.checkAndSetItemOwner(stack, player)) return false;
 
         if(placeRitualStoneAtMasterStone(stack, player, world, pos))
         {
@@ -233,7 +231,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                             player.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
                         }
 
-                        if(EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+                        if(BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
                         {
                         	world.setBlockState(newPos, ModBlocks.ritualStone.getStateFromMeta(rc.getStoneType()), 3);
 
@@ -257,7 +255,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
                     	int metadata = block.getMetaFromState(state);
                         if (metadata != rc.getStoneType())
                         {
-                        	if(EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
+                        	if(BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
                         	{
 	                            if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(stack))
 	                            {
@@ -361,7 +359,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
+        if (BindableItems.checkAndSetItemOwner(stack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
         {
             rotateRituals(par2World,par3EntityPlayer, stack, true);
         }
@@ -376,7 +374,7 @@ public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            if (!EnergyItems.checkAndSetItemOwner(stack,player)) return true;
+            if (!BindableItems.checkAndSetItemOwner(stack, player)) return true;
 
             if (!player.isSwingInProgress)
             {

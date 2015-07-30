@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import net.minecraft.item.ItemStack;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 
-public class SigilToggleable extends EnergyItems
+public class SigilToggleable extends BindableItems
 {
 	public void setActivated(ItemStack stack, boolean newActivated)
     {

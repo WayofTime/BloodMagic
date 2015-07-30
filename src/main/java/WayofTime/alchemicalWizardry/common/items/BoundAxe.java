@@ -33,10 +33,9 @@ public class BoundAxe extends ItemAxe implements IBindable
     public BoundAxe()
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
-        this.maxStackSize = 1;
+        setMaxStackSize(1);
         this.efficiencyOnProperMaterial = 12.0F;
         this.damageVsEntity = 5;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setEnergyUsed(5);
     }
 
@@ -75,7 +74,7 @@ public class BoundAxe extends ItemAxe implements IBindable
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World world, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (world.getWorldTime() - 1) % 200);
@@ -97,7 +96,7 @@ public class BoundAxe extends ItemAxe implements IBindable
             return par1ItemStack;
         }
         
-        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 10000))
+        if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 10000))
         {
         	return par1ItemStack;
         }
@@ -168,7 +167,7 @@ public class BoundAxe extends ItemAxe implements IBindable
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 20))
                 {
                 	this.setActivated(par1ItemStack, false);
                 }
@@ -203,6 +202,7 @@ public class BoundAxe extends ItemAxe implements IBindable
         return super.getStrVsBlock(par1ItemStack, par2Block);
     }
 
+    @Override
     /**
      * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
      * the damage on the stack.
@@ -217,8 +217,8 @@ public class BoundAxe extends ItemAxe implements IBindable
         return true;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-
     /**
      * Returns True is the item is renderer in full 3D when hold.
      */
