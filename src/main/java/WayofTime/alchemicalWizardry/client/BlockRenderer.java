@@ -11,4 +11,9 @@ public class BlockRenderer
     {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation("alchemicalwizardry:" + block.getUnlocalizedName().substring(5), "inventory"));
     }
+    
+    public static void registerBlocks()
+    {
+    	
+    }
 }

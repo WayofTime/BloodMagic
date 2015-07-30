@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.renderer.block.itemRender;
 
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.Entity;
@@ -19,7 +18,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class TEBellJarItemRenderer implements IItemRenderer
 {
-    ItemRenderer d;
     private ModelCrystalBelljar modelConduit = new ModelCrystalBelljar();
     private ResourceLocation mainResource = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");
     private ResourceLocation resourceLocation = new ResourceLocation("alchemicalwizardry:textures/models/Reagent.png");
