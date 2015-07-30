@@ -42,6 +42,8 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityParticleBeam;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.ScrollHelper;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderAlchemicalCalcinator;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderAltar;
+import WayofTime.alchemicalWizardry.common.renderer.block.RenderChemistrySet;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderConduit;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderCrystalBelljar;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderMasterStone;
@@ -52,8 +54,6 @@ import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEffectBlock
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.renderer.block.RenderSpellParadigmBlock;
-import WayofTime.alchemicalWizardry.common.renderer.block.RenderChemistrySet;
-import WayofTime.alchemicalWizardry.common.renderer.block.RenderAltar;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAlchemicalCalcinatorItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEAltarItemRenderer;
 import WayofTime.alchemicalWizardry.common.renderer.block.itemRender.TEBellJarItemRenderer;
@@ -90,7 +90,8 @@ import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
 import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicalCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
@@ -100,7 +101,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 
 public class ClientProxy extends CommonProxy
 {
@@ -160,7 +160,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TEReagentConduit.class, new RenderReagentConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TEMasterStone.class, new RenderMasterStone());
         ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicalCalcinator.class, new RenderAlchemicalCalcinator());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEBelljar.class, new RenderCrystalBelljar());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEBellJar.class, new RenderCrystalBelljar());
 
         //Item Renderer stuff
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());
@@ -170,7 +170,6 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier), new TESpellModifierBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAlchemicalCalcinator), new TEAlchemicalCalcinatorItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockCrystalBelljar), new TEBellJarItemRenderer());
-        ShaderHelper.initShaders();
     }
 
     @Override
