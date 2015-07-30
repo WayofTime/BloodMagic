@@ -20,6 +20,6 @@ public class TEConduit extends TESpellBlock
     @Override
     protected void applySpellChange(SpellParadigm parad)
     {
-        return;
+
     }
 }

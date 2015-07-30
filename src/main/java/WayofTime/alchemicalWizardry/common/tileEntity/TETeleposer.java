@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.tileEntity;
 import java.util.Iterator;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockTeleposer;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
@@ -127,7 +127,7 @@ public class TETeleposer extends TEInventory implements IUpdatePlayerListBox
                         entityCount++;
                     }
 
-                    if (EnergyItems.canSyphonInContainer(focus, damage * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) + damage * entityCount))
+                    if (SoulNetworkHandler.canSyphonInContainer(focus, damage * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) + damage * entityCount))
                     {
                         for (int k = 0; k <= (focusLevel * 2 - 2); k++)
                             for (int i = -(focusLevel - 1); i <= (focusLevel - 1); i++)
@@ -148,7 +148,7 @@ public class TETeleposer extends TEInventory implements IUpdatePlayerListBox
                             entityCount = 0;
                         }
 
-                        EnergyItems.syphonWhileInContainer(focus, damage * transportCount + damage * entityCount);
+                        SoulNetworkHandler.syphonFromNetworkWhileInContainer(focus, damage * transportCount + damage * entityCount);
                         //Teleport
 
                         if (worldF.equals(worldObj))

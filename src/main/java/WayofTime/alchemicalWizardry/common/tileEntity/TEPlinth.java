@@ -36,7 +36,7 @@ public class TEPlinth extends TEInventory implements IUpdatePlayerListBox
     private int progressInterval;
     private int progress;
 
-    public static List<PlinthComponent> pedestalPositions = new ArrayList();
+    public static List<PlinthComponent> pedestalPositions = new ArrayList<PlinthComponent>();
 
     public TEPlinth()
     {

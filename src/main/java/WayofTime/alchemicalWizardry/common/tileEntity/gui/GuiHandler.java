@@ -10,7 +10,7 @@ import WayofTime.alchemicalWizardry.common.items.sigil.holding.ContainerHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.GuiHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.InventoryHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 
@@ -28,9 +28,9 @@ public class GuiHandler implements IGuiHandler
             case 0:
                 tileEntity = world.getTileEntity(pos);
 
-                if (tileEntity instanceof TEWritingTable)
+                if (tileEntity instanceof TEChemistrySet)
                 {
-                    return new ContainerWritingTable(player.inventory, (TEWritingTable) tileEntity);
+                    return new ContainerWritingTable(player.inventory, (TEChemistrySet) tileEntity);
                 }
 
             case 1:
@@ -62,9 +62,9 @@ public class GuiHandler implements IGuiHandler
             case 0:
                 tileEntity = world.getTileEntity(pos);
 
-                if (tileEntity instanceof TEWritingTable)
+                if (tileEntity instanceof TEChemistrySet)
                 {
-                    return new GuiWritingTable(player.inventory, (TEWritingTable) tileEntity);
+                    return new GuiWritingTable(player.inventory, (TEChemistrySet) tileEntity);
                 }
 
                 break;

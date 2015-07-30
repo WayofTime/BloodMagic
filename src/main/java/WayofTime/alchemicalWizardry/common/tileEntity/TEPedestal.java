@@ -135,5 +135,4 @@ public class TEPedestal extends TEInventory
             SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 2, pos);
         }
     }
-
 }

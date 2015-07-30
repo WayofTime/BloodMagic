@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.tileEntity.container;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -10,9 +10,9 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerWritingTable extends Container
 {
-    protected TEWritingTable tileEntity;
+    protected TEChemistrySet tileEntity;
 
-    public ContainerWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable te)
+    public ContainerWritingTable(InventoryPlayer inventoryPlayer, TEChemistrySet te)
     {
         tileEntity = te;
         addSlotToContainer(new Slot(tileEntity, 0, 152, 110));

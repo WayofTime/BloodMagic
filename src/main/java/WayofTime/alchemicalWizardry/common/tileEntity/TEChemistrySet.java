@@ -23,7 +23,7 @@ import WayofTime.alchemicalWizardry.common.alchemy.ICombinationalCatalyst;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEWritingTable extends TEInventory implements ISidedInventory, IUpdatePlayerListBox
+public class TEChemistrySet extends TEInventory implements ISidedInventory, IUpdatePlayerListBox
 {
 	public static final int sizeInv = 7;
 	
@@ -32,7 +32,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory, IUpd
 
     private int accelerationTime;
 
-    public TEWritingTable()
+    public TEChemistrySet()
     {
         super(sizeInv);
     }
@@ -180,13 +180,7 @@ public class TEWritingTable extends TEInventory implements ISidedInventory, IUpd
 
     public boolean containsCombinationCatalyst()
     {
-        if (getCombinationCatalystPosition() != -1)
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+        return getCombinationCatalystPosition() != -1;
     }
 
     public int getCombinationCatalystPosition()
@@ -742,10 +736,10 @@ public class TEWritingTable extends TEInventory implements ISidedInventory, IUpd
 	{
 		switch(facing)
 		{
-		case DOWN:
-			return new int[]{6};
-		default:
-			return new int[]{0, 1, 2, 3, 4, 5};
+		    case DOWN:
+			    return new int[]{6};
+		    default:
+			    return new int[]{0, 1, 2, 3, 4, 5};
 		}
 	}
 

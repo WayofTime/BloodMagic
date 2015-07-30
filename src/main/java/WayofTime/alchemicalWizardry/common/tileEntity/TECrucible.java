@@ -266,7 +266,7 @@ public class TECrucible extends TEInventory implements IUpdatePlayerListBox
 	@Override
     public boolean isItemValidForSlot(int slot, ItemStack stack)
     {
-        return stack != null ? stack.getItem() instanceof IIncense : false;
+        return stack != null && stack.getItem() instanceof IIncense;
     }
 
 	public int getRSPowerOutput() 

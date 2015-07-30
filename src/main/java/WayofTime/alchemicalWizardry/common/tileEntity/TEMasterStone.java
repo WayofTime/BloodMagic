@@ -56,7 +56,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     public TEMasterStone()
     {
         tanks = new ReagentContainer[]{new ReagentContainer(1000), new ReagentContainer(1000), new ReagentContainer(1000)};
-        this.attunedTankMap = new HashMap();
+        this.attunedTankMap = new HashMap<Reagent, Integer>();
 
         isActive = false;
         owner = "";
@@ -454,9 +454,8 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
 
     public AxisAlignedBB getRenderBoundingBox()
     {
-        double renderExtention = 1.0d;
-        AxisAlignedBB bb = new AxisAlignedBB(pos.add(-renderExtention, -renderExtention, -renderExtention), pos.add(1 + renderExtention, 1 + renderExtention, 1 + renderExtention));
-        return bb;
+        double renderExtension = 1.0d;
+        return new AxisAlignedBB(pos.add(-renderExtension, -renderExtension, -renderExtension), pos.add(1 + renderExtension, 1 + renderExtension, 1 + renderExtension));
     }
 
     /* ISegmentedReagentHandler */
@@ -484,7 +483,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
                 ReagentStack remainingStack = resource.copy();
                 remainingStack.amount = maxFill - totalFill;
 
-                boolean doesReagentMatch = tanks[i].getReagent() == null ? false : tanks[i].getReagent().isReagentEqual(remainingStack);
+                boolean doesReagentMatch = tanks[i].getReagent() != null && tanks[i].getReagent().isReagentEqual(remainingStack);
 
                 if (doesReagentMatch)
                 {
@@ -637,7 +636,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
             return;
         }
 
-        this.attunedTankMap.put(reagent, new Integer(total));
+        this.attunedTankMap.put(reagent, total);
     }
 
     @Override

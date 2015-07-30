@@ -35,7 +35,7 @@ public class BlockSchematicSaver extends BlockContainer
 
         TESchematicSaver tileEntity = (TESchematicSaver) world.getTileEntity(blockPos);
 
-        tileEntity.rightClickBlock(player, side.getIndex());
+        tileEntity.rightClickBlock();
 
         return false;
     }

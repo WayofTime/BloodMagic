@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.common.items.BlankSpell;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellTable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +25,7 @@ public class BlockSpellTable extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TEHomHeart tileEntity = (TEHomHeart) world.getTileEntity(blockPos);
+        TESpellTable tileEntity = (TESpellTable) world.getTileEntity(blockPos);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -58,6 +58,6 @@ public class BlockSpellTable extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int metaMaybe)
     {
-        return new TEHomHeart();
+        return new TESpellTable();
     }
 }

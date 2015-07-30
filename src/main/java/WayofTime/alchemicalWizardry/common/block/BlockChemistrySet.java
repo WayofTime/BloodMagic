@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -92,7 +92,7 @@ public class BlockChemistrySet extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TEWritingTable();
+        return new TEChemistrySet();
     }
 
     @Override

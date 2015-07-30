@@ -19,6 +19,32 @@ import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
 public class SoulNetworkHandler
 {
+    public static boolean canSyphonInContainer(ItemStack ist, int damageToBeDone)
+    {
+        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))
+        {
+            String ownerName = ist.getTagCompound().getString("ownerName");
+
+            if (MinecraftServer.getServer() == null)
+            {
+                return false;
+            }
+
+            World world = MinecraftServer.getServer().worldServers[0];
+            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+
+            if (data == null)
+            {
+                data = new LifeEssenceNetwork(ownerName);
+                world.setItemData(ownerName, data);
+            }
+
+            return data.currentEssence >= damageToBeDone;
+        }
+
+        return false;
+    }
+
     public static boolean syphonFromNetworkWhileInContainer(ItemStack ist, int damageToBeDone)
     {
     	String ownerName = "";

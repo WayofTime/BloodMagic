@@ -20,19 +20,16 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
-public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory, IUpdatePlayerListBox
+public class TEAlchemicalCalcinator extends TEReagentConduit implements IInventory, IUpdatePlayerListBox
 {
     protected ItemStack[] inv;
     protected ReagentContainer bufferTank = new ReagentContainer(Reagent.REAGENT_SIZE * 2);
 
     protected int bufferTransferRate = 20;
 
-    private int lpPerTick = 10;
-    private int ticksPerReagent = 200;
+    private int progress;
 
-    public int progress;
-
-    public TEAlchemicCalcinator()
+    public TEAlchemicalCalcinator()
     {
         super(1, Reagent.REAGENT_SIZE * 4);
         this.inv = new ItemStack[2];
@@ -56,7 +53,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound savedTag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+            NBTTagCompound savedTag = tagList.getCompoundTagAt(i);
 
             if (savedTag.getBoolean("Empty"))
             {
@@ -85,7 +82,6 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < inv.length; i++)
         {
-            ItemStack stack = inv[i];
             NBTTagCompound savedTag = new NBTTagCompound();
 
             if (inv[i] != null)
@@ -128,7 +124,10 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
     public void tickProgress()
     {
+        int lpPerTick = 10;
+        int ticksPerReagent = 200;
         ItemStack reagentItemStack = this.getStackInSlot(1);
+
         if (reagentItemStack == null)
         {
             progress = 0;
@@ -165,7 +164,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
             SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
         }
 
-        if (progress >= this.ticksPerReagent)
+        if (progress >= ticksPerReagent)
         {
             progress = 0;
             this.bufferTank.fill(possibleReagent, true);
@@ -200,7 +199,7 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < invTagList.tagCount(); i++)
         {
-            NBTTagCompound savedTag = (NBTTagCompound) invTagList.getCompoundTagAt(i);
+            NBTTagCompound savedTag = invTagList.getCompoundTagAt(i);
 
             if (savedTag.getBoolean("Empty"))
             {
@@ -235,7 +234,6 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
 
         for (int i = 0; i < inv.length; i++)
         {
-            ItemStack stack = inv[i];
             NBTTagCompound savedTag = new NBTTagCompound();
 
             if (inv[i] != null)
@@ -342,14 +340,10 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
     @Override
-    public void openInventory(EntityPlayer player)
-    {
-    }
+    public void openInventory(EntityPlayer player) {}
 
     @Override
-    public void closeInventory(EntityPlayer player)
-    {
-    }
+    public void closeInventory(EntityPlayer player) {}
 
     @Override
     public String getName()
@@ -381,32 +375,26 @@ public class TEAlchemicCalcinator extends TEReagentConduit implements IInventory
     }
 
 	@Override
-	public IChatComponent getDisplayName() {
-		// TODO Auto-generated method stub
+	public IChatComponent getDisplayName()
+    {
 		return null;
 	}
 
 	@Override
-	public int getField(int id) {
-		// TODO Auto-generated method stub
+	public int getField(int id)
+    {
 		return 0;
 	}
 
 	@Override
-	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setField(int id, int value) {}
 
 	@Override
-	public int getFieldCount() {
-		// TODO Auto-generated method stub
+	public int getFieldCount()
+    {
 		return 0;
 	}
 
 	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void clear() {}
 }

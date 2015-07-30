@@ -9,9 +9,9 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpell;
 import WayofTime.alchemicalWizardry.common.spell.simple.HomSpellRegistry;
 
-public class TEHomHeart extends TileEntity
+public class TESpellTable extends TileEntity
 {
-    public boolean canCastSpell(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public boolean canCastSpell()
     {
         return true;
     }

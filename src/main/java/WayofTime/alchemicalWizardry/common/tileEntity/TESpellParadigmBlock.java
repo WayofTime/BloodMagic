@@ -31,10 +31,7 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     }
 
     @Override
-    protected void applySpellChange(SpellParadigm parad)
-    {
-
-    }
+    protected void applySpellChange(SpellParadigm parad) {}
 
     public boolean canInputRecieve()
     {
@@ -68,10 +65,7 @@ public class TESpellParadigmBlock extends TESpellBlock implements ISpellParadigm
     }
 
     @Override
-    public void setInputDirection(EnumFacing direction)
-    {
-
-    }
+    public void setInputDirection(EnumFacing direction) {}
 
     @Override
     public EnumFacing getInputDirection()

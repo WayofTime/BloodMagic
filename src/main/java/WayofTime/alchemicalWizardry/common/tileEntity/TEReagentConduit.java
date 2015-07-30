@@ -17,7 +17,6 @@ import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -55,9 +54,9 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
     {
         super(numberOfTanks, size);
 
-        destinationList = new LinkedList();
-        reagentTargetList = new HashMap();
-        reagentTankDesignationList = new HashMap();
+        destinationList = new LinkedList<ColourAndCoords>();
+        reagentTargetList = new HashMap<Reagent, List<Int3>>();
+        reagentTankDesignationList = new HashMap<Reagent, Integer>();
     }
 
     public Int3 getColour()
@@ -164,7 +163,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
 
         NBTTagList tagList = tag.getTagList("destinationList", Constants.NBT.TAG_COMPOUND);
 
-        destinationList = new LinkedList();
+        destinationList = new LinkedList<ColourAndCoords>();
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -173,7 +172,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
             destinationList.add(ColourAndCoords.readFromNBT(savedTag));
         }
 
-        reagentTargetList = new HashMap();
+        reagentTargetList = new HashMap<Reagent, List<Int3>>();
 
         NBTTagList reagentTagList = tag.getTagList("reagentTargetList", Constants.NBT.TAG_COMPOUND);
 
@@ -183,7 +182,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
 
             Reagent reagent = ReagentRegistry.getReagentForKey(savedTag.getString("reagent"));
 
-            List<Int3> coordList = new LinkedList();
+            List<Int3> coordList = new LinkedList<Int3>();
 
             NBTTagList coordinateList = savedTag.getTagList("coordinateList", Constants.NBT.TAG_COMPOUND);
 
@@ -195,7 +194,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
             reagentTargetList.put(reagent, coordList);
         }
 
-        reagentTankDesignationList = new HashMap();
+        reagentTankDesignationList = new HashMap<Reagent, Integer>();
 
         NBTTagList tankDesignationList = tag.getTagList("tankDesignationList", Constants.NBT.TAG_COMPOUND);
 
@@ -203,7 +202,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
         {
             NBTTagCompound savedTag = tankDesignationList.getCompoundTagAt(i);
 
-            this.reagentTankDesignationList.put(ReagentRegistry.getReagentForKey(savedTag.getString("reagent")), new Integer(savedTag.getInteger("integer")));
+            this.reagentTankDesignationList.put(ReagentRegistry.getReagentForKey(savedTag.getString("reagent")), savedTag.getInteger("integer"));
         }
     }
 
@@ -211,7 +210,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
     {
         NBTTagList tagList = tag.getTagList("destinationList", Constants.NBT.TAG_COMPOUND);
 
-        destinationList = new LinkedList();
+        destinationList = new LinkedList<ColourAndCoords>();
 
         for (int i = 0; i < tagList.tagCount(); i++)
         {
@@ -315,7 +314,6 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
                         int amount = Math.min(((IReagentHandler) tile).fill(EnumFacing.UP, maxDrainAmount, false), amountLeft);
                         if (amount > 0)
                         {
-                            amountLeft -= amount;
                             totalTransfered += amount;
 
                             ReagentStack stack = this.drain(EnumFacing.UP, new ReagentStack(entry.getKey(), amount), true);
@@ -342,13 +340,11 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
         }
     }
 
-
     @SideOnly(Side.CLIENT)
     public void sendPlayerStuffs()
     {
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.thePlayer;
-        World world = mc.theWorld;
         if (SpellHelper.canPlayerSeeAlchemy(player))
         {
             for (ColourAndCoords colourSet : this.destinationList)
@@ -387,7 +383,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
 
     public List<ColourAndCoords> compileListForReagentTargets(Map<Reagent, List<Int3>> map)
     {
-        List<ColourAndCoords> list = new LinkedList();
+        List<ColourAndCoords> list = new LinkedList<ColourAndCoords>();
 
         for (Entry<Reagent, List<Int3>> entry : map.entrySet())
         {
@@ -475,7 +471,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
             List<Int3> coordList = this.reagentTargetList.get(reagent);
             if (coordList == null)
             {
-                List<Int3> newCoordList = new LinkedList();
+                List<Int3> newCoordList = new LinkedList<Int3>();
                 newCoordList.add(newCoord);
                 this.reagentTargetList.put(reagent, newCoordList);
             } else
@@ -486,7 +482,7 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
             return true;
         } else
         {
-            List<Int3> newCoordList = new LinkedList();
+            List<Int3> newCoordList = new LinkedList<Int3>();
             newCoordList.add(newCoord);
             this.reagentTargetList.put(reagent, newCoordList);
 
