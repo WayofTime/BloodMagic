@@ -74,7 +74,7 @@ public class EntityMeteor extends EnergyBlastProjectile
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            MeteorRegistry.createMeteorImpact(worldObj, mop.blockX, mop.blockY, mop.blockZ, this.meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
+            MeteorRegistry.createMeteorImpact(worldObj, mop.func_178782_a(), this.meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
         }
 
         this.setDead();
@@ -83,7 +83,7 @@ public class EntityMeteor extends EnergyBlastProjectile
     @Override
     public void onImpact(Entity mop)
     {
-        MeteorRegistry.createMeteorImpact(worldObj, (int) this.posX, (int) this.posY, (int) this.posZ, meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
+        MeteorRegistry.createMeteorImpact(worldObj, this.getPosition(), meteorID, new boolean[]{hasTerrae, hasOrbisTerrae, hasCrystallos, hasIncendium, hasTennebrae});
 
         this.setDead();
     }

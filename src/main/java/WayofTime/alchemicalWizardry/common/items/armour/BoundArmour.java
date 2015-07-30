@@ -3,26 +3,24 @@ package WayofTime.alchemicalWizardry.common.items.armour;
 import java.util.List;
 
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.Constants;
-import thaumcraft.api.IGoggles;
-import thaumcraft.api.IRunicArmor;
-import thaumcraft.api.nodes.IRevealer;
+import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IAlchemyGoggles;
@@ -32,23 +30,12 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.ILPGauge;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaArmour;
-import cpw.mods.fml.common.Optional;
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.InterfaceList(value = {@Interface(iface = "thaumcraft.api.nodes.IRevealer", modid = "Thaumcraft"), @Interface(iface = "thaumcraft.api.IGoggles", modid = "Thaumcraft"), @Interface(iface = "thaumcraft.api.IRunicArmor", modid = "Thaumcraft")})
-public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialArmor, IBindable, IRevealer, IGoggles, IRunicArmor, ILPGauge
+public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialArmor, IBindable, ILPGauge//, IRevealer, IGoggles, IRunicArmor
 {
     private static int invSize = 9;
     @SideOnly(Side.CLIENT)
-    private IIcon helmetIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon plateIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon leggingsIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon bootsIcon;
 
     public static boolean tryComplexRendering = true;
 
@@ -109,10 +96,10 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
                     if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0)
                     {
                         EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
-                        if (enumaction == EnumAction.block)
+                        if (enumaction == EnumAction.BLOCK)
                         {
                             this.model.heldItemRight = 3;
-                        } else if (enumaction == EnumAction.bow)
+                        } else if (enumaction == EnumAction.BOW)
                         {
                             this.model.aimedBow = true;
                         }
@@ -126,44 +113,6 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         {
             return super.getArmorModel(entityLiving, itemStack, armorSlot);
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-        this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundHelmet");
-        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundPlate");
-        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundLeggings");
-        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundBoots");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (this.equals(ModItems.boundHelmet))
-        {
-            return this.helmetIcon;
-        }
-
-        if (this.equals(ModItems.boundPlate))
-        {
-            return this.plateIcon;
-        }
-
-        if (this.equals(ModItems.boundLeggings))
-        {
-            return this.leggingsIcon;
-        }
-
-        if (this.equals(ModItems.boundBoots))
-        {
-            return this.bootsIcon;
-        }
-
-        return this.itemIcon;
     }
 
     @Override
@@ -594,66 +543,66 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         return false;
     }
 
-    @Optional.Method(modid = "Thaumcraft")
-    public boolean hasIRevealer(ItemStack itemStack)
-    {
-        ItemStack[] inv = getInternalInventory(itemStack);
-
-        if (inv == null)
-        {
-            return false;
-        }
-
-        for (ItemStack item : inv)
-        {
-            if (item == null)
-            {
-                continue;
-            }
-
-            if (item.getItem() instanceof IRevealer)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @Optional.Method(modid = "Thaumcraft")
-    public boolean hasIGoggles(ItemStack itemStack)
-    {
-        ItemStack[] inv = getInternalInventory(itemStack);
-
-        if (inv == null)
-        {
-            return false;
-        }
-        
-        int blood = getMaxBloodShardLevel(itemStack);
-
-        for (ItemStack item : inv)
-        {
-            if (item == null)
-            {
-                continue;
-            }
-            if (item.getItem() instanceof ArmourUpgrade && blood > 0)
-            {
-            	if (item.getItem() instanceof IGoggles)
-                {
-                    return true;
-                }
-            	
-            	if(((ArmourUpgrade)item.getItem()).isUpgrade())
-            	{
-            		blood--;
-            	}
-            }    
-        }
-
-        return false;
-    }
+//    @Optional.Method(modid = "Thaumcraft")
+//    public boolean hasIRevealer(ItemStack itemStack)
+//    {
+//        ItemStack[] inv = getInternalInventory(itemStack);
+//
+//        if (inv == null)
+//        {
+//            return false;
+//        }
+//
+//        for (ItemStack item : inv)
+//        {
+//            if (item == null)
+//            {
+//                continue;
+//            }
+//
+//            if (item.getItem() instanceof IRevealer)
+//            {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    @Optional.Method(modid = "Thaumcraft")
+//    public boolean hasIGoggles(ItemStack itemStack)
+//    {
+//        ItemStack[] inv = getInternalInventory(itemStack);
+//
+//        if (inv == null)
+//        {
+//            return false;
+//        }
+//        
+//        int blood = getMaxBloodShardLevel(itemStack);
+//
+//        for (ItemStack item : inv)
+//        {
+//            if (item == null)
+//            {
+//                continue;
+//            }
+//            if (item.getItem() instanceof ArmourUpgrade && blood > 0)
+//            {
+//            	if (item.getItem() instanceof IGoggles)
+//                {
+//                    return true;
+//                }
+//            	
+//            	if(((ArmourUpgrade)item.getItem()).isUpgrade())
+//            	{
+//            		blood--;
+//            	}
+//            }    
+//        }
+//
+//        return false;
+//    }
     
     @Override
     public boolean canSeeLPBar(ItemStack itemStack)
@@ -783,75 +732,75 @@ public class BoundArmour extends ItemArmor implements IAlchemyGoggles, ISpecialA
         tag.setBoolean("invisible", invisible);
     }
 
-    @Override
-    @Optional.Method(modid = "Thaumcraft")
-    public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
-    {
-        return this.hasIRevealer(itemstack);
-    }
-
-    @Override
-    @Optional.Method(modid = "Thaumcraft")
-    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
-    {
-        return this.hasIGoggles(itemstack);
-    }
-
-    @Override
-    @Optional.Method(modid = "Thaumcraft")
-    public int getRunicCharge(ItemStack itemstack)
-    {
-        ItemStack[] inv = this.getInternalInventory(itemstack);
-        int shardLevel = this.getMaxBloodShardLevel(itemstack);
-        int count = 0;
-        int harden = 0;
-
-        if (inv == null)
-        {
-            return 0;
-        }
-
-        for (ItemStack stack : inv)
-        {
-            if (count >= shardLevel)
-            {
-                break;
-            }
-
-            if (stack == null || !(stack.getItem() instanceof ArmourUpgrade))
-            {
-                continue;
-            }
-
-            if (stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).armorType != this.armorType)
-            {
-                continue;
-            }
-
-            if (stack.hasTagCompound())
-            {
-                NBTTagCompound tag = stack.getTagCompound();
-
-                int enchLvl = tag.getByte("RS.HARDEN");
-
-                if (stack.getItem() instanceof IRunicArmor)
-                {
-                    enchLvl += ((IRunicArmor) stack.getItem()).getRunicCharge(stack);
-                }
-
-                if (enchLvl > 0)
-                {
-                    harden += enchLvl;
-                    if (((ArmourUpgrade) stack.getItem()).isUpgrade())
-                    {
-                        count += 1;
-                    }
-                }
-            }
-        }
-
-        return harden;
-    }
+//    @Override
+//    @Optional.Method(modid = "Thaumcraft")
+//    public boolean showNodes(ItemStack itemstack, EntityLivingBase player)
+//    {
+//        return this.hasIRevealer(itemstack);
+//    }
+//
+//    @Override
+//    @Optional.Method(modid = "Thaumcraft")
+//    public boolean showIngamePopups(ItemStack itemstack, EntityLivingBase player)
+//    {
+//        return this.hasIGoggles(itemstack);
+//    }
+//
+//    @Override
+//    @Optional.Method(modid = "Thaumcraft")
+//    public int getRunicCharge(ItemStack itemstack)
+//    {
+//        ItemStack[] inv = this.getInternalInventory(itemstack);
+//        int shardLevel = this.getMaxBloodShardLevel(itemstack);
+//        int count = 0;
+//        int harden = 0;
+//
+//        if (inv == null)
+//        {
+//            return 0;
+//        }
+//
+//        for (ItemStack stack : inv)
+//        {
+//            if (count >= shardLevel)
+//            {
+//                break;
+//            }
+//
+//            if (stack == null || !(stack.getItem() instanceof ArmourUpgrade))
+//            {
+//                continue;
+//            }
+//
+//            if (stack.getItem() instanceof ItemArmor && ((ItemArmor) stack.getItem()).armorType != this.armorType)
+//            {
+//                continue;
+//            }
+//
+//            if (stack.hasTagCompound())
+//            {
+//                NBTTagCompound tag = stack.getTagCompound();
+//
+//                int enchLvl = tag.getByte("RS.HARDEN");
+//
+//                if (stack.getItem() instanceof IRunicArmor)
+//                {
+//                    enchLvl += ((IRunicArmor) stack.getItem()).getRunicCharge(stack);
+//                }
+//
+//                if (enchLvl > 0)
+//                {
+//                    harden += enchLvl;
+//                    if (((ArmourUpgrade) stack.getItem()).isUpgrade())
+//                    {
+//                        count += 1;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return harden;
+//    }
 
     @Override
     public boolean showIngameHUD(World world, ItemStack stack, EntityPlayer player)

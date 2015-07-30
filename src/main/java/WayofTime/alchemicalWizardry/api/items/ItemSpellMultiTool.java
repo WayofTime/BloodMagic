@@ -43,12 +43,6 @@ public class ItemSpellMultiTool extends Item
         this.setMaxStackSize(1);
         this.setFull3D();
     }
-
-    @Override
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundTool");
-    }
     
     @Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)

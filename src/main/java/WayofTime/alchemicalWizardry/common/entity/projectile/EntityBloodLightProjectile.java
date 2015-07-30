@@ -1,12 +1,15 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import WayofTime.alchemicalWizardry.ModBlocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.ModBlocks;
 
 
 public class EntityBloodLightProjectile extends EnergyBlastProjectile
@@ -55,39 +58,12 @@ public class EntityBloodLightProjectile extends EnergyBlastProjectile
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            int sideHit = mop.sideHit;
-            int blockX = mop.blockX;
-            int blockY = mop.blockY;
-            int blockZ = mop.blockZ;
-
-            if (sideHit == 0 && this.worldObj.isAirBlock(blockX, blockY - 1, blockZ))
+        	EnumFacing facing = mop.field_178784_b;
+        	BlockPos position = mop.func_178782_a().offset(facing);
+            
+            if(this.worldObj.isAirBlock(position))
             {
-                this.worldObj.setBlock(blockX, blockY - 1, blockZ, ModBlocks.blockBloodLight);
-            }
-
-            if (sideHit == 1 && this.worldObj.isAirBlock(blockX, blockY + 1, blockZ))
-            {
-                this.worldObj.setBlock(blockX, blockY + 1, blockZ, ModBlocks.blockBloodLight);
-            }
-
-            if (sideHit == 2 && this.worldObj.isAirBlock(blockX, blockY, blockZ - 1))
-            {
-                this.worldObj.setBlock(blockX, blockY, blockZ - 1, ModBlocks.blockBloodLight);
-            }
-
-            if (sideHit == 3 && this.worldObj.isAirBlock(blockX, blockY, blockZ + 1))
-            {
-                this.worldObj.setBlock(blockX, blockY, blockZ + 1, ModBlocks.blockBloodLight);
-            }
-
-            if (sideHit == 4 && this.worldObj.isAirBlock(blockX - 1, blockY, blockZ))
-            {
-                this.worldObj.setBlock(blockX - 1, blockY, blockZ, ModBlocks.blockBloodLight);
-            }
-
-            if (sideHit == 5 && this.worldObj.isAirBlock(blockX + 1, blockY, blockZ))
-            {
-                this.worldObj.setBlock(blockX + 1, blockY, blockZ, ModBlocks.blockBloodLight);
+            	this.worldObj.setBlockState(position, ModBlocks.blockBloodLight.getDefaultState());
             }
         }
 
@@ -110,12 +86,13 @@ public class EntityBloodLightProjectile extends EnergyBlastProjectile
             }
         }
 
-        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
+        BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
+        if (worldObj.isAirBlock(pos))
         {
-            worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, Blocks.fire);
+            worldObj.setBlockState(pos, Blocks.fire.getDefaultState());
         }
 
-        spawnHitParticles("magicCrit", 8);
+        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
         this.setDead();
     }
 }

@@ -20,15 +20,16 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class OmegaArmour extends BoundArmour
 {
@@ -90,10 +91,9 @@ public abstract class OmegaArmour extends BoundArmour
 		{
 			if(this.storeBiomeID())
 			{
-				int xCoord = (int) Math.floor(player.posX);
-				int zCoord = (int) Math.floor(player.posZ);
+				BlockPos pos = player.getPosition();
 				
-				BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
+				BiomeGenBase biome = world.getBiomeGenForCoords(pos);
 				if(biome != null)
 				{
 					this.setBiomeIDStored(itemStack, biome.biomeID);
@@ -376,10 +376,10 @@ public abstract class OmegaArmour extends BoundArmour
                     if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0)
                     {
                         EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
-                        if (enumaction == EnumAction.block)
+                        if (enumaction == EnumAction.BLOCK)
                         {
                             this.model.heldItemRight = 3;
-                        } else if (enumaction == EnumAction.bow)
+                        } else if (enumaction == EnumAction.BOW)
                         {
                             this.model.aimedBow = true;
                         }

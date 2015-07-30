@@ -1,18 +1,17 @@
 package WayofTime.alchemicalWizardry.common.entity.projectile;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.registry.IThrowableEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.particle.EntityCloudFX;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IThrowableEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 //Shamelessly ripped off from x3n0ph0b3
 public class EntityParticleBeam extends Entity implements IProjectile, IThrowableEntity
@@ -51,7 +50,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         super(par1World);
         this.setSize(0.5F, 0.5F);
         this.setPosition(par2, par4, par6);
-        yOffset = 0.0F;
         this.maxTicksInAir = 600;
     }
 
@@ -66,7 +64,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         posY -= 0.2D;
         posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
-        yOffset = 0.0F;
         motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
@@ -86,7 +83,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         posY -= 0.2D;
         posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
-        yOffset = 0.0F;
         motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
@@ -102,7 +98,7 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         this.shootingEntity = par2EntityLivingBase;
         this.posY = par2EntityLivingBase.posY + (double) par2EntityLivingBase.getEyeHeight() - 0.10000000149011612D;
         double d0 = par3EntityLivingBase.posX - par2EntityLivingBase.posX;
-        double d1 = par3EntityLivingBase.boundingBox.minY + (double) (par3EntityLivingBase.height / 1.5F) - this.posY;
+        double d1 = par3EntityLivingBase.getBoundingBox().minY + (double) (par3EntityLivingBase.height / 1.5F) - this.posY;
         double d2 = par3EntityLivingBase.posZ - par2EntityLivingBase.posZ;
         double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 
@@ -113,7 +109,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
             double d4 = d0 / d3;
             double d5 = d2 / d3;
             this.setLocationAndAngles(par2EntityLivingBase.posX + d4, this.posY, par2EntityLivingBase.posZ + d5, f2, f3);
-            this.yOffset = 0.0F;
             float f4 = (float) d3 * 0.2F;
             this.setThrowableHeading(d0, d1, d2, par4, par5);
         }
@@ -151,18 +146,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         float var10 = MathHelper.sqrt_double(var1 * var1 + var5 * var5);
         prevRotationYaw = rotationYaw = (float) (Math.atan2(var1, var5) * 180.0D / Math.PI);
         prevRotationPitch = rotationPitch = (float) (Math.atan2(var3, var10) * 180.0D / Math.PI);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    /**
-     * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
-     * posY, posZ, yaw, pitch
-     */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
-    {
-        this.setPosition(par1, par3, par5);
-        this.setRotation(par7, par8);
     }
 
     @Override
@@ -225,9 +208,11 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
         {
             return;
         }
-        EntityFX particle = new EntityCloudFX(worldObj, posX, posY, posZ, 0, 0, 0);
-        particle.setRBGColorF(colourRed + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourGreen + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourBlue + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()));
-        FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
+        
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+//        EntityFX particle = new EntityCloudFX(worldObj, posX, posY, posZ, 0, 0, 0);
+//        particle.setRBGColorF(colourRed + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourGreen + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()), colourBlue + 0.15f * (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()));
+//        FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
     }
 
     /**
@@ -280,21 +265,6 @@ public class EntityParticleBeam extends Entity implements IProjectile, IThrowabl
     protected boolean canTriggerWalking()
     {
         return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public float getShadowSize()
-    {
-        return 0.0F;
-    }
-
-    protected void spawnHitParticles(String string, int i)
-    {
-        for (int particles = 0; particles < i; particles++)
-        {
-            worldObj.spawnParticle(string, posX, posY - (string == "portal" ? 1 : 0), posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
-        }
     }
 
     public DamageSource getDamageSource()

@@ -1,20 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import WayofTime.alchemicalWizardry.common.IFillingAgent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+
 import org.lwjgl.input.Keyboard;
 
-import java.util.List;
-import java.util.Random;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
+import WayofTime.alchemicalWizardry.common.IFillingAgent;
 
 public class WeakFillingAgent extends Item implements IFillingAgent
 {
@@ -46,13 +45,6 @@ public class WeakFillingAgent extends Item implements IFillingAgent
         }
 
         return 0;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WeakFillingAgent");
     }
 
     @Override

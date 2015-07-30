@@ -4,7 +4,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -60,9 +62,10 @@ public class FireProjectile extends EnergyBlastProjectile
                 {
                     for (int k = -1; k <= 1; k++)
                     {
-                        if (worldObj.isAirBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k))
+                    	BlockPos newPos = new BlockPos(this.posX + i, this.posY + j, this.posZ + k);
+                        if (worldObj.isAirBlock(newPos))
                         {
-                            worldObj.setBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k, Blocks.fire);
+                            worldObj.setBlockState(newPos, Blocks.fire.getDefaultState());
                         }
                     }
                 }
@@ -97,12 +100,13 @@ public class FireProjectile extends EnergyBlastProjectile
             }
         }
 
-        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
+        BlockPos newPos = new BlockPos(this.posX, this.posY, this.posZ);
+        if (worldObj.isAirBlock(newPos))
         {
-            worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, Blocks.fire);
+            worldObj.setBlockState(newPos, Blocks.fire.getDefaultState());
         }
 
-        spawnHitParticles("magicCrit", 8);
+        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
         this.setDead();
     }
 }

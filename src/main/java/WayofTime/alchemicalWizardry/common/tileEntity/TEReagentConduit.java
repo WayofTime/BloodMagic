@@ -542,4 +542,14 @@ public class TEReagentConduit extends TileSegmentedReagentHandler implements IUp
 
         return super.drain(from, resource, doDrain);
     }
+
+	public void removeReagentDestinationViaActual(Reagent reagent, BlockPos pos) 
+	{
+		this.removeReagentDestinationViaActual(reagent, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	public boolean addReagentDestinationViaActual(Reagent reagent, BlockPos pos) 
+	{
+		return addReagentDestinationViaActual(reagent, pos.getX(), pos.getY(), pos.getZ());
+	}
 }

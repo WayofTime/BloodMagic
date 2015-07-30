@@ -2,34 +2,22 @@ package WayofTime.alchemicalWizardry.common.items.armour;
 
 import java.util.UUID;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.biome.BiomeGenBase;
-import WayofTime.alchemicalWizardry.ModItems;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelOmegaFire;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class OmegaArmourFire extends OmegaArmour
-{
-	@SideOnly(Side.CLIENT)
-	private IIcon helmetIcon;
-	@SideOnly(Side.CLIENT)
-    private IIcon plateIcon;
-	@SideOnly(Side.CLIENT)
-    private IIcon leggingsIcon;
-	@SideOnly(Side.CLIENT)
-    private IIcon bootsIcon;
-    
+{   
 	public OmegaArmourFire(int armorType) 
 	{
 		super(armorType);
@@ -56,44 +44,6 @@ public class OmegaArmourFire extends OmegaArmour
 	{
 		return new ModelOmegaFire(0.5f, false, false, true, false);
 	}
-	
-	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-        this.helmetIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaHelmet_fire");
-        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaPlate_fire");
-        this.leggingsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaLeggings_fire");
-        this.bootsIcon = iconRegister.registerIcon("AlchemicalWizardry:OmegaBoots_fire");
-    }
-	
-	@Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (this.equals(ModItems.boundHelmetFire))
-        {
-            return this.helmetIcon;
-        }
-
-        if (this.equals(ModItems.boundPlateFire))
-        {
-            return this.plateIcon;
-        }
-
-        if (this.equals(ModItems.boundLeggingsFire))
-        {
-            return this.leggingsIcon;
-        }
-
-        if (this.equals(ModItems.boundBootsFire))
-        {
-            return this.bootsIcon;
-        }
-
-        return this.itemIcon;
-    }
 	
 	@Override
 	public Multimap getAttributeModifiers(ItemStack stack)

@@ -4,20 +4,23 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectile implements IProjectile
 {
@@ -48,7 +51,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         super(par1World);
         this.setSize(0.5F, 0.5F);
         this.setPosition(par2, par4, par6);
-        yOffset = 0.0F;
         this.damage = damage;
     }
 
@@ -63,7 +65,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         posY -= 0.2D;
         posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
-        yOffset = 0.0F;
         motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
@@ -100,18 +101,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         float var10 = MathHelper.sqrt_double(var1 * var1 + var5 * var5);
         prevRotationYaw = rotationYaw = (float) (Math.atan2(var1, var5) * 180.0D / Math.PI);
         prevRotationPitch = rotationPitch = (float) (Math.atan2(var3, var10) * 180.0D / Math.PI);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    /**
-     * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
-     * posY, posZ, yaw, pitch
-     */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
-    {
-        this.setPosition(par1, par3, par5);
-        this.setRotation(par7, par8);
     }
 
     @Override
@@ -180,28 +169,21 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
             prevRotationPitch = rotationPitch = (float) (Math.atan2(motionY, var1) * 180.0D / Math.PI);
         }
 
-        Block var16 = worldObj.getBlock(xTile, yTile, zTile);
+        IBlockState state = worldObj.getBlockState(new BlockPos(xTile, yTile, zTile));
+        Block var16 = state.getBlock();
 
         if (var16 != null)
         {
-            var16.setBlockBoundsBasedOnState(worldObj, xTile, yTile, zTile);
-            AxisAlignedBB var2 = var16.getCollisionBoundingBoxFromPool(worldObj, xTile, yTile, zTile);
+            var16.setBlockBoundsBasedOnState(worldObj, new BlockPos(xTile, yTile, zTile));
+            AxisAlignedBB var2 = var16.getCollisionBoundingBox(worldObj, new BlockPos(xTile, yTile, zTile), state);
 
-            if (var2 != null && var2.isVecInside(SpellHelper.createVec3(posX, posY, posZ)))
+            if (var2 != null && var2.isVecInside(new Vec3(posX, posY, posZ)))
             {
                 inGround = true;
             }
         }
 
-        if (inGround)
-        {
-            Block var18 = worldObj.getBlock(xTile, yTile, zTile);
-            int var19 = worldObj.getBlockMetadata(xTile, yTile, zTile);
-
-            if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
-            {
-            }
-        } else
+        if (!inGround)
         {
             ++ticksInAir;
 
@@ -213,19 +195,19 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
                 }
             }
 
-            Vec3 var17 = SpellHelper.createVec3(posX, posY, posZ);
-            Vec3 var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
-            MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
-            var17 = SpellHelper.createVec3(posX, posY, posZ);
-            var3 = SpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
+            Vec3 var17 = new Vec3(posX, posY, posZ);
+            Vec3 var3 = new Vec3(posX + motionX, posY + motionY, posZ + motionZ);
+            MovingObjectPosition var4 = worldObj.rayTraceBlocks(var17, var3, true, false, false);
+            var17 = new Vec3(posX, posY, posZ);
+            var3 = new Vec3(posX + motionX, posY + motionY, posZ + motionZ);
 
             if (var4 != null)
             {
-                var3 = SpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
+                var3 = new Vec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
             }
 
             Entity var5 = null;
-            List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+            List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, getBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
             double var7 = 0.0D;
             Iterator var9 = var6.iterator();
             float var11;
@@ -237,7 +219,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
                 if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
                 {
                     var11 = 0.3F;
-                    AxisAlignedBB var12 = var10.boundingBox.expand(var11, var11, var11);
+                    AxisAlignedBB var12 = var10.getBoundingBox().expand(var11, var11, var11);
                     MovingObjectPosition var13 = var12.calculateIntercept(var17, var3);
 
                     if (var13 != null)
@@ -278,8 +260,8 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
     public void doFiringParticles()
     {
-        worldObj.spawnParticle("mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
-        worldObj.spawnParticle("flame", posX, posY, posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
+        worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+        worldObj.spawnParticle(EnumParticleTypes.FLAME, posX, posY, posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
     }
 
     /**
@@ -318,13 +300,6 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
     protected boolean canTriggerWalking()
     {
         return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public float getShadowSize()
-    {
-        return 0.0F;
     }
 
     /**
@@ -382,7 +357,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            this.groundImpact(mop.sideHit);
+            this.groundImpact(mop.field_178784_b);
             worldObj.createExplosion(shootingEntity, posX, posY, posZ, 2, false);
         }
     }
@@ -399,7 +374,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
             worldObj.createExplosion(shootingEntity, posX, posY, posZ, 2, false);
         }
 
-        spawnHitParticles("magicCrit", 8);
+        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
         this.setDead();
     }
 
@@ -408,11 +383,11 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         return rand.nextInt(6) + 1;
     }
 
-    public void spawnHitParticles(String string, int i)
+    protected void spawnHitParticles(EnumParticleTypes type, int i)
     {
         for (int particles = 0; particles < i; particles++)
         {
-            worldObj.spawnParticle(string, posX, posY - (string == "portal" ? 1 : 0), posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
+            worldObj.spawnParticle(type, posX, posY - (type == EnumParticleTypes.PORTAL ? 1 : 0), posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
         }
     }
 
@@ -426,7 +401,7 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         return DamageSource.causeMobDamage(shootingEntity);
     }
 
-    public void groundImpact(int sideHit)
+    public void groundImpact(EnumFacing sideHit)
     {
         this.ricochet(sideHit);
     }
@@ -441,27 +416,21 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
         return d + d * ((rand.nextFloat() - 0.5D) / 4);
     }
 
-    private void ricochet(int sideHit)
-    {
-        switch (sideHit)
+    private void ricochet(EnumFacing sideHit)
+    {        
+        if(sideHit.getFrontOffsetX() != 0)
         {
-            case 0:
-            case 1:
-                // topHit, bottomHit, reflect Y
-                motionY = motionY * -1;
-                break;
-
-            case 2:
-            case 3:
-                // westHit, eastHit, reflect Z
-                motionZ = motionZ * -1;
-                break;
-
-            case 4:
-            case 5:
-                // southHit, northHit, reflect X
-                motionX = motionX * -1;
-                break;
+        	motionX *= -1;
+        }
+        
+        if(sideHit.getFrontOffsetY() != 0)
+        {
+        	motionY *= -1;
+        }
+        
+        if(sideHit.getFrontOffsetZ() != 0)
+        {
+        	motionZ *= -1;
         }
 
         ricochetCounter++;
@@ -472,32 +441,33 @@ public class EntityEnergyBazookaSecondaryProjectile extends EnergyBlastProjectil
 
             for (int particles = 0; particles < 4; particles++)
             {
-                switch (sideHit)
-                {
-                    case 0:
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), -gaussian(0.1D), gaussian(0.1D));
-                        break;
-
-                    case 1:
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
-                        break;
-
-                    case 2:
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), -gaussian(0.1D));
-                        break;
-
-                    case 3:
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
-                        break;
-
-                    case 4:
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, -gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
-                        break;
-
-                    case 5:
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
-                        break;
-                }
+            	worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+//                switch (sideHit)
+//                {
+//                    case 0:
+//                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), -gaussian(0.1D), gaussian(0.1D));
+//                        break;
+//
+//                    case 1:
+//                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+//                        break;
+//
+//                    case 2:
+//                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), -gaussian(0.1D));
+//                        break;
+//
+//                    case 3:
+//                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+//                        break;
+//
+//                    case 4:
+//                        worldObj.spawnParticle("smoke", posX, posY, posZ, -gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+//                        break;
+//
+//                    case 5:
+//                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+//                        break;
+//                }
             }
         }
     }

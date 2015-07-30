@@ -1,21 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items.energy;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 
 public class ItemDestinationClearer extends Item implements IReagentManipulator
 {
@@ -24,13 +22,6 @@ public class ItemDestinationClearer extends Item implements IReagentManipulator
         super();
         this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.maxStackSize = 1;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:TankClearer");
     }
 
     @Override
@@ -57,11 +48,9 @@ public class ItemDestinationClearer extends Item implements IReagentManipulator
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                int x = movingobjectposition.blockX;
-                int y = movingobjectposition.blockY;
-                int z = movingobjectposition.blockZ;
+                BlockPos pos = movingobjectposition.func_178782_a();
 
-                TileEntity tile = world.getTileEntity(x, y, z);
+                TileEntity tile = world.getTileEntity(pos);
 
                 if (!(tile instanceof TEReagentConduit))
                 {

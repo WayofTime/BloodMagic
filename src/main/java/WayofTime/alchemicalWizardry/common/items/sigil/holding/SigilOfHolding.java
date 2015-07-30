@@ -7,14 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.items.EnergyItems;
-import codechicken.lib.render.TextureUtils.IIconRegister;
 
 public class SigilOfHolding extends EnergyItems
 {
@@ -30,51 +29,21 @@ public class SigilOfHolding extends EnergyItems
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfHolding");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (!(stack.getTagCompound() == null))
-        {
-            ItemStack[] inv = getInternalInventory(stack);
-
-            if (inv == null)
-            {
-                return this.itemIcon;
-            }
-
-            ItemStack item = getCurrentSigil(stack);
-
-            if (item != null)
-            {
-                return item.getIconIndex();
-            }
-        }
-
-        return this.itemIcon;
-    }
-
-    @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.sigilofholding.desc"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(stack.getTagCompound() == null))
         {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
-            ItemStack[] inv = getInternalInventory(par1ItemStack);
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
+            ItemStack[] inv = getInternalInventory(stack);
 
             if (inv == null)
             {
                 return;
             }
 
-            int currentSlot = getCurrentItem(par1ItemStack);
+            int currentSlot = getCurrentItem(stack);
             ItemStack item = inv[currentSlot];
 
             if (item != null)
@@ -93,12 +62,12 @@ public class SigilOfHolding extends EnergyItems
     }
     
     @Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (checkAndSetItemOwner(par1ItemStack, par2EntityPlayer))
+        if (checkAndSetItemOwner(stack, player))
         {
-        	int currentSlot = getCurrentItem(par1ItemStack);
-            ItemStack[] inv = getInternalInventory(par1ItemStack);
+        	int currentSlot = getCurrentItem(stack);
+            ItemStack[] inv = getInternalInventory(stack);
 
             if (inv == null)
             {
@@ -112,9 +81,9 @@ public class SigilOfHolding extends EnergyItems
                 return false;
             }
 
-            boolean bool = itemUsed.getItem().onItemUse(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10);
+            boolean bool = itemUsed.getItem().onItemUse(stack, player, world, pos, side, hitX, hitY, hitZ);
 
-            saveInventory(par1ItemStack, inv);
+            saveInventory(stack, inv);
 
             return bool;
         }
@@ -123,36 +92,36 @@ public class SigilOfHolding extends EnergyItems
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        if (checkAndSetItemOwner(stack, par3EntityPlayer))
         {
             if (par3EntityPlayer.isSneaking())
             {
-                InventoryHolding.setUUID(par1ItemStack);
+                InventoryHolding.setUUID(stack);
                 par3EntityPlayer.openGui(AlchemicalWizardry.instance, 3, par3EntityPlayer.worldObj, (int) par3EntityPlayer.posX, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ);
-                return par1ItemStack;
+                return stack;
             }
 
-            int currentSlot = getCurrentItem(par1ItemStack);
-            ItemStack[] inv = getInternalInventory(par1ItemStack);
+            int currentSlot = getCurrentItem(stack);
+            ItemStack[] inv = getInternalInventory(stack);
 
             if (inv == null)
             {
-                return par1ItemStack;
+                return stack;
             }
 
             ItemStack itemUsed = inv[currentSlot];
 
             if (itemUsed == null)
             {
-                return par1ItemStack;
+                return stack;
             }
 
             itemUsed.getItem().onItemRightClick(itemUsed, par2World, par3EntityPlayer);
-            saveInventory(par1ItemStack, inv);
+            saveInventory(stack, inv);
         }
-        return par1ItemStack;
+        return stack;
     }
 
     public static int next(int mode)
@@ -183,7 +152,7 @@ public class SigilOfHolding extends EnergyItems
     {
         if (itemStack.getTagCompound() == null)
         {
-            itemStack.getTagCompound() = new NBTTagCompound();
+            itemStack.setTagCompound(new NBTTagCompound());
             itemStack.getTagCompound().setInteger(NBT_CURRENT_SIGIL, invSize);
         }
     }
@@ -283,17 +252,17 @@ public class SigilOfHolding extends EnergyItems
     }
 
     @Override
-    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void onUpdate(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(stack.getTagCompound() == null))
         {
-            this.tickInternalInventory(par1ItemStack, par2World, par3Entity, par4, par5);
+            this.tickInternalInventory(stack, par2World, par3Entity, par4, par5);
         }
     }
 
-    public void tickInternalInventory(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void tickInternalInventory(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        ItemStack[] inv = getInternalInventory(par1ItemStack);
+        ItemStack[] inv = getInternalInventory(stack);
 
         if (inv == null)
         {
