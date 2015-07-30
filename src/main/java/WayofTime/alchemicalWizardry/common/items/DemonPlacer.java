@@ -1,29 +1,24 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
-import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
+
+import net.minecraft.block.BlockFence;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Facing;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistry;
+import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 
 public class DemonPlacer extends Item
 {
@@ -35,110 +30,49 @@ public class DemonPlacer extends Item
         this.maxStackSize = 1;
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
-    {
-        EntityEggInfo entityegginfo = (EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(par1ItemStack.getItemDamage()));
-        return entityegginfo != null ? (par2 == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
-    }
-
     /**
-     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (par3World.isRemote)
+        if (world.isRemote)
         {
             return true;
-        } else
+        }
+        else if (!playerIn.func_175151_a(pos.offset(side), side, stack))
         {
-            Block i1 = par3World.getBlock(par4, par5, par6);
-            par4 += Facing.offsetsXForSide[par7];
-            par5 += Facing.offsetsYForSide[par7];
-            par6 += Facing.offsetsZForSide[par7];
+            return false;
+        }
+        else
+        {
+            IBlockState iblockstate = world.getBlockState(pos);
+
+            pos = pos.offset(side);
             double d0 = 0.0D;
 
-            if (par7 == 1 && i1 != null && i1.getRenderType() == 11)
+            if (side == EnumFacing.UP && iblockstate instanceof BlockFence)
             {
                 d0 = 0.5D;
             }
 
-        	String demonName = DemonPlacer.getDemonString(par1ItemStack);
-            Entity entity = spawnCreature(par3World, demonName, (double) par4 + 0.5D, (double) par5 + d0, (double) par6 + 0.5D, par1ItemStack);
+            String demonName = DemonPlacer.getDemonString(stack);
+            Entity entity = spawnCreature(world, demonName, (double)pos.getX() + 0.5D, (double)pos.getY() + d0, (double)pos.getZ() + 0.5D, stack);
 
             if (entity != null)
             {
-                if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
+                if (entity instanceof EntityLivingBase && stack.hasDisplayName())
                 {
-                    ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
+                    entity.setCustomNameTag(stack.getDisplayName());
                 }
 
-                if (!par2EntityPlayer.capabilities.isCreativeMode)
+                if (!playerIn.capabilities.isCreativeMode)
                 {
-                    --par1ItemStack.stackSize;
+                    --stack.stackSize;
                 }
             }
 
             return true;
-        }
-    }
-
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (par2World.isRemote)
-        {
-            return par1ItemStack;
-        } else
-        {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
-
-            if (movingobjectposition == null)
-            {
-                return par1ItemStack;
-            } else
-            {
-                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-                {
-                    int i = movingobjectposition.blockX;
-                    int j = movingobjectposition.blockY;
-                    int k = movingobjectposition.blockZ;
-
-                    if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
-                    {
-                        return par1ItemStack;
-                    }
-
-                    if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
-                    {
-                        return par1ItemStack;
-                    }
-
-                    if (par2World.getBlock(i, j, k).getMaterial() == Material.water)
-                    {
-                    	String demonName = DemonPlacer.getDemonString(par1ItemStack);
-                        Entity entity = spawnCreature(par2World, demonName, (double) i, (double) j, (double) k, par1ItemStack);
-
-                        if (entity != null)
-                        {
-                            if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
-                            {
-                                ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
-                            }
-
-                            if (!par3EntityPlayer.capabilities.isCreativeMode)
-                            {
-                                --par1ItemStack.stackSize;
-                            }
-                        }
-                    }
-                }
-
-                return par1ItemStack;
-            }
         }
     }
 
@@ -229,12 +163,5 @@ public class DemonPlacer extends Item
                 par3List.add(StatCollector.translateToLocal("tooltip.owner.demonsowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
             }
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonPlacer");
     }
 }

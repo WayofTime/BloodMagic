@@ -1,27 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.entity.projectile.EntityEnergyBazookaMainProjectile;
 
 public class EnergyBazooka extends EnergyItems
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
     private int damage;
 
     public EnergyBazooka()
@@ -33,34 +25,6 @@ public class EnergyBazooka extends EnergyItems
         setMaxDamage(250);
         this.setEnergyUsed(20000);
         damage = 12;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:EnergyBazooka_activated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:EnergyBazooka_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
-        {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
     }
 
     @Override
@@ -168,28 +132,14 @@ public class EnergyBazooka extends EnergyItems
         }
     }
 
-    public void setActivated(ItemStack par1ItemStack, boolean newActivated)
+    public void setActivated(ItemStack stack, boolean newActivated)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        itemTag.setBoolean("isActive", newActivated);
+        stack.setItemDamage(newActivated ? 1 : 0);
     }
 
-    public boolean getActivated(ItemStack par1ItemStack)
+    public boolean getActivated(ItemStack stack)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        return itemTag.getBoolean("isActive");
+        return stack.getItemDamage() == 1;
     }
 
     public void setDelay(ItemStack par1ItemStack, int newDelay)

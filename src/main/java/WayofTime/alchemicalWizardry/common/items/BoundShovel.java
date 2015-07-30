@@ -1,44 +1,32 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.common.ItemType;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BoundShovel extends ItemSpade implements IBindable
 {
     public float efficiencyOnProperMaterial = 12.0F;
     public float damageVsEntity;
-
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
 
     private int energyUsed;
 
@@ -85,67 +73,36 @@ public class BoundShovel extends ItemSpade implements IBindable
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer par3EntityPlayer)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundShovel_activated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundShovel_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SheathedItem");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
+        if (!EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
-        {
-            this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
-            par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
-            return par1ItemStack;
+            this.setActivated(stack, !getActivated(stack));
+            stack.getTagCompound().setInteger("worldTimeDelay", (int) (world.getWorldTime() - 1) % 200);
+            return stack;
         }
         
-        if (par2World.isRemote)
+        if (world.isRemote)
         {
-            return par1ItemStack;
+            return stack;
         }
 
-        if (!getActivated(par1ItemStack) || SpellHelper.isFakePlayer(par2World, par3EntityPlayer))
+        if (!getActivated(stack) || SpellHelper.isFakePlayer(world, par3EntityPlayer))
         {
-            return par1ItemStack;
+            return stack;
         }
 
         if (par3EntityPlayer.isPotionActive(AlchemicalWizardry.customPotionInhibit))
         {
-            return par1ItemStack;
+            return stack;
         }
         
-        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 10000))
+        if(!EnergyItems.syphonBatteries(stack, par3EntityPlayer, 10000))
         {
-        	return par1ItemStack;
+        	return stack;
         }
 
-        Vec3 blockVec = SpellHelper.getEntityBlockVector(par3EntityPlayer);
-        int posX = (int) (blockVec.xCoord);
-        int posY = (int) (blockVec.yCoord);
-        int posZ = (int) (blockVec.zCoord);
+        BlockPos pos = par3EntityPlayer.getPosition();
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(par3EntityPlayer);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(par3EntityPlayer);
 
@@ -157,39 +114,40 @@ public class BoundShovel extends ItemSpade implements IBindable
             {
                 for (int k = -5; k <= 5; k++)
                 {
-                    Block block = par2World.getBlock(posX + i, posY + j, posZ + k);
-                    int meta = par2World.getBlockMetadata(posX + i, posY + j, posZ + k);
+                	BlockPos newPos = pos.add(i, j, k);
+                	IBlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
 
                     if (block != null)
                     {
-                        float str = func_150893_a(par1ItemStack, block);
+                        float str = getStrVsBlock(stack, block);
 
-                        if (str > 1.1f && par2World.canMineBlock(par3EntityPlayer, posX + i, posY + j, posZ + k))
+                        if (str > 1.1f && world.canMineBlockBody(par3EntityPlayer, newPos))
                         {
-                            if (silkTouch && block.canSilkHarvest(par2World, par3EntityPlayer, posX + i, posY + j, posZ + k, meta))
+                            if (silkTouch && block.canSilkHarvest(world, newPos, state, par3EntityPlayer))
                             {
-                                dropMultiset.add(new ItemType(block, meta));
+                                dropMultiset.add(new ItemType(block, block.getMetaFromState(state)));
                             } else
                             {
-                                ArrayList<ItemStack> itemDropList = block.getDrops(par2World, posX + i, posY + j, posZ + k, meta, fortuneLvl);
+                                List<ItemStack> itemDropList = block.getDrops(world, newPos, state, fortuneLvl);
 
                                 if (itemDropList != null)
                                 {
-                                    for (ItemStack stack : itemDropList)
-                                        dropMultiset.add(ItemType.fromStack(stack), stack.stackSize);
+                                    for (ItemStack stacky : itemDropList)
+                                        dropMultiset.add(ItemType.fromStack(stacky), stacky.stackSize);
                                 }
                             }
 
-                            par2World.setBlockToAir(posX + i, posY + j, posZ + k);
+                            world.setBlockToAir(newPos);
                         }
                     }
                 }
             }
         }
         
-        BoundPickaxe.dropMultisetStacks(dropMultiset, par2World, posX, posY + par3EntityPlayer.getEyeHeight(), posZ);
-
-        return par1ItemStack;
+        BoundPickaxe.dropMultisetStacks(dropMultiset, world, pos.getX(), pos.getY() + par3EntityPlayer.getEyeHeight(), pos.getZ());
+        
+        return stack;
     }
 
     @Override
@@ -220,28 +178,14 @@ public class BoundShovel extends ItemSpade implements IBindable
         par1ItemStack.setItemDamage(0);
     }
 
-    public void setActivated(ItemStack par1ItemStack, boolean newActivated)
+    public void setActivated(ItemStack stack, boolean newActivated)
     {
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        if (itemTag == null)
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        itemTag.setBoolean("isActive", newActivated);
+        stack.setItemDamage(newActivated ? 1 : 0);
     }
 
-    public boolean getActivated(ItemStack par1ItemStack)
+    public boolean getActivated(ItemStack stack)
     {
-        if (!par1ItemStack.hasTagCompound())
-        {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-
-        return itemTag.getBoolean("isActive");
+        return stack.getItemDamage() == 1;
     }
 
     /**
@@ -249,14 +193,14 @@ public class BoundShovel extends ItemSpade implements IBindable
      * sword
      */
     @Override
-    public float func_150893_a(ItemStack par1ItemStack, Block par2Block)
+    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
         if (!getActivated(par1ItemStack))
         {
             return 0.0F;
         }
 
-        return super.func_150893_a(par1ItemStack, par2Block);
+        return super.getStrVsBlock(par1ItemStack, par2Block);
     }
 
     /**
@@ -291,31 +235,23 @@ public class BoundShovel extends ItemSpade implements IBindable
         return 30;
     }
 
-    @Override
-    public Multimap getItemAttributeModifiers()
-    {
-        Multimap multimap = super.getItemAttributeModifiers();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", (double) this.damageVsEntity, 0));
-        return multimap;
-    }
-
     /**
      * FORGE: Overridden to allow custom tool effectiveness
      */
     @Override
-    public float getDigSpeed(ItemStack stack, Block block, int meta)
+    public float getDigSpeed(ItemStack stack, IBlockState state)
     {
         if (!getActivated(stack))
         {
             return 0.0F;
         }
 
-        if (ForgeHooks.isToolEffective(stack, block, meta))
+        for (String type : getToolClasses(stack))
         {
-            return efficiencyOnProperMaterial;
+            if (state.getBlock().isToolEffective(type, state))
+                return efficiencyOnProperMaterial;
         }
-
-        return func_150893_a(stack, block);
+        return super.getDigSpeed(stack, state);
     }
 
     @Override

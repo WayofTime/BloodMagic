@@ -1,5 +1,15 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
@@ -7,18 +17,6 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-
-import java.util.List;
 
 public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBloodOrb
 {
@@ -32,13 +30,6 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         maxEssence = damage;
         orbLevel = 1;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:EnergyBattery");
     }
 
     @Override
@@ -125,7 +116,7 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
 
             for (int l = 0; l < 8; ++l)
             {
-                world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
+                world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
             }
         }
 
@@ -209,11 +200,5 @@ public class EnergyBattery extends Item implements ArmourUpgrade, IBindable, IBl
         }
 
         return data.currentEssence;
-    }
-
-    @Override
-    public boolean doesContainerItemLeaveCraftingGrid(ItemStack itemStack)
-    {
-        return false;
     }
 }
