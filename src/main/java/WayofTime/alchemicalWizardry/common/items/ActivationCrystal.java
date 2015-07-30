@@ -20,14 +20,13 @@ import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 
 public class ActivationCrystal extends EnergyItems
 {
-    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"Weak", "Awakened", "Creative"};
+    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"weak", "awakened", "creative"};
 
     public ActivationCrystal()
     {
         super();
         this.maxStackSize = 1;
         setEnergyUsed(100);
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
     }
 
@@ -101,7 +100,7 @@ public class ActivationCrystal extends EnergyItems
     {
         //This is what will do all the localisation things on the alchemy components so you dont have to set it :D
         int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ACTIVATION_CRYSTAL_NAMES.length - 1);
-        return ("" + "item.activationCrystal" + ACTIVATION_CRYSTAL_NAMES[meta]);
+        return (getUnlocalizedName() + "_" + ACTIVATION_CRYSTAL_NAMES[meta]);
     }
 
     @Override

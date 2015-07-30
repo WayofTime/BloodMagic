@@ -49,7 +49,7 @@ import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergySword;
+import WayofTime.alchemicalWizardry.common.items.BoundBlade;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmour;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
@@ -84,7 +84,7 @@ public class AlchemicalWizardryEventHooks
 			parad.onEmptyHandEntityInteract(player, event.target); 
 		}else
 		{
-			if(heldItem.getItem() instanceof EnergySword)
+			if(heldItem.getItem() instanceof BoundBlade)
 			{
 				parad.onBoundSwordInteractWithEntity(player, event.target);
 			}
