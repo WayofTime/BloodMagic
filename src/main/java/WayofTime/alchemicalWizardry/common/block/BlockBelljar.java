@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -77,12 +77,12 @@ public class BlockBelljar extends BlockContainer
     {
         TileEntity tile = world.getTileEntity(blockPos);
 
-        if (tile instanceof TEBellJar)
+        if (tile instanceof TEBelljar)
         {
             NBTTagCompound tag = stack.getTagCompound();
             if (tag != null)
             {
-                ((TEBellJar) tile).readTankNBTOnPlace(tag);
+                ((TEBelljar) tile).readTankNBTOnPlace(tag);
             }
         }
     }
@@ -90,7 +90,7 @@ public class BlockBelljar extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TEBellJar();
+        return new TEBelljar();
     }
 
     @Override
@@ -121,9 +121,9 @@ public class BlockBelljar extends BlockContainer
     public int getComparatorInputOverride(World world, BlockPos blockPos)
     {
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile instanceof TEBellJar)
+        if (tile instanceof TEBelljar)
         {
-            return ((TEBellJar) tile).getRSPowerOutput();
+            return ((TEBelljar) tile).getRSPowerOutput();
         }
         return 15;
     }
@@ -142,11 +142,11 @@ public class BlockBelljar extends BlockContainer
 
         TileEntity tile = world.getTileEntity(blockPos);
 
-        if (tile instanceof TEBellJar)
+        if (tile instanceof TEBelljar)
         {
             ItemStack drop = new ItemStack(this);
             NBTTagCompound tag = new NBTTagCompound();
-            ((TEBellJar) tile).writeTankNBT(tag);
+            ((TEBelljar) tile).writeTankNBT(tag);
             drop.setTagCompound(tag);
 
             list.add(drop);

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.renderer.block;
 
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelWritingTable;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -37,9 +37,9 @@ public class RenderWritingTable extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
     {
-        if (tileEntity instanceof TEWritingTable)
+        if (tileEntity instanceof TEChemistrySet)
         {
-            TEWritingTable tileAltar = (TEWritingTable) tileEntity;
+            TEChemistrySet tileAltar = (TEChemistrySet) tileEntity;
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);

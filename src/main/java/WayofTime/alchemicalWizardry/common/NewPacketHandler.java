@@ -39,7 +39,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 
 public enum NewPacketHandler
 {
@@ -194,9 +194,9 @@ public enum NewPacketHandler
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
             TileEntity te = world.getTileEntity(msg.pos);
-            if (te instanceof TEWritingTable)
+            if (te instanceof TEChemistrySet)
             {
-                TEWritingTable WritingTable = (TEWritingTable) te;
+                TEChemistrySet WritingTable = (TEChemistrySet) te;
 
                 WritingTable.handlePacketData(msg.items);
             }
@@ -809,10 +809,10 @@ public enum NewPacketHandler
 
                     boolean hasStacks5 = newBuffer.readBoolean();
 
-                    ((TEWritingTableMessage) msg).items = new int[TEWritingTable.sizeInv * 3];
+                    ((TEWritingTableMessage) msg).items = new int[TEChemistrySet.sizeInv * 3];
                     if (hasStacks5)
                     {
-                        ((TEWritingTableMessage) msg).items = new int[TEWritingTable.sizeInv * 3];
+                        ((TEWritingTableMessage) msg).items = new int[TEChemistrySet.sizeInv * 3];
                         for (int i = 0; i < ((TEWritingTableMessage) msg).items.length; i++)
                         {
                             ((TEWritingTableMessage) msg).items[i] = newBuffer.readInt();
@@ -971,7 +971,7 @@ public enum NewPacketHandler
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public static Packet getPacket(TEWritingTable tileWritingTable)
+    public static Packet getPacket(TEChemistrySet tileWritingTable)
     {
         TEWritingTableMessage msg = new TEWritingTableMessage();
         msg.index = 6;

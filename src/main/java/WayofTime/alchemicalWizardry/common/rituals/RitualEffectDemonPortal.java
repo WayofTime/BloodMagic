@@ -21,7 +21,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 
 public class RitualEffectDemonPortal extends RitualEffect
 {
@@ -137,7 +137,7 @@ public class RitualEffectDemonPortal extends RitualEffect
     	
     	for(Int3 pos : jarLocations)
     	{
-    		if(!(ritualStone.getWorld().getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord) instanceof TEBellJar))
+    		if(!(ritualStone.getWorld().getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord) instanceof TEBelljar))
     		{
     			return false;
     		}

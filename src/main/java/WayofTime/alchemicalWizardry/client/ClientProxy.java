@@ -89,9 +89,9 @@ import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBazoo
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderEnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
 import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicalCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
@@ -101,7 +101,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 
 public class ClientProxy extends CommonProxy
 {
@@ -152,7 +152,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TEAltar.class, new TEAltarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPedestal.class, new RenderPedestal());
         ClientRegistry.bindTileEntitySpecialRenderer(TEPlinth.class, new RenderPlinth());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEWritingTable.class, new RenderWritingTable());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEChemistrySet.class, new RenderWritingTable());
         ClientRegistry.bindTileEntitySpecialRenderer(TEConduit.class, new RenderConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEffectBlock.class, new RenderSpellEffectBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellEnhancementBlock.class, new RenderSpellEnhancementBlock());
@@ -160,8 +160,8 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TESpellModifierBlock.class, new RenderSpellModifierBlock());
         ClientRegistry.bindTileEntitySpecialRenderer(TEReagentConduit.class, new RenderReagentConduit());
         ClientRegistry.bindTileEntitySpecialRenderer(TEMasterStone.class, new RenderMasterStone());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicCalcinator.class, new RenderAlchemicCalcinator());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEBellJar.class, new RenderCrystalBelljar());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicalCalcinator.class, new RenderAlchemicCalcinator());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEBelljar.class, new RenderCrystalBelljar());
 
         //Item Renderer stuff
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());

@@ -14,7 +14,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class TEBellJarItemRenderer implements IItemRenderer
@@ -35,7 +35,7 @@ public class TEBellJarItemRenderer implements IItemRenderer
         GL11.glPopMatrix();
         GL11.glPopMatrix();
 
-        ReagentContainerInfo[] info = TEBellJar.getContainerInfoFromItem(item);
+        ReagentContainerInfo[] info = TEBelljar.getContainerInfoFromItem(item);
         if (info.length >= 1 && info[0] != null)
         {
             ReagentStack reagentStack = info[0].reagent;

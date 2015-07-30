@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class EnergyItems extends Item implements IBindable
@@ -47,7 +48,7 @@ public class EnergyItems extends Item implements IBindable
             float f3 = f * f * 0.6F - 0.7F;
             for (int l = 0; l < 8; ++l)
             {
-                world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
+                world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
             }
         }
         for (int i = 0; i < damage; i++)
@@ -115,6 +116,7 @@ public class EnergyItems extends Item implements IBindable
         return false;
     }
 
+    @Deprecated
     public static boolean canSyphonInContainer(ItemStack ist, int damageToBeDone)
     {
         if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))
@@ -173,6 +175,7 @@ public class EnergyItems extends Item implements IBindable
         }
     }
 
+    @Deprecated
     public static boolean syphonAndDamageWhileInContainer(ItemStack ist, EntityPlayer player, int damageToBeDone)
     {
         if (!syphonWhileInContainer(ist, damageToBeDone))
@@ -220,35 +223,6 @@ public class EnergyItems extends Item implements IBindable
         }
 
         return item.getTagCompound().getString("ownerName");
-    }
-
-    @Deprecated
-    public static void drainPlayerNetwork(EntityPlayer player, int damageToBeDone)
-    {
-        String ownerName = SpellHelper.getUsername(player);
-
-        if (MinecraftServer.getServer() == null)
-        {
-            return;
-        }
-
-        World world = MinecraftServer.getServer().worldServers[0];
-        LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
-
-        if (data == null)
-        {
-            data = new LifeEssenceNetwork(ownerName);
-            world.setItemData(ownerName, data);
-        }
-
-        if (data.currentEssence >= damageToBeDone)
-        {
-            data.currentEssence -= damageToBeDone;
-            data.markDirty();
-        } else
-        {
-            hurtPlayer(player, damageToBeDone);
-        }
     }
 
     @Deprecated

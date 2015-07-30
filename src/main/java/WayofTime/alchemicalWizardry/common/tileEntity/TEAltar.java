@@ -106,11 +106,6 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
 
     	return filledAmount;
     }
-
-    public int getRSPowerOutput()
-    {
-        return 5;
-    }
     
     public void addToDemonBloodDuration(int dur)
     {
@@ -509,8 +504,8 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
         if(worldObj.getWorldTime() % Math.max(20 - this.accelerationUpgrades, 1) == 0)
         {
         	int syphonMax = (int) (20 * this.dislocationMultiplier);
-            int fluidInputted = 0;
-            int fluidOutputted = 0;
+            int fluidInputted;
+            int fluidOutputted;
             fluidInputted = Math.min(syphonMax, -this.fluid.amount + capacity);
             fluidInputted = Math.min(this.fluidInput.amount, fluidInputted);
             this.fluid.amount += fluidInputted;
@@ -688,9 +683,9 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             }
         }
 
-        FluidStack flMain = new FluidStack(fluidData[0], fluidData[1]);
-        FluidStack flIn = new FluidStack(fluidData[2], fluidData[3]);
-        FluidStack flOut = new FluidStack(fluidData[4], fluidData[5]);
+        FluidStack flMain = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fluidData[1]); //First parameter was fluidData[0] --Checking to see if this will cause issues or not
+        FluidStack flIn = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fluidData[3]); //"   "
+        FluidStack flOut = new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fluidData[5]); //"   "
 
         this.setMainFluid(flMain);
         this.setInputFluid(flIn);
@@ -901,7 +896,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[1] = 0;
         } else
         {
-            sortList[0] = this.fluid.fluidID;
+            sortList[0] = this.fluid.getFluidID();
             sortList[1] = this.fluid.amount;
         }
 
@@ -911,7 +906,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[3] = 0;
         } else
         {
-            sortList[2] = this.fluidInput.fluidID;
+            sortList[2] = this.fluidInput.getFluidID();
             sortList[3] = this.fluidInput.amount;
         }
 
@@ -921,7 +916,7 @@ public class TEAltar extends TEInventory implements IFluidTank, IFluidHandler, I
             sortList[5] = 0;
         } else
         {
-            sortList[4] = this.fluidOutput.fluidID;
+            sortList[4] = this.fluidOutput.getFluidID();
             sortList[5] = this.fluidOutput.amount;
         }
 

@@ -7,7 +7,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
@@ -21,7 +20,7 @@ public class TESchematicSaver extends TileEntity
 {
     public Block targetBlock = ModBlocks.largeBloodStoneBrick;
 
-    public void rightClickBlock(EntityPlayer player, int side)
+    public void rightClickBlock()
     {
         BuildingSchematic schematic = new BuildingSchematic();
 

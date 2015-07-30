@@ -2,7 +2,7 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicalCalcinator;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +30,7 @@ public class BlockAlchemicalCalcinator extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TEAlchemicCalcinator();
+        return new TEAlchemicalCalcinator();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class BlockAlchemicalCalcinator extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TEAlchemicCalcinator tileEntity = (TEAlchemicCalcinator) world.getTileEntity(blockPos);
+        TEAlchemicalCalcinator tileEntity = (TEAlchemicalCalcinator) world.getTileEntity(blockPos);
 
         if (tileEntity == null || player.isSneaking())
         {

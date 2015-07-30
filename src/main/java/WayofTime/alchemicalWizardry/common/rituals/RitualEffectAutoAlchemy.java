@@ -18,7 +18,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 
 public class RitualEffectAutoAlchemy extends RitualEffect
 {
@@ -60,7 +60,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
             ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(targetStack);
             if (recipe != null)
             {
-                TEWritingTable alchemyEntity;
+                TEChemistrySet alchemyEntity;
                 IInventory outputInv = null;
                 IInventory inputInv1 = null;
                 IInventory inputInv2 = null;
@@ -70,63 +70,63 @@ public class RitualEffectAutoAlchemy extends RitualEffect
                 TileEntity eastEntity = world.getTileEntity(x + 1, y, z);
                 TileEntity westEntity = world.getTileEntity(x - 1, y, z);
 
-                if (northEntity instanceof TEWritingTable)
+                if (northEntity instanceof TEChemistrySet)
                 {
-                    alchemyEntity = (TEWritingTable) northEntity;
-                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable))
+                    alchemyEntity = (TEChemistrySet) northEntity;
+                    if (southEntity instanceof IInventory && !(southEntity instanceof TEChemistrySet))
                     {
                         outputInv = (IInventory) southEntity;
                     }
-                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable))
+                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEChemistrySet))
                     {
                         inputInv1 = (IInventory) eastEntity;
                     }
-                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable))
+                    if (westEntity instanceof IInventory && !(westEntity instanceof TEChemistrySet))
                     {
                         inputInv2 = (IInventory) westEntity;
                     }
-                } else if (southEntity instanceof TEWritingTable)
+                } else if (southEntity instanceof TEChemistrySet)
                 {
-                    alchemyEntity = (TEWritingTable) southEntity;
-                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable))
+                    alchemyEntity = (TEChemistrySet) southEntity;
+                    if (northEntity instanceof IInventory && !(northEntity instanceof TEChemistrySet))
                     {
                         outputInv = (IInventory) northEntity;
                     }
-                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable))
+                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEChemistrySet))
                     {
                         inputInv1 = (IInventory) eastEntity;
                     }
-                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable))
+                    if (westEntity instanceof IInventory && !(westEntity instanceof TEChemistrySet))
                     {
                         inputInv2 = (IInventory) westEntity;
                     }
-                } else if (eastEntity instanceof TEWritingTable)
+                } else if (eastEntity instanceof TEChemistrySet)
                 {
-                    alchemyEntity = (TEWritingTable) eastEntity;
-                    if (westEntity instanceof IInventory && !(westEntity instanceof TEWritingTable))
+                    alchemyEntity = (TEChemistrySet) eastEntity;
+                    if (westEntity instanceof IInventory && !(westEntity instanceof TEChemistrySet))
                     {
                         outputInv = (IInventory) westEntity;
                     }
-                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable))
+                    if (northEntity instanceof IInventory && !(northEntity instanceof TEChemistrySet))
                     {
                         inputInv1 = (IInventory) northEntity;
                     }
-                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable))
+                    if (southEntity instanceof IInventory && !(southEntity instanceof TEChemistrySet))
                     {
                         inputInv2 = (IInventory) southEntity;
                     }
-                } else if (westEntity instanceof TEWritingTable)
+                } else if (westEntity instanceof TEChemistrySet)
                 {
-                    alchemyEntity = (TEWritingTable) westEntity;
-                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEWritingTable))
+                    alchemyEntity = (TEChemistrySet) westEntity;
+                    if (eastEntity instanceof IInventory && !(eastEntity instanceof TEChemistrySet))
                     {
                         outputInv = (IInventory) eastEntity;
                     }
-                    if (northEntity instanceof IInventory && !(northEntity instanceof TEWritingTable))
+                    if (northEntity instanceof IInventory && !(northEntity instanceof TEChemistrySet))
                     {
                         inputInv1 = (IInventory) northEntity;
                     }
-                    if (southEntity instanceof IInventory && !(southEntity instanceof TEWritingTable))
+                    if (southEntity instanceof IInventory && !(southEntity instanceof TEChemistrySet))
                     {
                         inputInv2 = (IInventory) southEntity;
                     }

@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicalCalcinator;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -41,9 +41,9 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f, int i)
     {
-        if (tileEntity instanceof TEAlchemicCalcinator)
+        if (tileEntity instanceof TEAlchemicalCalcinator)
         {
-            TEAlchemicCalcinator tileAltar = (TEAlchemicCalcinator) tileEntity;
+            TEAlchemicalCalcinator tileAltar = (TEAlchemicalCalcinator) tileEntity;
 
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);

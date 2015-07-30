@@ -7,12 +7,12 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
 
 public class GuiWritingTable extends GuiContainer
 {
-    public GuiWritingTable(InventoryPlayer inventoryPlayer, TEWritingTable tileEntity)
+    public GuiWritingTable(InventoryPlayer inventoryPlayer, TEChemistrySet tileEntity)
     {
         super(new ContainerWritingTable(inventoryPlayer, tileEntity));
         xSize = 176;

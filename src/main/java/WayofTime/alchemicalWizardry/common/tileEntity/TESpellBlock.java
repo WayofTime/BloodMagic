@@ -24,9 +24,6 @@ public abstract class TESpellBlock extends TEOrientable implements ISpellTile
     public TESpellBlock getTileAtOutput()
     {
         EnumFacing output = this.getOutputDirection();
-        int xOffset = output.getFrontOffsetX();
-        int yOffset = output.getFrontOffsetY();
-        int zOffset = output.getFrontOffsetZ();
 
         TileEntity tile = worldObj.getTileEntity(pos.add(output.getDirectionVec()));
 

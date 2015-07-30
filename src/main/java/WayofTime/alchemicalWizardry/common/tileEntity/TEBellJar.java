@@ -14,9 +14,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.Constants;
 
-public class TEBellJar extends TEReagentConduit
+public class TEBelljar extends TEReagentConduit
 {
-    public TEBellJar()
+    public TEBelljar()
     {
         super(1, 16000);
         this.maxConnextions = 1;

@@ -1,14 +1,12 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -22,13 +20,6 @@ public class BlankSpell extends EnergyItems
         super();
         this.setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BlankSpell");
     }
 
     @Override
@@ -65,13 +56,13 @@ public class BlankSpell extends EnergyItems
             if (world != null)
             {
                 NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-                TileEntity tileEntity = world.getTileEntity(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord"));
+                TileEntity tileEntity = world.getTileEntity(new BlockPos(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord")));
 
-                if (tileEntity instanceof TEHomHeart)
+                if (tileEntity instanceof TESpellTable)
                 {
-                    TEHomHeart homHeart = (TEHomHeart) tileEntity;
+                    TESpellTable homHeart = (TESpellTable) tileEntity;
 
-                    if (homHeart.canCastSpell(par1ItemStack, par2World, par3EntityPlayer))
+                    if (homHeart.canCastSpell())
                     {
                     	if(EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, homHeart.getCostForSpell()))
                     	{
