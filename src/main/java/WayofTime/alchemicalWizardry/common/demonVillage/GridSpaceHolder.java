@@ -1,13 +1,11 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GridSpaceHolder
 {
@@ -141,7 +139,7 @@ public class GridSpaceHolder
         }
     }
 
-    public boolean doesContainAll(GridSpaceHolder master, int xInit, int zInit, EnumFacing dir)
+    public boolean doesContainAll(GridSpaceHolder master, int xInit, int zInit, ForgeDirection dir)
     {
         if (master != null)
         {
@@ -193,7 +191,7 @@ public class GridSpaceHolder
         return false;
     }
 
-    public void setAllGridSpaces(int xInit, int zInit, int yLevel, EnumFacing dir, int type, GridSpaceHolder master)
+    public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master)
     {
     	if(TEDemonPortal.printDebug)
         AlchemicalWizardry.logger.info("Grid space selected: (" + xInit + "," + zInit + ")");
@@ -241,7 +239,7 @@ public class GridSpaceHolder
         }
     }
 
-    public void destroyAllInGridSpaces(World world, int xCoord, int yCoord, int zCoord, EnumFacing dir)
+    public void destroyAllInGridSpaces(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
     {
         for (int i = -negXRadius; i <= posXRadius; i++)
         {
@@ -280,14 +278,12 @@ public class GridSpaceHolder
                 {
                     for (int m = -2; m <= 2; m++)
                     {
-                    	BlockPos newPos = new BlockPos(xCoord + xOff * 5 + l, yCoord, zCoord + zOff * 5 + m);
-                    	IBlockState state = world.getBlockState(newPos);
-                        Block block = state.getBlock();
+                        Block block = world.getBlock(xCoord + xOff * 5 + l, yCoord, zCoord + zOff * 5 + m);
                         if (block == ModBlocks.blockDemonPortal)
                         {
                             continue;
                         }
-                        world.setBlockToAir(newPos);
+                        world.setBlockToAir(xCoord + xOff * 5 + l, yCoord, zCoord + zOff * 5 + m);
                     }
                 }
             }

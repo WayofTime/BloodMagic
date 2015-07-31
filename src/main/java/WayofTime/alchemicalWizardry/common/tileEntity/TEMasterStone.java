@@ -11,16 +11,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.common.util.ForgeDirection;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
@@ -33,8 +31,9 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualBreakMethod;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import cpw.mods.fml.common.eventhandler.Event;
 
-public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUpdatePlayerListBox
+public class TEMasterStone extends TileEntity implements IMasterRitualStone
 {
     private String currentRitualString;
     private boolean isActive;
@@ -56,7 +55,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     public TEMasterStone()
     {
         tanks = new ReagentContainer[]{new ReagentContainer(1000), new ReagentContainer(1000), new ReagentContainer(1000)};
-        this.attunedTankMap = new HashMap<Reagent, Integer>();
+        this.attunedTankMap = new HashMap();
 
         isActive = false;
         owner = "";
@@ -152,7 +151,9 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
         {
         	newStorage.readFromNBT(localStorageTag);
         	storage = newStorage;
-        	storage.setLocation(pos);
+        	storage.xCoord = xCoord;
+        	storage.yCoord = yCoord;
+        	storage.zCoord = zCoord;
         }
     }
 
@@ -214,7 +215,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
             return;
         }
 
-        String testRitual = Rituals.checkValidRitual(world, pos);
+        String testRitual = Rituals.checkValidRitual(world, xCoord, yCoord, zCoord);
 
         if (testRitual.equals(""))
         {
@@ -270,7 +271,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
                 	
                     for (int i = 0; i < 12; i++)
                     {
-                        SpellHelper.sendIndexedParticleToAllAround(world, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
+                        SpellHelper.sendIndexedParticleToAllAround(world, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
                     }
                 }else
                 {
@@ -290,11 +291,11 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
         var1 = 0;
         currentRitualString = testRitual;
     	storage = Rituals.getLocalStorage(currentRitualString);
-    	storage.setLocation(pos);
+    	storage.setLocation(new Int3(xCoord, yCoord, zCoord));
         isActive = true;
         isRunning = true;
-        direction = Rituals.getDirectionOfRitual(world, pos, testRitual);
-        worldObj.markBlockForUpdate(pos);
+        direction = Rituals.getDirectionOfRitual(world, xCoord, yCoord, zCoord, testRitual);
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     public void setOwner(String owner)
@@ -313,7 +314,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     }
 
     @Override
-    public void update()
+    public void updateEntity()
     {
         if (isRunning && runningTime < 100)
         {
@@ -337,26 +338,26 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
 
         if (worldTime % 100 == 0)
         {
-            boolean testRunes = Rituals.checkDirectionOfRitualValid(worldObj, pos, currentRitualString, direction);
-            SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 1, pos);
+            boolean testRunes = Rituals.checkDirectionOfRitualValid(worldObj, xCoord, yCoord, zCoord, currentRitualString, direction);
+            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
 
             if (!testRunes)
             {
                 Rituals.onRitualBroken(this, currentRitualString, RitualBreakMethod.BREAK_STONE);
                 isActive = false;
                 currentRitualString = "";
-                worldObj.markBlockForUpdate(pos);
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                 return;
             }
         }
 
-        if (worldObj.getStrongPower(pos) > 0)
+        if (worldObj.getBlockPowerInput(xCoord, yCoord, zCoord) > 0)
         {
             if (isRunning)
             {
             	Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.REDSTONE);
                 isRunning = false;
-                worldObj.markBlockForUpdate(pos);
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
             
             return;
@@ -365,14 +366,14 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
             if (!isRunning)
             {
                 isRunning = true;
-                worldObj.markBlockForUpdate(pos);
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             }
         }
 
-        performRitual(worldObj, pos, currentRitualString);
+        performRitual(worldObj, xCoord, yCoord, zCoord, currentRitualString);
     }
 
-    public void performRitual(World world, BlockPos pos, String currentRitualString)
+    public void performRitual(World world, int x, int y, int z, String currentRitualString)
     {
         Rituals.performEffect(this, currentRitualString);
     }
@@ -407,7 +408,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     	Rituals.onRitualBroken(this, this.currentRitualString, RitualBreakMethod.DEACTIVATE);
         this.isActive = active;
         this.isRunning = active;
-        worldObj.markBlockForUpdate(pos);
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     public int getDirection()
@@ -416,15 +417,27 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     }
 
     @Override
-    public World getWorldObj()
+    public World getWorld()
     {
-        return this.getWorld();
+        return this.getWorldObj();
     }
 
     @Override
-    public BlockPos getPosition()
+    public int getXCoord()
     {
-    	return this.getPos();
+        return xCoord;
+    }
+
+    @Override
+    public int getYCoord()
+    {
+        return yCoord;
+    }
+
+    @Override
+    public int getZCoord()
+    {
+        return zCoord;
     }
 
     public String getCurrentRitual()
@@ -442,29 +455,30 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         writeClientNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(pos, -999, nbttagcompound);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, -999, nbttagcompound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet)
     {
         super.onDataPacket(net, packet);
-        readClientNBT(packet.getNbtCompound());
+        readClientNBT(packet.func_148857_g());
     }
 
     public AxisAlignedBB getRenderBoundingBox()
     {
-        double renderExtension = 1.0d;
-        return new AxisAlignedBB(pos.add(-renderExtension, -renderExtension, -renderExtension), pos.add(1 + renderExtension, 1 + renderExtension, 1 + renderExtension));
+        double renderExtention = 1.0d;
+        AxisAlignedBB bb = AxisAlignedBB.getBoundingBox(xCoord - renderExtention, yCoord - renderExtention, zCoord - renderExtention, xCoord + 1 + renderExtention, yCoord + 1 + renderExtention, zCoord + 1 + renderExtention);
+        return bb;
     }
 
     /* ISegmentedReagentHandler */
     @Override
-    public int fill(EnumFacing from, ReagentStack resource, boolean doFill)
+    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
     {
         if (doFill)
         {
-            worldObj.markBlockForUpdate(pos);
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
         int totalFill = 0;
@@ -531,7 +545,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     }
 
     @Override
-    public ReagentStack drain(EnumFacing from, ReagentStack resource, boolean doDrain)
+    public ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain)
     {
         if (resource == null)
         {
@@ -540,7 +554,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
 
         if (doDrain)
         {
-            worldObj.markBlockForUpdate(pos);
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
 
         int maxDrain = resource.amount;
@@ -569,7 +583,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
 
     /* Only returns the amount from the first available tank */
     @Override
-    public ReagentStack drain(EnumFacing from, int maxDrain, boolean doDrain)
+    public ReagentStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
     {
         for (int i = 0; i < tanks.length; i++)
         {
@@ -578,7 +592,7 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
             {
                 if (doDrain)
                 {
-                    worldObj.markBlockForUpdate(pos);
+                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                 }
 
                 return stack;
@@ -589,19 +603,19 @@ public class TEMasterStone extends TileEntity implements IMasterRitualStone, IUp
     }
 
     @Override
-    public boolean canFill(EnumFacing from, Reagent reagent)
+    public boolean canFill(ForgeDirection from, Reagent reagent)
     {
         return true;
     }
 
     @Override
-    public boolean canDrain(EnumFacing from, Reagent reagent)
+    public boolean canDrain(ForgeDirection from, Reagent reagent)
     {
         return true;
     }
 
     @Override
-    public ReagentContainerInfo[] getContainerInfo(EnumFacing from)
+    public ReagentContainerInfo[] getContainerInfo(ForgeDirection from)
     {
         ReagentContainerInfo[] info = new ReagentContainerInfo[this.getNumberOfTanks()];
         for (int i = 0; i < this.getNumberOfTanks(); i++)

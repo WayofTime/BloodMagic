@@ -1,31 +1,22 @@
 package WayofTime.alchemicalWizardry.common.renderer.projectile;
 
-import net.minecraft.client.Minecraft;
+import WayofTime.alchemicalWizardry.common.renderer.model.ModelMeteor;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import WayofTime.alchemicalWizardry.common.renderer.model.ModelMeteor;
-
 public class RenderMeteor extends Render
 {
-    public RenderMeteor() 
-    {
-		super(Minecraft.getMinecraft().getRenderManager());
-		// TODO Auto-generated constructor stub
-	}
-
-	public ModelBase model = new ModelMeteor();
+    public ModelBase model = new ModelMeteor();
     private static final ResourceLocation field_110833_a = new ResourceLocation("alchemicalwizardry", "textures/models/Meteor.png");
+    private float scale = 1.0f;
 
     @Override
     public void doRender(Entity entity, double d0, double d1, double d2, float f, float f1)
     {
-        float scale = 1.0f;
         GL11.glPushMatrix();
         GL11.glTranslatef((float) d0, (float) d1, (float) d2);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

@@ -7,7 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -60,7 +59,7 @@ public class MudProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }// else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
 
@@ -88,15 +87,15 @@ public class MudProjectile extends EnergyBlastProjectile
             }
         }
 
-        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
+        spawnHitParticles("magicCrit", 8);
         this.setDead();
     }
 
     @Override
     public void doFiringParticles()
     {
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB, posX, posY, posZ, 0.5F, 0.297F, 0.0664F);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "mobSpell", posX, posY, posZ, 0.5F, 0.297F, 0.0664F);
     }
 
     @Override

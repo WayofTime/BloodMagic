@@ -6,24 +6,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntitySpellProjectile extends Entity implements IProjectile
 {
@@ -45,10 +41,10 @@ public class EntitySpellProjectile extends Entity implements IProjectile
     //Custom variables
     private int maxRicochet = 0;
     private float damage = 1;
-    public List<IProjectileImpactEffect> impactList = new ArrayList<IProjectileImpactEffect>();
+    public List<IProjectileImpactEffect> impactList = new ArrayList();
     private boolean penetration = false;
-    public List<IProjectileUpdateEffect> updateEffectList = new ArrayList<IProjectileUpdateEffect>();
-    public List<SpellEffect> spellEffectList = new LinkedList<SpellEffect>();
+    public List<IProjectileUpdateEffect> updateEffectList = new ArrayList();
+    public List<SpellEffect> spellEffectList = new LinkedList();
     private int blocksBroken = 0;
 
     public EntitySpellProjectile(World par1World)
@@ -62,6 +58,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         super(par1World);
         this.setSize(0.5F, 0.5F);
         this.setPosition(par2, par4, par6);
+        yOffset = 0.0F;
     }
 
     public EntitySpellProjectile(World par1World, EntityPlayer par2EntityPlayer)
@@ -75,6 +72,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         posY -= 0.2D;
         posZ -= MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
         this.setPosition(posX, posY, posZ);
+        yOffset = 0.0F;
         motionX = -MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
@@ -116,6 +114,18 @@ public class EntitySpellProjectile extends Entity implements IProjectile
     @Override
     @SideOnly(Side.CLIENT)
     /**
+     * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
+     * posY, posZ, yaw, pitch
+     */
+    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
+    {
+        this.setPosition(par1, par3, par5);
+        this.setRotation(par7, par8);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    /**
      * Sets the velocity to the args. Args: x, y, z
      */
     public void setVelocity(double par1, double par3, double par5)
@@ -148,7 +158,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         }
         if (shootingEntity == null)
         {
-            List players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(posX - 1, posY - 1, posZ - 1, posX + 1, posY + 1, posZ + 1));
+            List players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(posX - 1, posY - 1, posZ - 1, posX + 1, posY + 1, posZ + 1));
             Iterator i = players.iterator();
             double closestDistance = Double.MAX_VALUE;
             EntityPlayer closestPlayer = null;
@@ -172,15 +182,14 @@ public class EntitySpellProjectile extends Entity implements IProjectile
             prevRotationYaw = rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
             prevRotationPitch = rotationPitch = (float) (Math.atan2(motionY, var1) * 180.0D / Math.PI);
         }
-        IBlockState state = worldObj.getBlockState(new BlockPos(xTile, yTile, zTile));
-        Block var16 = state.getBlock();
+        Block var16 = worldObj.getBlock(xTile, yTile, zTile);
 
         if (var16 != null)
         {
-            var16.setBlockBoundsBasedOnState(worldObj, new BlockPos(xTile, yTile, zTile));
-            AxisAlignedBB var2 = var16.getCollisionBoundingBox(worldObj, new BlockPos(xTile, yTile, zTile), state);
+            var16.setBlockBoundsBasedOnState(worldObj, xTile, yTile, zTile);
+            AxisAlignedBB var2 = var16.getCollisionBoundingBoxFromPool(worldObj, xTile, yTile, zTile);
 
-            if (var2 != null && var2.isVecInside(new Vec3(posX, posY, posZ)))
+            if (var2 != null && var2.isVecInside(APISpellHelper.createVec3(posX, posY, posZ)))
             {
                 inGround = true;
             }
@@ -188,7 +197,14 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 
         if (inGround)
         {
+            Block var18 = worldObj.getBlock(xTile, yTile, zTile);
+            int var19 = worldObj.getBlockMetadata(xTile, yTile, zTile);
 
+//            if (var18.equals(Block.getBlockById(inTile)) && var19 == inData)
+            {
+                // this.groundImpact();
+                // this.setDead();
+            }
         } else
         {
             ++ticksInAir;
@@ -202,19 +218,19 @@ public class EntitySpellProjectile extends Entity implements IProjectile
                 }
             }
 
-            Vec3 var17 = new Vec3(posX, posY, posZ);
-            Vec3 var3 = new Vec3(posX + motionX, posY + motionY, posZ + motionZ);
-            MovingObjectPosition var4 = worldObj.rayTraceBlocks(var17, var3, true, false, false);
-            var17 = new Vec3(posX, posY, posZ);
-            var3 = new Vec3(posX + motionX, posY + motionY, posZ + motionZ);
+            Vec3 var17 = APISpellHelper.createVec3(posX, posY, posZ);
+            Vec3 var3 = APISpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
+            MovingObjectPosition var4 = worldObj.func_147447_a(var17, var3, true, false, false);
+            var17 = APISpellHelper.createVec3(posX, posY, posZ);
+            var3 = APISpellHelper.createVec3(posX + motionX, posY + motionY, posZ + motionZ);
 
             if (var4 != null)
             {
-                var3 = new Vec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
+                var3 = APISpellHelper.createVec3(var4.hitVec.xCoord, var4.hitVec.yCoord, var4.hitVec.zCoord);
             }
 
             Entity var5 = null;
-            List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, getBoundingBox().addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+            List var6 = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
             double var7 = 0.0D;
             Iterator var9 = var6.iterator();
             float var11;
@@ -226,7 +242,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
                 if (var10.canBeCollidedWith() && (var10 != shootingEntity || ticksInAir >= 5))
                 {
                     var11 = 0.3F;
-                    AxisAlignedBB var12 = var10.getBoundingBox().expand(var11, var11, var11);
+                    AxisAlignedBB var12 = var10.boundingBox.expand(var11, var11, var11);
                     MovingObjectPosition var13 = var12.calculateIntercept(var17, var3);
 
                     if (var13 != null)
@@ -271,14 +287,14 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         if (ticksInAir % 3 == 0)
         {
             double gauss = gaussian(1.0F);
-            worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB, posX, posY, posZ, gauss, gauss, 0.0F);
+            worldObj.spawnParticle("mobSpell", posX, posY, posZ, gauss, gauss, 0.0F);
         }
     }
 
     private void doFiringParticles()
     {
-        worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
-        worldObj.spawnParticle(EnumParticleTypes.FLAME, posX, posY, posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
+        worldObj.spawnParticle("mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+        worldObj.spawnParticle("flame", posX, posY, posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
     }
 
     /**
@@ -300,6 +316,17 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         {
             effectList.appendTag(eff.getTag());
         }
+
+//        for (String str : this.effectList)
+//        {
+//            if (str != null)
+//            {
+//                NBTTagCompound tag = new NBTTagCompound();
+//
+//                tag.setString("Class", str);
+//                effectList.appendTag(tag);
+//            }
+//        }
 
         par1NBTTagCompound.setTag("Effects", effectList);
         par1NBTTagCompound.setInteger("blocksBroken", blocksBroken);
@@ -323,7 +350,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
 
         NBTTagList tagList = par1NBTTagCompound.getTagList("Effects", Constants.NBT.TAG_COMPOUND);
 
-        List<SpellEffect> spellEffectList = new LinkedList<SpellEffect>();
+        List<SpellEffect> spellEffectList = new LinkedList();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
@@ -359,6 +386,13 @@ public class EntitySpellProjectile extends Entity implements IProjectile
     protected boolean canTriggerWalking()
     {
         return false;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public float getShadowSize()
+    {
+        return 0.0F;
     }
 
     /**
@@ -414,7 +448,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         {
             if (!this.penetration)
             {
-                this.groundImpact(mop.field_178784_b);
+                this.groundImpact(mop.sideHit);
                 this.performTileImpactEffects(mop);
             }
         }
@@ -439,7 +473,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
     {
         for (int particles = 0; particles < i; particles++)
         {
-            worldObj.spawnParticle(EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), posGauss(1.0F), posGauss(1.0F), 0.0F);
+            worldObj.spawnParticle("mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), posGauss(1.0F), posGauss(1.0F), 0.0F);
         }
     }
 
@@ -453,7 +487,7 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         return DamageSource.causePlayerDamage(shootingEntity);
     }
 
-    private void groundImpact(EnumFacing sideHit)
+    private void groundImpact(int sideHit)
     {
         this.ricochet(sideHit);
     }
@@ -473,22 +507,22 @@ public class EntitySpellProjectile extends Entity implements IProjectile
         return d + d * ((rand.nextFloat() - 0.5D) / 4);
     }
 
-    private void ricochet(EnumFacing sideHit)
+    private void ricochet(int sideHit)
     {
         switch (sideHit)
         {
-            case UP:
-            case DOWN:
+            case 0:
+            case 1:
                 // topHit, bottomHit, reflect Y
                 motionY = motionY * -1;
                 break;
-            case WEST:
-            case EAST:
+            case 2:
+            case 3:
                 // westHit, eastHit, reflect Z
                 motionZ = motionZ * -1;
                 break;
-            case SOUTH:
-            case NORTH:
+            case 4:
+            case 5:
                 // southHit, northHit, reflect X
                 motionX = motionX * -1;
                 break;
@@ -501,23 +535,23 @@ public class EntitySpellProjectile extends Entity implements IProjectile
             {
                 switch (sideHit)
                 {
-                    case UP:
-                        worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, gaussian(0.1D), -gaussian(0.1D), gaussian(0.1D));
+                    case 0:
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), -gaussian(0.1D), gaussian(0.1D));
                         break;
-                    case DOWN:
-                        worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                    case 1:
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
                         break;
-                    case NORTH:
-                        worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), -gaussian(0.1D));
+                    case 2:
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), -gaussian(0.1D));
                         break;
-                    case SOUTH:
-                        worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                    case 3:
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
                         break;
-                    case WEST:
-                        worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, -gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                    case 4:
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, -gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
                         break;
-                    case EAST:
-                        worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
+                    case 5:
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, gaussian(0.1D), gaussian(0.1D), gaussian(0.1D));
                         break;
                 }
             }

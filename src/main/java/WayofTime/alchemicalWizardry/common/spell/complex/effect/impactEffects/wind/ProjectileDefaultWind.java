@@ -15,16 +15,13 @@ public class ProjectileDefaultWind extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        float wantedYVel = (float) ((0.5) * (0.5 * this.potencyUpgrades + 1));
-
         mop.motionX = proj.motionX;
-        mop.motionY = mop.motionY += wantedYVel;
         mop.motionZ = proj.motionZ;
     }
 
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-        return;
+
     }
 }

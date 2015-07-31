@@ -2,5 +2,5 @@ package WayofTime.alchemicalWizardry.api;
 
 public interface ILimitingLogic 
 {
-	int getRoutingLimit();
+	public int getRoutingLimit();
 }

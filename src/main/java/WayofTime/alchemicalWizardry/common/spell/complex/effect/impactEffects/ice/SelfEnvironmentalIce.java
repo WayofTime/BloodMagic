@@ -1,12 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class SelfEnvironmentalIce extends SelfSpellEffect
 {
@@ -18,24 +18,27 @@ public class SelfEnvironmentalIce extends SelfSpellEffect
     @Override
     public void onSelfUse(World world, EntityPlayer player)
     {
-        EnumFacing look = SpellHelper.getCompassDirectionForLookVector(player.getLookVec());
+        ForgeDirection look = SpellHelper.getCompassDirectionForLookVector(player.getLookVec());
 
         int width = this.potencyUpgrades + 1;
         int length = 5 * this.powerUpgrades + 3;
 
-        int xOffset = look.getFrontOffsetX();
-        int zOffset = look.getFrontOffsetZ();
+        int xOffset = look.offsetX;
+        int zOffset = look.offsetZ;
 
-        BlockPos pos = player.getPosition();
+        Vec3 lookVec = SpellHelper.getEntityBlockVector(player);
+
+        int xStart = (int) (lookVec.xCoord);
+        int zStart = (int) (lookVec.zCoord);
+        int yStart = (int) (lookVec.yCoord) - 1;
 
         for (int i = -width; i <= width; i++)
         {
             for (int j = 0; j < length; j++)
             {
-            	BlockPos newPos = pos.add(i * (zOffset) + j * (xOffset), 0, i * (xOffset) + j * (zOffset));
-                if (world.isAirBlock(newPos))
+                if (world.isAirBlock(xStart + i * (zOffset) + j * (xOffset), yStart, zStart + i * (xOffset) + j * (zOffset)))
                 {
-                    world.setBlockState(newPos, Blocks.ice.getDefaultState());
+                    world.setBlock(xStart + i * (zOffset) + j * (xOffset), yStart, zStart + i * (xOffset) + j * (zOffset), Blocks.ice);
                 }
             }
         }

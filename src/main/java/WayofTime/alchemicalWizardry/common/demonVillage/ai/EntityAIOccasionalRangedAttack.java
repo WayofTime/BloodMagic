@@ -24,6 +24,7 @@ public class EntityAIOccasionalRangedAttack extends EntityAIBase
     private int maxRangedAttackTime;
     private float field_96562_i;
     private float field_82642_h;
+    private static final String __OBFID = "CL_00001609";
     private double range;
 
     public EntityAIOccasionalRangedAttack(IOccasionalRangedAttackMob p_i1649_1_, double p_i1649_2_, int p_i1649_4_, float p_i1649_5_, double range)
@@ -109,7 +110,7 @@ public class EntityAIOccasionalRangedAttack extends EntityAIBase
      */
     public void updateTask()
     {
-        double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.getBoundingBox().minY, this.attackTarget.posZ);
+        double d0 = this.entityHost.getDistanceSq(this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
         boolean flag = this.entityHost.getEntitySenses().canSee(this.attackTarget);
 
         if (flag)

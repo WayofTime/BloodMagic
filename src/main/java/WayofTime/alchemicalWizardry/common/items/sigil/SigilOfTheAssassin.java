@@ -3,30 +3,39 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.*;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, ISigil
+public class SigilOfTheAssassin extends EnergyItems implements ArmourUpgrade, ISigil
 {
     public SigilOfTheAssassin()
     {
         super();
+        this.maxStackSize = 1;
         setEnergyUsed(100);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -36,6 +45,13 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
         {
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WaterSigil");
     }
 
     @Override
@@ -58,16 +74,17 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
         }
     }
 
-    @Override
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
+        
+
 
         float f = 10.0F;
 
@@ -91,6 +108,7 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
                 if(hitEntity instanceof EntityLivingBase)
                 {
                 	AlchemicalWizardry.logger.info("It's a living entity!");
+
                 	
                 	teleportTo(par3EntityPlayer, x, y, z, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ);
                 }
@@ -117,18 +135,17 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
         int i = MathHelper.floor_double(entityLiving.posX);
         int j = MathHelper.floor_double(entityLiving.posY);
         int k = MathHelper.floor_double(entityLiving.posZ);
-        BlockPos blockPos = new BlockPos(i, j, k);
-        IBlockState l;
+        Block l;
 
-        if (!entityLiving.worldObj.isAirBlock(blockPos))
+        if (entityLiving.worldObj.blockExists(i, j, k))
         {
             boolean flag1 = false;
 
             while (!flag1 && j > 0)
             {
-                l = entityLiving.worldObj.getBlockState(blockPos);
+                l = entityLiving.worldObj.getBlock(i, j - 1, k);
 
-                if (l != null && l.getBlock().getMaterial().blocksMovement())
+                if (l != null && l.getMaterial().blocksMovement())
                 {
                     flag1 = true;
                 } else
@@ -142,7 +159,7 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
             {
                 SpellTeleport.moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.getBoundingBox()).isEmpty() && !entityLiving.worldObj.isAnyLiquid(entityLiving.getBoundingBox()))
+                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox).isEmpty() && !entityLiving.worldObj.isAnyLiquid(entityLiving.boundingBox))
                 {
                     flag = true;
                 }
@@ -166,7 +183,7 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
                 double d7 = d3 + (entityLiving.posX - d3) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
                 double d8 = d4 + (entityLiving.posY - d4) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
                 double d9 = d5 + (entityLiving.posZ - d5) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                entityLiving.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d7, d8, d9, (double) f, (double) f1, (double) f2);
+                entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
             return true;
         }
@@ -180,7 +197,7 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
         double d0 = p_77621_2_.prevPosX + (p_77621_2_.posX - p_77621_2_.prevPosX) * (double)f;
         double d1 = p_77621_2_.prevPosY + (p_77621_2_.posY - p_77621_2_.prevPosY) * (double)f + (double)(p_77621_1_.isRemote ? p_77621_2_.getEyeHeight() - p_77621_2_.getDefaultEyeHeight() : p_77621_2_.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
         double d2 = p_77621_2_.prevPosZ + (p_77621_2_.posZ - p_77621_2_.prevPosZ) * (double)f;
-        Vec3 vec3 = new Vec3(d0, d1, d2);
+        Vec3 vec3 = SpellHelper.createVec3(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
         float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
         float f5 = -MathHelper.cos(-f1 * 0.017453292F);
@@ -188,12 +205,12 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
         float f7 = f4 * f5;
         float f8 = f3 * f5;
         double d3 = 500.0D;
-//        if (p_77621_2_ instanceof EntityPlayerMP)
+        if (p_77621_2_ instanceof EntityPlayerMP)
         {
 //            d3 = ((EntityPlayerMP)p_77621_2_).theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
-        return p_77621_1_.rayTraceBlocks(vec3, vec31, p_77621_3_, !p_77621_3_, false);
+        return p_77621_1_.func_147447_a(vec3, vec31, p_77621_3_, !p_77621_3_, false);
     }
     
 //    public MovingObjectPosition movingObjectPositiongdsa(WOrld worldObj, int posX, int posY, int posZ)
@@ -252,7 +269,7 @@ public class SigilOfTheAssassin extends BindableItems implements ArmourUpgrade, 
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 9, true, false));
+        player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 9, true));
     }
 
     @Override

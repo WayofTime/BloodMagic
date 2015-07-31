@@ -2,27 +2,35 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+
 
 public class BlockSpellEffect extends BlockOrientable
 {
     public BlockSpellEffect()
     {
         super();
+        this.setBlockName("blockSpellEffect");
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return new TESpellEffectBlock();
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
     }
 
     @Override
@@ -37,7 +45,6 @@ public class BlockSpellEffect extends BlockOrientable
         return false;
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {

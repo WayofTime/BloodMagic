@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class SelfEnvironmentalFire extends SelfSpellEffect
 {
@@ -17,7 +16,9 @@ public class SelfEnvironmentalFire extends SelfSpellEffect
     @Override
     public void onSelfUse(World world, EntityPlayer player)
     {
-        BlockPos pos = player.getPosition();
+        int posX = (int) Math.round(player.posX - 0.5f);
+        int posY = (int) player.posY;
+        int posZ = (int) Math.round(player.posZ - 0.5f);
 
         int powRadius = this.powerUpgrades;
         int potRadius = this.potencyUpgrades - 1;
@@ -28,11 +29,9 @@ public class SelfEnvironmentalFire extends SelfSpellEffect
             {
                 for (int k = -powRadius; k <= powRadius; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                	
-                    if (world.isAirBlock(newPos))
+                    if (world.isAirBlock(posX + i, posY + j, posZ + k))
                     {
-                        world.setBlockState(newPos, Blocks.fire.getDefaultState());
+                        world.setBlock(posX + i, posY + j, posZ + k, Blocks.fire);
 
                     }
                 }
@@ -45,11 +44,9 @@ public class SelfEnvironmentalFire extends SelfSpellEffect
             {
                 for (int k = -potRadius; k <= potRadius; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-
-                    if (!world.isAirBlock(newPos))
+                    if (!world.isAirBlock(posX + i, posY + j, posZ + k))
                     {
-                        SpellHelper.smeltBlockInWorld(world, newPos);
+                        SpellHelper.smeltBlockInWorld(world, posX + i, posY + j, posZ + k);
                     }
                 }
             }

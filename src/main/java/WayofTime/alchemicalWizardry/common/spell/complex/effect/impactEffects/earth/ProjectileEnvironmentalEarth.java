@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect
 {
@@ -21,11 +20,15 @@ public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect
     @Override
     public void onUpdateEffect(Entity projectile)
     {
-        BlockPos pos = projectile.getPosition();
+        Vec3 posVec = SpellHelper.getEntityBlockVector(projectile);
 
         int horizRange = this.powerUpgrades + 1;
         int vertRange = (int) (0.5 * (this.powerUpgrades + 1));
         int maxBlocks = (int) (2 * Math.pow(3.47, this.potencyUpgrades));
+
+        int posX = (int) (posVec.xCoord);
+        int posY = (int) (posVec.yCoord);
+        int posZ = (int) (posVec.zCoord);
 
         World worldObj = projectile.worldObj;
 
@@ -44,25 +47,24 @@ public class ProjectileEnvironmentalEarth extends ProjectileUpdateEffect
                 {
                     for (int k = -horizRange; k <= horizRange; k++)
                     {
-                    	BlockPos newPos = pos.add(i, j, k);
-                        if (!worldObj.isAirBlock(newPos) && blocksBroken < maxBlocks)
+                        if (!worldObj.isAirBlock(posX + i, posY + j, posZ + k) && blocksBroken < maxBlocks)
                         {
-                        	IBlockState state = worldObj.getBlockState(newPos);
-                            Block block = state.getBlock();
-                            if (block == null || block.getBlockHardness(worldObj, newPos) == -1 || SpellHelper.isBlockFluid(block))
+                            Block block = worldObj.getBlock(posX + i, posY + j, posZ + k);
+                            int meta = worldObj.getBlockMetadata(posX + i, posY + j, posZ + k);
+                            if (block == null || block.getBlockHardness(worldObj, posX + i, posY + j, posZ + k) == -1 || SpellHelper.isBlockFluid(block))
                             {
                                 continue;
                             }
 
-                            if (((EntitySpellProjectile) projectile).getIsSilkTouch() && block.canSilkHarvest(worldObj, newPos, state, ((EntitySpellProjectile) projectile).shootingEntity))
+                            if (((EntitySpellProjectile) projectile).getIsSilkTouch() && block.canSilkHarvest(worldObj, ((EntitySpellProjectile) projectile).shootingEntity, posX + i, posY + j, posZ + k, meta))
                             {
-                                ItemStack stack = new ItemStack(block, 1, block.getMetaFromState(state));
-                                EntityItem itemEntity = new EntityItem(worldObj, newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5, stack);
+                                ItemStack stack = new ItemStack(block, 1, meta);
+                                EntityItem itemEntity = new EntityItem(worldObj, posX + i + 0.5, posY + j + 0.5, posZ + k + 0.5, stack);
                                 worldObj.spawnEntityInWorld(itemEntity);
-                                worldObj.setBlockToAir(newPos);
+                                worldObj.setBlockToAir(posX + i, posY + j, posZ + k);
                             } else
                             {
-                                worldObj.destroyBlock(newPos, true);
+                                worldObj.func_147480_a(posX + i, posY + j, posZ + k, true);
                             }
                             blocksBroken++;
                         }

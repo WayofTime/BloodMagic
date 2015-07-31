@@ -20,11 +20,11 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
+import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.LocalRitualStorage;
 import WayofTime.alchemicalWizardry.common.EntityAITargetAggroCloaking;
@@ -34,6 +34,7 @@ import WayofTime.alchemicalWizardry.common.demonVillage.ai.IOccasionalRangedAtta
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.entity.mob.EntityDemon;
 import WayofTime.alchemicalWizardry.common.entity.projectile.HolyProjectile;
+import WayofTime.alchemicalWizardry.common.rituals.LocalStorageAlphaPact;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRangedAttackMob, IHoardDemon
@@ -42,7 +43,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
 
     private boolean isAngry = true;
-    private BlockPos demonPortal;
+    private Int3 demonPortal;
     
     private static float maxTamedHealth = 200.0F;
     private static float maxUntamedHealth = 200.0F;
@@ -53,7 +54,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     {
         super(par1World, AlchemicalWizardry.entityMinorDemonGruntID);
         this.setSize(0.7F, 1.8F);
-//        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);
         this.tasks.addTask(3, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
@@ -67,7 +68,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
         this.setAggro(false);
         this.setTamed(false);
         
-        demonPortal = new BlockPos(0,0,0);
+        demonPortal = new Int3(0,0,0);
 
         if (par1World != null && !par1World.isRemote)
         {
@@ -127,13 +128,13 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     }
     
     @Override
-    public void setPortalLocation(BlockPos position)
+    public void setPortalLocation(Int3 position)
     {
     	this.demonPortal = position;
     }
     
     @Override
-    public BlockPos getPortalLocation()
+    public Int3 getPortalLocation()
     {
     	return this.demonPortal;
     }
@@ -175,25 +176,23 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
     @Override
-    public void writeEntityToNBT(NBTTagCompound tag)
+    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
-        super.writeEntityToNBT(tag);
-        tag.setBoolean("Angry", this.isAngry());
+        super.writeEntityToNBT(par1NBTTagCompound);
+        par1NBTTagCompound.setBoolean("Angry", this.isAngry());
         
-        tag.setInteger("xCoord", this.demonPortal.getX());
-        tag.setInteger("yCoord", this.demonPortal.getY());
-        tag.setInteger("zCoord", this.demonPortal.getZ());
+        this.demonPortal.writeToNBT(par1NBTTagCompound);
     }
 
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     @Override
-    public void readEntityFromNBT(NBTTagCompound tag)
+    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
-        super.readEntityFromNBT(tag);
-        this.setAngry(tag.getBoolean("Angry"));
-        this.demonPortal = new BlockPos(tag.getInteger("xCoord"), tag.getInteger("yCoord"), tag.getInteger("zCoord"));
+        super.readEntityFromNBT(par1NBTTagCompound);
+        this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
+        this.demonPortal = Int3.readFromNBT(par1NBTTagCompound);
         
         this.setCombatTask();
     }
@@ -253,7 +252,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
     {
     	if(!this.enthralled)
     	{
-            TileEntity tile = this.worldObj.getTileEntity(this.demonPortal);
+            TileEntity tile = this.worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
             if(tile instanceof TEDemonPortal)
             {
             	((TEDemonPortal) tile).enthrallDemon(this);
@@ -262,12 +261,12 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
             {
             	IMasterRitualStone stone = (IMasterRitualStone)tile;
             	LocalRitualStorage stor = stone.getLocalStorage();
-//            	if(stor instanceof LocalStorageAlphaPact)
-//            	{
-//            		LocalStorageAlphaPact storage = (LocalStorageAlphaPact)stor;
-//            		
-//            		storage.thrallDemon(this);
-//            	}
+            	if(stor instanceof LocalStorageAlphaPact)
+            	{
+            		LocalStorageAlphaPact storage = (LocalStorageAlphaPact)stor;
+            		
+            		storage.thrallDemon(this);
+            	}
             }
     	}
         super.onUpdate();
@@ -326,7 +325,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                             --itemstack.stackSize;
                         }
 
-                        this.heal((float) itemfood.getHealAmount(itemstack));
+                        this.heal((float) itemfood.func_150905_g(itemstack));
 
                         if (itemstack.stackSize <= 0)
                         {
@@ -344,8 +343,8 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 {
                     this.aiSit.setSitting(!this.isSitting());
                     this.isJumping = false;
-//                    this.setPathToEntity(null);
-//                    this.setTarget(null);
+                    this.setPathToEntity(null);
+                    this.setTarget(null);
                     this.setAttackTarget(null);
                 }
 
@@ -368,7 +367,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
                 if (this.rand.nextInt(1) == 0)
                 {
                     this.setTamed(true);
-//                    this.setPathToEntity(null);
+                    this.setPathToEntity(null);
                     this.setAttackTarget(null);
                     this.aiSit.setSitting(true);
                     this.setHealth(maxTamedHealth);
@@ -501,7 +500,7 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 	}
 
 	@Override
-	public boolean thrallDemon(BlockPos location) 
+	public boolean thrallDemon(Int3 location) 
 	{
 		this.setPortalLocation(location);
 		return true;
@@ -510,9 +509,9 @@ public class EntityMinorDemonGrunt extends EntityDemon implements IOccasionalRan
 	@Override
 	public boolean isSamePortal(IHoardDemon demon) 
 	{
-		BlockPos position = demon.getPortalLocation();
-		TileEntity portal = worldObj.getTileEntity(this.demonPortal);
+		Int3 position = demon.getPortalLocation();
+		TileEntity portal = worldObj.getTileEntity(this.demonPortal.xCoord, this.demonPortal.yCoord, this.demonPortal.zCoord);
 		
-		return portal instanceof TEDemonPortal && portal == worldObj.getTileEntity(position);
+		return portal instanceof TEDemonPortal ? portal == worldObj.getTileEntity(position.xCoord, position.yCoord, position.zCoord) : false;
 	}
 }

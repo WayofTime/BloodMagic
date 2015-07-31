@@ -3,14 +3,11 @@ package WayofTime.alchemicalWizardry.common.items;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -27,7 +24,6 @@ public class ItemBlockCrystalBelljar extends ItemBlock
         this.setMaxStackSize(16);
     }
 
-    @Override
     public int getMetadata(int par1)
     {
         return par1;
@@ -81,14 +77,17 @@ public class ItemBlockCrystalBelljar extends ItemBlock
     }
 
     @Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState)
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
     {
-    	if (!world.setBlockState(pos, newState, 3)) return false;
-
-        IBlockState state = world.getBlockState(pos);
-        if (state.getBlock() == this.block)
+        if (!world.setBlock(x, y, z, field_150939_a, metadata, 3))
         {
-            this.block.onBlockPlacedBy(world, pos, state, player, stack);
+            return false;
+        }
+
+        if (world.getBlock(x, y, z) == field_150939_a)
+        {
+            field_150939_a.onBlockPlacedBy(world, x, y, z, player, stack);
+            field_150939_a.onPostBlockPlaced(world, x, y, z, metadata);
         }
 
         return true;

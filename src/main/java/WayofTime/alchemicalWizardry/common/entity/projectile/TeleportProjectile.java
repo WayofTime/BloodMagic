@@ -7,7 +7,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -84,7 +83,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                         {
                             if (shootingEntity.isRiding())
                             {
-                                shootingEntity.mountEntity(null);
+                                shootingEntity.mountEntity((Entity) null);
                             }
                             shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
                         }
@@ -118,7 +117,7 @@ public class TeleportProjectile extends EnergyBlastProjectile
                             {
                                 if (shootingEntity.isRiding())
                                 {
-                                    shootingEntity.mountEntity(null);
+                                    shootingEntity.mountEntity((Entity) null);
                                 }
 
                                 shootingEntity.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
@@ -132,15 +131,15 @@ public class TeleportProjectile extends EnergyBlastProjectile
             }
         }
 
-        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
+        spawnHitParticles("magicCrit", 8);
         this.setDead();
     }
 
     @Override
     public void doFiringParticles()
     {
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.PORTAL, posX, posY, posZ, -motionX, -motionY, -motionZ);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "portal", posX, posY, posZ, -motionX, -motionY, -motionZ);
     }
 
     @Override

@@ -134,7 +134,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
                     //If target is integer, then we should be check the blood orb value of the item instead
                     if (next instanceof Integer)
                     {
-                        if (slot.getItem() instanceof IBloodOrb)
+                        if (slot != null && slot.getItem() instanceof IBloodOrb)
                         {
                             IBloodOrb orb = (IBloodOrb) slot.getItem();
                             if (orb.getOrbLevel() < (Integer) next)
@@ -177,10 +177,4 @@ public class ShapelessBloodOrbRecipe implements IRecipe
     {
         return this.input;
     }
-    
-    @Override
-	public ItemStack[] func_179532_b(InventoryCrafting inventory) 
-	{
-		return new ItemStack[1];
-	}
 }

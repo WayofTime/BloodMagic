@@ -2,8 +2,8 @@ package WayofTime.alchemicalWizardry.common.routing;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameData;
 import WayofTime.alchemicalWizardry.api.RoutingFocusLogic;
+import cpw.mods.fml.common.registry.GameData;
 
 public class RoutingFocusLogicModItems extends RoutingFocusLogic
 {
@@ -22,7 +22,7 @@ public class RoutingFocusLogicModItems extends RoutingFocusLogic
 	
 	public String getModID(Item itm)
 	{
-		String str = (String) GameData.getItemRegistry().getNameForObject(itm);
+		String str = GameData.getItemRegistry().getNameForObject(itm);
 		if(!str.isEmpty())
 		{
 			String[] strs = str.split(":");

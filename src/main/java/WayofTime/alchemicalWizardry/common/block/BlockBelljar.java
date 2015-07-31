@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,16 +13,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBelljar extends BlockContainer
 {
@@ -32,9 +30,11 @@ public class BlockBelljar extends BlockContainer
         super(Material.glass);
         setHardness(2.0F);
         setResistance(5.0F);
+        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("crystalBelljar");
     }
 
-    @Override
+    
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
@@ -73,16 +73,16 @@ public class BlockBelljar extends BlockContainer
     }
     
     @Override
-    public void onBlockPlacedBy(World world, BlockPos blockPos, IBlockState blockState, EntityLivingBase entityLiving, ItemStack stack)
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entityLiving, ItemStack stack)
     {
-        TileEntity tile = world.getTileEntity(blockPos);
+        TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile instanceof TEBelljar)
+        if (tile instanceof TEBellJar)
         {
             NBTTagCompound tag = stack.getTagCompound();
             if (tag != null)
             {
-                ((TEBelljar) tile).readTankNBTOnPlace(tag);
+                ((TEBellJar) tile).readTankNBTOnPlace(tag);
             }
         }
     }
@@ -90,7 +90,13 @@ public class BlockBelljar extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TEBelljar();
+        return new TEBellJar();
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
     }
 
     @Override
@@ -106,7 +112,7 @@ public class BlockBelljar extends BlockContainer
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState blockState)
+    public boolean hasTileEntity()
     {
         return true;
     }
@@ -118,35 +124,35 @@ public class BlockBelljar extends BlockContainer
     }
 
     @Override
-    public int getComparatorInputOverride(World world, BlockPos blockPos)
+    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
     {
-        TileEntity tile = world.getTileEntity(blockPos);
-        if (tile instanceof TEBelljar)
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (tile instanceof TEBellJar)
         {
-            return ((TEBelljar) tile).getRSPowerOutput();
+            return ((TEBellJar) tile).getRSPowerOutput();
         }
         return 15;
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
     {
-        this.dropBlockAsItem(world, blockPos, blockState, 0);
-        super.onBlockHarvested(world, blockPos, blockState, player);
+        this.dropBlockAsItem(world, x, y, z, meta, 0);
+        super.onBlockHarvested(world, x, y, z, meta, player);
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos blockPos, IBlockState blockState, int fortune)
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
     {
-        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> list = new ArrayList();
 
-        TileEntity tile = world.getTileEntity(blockPos);
+        TileEntity tile = world.getTileEntity(x, y, z);
 
-        if (tile instanceof TEBelljar)
+        if (tile instanceof TEBellJar)
         {
             ItemStack drop = new ItemStack(this);
             NBTTagCompound tag = new NBTTagCompound();
-            ((TEBelljar) tile).writeTankNBT(tag);
+            ((TEBellJar) tile).writeTankNBT(tag);
             drop.setTagCompound(tag);
 
             list.add(drop);

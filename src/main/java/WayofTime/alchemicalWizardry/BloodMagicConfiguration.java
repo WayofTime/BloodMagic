@@ -9,8 +9,6 @@ import java.util.Map.Entry;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.client.renderer.ColourThreshold;
 import WayofTime.alchemicalWizardry.client.renderer.RenderHelper;
@@ -18,6 +16,8 @@ import WayofTime.alchemicalWizardry.common.demonVillage.DemonVillagePath;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,8 +32,6 @@ public class BloodMagicConfiguration
 
 	public static Configuration config;
 
-	public static String[] blocksToBeDisabled;
-	public static String[] itemsToBeDisabled;
     public static String[] teleposerBlacklist;
     public static String[] blacklist = {};
 
@@ -108,6 +106,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.causeHungerChatMessage = config.get("WimpySettings", "causeHungerChatMessage", true).getBoolean();
 //		AlchemicalWizardry.lockdownAltar = config.get("WimpySettings", "LockdownAltarWithRegen", true).getBoolean();
 		AlchemicalWizardry.lockdownAltar = false;
+		AlchemicalWizardry.disableBoundToolsRightClick = config.get("WimpySettings", "disableBoundToolsRightClick", false).getBoolean(false);
 
 		AlchemicalWizardry.ritualDisabledWater = config.get("Ritual Blacklist", "Ritual of the Full Spring", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledLava = config.get("Ritual Blacklist", "Serenade of the Nether", false).getBoolean(false);
@@ -145,7 +144,7 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledCrafting = config.get("Ritual Blacklist", "Rhythm of the Beating Anvil", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledPhantomHands = config.get("Ritual Blacklist", "Orchestra of the Phantom Hands", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledSphereIsland = config.get("Ritual Blacklist", "Birth of the Bastion", false).getBoolean(false);
-		
+
 		AlchemicalWizardry.potionDisableRegen = config.get("Alchemy Potion Blacklist", "Regeneration", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableNightVision = config.get("Alchemy Potion Blacklist", "Night Vision", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableFireResistance = config.get("Alchemy Potion Blacklist", "Fire Resistance", false).getBoolean(false);
@@ -195,16 +194,12 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.isDemonRitualCreativeOnly = config.get(tempDemonConfigs, "IsDemonRitualCreativeOnly", false).getBoolean();
 		
 		BoundArmour.tryComplexRendering = config.get("WimpySettings", "UseFancyBoundArmour", true).getBoolean(true);
-
-        blocksToBeDisabled = config.getStringList("Disable blocks here", "WimpySettings", new String[]{""}, "Type in the unlocalized name of the block you want disabled here (separate them using ENTER)");
-        itemsToBeDisabled = config.getStringList("Disable items here", "WimpySettings", new String[]{""}, "Type in the unlocalized name of the item you want disabled (separate them using ENTER)");
 		
 //		ItemIncense.itemDuration = config.get("TestIncenseSettings", "ItemDuration", 100).getInt();
 //		ItemIncense.minValue = config.get("TestIncenseSettings", "MinValue", 0).getInt();
 //		ItemIncense.maxValue = config.get("TestIncenseSettings", "MaxValue", 100).getInt();
 //		PlayerSacrificeHandler.scalingOfSacrifice = (float) config.get("TestIncenseSettings", "ScalingFactor", 0.0025f).getDouble();
 //		PlayerSacrificeHandler.soulFrayDuration = config.get("TestIncenseSettings", "SoulFrayDuration", 400).getInt();
-
 
 		Side side = FMLCommonHandler.instance().getSide();
 		if (side == Side.CLIENT)
@@ -213,6 +208,7 @@ public class BloodMagicConfiguration
 			RenderHelper.yOffset = config.get("ClientSettings", "AlchemyHUDyOffset", 2).getInt();
 			RenderHelper.lpBarX = config.get("ClientSettings", "LPHUDxOffset", 12).getInt();
 			RenderHelper.lpBarY = config.get("ClientSettings", "LPHUDyOffset", 75).getInt();
+			AlchemicalWizardry.displayRitualAnimation = config.get("ClientSettings", "Display Ritual Animation", true).getBoolean(true);
 		}
 
 		config.save();
@@ -220,7 +216,6 @@ public class BloodMagicConfiguration
 
 	public static void set(String categoryName, String propertyName, String newValue)
 	{
-
 		config.load();
 		if (config.getCategoryNames().contains(categoryName))
 		{
@@ -230,8 +225,6 @@ public class BloodMagicConfiguration
 			}
 		}
 		config.save();
-
-
 	}
 
 	public static void loadBlacklist()
@@ -253,49 +246,49 @@ public class BloodMagicConfiguration
 		config.save();
 	}
 
-    public static void blacklistRituals()
-    {
-        if (AlchemicalWizardry.ritualDisabledWater) r("AW001Water");
-        if (AlchemicalWizardry.ritualDisabledLava) r("AW002Lava");
-        if (AlchemicalWizardry.ritualDisabledGreenGrove) r("AW003GreenGrove");
-        if (AlchemicalWizardry.ritualDisabledInterdiction) r("AW004Interdiction");
-        if (AlchemicalWizardry.ritualDisabledContainment) r("AW005Containment");
-        if (AlchemicalWizardry.ritualDisabledBinding) r("AW006Binding");
-        if (AlchemicalWizardry.ritualDisabledUnbinding) r("AW007Unbinding"); // "A medium dry martini, lemon peel. Shaken, not stirred."
-        if (AlchemicalWizardry.ritualDisabledHighJump) r("AW008HighJump");
-        if (AlchemicalWizardry.ritualDisabledMagnetism) r("AW009Magnetism");
-        if (AlchemicalWizardry.ritualDisabledCrusher) r("AW010Crusher");
-        if (AlchemicalWizardry.ritualDisabledSpeed) r("AW011Speed");
-        if (AlchemicalWizardry.ritualDisabledAnimalGrowth) r("AW012AnimalGrowth");
-        if (AlchemicalWizardry.ritualDisabledSuffering) r("AW013Suffering");
-        if (AlchemicalWizardry.ritualDisabledRegen) r("AW014Regen");
-        if (AlchemicalWizardry.ritualDisabledFeatheredKnife) r("AW015FeatheredKnife");
-        if (AlchemicalWizardry.ritualDisabledFeatheredEarth) r("AW016FeatheredEarth");
-        if (AlchemicalWizardry.ritualDisabledGaia) r("AW017Gaia");
-        if (AlchemicalWizardry.ritualDisabledCondor) r("AW018Condor");
-        if (AlchemicalWizardry.ritualDisabledFallingTower) r("AW019FallingTower");
-        if (AlchemicalWizardry.ritualDisabledBalladOfAlchemy) r("AW020BalladOfAlchemy");
-        if (AlchemicalWizardry.ritualDisabledExpulsion) r("AW021Expulsion");
-        if (AlchemicalWizardry.ritualDisabledSuppression) r("AW022Suppression");
-        if (AlchemicalWizardry.ritualDisabledZephyr) r("AW023Zephyr");
-        if (AlchemicalWizardry.ritualDisabledHarvest) r("AW024Harvest");
-        if (AlchemicalWizardry.ritualDisabledConduit) r("AW025Conduit");
-        if (AlchemicalWizardry.ritualDisabledEllipsoid) r("AW026Ellipsoid");
-        if (AlchemicalWizardry.ritualDisabledEvaporation) r("AW027Evaporation");
-        if (AlchemicalWizardry.ritualDisabledSpawnWard) r("AW028SpawnWard");
-        if (AlchemicalWizardry.ritualDisabledVeilOfEvil) r("AW029VeilOfEvil");
-        if (AlchemicalWizardry.ritualDisabledFullStomach) r("AW030FullStomach");
-        if (AlchemicalWizardry.ritualDisabledConvocation) r("AW031Convocation");
-        if (AlchemicalWizardry.ritualDisabledSymmetry) r("AW032Symmetry");
-        if (AlchemicalWizardry.ritualDisabledStalling) r("AW033Stalling");
-        if (AlchemicalWizardry.ritualDisabledCrafting) r("AW034Crafting");
-        if (AlchemicalWizardry.ritualDisabledPhantomHands) r("AW035PhantomHands");
-        if (AlchemicalWizardry.ritualDisabledSphereIsland) r("AW036SphereIsland");
-    }
+	public static void blacklistRituals()
+	{
+		if (AlchemicalWizardry.ritualDisabledWater) r("AW001Water");
+		if (AlchemicalWizardry.ritualDisabledLava) r("AW002Lava");
+		if (AlchemicalWizardry.ritualDisabledGreenGrove) r("AW003GreenGrove");
+		if (AlchemicalWizardry.ritualDisabledInterdiction) r("AW004Interdiction");
+		if (AlchemicalWizardry.ritualDisabledContainment) r("AW005Containment");
+		if (AlchemicalWizardry.ritualDisabledBinding) r("AW006Binding");
+		if (AlchemicalWizardry.ritualDisabledUnbinding) r("AW007Unbinding"); // "A medium dry martini, lemon peel. Shaken, not stirred."
+		if (AlchemicalWizardry.ritualDisabledHighJump) r("AW008HighJump");
+		if (AlchemicalWizardry.ritualDisabledMagnetism) r("AW009Magnetism");
+		if (AlchemicalWizardry.ritualDisabledCrusher) r("AW010Crusher");
+		if (AlchemicalWizardry.ritualDisabledSpeed) r("AW011Speed");
+		if (AlchemicalWizardry.ritualDisabledAnimalGrowth) r("AW012AnimalGrowth");
+		if (AlchemicalWizardry.ritualDisabledSuffering) r("AW013Suffering");
+		if (AlchemicalWizardry.ritualDisabledRegen) r("AW014Regen");
+		if (AlchemicalWizardry.ritualDisabledFeatheredKnife) r("AW015FeatheredKnife");
+		if (AlchemicalWizardry.ritualDisabledFeatheredEarth) r("AW016FeatheredEarth");
+		if (AlchemicalWizardry.ritualDisabledGaia) r("AW017Gaia");
+		if (AlchemicalWizardry.ritualDisabledCondor) r("AW018Condor");
+		if (AlchemicalWizardry.ritualDisabledFallingTower) r("AW019FallingTower");
+		if (AlchemicalWizardry.ritualDisabledBalladOfAlchemy) r("AW020BalladOfAlchemy");
+		if (AlchemicalWizardry.ritualDisabledExpulsion) r("AW021Expulsion");
+		if (AlchemicalWizardry.ritualDisabledSuppression) r("AW022Suppression");
+		if (AlchemicalWizardry.ritualDisabledZephyr) r("AW023Zephyr");
+		if (AlchemicalWizardry.ritualDisabledHarvest) r("AW024Harvest");
+		if (AlchemicalWizardry.ritualDisabledConduit) r("AW025Conduit");
+		if (AlchemicalWizardry.ritualDisabledEllipsoid) r("AW026Ellipsoid");
+		if (AlchemicalWizardry.ritualDisabledEvaporation) r("AW027Evaporation");
+		if (AlchemicalWizardry.ritualDisabledSpawnWard) r("AW028SpawnWard");
+		if (AlchemicalWizardry.ritualDisabledVeilOfEvil) r("AW029VeilOfEvil");
+		if (AlchemicalWizardry.ritualDisabledFullStomach) r("AW030FullStomach");
+		if (AlchemicalWizardry.ritualDisabledConvocation) r("AW031Convocation");
+		if (AlchemicalWizardry.ritualDisabledSymmetry) r("AW032Symmetry");
+		if (AlchemicalWizardry.ritualDisabledStalling) r("AW033Stalling");
+		if (AlchemicalWizardry.ritualDisabledCrafting) r("AW034Crafting");
+		if (AlchemicalWizardry.ritualDisabledPhantomHands) r("AW035PhantomHands");
+		if (AlchemicalWizardry.ritualDisabledSphereIsland) r("AW036SphereIsland");
+	}
 
-    private static void r(String ritualID)
-    {
-        Rituals.ritualMap.remove(ritualID);
-        Rituals.keyList.remove(ritualID);
-    }
+	private static void r(String ritualID)
+	{
+		Rituals.ritualMap.remove(ritualID);
+		Rituals.keyList.remove(ritualID);
+	}
 }

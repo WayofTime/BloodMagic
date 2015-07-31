@@ -9,7 +9,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -27,8 +26,10 @@ public class RitualEffectFullStomach extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (world.getWorldTime() % 20 != 0)
         {
@@ -38,7 +39,7 @@ public class RitualEffectFullStomach extends RitualEffect
         double horizRange = 16;
         double vertRange = 16;
 
-        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, horizRange, vertRange);
+        List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizRange, vertRange);
 
         if (playerList == null)
         {
@@ -50,14 +51,14 @@ public class RitualEffectFullStomach extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            TileEntity tile = world.getTileEntity(pos.offsetUp());
+            TileEntity tile = world.getTileEntity(x, y + 1, z);
             IInventory inventory = null;
             if (tile instanceof IInventory)
             {
                 inventory = (IInventory) tile;
             } else
             {
-                tile = world.getTileEntity(pos.offsetDown());
+                tile = world.getTileEntity(x, y - 1, z);
                 if (tile instanceof IInventory)
                 {
                     inventory = (IInventory) tile;
@@ -81,8 +82,8 @@ public class RitualEffectFullStomach extends RitualEffect
                         {
                             ItemFood foodItem = (ItemFood) stack.getItem();
 
-                            int regularHeal = foodItem.getHealAmount(stack);
-                            float saturatedHeal = foodItem.getSaturationModifier(stack) * regularHeal * 2.0f;
+                            int regularHeal = foodItem.func_150905_g(stack);
+                            float saturatedHeal = foodItem.func_150906_h(stack) * regularHeal * 2.0f;
 
                             if (saturatedHeal + satLevel <= 20)
                             {
@@ -113,7 +114,7 @@ public class RitualEffectFullStomach extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> fullRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> fullRitual = new ArrayList();
         fullRitual.add(new RitualComponent(0, 0, 3, RitualComponent.FIRE));
         fullRitual.add(new RitualComponent(0, 0, -3, RitualComponent.FIRE));
         fullRitual.add(new RitualComponent(3, 0, 0, RitualComponent.FIRE));

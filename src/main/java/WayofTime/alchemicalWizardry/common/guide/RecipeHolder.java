@@ -155,7 +155,7 @@ public class RecipeHolder
 		
 		arcanePlinthRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockPlinth));
 		arcanePedestalRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockPedestal));
-		spellTableRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockSpellTable));
+		spellTableRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockHomHeart));
 		
 		alchemySetRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockWritingTable));
 		crucibleRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockCrucible));
@@ -168,7 +168,7 @@ public class RecipeHolder
 		routerRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemAttunedCrystal));
 		segmenterRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemTankSegmenter));
 		cleanserRecipe = getRecipeForItemStack(new ItemStack(ModItems.itemDestinationClearer));
-		calcinatorRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockAlchemicalCalcinator));
+		calcinatorRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockAlchemicCalcinator));
 		belljarRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockCrystalBelljar));
 		relayRecipe = getRecipeForItemStack(new ItemStack(ModBlocks.blockReagentConduit));
 		

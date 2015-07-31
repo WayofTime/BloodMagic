@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BindingRegistry
 {
-    public static List<BindingRecipe> bindingRecipes = new LinkedList<BindingRecipe>();
+    public static List<BindingRecipe> bindingRecipes = new LinkedList();
 
     public static void registerRecipe(ItemStack output, ItemStack input)
     {

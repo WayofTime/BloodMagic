@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
@@ -25,8 +24,10 @@ public class RitualEffectLifeConduit extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         IBloodAltar tileAltar = null;
         boolean testFlag = false;
@@ -37,10 +38,9 @@ public class RitualEffectLifeConduit extends RitualEffect
             {
                 for (int k = -10; k <= 10; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    if (world.getTileEntity(newPos) instanceof IBloodAltar)
+                    if (world.getTileEntity(x + i, y + k, z + j) instanceof IBloodAltar)
                     {
-                        tileAltar = (IBloodAltar) world.getTileEntity(newPos);
+                        tileAltar = (IBloodAltar) world.getTileEntity(x + i, y + k, z + j);
                         testFlag = true;
                     }
                 }
@@ -61,7 +61,7 @@ public class RitualEffectLifeConduit extends RitualEffect
         int vertRange = 20;
 
         EntityPlayer entityOwner = null;
-        List<EntityPlayer> list = SpellHelper.getPlayersInRange(world, pos.getX(), pos.getY(), pos.getZ(), d0, vertRange);
+        List<EntityPlayer> list = SpellHelper.getPlayersInRange(world, x, y, z, d0, vertRange);
 
         for (EntityPlayer player : list)
         {
@@ -76,10 +76,10 @@ public class RitualEffectLifeConduit extends RitualEffect
             return;
         }
 
-        int fillAmount = Math.min(currentEssence / 2, ((IFluidHandler)tileAltar).fill(EnumFacing.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 10000), false));
+        int fillAmount = Math.min(currentEssence / 2, ((IFluidHandler)tileAltar).fill(ForgeDirection.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, 10000), false));
 
         {
-        	((IFluidHandler)tileAltar).fill(EnumFacing.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fillAmount), true);
+        	((IFluidHandler)tileAltar).fill(ForgeDirection.UP, new FluidStack(AlchemicalWizardry.lifeEssenceFluid, fillAmount), true);
             if (entityOwner.getHealth() > 2.0f && fillAmount != 0)
             {
                 entityOwner.setHealth(2.0f);
@@ -97,7 +97,7 @@ public class RitualEffectLifeConduit extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> conduitRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> conduitRitual = new ArrayList();
 
         conduitRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.FIRE));
         conduitRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.FIRE));

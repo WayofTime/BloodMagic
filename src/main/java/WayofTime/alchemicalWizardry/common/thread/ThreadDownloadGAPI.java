@@ -35,7 +35,7 @@ public class ThreadDownloadGAPI extends Thread
     {
         try
         {
-            IChatComponent component = IChatComponent.Serializer.jsonToComponent(String.format(StatCollector.translateToLocal("bm.versioning.startingDownload"), fileName));
+            IChatComponent component = IChatComponent.Serializer.func_150699_a(String.format(StatCollector.translateToLocal("bm.versioning.startingDownload"), fileName));
 
             if (Minecraft.getMinecraft().thePlayer != null)
             {

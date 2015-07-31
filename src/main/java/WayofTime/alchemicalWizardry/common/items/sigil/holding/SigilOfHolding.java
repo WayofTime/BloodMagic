@@ -2,20 +2,22 @@ package WayofTime.alchemicalWizardry.common.items.sigil.holding;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilOfHolding extends BindableItems
+public class SigilOfHolding extends EnergyItems
 {
     private static int invSize = 5;
 
@@ -24,25 +26,56 @@ public class SigilOfHolding extends BindableItems
     public SigilOfHolding()
     {
         super();
-        setMaxStackSize(1);
+        this.maxStackSize = 1;
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4)
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfHolding");
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
+    {
+        if (!(stack.getTagCompound() == null))
+        {
+            ItemStack[] inv = getInternalInventory(stack);
+
+            if (inv == null)
+            {
+                return this.itemIcon;
+            }
+
+            ItemStack item = getCurrentSigil(stack);
+
+            if (item != null)
+            {
+                return item.getIconIndex();
+            }
+        }
+
+        return this.itemIcon;
+    }
+
+    @Override
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.sigilofholding.desc"));
 
-        if (!(stack.getTagCompound() == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + stack.getTagCompound().getString("ownerName"));
-            ItemStack[] inv = getInternalInventory(stack);
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+            ItemStack[] inv = getInternalInventory(par1ItemStack);
 
             if (inv == null)
             {
                 return;
             }
 
-            int currentSlot = getCurrentItem(stack);
+            int currentSlot = getCurrentItem(par1ItemStack);
             ItemStack item = inv[currentSlot];
 
             if (item != null)
@@ -61,11 +94,74 @@ public class SigilOfHolding extends BindableItems
     }
     
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    {
+        if (checkAndSetItemOwner(par1ItemStack, par2EntityPlayer))
+        {
+        	int currentSlot = getCurrentItem(par1ItemStack);
+            ItemStack[] inv = getInternalInventory(par1ItemStack);
+
+            if (inv == null)
+            {
+                return false;
+            }
+
+            ItemStack itemUsed = inv[currentSlot];
+
+            if (itemUsed == null)
+            {
+                return false;
+            }
+
+            boolean bool = itemUsed.getItem().onItemUse(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10);
+
+            saveInventory(par1ItemStack, inv);
+
+            return bool;
+        }
+
+        return false;
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+        if (checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        {
+            if (par3EntityPlayer.isSneaking())
+            {
+                InventoryHolding.setUUID(par1ItemStack);
+                par3EntityPlayer.openGui(AlchemicalWizardry.instance, 3, par3EntityPlayer.worldObj, (int) par3EntityPlayer.posX, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ);
+                return par1ItemStack;
+            }
+
+            int currentSlot = getCurrentItem(par1ItemStack);
+            ItemStack[] inv = getInternalInventory(par1ItemStack);
+
+            if (inv == null)
+            {
+                return par1ItemStack;
+            }
+
+            ItemStack itemUsed = inv[currentSlot];
+
+            if (itemUsed == null)
+            {
+                return par1ItemStack;
+            }
+
+            itemUsed.getItem().onItemRightClick(itemUsed, par2World, par3EntityPlayer);
+            saveInventory(par1ItemStack, inv);
+        }
+        return par1ItemStack;
+    }
+
+    @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
         if (checkAndSetItemOwner(stack, player))
         {
-        	int currentSlot = getCurrentItem(stack);
+            int currentSlot = getCurrentItem(stack);
             ItemStack[] inv = getInternalInventory(stack);
 
             if (inv == null)
@@ -80,7 +176,7 @@ public class SigilOfHolding extends BindableItems
                 return false;
             }
 
-            boolean bool = itemUsed.getItem().onItemUse(stack, player, world, pos, side, hitX, hitY, hitZ);
+            boolean bool = itemUsed.getItem().onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
 
             saveInventory(stack, inv);
 
@@ -90,44 +186,11 @@ public class SigilOfHolding extends BindableItems
         return false;
     }
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (checkAndSetItemOwner(stack, par3EntityPlayer))
-        {
-            if (par3EntityPlayer.isSneaking())
-            {
-                InventoryHolding.setUUID(stack);
-                par3EntityPlayer.openGui(AlchemicalWizardry.instance, 3, par3EntityPlayer.worldObj, (int) par3EntityPlayer.posX, (int) par3EntityPlayer.posY, (int) par3EntityPlayer.posZ);
-                return stack;
-            }
-
-            int currentSlot = getCurrentItem(stack);
-            ItemStack[] inv = getInternalInventory(stack);
-
-            if (inv == null)
-            {
-                return stack;
-            }
-
-            ItemStack itemUsed = inv[currentSlot];
-
-            if (itemUsed == null)
-            {
-                return stack;
-            }
-
-            itemUsed.getItem().onItemRightClick(itemUsed, par2World, par3EntityPlayer);
-            saveInventory(stack, inv);
-        }
-        return stack;
-    }
-
     public static int next(int mode)
     {
         int index = mode + 1;
 
-        if (index >= invSize + 1)
+        if (index >= invSize)
         {
             index = 0;
         }
@@ -149,10 +212,10 @@ public class SigilOfHolding extends BindableItems
 
     private static void initModeTag(ItemStack itemStack)
     {
-        if (itemStack.getTagCompound() == null)
+        if (itemStack.stackTagCompound == null)
         {
-            itemStack.setTagCompound(new NBTTagCompound());
-            itemStack.getTagCompound().setInteger(NBT_CURRENT_SIGIL, invSize);
+            itemStack.stackTagCompound = new NBTTagCompound();
+            itemStack.stackTagCompound.setInteger(NBT_CURRENT_SIGIL, invSize);
         }
     }
 
@@ -176,7 +239,7 @@ public class SigilOfHolding extends BindableItems
         if (itemStack != null && itemStack.getItem() instanceof SigilOfHolding)
         {
             initModeTag(itemStack);
-            int currentSigil = itemStack.getTagCompound().getInteger(NBT_CURRENT_SIGIL);
+            int currentSigil = itemStack.stackTagCompound.getInteger(NBT_CURRENT_SIGIL);
             currentSigil = MathHelper.clamp_int(currentSigil, 0, invSize);
             return currentSigil;
         }
@@ -246,22 +309,22 @@ public class SigilOfHolding extends BindableItems
         if (itemStack != null && itemStack.getItem() instanceof SigilOfHolding)
         {
             initModeTag(itemStack);
-            itemStack.getTagCompound().setInteger(NBT_CURRENT_SIGIL, mode);
+            itemStack.stackTagCompound.setInteger(NBT_CURRENT_SIGIL, mode);
         }
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        if (!(stack.getTagCompound() == null))
+        if (!(par1ItemStack.getTagCompound() == null))
         {
-            this.tickInternalInventory(stack, par2World, par3Entity, par4, par5);
+            this.tickInternalInventory(par1ItemStack, par2World, par3Entity, par4, par5);
         }
     }
 
-    public void tickInternalInventory(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5)
+    public void tickInternalInventory(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5)
     {
-        ItemStack[] inv = getInternalInventory(stack);
+        ItemStack[] inv = getInternalInventory(par1ItemStack);
 
         if (inv == null)
         {

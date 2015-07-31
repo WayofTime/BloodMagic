@@ -1,32 +1,30 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.spell.simple.SpellTeleport;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RitualEffectExpulsion extends RitualEffect
 {
@@ -40,8 +38,10 @@ public class RitualEffectExpulsion extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -53,10 +53,10 @@ public class RitualEffectExpulsion extends RitualEffect
 
             int teleportDistance = hasVirtus ? 300 : 100;
             int range = hasPotentia ? 50 : 25;
-            List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, range);
+            List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             boolean flag = false;
 
-            TileEntity tile = world.getTileEntity(pos.offsetUp());
+            TileEntity tile = world.getTileEntity(x, y + 1, z);
             IInventory inventoryTile = null;
             if (tile instanceof IInventory)
             {
@@ -78,7 +78,7 @@ public class RitualEffectExpulsion extends RitualEffect
                         for (int i = 0; i < inventoryTile.getSizeInventory(); i++)
                         {
                             ItemStack stack = inventoryTile.getStackInSlot(i);
-                            if (stack != null && stack.getItem() instanceof IBindable && BindableItems.getOwnerName(stack).equals(playerString))
+                            if (stack != null && stack.getItem() instanceof IBindable && EnergyItems.getOwnerName(stack).equals(playerString))
                             {
                                 test = true;
                             }
@@ -117,7 +117,7 @@ public class RitualEffectExpulsion extends RitualEffect
 
             int teleportDistance = hasVirtus ? 300 : 100;
             int range = hasPotentia ? 50 : 25;
-            List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, range);
+            List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             boolean flag = false;
 
             for (EntityLivingBase livingEntity : livingList)
@@ -162,14 +162,14 @@ public class RitualEffectExpulsion extends RitualEffect
         double z = entityLiving.posZ;
         Random rand = new Random();
         double d0 = x + (rand.nextDouble() - 0.5D) * distance;
-        double d1 = y + (rand.nextInt((int) distance) - (distance) / 2);
+        double d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
         double d2 = z + (rand.nextDouble() - 0.5D) * distance;
         int i = 0;
 
         while (!teleportTo(entityLiving, d0, d1, d2, x, y, z) && i < 100)
         {
             d0 = x + (rand.nextDouble() - 0.5D) * distance;
-            d1 = y + (rand.nextInt((int) distance) - (distance) / 2);
+            d1 = y + (double) (rand.nextInt((int) distance) - (distance) / 2);
             d2 = z + (rand.nextDouble() - 0.5D) * distance;
             i++;
         }
@@ -191,24 +191,23 @@ public class RitualEffectExpulsion extends RitualEffect
             return false;
         }
 
+        double d3 = lastX;
+        double d4 = lastY;
+        double d5 = lastZ;
         SpellTeleport.moveEntityViaTeleport(entityLiving, event.targetX, event.targetY, event.targetZ);
         boolean flag = false;
-        
-        
         int i = MathHelper.floor_double(entityLiving.posX);
         int j = MathHelper.floor_double(entityLiving.posY);
         int k = MathHelper.floor_double(entityLiving.posZ);
         int l;
 
-//        if (entityLiving.worldObj.blockExists(i, j, k))
+        if (entityLiving.worldObj.blockExists(i, j, k))
         {
             boolean flag1 = false;
 
             while (!flag1 && j > 0)
             {
-            	BlockPos newPos = new BlockPos(i, j - 1, k);
-            	IBlockState state = entityLiving.worldObj.getBlockState(newPos);
-                Block block = state.getBlock();
+                Block block = entityLiving.worldObj.getBlock(i, j - 1, k);
 
                 if (block != null && block.getMaterial().blocksMovement())
                 {
@@ -224,7 +223,7 @@ public class RitualEffectExpulsion extends RitualEffect
             {
                 SpellTeleport.moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.getBoundingBox()).isEmpty() && !entityLiving.worldObj.isAnyLiquid(entityLiving.getBoundingBox()))
+                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.boundingBox).isEmpty() && !entityLiving.worldObj.isAnyLiquid(entityLiving.boundingBox))
                 {
                     flag = true;
                 }
@@ -233,7 +232,7 @@ public class RitualEffectExpulsion extends RitualEffect
 
         if (!flag)
         {
-            SpellTeleport.moveEntityViaTeleport(entityLiving, lastX, lastY, lastZ);
+            SpellTeleport.moveEntityViaTeleport(entityLiving, d3, d4, d5);
             return false;
         } else
         {
@@ -245,10 +244,10 @@ public class RitualEffectExpulsion extends RitualEffect
                 float f = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f1 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
                 float f2 = (entityLiving.worldObj.rand.nextFloat() - 0.5F) * 0.2F;
-                double d7 = lastX + (entityLiving.posX - lastX) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                double d8 = lastY + (entityLiving.posY - lastY) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
-                double d9 = lastZ + (entityLiving.posZ - lastZ) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
-                entityLiving.worldObj.spawnParticle(EnumParticleTypes.PORTAL, d7, d8, d9, (double) f, (double) f1, (double) f2);
+                double d7 = d3 + (entityLiving.posX - d3) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                double d8 = d4 + (entityLiving.posY - d4) * d6 + entityLiving.worldObj.rand.nextDouble() * (double) entityLiving.height;
+                double d9 = d5 + (entityLiving.posZ - d5) * d6 + (entityLiving.worldObj.rand.nextDouble() - 0.5D) * (double) entityLiving.width * 2.0D;
+                entityLiving.worldObj.spawnParticle("portal", d7, d8, d9, (double) f, (double) f1, (double) f2);
             }
             return true;
         }
@@ -258,7 +257,7 @@ public class RitualEffectExpulsion extends RitualEffect
     {
         if (entityLiving instanceof EntityPlayer)
         {
-            if (entityLiving instanceof EntityPlayerMP)
+            if (entityLiving != null && entityLiving instanceof EntityPlayerMP)
             {
                 EntityPlayerMP entityplayermp = (EntityPlayerMP) entityLiving;
 
@@ -270,7 +269,7 @@ public class RitualEffectExpulsion extends RitualEffect
                     {
                         if (entityLiving.isRiding())
                         {
-                            entityLiving.mountEntity(null);
+                            entityLiving.mountEntity((Entity) null);
                         }
                         entityLiving.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
                     }
@@ -285,7 +284,7 @@ public class RitualEffectExpulsion extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> expulsionRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> expulsionRitual = new ArrayList();
         expulsionRitual.add(new RitualComponent(2, 0, 2, RitualComponent.EARTH));
         expulsionRitual.add(new RitualComponent(2, 0, 1, RitualComponent.EARTH));
         expulsionRitual.add(new RitualComponent(1, 0, 2, RitualComponent.EARTH));

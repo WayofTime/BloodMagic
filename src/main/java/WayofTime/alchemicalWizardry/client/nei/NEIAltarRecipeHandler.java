@@ -30,7 +30,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 //		PositionedStack inputItems;
 		PositionedStack output;
 		int tier, lp_amount, consumption, drain;
-
+		
 		public CachedAltarRecipe(AltarRecipe recipe) {
 //			inputItems = new PositionedStack(recipe.input, 38, 2, false);
 			input = new PositionedStack(recipe.requiredItem, 38, 2, false);
@@ -40,18 +40,18 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			consumption = recipe.consumptionRate;
 			drain = recipe.drainRate;
 		}
-
+		
 		@Override
 		public PositionedStack getIngredient() {
             return input;
         }
-
+		
 		@Override
 		public PositionedStack getResult() {
 			return output;
 		}
 	}
-
+	
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
 		if (outputId.equals("alchemicalwizardry.altar") && getClass() == NEIAltarRecipeHandler.class) {
@@ -62,7 +62,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			super.loadCraftingRecipes(outputId, results);
 		}
 	}
-
+	
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
 		for(AltarRecipe recipe: AltarRecipeRegistry.altarRecipes) {
@@ -71,7 +71,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			}
 		}
 	}
-
+	
 	@Override
     public void loadUsageRecipes(ItemStack ingredient)  {
 		for(AltarRecipe recipe: AltarRecipeRegistry.altarRecipes) {
@@ -80,7 +80,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			}
 		}
     }
-
+	
 	//Mouse Position helper
 	public Point getMouse(int width, int height) {
 		Point mousepos = getMousePosition();
@@ -89,7 +89,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
         Point relMouse = new Point(mousepos.x - guiLeft, mousepos.y - guiTop);
         return relMouse;
 	}
-
+	
 	//width helper, getting width normal way hates me on compile
 	public int getGuiWidth(GuiRecipe gui) {
 		try {
@@ -104,10 +104,10 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			return 0; 
 		}
 	}
-
+	
 	//height helper, getting height normal way hates me on compile
 	public int getGuiHeight(GuiRecipe gui) {
 		try {
@@ -122,17 +122,17 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return 0;
+			return 0; 
 		}
 	}
-
+	
 	@Override
 	public void drawExtras(int id) {
 		CachedAltarRecipe recipe = (CachedAltarRecipe) arecipes.get(id);
-		Minecraft.getMinecraft().fontRendererObj.drawString("\u00a77" + StatCollector.translateToLocal("bm.string.tier") + ": " + recipe.tier, 78, 5, 0);
-		Minecraft.getMinecraft().fontRendererObj.drawString("\u00a77" + "LP: " + recipe.lp_amount, 78, 15, 0);
+		Minecraft.getMinecraft().fontRenderer.drawString("\u00a77" + StatCollector.translateToLocal("bm.string.tier") + ": " + recipe.tier, 78, 5, 0);
+		Minecraft.getMinecraft().fontRenderer.drawString("\u00a77" + "LP: " + recipe.lp_amount, 78, 15, 0);
 	}
-
+	
 	@Override
     public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int id) {
 		currenttip = super.handleTooltip(gui, currenttip, id);
@@ -144,20 +144,20 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 			currenttip.add(StatCollector.translateToLocal("bm.string.consume") + ": " + recipe.consumption + "LP/t");
 			currenttip.add(StatCollector.translateToLocal("bm.string.drain") + ": " + recipe.drain + "LP/t");
         }
-
+        
         return currenttip;
     }
-
+	
 	@Override
 	public String getOverlayIdentifier() {
 		return "altarrecipes";
 	}
-
+	
 	@Override
 	public void loadTransferRects() {
 		transferRects.add(new RecipeTransferRect(new Rectangle(90, 32, 22, 16), "alchemicalwizardry.altar"));
 	}
-
+	
 	@Override
 	public String getRecipeName() {
 		return "          " + StatCollector.translateToLocal("tile.bloodAltar.name");
@@ -167,7 +167,7 @@ public class NEIAltarRecipeHandler extends TemplateRecipeHandler {
 	public String getGuiTexture() {
 		return new ResourceLocation("alchemicalwizardry", "gui/nei/altar.png").toString();
 	}
-
+	
 	public static Point getMousePosition() {
         Dimension size = displaySize();
         Dimension res = displayRes();

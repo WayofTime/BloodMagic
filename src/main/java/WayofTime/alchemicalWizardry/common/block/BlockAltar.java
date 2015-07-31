@@ -2,33 +2,67 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
-import WayofTime.alchemicalWizardry.common.items.Orb;
+import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAltar extends BlockContainer
 {
+    @SideOnly(Side.CLIENT)
+    private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon sideIcon2;
+    @SideOnly(Side.CLIENT)
+    private IIcon bottomIcon;
+
     public BlockAltar()
     {
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("bloodAltar");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
+    {
+        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Top");
+        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_SideType2");
+        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodAltar_Bottom");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int meta)
+    {
+        switch (side)
+        {
+            case 0:
+                return bottomIcon;
+            case 1:
+                return topIcon;
+            default:
+                return sideIcon2;
+        }
     }
 
     @Override
@@ -38,17 +72,17 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public int getComparatorInputOverride(World world, BlockPos blockPos)
+    public int getComparatorInputOverride(World world, int x, int y, int z, int meta)
     {
-        TileEntity tile = world.getTileEntity(blockPos);
+        TileEntity tile = world.getTileEntity(x, y, z);
 
         if (tile instanceof TEAltar)
         {
             ItemStack stack = ((TEAltar) tile).getStackInSlot(0);
 
-            if (stack != null && stack.getItem() instanceof Orb)
+            if (stack != null && stack.getItem() instanceof EnergyBattery)
             {
-                Orb bloodOrb = (Orb) stack.getItem();
+                EnergyBattery bloodOrb = (EnergyBattery) stack.getItem();
                 int maxEssence = bloodOrb.getMaxEssence();
                 int currentEssence = bloodOrb.getCurrentEssence(stack);
                 int level = currentEssence * 15 / maxEssence;
@@ -60,9 +94,9 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TEAltar tileEntity = (TEAltar) world.getTileEntity(blockPos);
+        TEAltar tileEntity = (TEAltar) world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -77,7 +111,7 @@ public class BlockAltar extends BlockContainer
             {
                 if (player.worldObj.isRemote)
                 {
-                    world.markBlockForUpdate(blockPos);
+                    world.markBlockForUpdate(x, y, z);
                 } else
                 {
                     tileEntity.sendChatInfoToPlayer(player);
@@ -88,7 +122,7 @@ public class BlockAltar extends BlockContainer
             {
                 if (player.worldObj.isRemote)
                 {
-                    world.markBlockForUpdate(blockPos);
+                    world.markBlockForUpdate(x, y, z);
                 } else
                 {
                     tileEntity.sendMoreChatInfoToPlayer(player);
@@ -107,7 +141,7 @@ public class BlockAltar extends BlockContainer
                 {
                     if (player.worldObj.isRemote)
                     {
-                        world.markBlockForUpdate(blockPos);
+                        world.markBlockForUpdate(x, y, z);
                     } else
                     {
                         tileEntity.sendChatInfoToPlayer(player);
@@ -118,7 +152,7 @@ public class BlockAltar extends BlockContainer
                 {
                     if (player.worldObj.isRemote)
                     {
-                        world.markBlockForUpdate(blockPos);
+                        world.markBlockForUpdate(x, y, z);
                     } else
                     {
                         tileEntity.sendMoreChatInfoToPlayer(player);
@@ -142,21 +176,21 @@ public class BlockAltar extends BlockContainer
             tileEntity.setInventorySlotContents(0, null);
             tileEntity.setActive();
         }
-        world.markBlockForUpdate(blockPos);
+        world.markBlockForUpdate(x, y, z);
         return true;
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
+    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
     {
-        dropItems(world, blockPos);
-        super.breakBlock(world, blockPos, blockState);
+        dropItems(world, x, y, z);
+        super.breakBlock(world, x, y, z, par5, par6);
     }
 
-    private void dropItems(World world, BlockPos blockPos)
+    private void dropItems(World world, int x, int y, int z)
     {
         Random rand = new Random();
-        TileEntity tileEntity = world.getTileEntity(blockPos);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (!(tileEntity instanceof IInventory))
         {
@@ -174,7 +208,9 @@ public class BlockAltar extends BlockContainer
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world, blockPos.getX() + rx, blockPos.getY() + ry, blockPos.getZ() + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                EntityItem entityItem = new EntityItem(world,
+                        x + rx, y + ry, z + rz,
+                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {
@@ -192,6 +228,12 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    @Override
     public int getRenderType()
     {
         return -1;
@@ -204,16 +246,15 @@ public class BlockAltar extends BlockContainer
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState blockState)
+    public boolean hasTileEntity()
     {
         return true;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, BlockPos blockPos, IBlockState blockState, Random rand)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
     {
-        TEAltar tileEntity = (TEAltar) world.getTileEntity(blockPos);
+        TEAltar tileEntity = (TEAltar) world.getTileEntity(x, y, z);
 
         if (!tileEntity.isActive())
         {

@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class DemonPacketRegistry 
 {
-	public static Map<String, DemonHoardPacket> packetMap = new HashMap<String, DemonHoardPacket>();
+	public static Map<String, DemonHoardPacket> packetMap = new HashMap();
 	
 	public static boolean registerDemonPacket(String string, DemonHoardPacket packet)
 	{

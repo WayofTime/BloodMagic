@@ -76,7 +76,7 @@ public class AltarRecipe
     
     protected boolean areTagsEqual(NBTTagCompound tag, NBTTagCompound comparedTag)
     {
-    	Set set = tag.getKeySet();
+    	Set set = tag.func_150296_c();
     	
     	for(Object obj : set)
     	{

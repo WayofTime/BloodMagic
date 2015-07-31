@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AchievementsMod extends Achievement
 {
-    public static List<Achievement> achievements = new ArrayList<Achievement>();
+    public static List<Achievement> achievements = new ArrayList();
 
     public AchievementsMod(String name, int x, int y, ItemStack icon, Achievement parent)
     {

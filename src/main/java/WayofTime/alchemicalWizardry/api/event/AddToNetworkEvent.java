@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.api.event;
 
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Cancelable;
+import cpw.mods.fml.common.eventhandler.Event;
 
 @Cancelable
 public class AddToNetworkEvent extends Event

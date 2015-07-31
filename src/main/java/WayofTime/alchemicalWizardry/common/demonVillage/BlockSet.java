@@ -14,16 +14,15 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry.UniqueIdentifier;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.loot.DemonVillageLootRegistry;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.IBlockPortalNode;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.ITilePortalNode;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 public class BlockSet
 {
@@ -40,7 +39,7 @@ public class BlockSet
     {
         this.blockid = blockid;
         this.metadata = new int[4];
-        positions = new ArrayList<Int3>();
+        positions = new ArrayList();
     }
 
     public BlockSet(Block block)
@@ -277,7 +276,7 @@ public class BlockSet
         return GameRegistry.findBlock(modId, name);
     }
 
-    public int getMetaForDirection(EnumFacing dir)
+    public int getMetaForDirection(ForgeDirection dir)
     {
         if (metadata.length < 4)
         {
@@ -299,7 +298,7 @@ public class BlockSet
         }
     }
 
-    public void buildAtIndex(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, EnumFacing dir, int index, boolean populateInventories, int tier)
+    public void buildAtIndex(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, int index, boolean populateInventories, int tier)
     {
         Block block = this.getBlock();
         if (index >= positions.size() || block == null)
@@ -334,15 +333,14 @@ public class BlockSet
             default:
         }
 
-        BlockPos newPos = new BlockPos(xCoord + xOff, yCoord + yOff, zCoord + zOff);
-        world.setBlockState(newPos, block.getStateFromMeta(meta), 3);
+        world.setBlock(xCoord + xOff, yCoord + yOff, zCoord + zOff, block, meta, 3);
         if(populateInventories)
         {
-        	this.populateIfIInventory(world, newPos, tier);
+        	this.populateIfIInventory(world, xCoord + xOff, yCoord + yOff, zCoord + zOff, tier);
         }
         if(block instanceof IBlockPortalNode)
         {
-        	TileEntity tile = world.getTileEntity(newPos);
+        	TileEntity tile = world.getTileEntity(xCoord + xOff, yCoord + yOff, zCoord + zOff);
         	if(tile instanceof ITilePortalNode)
         	{
         		((ITilePortalNode) tile).setPortalLocation(teDemonPortal); 
@@ -350,16 +348,16 @@ public class BlockSet
         }
     }
     
-    public void populateIfIInventory(World world, BlockPos pos, int tier)
+    public void populateIfIInventory(World world, int x, int y, int z, int tier)
     {
-    	TileEntity tile = world.getTileEntity(pos);
+    	TileEntity tile = world.getTileEntity(x, y, z);
     	if(tile instanceof IInventory)
     	{
     		DemonVillageLootRegistry.populateChest((IInventory)tile, tier);
     	}
     }
 
-    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, EnumFacing dir, boolean populateInventories, int tier)
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, boolean populateInventories, int tier)
     {
         for (int i = 0; i < positions.size(); i++)
         {

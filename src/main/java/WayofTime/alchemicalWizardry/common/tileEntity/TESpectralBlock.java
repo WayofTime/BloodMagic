@@ -1,13 +1,11 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-public class TESpectralBlock extends TileEntity implements IUpdatePlayerListBox
+public class TESpectralBlock extends TileEntity
 {
     private int ticksRemaining;
 
@@ -33,30 +31,31 @@ public class TESpectralBlock extends TileEntity implements IUpdatePlayerListBox
     }
 
     @Override
-    public void update()
+    public void updateEntity()
     {
-        if (worldObj.isRemote)
+        super.updateEntity();
+
+//        if (worldObj.isRemote)
         {
-            return;
+//            return;
         }
 
         this.ticksRemaining--;
 
         if (this.ticksRemaining <= 0)
         {
-            worldObj.setBlockToAir(pos);
+            worldObj.setBlockToAir(xCoord, yCoord, zCoord);
         }
     }
 
-    public static boolean createSpectralBlockAtLocation(World world, BlockPos pos, int duration)
+    public static boolean createSpectralBlockAtLocation(World world, int x, int y, int z, int duration)
     {
-        if (!world.isAirBlock(pos))
+        if (!world.isAirBlock(x, y, z))
         {
             return false;
         }
-        
-        world.setBlockState(pos, ModBlocks.spectralBlock.getDefaultState());
-        TileEntity tile = world.getTileEntity(pos);
+        world.setBlock(x, y, z, ModBlocks.spectralBlock);
+        TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TESpectralBlock)
         {
             ((TESpectralBlock) tile).setDuration(duration);

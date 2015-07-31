@@ -2,13 +2,13 @@ package WayofTime.alchemicalWizardry.common.entity.mob;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -16,12 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 
@@ -45,20 +42,19 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-//    public int courseChangeCooldown;
+    public int courseChangeCooldown;
     public double waypointX;
     public double waypointY;
     public double waypointZ;
-/*    private Entity targetedEntity;
+    private Entity targetedEntity;
 
     /**
      * Cooldown time between target loss and new target aquirement.
-
+     */
     private int aggroCooldown;
     public int prevAttackCounter;
     public int attackCounter;
-*/
-    @Override
+
     /**
      * The explosion radius of spawned fireballs.
      */
@@ -70,67 +66,74 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    @Override
+    protected void fall(float par1)
+    {
+    }
+
+    /**
+     * Takes in the distance the entity has fallen this tick and whether its on the ground to update the fall distance
+     * and deal fall damage if landing on the ground.  Args: distanceFallenThisTick, onGround
+     */
+    protected void updateFallState(double par1, boolean par3)
+    {
+    }
+
     /**
      * Moves the entity based on the specified heading.  Args: strafe, forward
      */
-    public void moveEntityWithHeading(float p_70612_1_, float p_70612_2_)
+    public void moveEntityWithHeading(float par1, float par2)
     {
         if (this.isInWater())
         {
-            this.moveFlying(p_70612_1_, p_70612_2_, 0.02F);
+            this.moveFlying(par1, par2, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.800000011920929D;
             this.motionZ *= 0.800000011920929D;
-        }
-        else if (this.isInLava())
+        } else if (this.handleLavaMovement())
         {
-            this.moveFlying(p_70612_1_, p_70612_2_, 0.02F);
+            this.moveFlying(par1, par2, 0.02F);
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.5D;
             this.motionY *= 0.5D;
             this.motionZ *= 0.5D;
-        }
-        else
+        } else
         {
             float f2 = 0.91F;
 
             if (this.onGround)
             {
-                f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                f2 = 0.54600006F;
+                Block i = this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+
+                if (i != null)
+                {
+                    f2 = i.slipperiness * 0.91F;
+                }
             }
 
             float f3 = 0.16277136F / (f2 * f2 * f2);
-            this.moveFlying(p_70612_1_, p_70612_2_, this.onGround ? 0.1F * f3 : 0.02F);
+            this.moveFlying(par1, par2, this.onGround ? 0.1F * f3 : 0.02F);
             f2 = 0.91F;
 
             if (this.onGround)
             {
-                f2 = this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock().slipperiness * 0.91F;
+                f2 = 0.54600006F;
+                Block j = this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+
+                if (j != null)
+                {
+                    f2 = j.slipperiness * 0.91F;
+                }
             }
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= (double)f2;
-            this.motionY *= (double)f2;
-            this.motionZ *= (double)f2;
+            this.motionX *= (double) f2;
+            this.motionY *= (double) f2;
+            this.motionZ *= (double) f2;
         }
-
-        this.prevLimbSwingAmount = this.limbSwingAmount;
-        double d1 = this.posX - this.prevPosX;
-        double d0 = this.posZ - this.prevPosZ;
-        float f4 = MathHelper.sqrt_double(d1 * d1 + d0 * d0) * 4.0F;
-
-        if (f4 > 1.0F)
-        {
-            f4 = 1.0F;
-        }
-
-        this.limbSwingAmount += (f4 - this.limbSwingAmount) * 0.4F;
-        this.limbSwing += this.limbSwingAmount;
     }
 
-    @Override
     /**
      * returns true if this entity is by a ladder, false otherwise
      */
@@ -139,10 +142,115 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
-    @SideOnly(Side.CLIENT)
-    public boolean func_110182_bF()
+    protected void updateEntityActionState()
     {
-        return this.dataWatcher.getWatchableObjectByte(25) != 0;
+        if (this.getHealth() <= this.getMaxHealth() / 2.0f && worldObj.rand.nextInt(200) == 0)
+        {
+            this.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionReciprocation.id, 100, 1));
+        }
+
+        this.prevAttackCounter = this.attackCounter;
+        double d0 = this.waypointX - this.posX;
+        double d1 = this.waypointY - this.posY;
+        double d2 = this.waypointZ - this.posZ;
+        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+
+        if (d3 < 1.0D || d3 > 3600.0D)
+        {
+            this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+        }
+
+        if (this.courseChangeCooldown-- <= 0)
+        {
+            this.courseChangeCooldown += this.rand.nextInt(5) + 2;
+            d3 = (double) MathHelper.sqrt_double(d3);
+
+            if (this.isCourseTraversable(this.waypointX, this.waypointY, this.waypointZ, d3))
+            {
+                this.motionX += d0 / d3 * 0.1D;
+                this.motionY += d1 / d3 * 0.1D;
+                this.motionZ += d2 / d3 * 0.1D;
+            } else
+            {
+                this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+            }
+        }
+
+        if (this.targetedEntity != null && this.targetedEntity.isDead)
+        {
+            this.targetedEntity = null;
+        }
+
+        if (this.targetedEntity == null || this.aggroCooldown-- <= 0)
+        {
+            this.targetedEntity = getClosestVulnerableMonsterToEntity(this, 100.0D);
+
+            if (this.targetedEntity != null)
+            {
+                this.aggroCooldown = 20;
+            }
+        }
+
+        double d4 = 64.0D;
+
+        if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < d4 * d4)
+        {
+            double d5 = this.targetedEntity.posX - this.posX;
+            double d6 = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F) - (this.posY + (double) (this.height / 2.0F));
+            double d7 = this.targetedEntity.posZ - this.posZ;
+            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(d5, d7)) * 180.0F / (float) Math.PI;
+
+            if (this.courseChangeCooldown <= 0)
+            {
+                if (isCourseTraversable(this.targetedEntity.posX, this.targetedEntity.posY, this.targetedEntity.posZ, Math.sqrt(d5 * d5 + d6 * d6 + d7 * d7)))
+                {
+                    this.waypointX = this.targetedEntity.posX;
+                    this.waypointY = this.targetedEntity.posY;
+                    this.waypointZ = this.targetedEntity.posZ;
+                    this.motionX += d5 / d3 * 0.1D;
+                    this.motionY += d6 / d3 * 0.1D;
+                    this.motionZ += d7 / d3 * 0.1D;
+                } else
+                {
+                    this.waypointX = this.posX + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                    this.waypointY = this.posY + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                    this.waypointZ = this.posZ + (double) ((this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+                    this.motionX += d5 / d3 * 0.1D;
+                    this.motionY += d6 / d3 * 0.1D;
+                    this.motionZ += d7 / d3 * 0.1D;
+                }
+            }
+
+            if (this.canEntityBeSeen(this.targetedEntity))
+            {
+                if (Math.sqrt(d5 * d5 + d6 * d6 + d7 * d7) < 4)
+                {
+                    ++this.attackCounter;
+
+                    if (this.attackCounter >= 10)
+                    {
+                        this.worldObj.playAuxSFXAtEntity(null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+                        this.inflictEffectOnEntity(this.targetedEntity);
+                        this.attackCounter = -40;
+                    }
+                }
+            } else if (this.attackCounter > 0)
+            {
+                --this.attackCounter;
+            }
+        } else
+        {
+            this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(motionX, this.motionZ)) * 180.0F / (float) Math.PI;
+
+            if (this.attackCounter > 0)
+            {
+                --this.attackCounter;
+            }
+        }
     }
 
     /**
@@ -153,7 +261,7 @@ public class EntityElemental extends EntityDemon
         double d4 = (this.waypointX - this.posX) / par7;
         double d5 = (this.waypointY - this.posY) / par7;
         double d6 = (this.waypointZ - this.posZ) / par7;
-        AxisAlignedBB axisalignedbb = this.getBoundingBox();
+        AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
         for (int i = 1; (double) i < par7; ++i)
         {
@@ -168,7 +276,6 @@ public class EntityElemental extends EntityDemon
         return true;
     }
 
-    @Override
     /**
      * Will return how many at most can spawn in a chunk at once.
      */
@@ -177,7 +284,6 @@ public class EntityElemental extends EntityDemon
         return 1;
     }
 
-    @Override
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
@@ -186,14 +292,12 @@ public class EntityElemental extends EntityDemon
         super.writeEntityToNBT(par1NBTTagCompound);
     }
 
-    @Override
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
-        this.setAngry(par1NBTTagCompound.getBoolean("Angry"));
 
         this.setCombatTask();
     }
@@ -215,7 +319,6 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    @Override
     /**
      * Returns true if the newer Entity AI code should be run
      */
@@ -224,24 +327,14 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
-    @Override
     /**
      * Sets the active target the Task system uses for tracking
      */
     public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
     {
         super.setAttackTarget(par1EntityLivingBase);
-
-        if (par1EntityLivingBase == null)
-        {
-            this.setAngry(false);
-        } else if (!this.isTamed())
-        {
-            this.setAngry(true);
-        }
     }
 
-    @Override
     /**
      * main AI tick function, replaces updateEntityActionState
      */
@@ -250,16 +343,13 @@ public class EntityElemental extends EntityDemon
         this.dataWatcher.updateObject(18, this.getHealth());
     }
 
-    @Override
     protected void entityInit()
     {
         super.entityInit();
         this.dataWatcher.addObject(18, this.getHealth());
         this.dataWatcher.addObject(19, 0);
-        this.dataWatcher.addObject(25, 0);
     }
 
-    @Override
     /**
      * Plays step sound at given x, y, z for the entity
      */
@@ -268,7 +358,6 @@ public class EntityElemental extends EntityDemon
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
 
-    @Override
     /**
      * Returns the sound this mob makes while it's alive.
      */
@@ -278,7 +367,6 @@ public class EntityElemental extends EntityDemon
         return "none";
     }
 
-    @Override
     /**
      * Returns the sound this mob makes when it is hurt.
      */
@@ -287,7 +375,6 @@ public class EntityElemental extends EntityDemon
         return "none";
     }
 
-    @Override
     /**
      * Returns the sound this mob makes on death.
      */
@@ -296,7 +383,6 @@ public class EntityElemental extends EntityDemon
         return "none";
     }
 
-    @Override
     /**
      * Returns the volume for the sounds this mob makes.
      */
@@ -305,36 +391,28 @@ public class EntityElemental extends EntityDemon
         return 0.4F;
     }
 
-    @Override
     /**
-     * Returns the item ID for the item the mob drops on death.
+     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
+     * use this to react to sunlight and start to burn.
      */
-    protected int getDropItemId()
+    public void onLivingUpdate()
     {
-        return -1;
+        super.onLivingUpdate();
     }
 
-    @Override
     /**
      * Called to update the entity's position/logic.
      */
     public void onUpdate()
     {
         super.onUpdate();
-        
-        if (this.getHealth() <= this.getMaxHealth() / 2.0f && worldObj.rand.nextInt(200) == 0)
-        {
-            this.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionReciprocation.id, 100, 1));
-        }
     }
 
-    @Override
     public float getEyeHeight()
     {
         return this.height * 0.8F;
     }
 
-    @Override
     /**
      * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
      * use in wolves.
@@ -344,18 +422,17 @@ public class EntityElemental extends EntityDemon
         return this.isSitting() ? 20 : super.getVerticalFaceSpeed();
     }
 
-    @Override
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource source, float par2)
+    public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
     {
-        if (this.func_180431_b(source))
+        if (this.isEntityInvulnerable())
         {
             return false;
         } else
         {
-            Entity entity = source.getEntity();
+            Entity entity = par1DamageSource.getEntity();
             this.aiSit.setSitting(false);
 
             if (entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow))
@@ -363,18 +440,16 @@ public class EntityElemental extends EntityDemon
                 par2 = (par2 + 1.0F) / 2.0F;
             }
 
-            return super.attackEntityFrom(source, par2);
+            return super.attackEntityFrom(par1DamageSource, par2);
         }
     }
 
-    @Override
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         int i = this.isTamed() ? 6 : 7;
         return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) i);
     }
 
-    @Override
     public void setTamed(boolean par1)
     {
         super.setTamed(par1);
@@ -388,7 +463,10 @@ public class EntityElemental extends EntityDemon
         }
     }
 
-    @Override
+    /**
+     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
+     */
+
     /**
      * Checks if the parameter is an item which this animal can be fed to breed it (wheat, carrots or seeds depending on
      * the animal type)
@@ -398,59 +476,6 @@ public class EntityElemental extends EntityDemon
         return false;
     }
 
-    @Override
-    /**
-     * Determines whether this wolf is angry or not.
-     */
-    public boolean isAngry()
-    {
-        return (this.dataWatcher.getWatchableObjectByte(16) & 2) != 0;
-    }
-
-    @Override
-    /**
-     * Sets whether this wolf is angry or not.
-     */
-    public void setAngry(boolean par1)
-    {
-        byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-
-        if (par1)
-        {
-            this.dataWatcher.updateObject(16, b0 | 2);
-        } else
-        {
-            this.dataWatcher.updateObject(16, b0 & -3);
-        }
-    }
-
-    public void func_70918_i(boolean par1)
-    {
-        if (par1)
-        {
-            this.dataWatcher.updateObject(19, 1);
-        } else
-        {
-            this.dataWatcher.updateObject(19, 0);
-        }
-    }
-
-    @Override
-    /**
-     * Returns true if the mob is currently able to mate with the specified mob.
-     */
-    public boolean canMateWith(EntityAnimal par1EntityAnimal)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean func_70922_bv()
-    {
-        return this.dataWatcher.getWatchableObjectByte(19) == 1;
-    }
-
-    @Override
     /**
      * Determines if an entity can be despawned, used on idle far away entities
      */
@@ -511,7 +536,7 @@ public class EntityElemental extends EntityDemon
 
         double range = Math.sqrt(par2);
         double verticalRange = Math.sqrt(par2);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(par1 - 0.5f, par3 - 0.5f, par5 - 0.5f, par1 + 0.5f, par3 + 0.5f, par5 + 0.5f).expand(range, verticalRange, range));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(par1 - 0.5f, par3 - 0.5f, par5 - 0.5f, par1 + 0.5f, par3 + 0.5f, par5 + 0.5f).expand(range, verticalRange, range));
         if (entities == null)
         {
             return null;

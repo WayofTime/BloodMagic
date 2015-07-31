@@ -1,50 +1,56 @@
 package WayofTime.alchemicalWizardry.api.event;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Cancelable;
+import cpw.mods.fml.common.eventhandler.Event;
 
 /** Fired when a teleposer attempts to transpose two blocks. Use this to perform special cleanup or compensation,
 or cancel it entirely to prevent the transposition. */
 @Cancelable
-public class TeleposeEvent extends Event 
-{
-    public final World initialWorld;
-    public final BlockPos initialPos;
+public class TeleposeEvent extends Event {
   
-    public final Block initialBlock;
-    public final IBlockState initialState;
+  public final World initialWorld;
+  public final int initialX;
+  public final int initialY;
+  public final int initialZ;
   
-    public final World finalWorld;
-    public final BlockPos finalPos;
+  public final Block initialBlock;
+  public final int initialMetadata;
   
-    public final Block finalBlock;
-    public final IBlockState finalState;
+  public final World finalWorld;
+  public final int finalX;
+  public final int finalY;
+  public final int finalZ;
   
-    public TeleposeEvent(World wi, BlockPos posi, IBlockState statei, World wf, BlockPos posf, IBlockState statef)
-    {
-      initialWorld = wi;
-      initialPos = posi;
+  public final Block finalBlock;
+  public final int finalMetadata;
+  
+  public TeleposeEvent(World wi, int xi, int yi, int zi, Block bi, int mi, World wf, int xf, int yf, int zf, Block bf, int mf) {
+    initialWorld = wi;
+    initialX = xi;
+    initialY = yi;
+    initialZ = zi;
     
-      initialState = statei;
-      initialBlock = initialState.getBlock();
+    initialBlock = bi;
+    initialMetadata = mi;
+    
+    finalWorld = wf;
+    finalX = xf;
+    finalY = yf;
+    finalZ = zf;
+    
+    finalBlock = bf;
+    finalMetadata = mf;
+  }
+  
+  public TileEntity getInitialTile() {
+    return initialWorld.getTileEntity(initialX, initialY, initialZ);
+  }
+  
+  public TileEntity getFinalTile() {
+    return finalWorld.getTileEntity(finalX, finalY, finalZ);
+  }
 
-      finalWorld = wf;
-      finalPos = posf;
-    
-      finalState = statef;
-      finalBlock = finalState.getBlock();
-    }
-  
-    public TileEntity getInitialTile() {
-    return initialWorld.getTileEntity(initialPos);
-  }
-  
-    public TileEntity getFinalTile() {
-    return finalWorld.getTileEntity(finalPos);
-  }
 }

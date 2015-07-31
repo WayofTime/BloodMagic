@@ -1,17 +1,19 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
-public class TelepositionFocus extends BindableItems
+import java.util.List;
+
+public class TelepositionFocus extends EnergyItems
 {
     private int focusLevel;
 
@@ -21,6 +23,13 @@ public class TelepositionFocus extends BindableItems
         this.setMaxStackSize(1);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.focusLevel = focusLevel;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:TeleposerFocus");
     }
 
     @Override
@@ -45,7 +54,7 @@ public class TelepositionFocus extends BindableItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
             if (par3EntityPlayer.isSneaking())
             {
@@ -101,11 +110,6 @@ public class TelepositionFocus extends BindableItems
         {
             return 0;
         }
-    }
-    
-    public BlockPos getBlockPos(ItemStack stack)
-    {
-    	return new BlockPos(xCoord(stack), yCoord(stack), zCoord(stack));
     }
 
     public int getFocusLevel()

@@ -1,16 +1,17 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -21,25 +22,34 @@ public class BlockMasterStone extends BlockContainer
         super(Material.iron);
         setHardness(2.0F);
         setResistance(5.0F);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("blockMasterStone");
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
     {
-        TileEntity tile = world.getTileEntity(blockPos);
+        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:MasterStone");
+    }
+
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
+    {
+        TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TEMasterStone)
         {
             ((TEMasterStone) tile).useOnRitualBroken();
         }
 
-        super.onBlockHarvested(world, blockPos, blockState, player);
+        super.onBlockHarvested(world, x, y, z, meta, player);
     }
     
     @Override
-    public void onBlockDestroyedByExplosion(World world, BlockPos blockPos, Explosion explosion)
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion)
     {
-    	super.onBlockDestroyedByExplosion(world, blockPos, explosion);
-    	TileEntity tile = world.getTileEntity(blockPos);
+    	super.onBlockDestroyedByExplosion(world, x, y, z, explosion);
+    	TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TEMasterStone)
         {
             ((TEMasterStone) tile).useOnRitualBrokenExplosion();
@@ -47,9 +57,9 @@ public class BlockMasterStone extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
-        TEMasterStone tileEntity = (TEMasterStone) world.getTileEntity(blockPos);
+        TEMasterStone tileEntity = (TEMasterStone) world.getTileEntity(x, y, z);
 
         if (tileEntity == null || player.isSneaking())
         {
@@ -72,8 +82,8 @@ public class BlockMasterStone extends BlockContainer
 
         ActivationCrystal acItem = (ActivationCrystal) item;
 //        tileEntity.setOwner(acItem.getOwnerName(playerItem));
-        tileEntity.activateRitual(world, acItem.getCrystalLevel(playerItem), playerItem, player, ActivationCrystal.getOwnerName(playerItem));
-        world.markBlockForUpdate(blockPos);
+        tileEntity.activateRitual(world, acItem.getCrystalLevel(playerItem), playerItem, player, acItem.getOwnerName(playerItem));
+        world.markBlockForUpdate(x, y, z);
         return true;
     }
 

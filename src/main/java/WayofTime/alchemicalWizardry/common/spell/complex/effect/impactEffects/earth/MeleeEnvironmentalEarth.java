@@ -1,14 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class MeleeEnvironmentalEarth extends MeleeSpellCenteredWorldEffect
 {
@@ -19,7 +16,7 @@ public class MeleeEnvironmentalEarth extends MeleeSpellCenteredWorldEffect
     }
 
     @Override
-    public void onCenteredWorldEffect(EntityPlayer player, World world, BlockPos pos)
+    public void onCenteredWorldEffect(EntityPlayer player, World world, int posX, int posY, int posZ)
     {
         int radius = this.potencyUpgrades;
 
@@ -29,21 +26,18 @@ public class MeleeEnvironmentalEarth extends MeleeSpellCenteredWorldEffect
             {
                 for (int k = -radius; k <= radius; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    if (!world.isAirBlock(newPos) && world.getTileEntity(newPos) == null)
+                    if (!world.isAirBlock(posX + i, posY + j, posZ + k) && world.getTileEntity(posX + i, posY + j, posZ + k) == null)
                     {
-                    	IBlockState state = world.getBlockState(newPos);
-                    	Block block = state.getBlock();
-                        ItemStack stack = new ItemStack(block, 1, block.getMetaFromState(state));
+                        ItemStack stack = new ItemStack(world.getBlock(posX + i, posY + j, posZ + k), 1, world.getBlockMetadata(posX + i, posY + j, posZ + k));
 
                         ItemStack dustStack = SpellHelper.getDustForOre(stack);
 
                         if (dustStack != null)
                         {
-                            dustStack.stackSize = 3;
-                            world.spawnEntityInWorld(new EntityItem(world, newPos.getX() + 0.5, newPos.getY() + 0.5, newPos.getZ() + 0.5, dustStack));
+                            dustStack.stackSize *= 3;
+                            world.spawnEntityInWorld(new EntityItem(world, posX, posY, posZ, dustStack));
 
-                            world.setBlockToAir(newPos);
+                            world.setBlockToAir(posX + i, posY + j, posZ + k);
                         }
                     }
                 }

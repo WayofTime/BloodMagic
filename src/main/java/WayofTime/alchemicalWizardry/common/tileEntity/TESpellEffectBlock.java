@@ -14,7 +14,7 @@ public class TESpellEffectBlock extends TESpellBlock
 
     public SpellEffect getSpellEffect()
     {
-        int meta = this.getBlockMetadata();
+        int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         switch (meta)
         {
             case 0:

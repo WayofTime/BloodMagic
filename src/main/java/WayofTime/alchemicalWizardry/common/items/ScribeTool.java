@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -7,7 +8,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ScribeTool extends BindableItems
+public class ScribeTool extends EnergyItems
 {
     private int meta;
 
@@ -15,6 +16,7 @@ public class ScribeTool extends BindableItems
     {
         super();
         setMaxStackSize(1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setMaxDamage(10);
         setEnergyUsed(10);
         this.meta = inkType;
@@ -34,7 +36,7 @@ public class ScribeTool extends BindableItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
             if (par1ItemStack.getItemDamage() > 0)
             {

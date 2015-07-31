@@ -1,18 +1,17 @@
 package WayofTime.alchemicalWizardry.common.items;
 
+import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
@@ -21,7 +20,9 @@ public class CreativeDagger extends Item
     public CreativeDagger()
     {
         super();
+        setTextureName("AlchemicalWizardry:SacrificialDagger");
         setMaxStackSize(1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setFull3D();
     }
 
@@ -68,7 +69,7 @@ public class CreativeDagger extends Item
 
         for (int l = 0; l < 8; ++l)
         {
-            world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
+            world.spawnParticle("reddust", posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
         }
 
         if (!world.isRemote && SpellHelper.isFakePlayer(world, player))
@@ -82,8 +83,10 @@ public class CreativeDagger extends Item
 
     public void findAndFillAltar(World world, EntityPlayer player, int amount)
     {
-        BlockPos pos = player.getPosition();
-        IBloodAltar altarEntity = getAltar(world, pos);
+        int posX = (int) Math.round(player.posX - 0.5f);
+        int posY = (int) player.posY;
+        int posZ = (int) Math.round(player.posZ - 0.5f);
+        IBloodAltar altarEntity = getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -94,7 +97,7 @@ public class CreativeDagger extends Item
         altarEntity.startCycle();
     }
 
-    public IBloodAltar getAltar(World world, BlockPos pos)
+    public IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity;
 
@@ -104,8 +107,7 @@ public class CreativeDagger extends Item
             {
                 for (int k = -2; k <= 1; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    tileEntity = world.getTileEntity(newPos);
+                    tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
                     if(tileEntity instanceof IBloodAltar)
                     {

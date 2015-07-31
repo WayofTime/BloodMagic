@@ -20,16 +20,15 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigm;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class OmegaArmour extends BoundArmour
 {
@@ -40,7 +39,7 @@ public abstract class OmegaArmour extends BoundArmour
 	protected boolean storeYLevel = false;
 	protected boolean storeSeesSky = false;
 	
-	protected List<Enchantment> illegalEnchantmentList = new LinkedList<Enchantment>();
+	protected List<Enchantment> illegalEnchantmentList = new LinkedList();
 	
 	public float reagentDrainPerDamage = 0.1f;
 	
@@ -91,9 +90,10 @@ public abstract class OmegaArmour extends BoundArmour
 		{
 			if(this.storeBiomeID())
 			{
-				BlockPos pos = player.getPosition();
+				int xCoord = (int) Math.floor(player.posX);
+				int zCoord = (int) Math.floor(player.posZ);
 				
-				BiomeGenBase biome = world.getBiomeGenForCoords(pos);
+				BiomeGenBase biome = world.getBiomeGenForCoords(xCoord, zCoord);
 				if(biome != null)
 				{
 					this.setBiomeIDStored(itemStack, biome.biomeID);
@@ -102,7 +102,7 @@ public abstract class OmegaArmour extends BoundArmour
 			
 			if(this.storeDimensionID())
 			{
-				this.setDimensionIDStored(itemStack, world.provider.getDimensionId());
+				this.setDimensionIDStored(itemStack, world.provider.dimensionId);
 			}
 			
 			if(this.storeYLevel())
@@ -129,7 +129,7 @@ public abstract class OmegaArmour extends BoundArmour
         {
             if (!player.capabilities.isCreativeMode)
             {
-                if(BindableItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
+                if(EnergyItems.syphonBatteries(itemStack, player, itemStack.getItemDamage() * 75))
                 {
         			float reagentAmount = APISpellHelper.getPlayerCurrentReagentAmount(player);
         			
@@ -176,7 +176,7 @@ public abstract class OmegaArmour extends BoundArmour
 			}
 		}
 		
-		Map<Enchantment, Map<Integer, Integer>> map = new HashMap<Enchantment, Map<Integer, Integer>>();
+		Map<Enchantment, Map<Integer, Integer>> map = new HashMap();
 		
 		for(Object obj : enchantList)
 		{
@@ -184,7 +184,7 @@ public abstract class OmegaArmour extends BoundArmour
             
             if(!map.containsKey(enchantmentdata.enchantmentobj))
             {
-            	map.put(enchantmentdata.enchantmentobj, new HashMap<Integer, Integer>());
+            	map.put(enchantmentdata.enchantmentobj, new HashMap());
             }
             
             Map<Integer, Integer> numMap = map.get(enchantmentdata.enchantmentobj);
@@ -308,8 +308,9 @@ public abstract class OmegaArmour extends BoundArmour
 		}
 		
 		NBTTagCompound tag = omegaTag.getCompoundTag("armour");
-
-		return ItemStack.loadItemStackFromNBT(tag);
+		ItemStack armourStack = ItemStack.loadItemStackFromNBT(tag);
+		
+		return armourStack;
 	}
 	
 	@Override
@@ -375,10 +376,10 @@ public abstract class OmegaArmour extends BoundArmour
                     if (((EntityPlayer) entityLiving).getItemInUseDuration() > 0)
                     {
                         EnumAction enumaction = ((EntityPlayer) entityLiving).getItemInUse().getItemUseAction();
-                        if (enumaction == EnumAction.BLOCK)
+                        if (enumaction == EnumAction.block)
                         {
                             this.model.heldItemRight = 3;
-                        } else if (enumaction == EnumAction.BOW)
+                        } else if (enumaction == EnumAction.bow)
                         {
                             this.model.aimedBow = true;
                         }

@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 
 public class ProjectileDefaultFire extends ProjectileImpactEffect
 {
@@ -17,8 +18,11 @@ public class ProjectileDefaultFire extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        BlockPos pos = proj.getPosition();
-        
+        Vec3 blockVec = SpellHelper.getEntityBlockVector(mop);
+
+        int x = (int) (blockVec.xCoord);
+        int y = (int) (blockVec.yCoord);
+        int z = (int) (blockVec.zCoord);
         World world = mop.worldObj;
 
         int horizRange = 0;
@@ -30,11 +34,9 @@ public class ProjectileDefaultFire extends ProjectileImpactEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                	
-                    if (world.isAirBlock(newPos))
+                    if (world.isAirBlock(x + i, y + j, z + k))
                     {
-                        world.setBlockState(newPos, Blocks.fire.getDefaultState());
+                        world.setBlock(x + i, y + j, z + k, Blocks.fire);
                     }
                 }
             }
@@ -44,8 +46,10 @@ public class ProjectileDefaultFire extends ProjectileImpactEffect
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-    	BlockPos pos = mop.func_178782_a();
-        
+        int x = mop.blockX;
+        int y = mop.blockY;
+        int z = mop.blockZ;
+
         int horizRange = 0;
         int vertRange = 0;
 
@@ -55,11 +59,9 @@ public class ProjectileDefaultFire extends ProjectileImpactEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                	
-                    if (world.isAirBlock(newPos))
+                    if (world.isAirBlock(x + i, y + j, z + k))
                     {
-                        world.setBlockState(newPos, Blocks.fire.getDefaultState());
+                        world.setBlock(x + i, y + j, z + k, Blocks.fire);
                     }
                 }
             }

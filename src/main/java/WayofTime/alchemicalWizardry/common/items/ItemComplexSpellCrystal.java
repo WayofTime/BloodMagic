@@ -1,23 +1,34 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 
-public class ItemComplexSpellCrystal extends BindableItems
+import java.util.List;
+
+public class ItemComplexSpellCrystal extends EnergyItems
 {
     public ItemComplexSpellCrystal()
     {
         super();
-        setMaxStackSize(1);
+        this.setMaxStackSize(1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:ComplexCrystal");
     }
 
     @Override
@@ -42,7 +53,7 @@ public class ItemComplexSpellCrystal extends BindableItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -54,7 +65,7 @@ public class ItemComplexSpellCrystal extends BindableItems
             if (world != null)
             {
                 NBTTagCompound itemTag = par1ItemStack.getTagCompound();
-                TileEntity tileEntity = world.getTileEntity(new BlockPos(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord")));
+                TileEntity tileEntity = world.getTileEntity(itemTag.getInteger("xCoord"), itemTag.getInteger("yCoord"), itemTag.getInteger("zCoord"));
 
                 if (tileEntity instanceof TESpellParadigmBlock)
                 {

@@ -5,7 +5,6 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -48,7 +47,7 @@ public class OmegaParadigm
 		ItemStack leggingsStack = armours[1];
 		ItemStack bootsStack = armours[0];
 		
-		if(helmetStack != null && helmetStack.getItem() == ModItems.boundHelmet && chestStack != null && chestStack.getItem() == ModItems.boundChestplate && leggingsStack != null && leggingsStack.getItem() == ModItems.boundLeggings && bootsStack != null && bootsStack.getItem() == ModItems.boundBoots)
+		if(helmetStack != null && helmetStack.getItem() == ModItems.boundHelmet && chestStack != null && chestStack.getItem() == ModItems.boundPlate && leggingsStack != null && leggingsStack.getItem() == ModItems.boundLeggings && bootsStack != null && bootsStack.getItem() == ModItems.boundBoots)
 		{			
 			long worldSeed = player.worldObj.getSeed();
 			Random rand = new Random(worldSeed + stability * (affinity + 7) * 94 + 84321*x - 17423*y + 76*z - 1623451*enchantability + 2 * enchantmentLevel);
@@ -133,7 +132,7 @@ public class OmegaParadigm
 		
 	}
 	
-	public boolean getBlockEffectWhileInside(Entity entity, BlockPos blockPos)
+	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
 	{
 		return false;
 	}

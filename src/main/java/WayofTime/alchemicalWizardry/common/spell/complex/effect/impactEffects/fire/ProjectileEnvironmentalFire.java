@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class ProjectileEnvironmentalFire extends ProjectileUpdateEffect
 {
@@ -16,10 +16,14 @@ public class ProjectileEnvironmentalFire extends ProjectileUpdateEffect
     @Override
     public void onUpdateEffect(Entity projectile)
     {
-        BlockPos pos = projectile.getPosition();
+        Vec3 posVec = SpellHelper.getEntityBlockVector(projectile);
 
         int horizRange = this.powerUpgrades + 1;
         int vertRange = (int) (0.5 * (this.powerUpgrades + 1));
+
+        int posX = (int) (posVec.xCoord);
+        int posY = (int) (posVec.yCoord);
+        int posZ = (int) (posVec.zCoord);
 
         World worldObj = projectile.worldObj;
 
@@ -29,11 +33,9 @@ public class ProjectileEnvironmentalFire extends ProjectileUpdateEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                	
-                    if (!worldObj.isAirBlock(newPos))
+                    if (!worldObj.isAirBlock(posX + i, posY + j, posZ + k))
                     {
-                        SpellHelper.evaporateWaterBlock(worldObj, newPos);
+                        SpellHelper.evaporateWaterBlock(worldObj, posX + i, posY + j, posZ + k);
                     }
                 }
             }

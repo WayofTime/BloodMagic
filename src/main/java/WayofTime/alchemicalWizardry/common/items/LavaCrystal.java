@@ -2,20 +2,35 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import net.minecraft.world.WorldProvider;
+import net.minecraftforge.common.DimensionManager;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class LavaCrystal extends BindableItems
+public class LavaCrystal extends EnergyItems
 {
     public LavaCrystal()
     {
         super();
         setMaxStackSize(1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setUnlocalizedName("lavaCrystal");
         setEnergyUsed(25);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:LavaCrystal");
     }
 
     /*
@@ -24,22 +39,24 @@ public class LavaCrystal extends BindableItems
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        SoulNetworkHandler.syphonFromNetwork(itemStack, this.getEnergyUsed());
-        ItemStack copiedStack = itemStack.copy();
-        copiedStack.setItemDamage(copiedStack.getItemDamage());
-        copiedStack.stackSize = 1;
-        return copiedStack;
+        {
+            syphonWhileInContainer(itemStack, this.getEnergyUsed());
+            ItemStack copiedStack = itemStack.copy();
+            copiedStack.setItemDamage(copiedStack.getItemDamage());
+            copiedStack.stackSize = 1;
+            return copiedStack;
+        }
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack itemStack)
+    public boolean hasContainerItem()
     {
         return true;
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         return par1ItemStack;
     }
 
@@ -66,7 +83,22 @@ public class LavaCrystal extends BindableItems
                 return false;
             }
 
-            if (SoulNetworkHandler.getCurrentEssence(ownerName) >= this.getEnergyUsed())
+//            World world = MinecraftServer.getServer().worldServers[0];
+            WorldProvider provider = DimensionManager.getProvider(0);
+            if(provider == null || provider.worldObj == null)
+            {
+            	return false;
+            }
+            World world = provider.worldObj;
+            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
+
+            if (data == null)
+            {
+                data = new LifeEssenceNetwork(ownerName);
+                world.setItemData(ownerName, data);
+            }
+
+            if (data.currentEssence >= this.getEnergyUsed())
             {
                 return true;
             }

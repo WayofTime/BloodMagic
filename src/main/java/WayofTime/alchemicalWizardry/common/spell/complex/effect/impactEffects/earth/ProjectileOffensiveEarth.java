@@ -1,13 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 
 public class ProjectileOffensiveEarth extends ProjectileImpactEffect
 {
@@ -19,10 +19,14 @@ public class ProjectileOffensiveEarth extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        int horizRange = (int) (this.powerUpgrades);
-        int vertDepth = (int) (3 * this.potencyUpgrades + 1);
+        int horizRange = this.powerUpgrades;
+        int vertDepth = 3 * this.potencyUpgrades + 1;
 
-        BlockPos pos = proj.getPosition();
+        Vec3 blockVector = SpellHelper.getEntityBlockVector(mop);
+
+        int posX = (int) (blockVector.xCoord);
+        int posY = (int) (blockVector.yCoord);
+        int posZ = (int) (blockVector.zCoord);
 
         World world = mop.worldObj;
 
@@ -32,18 +36,16 @@ public class ProjectileOffensiveEarth extends ProjectileImpactEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    if (!world.isAirBlock(newPos))
+                    if (!world.isAirBlock(posX + i, posY + j, posZ + k))
                     {
-                    	IBlockState state = world.getBlockState(newPos);
-                        Block block = state.getBlock();
-                        if (block == null || block.getBlockHardness(world, newPos) == -1)
+                        Block block = world.getBlock(posX + i, posY + j, posZ + k);
+                        if (block == null || block.getBlockHardness(world, posX + i, posY + j, posZ + k) == -1)
                         {
                             continue;
                         }
                         if (block == Blocks.stone || block == Blocks.cobblestone || block == Blocks.sand || block == Blocks.gravel || block == Blocks.grass || block == Blocks.dirt)
                         {
-                            world.setBlockToAir(newPos);
+                            world.setBlockToAir(posX + i, posY + j, posZ + k);
                         }
                     }
                 }

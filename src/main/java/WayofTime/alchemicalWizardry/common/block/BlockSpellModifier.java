@@ -2,13 +2,13 @@ package WayofTime.alchemicalWizardry.common.block;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ public class BlockSpellModifier extends BlockOrientable
     public BlockSpellModifier()
     {
         super();
+        this.setBlockName("blockSpellModifier");
     }
 
     @Override
@@ -25,7 +26,6 @@ public class BlockSpellModifier extends BlockOrientable
         return new TESpellModifierBlock();
     }
 
-    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
@@ -43,6 +43,12 @@ public class BlockSpellModifier extends BlockOrientable
 
     @Override
     public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
     {
         return false;
     }

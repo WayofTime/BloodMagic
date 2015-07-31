@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBeacon;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -26,24 +25,26 @@ public class RitualEffectOmegaStalling extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (world.getWorldTime() % 20 != 0)
         {
             return;
         }
         
-        TileEntity tile = world.getTileEntity(pos.offsetUp(5));
+        TileEntity tile = world.getTileEntity(x, y + 5, z);
         if(tile instanceof TileEntityBeacon)
         {
-        	int levels = ((TileEntityBeacon) tile).getField(0);
+        	int levels = ((TileEntityBeacon) tile).getLevels();
         	if(levels >= 4)
         	{
         		int horizontalRadius = 100;
                 int verticalRadius = 100;
                 
-                List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, horizontalRadius, verticalRadius);
+                List<EntityPlayer> playerList = SpellHelper.getPlayersInRange(world, x + 0.5, y + 0.5, z + 0.5, horizontalRadius, verticalRadius);
                 
                 for(EntityPlayer player : playerList)
                 {
@@ -72,7 +73,7 @@ public class RitualEffectOmegaStalling extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> omegaRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> omegaRitual = new ArrayList();
         
         this.addCornerRunes(omegaRitual, 1, 0, RitualComponent.FIRE);
         this.addOffsetRunes(omegaRitual, 2, 1, 0, RitualComponent.DUSK);

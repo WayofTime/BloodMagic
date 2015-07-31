@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -27,8 +26,10 @@ public class RitualEffectSummonMeteor extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (ritualStone.getCooldown() > 0)
         {
@@ -47,7 +48,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
-            List<EntityItem> entities = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.offsetUp(), pos.add(1, 2, 1)));
+            List<EntityItem> entities = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(x, y + 1, z, x + 1, y + 2, z + 1));
 
             if (entities == null)
             {
@@ -59,7 +60,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
                 if (entityItem != null && MeteorRegistry.isValidParadigmItem(entityItem.getEntityItem()))
                 {
                     int meteorID = MeteorRegistry.getParadigmIDForItem(entityItem.getEntityItem());
-                    EntityMeteor meteor = new EntityMeteor(world, pos.getX() + 0.5f, 257, pos.getZ() + 0.5f, meteorID);
+                    EntityMeteor meteor = new EntityMeteor(world, x + 0.5f, 257, z + 0.5f, meteorID);
                     meteor.motionY = -1.0f;
 
                     if (this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, 1000, true))
@@ -103,7 +104,7 @@ public class RitualEffectSummonMeteor extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> meteorRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> meteorRitual = new ArrayList();
         meteorRitual.add(new RitualComponent(2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(-2, 0, 0, RitualComponent.FIRE));
         meteorRitual.add(new RitualComponent(0, 0, 2, RitualComponent.FIRE));

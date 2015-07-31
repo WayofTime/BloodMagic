@@ -4,9 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -62,10 +60,9 @@ public class FireProjectile extends EnergyBlastProjectile
                 {
                     for (int k = -1; k <= 1; k++)
                     {
-                    	BlockPos newPos = new BlockPos(this.posX + i, this.posY + j, this.posZ + k);
-                        if (worldObj.isAirBlock(newPos))
+                        if (worldObj.isAirBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k))
                         {
-                            worldObj.setBlockState(newPos, Blocks.fire.getDefaultState());
+                            worldObj.setBlock((int) this.posX + i, (int) this.posY + j, (int) this.posZ + k, Blocks.fire);
                         }
                     }
                 }
@@ -86,12 +83,12 @@ public class FireProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                mop.setFire(10 * this.projectileDamage);
+                ((EntityLivingBase) mop).setFire(10 * this.projectileDamage);
                 ((EntityLivingBase) mop).setRevengeTarget(shootingEntity);
 
-                if (((EntityLivingBase) mop).isPotionActive(Potion.fireResistance) || mop.isImmuneToFire())
+                if (((EntityLivingBase) mop).isPotionActive(Potion.fireResistance) || ((EntityLivingBase) mop).isImmuneToFire())
                 {
-                    mop.attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
+                    ((EntityLivingBase) mop).attackEntityFrom(DamageSource.causeMobDamage(shootingEntity), 1);
                 } else
                 {
                     doDamage(projectileDamage, mop);
@@ -100,13 +97,12 @@ public class FireProjectile extends EnergyBlastProjectile
             }
         }
 
-        BlockPos newPos = new BlockPos(this.posX, this.posY, this.posZ);
-        if (worldObj.isAirBlock(newPos))
+        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
         {
-            worldObj.setBlockState(newPos, Blocks.fire.getDefaultState());
+            worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, Blocks.fire);
         }
 
-        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
+        spawnHitParticles("magicCrit", 8);
         this.setDead();
     }
 }

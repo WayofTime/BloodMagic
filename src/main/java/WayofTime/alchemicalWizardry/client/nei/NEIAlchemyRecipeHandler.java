@@ -6,7 +6,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiChemistrySet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
@@ -16,6 +15,7 @@ import net.minecraft.util.StatCollector;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBloodOrb;
+import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiWritingTable;
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
@@ -104,7 +104,7 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public Class<? extends GuiContainer> getGuiClass() {
-        return GuiChemistrySet.class;
+        return GuiWritingTable.class;
     }
 
     @Override
@@ -154,7 +154,7 @@ public class NEIAlchemyRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void drawExtras(int id) {
         CachedAlchemyRecipe cache = (CachedAlchemyRecipe) arecipes.get(id);
-        Minecraft.getMinecraft().fontRendererObj.drawString("\u00a77" + cache.lp + "LP", getLPX(cache.lp), 34, 0);
+        Minecraft.getMinecraft().fontRenderer.drawString("\u00a77" + cache.lp + "LP", getLPX(cache.lp), 34, 0);
     }
 
     public int getLPX(int lp) {

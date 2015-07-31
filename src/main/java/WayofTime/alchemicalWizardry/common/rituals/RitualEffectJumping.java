@@ -10,7 +10,6 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -18,8 +17,8 @@ import java.util.List;
 
 public class RitualEffectJumping extends RitualEffect
 {
-    public final int aetherDrain = 10;
-    public final int terraeDrain = 10;
+    public static final int aetherDrain = 10;
+    public static final int terraeDrain = 10;
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -27,11 +26,13 @@ public class RitualEffectJumping extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         double range = 0.5;
-        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, range, range);
+        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 1.5, z + 0.5, range, range);
 
         if (currentEssence < this.getCostPerRefresh() * livingList.size())
         {
@@ -98,7 +99,7 @@ public class RitualEffectJumping extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> jumpingRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> jumpingRitual = new ArrayList();
 
         for (int i = -1; i <= 1; i++)
         {

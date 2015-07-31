@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.items;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,18 +12,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IRitualDiviner;
@@ -32,18 +29,28 @@ import WayofTime.alchemicalWizardry.api.rituals.IRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
+public class ItemRitualDiviner extends EnergyItems implements IRitualDiviner
 {
     private int maxMetaData;
 
     public ItemRitualDiviner()
     {
         super();
-        setMaxStackSize(1);
+        this.maxStackSize = 1;
         setEnergyUsed(100);
-        setMaxDamage(4);
+        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.maxMetaData = 4;
         this.hasSubtypes = true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:RitualDiviner");
     }
 
     @Override
@@ -159,15 +166,15 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
     {
-        if (!BindableItems.checkAndSetItemOwner(stack, player)) return false;
+        if (!EnergyItems.checkAndSetItemOwner(stack, player)) return false;
 
-        if(placeRitualStoneAtMasterStone(stack, player, world, pos))
+        if(placeRitualStoneAtMasterStone(stack, player, world, x, y, z))
         {
-        	this.setStoredLocation(stack, new Int3(pos));
+        	this.setStoredLocation(stack, new Int3(x, y, z));
         	return true;
-        }else if(!(world.getBlockState(pos).getBlock() instanceof IRitualStone || world.getBlockState(pos).getBlock() instanceof IMasterRitualStone) && !player.isSneaking())
+        }else if(!(world.getBlock(x, y, z) instanceof IRitualStone || world.getBlock(x, y, z) instanceof IMasterRitualStone) && !player.isSneaking())
         {
         	if(world.isRemote)
         	{
@@ -181,12 +188,12 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
         return false;
     }
     
-    public boolean placeRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, BlockPos pos)
+    public boolean placeRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, int x, int y, int z)
     {
     	int direction = this.getDirection(stack);
 
     	ItemStack[] playerInventory = player.inventory.mainInventory;
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (tileEntity instanceof TEMasterStone)
         {
@@ -214,15 +221,13 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
 
             for (RitualComponent rc : ritualList)
             {
-            	BlockPos newPos = pos.add(rc.getX(direction), rc.getY(), rc.getZ(direction));
-
-                if (world.isAirBlock(newPos))
+                if (world.isAirBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)))
                 {
                     if (playerInvRitualStoneLocation >= 0 || player.capabilities.isCreativeMode)
                     {
                         if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(stack))
                         {
-                            world.playAuxSFX(200, newPos.offsetUp(), 0);
+                            world.playAuxSFX(200, x, y + 1, z, 0);
                             return true;
                         }
 
@@ -231,13 +236,13 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
                             player.inventory.decrStackSize(playerInvRitualStoneLocation, 1);
                         }
 
-                        if(BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
+                        if(EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
                         {
-                        	world.setBlockState(newPos, ModBlocks.ritualStone.getStateFromMeta(rc.getStoneType()), 3);
+                        	world.setBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction), ModBlocks.ritualStone, rc.getStoneType(), 3);
 
                             if (world.isRemote)
                             {
-                                world.playAuxSFX(2005, newPos.offsetUp(), 0);
+                                world.playAuxSFX(2005, x, y + 1, z, 0);
                                 
                                 return true;
                             }
@@ -247,29 +252,29 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
                     }
                 } else
                 {
-                	IBlockState state = world.getBlockState(newPos);
-                    Block block = state.getBlock();
+                    Block block = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
                     if (block == ModBlocks.ritualStone)
                     {
-                    	int metadata = block.getMetaFromState(state);
+                        int metadata = world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
+
                         if (metadata != rc.getStoneType())
                         {
-                        	if(BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
+                        	if(EnergyItems.syphonBatteries(stack, player, getEnergyUsed()))
                         	{
 	                            if (rc.getStoneType() > this.maxMetaData + this.getMaxRuneDisplacement(stack))
 	                            {
-	                                world.playAuxSFX(200, newPos.offsetUp(), 0);
+	                                world.playAuxSFX(200, x, y + 1, z, 0);
 	                                return true;
 	                            }
 	
-	                            world.setBlockState(newPos, ModBlocks.ritualStone.getStateFromMeta(rc.getStoneType()), 3);
+	                            world.setBlockMetadataWithNotify(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction), rc.getStoneType(), 3);
 	                            return true;
                         	}
                         }
                     } else
                     {
-                        world.playAuxSFX(0, newPos.offsetUp(), 0);
+                        world.playAuxSFX(0, x, y + 1, z, 0);
                         return true;
                     }
                 }
@@ -290,7 +295,7 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
 			int y = loc.yCoord;
 			int z = loc.zCoord;
 			
-			if(!this.placeRitualStoneAtMasterStone(stack, (EntityPlayer)entity, world, new BlockPos(x, y, z)))
+			if(!this.placeRitualStoneAtMasterStone(stack, (EntityPlayer)entity, world, x, y, z))
 			{
 				this.voidStoredLocation(stack);
 			}
@@ -359,7 +364,7 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (BindableItems.checkAndSetItemOwner(stack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
+        if (EnergyItems.checkAndSetItemOwner(stack, par3EntityPlayer) && par3EntityPlayer.isSneaking())
         {
             rotateRituals(par2World,par3EntityPlayer, stack, true);
         }
@@ -374,7 +379,7 @@ public class ItemRitualDiviner extends BindableItems implements IRitualDiviner
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            if (!BindableItems.checkAndSetItemOwner(stack, player)) return true;
+            if (!EnergyItems.checkAndSetItemOwner(stack,player)) return true;
 
             if (!player.isSwingInProgress)
             {

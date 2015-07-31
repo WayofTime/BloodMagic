@@ -1,15 +1,15 @@
 
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class TileSegmentedReagentHandler extends TileEntity implements ISegmentedReagentHandler
 {
@@ -30,7 +30,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
     {
         super();
 
-        this.attunedTankMap = new HashMap<Reagent, Integer>();
+        this.attunedTankMap = new HashMap();
         this.tanks = new ReagentContainer[numberOfTanks];
         for (int i = 0; i < numberOfTanks; i++)
         {
@@ -98,7 +98,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
 
     /* ISegmentedReagentHandler */
     @Override
-    public int fill(EnumFacing from, ReagentStack resource, boolean doFill)
+    public int fill(ForgeDirection from, ReagentStack resource, boolean doFill)
     {
         int totalFill = 0;
 
@@ -116,7 +116,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
                 ReagentStack remainingStack = resource.copy();
                 remainingStack.amount = maxFill - totalFill;
 
-                boolean doesReagentMatch = tanks[i].getReagent() != null && tanks[i].getReagent().isReagentEqual(remainingStack);
+                boolean doesReagentMatch = tanks[i].getReagent() == null ? false : tanks[i].getReagent().isReagentEqual(remainingStack);
 
                 if (doesReagentMatch)
                 {
@@ -164,7 +164,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
     }
 
     @Override
-    public ReagentStack drain(EnumFacing from, ReagentStack resource, boolean doDrain)
+    public ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain)
     {
         if (resource == null)
         {
@@ -197,7 +197,7 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
 
     /* Only returns the amount from the first available tank */
     @Override
-    public ReagentStack drain(EnumFacing from, int maxDrain, boolean doDrain)
+    public ReagentStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
     {
         for (int i = 0; i < tanks.length; i++)
         {
@@ -212,19 +212,19 @@ public class TileSegmentedReagentHandler extends TileEntity implements ISegmente
     }
 
     @Override
-    public boolean canFill(EnumFacing from, Reagent reagent)
+    public boolean canFill(ForgeDirection from, Reagent reagent)
     {
         return true;
     }
 
     @Override
-    public boolean canDrain(EnumFacing from, Reagent reagent)
+    public boolean canDrain(ForgeDirection from, Reagent reagent)
     {
         return true;
     }
 
     @Override
-    public ReagentContainerInfo[] getContainerInfo(EnumFacing from)
+    public ReagentContainerInfo[] getContainerInfo(ForgeDirection from)
     {
         ReagentContainerInfo[] info = new ReagentContainerInfo[this.getNumberOfTanks()];
         for (int i = 0; i < this.getNumberOfTanks(); i++)

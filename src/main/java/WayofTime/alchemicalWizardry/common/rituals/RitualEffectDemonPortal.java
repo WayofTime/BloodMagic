@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -22,6 +20,7 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 
 public class RitualEffectDemonPortal extends RitualEffect
 {
@@ -37,8 +36,10 @@ public class RitualEffectDemonPortal extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -67,7 +68,7 @@ public class RitualEffectDemonPortal extends RitualEffect
         			{
         				if(rand.nextInt(10) == 0)
         				{
-        					this.createRandomLightning(world, pos.getX(), pos.getY(), pos.getZ());
+        					this.createRandomLightning(world, x, y, z);
         				}
         				reagentAmount += drainAmount;
         				
@@ -81,9 +82,9 @@ public class RitualEffectDemonPortal extends RitualEffect
         	
         	if(reagentsFulfilled && checkCreatePortal(ritualStone))
         	{
-        		world.setBlockState(pos.offsetUp(), ModBlocks.blockDemonPortal.getDefaultState());
+        		world.setBlock(x, y+1, z, ModBlocks.blockDemonPortal);
         		
-        		TEDemonPortal portal = (TEDemonPortal) world.getTileEntity(pos.offsetUp());
+        		TEDemonPortal portal = (TEDemonPortal) world.getTileEntity(x, y + 1, z);
         		portal.start();
         		
         		ritualStone.setActive(false);
@@ -95,12 +96,11 @@ public class RitualEffectDemonPortal extends RitualEffect
 
     public boolean checkCreatePortal(IMasterRitualStone ritualStone)
     {
-    	BlockPos pos = ritualStone.getPosition();
-    	TileEntity entity = ritualStone.getWorldObj().getTileEntity(pos.offsetUp());
+    	TileEntity entity = ritualStone.getWorld().getTileEntity(ritualStone.getXCoord(), ritualStone.getYCoord() + 1, ritualStone.getZCoord());
     	if(entity instanceof IBloodAltar)
     	{
     		IBloodAltar altar = (IBloodAltar)entity;
-    		if(altar.hasDemonBlood() && ritualStone.getWorldObj().isAirBlock(pos.offsetUp(2)))
+    		if(altar.hasDemonBlood() && ritualStone.getWorld().isAirBlock(ritualStone.getXCoord(), ritualStone.getYCoord() + 2, ritualStone.getZCoord()))
     		{
     			return true;
     		}
@@ -132,11 +132,13 @@ public class RitualEffectDemonPortal extends RitualEffect
     
     public boolean checkJars(IMasterRitualStone ritualStone)
     {
-    	BlockPos position = ritualStone.getPosition();
+    	int x = ritualStone.getXCoord();
+    	int y = ritualStone.getYCoord();
+    	int z = ritualStone.getZCoord();
     	
     	for(Int3 pos : jarLocations)
     	{
-    		if(!(ritualStone.getWorldObj().getTileEntity(position.add(pos.xCoord, pos.yCoord, pos.zCoord)) instanceof TEBelljar))
+    		if(!(ritualStone.getWorld().getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord) instanceof TEBellJar))
     		{
     			return false;
     		}
@@ -148,7 +150,7 @@ public class RitualEffectDemonPortal extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> demonRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> demonRitual = new ArrayList();
         this.addParallelRunes(demonRitual, 3, 0, RitualComponent.FIRE);
         this.addParallelRunes(demonRitual, 5, 0, RitualComponent.FIRE);
         this.addCornerRunes(demonRitual, 2, 0, RitualComponent.AIR);

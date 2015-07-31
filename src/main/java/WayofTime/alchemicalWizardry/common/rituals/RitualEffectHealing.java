@@ -1,20 +1,19 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectHealing extends RitualEffect
 {
@@ -28,8 +27,10 @@ public class RitualEffectHealing extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         int timeDelay = 50;
 
@@ -43,8 +44,9 @@ public class RitualEffectHealing extends RitualEffect
         int range = 15 * (hasPraesidium ? 3 : 1);
         int vertRange = 15 * (hasPraesidium ? 3 : 1);
 
-        List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, vertRange);
+        List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, vertRange);
         int entityCount = 0;
+        boolean flag = false;
 
         for (EntityLivingBase livingEntity : list)
         {
@@ -82,7 +84,7 @@ public class RitualEffectHealing extends RitualEffect
                 if (livingEntity.getHealth() + 0.1f < livingEntity.getMaxHealth())
                 {
                     PotionEffect effect = livingEntity.getActivePotionEffect(Potion.regeneration);
-                    if (effect == null || (effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay))
+                    if (effect == null || (effect != null && effect.getAmplifier() <= potency && effect.getDuration() <= timeDelay))
                     {
                         if (!hasVirtus || (this.canDrainReagent(ritualStone, ReagentRegistry.virtusReagent, virtusDrain, false)))
                         {
@@ -128,7 +130,7 @@ public class RitualEffectHealing extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> healingRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> healingRitual = new ArrayList();
         healingRitual.add(new RitualComponent(4, 0, 0, RitualComponent.AIR));
         healingRitual.add(new RitualComponent(5, 0, -1, RitualComponent.AIR));
         healingRitual.add(new RitualComponent(5, 0, 1, RitualComponent.AIR));

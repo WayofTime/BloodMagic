@@ -1,12 +1,11 @@
 package WayofTime.alchemicalWizardry.common.summoning.meteor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeteorRegistry
 {
@@ -27,11 +26,11 @@ public class MeteorRegistry
         }
     }
 
-    public static void createMeteorImpact(World world, BlockPos pos, int paradigmID, boolean[] flags)
+    public static void createMeteorImpact(World world, int x, int y, int z, int paradigmID, boolean[] flags)
     {
         if (paradigmID < paradigmList.size())
         {
-            paradigmList.get(paradigmID).createMeteorImpact(world, pos, flags);
+            paradigmList.get(paradigmID).createMeteorImpact(world, x, y, z, flags);
         }
     }
 

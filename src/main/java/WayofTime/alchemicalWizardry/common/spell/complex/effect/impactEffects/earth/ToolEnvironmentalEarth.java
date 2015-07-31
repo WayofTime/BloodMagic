@@ -1,13 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.DigAreaEffect;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class ToolEnvironmentalEarth extends DigAreaEffect
 {
@@ -24,11 +23,13 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
             return 0;
         }
 
-        BlockPos pos = blockPos.func_178782_a();
-        EnumFacing sidehit = blockPos.field_178784_b;
+        int x = blockPos.blockX;
+        int y = blockPos.blockY;
+        int z = blockPos.blockZ;
+        ForgeDirection sidehit = ForgeDirection.getOrientation(blockPos.sideHit);
 
-        int radius = 2;
-        int depth = 5;
+        int radius = this.powerUpgrades;
+        int depth = 2 * this.potencyUpgrades + 1;
 
         depth--;
 
@@ -69,14 +70,13 @@ public class ToolEnvironmentalEarth extends DigAreaEffect
             default:
         }
 
-        for (int i = -negX; i <= posX; i++)
+        for (int xPos = x - negX; xPos <= x + posX; xPos++)
         {
-            for (int j = -negY; j <= posY; j++)
+            for (int yPos = y - negY; yPos <= y + posY; yPos++)
             {
-                for (int k = -negZ; k <= posZ; k++)
+                for (int zPos = z - negZ; zPos <= z + posZ; zPos++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    itemTool.onBlockStartBreak(container, newPos, player);
+                    this.breakBlock(container, world, player, blockHardness, xPos, yPos, zPos, itemTool);
                 }
             }
         }

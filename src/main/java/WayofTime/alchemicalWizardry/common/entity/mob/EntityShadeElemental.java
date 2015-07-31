@@ -15,7 +15,6 @@ public class EntityShadeElemental extends EntityElemental implements IMob
         super(world, AlchemicalWizardry.entityShadeElementalID);
     }
 
-    @Override
     public void inflictEffectOnEntity(Entity target)
     {
         if (target instanceof EntityLivingBase)

@@ -1,13 +1,12 @@
 package WayofTime.alchemicalWizardry.api.rituals;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ISegmentedReagentHandler;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 
 public interface IMasterRitualStone extends ISegmentedReagentHandler
 {
-    void performRitual(World world, BlockPos pos, String ritualID);
+    void performRitual(World world, int x, int y, int z, String ritualID);
 
     String getOwner();
 
@@ -23,9 +22,13 @@ public interface IMasterRitualStone extends ISegmentedReagentHandler
 
     int getDirection();
 
-    World getWorldObj();
+    World getWorld();
 
-    BlockPos getPosition();
+    int getXCoord();
+
+    int getYCoord();
+
+    int getZCoord();
 
     NBTTagCompound getCustomRitualTag();
 

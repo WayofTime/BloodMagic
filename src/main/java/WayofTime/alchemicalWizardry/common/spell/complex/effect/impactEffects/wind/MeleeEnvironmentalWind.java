@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.MeleeSpellCenteredWorldEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import java.util.List;
 
 public class MeleeEnvironmentalWind extends MeleeSpellCenteredWorldEffect
 {
@@ -19,18 +18,18 @@ public class MeleeEnvironmentalWind extends MeleeSpellCenteredWorldEffect
     }
 
     @Override
-    public void onCenteredWorldEffect(EntityPlayer player, World world, BlockPos pos)
+    public void onCenteredWorldEffect(EntityPlayer player, World world, int posX, int posY, int posZ)
     {
         int radius = 5 * this.potencyUpgrades + 3;
 
-        List<Entity> entities = SpellHelper.getEntitiesInRange(world, pos.getX(), pos.getY(), pos.getZ(), radius, radius);
+        List<Entity> entities = SpellHelper.getEntitiesInRange(world, posX, posY, posZ, radius, radius);
 
         for (Entity entity : entities)
         {
             if (entity instanceof EntityItem)
             {
-                ((EntityItem) entity).setPickupDelay(0);
-                entity.onCollideWithPlayer((EntityPlayer) player);
+                ((EntityItem) entity).delayBeforeCanPickup = 0;
+                entity.onCollideWithPlayer(player);
             }
         }
     }

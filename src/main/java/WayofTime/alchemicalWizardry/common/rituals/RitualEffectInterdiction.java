@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -27,8 +26,10 @@ public class RitualEffectInterdiction extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -37,7 +38,7 @@ public class RitualEffectInterdiction extends RitualEffect
         {
             int d0 = 5;
 
-            List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, d0, d0);
+            List<EntityLivingBase> list = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
             boolean flag = false;
 
             boolean hasOffensa = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
@@ -47,9 +48,9 @@ public class RitualEffectInterdiction extends RitualEffect
             {
                 if (!((!hasOffensa && entityLiving instanceof EntityPlayer) && (SpellHelper.getUsername((EntityPlayer) entityLiving).equals(owner))))
                 {
-                    double xDif = entityLiving.posX - (pos.getX() - 0.5);
-                    double yDif = entityLiving.posY - ((pos.getY() - 0.5) + 1);
-                    double zDif = entityLiving.posZ - (pos.getZ() - 0.5);
+                    double xDif = entityLiving.posX - x;
+                    double yDif = entityLiving.posY - (y + 1);
+                    double zDif = entityLiving.posZ - z;
                     entityLiving.motionX = 0.1 * xDif;
                     entityLiving.motionY = 0.1 * yDif;
                     entityLiving.motionZ = 0.1 * zDif;
@@ -77,7 +78,7 @@ public class RitualEffectInterdiction extends RitualEffect
 
                 int horizontalRadius = 5;
                 int verticalRadius = 5;
-                List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(horizontalRadius, verticalRadius, horizontalRadius));
+                List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(horizontalRadius, verticalRadius, horizontalRadius));
 
                 if (itemList != null)
                 {
@@ -85,9 +86,9 @@ public class RitualEffectInterdiction extends RitualEffect
 
                     for (EntityItem entity : itemList)
                     {
-                    	double xDif = entity.posX - (pos.getX() - 0.5);
-                        double yDif = entity.posY - ((pos.getY() - 0.5) + 1);
-                        double zDif = entity.posZ - (pos.getZ() - 0.5);
+                        double xDif = entity.posX - x;
+                        double yDif = entity.posY - (y + 1);
+                        double zDif = entity.posZ - z;
                         entity.motionX = 0.1 * xDif;
                         entity.motionY = 0.1 * yDif;
                         entity.motionZ = 0.1 * zDif;
@@ -123,7 +124,7 @@ public class RitualEffectInterdiction extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> interdictionRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> interdictionRitual = new ArrayList();
         interdictionRitual.add(new RitualComponent(1, 0, 0, 4));
         interdictionRitual.add(new RitualComponent(-1, 0, 0, 4));
         interdictionRitual.add(new RitualComponent(0, 0, 1, 4));

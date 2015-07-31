@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
@@ -54,7 +53,7 @@ public class IceProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }// else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
         this.setDead();
@@ -71,9 +70,9 @@ public class IceProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                if (mop.isImmuneToFire())
+                if (((EntityLivingBase) mop).isImmuneToFire())
                 {
-                    doDamage(projectileDamage * 2, mop);
+                    doDamage((int) (projectileDamage * 2), mop);
                     ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2));
                 } else
                 {
@@ -83,14 +82,19 @@ public class IceProjectile extends EnergyBlastProjectile
             }
         }
 
-        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
+        if (worldObj.isAirBlock((int) this.posX, (int) this.posY, (int) this.posZ))
+        {
+            //worldObj.setBlock((int)this.posX, (int)this.posY, (int)this.posZ,Block.fire.blockID);
+        }
+
+        spawnHitParticles("magicCrit", 8);
         this.setDead();
     }
 
     @Override
     public void doFiringParticles()
     {
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.EXPLOSION_LARGE, posX, posY, posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "explode", posX, posY, posZ, gaussian(motionX), gaussian(motionY), gaussian(motionZ));
     }
 }

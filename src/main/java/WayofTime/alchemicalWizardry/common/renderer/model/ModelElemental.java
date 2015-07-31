@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.renderer.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.world.World;
 
 public class ModelElemental extends ModelBase
@@ -71,11 +70,10 @@ public class ModelElemental extends ModelBase
             return;
         }
 
-        int ratio = 20;
-        float rot = (entity.worldObj.getWorldTime() % ratio) / ratio;
-        Shape1.rotateAngleX = f / 5;
-        Shape2.rotateAngleZ = f / 5;
-        Shape3.rotateAngleY = f / 5;
-        EntityBlaze d;
+        float ratio = 0.1f;
+        float rot = (entity.worldObj.getWorldTime() + f) * ratio;
+        Shape1.rotateAngleX = rot;
+        Shape2.rotateAngleZ = rot;
+        Shape3.rotateAngleY = rot;
     }
 }

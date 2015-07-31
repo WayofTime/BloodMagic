@@ -10,7 +10,6 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -30,12 +29,14 @@ public class RitualEffectLeap extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         double range = 2.0;
 
-        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, range);
+        List<EntityLivingBase> livingList = SpellHelper.getLivingEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
 
         if (livingList == null)
         {
@@ -208,7 +209,7 @@ public class RitualEffectLeap extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> leapingRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> leapingRitual = new ArrayList();
         leapingRitual.add(new RitualComponent(0, 0, -2, RitualComponent.DUSK));
         leapingRitual.add(new RitualComponent(1, 0, -1, RitualComponent.AIR));
         leapingRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.AIR));

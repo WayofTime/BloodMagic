@@ -8,11 +8,9 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.Int3;
@@ -68,8 +66,10 @@ public class RitualEffectMagnetic extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
 
@@ -88,7 +88,9 @@ public class RitualEffectMagnetic extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            BlockPos posRep = null;
+            int xRep = 0;
+            int yRep = 0;
+            int zRep = 0;
             boolean replace = false;
 
             outer:
@@ -98,10 +100,11 @@ public class RitualEffectMagnetic extends RitualEffect
                 {
                     for (int k = -1; k <= 1; k++)
                     {
-                    	BlockPos newPos = pos.add(i, j, k);
-                        if ((!replace) && world.isAirBlock(newPos))
+                        if ((!replace) && world.isAirBlock(x + i, y + j, z + k))
                         {
-                            posRep = newPos;
+                            xRep = x + i;
+                            yRep = y + j;
+                            zRep = z + k;
                             replace = true;
                             break outer;
                         }
@@ -113,7 +116,7 @@ public class RitualEffectMagnetic extends RitualEffect
             {
             	Int3 lastPos = this.getLastPosition(ritualStone.getCustomRitualTag());
             	
-            	int j = pos.getY() - 1;
+            	int j = y - 1;
             	int i = 0;
             	int k = 0;
             	
@@ -130,14 +133,13 @@ public class RitualEffectMagnetic extends RitualEffect
                     {
                         while(k <= radius)
                         {
-                        	BlockPos newPos = new BlockPos(pos.getX() + i, j, pos.getZ() + k);
-                        	IBlockState state = world.getBlockState(newPos);
-                            Block block = state.getBlock();
+                            Block block = world.getBlock(x + i, j, z + k);
+                            int meta = world.getBlockMetadata(x + i, j, z + k);
 
-                            if (isBlockOre(block, block.getMetaFromState(state)))
+                            if (isBlockOre(block, meta))
                             {
                                 //Allow swapping code. This means the searched block is an ore.
-                                BlockTeleposer.swapBlocks(this, world, world, newPos, posRep);
+                                BlockTeleposer.swapBlocks(this, world, world, x + i, j, z + k, xRep, yRep, zRep);
                                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
 
                                 if (hasPotentia)
@@ -170,8 +172,9 @@ public class RitualEffectMagnetic extends RitualEffect
                     return;
                 }
                 
-                j = pos.getY() - 1;
+                j = y - 1;
                 this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+                return;
             }
         }
     }
@@ -203,7 +206,7 @@ public class RitualEffectMagnetic extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> magneticRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> magneticRitual = new ArrayList();
         magneticRitual.add(new RitualComponent(1, 0, 1, RitualComponent.EARTH));
         magneticRitual.add(new RitualComponent(1, 0, -1, RitualComponent.EARTH));
         magneticRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.EARTH));

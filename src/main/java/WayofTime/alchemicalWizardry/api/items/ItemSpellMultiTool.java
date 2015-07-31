@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -18,12 +18,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.api.spell.SpellEffect;
@@ -42,6 +42,12 @@ public class ItemSpellMultiTool extends Item
         this.setMaxDamage(0);
         this.setMaxStackSize(1);
         this.setFull3D();
+    }
+
+    @Override
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BoundTool");
     }
     
     @Override
@@ -92,7 +98,7 @@ public class ItemSpellMultiTool extends Item
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, EntityPlayer player)
+    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player)
     {
         if (player.worldObj.isRemote)
         {
@@ -103,23 +109,23 @@ public class ItemSpellMultiTool extends Item
             return false;
 
         World world = player.worldObj;
-        IBlockState state = world.getBlockState(pos);
-        Block block = state.getBlock();
+        Block block = player.worldObj.getBlock(x, y, z);
+        int meta = world.getBlockMetadata(x, y, z);
         if (block == null || block == Blocks.air)
             return false;
         int hlvl = -1;
-        float blockHardness = block.getBlockHardness(world, pos);
+        float blockHardness = block.getBlockHardness(world, x, y, z);
 
         MovingObjectPosition mop = APISpellHelper.raytraceFromEntity(world, player, true, 5.0D);
 
-        IBlockState localState = world.getBlockState(pos);
-        Block localBlock = state.getBlock();
-        String toolClass = block.getHarvestTool(state);
+        Block localBlock = world.getBlock(x, y, z);
+        int localMeta = world.getBlockMetadata(x, y, z);
+        String toolClass = block.getHarvestTool(meta);
         if (toolClass != null && this.getHarvestLevel(stack, toolClass) != -1)
-            hlvl = block.getHarvestLevel(state);
+            hlvl = block.getHarvestLevel(meta);
         int toolLevel = this.getHarvestLevel(stack, toolClass);
 
-        float localHardness = localBlock == null ? Float.MAX_VALUE : localBlock.getBlockHardness(world, pos);
+        float localHardness = localBlock == null ? Float.MAX_VALUE : localBlock.getBlockHardness(world, x, y, z);
 
         if (hlvl <= toolLevel && localHardness - 1.5 <= blockHardness)
         {
@@ -133,7 +139,7 @@ public class ItemSpellMultiTool extends Item
 
                     String localToolClass = this.getToolClassForMaterial(localBlock.getMaterial());
 
-                    if (localToolClass != null && this.getHarvestLevel(stack, toolClass) >= localBlock.getHarvestLevel(localState))
+                    if (localToolClass != null && this.getHarvestLevel(stack, toolClass) >= localBlock.getHarvestLevel(localMeta))
                     {
                         isEffective = true;
                     }
@@ -148,31 +154,31 @@ public class ItemSpellMultiTool extends Item
                     {
                         if (isEffective)
                         {
-                            if (localBlock.removedByPlayer(world, pos, player, true))
+                            if (localBlock.removedByPlayer(world, player, x, y, z, true))
                             {
-                                localBlock.onBlockDestroyedByPlayer(world, pos, localState);
+                                localBlock.onBlockDestroyedByPlayer(world, x, y, z, localMeta);
                             }
-                            localBlock.onBlockHarvested(world, pos, localState, player);
+                            localBlock.onBlockHarvested(world, x, y, z, localMeta, player);
                             if (blockHardness > 0f)
-                                onBlockDestroyed(stack, world, localBlock, pos, player);
+                                onBlockDestroyed(stack, world, localBlock, x, y, z, player);
 
-                            List<ItemStack> items = APISpellHelper.getItemsFromBlock(world, pos, localBlock, localState, this.getSilkTouch(stack), this.getFortuneLevel(stack));
+                            List<ItemStack> items = APISpellHelper.getItemsFromBlock(world, localBlock, x, y, z, localMeta, this.getSilkTouch(stack), this.getFortuneLevel(stack));
 
                             SpellParadigmTool parad = this.loadParadigmFromStack(stack);
                             List<ItemStack> newItems = parad.handleItemList(stack, items);
 
                             if (!world.isRemote)
                             {
-                                APISpellHelper.spawnItemListInWorld(newItems, world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+                                APISpellHelper.spawnItemListInWorld(newItems, world, x + 0.5f, y + 0.5f, z + 0.5f);
                             }
 
-                            world.markBlockForUpdate(pos);
+                            world.func_147479_m(x, y, z);
 
                             int cost = 0;
 
                             cost += parad.digSurroundingArea(stack, world, player, mop, localToolClass, localHardness, toolLevel, this);
 
-                            cost += parad.onBreakBlock(stack, world, player, localBlock, localState, pos, mop.field_178784_b);
+                            cost += parad.onBreakBlock(stack, world, player, localBlock, localMeta, x, y, z, ForgeDirection.getOrientation(mop.sideHit));
 
                             if (cost > 0)
                             {
@@ -180,14 +186,14 @@ public class ItemSpellMultiTool extends Item
                             }
                         } else
                         {
-                            world.setBlockToAir(pos);
-                            world.markBlockForUpdate(pos);
+                            world.setBlockToAir(x, y, z);
+                            world.func_147479_m(x, y, z);
                         }
 
                     } else
                     {
-                        world.setBlockToAir(pos);
-                        world.markBlockForUpdate(pos);
+                        world.setBlockToAir(x, y, z);
+                        world.func_147479_m(x, y, z);
                     }
                 }
             }
@@ -252,7 +258,7 @@ public class ItemSpellMultiTool extends Item
 
     public Set<String> getToolClasses(ItemStack stack)
     {
-        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet();
 
         if (this.getHarvestLevel(stack, "pickaxe") > -1)
         {
@@ -273,14 +279,18 @@ public class ItemSpellMultiTool extends Item
     }
 
     @Override
-    public float getDigSpeed(ItemStack stack, IBlockState state)
+    public float getDigSpeed(ItemStack stack, Block block, int meta)
     {
-    	Block block = state.getBlock();
-        String toolClass = block.getHarvestTool(state);
+        String toolClass = block.getHarvestTool(meta);
 
         if (toolClass == null || toolClass.equals(""))
         {
-            return 1.0f;
+        	toolClass = getToolClassOfMaterial(block.getMaterial());
+        	
+        	if(toolClass == "")
+        	{
+                return 1.0f;
+        	}
         }
         {
             if (stack.hasTagCompound())
@@ -295,6 +305,26 @@ public class ItemSpellMultiTool extends Item
         }
 
         return 1.0f;
+    }
+    
+    public String getToolClassOfMaterial(Material mat)
+    {
+        if(mat == Material.iron || mat == Material.anvil || mat == Material.rock)
+        {
+        	return "pickaxe";
+        }
+
+        if(mat == Material.wood || mat == Material.plants || mat == Material.vine)
+        {
+        	return "axe";
+        }
+        
+        if(mat == Material.ground || mat == Material.grass)
+        {
+        	return "shovel";
+        }
+    	
+    	return "";
     }
 
     @Override
@@ -369,7 +399,7 @@ public class ItemSpellMultiTool extends Item
 
         MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, false);
 
-        int cost;
+        int cost = 0;
 
         if (mop != null && mop.typeOfHit.equals(MovingObjectPosition.MovingObjectType.BLOCK))
         {
@@ -549,7 +579,10 @@ public class ItemSpellMultiTool extends Item
 
     public void setDuration(ItemStack container, World world, int duration)
     {
-        if (!world.isRemote)
+        if (world.isRemote)
+        {
+            return;
+        } else
         {
             World overWorld = DimensionManager.getWorld(0);
             long worldtime = overWorld.getTotalWorldTime();
@@ -629,10 +662,10 @@ public class ItemSpellMultiTool extends Item
 
         NBTTagList tagList = tagiest.getTagList("Effects", Constants.NBT.TAG_COMPOUND);
 
-        List<SpellEffect> spellEffectList = new LinkedList<SpellEffect>();
+        List<SpellEffect> spellEffectList = new LinkedList();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
 
             SpellEffect eff = SpellEffect.getEffectFromTag(tag);
             if (eff != null)
@@ -726,10 +759,10 @@ public class ItemSpellMultiTool extends Item
 
         NBTTagList tagList = tagiest.getTagList("ToolTips", Constants.NBT.TAG_COMPOUND);
 
-        List<String> toolTipList = new LinkedList<String>();
+        List<String> toolTipList = new LinkedList();
         for (int i = 0; i < tagList.tagCount(); i++)
         {
-            NBTTagCompound tag = tagList.getCompoundTagAt(i);
+            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
 
             String str = tag.getString("tip");
             if (str != null)

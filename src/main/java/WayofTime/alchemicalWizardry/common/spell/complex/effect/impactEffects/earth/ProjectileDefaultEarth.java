@@ -1,13 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 
 public class ProjectileDefaultEarth extends ProjectileImpactEffect
 {
@@ -24,10 +22,12 @@ public class ProjectileDefaultEarth extends ProjectileImpactEffect
     @Override
     public void onTileImpact(World world, MovingObjectPosition mop)
     {
-    	BlockPos pos = mop.func_178782_a();
-    	
         int horizRange = (int) (0.5 * (this.powerUpgrades) + 1);
         int vertRange = (int) (0.5 * (this.powerUpgrades) + 1);
+
+        int posX = mop.blockX;
+        int posY = mop.blockY;
+        int posZ = mop.blockZ;
 
         for (int i = -horizRange; i <= horizRange; i++)
         {
@@ -35,21 +35,21 @@ public class ProjectileDefaultEarth extends ProjectileImpactEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    if (!world.isAirBlock(newPos))
+                    if (!world.isAirBlock(posX + i, posY + j, posZ + k))
                     {
-                    	IBlockState state = world.getBlockState(newPos);
-                        Block block = state.getBlock();
-                        if (block == null || block.getBlockHardness(world, newPos) == -1 || SpellHelper.isBlockFluid(block))
+                        Block block = world.getBlock(posX + i, posY + j, posZ + k);
+                        if (block == null || block.getBlockHardness(world, posX + i, posY + j, posZ + k) == -1 || SpellHelper.isBlockFluid(block))
                         {
                             continue;
                         }
                         //block.breakBlock(world, posX+i, posY+j, posZ+k, block.blockID, world.getBlockMetadata(posX+i, posY+j, posZ+k));
                         //world.destroyBlock(posX+i, posY+j, posZ+k, true);
-                        world.destroyBlock(newPos, false);
+                        world.func_147480_a(posX + i, posY + j, posZ + k, false);
                     }
                 }
             }
         }
+
     }
+
 }

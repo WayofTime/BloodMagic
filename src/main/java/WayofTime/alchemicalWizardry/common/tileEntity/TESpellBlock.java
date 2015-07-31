@@ -1,9 +1,9 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigm;
 import WayofTime.alchemicalWizardry.api.tile.ISpellTile;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class TESpellBlock extends TEOrientable implements ISpellTile
 {
@@ -23,9 +23,12 @@ public abstract class TESpellBlock extends TEOrientable implements ISpellTile
 
     public TESpellBlock getTileAtOutput()
     {
-        EnumFacing output = this.getOutputDirection();
+        ForgeDirection output = this.getOutputDirection();
+        int xOffset = output.offsetX;
+        int yOffset = output.offsetY;
+        int zOffset = output.offsetZ;
 
-        TileEntity tile = worldObj.getTileEntity(pos.add(output.getDirectionVec()));
+        TileEntity tile = worldObj.getTileEntity(xCoord + xOffset, yCoord + yOffset, zCoord + zOffset);
 
         if (tile instanceof TESpellBlock && ((TESpellBlock) tile).canInputRecieveOutput(output))
         {
@@ -41,7 +44,7 @@ public abstract class TESpellBlock extends TEOrientable implements ISpellTile
     }
 
     @Override
-    public boolean canInputRecieveOutput(EnumFacing output)
+    public boolean canInputRecieveOutput(ForgeDirection output)
     {
         return this.canInputRecieve() && this.getInputDirection().getOpposite() == output;
     }

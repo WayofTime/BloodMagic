@@ -6,7 +6,6 @@ public class HomSpellComponent
 {
     public HomSpell spell;
     public ItemStack item;
-    public int blockID;
 
     public HomSpellComponent(ItemStack item, HomSpell spell)
     {

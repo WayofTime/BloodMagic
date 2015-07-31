@@ -1,15 +1,14 @@
 package WayofTime.alchemicalWizardry.common;
 
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.ModItems;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.ModItems;
 
 public class LifeBucketHandler
 {
@@ -29,12 +28,11 @@ public class LifeBucketHandler
 
     public ItemStack fillCustomBucket(World world, MovingObjectPosition pos)
     {
-        IBlockState state = world.getBlockState(pos.func_178782_a());
-        Block block = state.getBlock();
+        Block block = world.getBlock(pos.blockX, pos.blockY, pos.blockZ);
 
-        if (block != null && (block.equals(ModBlocks.blockLifeEssence)) && block.getMetaFromState(state) == 0)
+        if (block != null && (block.equals(ModBlocks.blockLifeEssence)) && world.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ) == 0)
         {
-            world.setBlockToAir(pos.func_178782_a());
+            world.setBlockToAir(pos.blockX, pos.blockY, pos.blockZ);
             return new ItemStack(ModItems.bucketLife);
         } else
         {

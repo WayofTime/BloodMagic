@@ -15,9 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -41,8 +40,10 @@ public class RitualEffectCrafting extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         boolean hasPotentia = this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, false);
         
@@ -92,13 +93,13 @@ public class RitualEffectCrafting extends RitualEffect
             	{
         			int gridSpace = (i+1)*3 + (j+1);
 
-            		Int3 position = this.getSlotPositionForDirection(gridSpace, direction);
-            		TileEntity inv = world.getTileEntity(pos.add(position.xCoord, position.yCoord, position.zCoord));
+            		Int3 pos = this.getSlotPositionForDirection(gridSpace, direction);
+            		TileEntity inv = world.getTileEntity(x + pos.xCoord, y + pos.yCoord, z + pos.zCoord);
             		if(inv instanceof IInventory)
             		{
             			if(((IInventory) inv).getSizeInventory() <= slotDesignation || !((IInventory) inv).isItemValidForSlot(slotDesignation, ((IInventory) inv).getStackInSlot(slotDesignation)))
             			{
-
+            				continue;
             			}else
             			{
             				ItemStack invStack = ((IInventory) inv).getStackInSlot(slotDesignation);
@@ -131,12 +132,12 @@ public class RitualEffectCrafting extends RitualEffect
 
                 IInventory outputInv = null;
                 
-                List<IInventory> invList = new ArrayList<IInventory>();
+                List<IInventory> invList = new ArrayList();
 
-                TileEntity northEntity = world.getTileEntity(pos.add(0, -1, -2));
-                TileEntity southEntity = world.getTileEntity(pos.add(0, -1, 2));
-                TileEntity eastEntity = world.getTileEntity(pos.add(2, -1, 0));
-                TileEntity westEntity = world.getTileEntity(pos.add(-2, -1, 0));
+                TileEntity northEntity = world.getTileEntity(x, y-1, z - 2);
+                TileEntity southEntity = world.getTileEntity(x, y-1, z + 2);
+                TileEntity eastEntity = world.getTileEntity(x + 2, y-1, z);
+                TileEntity westEntity = world.getTileEntity(x - 2, y-1, z);
                 
                 switch(direction)
                 {
@@ -239,7 +240,7 @@ public class RitualEffectCrafting extends RitualEffect
 
                 if (outputInv != null)
                 {
-                	if(!(!limitToSingleStack ? SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, EnumFacing.DOWN) : SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, EnumFacing.DOWN, true, returnStack.getMaxStackSize())))
+                	if(!(!limitToSingleStack ? SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, ForgeDirection.DOWN) : SpellHelper.canInsertStackFullyIntoInventory(returnStack, outputInv, ForgeDirection.DOWN, true, returnStack.getMaxStackSize())))
                 	{
                 		tag.setBoolean("didLastCraftFail", true);
                 		return;
@@ -250,7 +251,7 @@ public class RitualEffectCrafting extends RitualEffect
                 		invList.add(outputInv);
                 	}
                 	
-                	Map<Integer, Map<Integer, Integer>> syphonMap = new HashMap<Integer, Map<Integer, Integer>>(); //Inventory, Slot, how much claimed
+                	Map<Integer, Map<Integer, Integer>> syphonMap = new HashMap(); //Inventory, Slot, how much claimed
                 	
                 	for(int n = 0; n < recipe.length; n++) //Look for the correct items
                 	{
@@ -299,7 +300,7 @@ public class RitualEffectCrafting extends RitualEffect
                 					Map<Integer, Integer> slotMap = syphonMap.get(i);
                 					if(slotMap == null)
                 					{
-                						slotMap = new HashMap<Integer, Integer>();
+                						slotMap = new HashMap();
                 						syphonMap.put(i, slotMap);
                 					}
                 					
@@ -331,7 +332,7 @@ public class RitualEffectCrafting extends RitualEffect
                 	
                 	/* The recipe is valid and the items have been found */
                 	                	
-                	SpellHelper.insertStackIntoInventory(CraftingManager.getInstance().findMatchingRecipe(inventory, world), outputInv, EnumFacing.DOWN);
+                	SpellHelper.insertStackIntoInventory(CraftingManager.getInstance().findMatchingRecipe(inventory, world), outputInv, ForgeDirection.DOWN);
                 	
                 	for(Entry<Integer, Map<Integer, Integer>> entry1 : syphonMap.entrySet())
                 	{
@@ -366,10 +367,10 @@ public class RitualEffectCrafting extends RitualEffect
                     	this.canDrainReagent(ritualStone, ReagentRegistry.potentiaReagent, potentiaDrain, true);
                     }
                     
-                    world.markBlockForUpdate(pos.add(0, 1, 2));
-                    world.markBlockForUpdate(pos.add(0, 1, -2));
-                    world.markBlockForUpdate(pos.add(2, 1, 0));
-                    world.markBlockForUpdate(pos.add(-2, 1, 0));
+                    world.markBlockForUpdate(x, y-1, z + 2);
+                    world.markBlockForUpdate(x, y-1, z - 2);
+                    world.markBlockForUpdate(x + 2, y-1, z);
+                    world.markBlockForUpdate(x - 2, y-1, z);
                     
 //                    long endTime = System.nanoTime();
 //
@@ -389,7 +390,7 @@ public class RitualEffectCrafting extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> autoCraftingRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> autoCraftingRitual = new ArrayList();
 
         this.addCornerRunes(autoCraftingRitual, 1, 1, RitualComponent.EARTH);
         this.addParallelRunes(autoCraftingRitual, 1, 1, RitualComponent.EARTH);

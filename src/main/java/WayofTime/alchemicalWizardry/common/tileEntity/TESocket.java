@@ -45,7 +45,7 @@ public class TESocket extends TEInventory
     }
 
     @Override
-    public String getName()
+    public String getInventoryName()
     {
         return "TESocket";
     }
@@ -54,6 +54,13 @@ public class TESocket extends TEInventory
     public int getInventoryStackLimit()
     {
         return 1;
+    }
+
+    //Logic for the actual block is under here
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
     }
 
     public void setActive()

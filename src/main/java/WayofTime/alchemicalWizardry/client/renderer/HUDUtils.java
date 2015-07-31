@@ -4,13 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -171,13 +169,12 @@ public final class HUDUtils
     {
         float var7 = 0.00390625F;
         float var8 = 0.00390625F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer wr = tessellator.getWorldRenderer();
-        wr.startDrawingQuads();
-        wr.addVertexWithUV((x + 0), (y + height), zLevel, ((u + 0) * var7), ((v + height) * var8));
-        wr.addVertexWithUV((x + width), (y + height), zLevel, ((u + width) * var7), ((v + height) * var8));
-        wr.addVertexWithUV((x + width), (y + 0), zLevel, ((u + width) * var7), ((v + 0) * var8));
-        wr.addVertexWithUV((x + 0), (y + 0), zLevel, ((u + 0) * var7), ((v + 0) * var8));
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((x + 0), (y + height), zLevel, ((u + 0) * var7), ((v + height) * var8));
+        tessellator.addVertexWithUV((x + width), (y + height), zLevel, ((u + width) * var7), ((v + height) * var8));
+        tessellator.addVertexWithUV((x + width), (y + 0), zLevel, ((u + width) * var7), ((v + 0) * var8));
+        tessellator.addVertexWithUV((x + 0), (y + 0), zLevel, ((u + 0) * var7), ((v + 0) * var8));
         tessellator.draw();
     }
 
@@ -198,12 +195,12 @@ public final class HUDUtils
         {
             if (itemStack.isItemDamaged() && showDamageBar)
             {
-                int var11 = (int) Math.round(13.0D - itemStack.getItemDamage() * 13.0D / itemStack.getMaxDamage());
-                int var7 = (int) Math.round(255.0D - itemStack.getItemDamage() * 255.0D / itemStack.getMaxDamage());
+                int var11 = (int) Math.round(13.0D - itemStack.getItemDamageForDisplay() * 13.0D / itemStack.getMaxDamage());
+                int var7 = (int) Math.round(255.0D - itemStack.getItemDamageForDisplay() * 255.0D / itemStack.getMaxDamage());
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glDisable(GL11.GL_TEXTURE_2D);
-                Tessellator var8 = Tessellator.getInstance();
+                Tessellator var8 = Tessellator.instance;
                 int var9 = 255 - var7 << 16 | var7 << 8;
                 int var10 = (255 - var7) / 4 << 16 | 16128;
                 renderQuad(var8, x + 2, y + 13, 13, 2, 0);
@@ -229,7 +226,7 @@ public final class HUDUtils
                     String var6 = "" + count;
                     GL11.glDisable(GL11.GL_LIGHTING);
                     GL11.glDisable(GL11.GL_DEPTH_TEST);
-                    fontRenderer.drawString(var6, x + 19 - 2 - fontRenderer.getStringWidth(var6), y + 6 + 3, 16777215);
+                    fontRenderer.drawStringWithShadow(var6, x + 19 - 2 - fontRenderer.getStringWidth(var6), y + 6 + 3, 16777215);
                     GL11.glEnable(GL11.GL_LIGHTING);
                     GL11.glEnable(GL11.GL_DEPTH_TEST);
                 }
@@ -243,13 +240,12 @@ public final class HUDUtils
      */
     public static void renderQuad(Tessellator tessellator, int x, int y, int width, int height, int color)
     {
-    	WorldRenderer wr = tessellator.getWorldRenderer();
-        wr.startDrawingQuads();
-//        wr.setColorOpaque_I(color);
-        wr.addVertex((x + 0), (y + 0), 0.0D);
-        wr.addVertex((x + 0), (y + height), 0.0D);
-        wr.addVertex((x + width), (y + height), 0.0D);
-        wr.addVertex((x + width), (y + 0), 0.0D);
+        tessellator.startDrawingQuads();
+        tessellator.setColorOpaque_I(color);
+        tessellator.addVertex((x + 0), (y + 0), 0.0D);
+        tessellator.addVertex((x + 0), (y + height), 0.0D);
+        tessellator.addVertex((x + width), (y + height), 0.0D);
+        tessellator.addVertex((x + width), (y + 0), 0.0D);
         tessellator.draw();
     }
 

@@ -6,7 +6,6 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.CoordAndRange;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -21,8 +20,10 @@ public class RitualEffectVeilOfEvil extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -32,40 +33,42 @@ public class RitualEffectVeilOfEvil extends RitualEffect
             int horizRange = 32;
             int vertRange = 32;
 
-            int dimension = world.provider.getDimensionId();
+            int dimension = world.provider.dimensionId;
 
-            if (AlchemicalWizardryEventHooks.forceSpawnMap.containsKey(dimension))
+            if (AlchemicalWizardryEventHooks.forceSpawnMap.containsKey(new Integer(dimension)))
             {
-                List<CoordAndRange> list = AlchemicalWizardryEventHooks.forceSpawnMap.get(dimension);
+                List<CoordAndRange> list = AlchemicalWizardryEventHooks.forceSpawnMap.get(new Integer(dimension));
                 if (list != null)
                 {
-                    if (!list.contains(new CoordAndRange(pos, horizRange, vertRange)))
+                    if (!list.contains(new CoordAndRange(x, y, z, horizRange, vertRange)))
                     {
                         boolean hasFoundAndRemoved = false;
                         for (CoordAndRange coords : list)
                         {
-                            BlockPos locationPos = coords.getPos();
+                            int xLocation = coords.xCoord;
+                            int yLocation = coords.yCoord;
+                            int zLocation = coords.zCoord;
 
-                            if (locationPos.equals(pos))
+                            if (xLocation == x && yLocation == y && zLocation == z)
                             {
                                 list.remove(coords);
                                 hasFoundAndRemoved = true;
                                 break;
                             }
                         }
-                        list.add(new CoordAndRange(pos, horizRange, vertRange));
+                        list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                     }
                 } else
                 {
-                    list = new LinkedList<CoordAndRange>();
-                    list.add(new CoordAndRange(pos, horizRange, vertRange));
-                    AlchemicalWizardryEventHooks.forceSpawnMap.put(dimension, list);
+                    list = new LinkedList();
+                    list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
+                    AlchemicalWizardryEventHooks.forceSpawnMap.put(new Integer(dimension), list);
                 }
             } else
             {
-                List<CoordAndRange> list = new LinkedList<CoordAndRange>();
-                list.add(new CoordAndRange(pos, horizRange, vertRange));
-                AlchemicalWizardryEventHooks.forceSpawnMap.put(dimension, list);
+                List<CoordAndRange> list = new LinkedList();
+                list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
+                AlchemicalWizardryEventHooks.forceSpawnMap.put(new Integer(dimension), list);
             }
 
 
@@ -82,7 +85,7 @@ public class RitualEffectVeilOfEvil extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> veilRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> veilRitual = new ArrayList();
 
         veilRitual.add(new RitualComponent(1, 0, 2, RitualComponent.DUSK));
         veilRitual.add(new RitualComponent(2, 0, 1, RitualComponent.DUSK));

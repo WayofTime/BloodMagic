@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 
@@ -17,7 +17,10 @@ public abstract class RitualEffect
         return true;
     }
 
-    public void onRitualBroken(IMasterRitualStone ritualStone, RitualBreakMethod method) {}
+    public void onRitualBroken(IMasterRitualStone ritualStone, RitualBreakMethod method)
+    {
+
+    }
 
     public abstract int getCostPerRefresh();
 
@@ -37,13 +40,13 @@ public abstract class RitualEffect
 
         ReagentStack reagentStack = new ReagentStack(reagent, amount);
 
-        ReagentStack stack = ritualStone.drain(EnumFacing.UP, reagentStack, false);
+        ReagentStack stack = ritualStone.drain(ForgeDirection.UNKNOWN, reagentStack, false);
 
         if (stack != null && stack.amount >= amount)
         {
             if (doDrain)
             {
-                ritualStone.drain(EnumFacing.UP, reagentStack, true);
+                ritualStone.drain(ForgeDirection.UNKNOWN, reagentStack, true);
             }
 
             return true;

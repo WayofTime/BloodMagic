@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.common.demonVillage;
 
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
@@ -30,17 +30,17 @@ public class DemonBuilding
         return schematic.getName();
     }
 
-    public boolean isValid(GridSpaceHolder master, int gridX, int gridZ, EnumFacing dir)
+    public boolean isValid(GridSpaceHolder master, int gridX, int gridZ, ForgeDirection dir)
     {
         return area.doesContainAll(master, gridX, gridZ, dir);
     }
 
-    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, EnumFacing dir, boolean populateInventories)
+    public void buildAll(TEDemonPortal teDemonPortal, World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir, boolean populateInventories)
     {
         schematic.buildAll(teDemonPortal, world, xCoord, yCoord, zCoord, dir, populateInventories);
     }
 
-    public void setAllGridSpaces(int xInit, int zInit, int yLevel, EnumFacing dir, int type, GridSpaceHolder master)
+    public void setAllGridSpaces(int xInit, int zInit, int yLevel, ForgeDirection dir, int type, GridSpaceHolder master)
     {
         area.setAllGridSpaces(xInit, zInit, yLevel, dir, type, master);
     }
@@ -57,7 +57,7 @@ public class DemonBuilding
         return scheme.createGSH();
     }
 
-    public Int3 getDoorSpace(EnumFacing dir)
+    public Int3 getDoorSpace(ForgeDirection dir)
     {
         int x;
         int z;
@@ -84,7 +84,7 @@ public class DemonBuilding
         return new Int3(x, doorGridSpace.yCoord, z);
     }
 
-    public Int3 getGridOffsetFromRoad(EnumFacing sideOfRoad, int yLevel)
+    public Int3 getGridOffsetFromRoad(ForgeDirection sideOfRoad, int yLevel)
     {
         Int3 doorSpace = this.getDoorSpace(sideOfRoad);
         int x = doorSpace.xCoord;
@@ -109,7 +109,7 @@ public class DemonBuilding
         return new Int3(x, yLevel, z);
     }
 
-    public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, EnumFacing dir)
+    public void destroyAllInField(World world, int xCoord, int yCoord, int zCoord, ForgeDirection dir)
     {
         schematic.destroyAllInField(world, xCoord, yCoord, zCoord, dir);
     }

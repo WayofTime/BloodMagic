@@ -1,11 +1,9 @@
 package WayofTime.alchemicalWizardry.common.harvest;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.harvest.IHarvestHandler;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 
 public class GourdHarvestHandler implements IHarvestHandler
 {
@@ -15,13 +13,13 @@ public class GourdHarvestHandler implements IHarvestHandler
     }
 
     @Override
-    public boolean harvestAndPlant(World world, BlockPos pos, Block block, IBlockState state)
+    public boolean harvestAndPlant(World world, int xCoord, int yCoord, int zCoord, Block block, int meta)
     {
         if (!this.canHandleBlock(block))
         {
             return false;
         }
-        world.destroyBlock(pos, true);
+        world.func_147480_a(xCoord, yCoord, zCoord, true);
         return true;
     }
 }

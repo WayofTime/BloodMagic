@@ -128,7 +128,7 @@ public class NEIBloodOrbShapedHandler extends ShapedRecipeHandler {
 
 		return new CachedBloodOrbRecipe(width, height, items, recipe.getRecipeOutput());
 	}
-
+	
 	@Override
     public void loadTransferRects() {
         transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "crafting"));

@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry.common.omega;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -34,26 +35,32 @@ public class OmegaParadigmFire extends OmegaParadigm
 			boolean isInLava = player.isInsideOfMaterial(Material.lava);
 			if(player.isBurning() && player.getHealth() < player.getMaxHealth())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, isInLava ? 1 : 0, true, false));
+				player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 200, isInLava ? 1 : 0, true));
 			}
 			
 			if(player.isBurning())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, isInLava ? 400 : 200, isInLava ? 1 : 0, true, false));
+				player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, isInLava ? 400 : 200, isInLava ? 1 : 0, true));
 			}
 			
 			if(player.isInWater())
 			{
-				player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 200, 2, true, false));
-				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2, true, false));
-				player.addPotionEffect(new PotionEffect(Potion.weakness.id, 200, 1, true, false));
+				player.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 200, 2, true));
+				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 200, 2, true));
+				player.addPotionEffect(new PotionEffect(Potion.weakness.id, 200, 1, true));
 			}
 		}
 		
 		if(player.isBurning())
 		{
-			player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 200, 0, true, false));
+			player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 200, 0, true));
 		}
+	}
+	
+	@Override
+	public boolean getBlockEffectWhileInside(Entity entity, int x, int y, int z)
+	{
+		return true;
 	}
 	
 	@Override

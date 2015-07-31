@@ -1,23 +1,20 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectEvaporation extends RitualEffect
 {
@@ -27,8 +24,10 @@ public class RitualEffectEvaporation extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < 0)
         {
@@ -42,8 +41,7 @@ public class RitualEffectEvaporation extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
-        	IBlockState state1 = world.getBlockState(pos.offsetDown());
-            Block block1 = state1.getBlock();
+            Block block1 = world.getBlock(x, y - 1, z);
             int range = this.getRadiusForModifierBlock(block1);
 
             boolean[][][] boolList = new boolean[range * 2 + 1][range * 2 + 1][range * 2 + 1];
@@ -74,26 +72,65 @@ public class RitualEffectEvaporation extends RitualEffect
                         {
                             if (boolList[i][j][k])
                             {
-                            	BlockPos position = pos.add(i - range, j - range, k - range);
-                            	
-                            	for(EnumFacing face : EnumFacing.VALUES)
-                            	{
-                            		int iP = i + face.getFrontOffsetX();
-                            		int jP = j + face.getFrontOffsetY();
-                            		int kP = k + face.getFrontOffsetZ();
-                            		
-                            		if(iP >= 0 && iP <= 2 * range && jP >= 0 && jP <= 2 * range && kP >= 0 && kP <= 2 * range && !boolList[iP][jP][kP])
-                            		{
-                                		BlockPos newPos = position.add(face.getDirectionVec());
-                                		IBlockState state = world.getBlockState(newPos);
-                                		Block block = state.getBlock();
-                                		if (world.isAirBlock(newPos) || block == ModBlocks.blockSpectralContainer)
-                                        {
-                                            boolList[iP][jP][kP] = true;
-                                            isReady = false;
-                                        }
-                            		}
-                            	}
+                                if (i - 1 >= 0 && !boolList[i - 1][j][k])
+                                {
+                                    Block block = world.getBlock(x - range + i - 1, y - range + j, z - range + k);
+                                    if (world.isAirBlock(x - range + i - 1, y - range + j, z - range + k) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                                        boolList[i - 1][j][k] = true;
+                                        isReady = false;
+                                    }
+                                }
+
+                                if (j - 1 >= 0 && !boolList[i][j - 1][k])
+                                {
+                                    Block block = world.getBlock(x - range + i, y - range + j - 1, z - range + k);
+                                    if (world.isAirBlock(x - range + i, y - range + j - 1, z - range + k) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                                        boolList[i][j - 1][k] = true;
+                                        isReady = false;
+                                    }
+                                }
+
+                                if (k - 1 >= 0 && !boolList[i][j][k - 1])
+                                {
+                                    Block block = world.getBlock(x - range + i, y - range + j, z - range + k - 1);
+                                    if (world.isAirBlock(x - range + i, y - range + j, z - range + k - 1) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                                        boolList[i][j][k - 1] = true;
+                                        isReady = false;
+                                    }
+                                }
+
+                                if (i + 1 <= 2 * range && !boolList[i + 1][j][k])
+                                {
+                                    Block block = world.getBlock(x - range + i + 1, y - range + j, z - range + k);
+                                    if (world.isAirBlock(x - range + i + 1, y - range + j, z - range + k) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                                        boolList[i + 1][j][k] = true;
+                                        isReady = false;
+                                    }
+                                }
+
+                                if (j + 1 <= 2 * range && !boolList[i][j + 1][k])
+                                {
+                                    Block block = world.getBlock(x - range + i, y - range + j + 1, z - range + k);
+                                    if (world.isAirBlock(x - range + i, y - range + j + 1, z - range + k) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                                        boolList[i][j + 1][k] = true;
+                                        isReady = false;
+                                    }
+                                }
+
+                                if (k + 1 <= 2 * range && !boolList[i][j][k + 1])
+                                {
+                                    Block block = world.getBlock(x - range + i, y - range + j, z - range + k + 1);
+                                    if (world.isAirBlock(x - range + i, y - range + j, z - range + k + 1) || block == ModBlocks.blockSpectralContainer)
+                                    {
+                                        boolList[i][j][k + 1] = true;
+                                        isReady = false;
+                                    }
+                                }
                             }
                         }
                     }
@@ -111,13 +148,11 @@ public class RitualEffectEvaporation extends RitualEffect
                             continue;
                         }
 
-                        BlockPos newPos = pos.add(i - range, j - range, k - range);
-                        IBlockState state = world.getBlockState(newPos);
-                        Block block = state.getBlock();
+                        Block block = world.getBlock(x + i - range, y + j - range, z + k - range);
 
                         if (block == ModBlocks.blockSpectralContainer)
                         {
-                            world.setBlockToAir(newPos);
+                            world.setBlockToAir(x + i - range, y + j - range, z + k - range);
                         }
                     }
                 }
@@ -138,7 +173,7 @@ public class RitualEffectEvaporation extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> ellipsoidRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> ellipsoidRitual = new ArrayList();
 
         ellipsoidRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.DUSK));
         ellipsoidRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.DUSK));

@@ -1,22 +1,20 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectHarvest extends RitualEffect
 {
@@ -26,9 +24,10 @@ public class RitualEffectHarvest extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
-        
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
         int maxCount = 100;
 
         if (currentEssence < this.getCostPerRefresh() * maxCount)
@@ -48,8 +47,7 @@ public class RitualEffectHarvest extends RitualEffect
                 return;
             }
 
-            IBlockState state = world.getBlockState(pos.offsetDown());
-            Block block = state.getBlock();
+            Block block = world.getBlock(x, y - 1, z);
             int flag = 0;
             int range = this.getRadiusForModifierBlock(block);
             int vertRange = 4;
@@ -60,7 +58,7 @@ public class RitualEffectHarvest extends RitualEffect
                 {
                     for (int k = -range; k <= range; k++)
                     {
-                        if (HarvestRegistry.harvestBlock(world, pos.add(i, j, k)) && flag < maxCount)
+                        if (HarvestRegistry.harvestBlock(world, x + i, y + j, z + k) && flag < maxCount)
                         {
                             flag++;
                         }
@@ -109,7 +107,7 @@ public class RitualEffectHarvest extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> harvestRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> harvestRitual = new ArrayList();
 
         harvestRitual.add(new RitualComponent(1, 0, 1, RitualComponent.DUSK));
         harvestRitual.add(new RitualComponent(1, 0, -1, RitualComponent.DUSK));

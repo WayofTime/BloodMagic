@@ -1,22 +1,5 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -25,6 +8,21 @@ import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.block.BlockSpectralContainer;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectWater extends RitualEffect
 {
@@ -39,8 +37,10 @@ public class RitualEffectWater extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         boolean hasCrystallos = this.canDrainReagent(ritualStone, ReagentRegistry.crystallosReagent, crystallosDrain, false);
         boolean hasAquasalus = this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false);
@@ -57,8 +57,7 @@ public class RitualEffectWater extends RitualEffect
                 {
                     for (int k = -hydrationRange; k <= hydrationRange; k++)
                     {
-                    	BlockPos newPos = pos.add(i, j, k);
-                        if (SpellHelper.hydrateSoil(world, newPos))
+                        if (SpellHelper.hydrateSoil(world, x + i, y + j, z + k))
                         {
                             this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
                         }
@@ -73,7 +72,7 @@ public class RitualEffectWater extends RitualEffect
             boolean drainReductus = world.getWorldTime() % 100 == 0;
 
             int range = 10;
-            List<Entity> list = SpellHelper.getEntitiesInRange(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, range, range);
+            List<Entity> list = SpellHelper.getEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, range, range);
             for (Entity entity : list)
             {
                 if (entity instanceof EntityLivingBase)
@@ -107,11 +106,9 @@ public class RitualEffectWater extends RitualEffect
             }
         }
 
-        BlockPos newPos = pos.offsetUp();
-        IBlockState state = world.getBlockState(newPos);
-        Block block = state.getBlock();
+        Block block = world.getBlock(x, y + 1, z);
 
-        if (world.isAirBlock(newPos) && !(block instanceof BlockSpectralContainer))
+        if (world.isAirBlock(x, y + 1, z) && !(block instanceof BlockSpectralContainer))
         {
             if (currentEssence < this.getCostPerRefresh())
             {
@@ -120,10 +117,10 @@ public class RitualEffectWater extends RitualEffect
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    SpellHelper.sendIndexedParticleToAllAround(world, pos, 20, world.provider.getDimensionId(), 3, pos);
+                    SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
                 }
 
-                world.setBlockState(newPos, Blocks.water.getDefaultState());
+                world.setBlock(x, y + 1, z, Blocks.water, 0, 3);
                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh());
             }
         } else
@@ -133,13 +130,13 @@ public class RitualEffectWater extends RitualEffect
             {
                 return;
             }
-            TileEntity tile = world.getTileEntity(newPos);
+            TileEntity tile = world.getTileEntity(x, y + 1, z);
             if (tile instanceof IFluidHandler)
             {
-                int amount = ((IFluidHandler) tile).fill(EnumFacing.DOWN, new FluidStack(FluidRegistry.WATER, 1000), false);
+                int amount = ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.WATER, 1000), false);
                 if (amount >= 1000)
                 {
-                    ((IFluidHandler) tile).fill(EnumFacing.DOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
+                    ((IFluidHandler) tile).fill(ForgeDirection.DOWN, new FluidStack(FluidRegistry.WATER, 1000), true);
 
                     this.canDrainReagent(ritualStone, ReagentRegistry.sanctusReagent, sanctusDrain, true);
 
@@ -162,13 +159,12 @@ public class RitualEffectWater extends RitualEffect
                         if (hasCrystallos)
                         {
                             boolean success = false;
-                            newPos = pos.add(i, j, k);
-                            if (!world.isAirBlock(newPos) && SpellHelper.freezeWaterBlock(world, newPos))
+                            if (!world.isAirBlock(x + i, y + j, z + k) && SpellHelper.freezeWaterBlock(world, x + i, y + j, z + k))
                             {
                                 success = true;
                             } else
                             {
-                                if (world.rand.nextInt(100) == 0 && world.isSideSolid(newPos, EnumFacing.UP))
+                                if (world.rand.nextInt(100) == 0 && world.isSideSolid(x + i, y + j - 1, z + k, ForgeDirection.UP))
                                 {
                                     success = true;
                                 }
@@ -193,7 +189,7 @@ public class RitualEffectWater extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> waterRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> waterRitual = new ArrayList();
         waterRitual.add(new RitualComponent(-1, 0, 1, 1));
         waterRitual.add(new RitualComponent(-1, 0, -1, 1));
         waterRitual.add(new RitualComponent(1, 0, -1, 1));

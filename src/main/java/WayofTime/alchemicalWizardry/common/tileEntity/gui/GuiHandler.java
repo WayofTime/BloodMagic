@@ -2,16 +2,15 @@ package WayofTime.alchemicalWizardry.common.tileEntity.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.ContainerHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.GuiHolding;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.InventoryHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerTeleposer;
 import WayofTime.alchemicalWizardry.common.tileEntity.container.ContainerWritingTable;
+import cpw.mods.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -20,20 +19,19 @@ public class GuiHandler implements IGuiHandler
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
     {
         TileEntity tileEntity;
-        BlockPos pos = new BlockPos(x, y, z);
 
         switch (id)
         {
             case 0:
-                tileEntity = world.getTileEntity(pos);
+                tileEntity = world.getTileEntity(x, y, z);
 
-                if (tileEntity instanceof TEChemistrySet)
+                if (tileEntity instanceof TEWritingTable)
                 {
-                    return new ContainerWritingTable(player.inventory, (TEChemistrySet) tileEntity);
+                    return new ContainerWritingTable(player.inventory, (TEWritingTable) tileEntity);
                 }
 
             case 1:
-                tileEntity = world.getTileEntity(pos);
+                tileEntity = world.getTileEntity(x, y, z);
 
                 if (tileEntity instanceof TETeleposer)
                 {
@@ -52,22 +50,21 @@ public class GuiHandler implements IGuiHandler
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
     {
         TileEntity tileEntity;
-        BlockPos pos = new BlockPos(x, y, z);
-
+        
         switch (id)
         {
             case 0:
-                tileEntity = world.getTileEntity(pos);
+                tileEntity = world.getTileEntity(x, y, z);
 
-                if (tileEntity instanceof TEChemistrySet)
+                if (tileEntity instanceof TEWritingTable)
                 {
-                    return new GuiChemistrySet(player.inventory, (TEChemistrySet) tileEntity);
+                    return new GuiWritingTable(player.inventory, (TEWritingTable) tileEntity);
                 }
 
                 break;
 
             case 1:
-                tileEntity = world.getTileEntity(pos);
+                tileEntity = world.getTileEntity(x, y, z);
 
                 if (tileEntity instanceof TETeleposer)
                 {

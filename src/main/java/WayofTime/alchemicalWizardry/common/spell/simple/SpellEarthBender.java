@@ -1,18 +1,15 @@
 package WayofTime.alchemicalWizardry.common.spell.simple;
 
-import java.util.Random;
-
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import net.minecraft.block.state.IBlockState;
+import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import java.util.Random;
 
 public class SpellEarthBender extends HomSpell
 {
@@ -25,132 +22,133 @@ public class SpellEarthBender extends HomSpell
     }
 
     @Override
-    public ItemStack onOffensiveRangedRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            return stack;
+            return par1ItemStack;
         }
 
-        if (!player.capabilities.isCreativeMode)
+        if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
+            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
-        world.spawnEntityInWorld(new MudProjectile(world, player, 8, false));
-        world.playSoundAtEntity(player, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-        return stack;
+        par2World.spawnEntityInWorld(new MudProjectile(par2World, par3EntityPlayer, 8, false));
+        par2World.playSoundAtEntity(par3EntityPlayer, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        return par1ItemStack;
     }
 
     @Override
-    public ItemStack onOffensiveMeleeRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            return stack;
+            return par1ItemStack;
         }
 
-        if (!player.capabilities.isCreativeMode)
+        if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
+            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
-        if (!world.isRemote)
+        if (!par2World.isRemote)
         {
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    world.spawnEntityInWorld(new MudProjectile(world, player, 3, 3, player.posX, player.posY + player.getEyeHeight(), player.posZ, player.rotationYaw + i * 10F, player.rotationPitch + j * 5F, true));
+                    par2World.spawnEntityInWorld(new MudProjectile(par2World, par3EntityPlayer, 3, 3, par3EntityPlayer.posX, par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight(), par3EntityPlayer.posZ, par3EntityPlayer.rotationYaw + i * 10F, par3EntityPlayer.rotationPitch + j * 5F, true));
                 }
             }
         }
 
-        return stack;
+        return par1ItemStack;
     }
 
     @Override
-    public ItemStack onDefensiveRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            return stack;
+            return par1ItemStack;
         }
 
-        if (!player.capabilities.isCreativeMode)
+        if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, this.getDefensiveEnergy());
+            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getDefensiveEnergy());
         }
 
-        double xCoord = player.posX;
-        double yCoord = player.posY;
-        double zCoord = player.posZ;
+        double xCoord = par3EntityPlayer.posX;
+        double yCoord = par3EntityPlayer.posY;
+        double zCoord = par3EntityPlayer.posZ;
         int posX = (int) xCoord;
         int posY = (int) yCoord;
         int posZ = (int) zCoord;
-        BlockPos pos = player.getPosition();
-        IBlockState blockID = Blocks.stone.getDefaultState();
+        Block blockID = Blocks.stone;
 
-        if (world.isAirBlock(pos.offsetUp(3)))
+        if (par2World.isAirBlock(posX, posY + 3, posZ))
         {
-            world.setBlockState(pos.offsetUp(3), Blocks.glass.getDefaultState());
+            par2World.setBlock(posX, posY + 3, posZ, Blocks.glass);
         }
 
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (world.isAirBlock(new BlockPos(posX + i - 1, posY + j, posZ - 2)))
+                if (par2World.isAirBlock(posX + i - 1, posY + j, posZ - 2))
                 {
-                    world.setBlockState(new BlockPos(posX + i - 1, posY + j, posZ - 2), blockID);
+                    par2World.setBlock(posX + i - 1, posY + j, posZ - 2, blockID);
                 }
 
-                if (world.isAirBlock(new BlockPos(posX + 2, posY + j, posZ - 1 + i)))
+                if (par2World.isAirBlock(posX + 2, posY + j, posZ - 1 + i))
                 {
-                    world.setBlockState(new BlockPos(posX + 2, posY + j, posZ - 1 + i), blockID);
+                    par2World.setBlock(posX + 2, posY + j, posZ - 1 + i, blockID);
                 }
 
-                if (world.isAirBlock(new BlockPos(posX - i + 1, posY + j, posZ + 2)))
+                if (par2World.isAirBlock(posX - i + 1, posY + j, posZ + 2))
                 {
-                    world.setBlockState(new BlockPos(posX - i + 1, posY + j, posZ + 2), blockID);
+                    par2World.setBlock(posX - i + 1, posY + j, posZ + 2, blockID);
                 }
 
-                if (world.isAirBlock(new BlockPos(posX - 2, posY + j, posZ + 1 - i)))
+                if (par2World.isAirBlock(posX - 2, posY + j, posZ + 1 - i))
                 {
-                    world.setBlockState(new BlockPos(posX - 2, posY + j, posZ + 1 - i), blockID);
+                    par2World.setBlock(posX - 2, posY + j, posZ + 1 - i, blockID);
                 }
 
-                if (world.isAirBlock(new BlockPos(posX - 1 + i, posY + 3, posZ - 1 + j)))
                 {
-                    world.setBlockState(new BlockPos(posX - 1 + i, posY + 3, posZ - 1 + j), blockID);
+                    if (par2World.isAirBlock(posX - 1 + i, posY + 3, posZ - 1 + j))
+                    {
+                        par2World.setBlock(posX - 1 + i, posY + 3, posZ - 1 + j, blockID);
+                    }
                 }
             }
         }
 
         for (int i = 0; i < 20; i++)
         {
-            SpellHelper.sendParticleToAllAround(world, xCoord, yCoord, zCoord, 30, world.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB, xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
+            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
         }
 
-        return stack;
+        return par1ItemStack;
     }
 
     @Override
-    public ItemStack onEnvironmentalRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            return stack;
+            return par1ItemStack;
         }
 
-        if (!player.capabilities.isCreativeMode)
+        if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, this.getEnvironmentalEnergy());
+            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getEnvironmentalEnergy());
         }
 
         int range = 3;
 
-        if (!world.isRemote)
+        if (!par2World.isRemote)
         {
             for (int i = -range; i <= range; i++)
             {
@@ -158,17 +156,16 @@ public class SpellEarthBender extends HomSpell
                 {
                     for (int k = -range; k <= range; k++)
                     {
-                    	BlockPos pos = player.getPosition().add(i, j, k);
-                        if (world.getBlockState(pos).getBlock() == Blocks.water || world.getBlockState(pos).getBlock() == Blocks.flowing_water)
+                        if (par2World.getBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k) == Blocks.water || par2World.getBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k) == Blocks.flowing_water)
                         {
-                            int x = world.rand.nextInt(2);
+                            int x = par2World.rand.nextInt(2);
 
                             if (x == 0)
                             {
-                                world.setBlockState(pos, Blocks.sand.getDefaultState());
+                                par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Blocks.sand);
                             } else
                             {
-                                world.setBlockState(pos, Blocks.dirt.getDefaultState());
+                                par2World.setBlock((int) par3EntityPlayer.posX + i, (int) par3EntityPlayer.posY + j, (int) par3EntityPlayer.posZ + k, Blocks.dirt);
                             }
                         }
                     }
@@ -176,15 +173,15 @@ public class SpellEarthBender extends HomSpell
             }
         }
 
-        double xCoord = player.posX;
-        double yCoord = player.posY;
-        double zCoord = player.posZ;
+        double xCoord = par3EntityPlayer.posX;
+        double yCoord = par3EntityPlayer.posY;
+        double zCoord = par3EntityPlayer.posZ;
 
         for (int i = 0; i < 16; i++)
         {
-            SpellHelper.sendParticleToAllAround(world, xCoord, yCoord, zCoord, 30, world.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB, xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
+            SpellHelper.sendParticleToAllAround(par2World, xCoord, yCoord, zCoord, 30, par2World.provider.dimensionId, "mobSpell", xCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, yCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, zCoord + (itemRand.nextFloat() - itemRand.nextFloat()) * 3, 0.0F, 0.410F, 1.0F);
         }
 
-        return stack;
+        return par1ItemStack;
     }
 }

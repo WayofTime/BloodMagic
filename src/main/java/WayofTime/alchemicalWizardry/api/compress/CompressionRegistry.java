@@ -15,8 +15,8 @@ import net.minecraft.world.World;
  */
 public class CompressionRegistry 
 {
-	public static List<CompressionHandler> compressionRegistry = new ArrayList<CompressionHandler>();
-	public static Map<ItemStack, Integer> thresholdMap = new HashMap<ItemStack, Integer>();
+	public static List<CompressionHandler> compressionRegistry = new ArrayList();
+	public static Map<ItemStack, Integer> thresholdMap = new HashMap();
 	
 	public static void registerHandler(CompressionHandler handler)
 	{

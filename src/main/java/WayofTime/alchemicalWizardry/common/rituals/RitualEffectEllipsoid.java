@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemBlock;
@@ -12,8 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -30,10 +28,12 @@ public class RitualEffectEllipsoid extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
-        TileEntity tile = world.getTileEntity(pos.offsetUp());
+        TileEntity tile = world.getTileEntity(x, y + 1, z);
 
         if (!(tile instanceof IInventory) || ((IInventory) tile).getSizeInventory() < 3)
         {
@@ -62,7 +62,7 @@ public class RitualEffectEllipsoid extends RitualEffect
             entityOwner.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
         } else
         {
-        	tile = world.getTileEntity(pos.offsetDown());
+        	tile = world.getTileEntity(x, y-1, z);
         	if(!(tile instanceof IInventory))
         	{
         		return;
@@ -115,7 +115,7 @@ public class RitualEffectEllipsoid extends RitualEffect
         	
             while(j <= ySize)
             {
-            	if(pos.getY() + j < 0)
+            	if(y + j < 0)
             	{
             		j++;
             		continue;
@@ -144,29 +144,36 @@ public class RitualEffectEllipsoid extends RitualEffect
                         
                         count--;
 
-                        BlockPos newPos = pos.add(i, j, k);
-                                                
-                        if (!world.isAirBlock(newPos))
+                        Block block = world.getBlock(x + i, y + j, z + k);
+                        
+                        if (!block.isAir(world, x + i, y + j, z + k))
                         {
                         	k++;
                             continue;
                         } else
                         {
                         	//This is pulled from the ItemBlock's placing calls
-                        	int newState = placedBlock.getMetadata(stack.getMetadata());
-                            IBlockState iblockstate1 = placedBlock.block.onBlockPlaced(world, newPos, EnumFacing.UP, 0, 0, 0, newState, null);
+                        	int i1 = placedBlock.getMetadata(stack.getItemDamage());
+                            int j1 = placedBlock.field_150939_a.onBlockPlaced(world, x + i, y + j, z + k, 0, 0, 0, 0, i1);
 
-                            if (placedBlock.placeBlockAt(stack, null, world, pos, EnumFacing.UP, 0, 0, 0, iblockstate1))
+                            if (placedBlock.placeBlockAt(stack, null, world, x + i, y + j, z + k, 0, 0, 0, 0, j1))
                             {
-                                world.playSoundEffect((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), placedBlock.block.stepSound.getPlaceSound(), (placedBlock.block.stepSound.getVolume() + 1.0F) / 2.0F, placedBlock.block.stepSound.getFrequency() * 0.8F);
+                                world.playSoundEffect((double)(x + i + 0.5F), (double)(y + j + 0.5F), (double)(z + k + 0.5F), placedBlock.field_150939_a.stepSound.func_150496_b(), (placedBlock.field_150939_a.stepSound.getVolume() + 1.0F) / 2.0F, placedBlock.field_150939_a.stepSound.getPitch() * 0.8F);
                                 --stack.stackSize;
+                                if(stack.stackSize <= 0)
+                                {
+                                	inv.setInventorySlotContents(slot, null);
+                                }
+                                
+                                this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
+                                
+                                incrementNext = true;
+                                SoulNetworkHandler.syphonFromNetwork(owner, cost);    
+                                
                             }
                             
-                            this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
-                            
-                            incrementNext = true;
-                            SoulNetworkHandler.syphonFromNetwork(owner, cost); 
-                                                    	
+//                        	world.setBlock(x + i, y + j, z + k, Blocks.stone);
+                        	
                             k++;
                         }                      
                     }
@@ -192,7 +199,7 @@ public class RitualEffectEllipsoid extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> ellipsoidRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> ellipsoidRitual = new ArrayList();
 
         ellipsoidRitual.add(new RitualComponent(-1, 0, -1, RitualComponent.DUSK));
         ellipsoidRitual.add(new RitualComponent(-1, 0, 1, RitualComponent.DUSK));

@@ -2,6 +2,8 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,15 +12,19 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
-import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
+import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
+public class SigilAir extends EnergyItems implements ArmourUpgrade, ISigil
 {
     public SigilAir()
     {
         super();
+        this.maxStackSize = 1;
+        //setMaxDamage(1000);
         setEnergyUsed(50);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -33,9 +39,16 @@ public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AirSigil");
+    }
+
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -62,7 +75,7 @@ public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+            if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
             {
             	if(!par2World.isRemote)
             	{
@@ -108,7 +121,8 @@ public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
+    public void onArmourUpdate(World world, EntityPlayer player,
+                               ItemStack thisItemStack)
     {
         // TODO Auto-generated method stub
         player.fallDistance = 0;

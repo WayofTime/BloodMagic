@@ -1,46 +1,55 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.RoutingFocusParadigm;
 import WayofTime.alchemicalWizardry.api.RoutingFocusPosAndFacing;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class RitualEffectItemRouting extends RitualEffect
 {
+	Random rand = new Random();
+	
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
         String owner = ritualStone.getOwner();
 
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (world.getWorldTime() % 20 != 0)
         {
             return;
         }
                 
-        List<IInventory> outputList = new ArrayList<IInventory>();
+        Map<Int3, IInventory> tileMap = new HashMap();
+                
+        List<IInventory> outputList = new ArrayList();
         for(int i=0; i<4; i++) //Check output foci chests, return if none available
         {
         	Int3 outputFocusChest = this.getOutputBufferChestLocation(i);
-        	BlockPos newPos = pos.add(outputFocusChest.xCoord, outputFocusChest.yCoord, outputFocusChest.zCoord);
-        	TileEntity outputFocusInv = world.getTileEntity(newPos);
+        	TileEntity outputFocusInv = world.getTileEntity(x + outputFocusChest.xCoord, y + outputFocusChest.yCoord, z + outputFocusChest.zCoord);
         	if(outputFocusInv instanceof IInventory)
         	{
         		outputList.add((IInventory)outputFocusInv);
@@ -55,12 +64,12 @@ public class RitualEffectItemRouting extends RitualEffect
         for(IInventory outputFocusInventory : outputList)
 		{
 			{        				    				
-				OutputRoutingFocus outputFocus;
+				OutputRoutingFocus outputFocus;;
 				
 				RoutingFocusParadigm parad = new RoutingFocusParadigm();
 				
 				TileEntity outputChest = null; //Destination
-				EnumFacing inputDirection;
+				ForgeDirection inputDirection;
 				
 				{        				    					
 					IInventory outputChestInventory = null;
@@ -100,9 +109,9 @@ public class RitualEffectItemRouting extends RitualEffect
 								continue;
 							}
 							inputDirection = posAndFacing.facing;
-							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.getPos())))
+							if(outputChest == null || !posAndFacing.location.equals(new Int3(outputChest.xCoord, outputChest.yCoord, outputChest.zCoord)))
 							{
-								outputChest = world.getTileEntity(new BlockPos(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord));
+								outputChest = world.getTileEntity(posAndFacing.location.xCoord, posAndFacing.location.yCoord, posAndFacing.location.zCoord);
 								if(outputChest instanceof IInventory)
 								{
 									outputChestInventory = (IInventory)outputChest;
@@ -115,7 +124,7 @@ public class RitualEffectItemRouting extends RitualEffect
 					        for(int i=0; i<4; i++)
 					        {
 					        	Int3 inputFocusChest = this.getInputBufferChestLocation(i);
-					        	TileEntity inputFocusInv = world.getTileEntity(pos.add(inputFocusChest.xCoord, inputFocusChest.yCoord, inputFocusChest.zCoord));
+					        	TileEntity inputFocusInv = world.getTileEntity(x + inputFocusChest.xCoord, y + inputFocusChest.yCoord, z + inputFocusChest.zCoord);
 					        	if(inputFocusInv instanceof IInventory)
 					        	{
 					        		for(int ji=0; ji<((IInventory) inputFocusInv).getSizeInventory(); ji++) //Iterate through foci inventory
@@ -124,15 +133,15 @@ public class RitualEffectItemRouting extends RitualEffect
 					        			if(inputFocusStack != null && inputFocusStack.getItem() instanceof InputRoutingFocus)
 					        			{
 					        				InputRoutingFocus inputFocus = (InputRoutingFocus)inputFocusStack.getItem();
-					        				TileEntity inputChest = world.getTileEntity(new BlockPos(inputFocus.xCoord(inputFocusStack), inputFocus.yCoord(inputFocusStack), inputFocus.zCoord(inputFocusStack)));
+					        				TileEntity inputChest = world.getTileEntity(inputFocus.xCoord(inputFocusStack), inputFocus.yCoord(inputFocusStack), inputFocus.zCoord(inputFocusStack));
 					        				if(inputChest instanceof IInventory)
 					        				{
 					        					IInventory inputChestInventory = (IInventory)inputChest;
-					        					EnumFacing syphonDirection = inputFocus.getSetDirection(inputFocusStack);
+					        					ForgeDirection syphonDirection = inputFocus.getSetDirection(inputFocusStack);
 					        					boolean[] canSyphonList = new boolean[inputChestInventory.getSizeInventory()];
 					        					if(inputChest instanceof ISidedInventory)
 					        					{
-					        						int[] validSlots = ((ISidedInventory) inputChest).getSlotsForFace(syphonDirection);
+					        						int[] validSlots = ((ISidedInventory) inputChest).getAccessibleSlotsFromSide(syphonDirection.ordinal());
 					        						for(int in : validSlots)
 					        						{
 					        							canSyphonList[in] = true;
@@ -150,7 +159,7 @@ public class RitualEffectItemRouting extends RitualEffect
 					        						if(canSyphonList[ni])
 					        						{
 					        							ItemStack syphonedStack = inputChestInventory.getStackInSlot(ni); //Has a syphoned item linked, next need to find a destination
-					        							if(syphonedStack == null || (inputChestInventory instanceof ISidedInventory && !((ISidedInventory)inputChestInventory).canExtractItem(ni, syphonedStack, syphonDirection)))
+					        							if(syphonedStack == null || (inputChestInventory instanceof ISidedInventory && !((ISidedInventory)inputChestInventory).canExtractItem(ni, syphonedStack, syphonDirection.ordinal())))
 					        							{
 					        								continue;
 					        							}
@@ -159,7 +168,7 @@ public class RitualEffectItemRouting extends RitualEffect
         				    								
     				    								if(parad.doesItemMatch(keyStack, syphonedStack))
     				    								{
-    				    									ItemStack newStack;
+    				    									ItemStack newStack = null;
     				    									if(parad.maximumAmount <= 0)
     				    									{
         				    									newStack = SpellHelper.insertStackIntoInventory(syphonedStack, outputChestInventory, inputDirection);
@@ -172,7 +181,9 @@ public class RitualEffectItemRouting extends RitualEffect
     				    										continue;
     				    									}
     				    									
-    				            							if(newStack.stackSize <= 0)
+    				    									int numberSyphoned = size - newStack.stackSize;
+    				    									
+    				            							if(newStack != null && newStack.stackSize <= 0)
     				            							{
         				            							size = newStack.stackSize;
     				            								newStack = null;
@@ -235,7 +246,7 @@ public class RitualEffectItemRouting extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> omegaRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> omegaRitual = new ArrayList();
         
         this.addCornerRunes(omegaRitual, 1, 0, RitualComponent.BLANK);
         this.addOffsetRunes(omegaRitual, 2, 1, 0, RitualComponent.FIRE);
@@ -245,4 +256,6 @@ public class RitualEffectItemRouting extends RitualEffect
 
         return omegaRitual;
     }
+    
+    
 }

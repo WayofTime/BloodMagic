@@ -9,42 +9,16 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import WayofTime.alchemicalWizardry.api.event.AddToNetworkEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemBindEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainInContainerEvent;
 import WayofTime.alchemicalWizardry.api.event.ItemDrainNetworkEvent;
 
+import cpw.mods.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class SoulNetworkHandler
 {
-    public static boolean canSyphonInContainer(ItemStack ist, int damageToBeDone)
-    {
-        if (ist.getTagCompound() != null && !(ist.getTagCompound().getString("ownerName").equals("")))
-        {
-            String ownerName = ist.getTagCompound().getString("ownerName");
-
-            if (MinecraftServer.getServer() == null)
-            {
-                return false;
-            }
-
-            World world = MinecraftServer.getServer().worldServers[0];
-            LifeEssenceNetwork data = (LifeEssenceNetwork) world.loadItemData(LifeEssenceNetwork.class, ownerName);
-
-            if (data == null)
-            {
-                data = new LifeEssenceNetwork(ownerName);
-                world.setItemData(ownerName, data);
-            }
-
-            return data.currentEssence >= damageToBeDone;
-        }
-
-        return false;
-    }
-
     public static boolean syphonFromNetworkWhileInContainer(ItemStack ist, int damageToBeDone)
     {
     	String ownerName = "";
@@ -422,7 +396,7 @@ public class SoulNetworkHandler
 
     public static String getUsername(EntityPlayer player)
     {
-        return player.getName();
+        return player.getCommandSenderName();
     }
 
     public static EntityPlayer getPlayerForUsername(String str)
@@ -431,7 +405,7 @@ public class SoulNetworkHandler
         {
             return null;
         }
-        return MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(str);
+        return MinecraftServer.getServer().getConfigurationManager().func_152612_a(str);
     }
 
     public static void causeNauseaToPlayer(ItemStack stack)

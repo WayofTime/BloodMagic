@@ -1,13 +1,13 @@
 package WayofTime.alchemicalWizardry.api;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class RoutingFocusPosAndFacing 
 {
 	public Int3 location;
-	public EnumFacing facing;
+	public ForgeDirection facing;
 	
-	public RoutingFocusPosAndFacing(Int3 location, EnumFacing facing)
+	public RoutingFocusPosAndFacing(Int3 location, ForgeDirection facing)
 	{
 		this.location = location;
 		this.facing = facing;

@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.api.event;
 
-import net.minecraftforge.fml.common.eventhandler.Event;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class RitualEvent extends Event
 {

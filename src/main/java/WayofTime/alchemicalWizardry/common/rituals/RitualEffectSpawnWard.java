@@ -1,17 +1,16 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
 import WayofTime.alchemicalWizardry.common.CoordAndRange;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RitualEffectSpawnWard extends RitualEffect
 {
@@ -21,8 +20,10 @@ public class RitualEffectSpawnWard extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         if (currentEssence < this.getCostPerRefresh())
         {
@@ -32,38 +33,42 @@ public class RitualEffectSpawnWard extends RitualEffect
             int horizRange = 32;
             int vertRange = 32;
 
-            int dimension = world.provider.getDimensionId();
+            int dimension = world.provider.dimensionId;
 
-            if (AlchemicalWizardryEventHooks.respawnMap.containsKey(dimension))
+            if (AlchemicalWizardryEventHooks.respawnMap.containsKey(new Integer(dimension)))
             {
-                List<CoordAndRange> list = AlchemicalWizardryEventHooks.respawnMap.get(dimension);
+                List<CoordAndRange> list = AlchemicalWizardryEventHooks.respawnMap.get(new Integer(dimension));
                 if (list != null)
                 {
-                    if (!list.contains(new CoordAndRange(pos, horizRange, vertRange)))
+                    if (!list.contains(new CoordAndRange(x, y, z, horizRange, vertRange)))
                     {
+                        boolean hasFoundAndRemoved = false;
                         for (CoordAndRange coords : list)
                         {
-                            BlockPos locationPos = coords.getPos();
+                            int xLocation = coords.xCoord;
+                            int yLocation = coords.yCoord;
+                            int zLocation = coords.zCoord;
 
-                            if (locationPos.equals(pos))
+                            if (xLocation == x && yLocation == y && zLocation == z)
                             {
                                 list.remove(coords);
+                                hasFoundAndRemoved = true;
                                 break;
                             }
                         }
-                        list.add(new CoordAndRange(pos, horizRange, vertRange));
+                        list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
                     }
                 } else
                 {
-                    list = new LinkedList<CoordAndRange>();
-                    list.add(new CoordAndRange(pos, horizRange, vertRange));
-                    AlchemicalWizardryEventHooks.respawnMap.put(dimension, list);
+                    list = new LinkedList();
+                    list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
+                    AlchemicalWizardryEventHooks.respawnMap.put(new Integer(dimension), list);
                 }
             } else
             {
-                List<CoordAndRange> list = new LinkedList<CoordAndRange>();
-                list.add(new CoordAndRange(pos, horizRange, vertRange));
-                AlchemicalWizardryEventHooks.respawnMap.put(dimension, list);
+                List<CoordAndRange> list = new LinkedList();
+                list.add(new CoordAndRange(x, y, z, horizRange, vertRange));
+                AlchemicalWizardryEventHooks.respawnMap.put(new Integer(dimension), list);
             }
 
 
@@ -80,7 +85,7 @@ public class RitualEffectSpawnWard extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> wardRitualRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> wardRitualRitual = new ArrayList();
 
         for (int i = 2; i <= 4; i++)
         {

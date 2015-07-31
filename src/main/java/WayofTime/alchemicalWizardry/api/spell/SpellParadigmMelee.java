@@ -15,12 +15,15 @@ public class SpellParadigmMelee extends SpellParadigm
 
     public SpellParadigmMelee()
     {
-        this.entityEffectList = new ArrayList<IMeleeSpellEntityEffect>();
-        this.worldEffectList = new ArrayList<IMeleeSpellWorldEffect>();
+        this.entityEffectList = new ArrayList();
+        this.worldEffectList = new ArrayList();
     }
 
     @Override
-    public void enhanceParadigm(SpellEnhancement enh) {}
+    public void enhanceParadigm(SpellEnhancement enh)
+    {
+
+    }
 
     @Override
     public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)

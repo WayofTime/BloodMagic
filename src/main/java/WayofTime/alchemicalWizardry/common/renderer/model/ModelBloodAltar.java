@@ -2,31 +2,32 @@ package WayofTime.alchemicalWizardry.common.renderer.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class ModelBloodAltar extends ModelBase
 {
 	private static final ResourceLocation altar_texture = new ResourceLocation("alchemicalwizardry:textures/models/altar.png");
 	
-//    private IModelCustom modelBloodAltar;
+    private IModelCustom modelBloodAltar;
 
     public ModelBloodAltar()
     {
-//        modelBloodAltar = AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
+        modelBloodAltar = AdvancedModelLoader.loadModel(new ResourceLocation("alchemicalwizardry:models/bloodaltar-fixeUV.obj"));
     }
 
     public void renderBloodAltar()
     {
-//        modelBloodAltar.renderAll();
+        modelBloodAltar.renderAll();
     }
 
     public void renderBloodAltar(TEAltar altar, double x, double y, double z)
@@ -56,22 +57,21 @@ public class ModelBloodAltar extends ModelBase
         GL11.glPopMatrix();
     }
     
-    public void renderBloodLevel(TextureAtlasSprite icon)
+    public void renderBloodLevel(IIcon icon)
     {
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer wr = tessellator.getWorldRenderer();
+        Tessellator tessellator = Tessellator.instance;
 
         double minU = (double) icon.getInterpolatedU(0);
         double maxU = (double) icon.getInterpolatedU(16);
         double minV = (double) icon.getInterpolatedV(0);
         double maxV = (double) icon.getInterpolatedV(16);
 
-        wr.startDrawingQuads();
-        wr.func_178980_d(0, 1, 0); //setNormal
-        wr.addVertexWithUV(1, 0, 1, maxU, maxV);
-        wr.addVertexWithUV(1, 0, 0, maxU, minV);
-        wr.addVertexWithUV(0, 0, 0, minU, minV);
-        wr.addVertexWithUV(0, 0, 1, minU, maxV);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0, 1, 0);
+        tessellator.addVertexWithUV(1, 0, 1, maxU, maxV);
+        tessellator.addVertexWithUV(1, 0, 0, maxU, minV);
+        tessellator.addVertexWithUV(0, 0, 0, minU, minV);
+        tessellator.addVertexWithUV(0, 0, 1, minU, maxV);
         tessellator.draw();
     }
 }

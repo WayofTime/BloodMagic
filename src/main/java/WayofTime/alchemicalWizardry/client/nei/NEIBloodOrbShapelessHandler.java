@@ -34,7 +34,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
 					stack.setMaxSize(1);
 					ingredients.add(stack);
 				} else if (o instanceof Integer) {
-					ArrayList<ItemStack> orbs = new ArrayList<ItemStack>();
+					ArrayList<ItemStack> orbs = new ArrayList();
 					for (Item item : NEIConfig.bloodOrbs) {
 						if (((IBloodOrb) item).getOrbLevel() >= (Integer) o) {
 							orbs.add(new ItemStack(item));
@@ -53,7 +53,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
             }
         }
 	}
-
+	
 	@Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("crafting") && getClass() == NEIBloodOrbShapelessHandler.class) {
@@ -72,7 +72,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
             super.loadCraftingRecipes(outputId, results);
         }
     }
-
+	
 	@Override
     public void loadCraftingRecipes(ItemStack result) {
         List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
@@ -89,7 +89,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
             }
         }
     }
-
+	
 	@Override
     public void loadUsageRecipes(ItemStack ingredient) {
         List<IRecipe> allrecipes = CraftingManager.getInstance().getRecipeList();
@@ -107,7 +107,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
             }
         }
     }
-
+	
 	public CachedBloodOrbRecipe forgeShapelessRecipe(ShapelessBloodOrbRecipe recipe) {
         ArrayList<Object> items = recipe.getInput();
 
@@ -117,7 +117,7 @@ public class NEIBloodOrbShapelessHandler extends ShapelessRecipeHandler {
 
         return new CachedBloodOrbRecipe(items, recipe.getRecipeOutput());
     }
-
+	
 	@Override
     public void loadTransferRects() {
         transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "crafting"));

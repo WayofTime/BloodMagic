@@ -1,11 +1,10 @@
 package WayofTime.alchemicalWizardry.api.sacrifice;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
@@ -13,6 +12,7 @@ public class PlayerSacrificeHandler
 {
 	public static float scalingOfSacrifice = 0.001f;
 	public static int soulFrayDuration = 400;
+	public static Potion soulFrayId;
 	public static float getPlayerIncense(EntityPlayer player)
 	{
 		return APISpellHelper.getCurrentIncense(player);
@@ -41,7 +41,7 @@ public class PlayerSacrificeHandler
 	
 	public static boolean sacrificePlayerHealth(EntityPlayer player)
 	{
-		if(player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
+		if(player.isPotionActive(soulFrayId))
 		{
 			return false;
 		}
@@ -61,7 +61,7 @@ public class PlayerSacrificeHandler
 				{
 					player.setHealth(maxHealth/10.0f);
 					setPlayerIncense(player, 0);
-					player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionSoulFray.id, soulFrayDuration));
+					player.addPotionEffect(new PotionEffect(soulFrayId.id, soulFrayDuration));
 										
 					return true;
 				}
@@ -78,7 +78,10 @@ public class PlayerSacrificeHandler
 	
 	public static boolean findAndFillAltar(World world, EntityPlayer player, int amount)
     {
-        IBloodAltar altarEntity = getAltar(world, player.getPosition());
+        int posX = (int) Math.round(player.posX - 0.5f);
+        int posY = (int) player.posY;
+        int posZ = (int) Math.round(player.posZ - 0.5f);
+        IBloodAltar altarEntity = getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -91,7 +94,7 @@ public class PlayerSacrificeHandler
         return true;
     }
 
-    public static IBloodAltar getAltar(World world, BlockPos pos)
+    public static IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity;
 
@@ -101,7 +104,7 @@ public class PlayerSacrificeHandler
             {
                 for (int k = -2; k <= 1; k++)
                 {
-                    tileEntity = world.getTileEntity(pos.add(i, j, k));
+                    tileEntity = world.getTileEntity(i + x, k + y, j + z);
                     
                     if(tileEntity instanceof IBloodAltar)
                     {

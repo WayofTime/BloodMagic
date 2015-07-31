@@ -19,16 +19,16 @@ public class ItemEnchantmentGlyphBlock extends ItemBlock
 
         switch (itemstack.getItemDamage())
         {
-            case 0:
-                name = "enchantability";
-                break;
+        case 0:
+            name = "enchantability";
+            break;
 
-            case 1:
-                name = "enchantmentLevel";
-                break;
+        case 1:
+            name = "enchantmentLevel";
+            break;
 
-            default:
-                name = "broken";
+        default:
+            name = "broken";
         }
 
         return getUnlocalizedName() + "." + name;

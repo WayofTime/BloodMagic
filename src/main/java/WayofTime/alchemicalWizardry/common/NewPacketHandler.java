@@ -13,19 +13,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
-import net.minecraftforge.fml.common.network.FMLIndexedMessageToMessageCodec;
-import net.minecraftforge.fml.common.network.FMLOutboundHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.common.util.ForgeDirection;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.ColourAndCoords;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
@@ -39,7 +29,14 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEReagentConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEWritingTable;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.FMLEmbeddedChannel;
+import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
+import cpw.mods.fml.common.network.FMLOutboundHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public enum NewPacketHandler
 {
@@ -98,7 +95,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEAltarMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEAltar)
             {
                 TEAltar altar = (TEAltar) te;
@@ -114,11 +111,11 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEOrientableMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEOrientable)
             {
-                ((TEOrientable) te).setInputDirection(EnumFacing.getFront(msg.input));
-                ((TEOrientable) te).setOutputDirection(EnumFacing.getFront(msg.output));
+                ((TEOrientable) te).setInputDirection(ForgeDirection.getOrientation(msg.input));
+                ((TEOrientable) te).setOutputDirection(ForgeDirection.getOrientation(msg.output));
             }
         }
     }
@@ -129,7 +126,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEPedestalMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEPedestal)
             {
                 TEPedestal pedestal = (TEPedestal) te;
@@ -145,7 +142,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEPlinthMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEPlinth)
             {
                 TEPlinth Plinth = (TEPlinth) te;
@@ -161,7 +158,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TESocketMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TESocket)
             {
                 TESocket Socket = (TESocket) te;
@@ -177,7 +174,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TETeleposerMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TETeleposer)
             {
                 TETeleposer Teleposer = (TETeleposer) te;
@@ -193,10 +190,10 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEWritingTableMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
-            if (te instanceof TEChemistrySet)
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
+            if (te instanceof TEWritingTable)
             {
-                TEChemistrySet WritingTable = (TEChemistrySet) te;
+                TEWritingTable WritingTable = (TEWritingTable) te;
 
                 WritingTable.handlePacketData(msg.items);
             }
@@ -210,7 +207,7 @@ public enum NewPacketHandler
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
 
-            world.spawnParticle(EnumParticleTypes.func_179342_a(msg.particle), msg.xCoord, msg.yCoord, msg.zCoord, msg.xVel, msg.yVel, msg.zVel);
+            world.spawnParticle(msg.particle, msg.xCoord, msg.yCoord, msg.zCoord, msg.xVel, msg.yVel, msg.zVel);
         }
     }
 
@@ -236,7 +233,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEMasterStoneMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEMasterStone)
             {
                 TEMasterStone masterStone = (TEMasterStone) te;
@@ -253,7 +250,7 @@ public enum NewPacketHandler
         protected void channelRead0(ChannelHandlerContext ctx, TEReagentConduitMessage msg) throws Exception
         {
             World world = AlchemicalWizardry.proxy.getClientWorld();
-            TileEntity te = world.getTileEntity(msg.pos);
+            TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
             if (te instanceof TEReagentConduit)
             {
                 TEReagentConduit reagentConduit = (TEReagentConduit) te;
@@ -321,7 +318,9 @@ public enum NewPacketHandler
 
     public static class TEAltarMessage extends BMMessage
     {
-        BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int[] items;
         int[] fluids;
@@ -330,7 +329,9 @@ public enum NewPacketHandler
 
     public static class TEOrientableMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int input;
         int output;
@@ -338,42 +339,52 @@ public enum NewPacketHandler
 
     public static class TEPedestalMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int[] items;
     }
 
     public static class TEPlinthMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int[] items;
     }
 
     public static class TESocketMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int[] items;
     }
 
     public static class TETeleposerMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int[] items;
     }
 
     public static class TEWritingTableMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         int[] items;
     }
 
     public static class ParticleMessage extends BMMessage
     {
-        int particle;
+        String particle;
 
         double xCoord;
         double yCoord;
@@ -393,7 +404,9 @@ public enum NewPacketHandler
 
     public static class TEMasterStoneMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         String ritual;
         boolean isRunning;
@@ -401,7 +414,9 @@ public enum NewPacketHandler
 
     public static class TEReagentConduitMessage extends BMMessage
     {
-    	BlockPos pos;
+        int x;
+        int y;
+        int z;
 
         List<ColourAndCoords> destinationList;
     }
@@ -486,209 +501,231 @@ public enum NewPacketHandler
         @Override
         public void encodeInto(ChannelHandlerContext ctx, BMMessage msg, ByteBuf target) throws Exception
         {
-            PacketBuffer newBuffer = new PacketBuffer(target);
-            newBuffer.writeInt(msg.index);
+            target.writeInt(msg.index);
 
             switch (msg.index)
             {
                 case 0:
-                    newBuffer.writeBlockPos(((TEAltarMessage) msg).pos);
+                    target.writeInt(((TEAltarMessage) msg).x);
+                    target.writeInt(((TEAltarMessage) msg).y);
+                    target.writeInt(((TEAltarMessage) msg).z);
 
-                    newBuffer.writeBoolean(((TEAltarMessage) msg).items != null);
+                    target.writeBoolean(((TEAltarMessage) msg).items != null);
                     if (((TEAltarMessage) msg).items != null)
                     {
                         int[] items = ((TEAltarMessage) msg).items;
                         for (int j = 0; j < items.length; j++)
                         {
                             int i = items[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
-                    newBuffer.writeBoolean(((TEAltarMessage) msg).fluids != null);
+                    target.writeBoolean(((TEAltarMessage) msg).fluids != null);
                     if (((TEAltarMessage) msg).fluids != null)
                     {
                         int[] fluids = ((TEAltarMessage) msg).fluids;
                         for (int j = 0; j < fluids.length; j++)
                         {
                             int i = fluids[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
-                    newBuffer.writeInt(((TEAltarMessage) msg).capacity);
+                    target.writeInt(((TEAltarMessage) msg).capacity);
 
                     break;
 
                 case 1:
-                    newBuffer.writeBlockPos(((TEOrientableMessage) msg).pos);
+                    target.writeInt(((TEOrientableMessage) msg).x);
+                    target.writeInt(((TEOrientableMessage) msg).y);
+                    target.writeInt(((TEOrientableMessage) msg).z);
 
-                    newBuffer.writeInt(((TEOrientableMessage) msg).input);
-                    newBuffer.writeInt(((TEOrientableMessage) msg).output);
+                    target.writeInt(((TEOrientableMessage) msg).input);
+                    target.writeInt(((TEOrientableMessage) msg).output);
 
                     break;
 
                 case 2:
-                    newBuffer.writeBlockPos(((TEPedestalMessage) msg).pos);
+                    target.writeInt(((TEPedestalMessage) msg).x);
+                    target.writeInt(((TEPedestalMessage) msg).y);
+                    target.writeInt(((TEPedestalMessage) msg).z);
 
-                    newBuffer.writeBoolean(((TEPedestalMessage) msg).items != null);
+                    target.writeBoolean(((TEPedestalMessage) msg).items != null);
                     if (((TEPedestalMessage) msg).items != null)
                     {
                         int[] items = ((TEPedestalMessage) msg).items;
                         for (int j = 0; j < items.length; j++)
                         {
                             int i = items[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
                     break;
 
                 case 3:
-                    newBuffer.writeBlockPos(((TEPlinthMessage) msg).pos);
+                    target.writeInt(((TEPlinthMessage) msg).x);
+                    target.writeInt(((TEPlinthMessage) msg).y);
+                    target.writeInt(((TEPlinthMessage) msg).z);
 
-                    newBuffer.writeBoolean(((TEPlinthMessage) msg).items != null);
+                    target.writeBoolean(((TEPlinthMessage) msg).items != null);
                     if (((TEPlinthMessage) msg).items != null)
                     {
                         int[] items = ((TEPlinthMessage) msg).items;
                         for (int j = 0; j < items.length; j++)
                         {
                             int i = items[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
                     break;
 
                 case 4:
-                    newBuffer.writeBlockPos(((TESocketMessage) msg).pos);
+                    target.writeInt(((TESocketMessage) msg).x);
+                    target.writeInt(((TESocketMessage) msg).y);
+                    target.writeInt(((TESocketMessage) msg).z);
 
-                    newBuffer.writeBoolean(((TESocketMessage) msg).items != null);
+                    target.writeBoolean(((TESocketMessage) msg).items != null);
                     if (((TESocketMessage) msg).items != null)
                     {
                         int[] items = ((TESocketMessage) msg).items;
                         for (int j = 0; j < items.length; j++)
                         {
                             int i = items[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
                     break;
 
                 case 5:
-                    newBuffer.writeBlockPos(((TETeleposerMessage) msg).pos);
+                    target.writeInt(((TETeleposerMessage) msg).x);
+                    target.writeInt(((TETeleposerMessage) msg).y);
+                    target.writeInt(((TETeleposerMessage) msg).z);
 
-                    newBuffer.writeBoolean(((TETeleposerMessage) msg).items != null);
+                    target.writeBoolean(((TETeleposerMessage) msg).items != null);
                     if (((TETeleposerMessage) msg).items != null)
                     {
                         int[] items = ((TETeleposerMessage) msg).items;
                         for (int j = 0; j < items.length; j++)
                         {
                             int i = items[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
                     break;
 
                 case 6:
-                    newBuffer.writeBlockPos(((TEWritingTableMessage) msg).pos);
+                    target.writeInt(((TEWritingTableMessage) msg).x);
+                    target.writeInt(((TEWritingTableMessage) msg).y);
+                    target.writeInt(((TEWritingTableMessage) msg).z);
 
-                    newBuffer.writeBoolean(((TEWritingTableMessage) msg).items != null);
+                    target.writeBoolean(((TEWritingTableMessage) msg).items != null);
                     if (((TEWritingTableMessage) msg).items != null)
                     {
                         int[] items = ((TEWritingTableMessage) msg).items;
                         for (int j = 0; j < items.length; j++)
                         {
                             int i = items[j];
-                            newBuffer.writeInt(i);
+                            target.writeInt(i);
                         }
                     }
 
                     break;
 
                 case 7:
-                    newBuffer.writeInt(((ParticleMessage) msg).particle);
+                    String str = ((ParticleMessage) msg).particle;
+                    target.writeInt(str.length());
+                    for (int i = 0; i < str.length(); i++)
+                    {
+                        target.writeChar(str.charAt(i));
+                    }
 
-                    newBuffer.writeDouble(((ParticleMessage) msg).xCoord);
-                    newBuffer.writeDouble(((ParticleMessage) msg).yCoord);
-                    newBuffer.writeDouble(((ParticleMessage) msg).zCoord);
+                    target.writeDouble(((ParticleMessage) msg).xCoord);
+                    target.writeDouble(((ParticleMessage) msg).yCoord);
+                    target.writeDouble(((ParticleMessage) msg).zCoord);
 
-                    newBuffer.writeDouble(((ParticleMessage) msg).xVel);
-                    newBuffer.writeDouble(((ParticleMessage) msg).yVel);
-                    newBuffer.writeDouble(((ParticleMessage) msg).zVel);
+                    target.writeDouble(((ParticleMessage) msg).xVel);
+                    target.writeDouble(((ParticleMessage) msg).yVel);
+                    target.writeDouble(((ParticleMessage) msg).zVel);
 
                     break;
 
                 case 8:
-                    newBuffer.writeDouble(((VelocityMessage) msg).xVel);
-                    newBuffer.writeDouble(((VelocityMessage) msg).yVel);
-                    newBuffer.writeDouble(((VelocityMessage) msg).zVel);
+                    target.writeDouble(((VelocityMessage) msg).xVel);
+                    target.writeDouble(((VelocityMessage) msg).yVel);
+                    target.writeDouble(((VelocityMessage) msg).zVel);
 
                     break;
 
                 case 9:
-                    newBuffer.writeBlockPos(((TEMasterStoneMessage) msg).pos);
+                    target.writeInt(((TEMasterStoneMessage) msg).x);
+                    target.writeInt(((TEMasterStoneMessage) msg).y);
+                    target.writeInt(((TEMasterStoneMessage) msg).z);
 
                     String ritual = ((TEMasterStoneMessage) msg).ritual;
-                    newBuffer.writeInt(ritual.length());
+                    target.writeInt(ritual.length());
                     for (int i = 0; i < ritual.length(); i++)
                     {
-                        newBuffer.writeChar(ritual.charAt(i));
+                        target.writeChar(ritual.charAt(i));
                     }
 
-                    newBuffer.writeBoolean(((TEMasterStoneMessage) msg).isRunning);
+                    target.writeBoolean(((TEMasterStoneMessage) msg).isRunning);
 
                     break;
 
                 case 10:
-                    newBuffer.writeBlockPos(((TEReagentConduitMessage) msg).pos);
+                    target.writeInt(((TEReagentConduitMessage) msg).x);
+                    target.writeInt(((TEReagentConduitMessage) msg).y);
+                    target.writeInt(((TEReagentConduitMessage) msg).z);
 
                     List<ColourAndCoords> list = ((TEReagentConduitMessage) msg).destinationList;
-                    newBuffer.writeInt(list.size());
+                    target.writeInt(list.size());
 
                     for (ColourAndCoords colourSet : list)
                     {
-                        newBuffer.writeInt(colourSet.colourRed);
-                        newBuffer.writeInt(colourSet.colourGreen);
-                        newBuffer.writeInt(colourSet.colourBlue);
-                        newBuffer.writeInt(colourSet.colourIntensity);
-                        newBuffer.writeInt(colourSet.xCoord);
-                        newBuffer.writeInt(colourSet.yCoord);
-                        newBuffer.writeInt(colourSet.zCoord);
+                        target.writeInt(colourSet.colourRed);
+                        target.writeInt(colourSet.colourGreen);
+                        target.writeInt(colourSet.colourBlue);
+                        target.writeInt(colourSet.colourIntensity);
+                        target.writeInt(colourSet.xCoord);
+                        target.writeInt(colourSet.yCoord);
+                        target.writeInt(colourSet.zCoord);
                     }
 
                     break;
                     
                 case 11:
-                	newBuffer.writeInt(((CurrentLPMessage) msg).currentLP);
-                	newBuffer.writeInt(((CurrentLPMessage) msg).maxLP);
+                	target.writeInt(((CurrentLPMessage) msg).currentLP);
+                	target.writeInt(((CurrentLPMessage) msg).maxLP);
                 	
                 	break;
                 	
                 case 12:
                 	char[] charSet = ((CurrentReagentBarMessage)msg).reagent.toCharArray();
-                	newBuffer.writeInt(charSet.length);
+                	target.writeInt(charSet.length);
                 	for(char cha : charSet)
                 	{
-                		newBuffer.writeChar(cha);
+                		target.writeChar(cha);
                 	}
-                	newBuffer.writeFloat(((CurrentReagentBarMessage)msg).currentAR);
-                	newBuffer.writeFloat(((CurrentReagentBarMessage)msg).maxAR);
+                	target.writeFloat(((CurrentReagentBarMessage)msg).currentAR);
+                	target.writeFloat(((CurrentReagentBarMessage)msg).maxAR);
                 	
                 	break;
                 	
                 case 13:
-                	newBuffer.writeFloat(((CurrentAddedHPMessage) msg).currentHP);
-                	newBuffer.writeFloat(((CurrentAddedHPMessage) msg).maxHP);
+                	target.writeFloat(((CurrentAddedHPMessage) msg).currentHP);
+                	target.writeFloat(((CurrentAddedHPMessage) msg).maxHP);
                 	
                 	break;
                 	
                 case 14:
         			System.out.println("Packet is being encoded");
 
-    				newBuffer.writeByte(((KeyboardMessage)msg).keyPressed);
+    				target.writeByte(((KeyboardMessage)msg).keyPressed);
     				break;
             }
         }
@@ -697,14 +734,15 @@ public enum NewPacketHandler
         @Override
         public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, BMMessage msg)
         {
-            PacketBuffer newBuffer = new PacketBuffer(dat);
-            int index = newBuffer.readInt();
+            int index = dat.readInt();
 
             switch (index)
             {
                 case 0:
-                    ((TEAltarMessage) msg).pos = newBuffer.readBlockPos();
-                    boolean hasStacks = newBuffer.readBoolean();
+                    ((TEAltarMessage) msg).x = dat.readInt();
+                    ((TEAltarMessage) msg).y = dat.readInt();
+                    ((TEAltarMessage) msg).z = dat.readInt();
+                    boolean hasStacks = dat.readBoolean();
 
                     ((TEAltarMessage) msg).items = new int[TEAltar.sizeInv * 3];
                     if (hasStacks)
@@ -712,34 +750,38 @@ public enum NewPacketHandler
                         ((TEAltarMessage) msg).items = new int[TEAltar.sizeInv * 3];
                         for (int i = 0; i < ((TEAltarMessage) msg).items.length; i++)
                         {
-                            ((TEAltarMessage) msg).items[i] = newBuffer.readInt();
+                            ((TEAltarMessage) msg).items[i] = dat.readInt();
                         }
                     }
 
-                    boolean hasFluids = newBuffer.readBoolean();
+                    boolean hasFluids = dat.readBoolean();
                     ((TEAltarMessage) msg).fluids = new int[6];
                     if (hasFluids)
                         for (int i = 0; i < ((TEAltarMessage) msg).fluids.length; i++)
                         {
-                            ((TEAltarMessage) msg).fluids[i] = newBuffer.readInt();
+                            ((TEAltarMessage) msg).fluids[i] = dat.readInt();
                         }
 
-                    ((TEAltarMessage) msg).capacity = newBuffer.readInt();
+                    ((TEAltarMessage) msg).capacity = dat.readInt();
 
                     break;
 
                 case 1:
-                    ((TEOrientableMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TEOrientableMessage) msg).x = dat.readInt();
+                    ((TEOrientableMessage) msg).y = dat.readInt();
+                    ((TEOrientableMessage) msg).z = dat.readInt();
 
-                    ((TEOrientableMessage) msg).input = newBuffer.readInt();
-                    ((TEOrientableMessage) msg).output = newBuffer.readInt();
+                    ((TEOrientableMessage) msg).input = dat.readInt();
+                    ((TEOrientableMessage) msg).output = dat.readInt();
 
                     break;
 
                 case 2:
-                    ((TEPedestalMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TEPedestalMessage) msg).x = dat.readInt();
+                    ((TEPedestalMessage) msg).y = dat.readInt();
+                    ((TEPedestalMessage) msg).z = dat.readInt();
 
-                    boolean hasStacks1 = newBuffer.readBoolean();
+                    boolean hasStacks1 = dat.readBoolean();
 
                     ((TEPedestalMessage) msg).items = new int[TEPedestal.sizeInv * 3];
                     if (hasStacks1)
@@ -747,16 +789,18 @@ public enum NewPacketHandler
                         ((TEPedestalMessage) msg).items = new int[TEPedestal.sizeInv * 3];
                         for (int i = 0; i < ((TEPedestalMessage) msg).items.length; i++)
                         {
-                            ((TEPedestalMessage) msg).items[i] = newBuffer.readInt();
+                            ((TEPedestalMessage) msg).items[i] = dat.readInt();
                         }
                     }
 
                     break;
 
                 case 3:
-                    ((TEPlinthMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TEPlinthMessage) msg).x = dat.readInt();
+                    ((TEPlinthMessage) msg).y = dat.readInt();
+                    ((TEPlinthMessage) msg).z = dat.readInt();
 
-                    boolean hasStacks2 = newBuffer.readBoolean();
+                    boolean hasStacks2 = dat.readBoolean();
 
                     ((TEPlinthMessage) msg).items = new int[TEPlinth.sizeInv * 3];
                     if (hasStacks2)
@@ -764,16 +808,18 @@ public enum NewPacketHandler
                         ((TEPlinthMessage) msg).items = new int[TEPlinth.sizeInv * 3];
                         for (int i = 0; i < ((TEPlinthMessage) msg).items.length; i++)
                         {
-                            ((TEPlinthMessage) msg).items[i] = newBuffer.readInt();
+                            ((TEPlinthMessage) msg).items[i] = dat.readInt();
                         }
                     }
 
                     break;
 
                 case 4:
-                    ((TESocketMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TESocketMessage) msg).x = dat.readInt();
+                    ((TESocketMessage) msg).y = dat.readInt();
+                    ((TESocketMessage) msg).z = dat.readInt();
 
-                    boolean hasStacks3 = newBuffer.readBoolean();
+                    boolean hasStacks3 = dat.readBoolean();
 
                     ((TESocketMessage) msg).items = new int[TESocket.sizeInv * 3];
                     if (hasStacks3)
@@ -781,16 +827,18 @@ public enum NewPacketHandler
                         ((TESocketMessage) msg).items = new int[TESocket.sizeInv * 3];
                         for (int i = 0; i < ((TESocketMessage) msg).items.length; i++)
                         {
-                            ((TESocketMessage) msg).items[i] = newBuffer.readInt();
+                            ((TESocketMessage) msg).items[i] = dat.readInt();
                         }
                     }
 
                     break;
 
                 case 5:
-                    ((TETeleposerMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TETeleposerMessage) msg).x = dat.readInt();
+                    ((TETeleposerMessage) msg).y = dat.readInt();
+                    ((TETeleposerMessage) msg).z = dat.readInt();
 
-                    boolean hasStacks4 = newBuffer.readBoolean();
+                    boolean hasStacks4 = dat.readBoolean();
 
                     ((TETeleposerMessage) msg).items = new int[TETeleposer.sizeInv * 3];
                     if (hasStacks4)
@@ -798,75 +846,89 @@ public enum NewPacketHandler
                         ((TETeleposerMessage) msg).items = new int[TETeleposer.sizeInv * 3];
                         for (int i = 0; i < ((TETeleposerMessage) msg).items.length; i++)
                         {
-                            ((TETeleposerMessage) msg).items[i] = newBuffer.readInt();
+                            ((TETeleposerMessage) msg).items[i] = dat.readInt();
                         }
                     }
 
                     break;
 
                 case 6:
-                    ((TEWritingTableMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TEWritingTableMessage) msg).x = dat.readInt();
+                    ((TEWritingTableMessage) msg).y = dat.readInt();
+                    ((TEWritingTableMessage) msg).z = dat.readInt();
 
-                    boolean hasStacks5 = newBuffer.readBoolean();
+                    boolean hasStacks5 = dat.readBoolean();
 
-                    ((TEWritingTableMessage) msg).items = new int[TEChemistrySet.sizeInv * 3];
+                    ((TEWritingTableMessage) msg).items = new int[TEWritingTable.sizeInv * 3];
                     if (hasStacks5)
                     {
-                        ((TEWritingTableMessage) msg).items = new int[TEChemistrySet.sizeInv * 3];
+                        ((TEWritingTableMessage) msg).items = new int[TEWritingTable.sizeInv * 3];
                         for (int i = 0; i < ((TEWritingTableMessage) msg).items.length; i++)
                         {
-                            ((TEWritingTableMessage) msg).items[i] = newBuffer.readInt();
+                            ((TEWritingTableMessage) msg).items[i] = dat.readInt();
                         }
                     }
 
                     break;
 
                 case 7:
-                    ((ParticleMessage) msg).particle = newBuffer.readInt();
+                    int size = dat.readInt();
+                    String str = "";
 
-                    ((ParticleMessage) msg).xCoord = newBuffer.readDouble();
-                    ((ParticleMessage) msg).yCoord = newBuffer.readDouble();
-                    ((ParticleMessage) msg).zCoord = newBuffer.readDouble();
+                    for (int i = 0; i < size; i++)
+                    {
+                        str = str + dat.readChar();
+                    }
 
-                    ((ParticleMessage) msg).xVel = newBuffer.readDouble();
-                    ((ParticleMessage) msg).yVel = newBuffer.readDouble();
-                    ((ParticleMessage) msg).zVel = newBuffer.readDouble();
+                    ((ParticleMessage) msg).particle = str;
+
+                    ((ParticleMessage) msg).xCoord = dat.readDouble();
+                    ((ParticleMessage) msg).yCoord = dat.readDouble();
+                    ((ParticleMessage) msg).zCoord = dat.readDouble();
+
+                    ((ParticleMessage) msg).xVel = dat.readDouble();
+                    ((ParticleMessage) msg).yVel = dat.readDouble();
+                    ((ParticleMessage) msg).zVel = dat.readDouble();
 
                     break;
 
                 case 8:
-                    ((VelocityMessage) msg).xVel = newBuffer.readDouble();
-                    ((VelocityMessage) msg).yVel = newBuffer.readDouble();
-                    ((VelocityMessage) msg).zVel = newBuffer.readDouble();
+                    ((VelocityMessage) msg).xVel = dat.readDouble();
+                    ((VelocityMessage) msg).yVel = dat.readDouble();
+                    ((VelocityMessage) msg).zVel = dat.readDouble();
 
                     break;
 
                 case 9:
-                    ((TEMasterStoneMessage) msg).pos = newBuffer.readBlockPos();
+                    ((TEMasterStoneMessage) msg).x = dat.readInt();
+                    ((TEMasterStoneMessage) msg).y = dat.readInt();
+                    ((TEMasterStoneMessage) msg).z = dat.readInt();
 
-                    int ritualStrSize = newBuffer.readInt();
+                    int ritualStrSize = dat.readInt();
                     String ritual = "";
 
                     for (int i = 0; i < ritualStrSize; i++)
                     {
-                        ritual = ritual + newBuffer.readChar();
+                        ritual = ritual + dat.readChar();
                     }
 
                     ((TEMasterStoneMessage) msg).ritual = ritual;
-                    ((TEMasterStoneMessage) msg).isRunning = newBuffer.readBoolean();
+                    ((TEMasterStoneMessage) msg).isRunning = dat.readBoolean();
 
                     break;
 
                 case 10:
-                    ((TEReagentConduitMessage) msg).pos = newBuffer.readBlockPos();
-                    
-                    int listSize = newBuffer.readInt();
+                    ((TEReagentConduitMessage) msg).x = dat.readInt();
+                    ((TEReagentConduitMessage) msg).y = dat.readInt();
+                    ((TEReagentConduitMessage) msg).z = dat.readInt();
+
+                    int listSize = dat.readInt();
 
                     List<ColourAndCoords> list = new LinkedList();
 
                     for (int i = 0; i < listSize; i++)
                     {
-                        list.add(new ColourAndCoords(newBuffer.readInt(), newBuffer.readInt(), newBuffer.readInt(), newBuffer.readInt(), newBuffer.readInt(), newBuffer.readInt(), newBuffer.readInt()));
+                        list.add(new ColourAndCoords(dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt()));
                     }
 
                     ((TEReagentConduitMessage) msg).destinationList = list;
@@ -874,34 +936,34 @@ public enum NewPacketHandler
                     break;
                     
                 case 11:
-                	((CurrentLPMessage) msg).currentLP = newBuffer.readInt();
-                	((CurrentLPMessage) msg).maxLP = newBuffer.readInt();
+                	((CurrentLPMessage) msg).currentLP = dat.readInt();
+                	((CurrentLPMessage) msg).maxLP = dat.readInt();
 
                 	break;
                 	
                 case 12:
-                	int size1 = newBuffer.readInt();
+                	int size1 = dat.readInt();
                 	String str1 = "";
                 	for(int i=0; i<size1; i++)
                 	{
-                		str1 = str1 + newBuffer.readChar();
+                		str1 = str1 + dat.readChar();
                 	}
                 	
                 	((CurrentReagentBarMessage) msg).reagent = str1;
-                	((CurrentReagentBarMessage) msg).currentAR = newBuffer.readFloat();
-                	((CurrentReagentBarMessage) msg).maxAR = newBuffer.readFloat();
+                	((CurrentReagentBarMessage) msg).currentAR = dat.readFloat();
+                	((CurrentReagentBarMessage) msg).maxAR = dat.readFloat();
                 	
                 	break;
                 	
                 case 13:
-                	((CurrentAddedHPMessage) msg).currentHP = newBuffer.readFloat();
-                	((CurrentAddedHPMessage) msg).maxHP = newBuffer.readFloat();
+                	((CurrentAddedHPMessage) msg).currentHP = dat.readFloat();
+                	((CurrentAddedHPMessage) msg).maxHP = dat.readFloat();
 
                 	break;
                 	
                 case 14:
                 	System.out.println("Packet recieved: being decoded");
-    				((KeyboardMessage)msg).keyPressed = newBuffer.readByte();
+    				((KeyboardMessage)msg).keyPressed = dat.readByte();
     				break;
             }
         }
@@ -912,7 +974,9 @@ public enum NewPacketHandler
     {
         TEAltarMessage msg = new TEAltarMessage();
         msg.index = 0;
-        msg.pos = tileAltar.getPos();
+        msg.x = tileAltar.xCoord;
+        msg.y = tileAltar.yCoord;
+        msg.z = tileAltar.zCoord;
         msg.items = tileAltar.buildIntDataList();
         msg.fluids = tileAltar.buildFluidList();
         msg.capacity = tileAltar.getCapacity();
@@ -924,9 +988,11 @@ public enum NewPacketHandler
     {
         TEOrientableMessage msg = new TEOrientableMessage();
         msg.index = 1;
-        msg.pos = tileOrientable.getPos();
-        msg.input = tileOrientable.getIntForEnumFacing(tileOrientable.getInputDirection());
-        msg.output = tileOrientable.getIntForEnumFacing(tileOrientable.getOutputDirection());
+        msg.x = tileOrientable.xCoord;
+        msg.y = tileOrientable.yCoord;
+        msg.z = tileOrientable.zCoord;
+        msg.input = tileOrientable.getIntForForgeDirection(tileOrientable.getInputDirection());
+        msg.output = tileOrientable.getIntForForgeDirection(tileOrientable.getOutputDirection());
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
@@ -935,7 +1001,9 @@ public enum NewPacketHandler
     {
         TEPedestalMessage msg = new TEPedestalMessage();
         msg.index = 2;
-        msg.pos = tilePedestal.getPos();
+        msg.x = tilePedestal.xCoord;
+        msg.y = tilePedestal.yCoord;
+        msg.z = tilePedestal.zCoord;
         msg.items = tilePedestal.buildIntDataList();
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
@@ -945,7 +1013,9 @@ public enum NewPacketHandler
     {
         TEPlinthMessage msg = new TEPlinthMessage();
         msg.index = 3;
-        msg.pos = tilePlinth.getPos();
+        msg.x = tilePlinth.xCoord;
+        msg.y = tilePlinth.yCoord;
+        msg.z = tilePlinth.zCoord;
         msg.items = tilePlinth.buildIntDataList();
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
@@ -955,7 +1025,9 @@ public enum NewPacketHandler
     {
         TESocketMessage msg = new TESocketMessage();
         msg.index = 4;
-        msg.pos = tileSocket.getPos();
+        msg.x = tileSocket.xCoord;
+        msg.y = tileSocket.yCoord;
+        msg.z = tileSocket.zCoord;
         msg.items = tileSocket.buildIntDataList();
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
@@ -965,27 +1037,31 @@ public enum NewPacketHandler
     {
         TETeleposerMessage msg = new TETeleposerMessage();
         msg.index = 5;
-        msg.pos = tileTeleposer.getPos();
+        msg.x = tileTeleposer.xCoord;
+        msg.y = tileTeleposer.yCoord;
+        msg.z = tileTeleposer.zCoord;
         msg.items = tileTeleposer.buildIntDataList();
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public static Packet getPacket(TEChemistrySet tileWritingTable)
+    public static Packet getPacket(TEWritingTable tileWritingTable)
     {
         TEWritingTableMessage msg = new TEWritingTableMessage();
         msg.index = 6;
-        msg.pos = tileWritingTable.getPos();
+        msg.x = tileWritingTable.xCoord;
+        msg.y = tileWritingTable.yCoord;
+        msg.z = tileWritingTable.zCoord;
         msg.items = tileWritingTable.buildIntDataList();
 
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 
-    public static Packet getParticlePacket(EnumParticleTypes type, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
+    public static Packet getParticlePacket(String str, double xCoord, double yCoord, double zCoord, double xVel, double yVel, double zVel)
     {
         ParticleMessage msg = new ParticleMessage();
         msg.index = 7;
-        msg.particle = type.ordinal();
+        msg.particle = str;
         msg.xCoord = xCoord;
         msg.yCoord = yCoord;
         msg.zCoord = zCoord;
@@ -1011,7 +1087,9 @@ public enum NewPacketHandler
     {
         TEMasterStoneMessage msg = new TEMasterStoneMessage();
         msg.index = 9;
-        msg.pos = tile.getPos();
+        msg.x = tile.xCoord;
+        msg.y = tile.yCoord;
+        msg.z = tile.zCoord;
 
         msg.ritual = tile.getCurrentRitual();
         msg.isRunning = tile.isRunning;
@@ -1023,7 +1101,9 @@ public enum NewPacketHandler
     {
         TEReagentConduitMessage msg = new TEReagentConduitMessage();
         msg.index = 10;
-        msg.pos = tile.getPos();
+        msg.x = tile.xCoord;
+        msg.y = tile.yCoord;
+        msg.z = tile.zCoord;
 
         msg.destinationList = tile.destinationList;
 

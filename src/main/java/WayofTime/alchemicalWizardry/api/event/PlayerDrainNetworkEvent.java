@@ -1,7 +1,7 @@
 package WayofTime.alchemicalWizardry.api.event;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.eventhandler.Cancelable;
+import cpw.mods.fml.common.eventhandler.Cancelable;
 
 @Cancelable
 public class PlayerDrainNetworkEvent extends SoulNetworkEvent

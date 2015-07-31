@@ -10,7 +10,6 @@ import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -28,14 +27,16 @@ public class RitualEffectFlight extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int currentEssence = SoulNetworkHandler.getCurrentEssence(owner);
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
 
         int range = 20;
-        int verticalRange = 70;
-        AxisAlignedBB axis = new AxisAlignedBB(pos, pos.add(1, 1, 1)).expand(range, verticalRange, range);
-//        axis.maxY = 256;
-//        axis.minY = 0;
+        int verticalRange = 30;
+        AxisAlignedBB axis = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1).expand(range, verticalRange, range);
+        axis.maxY = 256;
+        axis.minY = 0;
         List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, axis);
         int entityCount = 0;
 
@@ -95,7 +96,7 @@ public class RitualEffectFlight extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> flightRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> flightRitual = new ArrayList();
         flightRitual.add(new RitualComponent(1, 0, 0, RitualComponent.DUSK));
         flightRitual.add(new RitualComponent(-1, 0, 0, RitualComponent.DUSK));
         flightRitual.add(new RitualComponent(0, 0, 1, RitualComponent.DUSK));

@@ -7,7 +7,6 @@ import net.minecraft.util.Vec3;
 
 public class ToolDefensiveWind extends LeftClickEffect
 {
-
     public ToolDefensiveWind(int power, int potency, int cost)
     {
         super(power, potency, cost);
@@ -17,8 +16,8 @@ public class ToolDefensiveWind extends LeftClickEffect
     public int onLeftClickEntity(ItemStack stack, EntityLivingBase attacked, EntityLivingBase weilder)
     {
         Vec3 vec = weilder.getLookVec();
-        vec = vec.subtract(0, vec.yCoord, 0);
-        vec = vec.normalize();
+        vec.yCoord = 0;
+        vec.normalize();
 
         float velocity = 0.5f * (1 + this.powerUpgrades * 0.8f);
         float ratio = 0.1f + 0.3f * this.potencyUpgrades;

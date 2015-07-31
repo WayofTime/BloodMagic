@@ -1,18 +1,18 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.SummonToolEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.SummonToolEffect;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 public class ToolDefensiveIce extends SummonToolEffect
 {
@@ -36,19 +36,22 @@ public class ToolDefensiveIce extends SummonToolEffect
             }
         }
 
-        BlockPos pos = entity.getPosition();
+        Vec3 blockVec = SpellHelper.getEntityBlockVector(entity);
 
-        for (int x = -horizRadius; x <= horizRadius; x++)
+        int x = (int) (blockVec.xCoord);
+        int y = (int) (blockVec.yCoord);
+        int z = (int) (blockVec.zCoord);
+
+        for (int posX = x - horizRadius; posX <= x + horizRadius; posX++)
         {
-            for (int y = -vertRadius; y <= vertRadius; y++)
+            for (int posY = y - vertRadius; posY <= y + vertRadius; posY++)
             {
-                for (int z = -horizRadius; z <= horizRadius; z++)
+                for (int posZ = z - horizRadius; posZ <= z + horizRadius; posZ++)
                 {
-                	BlockPos newPos = pos.add(x, y, z);
-                    SpellHelper.freezeWaterBlock(world, newPos);
-                    if (world.isSideSolid(newPos, EnumFacing.UP) && world.isAirBlock(newPos.offsetUp()))
+                    SpellHelper.freezeWaterBlock(world, posX, posY, posZ);
+                    if (world.isSideSolid(posX, posY, posZ, ForgeDirection.UP) && world.isAirBlock(posX, posY + 1, posZ))
                     {
-                        world.setBlockState(newPos.offsetUp(), Blocks.snow_layer.getDefaultState());
+                        world.setBlock(posX, posY + 1, posZ, Blocks.snow_layer);
                     }
                 }
             }

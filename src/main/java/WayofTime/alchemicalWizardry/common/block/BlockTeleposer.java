@@ -7,7 +7,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -15,31 +15,65 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-//import net.minecraftforge.fml.common.Optional;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-//import codechicken.multipart.MultipartHelper;
-//import codechicken.multipart.TileMultipart;
+import codechicken.multipart.MultipartHelper;
+import codechicken.multipart.TileMultipart;
+import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTeleposer extends BlockContainer
 {
+    @SideOnly(Side.CLIENT)
+    private IIcon topIcon;
+    @SideOnly(Side.CLIENT)
+    private IIcon sideIcon2;
+    @SideOnly(Side.CLIENT)
+    private IIcon bottomIcon;
+
     public BlockTeleposer()
     {
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("bloodTeleposer");
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
+    {
+        this.topIcon = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Top");
+        this.sideIcon2 = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
+        this.bottomIcon = iconRegister.registerIcon("AlchemicalWizardry:Teleposer_Side");
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int meta)
+    {
+        switch (side)
+        {
+            case 0:
+                return bottomIcon;
+            case 1:
+                return topIcon;
+            default:
+                return sideIcon2;
+        }
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int idk, float what, float these, float are)
     {
         ItemStack playerItem = player.getCurrentEquippedItem();
 
@@ -55,28 +89,28 @@ public class BlockTeleposer extends BlockContainer
                 }
 
                 NBTTagCompound itemTag = playerItem.getTagCompound();
-                itemTag.setInteger("xCoord", pos.getX());
-                itemTag.setInteger("yCoord", pos.getY());
-                itemTag.setInteger("zCoord", pos.getZ());
-                itemTag.setInteger("dimensionId", world.provider.getDimensionId());
+                itemTag.setInteger("xCoord", x);
+                itemTag.setInteger("yCoord", y);
+                itemTag.setInteger("zCoord", z);
+                itemTag.setInteger("dimensionId", world.provider.dimensionId);
                 return true;
             }
         }
-        player.openGui(AlchemicalWizardry.instance, 1, world, pos.getX(), pos.getY(), pos.getZ());
+        player.openGui(AlchemicalWizardry.instance, 1, world, x, y, z);
         return true;
     }
 
     @Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state)
+    public void breakBlock(World world, int x, int y, int z, Block par5, int par6)
     {
-        dropItems(world, pos);
-        super.breakBlock(world, pos, state);
+        dropItems(world, x, y, z);
+        super.breakBlock(world, x, y, z, par5, par6);
     }
 
-    private void dropItems(World world, BlockPos pos)
+    private void dropItems(World world, int x, int y, int z)
     {
         Random rand = new Random();
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
         if (!(tileEntity instanceof IInventory))
         {
@@ -94,7 +128,7 @@ public class BlockTeleposer extends BlockContainer
                 float rx = rand.nextFloat() * 0.8F + 0.1F;
                 float ry = rand.nextFloat() * 0.8F + 0.1F;
                 float rz = rand.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityItem = new EntityItem(world, pos.getX() + rx, pos.getY() + ry, pos.getZ() + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                 if (item.hasTagCompound())
                 {
@@ -117,20 +151,20 @@ public class BlockTeleposer extends BlockContainer
         return new TETeleposer();
     }
     
-    public static boolean swapBlocks(Object caller, World worldI, World worldF, BlockPos posi, BlockPos posf)
+    public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
     {
-    	return swapBlocks(caller, worldI, worldF, posi, posf, true, 3);
+    	return swapBlocks(caller, worldI, worldF, xi, yi, zi, xf, yf, zf, true, 3);
     }
     
-    public static boolean swapBlocksWithoutSound(Object caller, World worldI, World worldF, BlockPos posi, BlockPos posf)
+    public static boolean swapBlocksWithoutSound(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf)
     {
-    	return swapBlocks(caller, worldI, worldF, posi, posf, false, 3);
+    	return swapBlocks(caller, worldI, worldF, xi, yi, zi, xf, yf, zf, false, 3);
     }
 
-    public static boolean swapBlocks(Object caller, World worldI, World worldF, BlockPos posi, BlockPos posf, boolean doSound, int flag)
+    public static boolean swapBlocks(Object caller, World worldI, World worldF, int xi, int yi, int zi, int xf, int yf, int zf, boolean doSound, int flag)
     {
-        TileEntity tileEntityI = worldI.getTileEntity(posi);
-        TileEntity tileEntityF = worldF.getTileEntity(posf);
+        TileEntity tileEntityI = worldI.getTileEntity(xi, yi, zi);
+        TileEntity tileEntityF = worldF.getTileEntity(xf, yf, zf);
 
         NBTTagCompound nbttag1 = new NBTTagCompound();
         NBTTagCompound nbttag2 = new NBTTagCompound();
@@ -145,10 +179,8 @@ public class BlockTeleposer extends BlockContainer
             tileEntityF.writeToNBT(nbttag2);
         }
 
-        IBlockState stateI = worldI.getBlockState(posi);
-        Block blockI = stateI.getBlock();
-        IBlockState stateF = worldF.getBlockState(posf);
-        Block blockF = stateF.getBlock();
+        Block blockI = worldI.getBlock(xi, yi, zi);
+        Block blockF = worldF.getBlock(xf, yf, zf);
 
 
         if (blockI.equals(Blocks.air) && blockF.equals(Blocks.air))
@@ -160,15 +192,18 @@ public class BlockTeleposer extends BlockContainer
         {
             return false;
         }
+
+        int metaI = worldI.getBlockMetadata(xi, yi, zi);
+        int metaF = worldF.getBlockMetadata(xf, yf, zf);
         
-        TeleposeEvent evt = new TeleposeEvent(worldI, posi, stateI, worldF, posf, stateF);
+        TeleposeEvent evt = new TeleposeEvent(worldI, xi, yi, zi, blockI, metaI, worldF, xf, yf, zf, blockF, metaF);
         if (MinecraftForge.EVENT_BUS.post(evt))
             return false;
         
         if(doSound)
         {
-        	worldI.playSoundEffect(posi.getX(), posi.getY(), posi.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
-            worldF.playSoundEffect(posf.getX(), posf.getY(), posf.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
+        	worldI.playSoundEffect(xi, yi, zi, "mob.endermen.portal", 1.0F, 1.0F);
+            worldF.playSoundEffect(xf, yf, zf, "mob.endermen.portal", 1.0F, 1.0F);
         }
         
         //CLEAR TILES
@@ -176,68 +211,73 @@ public class BlockTeleposer extends BlockContainer
 
         if (finalBlock != null)
         {
-            TileEntity tileToSet = finalBlock.createTileEntity(worldF, stateF);
+            TileEntity tileToSet = finalBlock.createTileEntity(worldF, metaF);
 
-            worldF.setTileEntity(posf, tileToSet);
+            worldF.setTileEntity(xf, yf, zf, tileToSet);
         }
 
         if (blockI != null)
         {
-            TileEntity tileToSet = blockI.createTileEntity(worldI, stateI);
+            TileEntity tileToSet = blockI.createTileEntity(worldI, metaI);
 
-            worldI.setTileEntity(posi, tileToSet);
+            worldI.setTileEntity(xi, yi, zi, tileToSet);
         }
 
         //TILES CLEARED
-        worldF.setBlockState(posf, stateI, flag);
+        worldF.setBlock(xf, yf, zf, blockI, metaI, flag);
 
         if (tileEntityI != null)
         {
             TileEntity newTileEntityI = TileEntity.createAndLoadEntity(nbttag1);
             
-//            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
         	{
-//        		newTileEntityI = createMultipartFromNBT(worldF, nbttag1);
+        		newTileEntityI = createMultipartFromNBT(worldF, nbttag1);
         	}
                         
-            worldF.setTileEntity(posf, newTileEntityI);
+            worldF.setTileEntity(xf, yf, zf, newTileEntityI);
             
-            newTileEntityI.setPos(posf);
-//           if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
+            newTileEntityI.xCoord = xf;
+            newTileEntityI.yCoord = yf;
+            newTileEntityI.zCoord = zf;
+            
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityI))
         	{
-//            	sendDescriptorOfTile(worldF, newTileEntityI);
+            	sendDescriptorOfTile(worldF, newTileEntityI);
         	} 
         }
 
-        worldI.setBlockState(posi, stateF, flag);
+        worldI.setBlock(xi, yi, zi, finalBlock, metaF, flag);
 
         if (tileEntityF != null)
         {        	
             TileEntity newTileEntityF = TileEntity.createAndLoadEntity(nbttag2);
-//            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
         	{
-//        		newTileEntityF = createMultipartFromNBT(worldI, nbttag2);
+        		newTileEntityF = createMultipartFromNBT(worldI, nbttag2);
         	}
             
-            worldI.setTileEntity(posi, newTileEntityF);
+            worldI.setTileEntity(xi, yi, zi, newTileEntityF);
             
-            newTileEntityF.setPos(posi);
+            newTileEntityF.xCoord = xi;
+            newTileEntityF.yCoord = yi;
+            newTileEntityF.zCoord = zi;
             
-//            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
+            if(AlchemicalWizardry.isFMPLoaded && isMultipart(tileEntityF))
         	{
-//            	sendDescriptorOfTile(worldI, newTileEntityF);
+            	sendDescriptorOfTile(worldI, newTileEntityF);
         	} 
         }
 
         return true;
     }
     
-/*    @Optional.Method(modid = "ForgeMultipart")
+    @Optional.Method(modid = "ForgeMultipart")
     public static boolean isMultipart(TileEntity tile)
     {
     	return tile instanceof TileMultipart;
     }
-
+    
     @Optional.Method(modid = "ForgeMultipart")
     public static TileEntity createMultipartFromNBT(World world, NBTTagCompound tag)
     {
@@ -249,5 +289,4 @@ public class BlockTeleposer extends BlockContainer
     {
     	MultipartHelper.sendDescPacket(world, tile);
     }
-    */
 }

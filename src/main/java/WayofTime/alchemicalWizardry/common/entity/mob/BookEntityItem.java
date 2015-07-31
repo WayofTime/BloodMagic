@@ -26,7 +26,7 @@ public class BookEntityItem extends EntityItem
 	public BookEntityItem(World world, Entity original, ItemStack stack) 
 	{ 
 	    this(world, original.posX, original.posY, original.posZ); 
-	    this.setDefaultPickupDelay();
+	    this.delayBeforeCanPickup = 20; 
 	    this.motionX = original.motionX; 
 	    this.motionY = original.motionY; 
 	    this.motionZ = original.motionZ; 

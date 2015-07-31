@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common;
 
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
 import WayofTime.alchemicalWizardry.common.entity.mob.BookEntityItem;
@@ -21,6 +20,10 @@ import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.TeleportProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
 import WayofTime.alchemicalWizardry.common.entity.projectile.WindGustProjectile;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy
 {
@@ -30,16 +33,38 @@ public class CommonProxy
         // Nothing here as the server doesn't render graphics!
     }
     
-    public void registerPostSideObjects() {}
+    public void registerPostSideObjects()
+    {
+    	
+    }
 
-    public void registerEntities() {}
+    public void registerEntities()
+    {
+    }
 
     public World getClientWorld()
     {
         return null;
     }
 
-    public void registerEvents() {}
+    public void registerActions()
+    {
+    }
+
+    public void registerEvents()
+    {
+    }
+
+    public void registerSoundHandler()
+    {
+        // Nothing here as this is a server side proxy
+    }
+
+    public void registerTileEntities()
+    {
+        GameRegistry.registerTileEntity(TEAltar.class, "containerAltar");
+        GameRegistry.registerTileEntity(TEMasterStone.class, "containerMasterStone");
+    }
 
     public void registerEntityTrackers()
     {
@@ -63,5 +88,12 @@ public class CommonProxy
         EntityRegistry.registerModEntity(BookEntityItem.class, "bookEntityItem", 17, AlchemicalWizardry.instance, 120, 3, true);
     }
 
-    public void initRendering() {}
+    public void registerTickHandlers()
+    {
+    }
+
+    public void InitRendering()
+    {
+        // TODO Auto-generated method stub
+    }
 }

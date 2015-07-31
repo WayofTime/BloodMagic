@@ -3,7 +3,6 @@ package WayofTime.alchemicalWizardry.common.entity.projectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -53,7 +52,7 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
             this.onImpact(mop.entityHit);
         } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, 5.0f, false);
+            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float) (5.0f), false);
             this.spawnSecondaryProjectiles();
         }
 
@@ -74,10 +73,10 @@ public class EntityEnergyBazookaMainProjectile extends EnergyBlastProjectile
                 spawnSecondaryProjectiles();
             }
 
-            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, 5.0f, false);
+            worldObj.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float) (5.0f), false);
         }
 
-        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
+        spawnHitParticles("magicCrit", 8);
         this.setDead();
     }
 

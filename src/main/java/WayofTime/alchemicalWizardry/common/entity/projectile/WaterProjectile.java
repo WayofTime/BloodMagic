@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -49,7 +48,7 @@ public class WaterProjectile extends EnergyBlastProjectile
             }
 
             this.onImpact(mop.entityHit);
-        }// else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
         }
 
@@ -66,7 +65,7 @@ public class WaterProjectile extends EnergyBlastProjectile
         {
             if (mop instanceof EntityLivingBase)
             {
-                if (mop.isImmuneToFire())
+                if (((EntityLivingBase) mop).isImmuneToFire())
                 {
                     doDamage(projectileDamage * 2, mop);
                     ((EntityLivingBase) mop).addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionDrowning.id, 80, 1));
@@ -78,14 +77,14 @@ public class WaterProjectile extends EnergyBlastProjectile
             }
         }
 
-        spawnHitParticles(EnumParticleTypes.CRIT_MAGIC, 8);
+        spawnHitParticles("magicCrit", 8);
         this.setDead();
     }
 
     @Override
     public void doFiringParticles()
     {
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.PORTAL, posX, posY, posZ, -motionX, -motionY, -motionZ);
-        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.getDimensionId(), EnumParticleTypes.SPELL_MOB_AMBIENT, posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "portal", posX, posY, posZ, -motionX, -motionY, -motionZ);
+        SpellHelper.sendParticleToAllAround(worldObj, posX, posY, posZ, 30, worldObj.provider.dimensionId, "mobSpellAmbient", posX + smallGauss(0.1D), posY + smallGauss(0.1D), posZ + smallGauss(0.1D), 0.5D, 0.5D, 0.5D);
     }
 }

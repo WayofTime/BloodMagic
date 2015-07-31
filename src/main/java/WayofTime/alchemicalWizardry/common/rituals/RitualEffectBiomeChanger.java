@@ -1,10 +1,13 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
+import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
+import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -15,18 +18,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
-import WayofTime.alchemicalWizardry.ModBlocks;
-import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
-import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
-import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualEffectBiomeChanger extends RitualEffect
 {
@@ -36,16 +33,17 @@ public class RitualEffectBiomeChanger extends RitualEffect
         String owner = ritualStone.getOwner();
 
         int cooldown = ritualStone.getCooldown();
-        World world = ritualStone.getWorldObj();
-        BlockPos pos = ritualStone.getPosition();
-        
+        World world = ritualStone.getWorld();
+        int x = ritualStone.getXCoord();
+        int y = ritualStone.getYCoord();
+        int z = ritualStone.getZCoord();
         if (cooldown > 0)
         {
             ritualStone.setCooldown(cooldown - 1);
 
             if (world.rand.nextInt(15) == 0)
             {
-                world.addWeatherEffect(new EntityLightningBolt(world, pos.getX() - 1 + world.rand.nextInt(3), pos.getY() + 1, pos.getZ() - 1 + world.rand.nextInt(3)));
+                world.addWeatherEffect(new EntityLightningBolt(world, x - 1 + world.rand.nextInt(3), y + 1, z - 1 + world.rand.nextInt(3)));
             }
 
             return;
@@ -91,25 +89,49 @@ public class RitualEffectBiomeChanger extends RitualEffect
                     {
                         if (boolList[i][j])
                         {
-                        	BlockPos position = pos.add(i - range, 1, j - range);
-                        	
-                        	for(EnumFacing face : EnumFacing.HORIZONTALS)
-                        	{
-                        		int iP = i + face.getFrontOffsetX();
-                        		int jP = j + face.getFrontOffsetY();
-                        		
-                        		if(iP >= 0 && iP <= 2 * range && jP >= 0 && jP <= 2 * range && !boolList[iP][jP])
-                        		{
-                            		BlockPos newPos = position.add(face.getDirectionVec());
-                            		IBlockState state = world.getBlockState(newPos);
-                            		Block block = state.getBlock();
-                            		if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
-                                    {
-                                        boolList[iP][jP] = true;
-                                        isReady = false;
-                                    }
-                        		}
-                        	}
+                            if (i - 1 >= 0 && !boolList[i - 1][j])
+                            {
+                                Block block = world.getBlock(x - range + i - 1, y + 1, z - range + j);
+
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
+                                {
+                                    boolList[i - 1][j] = true;
+                                    isReady = false;
+                                }
+                            }
+
+                            if (j - 1 >= 0 && !boolList[i][j - 1])
+                            {
+                                Block block = world.getBlock(x - range + i, y + 1, z - range + j - 1);
+
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
+                                {
+                                    boolList[i][j - 1] = true;
+                                    isReady = false;
+                                }
+                            }
+
+                            if (i + 1 <= 2 * range && !boolList[i + 1][j])
+                            {
+                                Block block = world.getBlock(x - range + i + 1, y + 1, z - range + j);
+
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
+                                {
+                                    boolList[i + 1][j] = true;
+                                    isReady = false;
+                                }
+                            }
+
+                            if (j + 1 <= 2 * range && !boolList[i][j + 1])
+                            {
+                                Block block = world.getBlock(x - range + i, y + 1, z - range + j + 1);
+
+                                if (!ModBlocks.largeBloodStoneBrick.equals(block) && !ModBlocks.bloodStoneBrick.equals(block))
+                                {
+                                    boolList[i][j + 1] = true;
+                                    isReady = false;
+                                }
+                            }
                         }
                     }
                 }
@@ -129,8 +151,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                     }
 
                     boolean isItemConsumed = false;
-                    BlockPos newPos = pos.add(i, 0, j);
-                    TileEntity tileEntity = world.getTileEntity(newPos);
+                    TileEntity tileEntity = world.getTileEntity(x + i, y, z + j);
 
                     if (!(tileEntity instanceof TEPlinth))
                     {
@@ -148,7 +169,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
                         {
                             if (itemTest instanceof ItemBlock)
                             {
-                                Block item = ((ItemBlock) itemTest).getBlock();
+                                Block item = ((ItemBlock) itemTest).field_150939_a;
                                 if (item == (Blocks.sand))
                                 {
                                     humidity -= 0.1f;
@@ -209,12 +230,14 @@ public class RitualEffectBiomeChanger extends RitualEffect
                     if (isItemConsumed)
                     {
                         tilePlinth.setInventorySlotContents(0, null);
-                        world.markBlockForUpdate(newPos);
-                        world.addWeatherEffect(new EntityLightningBolt(world, newPos.getX(), newPos.getY() + 1, newPos.getZ()));
+                        world.markBlockForUpdate(x + i, y, z + j);
+                        world.addWeatherEffect(new EntityLightningBolt(world, x + i, y + 1, z + j));
                     }
                 }
             }
 
+            boolean wantsSnow = false;
+            boolean wantsRain = true;
             int biomeID = 1;
             BiomeGenBase[] biomeList = BiomeGenBase.getBiomeGenArray();
             int iteration = 0;
@@ -246,11 +269,10 @@ public class RitualEffectBiomeChanger extends RitualEffect
                 {
                     if (boolList[i][j])
                     {
-                    	BlockPos newPos = pos.add(i - range, 0, j - range);
-                        Chunk chunk = world.getChunkFromBlockCoords(newPos);
+                        Chunk chunk = world.getChunkFromBlockCoords(x - range + i, z - range + j);
                         byte[] byteArray = chunk.getBiomeArray();
-                        int moduX = (newPos.getX()) % 16;
-                        int moduZ = (newPos.getZ()) % 16;
+                        int moduX = (x - range + i) % 16;
+                        int moduZ = (z - range + j) % 16;
 
                         if (moduX < 0)
                         {
@@ -288,7 +310,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> biomeChangerRitual = new ArrayList<RitualComponent>();
+        ArrayList<RitualComponent> biomeChangerRitual = new ArrayList();
         biomeChangerRitual.add(new RitualComponent(1, 0, -2, RitualComponent.AIR));
         biomeChangerRitual.add(new RitualComponent(1, 0, -3, RitualComponent.AIR));
         biomeChangerRitual.add(new RitualComponent(2, 0, -1, RitualComponent.AIR));

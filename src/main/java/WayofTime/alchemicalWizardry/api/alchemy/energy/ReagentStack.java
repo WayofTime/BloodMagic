@@ -28,8 +28,9 @@ public class ReagentStack
         }
 
         int amount = tag.getInteger("amount");
+        ReagentStack stack = new ReagentStack(reagent, amount);
 
-        return new ReagentStack(reagent, amount);
+        return stack;
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound tag)

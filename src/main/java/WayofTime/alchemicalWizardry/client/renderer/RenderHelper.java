@@ -7,14 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -167,7 +167,7 @@ public class RenderHelper
 
     private static List<HUDElement> getHUDElements(Minecraft mc)
     {
-        List<HUDElement> elements = new ArrayList<HUDElement>();
+        List<HUDElement> elements = new ArrayList();
 
         MovingObjectPosition movingobjectposition = mc.objectMouseOver;
         World world = mc.theWorld;
@@ -179,9 +179,11 @@ public class RenderHelper
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                BlockPos pos = movingobjectposition.func_178782_a();
+                int x = movingobjectposition.blockX;
+                int y = movingobjectposition.blockY;
+                int z = movingobjectposition.blockZ;
 
-                TileEntity tile = world.getTileEntity(pos);
+                TileEntity tile = world.getTileEntity(x, y, z);
 
                 if (!(tile instanceof IReagentHandler))
                 {
@@ -190,7 +192,7 @@ public class RenderHelper
 
                 IReagentHandler relay = (IReagentHandler) tile;
 
-                ReagentContainerInfo[] infos = relay.getContainerInfo(movingobjectposition.field_178784_b);
+                ReagentContainerInfo[] infos = relay.getContainerInfo(ForgeDirection.getOrientation(movingobjectposition.sideHit));
 
                 if (infos != null)
                 {
@@ -248,13 +250,12 @@ public class RenderHelper
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer wr = tessellator.getWorldRenderer();
-        wr.startDrawingQuads();
-        wr.addVertexWithUV((double)p_73729_1_, p_73729_2_ + p_73729_6_, (double)zLevel, (p_73729_3_ * f), (p_73729_4_ + p_73729_6_) * f1);
-        wr.addVertexWithUV(p_73729_1_ + p_73729_5_, p_73729_2_ + p_73729_6_, (double)zLevel, (p_73729_3_ + p_73729_5_) * f, (p_73729_4_ + p_73729_6_) * f1);
-        wr.addVertexWithUV(p_73729_1_ + p_73729_5_, (double)p_73729_2_, (double)zLevel, (p_73729_3_ + p_73729_5_) * f, p_73729_4_ * f1);
-        wr.addVertexWithUV((double)p_73729_1_, (double)p_73729_2_, (double)zLevel, (double)(p_73729_3_ * f), p_73729_4_ * f1);
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double)p_73729_1_, p_73729_2_ + p_73729_6_, (double)zLevel, (p_73729_3_ * f), (p_73729_4_ + p_73729_6_) * f1);
+        tessellator.addVertexWithUV(p_73729_1_ + p_73729_5_, p_73729_2_ + p_73729_6_, (double)zLevel, (p_73729_3_ + p_73729_5_) * f, (p_73729_4_ + p_73729_6_) * f1);
+        tessellator.addVertexWithUV(p_73729_1_ + p_73729_5_, (double)p_73729_2_, (double)zLevel, (p_73729_3_ + p_73729_5_) * f, p_73729_4_ * f1);
+        tessellator.addVertexWithUV((double)p_73729_1_, (double)p_73729_2_, (double)zLevel, (double)(p_73729_3_ * f), p_73729_4_ * f1);
         tessellator.draw();
     }
     
@@ -286,6 +287,17 @@ public class RenderHelper
         drawTexturedModalRect(x, y, 0, 0, 256, 256);
         
         GL11.glPopMatrix();
+    }
+    
+    public static void renderIcon(int p_94149_1_, int p_94149_2_, IIcon p_94149_3_, int p_94149_4_, int p_94149_5_)
+    {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double)p_94149_1_, (double)(p_94149_2_ + p_94149_5_), (double)zLevel, (double)p_94149_3_.getMinU(), (double)p_94149_3_.getMaxV());
+        tessellator.addVertexWithUV((double)(p_94149_1_ + p_94149_4_), (double)(p_94149_2_ + p_94149_5_), (double)zLevel, (double)p_94149_3_.getMaxU(), (double)p_94149_3_.getMaxV());
+        tessellator.addVertexWithUV((double)(p_94149_1_ + p_94149_4_), (double)p_94149_2_, (double)zLevel, (double)p_94149_3_.getMaxU(), (double)p_94149_3_.getMinV());
+        tessellator.addVertexWithUV((double)p_94149_1_, (double)p_94149_2_, (double)zLevel, (double)p_94149_3_.getMinU(), (double)p_94149_3_.getMinV());
+        tessellator.draw();
     }
 
     private static void displayArmorStatus(Minecraft mc)

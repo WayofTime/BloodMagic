@@ -1,11 +1,12 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
+import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileImpactEffect;
 
 public class ProjectileOffensiveFire extends ProjectileImpactEffect
 {
@@ -17,10 +18,14 @@ public class ProjectileOffensiveFire extends ProjectileImpactEffect
     @Override
     public void onEntityImpact(Entity mop, Entity proj)
     {
-        int horizRange = (int) (this.powerUpgrades);
-        int vertDepth = (int) (3 * this.potencyUpgrades + 1);
+        int horizRange = this.powerUpgrades;
+        int vertDepth = 3 * this.potencyUpgrades + 1;
 
-        BlockPos pos = proj.getPosition();
+        Vec3 blockVector = SpellHelper.getEntityBlockVector(mop);
+
+        int posX = (int) (blockVector.xCoord);
+        int posY = (int) (blockVector.yCoord);
+        int posZ = (int) (blockVector.zCoord);
 
         World world = mop.worldObj;
 
@@ -30,10 +35,9 @@ public class ProjectileOffensiveFire extends ProjectileImpactEffect
             {
                 for (int k = -horizRange; k <= horizRange; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    if (world.isAirBlock(newPos))
+                    if (world.isAirBlock(posX + i, posY + j, posZ + k))
                     {
-                        world.setBlockState(newPos, Blocks.flowing_lava.getStateFromMeta(7));
+                        world.setBlock(posX + i, posY + j, posZ + k, Blocks.flowing_lava, 7, 3);
                     }
                 }
             }

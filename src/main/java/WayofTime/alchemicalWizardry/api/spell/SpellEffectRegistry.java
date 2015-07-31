@@ -8,9 +8,9 @@ import java.util.Map.Entry;
 
 public class SpellEffectRegistry 
 {
-	public static Map<Class<? extends SpellParadigm>, List<ComplexSpellEffect>> effectRegistry = new HashMap<Class<? extends SpellParadigm>, List<ComplexSpellEffect>>();
-	public static Map<String, ComplexSpellType> typeRegistry = new HashMap<String, ComplexSpellType>();
-	public static Map<String, ComplexSpellModifier> modifierRegistry = new HashMap<String, ComplexSpellModifier>();
+	public static Map<Class<? extends SpellParadigm>, List<ComplexSpellEffect>> effectRegistry = new HashMap();
+	public static Map<String, ComplexSpellType> typeRegistry = new HashMap();
+	public static Map<String, ComplexSpellModifier> modifierRegistry = new HashMap();
 	
 	public static void registerSpellEffect(Class<? extends SpellParadigm> paraClass, ComplexSpellEffect effect)
 	{
@@ -43,7 +43,7 @@ public class SpellEffectRegistry
 			effectList.add(effect);
 		}else
 		{
-			List<ComplexSpellEffect> effectList = new LinkedList<ComplexSpellEffect>();
+			List<ComplexSpellEffect> effectList = new LinkedList();
 			effectList.add(effect);
 			effectRegistry.put(paraClass, effectList);
 		}

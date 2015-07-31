@@ -14,11 +14,14 @@ public class SpellParadigmSelf extends SpellParadigm
 
     public SpellParadigmSelf()
     {
-        selfSpellEffectList = new ArrayList<ISelfSpellEffect>();
+        selfSpellEffectList = new ArrayList();
     }
 
     @Override
-    public void enhanceParadigm(SpellEnhancement enh) {}
+    public void enhanceParadigm(SpellEnhancement enh)
+    {
+
+    }
 
     @Override
     public void castSpell(World world, EntityPlayer entityPlayer, ItemStack itemStack)

@@ -3,22 +3,28 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.Int3;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.BindableItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MaterialLiquid;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SigilFluid extends BindableItems implements IFluidContainerItem, ISigil
+public class SigilFluid extends Item implements IFluidContainerItem, ISigil
 {
     private int capacity = 128 * 1000;
     private static final int STATE_SYPHON = 0;
@@ -33,6 +39,8 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
     {
         super();
         this.setMaxDamage(0);
+        this.setMaxStackSize(1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -76,6 +84,13 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                 par3List.add("Empty");
             }
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WaterSigil");
     }
 
     @Override
@@ -181,6 +196,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
         }
         int range = 5;
 
+        float f = 1.0F;
         boolean flag = true;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 
@@ -191,12 +207,16 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                if (!world.canMineBlockBody(player, movingobjectposition.func_178782_a()))
+                int x = movingobjectposition.blockX;
+                int y = movingobjectposition.blockY;
+                int z = movingobjectposition.blockZ;
+
+                if (!world.canMineBlock(player, x, y, z))
                 {
                     return container;
                 }
 
-                if (!player.func_175151_a(movingobjectposition.func_178782_a(), movingobjectposition.field_178784_b, container))
+                if (!player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, container))
                 {
                     return container;
                 }
@@ -214,11 +234,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                     }
                 }
 
-                List<Int3> positionList = new ArrayList<Int3>();
-
-                int x = movingobjectposition.func_178782_a().getX();
-                int y = movingobjectposition.func_178782_a().getY();
-                int z = movingobjectposition.func_178782_a().getZ();
+                List<Int3> positionList = new ArrayList();
 
                 boolList[range][range][range] = true;
                 positionList.add(new Int3(range, range, range));
@@ -238,7 +254,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                                 {
                                     if (i - 1 >= 0 && !boolList[i - 1][j][k])
                                     {
-                                        Block block = world.getBlockState(new BlockPos(x - range + i - 1, y - range + j, z - range + k)).getBlock();
+                                        Block block = world.getBlock(x - range + i - 1, y - range + j, z - range + k);
                                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                                         if (fluid != null)
@@ -251,7 +267,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
                                     if (j - 1 >= 0 && !boolList[i][j - 1][k])
                                     {
-                                        Block block = world.getBlockState(new BlockPos(x - range + i, y - range + j - 1, z - range + k)).getBlock();
+                                        Block block = world.getBlock(x - range + i, y - range + j - 1, z - range + k);
                                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                                         if (fluid != null)
@@ -264,7 +280,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
                                     if (k - 1 >= 0 && !boolList[i][j][k - 1])
                                     {
-                                        Block block = world.getBlockState(new BlockPos(x - range + i, y - range + j, z - range + k - 1)).getBlock();
+                                        Block block = world.getBlock(x - range + i, y - range + j, z - range + k - 1);
                                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                                         if (fluid != null)
@@ -277,7 +293,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
                                     if (i + 1 <= 2 * range && !boolList[i + 1][j][k])
                                     {
-                                        Block block = world.getBlockState(new BlockPos(x - range + i + 1, y - range + j, z - range + k)).getBlock();
+                                        Block block = world.getBlock(x - range + i + 1, y - range + j, z - range + k);
                                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                                         if (fluid != null)
@@ -290,7 +306,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
                                     if (j + 1 <= 2 * range && !boolList[i][j + 1][k])
                                     {
-                                        Block block = world.getBlockState(new BlockPos(x - range + i, y - range + j + 1, z - range + k)).getBlock();
+                                        Block block = world.getBlock(x - range + i, y - range + j + 1, z - range + k);
                                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                                         if (fluid != null)
@@ -303,7 +319,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
                                     if (k + 1 <= 2 * range && !boolList[i][j][k + 1])
                                     {
-                                        Block block = world.getBlockState(new BlockPos(x - range + i, y - range + j, z - range + k + 1)).getBlock();
+                                        Block block = world.getBlock(x - range + i, y - range + j, z - range + k + 1);
                                         Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                                         if (fluid != null)
@@ -329,10 +345,10 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                     {
                         continue;
                     }
-                    if (world.getBlockState(new BlockPos(x + i - range, y + j - range, z + k - range)).getBlock() != null && world.getBlockState(new BlockPos(x + i - range, y + j - range, z + k - range)).getBlock().getMaterial() instanceof MaterialLiquid)
+                    if (world.getBlock(x + i - range, y + j - range, z + k - range) != null && world.getBlock(x + i - range, y + j - range, z + k - range).getMaterial() instanceof MaterialLiquid)
                     {
                         //world.setBlockToAir(x+i-range, y+j-range, z+k-range);
-                        Block block = world.getBlockState(new BlockPos(x + i - range, y + j - range, z + k - range)).getBlock();
+                        Block block = world.getBlock(x + i - range, y + j - range, z + k - range);
                         if (block == null)
                         {
                             continue;
@@ -342,7 +358,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                         AlchemicalWizardry.logger.info("x: " + (i - range) + " y: " + (j - range) + " z: " + (k - range));
 
 
-                        if (fluid == null || world.getBlockState(new BlockPos(x + i - range, y + j - range, z + k - range)).getBlock().getMetaFromState(world.getBlockState(new BlockPos(x + i - range, y + j - range, z + k - range))) != 0)
+                        if (fluid == null || world.getBlockMetadata(x + i - range, y + j - range, z + k - range) != 0)
                         {
                             continue;
                         }
@@ -355,7 +371,8 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                         if ((amount > 0 && forceFill) || (amount >= 1000 && !forceFill))
                         {
                             {
-                                world.setBlockToAir(new BlockPos(x + i - range, y + j - range, z + k - range));
+                                world.setBlockToAir(x + i - range, y + j - range, z + k - range);
+
                             }
 
                             this.fill(container, new FluidStack(fluid, 1000), true);
@@ -370,6 +387,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
     public ItemStack fillItemFromWorld(ItemStack container, World world, EntityPlayer player, boolean forceFill)
     {
+        float f = 1.0F;
         boolean flag = true;
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 
@@ -380,19 +398,23 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                if (!world.canMineBlockBody(player, movingobjectposition.func_178782_a()))
+                int i = movingobjectposition.blockX;
+                int j = movingobjectposition.blockY;
+                int k = movingobjectposition.blockZ;
+
+                if (!world.canMineBlock(player, i, j, k))
                 {
                     return container;
                 }
 
-                if (!player.func_175151_a(movingobjectposition.func_178782_a(), movingobjectposition.field_178784_b, container))
+                if (!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, container))
                 {
                     return container;
                 }
 
-                if (world.getBlockState(movingobjectposition.func_178782_a()).getBlock() != null && world.getBlockState(movingobjectposition.func_178782_a()).getBlock().getMaterial() instanceof MaterialLiquid)
+                if (world.getBlock(i, j, k) != null && world.getBlock(i, j, k).getMaterial() instanceof MaterialLiquid)
                 {
-                    Block block = world.getBlockState(movingobjectposition.func_178782_a()).getBlock();
+                    Block block = world.getBlock(i, j, k);
                     Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
 
                     if (fluid == null)
@@ -408,7 +430,7 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
                     {
                         if (!player.capabilities.isCreativeMode)
                         {
-                            world.setBlockToAir(movingobjectposition.func_178782_a());
+                            world.setBlockToAir(i, j, k);
                         }
 
                         this.fill(container, new FluidStack(fluid, 1000), true);
@@ -433,6 +455,12 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
 
         if (simStack != null && simStack.amount >= 1000)
         {
+            Block fluidBlock = simStack.getFluid().getBlock();
+
+            float f = 1.0F;
+            double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
+            double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + 1.62D - (double) player.yOffset;
+            double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
             boolean flag = false;
             MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, flag);
 
@@ -443,56 +471,57 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
             {
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
-                    if (!world.canMineBlockBody(player, movingobjectposition.func_178782_a()))
+                    int i = movingobjectposition.blockX;
+                    int j = movingobjectposition.blockY;
+                    int k = movingobjectposition.blockZ;
+
+                    if (!world.canMineBlock(player, i, j, k))
                     {
                         return container;
                     }
-                    
-                    int i = movingobjectposition.func_178782_a().getX();
-                    int j = movingobjectposition.func_178782_a().getY();
-                    int k = movingobjectposition.func_178782_a().getZ();
 
-                    if (movingobjectposition.field_178784_b.getIndex() == 0)
+                    if (movingobjectposition.sideHit == 0)
                     {
                         --j;
                     }
 
-                    if (movingobjectposition.field_178784_b.getIndex() == 1)
+                    if (movingobjectposition.sideHit == 1)
                     {
                         ++j;
                     }
 
-                    if (movingobjectposition.field_178784_b.getIndex() == 2)
+                    if (movingobjectposition.sideHit == 2)
                     {
                         --k;
                     }
 
-                    if (movingobjectposition.field_178784_b.getIndex() == 3)
+                    if (movingobjectposition.sideHit == 3)
                     {
                         ++k;
                     }
 
-                    if (movingobjectposition.field_178784_b.getIndex() == 4)
+                    if (movingobjectposition.sideHit == 4)
                     {
                         --i;
                     }
 
-                    if (movingobjectposition.field_178784_b.getIndex() == 5)
+                    if (movingobjectposition.sideHit == 5)
                     {
                         ++i;
                     }
 
-                    if (!player.func_175151_a(new BlockPos(i, j, k), movingobjectposition.field_178784_b, container))
+                    if (!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, container))
                     {
                         return container;
                     }
 
-                    if (this.tryPlaceContainedLiquid(world, new BlockPos(i, j, k)) && !player.capabilities.isCreativeMode)
+                    if (this.tryPlaceContainedLiquid(world, fluidBlock, d0, d1, d2, i, j, k) && !player.capabilities.isCreativeMode)
                     {
                         this.drain(container, 1000, true);
 
                         return container;
                     }
+
                 }
 
                 return container;
@@ -502,28 +531,27 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
         return container;
     }
 
-    public boolean tryPlaceContainedLiquid(World world, BlockPos blockPos)
+    public boolean tryPlaceContainedLiquid(World par1World, Block block, double par2, double par4, double par6, int par8, int par9, int par10)
     {
-        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid()) //TODO Was func_149730_j() so check this!
+        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).func_149730_j())
         {
             return false;
-        } else if ((world.getBlockState(blockPos).getBlock().getMaterial() instanceof MaterialLiquid && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0))
+        } else if ((par1World.getBlock(par8, par9, par10).getMaterial() instanceof MaterialLiquid && (par1World.getBlockMetadata(par8, par9, par10) == 0)))
         {
             return false;
         } else
         {
-            Block block = world.getBlockState(blockPos).getBlock();
-            if ((block == Blocks.water || block == Blocks.flowing_water) && world.provider.func_177500_n())
+            if ((block == Blocks.water || block == Blocks.flowing_water) && par1World.provider.isHellWorld)
             {
-                world.playSoundEffect(blockPos.getX() + 0.5D, blockPos.getY() + 0.5D, blockPos.getZ() + 0.5D, "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+                par1World.playSoundEffect(par2 + 0.5D, par4 + 0.5D, par6 + 0.5D, "random.fizz", 0.5F, 2.6F + (par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.8F);
 
                 for (int l = 0; l < 8; ++l)
                 {
-                    world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) blockPos.getX() + Math.random(), (double) blockPos.getY() + Math.random(), (double) blockPos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D);
+                    par1World.spawnParticle("largesmoke", (double) par8 + Math.random(), (double) par9 + Math.random(), (double) par10 + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
             } else
             {
-                world.setBlockState(blockPos, block.getBlockState().getBaseState());
+                par1World.setBlock(par8, par9, par10, block, 0, 3);
             }
 
             return true;
@@ -550,11 +578,15 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                TileEntity tile = world.getTileEntity(movingobjectposition.func_178782_a());
+                int i = movingobjectposition.blockX;
+                int j = movingobjectposition.blockY;
+                int k = movingobjectposition.blockZ;
+
+                TileEntity tile = world.getTileEntity(i, j, k);
 
                 if (tile instanceof IFluidHandler)
                 {
-                    int amount = ((IFluidHandler) tile).fill(movingobjectposition.field_178784_b, fluid, true);
+                    int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(movingobjectposition.sideHit), fluid, true);
 
                     this.drain(container, amount, true);
                 }
@@ -577,17 +609,21 @@ public class SigilFluid extends BindableItems implements IFluidContainerItem, IS
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                TileEntity tile = world.getTileEntity(movingobjectposition.func_178782_a());
+                int i = movingobjectposition.blockX;
+                int j = movingobjectposition.blockY;
+                int k = movingobjectposition.blockZ;
+
+                TileEntity tile = world.getTileEntity(i, j, k);
 
                 if (tile instanceof IFluidHandler)
                 {
-                    FluidStack fluidAmount = ((IFluidHandler) tile).drain(movingobjectposition.field_178784_b, this.getCapacity(container), false);
+                    FluidStack fluidAmount = ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), this.getCapacity(container), false);
 
                     int amount = this.fill(container, fluidAmount, false);
 
                     if (amount > 0)
                     {
-                        ((IFluidHandler) tile).drain(movingobjectposition.field_178784_b, this.getCapacity(container), true);
+                        ((IFluidHandler) tile).drain(ForgeDirection.getOrientation(movingobjectposition.sideHit), this.getCapacity(container), true);
 
                         this.fill(container, fluidAmount, true);
                     }

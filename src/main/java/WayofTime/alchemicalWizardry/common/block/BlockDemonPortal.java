@@ -1,13 +1,14 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.demonVillage.tileEntity.TEDemonPortal;
 
 public class BlockDemonPortal extends BlockContainer
@@ -17,18 +18,27 @@ public class BlockDemonPortal extends BlockContainer
         super(Material.rock);
         setHardness(1000);
         setResistance(10000);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("demonPortal");
     }
     
     @Override
-    public void onBlockHarvested(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player)
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
     {
-    	TileEntity tile = world.getTileEntity(blockPos);
+        this.blockIcon = iconRegister.registerIcon("AlchemicalWizardry:DemonPortal");
+    }
+    
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player)
+    {
+    	TileEntity tile = world.getTileEntity(x, y, z);
 		if(tile instanceof TEDemonPortal)
 		{
 			((TEDemonPortal) tile).notifyPortalOfBreak();
 		}
 		
-    	super.onBlockHarvested(world, blockPos, blockState, player);
+    	super.onBlockHarvested(world, x, y, z, meta, player);
     }
 
     @Override
@@ -38,16 +48,16 @@ public class BlockDemonPortal extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
     {
         if (world.isRemote)
         {
             return false;
         }
 
-        TEDemonPortal tileEntity = (TEDemonPortal) world.getTileEntity(blockPos);
+        TEDemonPortal tileEntity = (TEDemonPortal) world.getTileEntity(x, y, z);
 
-        tileEntity.rightClickBlock(player, side.getIndex());
+        tileEntity.rightClickBlock(player, side);
 
         return false;
     }

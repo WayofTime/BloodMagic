@@ -2,23 +2,30 @@ package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAltarManipulator
-{    
+{
+    @SideOnly(Side.CLIENT)
+    private IIcon plateIcon;
+    
     public int conversionRate = 100; //LP / half heart
     public float activationPoint = 0.5f;
     public int tickRate = 20;
@@ -27,6 +34,14 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     public ItemBloodLetterPack()
     {
         super(ArmorMaterial.CHAIN, 0, 1);
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.plateIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodPack");
     }
 
     @Override
@@ -38,6 +53,12 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
         {
             par3List.add(StatCollector.translateToLocal("tooltip.lp.storedlp") + " " + this.getStoredLP(par1ItemStack));
         }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1)
+    {
+        return this.plateIcon;
     }
 
     @Override
@@ -63,9 +84,11 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                BlockPos pos = movingobjectposition.func_178782_a();
+                int x = movingobjectposition.blockX;
+                int y = movingobjectposition.blockY;
+                int z = movingobjectposition.blockZ;
 
-                TileEntity tile = world.getTileEntity(pos);
+                TileEntity tile = world.getTileEntity(x, y, z);
 
                 if (!(tile instanceof TEAltar))
                 {
@@ -83,7 +106,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
                 		amount -= filledAmount;
                 		this.setStoredLP(itemStack, amount);
                 		
-                		world.markBlockForUpdate(pos);
+                		world.markBlockForUpdate(x, y, z);
                 	}
                 }
             }
@@ -138,7 +161,10 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
+    {
+
+    }
 
     @Override
     public boolean isUpgrade()

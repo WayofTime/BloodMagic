@@ -1,11 +1,11 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.ice;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class SelfDefaultIce extends SelfSpellEffect
 {
@@ -17,17 +17,20 @@ public class SelfDefaultIce extends SelfSpellEffect
     @Override
     public void onSelfUse(World world, EntityPlayer player)
     {
-        BlockPos pos = player.getPosition();
+        Vec3 blockVector = SpellHelper.getEntityBlockVector(player);
+
+        int posX = (int) (blockVector.xCoord);
+        int posY = (int) (blockVector.yCoord);
+        int posZ = (int) (blockVector.zCoord);
 
         double yVel = 1 * (0.4 * this.powerUpgrades + 0.75);
         SpellHelper.setPlayerSpeedFromServer(player, player.motionX, yVel, player.motionZ);
 
         for (int i = 0; i < 2; i++)
         {
-        	BlockPos newPos = pos.add(0, i, 0);
-            if (world.isAirBlock(newPos))
+            if (world.isAirBlock(posX, posY + i, posZ))
             {
-                world.setBlockState(newPos, Blocks.ice.getDefaultState());
+                world.setBlock(posX, posY + i, posZ, Blocks.ice);
             }
         }
 

@@ -1,64 +1,64 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
+import WayofTime.alchemicalWizardry.common.NewPacketHandler;
+import WayofTime.alchemicalWizardry.common.block.IOrientable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import WayofTime.alchemicalWizardry.common.NewPacketHandler;
-import WayofTime.alchemicalWizardry.common.block.IOrientable;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class TEOrientable extends TileEntity implements IOrientable
 {
-    protected EnumFacing inputFace;
-    protected EnumFacing outputFace;
+    protected ForgeDirection inputFace;
+    protected ForgeDirection outputFace;
 
     public TEOrientable()
     {
-        this.inputFace = EnumFacing.DOWN;
-        this.outputFace = EnumFacing.UP;
+        this.inputFace = ForgeDirection.DOWN;
+        this.outputFace = ForgeDirection.UP;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        this.setInputDirection(EnumFacing.getFront(par1NBTTagCompound.getInteger("inputFace")));
-        this.setOutputDirection(EnumFacing.getFront(par1NBTTagCompound.getInteger("outputFace")));
+        this.setInputDirection(ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("inputFace")));
+        this.setOutputDirection(ForgeDirection.getOrientation(par1NBTTagCompound.getInteger("outputFace")));
     }
 
     @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("inputFace", TEOrientable.getIntForEnumFacing(this.getInputDirection()));
-        par1NBTTagCompound.setInteger("outputFace", TEOrientable.getIntForEnumFacing(this.getOutputDirection()));
+        par1NBTTagCompound.setInteger("inputFace", TEOrientable.getIntForForgeDirection(this.getInputDirection()));
+        par1NBTTagCompound.setInteger("outputFace", TEOrientable.getIntForForgeDirection(this.getOutputDirection()));
     }
 
     @Override
-    public EnumFacing getInputDirection()
+    public ForgeDirection getInputDirection()
     {
         return this.inputFace;
     }
 
     @Override
-    public EnumFacing getOutputDirection()
+    public ForgeDirection getOutputDirection()
     {
         return this.outputFace;
     }
 
     @Override
-    public void setInputDirection(EnumFacing direction)
+    public void setInputDirection(ForgeDirection direction)
     {
         this.inputFace = direction;
     }
 
     @Override
-    public void setOutputDirection(EnumFacing direction)
+    public void setOutputDirection(ForgeDirection direction)
     {
         this.outputFace = direction;
     }
 
-    public static int getIntForEnumFacing(EnumFacing direction)
+    public static int getIntForForgeDirection(ForgeDirection direction)
     {
         switch (direction)
         {
@@ -92,7 +92,7 @@ public class TEOrientable extends TileEntity implements IOrientable
     }
 
 
-    public boolean isSideRendered(EnumFacing side)
+    public boolean isSideRendered(ForgeDirection side)
     {
         if (side.equals(this.getInputDirection()) || side.equals(this.getOutputDirection()))
         {

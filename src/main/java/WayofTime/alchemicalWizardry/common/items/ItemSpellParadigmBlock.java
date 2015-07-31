@@ -20,12 +20,16 @@ public class ItemSpellParadigmBlock extends ItemBlock
         switch (itemstack.getItemDamage())
         {
             case 0:
+            {
                 name = "projectile";
                 break;
+            }
 
             case 1:
+            {
                 name = "self";
                 break;
+            }
 
             case 2:
                 name = "melee";

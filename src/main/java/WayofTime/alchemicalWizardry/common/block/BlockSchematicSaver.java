@@ -1,13 +1,11 @@
 package WayofTime.alchemicalWizardry.common.block;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESchematicSaver;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class BlockSchematicSaver extends BlockContainer
@@ -17,6 +15,8 @@ public class BlockSchematicSaver extends BlockContainer
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
+//        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        this.setBlockName("schematicSaver");
     }
 
     @Override
@@ -26,16 +26,16 @@ public class BlockSchematicSaver extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float what, float these, float are)
     {
         if (world.isRemote)
         {
             return false;
         }
 
-        TESchematicSaver tileEntity = (TESchematicSaver) world.getTileEntity(blockPos);
+        TESchematicSaver tileEntity = (TESchematicSaver) world.getTileEntity(x, y, z);
 
-        tileEntity.rightClickBlock();
+        tileEntity.rightClickBlock(player, side);
 
         return false;
     }

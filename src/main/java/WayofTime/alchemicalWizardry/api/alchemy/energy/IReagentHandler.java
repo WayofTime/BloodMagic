@@ -1,18 +1,18 @@
 package WayofTime.alchemicalWizardry.api.alchemy.energy;
 
-import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IReagentHandler
 {
-    int fill(EnumFacing from, ReagentStack resource, boolean doFill);
+    int fill(ForgeDirection from, ReagentStack resource, boolean doFill);
 
-    ReagentStack drain(EnumFacing from, ReagentStack resource, boolean doDrain);
+    ReagentStack drain(ForgeDirection from, ReagentStack resource, boolean doDrain);
 
-    ReagentStack drain(EnumFacing from, int maxDrain, boolean doDrain);
+    ReagentStack drain(ForgeDirection from, int maxDrain, boolean doDrain);
 
-    boolean canFill(EnumFacing from, Reagent reagent);
+    boolean canFill(ForgeDirection from, Reagent reagent);
 
-    boolean canDrain(EnumFacing from, Reagent reagent);
+    boolean canDrain(ForgeDirection from, Reagent reagent);
 
-    ReagentContainerInfo[] getContainerInfo(EnumFacing from);
+    ReagentContainerInfo[] getContainerInfo(ForgeDirection from);
 }

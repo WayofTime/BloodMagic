@@ -1,14 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.wind;
 
-import java.util.List;
-
+import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
+import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.spell.EntitySpellProjectile;
-import WayofTime.alchemicalWizardry.api.spell.ProjectileUpdateEffect;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+
+import java.util.List;
 
 public class ProjectileEnvironmentalWind extends ProjectileUpdateEffect
 {
@@ -37,12 +37,14 @@ public class ProjectileEnvironmentalWind extends ProjectileUpdateEffect
                     {
                         if (entity instanceof EntityItem)
                         {
-                            ((EntityItem) entity).setPickupDelay(0);
+                            ((EntityItem) entity).delayBeforeCanPickup = 0;
                             entity.onCollideWithPlayer((EntityPlayer) shooter);
                         }
                     }
                 }
             }
         }
+
+
     }
 }

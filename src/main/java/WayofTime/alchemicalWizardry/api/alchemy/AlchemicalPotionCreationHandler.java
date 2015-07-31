@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class AlchemicalPotionCreationHandler
 {
-    public static ArrayList<AlchemyPotionHandlerComponent> registeredPotionEffects = new ArrayList<AlchemyPotionHandlerComponent>();
+    public static ArrayList<AlchemyPotionHandlerComponent> registeredPotionEffects = new ArrayList();
 
     public static void addPotion(ItemStack itemStack, int potionID, int tickDuration)
     {

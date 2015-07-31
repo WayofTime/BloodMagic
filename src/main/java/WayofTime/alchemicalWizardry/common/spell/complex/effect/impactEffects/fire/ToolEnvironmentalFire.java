@@ -1,16 +1,14 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.fire;
 
-import java.util.Random;
-
+import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.OnBreakBlockEffect;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.tool.OnBreakBlockEffect;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class ToolEnvironmentalFire extends OnBreakBlockEffect
 {
@@ -20,7 +18,7 @@ public class ToolEnvironmentalFire extends OnBreakBlockEffect
     }
 
     @Override
-    public int onBlockBroken(ItemStack container, World world, EntityPlayer player, Block block, IBlockState state, BlockPos pos, EnumFacing sideBroken) 
+    public int onBlockBroken(ItemStack container, World world, EntityPlayer player, Block block, int meta, int x, int y, int z, ForgeDirection sideBroken)
     {
         int amount = 0;
         int cost = (int) (250 * (1 - 0.1f * powerUpgrades) * Math.pow(0.85, costUpgrades));
@@ -33,13 +31,11 @@ public class ToolEnvironmentalFire extends OnBreakBlockEffect
             {
                 for (int k = -radius; k <= radius; k++)
                 {
-                	BlockPos newPos = pos.add(i - sideBroken.getFrontOffsetX(), j, k - sideBroken.getFrontOffsetZ());
-                	IBlockState newState = world.getBlockState(newPos);
-                    Block blockAffected = newState.getBlock();
+                    Block blockAffected = world.getBlock(x + i - sideBroken.offsetX, y + j, z + k - sideBroken.offsetZ);
 
                     if ((new Random().nextFloat() <= chance) && (blockAffected == Blocks.gravel || blockAffected == Blocks.stone || blockAffected == Blocks.cobblestone))
                     {
-                        world.setBlockState(newPos, Blocks.lava.getDefaultState());
+                        world.setBlock(x + i - sideBroken.offsetX, y + j, z + k - sideBroken.offsetZ, Blocks.lava);
                         amount += cost;
                     }
                 }

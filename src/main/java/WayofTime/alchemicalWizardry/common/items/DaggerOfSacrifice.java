@@ -1,10 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items;
 
 import java.util.List;
-import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -17,26 +17,37 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
 
 import com.google.common.collect.Multimap;
 
-public class DaggerOfSacrifice extends BindableItems
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class DaggerOfSacrifice extends EnergyItems
 {
     public DaggerOfSacrifice()
     {
         super();
-        setMaxStackSize(1);
+        this.maxStackSize = 1;
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setEnergyUsed(100);
         setFull3D();
         setMaxDamage(100);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister iconRegister)
+    {
+        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DaggerOfSacrifice");
     }
 
     @Override
@@ -84,7 +95,7 @@ public class DaggerOfSacrifice extends BindableItems
 
             for (int i = 0; i < 8; i++)
             {
-                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 1, posX, posY, posZ);
+                SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.dimensionId, 1, posX, posY, posZ);
             }
 
             par2EntityLivingBase.setHealth(-1);
@@ -107,7 +118,7 @@ public class DaggerOfSacrifice extends BindableItems
     }
 
     @Override
-    public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
+    public float func_150893_a(ItemStack par1ItemStack, Block par2Block)
     {
         if (par2Block == Blocks.web)
         {
@@ -126,17 +137,19 @@ public class DaggerOfSacrifice extends BindableItems
     }
 
     @Override
-    public Multimap getAttributeModifiers(ItemStack itemStack)
+    public Multimap getItemAttributeModifiers()
     {
-        Multimap multimap = super.getAttributeModifiers(itemStack);
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(4186465, 46565), "Tool modifier", 1.0d, 0));
+        Multimap multimap = super.getItemAttributeModifiers();
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", 1.0d, 0));
         return multimap;
     }
 
     public boolean findAndNotifyAltarOfDemon(World world, EntityLivingBase sacrifice)
     {
-    	BlockPos pos = sacrifice.getPosition();
-        IBloodAltar altarEntity = this.getAltar(world, pos);
+        int posX = (int) Math.round(sacrifice.posX - 0.5f);
+        int posY = (int) sacrifice.posY;
+        int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
+        IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -150,8 +163,10 @@ public class DaggerOfSacrifice extends BindableItems
     
     public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount)
     {
-        BlockPos pos = sacrifice.getPosition();
-        IBloodAltar altarEntity = this.getAltar(world, pos);
+        int posX = (int) Math.round(sacrifice.posX - 0.5f);
+        int posY = (int) sacrifice.posY;
+        int posZ = (int) Math.round(sacrifice.posZ - 0.5f);
+        IBloodAltar altarEntity = this.getAltar(world, posX, posY, posZ);
 
         if (altarEntity == null)
         {
@@ -163,7 +178,7 @@ public class DaggerOfSacrifice extends BindableItems
         return true;
     }
 
-    public IBloodAltar getAltar(World world, BlockPos pos)
+    public IBloodAltar getAltar(World world, int x, int y, int z)
     {
         TileEntity tileEntity;
 
@@ -173,8 +188,7 @@ public class DaggerOfSacrifice extends BindableItems
             {
                 for (int k = -2; k <= 1; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
-                    tileEntity = world.getTileEntity(newPos);
+                    tileEntity = world.getTileEntity(i + x, k + y, j + z);
 
                     if ((tileEntity instanceof IBloodAltar))
                     {

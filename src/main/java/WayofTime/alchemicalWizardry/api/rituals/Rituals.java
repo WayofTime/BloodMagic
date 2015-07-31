@@ -6,16 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import WayofTime.alchemicalWizardry.api.event.RitualRunEvent;
 import WayofTime.alchemicalWizardry.api.event.RitualStopEvent;
 import WayofTime.alchemicalWizardry.api.renderer.MRSRenderer;
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class Rituals
 {
@@ -26,8 +24,8 @@ public class Rituals
 
     public final MRSRenderer customRenderer;
 
-    public static Map<String, Rituals> ritualMap = new HashMap<String, Rituals>();
-    public static List<String> keyList = new LinkedList<String>();
+    public static Map<String, Rituals> ritualMap = new HashMap();
+    public static List<String> keyList = new LinkedList();
 
     public Rituals(int crystalLevel, int actCost, RitualEffect effect, String name, MRSRenderer renderer)
     {
@@ -97,11 +95,11 @@ public class Rituals
         }
     }
 
-    public static String checkValidRitual(World world, BlockPos pos)
+    public static String checkValidRitual(World world, int x, int y, int z)
     {
         for (String key : ritualMap.keySet())
         {
-            if (checkRitualIsValid(world, pos, key))
+            if (checkRitualIsValid(world, x, y, z, key))
             {
                 return key;
             }
@@ -124,9 +122,9 @@ public class Rituals
         return false;
     }
 
-    public static boolean checkRitualIsValid(World world, BlockPos pos, String ritualID)
+    public static boolean checkRitualIsValid(World world, int x, int y, int z, String ritualID)
     {
-        int direction = Rituals.getDirectionOfRitual(world, pos, ritualID);
+        int direction = Rituals.getDirectionOfRitual(world, x, y, z, ritualID);
 
         return direction != -1;
     }
@@ -137,7 +135,7 @@ public class Rituals
      * 3 - SOUTH
      * 4 - WEST
      */
-    public static boolean checkDirectionOfRitualValid(World world, BlockPos pos, String ritualID, int direction)
+    public static boolean checkDirectionOfRitualValid(World world, int x, int y, int z, String ritualID, int direction)
     {
         List<RitualComponent> ritual = Rituals.getRitualList(ritualID);
 
@@ -146,18 +144,15 @@ public class Rituals
             return false;
         }
 
-        IBlockState testState;
         Block test;
         TileEntity te;
 
         for (RitualComponent rc : ritual)
         {
-        	BlockPos newPos = pos.add(rc.getX(direction), rc.getY(), rc.getZ(direction));
-            testState = world.getBlockState(newPos);
-            test = testState.getBlock();
-            te = world.getTileEntity(newPos);
+            test = world.getBlock(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
+            te = world.getTileEntity(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction));
 
-            if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, newPos, testState, rc.getStoneType()))
+            if (!(test instanceof IRitualStone && ((IRitualStone)test).isRuneType(world, x + rc.getX(direction), y, z+ rc.getZ(direction), world.getBlockMetadata(x + rc.getX(direction), y + rc.getY(), z + rc.getZ(direction)), rc.getStoneType()))
                     && !(te instanceof ITileRitualStone && ((ITileRitualStone)te).isRuneType(rc.getStoneType())))
             {
                 return false;
@@ -167,11 +162,11 @@ public class Rituals
         return true;
     }
 
-    public static int getDirectionOfRitual(World world, BlockPos pos, String ritualID)
+    public static int getDirectionOfRitual(World world, int x, int y, int z, String ritualID)
     {
         for (int i = 1; i <= 4; i++)
         {
-            if (Rituals.checkDirectionOfRitualValid(world, pos, ritualID, i))
+            if (Rituals.checkDirectionOfRitualValid(world, x, y, z, ritualID, i))
             {
                 return i;
             }

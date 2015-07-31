@@ -1,14 +1,13 @@
 package WayofTime.alchemicalWizardry.common.spell.complex.effect.impactEffects.earth;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.api.spell.SelfSpellEffect;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class SelfOffensiveEarth extends SelfSpellEffect
 {
-
     public SelfOffensiveEarth(int power, int potency, int cost)
     {
         super(power, potency, cost);
@@ -20,7 +19,11 @@ public class SelfOffensiveEarth extends SelfSpellEffect
         int horizRadius = this.powerUpgrades;
         int vertRadius = this.potencyUpgrades + 1;
 
-        BlockPos pos = player.getPosition();
+        Vec3 blockVec = SpellHelper.getEntityBlockVector(player);
+
+        int posX = (int) (blockVec.xCoord);
+        int posY = (int) (blockVec.yCoord);
+        int posZ = (int) (blockVec.zCoord);
 
         for (int i = -horizRadius; i <= horizRadius; i++)
         {
@@ -28,10 +31,9 @@ public class SelfOffensiveEarth extends SelfSpellEffect
             {
                 for (int k = -horizRadius; k <= horizRadius; k++)
                 {
-                	BlockPos newPos = pos.add(i, j, k);
                     if (world.rand.nextFloat() < 0.7f)
                     {
-                        SpellHelper.smashBlock(world, newPos);
+                        SpellHelper.smashBlock(world, posX + i, posY + j, posZ + k);
                     }
                 }
             }

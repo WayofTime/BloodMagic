@@ -46,7 +46,7 @@ public class TEPedestal extends TEInventory
     }
 
     @Override
-    public String getName()
+    public String getInventoryName()
     {
         return "TEPedestal";
     }
@@ -55,6 +55,13 @@ public class TEPedestal extends TEInventory
     public int getInventoryStackLimit()
     {
         return 1;
+    }
+
+    //Logic for the actual block is under here
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
     }
 
     public void setActive()
@@ -127,12 +134,13 @@ public class TEPedestal extends TEInventory
 
     public void onItemDeletion()
     {
-        worldObj.addWeatherEffect(new EntityLightningBolt(worldObj, pos.getX(), pos.getY(), pos.getZ()));
-        worldObj.markBlockForUpdate(pos);
+        worldObj.addWeatherEffect(new EntityLightningBolt(worldObj, xCoord, yCoord, zCoord));
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 
         for (int i = 0; i < 16; i++)
         {
-            SpellHelper.sendIndexedParticleToAllAround(worldObj, pos, 20, worldObj.provider.getDimensionId(), 2, pos);
+            SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
         }
     }
+
 }

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.ICatalyst;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,7 @@ public class PowerCatalyst extends Item implements ICatalyst
     {
         super();
         this.catalystStrength = catalystStrength;
+        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override

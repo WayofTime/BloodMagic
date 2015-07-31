@@ -1,22 +1,19 @@
 package WayofTime.alchemicalWizardry.common.tileEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.util.Constants;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
 
-public class TEBelljar extends TEReagentConduit
+public class TEBellJar extends TEReagentConduit
 {
-    public TEBelljar()
+    public TEBellJar()
     {
         super(1, 16000);
         this.maxConnextions = 1;
@@ -39,7 +36,7 @@ public class TEBelljar extends TEReagentConduit
 
     public static ReagentContainerInfo[] getContainerInfoFromItem(ItemStack stack)
     {
-        if (stack != null && stack.getItem() instanceof ItemBlock && ModBlocks.blockCrystalBelljar == ((ItemBlock) stack.getItem()).getBlock())
+        if (stack != null && stack.getItem() instanceof ItemBlock && ModBlocks.blockCrystalBelljar == ((ItemBlock) stack.getItem()).field_150939_a)
         {
             NBTTagCompound tag = stack.getTagCompound();
             if (tag != null)
@@ -101,19 +98,24 @@ public class TEBelljar extends TEReagentConduit
     }
 
     @Override
-    public void update()
+    public void updateEntity()
     {
-    	super.update();
-    	
+        super.updateEntity();
+
         if (hasChanged == 1)
         {
-        	for(EnumFacing facing : EnumFacing.VALUES)
-        	{
-        		BlockPos newPos = pos.offset(facing);
-        		IBlockState state = worldObj.getBlockState(newPos);
-        		Block block = state.getBlock();
-        		block.onNeighborBlockChange(worldObj, newPos, state, this.getBlockType());
-        	}
+            Block block = worldObj.getBlock(xCoord + 1, yCoord, zCoord);
+            block.onNeighborBlockChange(worldObj, xCoord + 1, yCoord, zCoord, block);
+            block = worldObj.getBlock(xCoord - 1, yCoord, zCoord);
+            block.onNeighborBlockChange(worldObj, xCoord - 1, yCoord, zCoord, block);
+            block = worldObj.getBlock(xCoord, yCoord + 1, zCoord);
+            block.onNeighborBlockChange(worldObj, xCoord, yCoord + 1, zCoord, block);
+            block = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
+            block.onNeighborBlockChange(worldObj, xCoord, yCoord - 1, zCoord, block);
+            block = worldObj.getBlock(xCoord, yCoord, zCoord + 1);
+            block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord + 1, block);
+            block = worldObj.getBlock(xCoord, yCoord, zCoord - 1);
+            block.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord - 1, block);
         }
     }
 }
