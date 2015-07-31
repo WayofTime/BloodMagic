@@ -88,7 +88,7 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheAssassin;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheBridge;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilPackRat;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilCompress;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilVoid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilWater;
@@ -349,7 +349,7 @@ public class ModItems
         
         itemBloodPack = registerItem(new ItemBloodLetterPack(), "blood_pack");
         itemHarvestSigil = registerItem(new SigilHarvest(), "harvest_sigil");
-        itemCompressionSigil = registerItem(new SigilPackRat(), "compression_sigil");
+        itemCompressionSigil = registerItem(new SigilCompress(), "compression_sigil");
         itemAssassinSigil = registerItem(new SigilOfTheAssassin(), "assassin_sigil");
         
         boundHelmetWater = registerItem(new OmegaArmourWater(0), "bound_helmet_water");
@@ -384,17 +384,17 @@ public class ModItems
     {
         item.setUnlocalizedName(unlocalizedName);
         item.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        itemsNotToBeRegistered.clear();
+//        itemsNotToBeRegistered.clear();
 
-        for (String unlocName : BloodMagicConfiguration.itemsToBeDisabled)
+//        for (String unlocName : BloodMagicConfiguration.itemsToBeDisabled)
         {
-            if (unlocName.equals(unlocalizedName))
+//            if (unlocName.equals(unlocalizedName))
             {
-                itemsNotToBeRegistered.add(unlocName);
+//                itemsNotToBeRegistered.add(unlocName);
             }
         }
 
-        if (!itemsNotToBeRegistered.contains(unlocalizedName))
+//        if (!itemsNotToBeRegistered.contains(unlocalizedName))
         {
             GameRegistry.registerItem(item, unlocalizedName);
         }

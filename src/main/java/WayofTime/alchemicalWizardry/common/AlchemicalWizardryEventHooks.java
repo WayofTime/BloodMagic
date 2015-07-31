@@ -58,14 +58,13 @@ import WayofTime.alchemicalWizardry.common.omega.ReagentRegenConfiguration;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
-
 public class AlchemicalWizardryEventHooks
 {
-	public static Map<String, Boolean> playerFlightBuff = new HashMap();
-	public static List<String> playersWith1Step = new ArrayList();
+	public static Map<String, Boolean> playerFlightBuff = new HashMap<String, Boolean>();
+	public static List<String> playersWith1Step = new ArrayList<String>();
 
-	public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
-	public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
+	public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap<Integer, List<CoordAndRange>>();
+	public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap<Integer, List<CoordAndRange>>();
 	
 	public static Random rand = new Random();
 

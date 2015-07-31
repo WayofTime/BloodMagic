@@ -19,9 +19,7 @@ public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigi
     public SigilOfWind()
     {
         super();
-        this.maxStackSize = 1;
         setEnergyUsed(250);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -87,9 +85,9 @@ public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigi
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (this.getActivated(par1ItemStack))
         {
-            par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 2, 1));
+            par3EntityPlayer.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 2, 1, true, false));
         }
 
         if (par2World.getWorldTime() % 200 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par1ItemStack.getTagCompound().getBoolean("isActive"))
@@ -112,7 +110,7 @@ public class SigilOfWind extends SigilToggleable implements ArmourUpgrade, ISigi
             itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 3, 1));
+        player.addPotionEffect(new PotionEffect(AlchemicalWizardry.customPotionProjProt.id, 3, 1, true, false));
     }
 
     @Override

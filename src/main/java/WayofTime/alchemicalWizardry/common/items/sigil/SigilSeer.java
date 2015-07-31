@@ -1,13 +1,9 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,15 +18,7 @@ public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil
     public SigilSeer()
     {
         super();
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SeerSigil");
+        setMaxStackSize(1);
     }
 
     @Override
@@ -63,10 +51,7 @@ public class SigilSeer extends Item implements IHolding, ArmourUpgrade, ISigil
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
-    {
-    }
-
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
     @Override
     public boolean isUpgrade()
     {

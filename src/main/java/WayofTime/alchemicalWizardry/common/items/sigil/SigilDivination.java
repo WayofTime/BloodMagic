@@ -4,18 +4,15 @@ import java.util.List;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.IReagentHandler;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
@@ -23,23 +20,12 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilDivination extends Item implements ArmourUpgrade, IReagentManipulator, IBindable, ISigil
+public class SigilDivination extends BindableItems implements ArmourUpgrade, IReagentManipulator, IBindable, ISigil
 {
     public SigilDivination()
     {
         super();
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:DivinationSigil");
     }
 
     @Override
@@ -89,11 +75,7 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
         {
             if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
             {
-                int x = movingobjectposition.blockX;
-                int y = movingobjectposition.blockY;
-                int z = movingobjectposition.blockZ;
-
-                TileEntity tile = par2World.getTileEntity(x, y, z);
+                TileEntity tile = par2World.getTileEntity(movingobjectposition.func_178782_a());
 
                 if (!(tile instanceof IReagentHandler))
                 {
@@ -104,7 +86,7 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
 
                 IReagentHandler relay = (IReagentHandler) tile;
 
-                ReagentContainerInfo[] infoList = relay.getContainerInfo(ForgeDirection.UNKNOWN);
+                ReagentContainerInfo[] infoList = relay.getContainerInfo(EnumFacing.DOWN);
                 if (infoList != null)
                 {
                     for (ReagentContainerInfo info : infoList)
@@ -122,10 +104,7 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
-    {
-    }
-
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
     @Override
     public boolean isUpgrade()
     {

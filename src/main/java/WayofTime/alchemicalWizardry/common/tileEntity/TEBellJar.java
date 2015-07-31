@@ -14,9 +14,9 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainer;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 
-public class TEBellJar extends TEReagentConduit
+public class TEBelljar extends TEReagentConduit
 {
-    public TEBellJar()
+    public TEBelljar()
     {
         super(1, 16000);
         this.maxConnextions = 1;

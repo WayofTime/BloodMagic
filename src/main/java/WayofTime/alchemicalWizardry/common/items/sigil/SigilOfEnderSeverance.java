@@ -5,34 +5,23 @@ import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfEnderSeverance extends BindableItems implements IHolding, ISigil
+public class SigilOfEnderSeverance extends SigilToggleable implements IHolding, ISigil
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
-
     public SigilOfEnderSeverance()
     {
         super();
-        this.maxStackSize = 1;
         setEnergyUsed(200);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -42,7 +31,7 @@ public class SigilOfEnderSeverance extends BindableItems implements IHolding, IS
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+            if (this.getActivated(par1ItemStack))
             {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
@@ -51,47 +40,6 @@ public class SigilOfEnderSeverance extends BindableItems implements IHolding, IS
             }
 
             par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSeverance_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSeverance_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:SigilOfSeverance_deactivated");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
-        {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (par1 == 1)
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
         }
     }
 
@@ -109,9 +57,9 @@ public class SigilOfEnderSeverance extends BindableItems implements IHolding, IS
         }
 
         NBTTagCompound tag = par1ItemStack.getTagCompound();
-        tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
+        this.setActivated(par1ItemStack, !(this.getActivated(par1ItemStack)));
 
-        if (tag.getBoolean("isActive"))
+        if (this.getActivated(par1ItemStack))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
@@ -120,7 +68,7 @@ public class SigilOfEnderSeverance extends BindableItems implements IHolding, IS
             {
                 if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
-                	tag.setBoolean("isActive", false);
+                	this.setActivated(par1ItemStack, false);
                 }
             }
         } else
@@ -146,7 +94,7 @@ public class SigilOfEnderSeverance extends BindableItems implements IHolding, IS
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (this.getActivated(par1ItemStack))
         {
             List<Entity> list = SpellHelper.getEntitiesInRange(par2World, par3Entity.posX, par3Entity.posY, par3Entity.posZ, 4.5, 4.5);
             for (Entity entity : list)
@@ -157,17 +105,15 @@ public class SigilOfEnderSeverance extends BindableItems implements IHolding, IS
                 }
             }
         }
-        if (par2World.getWorldTime() % 200 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (par2World.getWorldTime() % 200 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && this.getActivated(par1ItemStack))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
-                	par1ItemStack.getTagCompound().setBoolean("isActive", false);
+                	this.setActivated(par1ItemStack, false);
                 }
             }
         }
-
-        return;
     }
 }

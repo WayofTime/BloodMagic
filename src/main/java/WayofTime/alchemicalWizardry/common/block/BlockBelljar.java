@@ -34,7 +34,7 @@ public class BlockBelljar extends BlockContainer
         setResistance(5.0F);
     }
 
-    
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {

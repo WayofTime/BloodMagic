@@ -1,43 +1,33 @@
 package WayofTime.alchemicalWizardry.common.items.sigil;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.List;
 
-public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigil
+public class SigilOfGrowth extends SigilToggleable implements ArmourUpgrade, ISigil
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
     private int tickDelay = 100;
 
     public SigilOfGrowth()
     {
         super();
-        this.maxStackSize = 1;
         setEnergyUsed(150);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -48,7 +38,7 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+            if (this.getActivated(par1ItemStack))
             {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
@@ -61,58 +51,17 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
+    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:GrowthSigil_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:GrowthSigil_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:GrowthSigil_deactivated");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
+        if (BindableItems.checkAndSetItemOwner(stack, playerIn))
         {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (par1 == 1)
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-    {
-        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer))
-        {
-            if (applyBonemeal(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer))
+            if (applyBonemeal(stack, worldIn, pos, playerIn))
             {
-                BindableItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed());
+                BindableItems.syphonBatteries(stack, playerIn, getEnergyUsed());
 
-                if (par3World.isRemote)
+                if (worldIn.isRemote)
                 {
-                    par3World.playAuxSFX(2005, par4, par5, par6, 0);
+                    worldIn.playAuxSFX(2005, pos, 0);
                     return true;
                 }
 
@@ -168,13 +117,13 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (this.getActivated(par1ItemStack))
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
                 if(!BindableItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
                 {
-                	par1ItemStack.getTagCompound().setBoolean("isActive", false);
+                	this.setActivated(par1ItemStack, false);
                 }
             }
             int range = 3;
@@ -189,14 +138,13 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
                 {
                     for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                     {
-                        Block block = par2World.getBlock(ix, iy, iz);
-
+                        IBlockState block = par2World.getBlockState(new BlockPos(ix, iy, iz));
 
                         if (block instanceof IPlantable || block instanceof IGrowable)
                         {
                             if (par2World.rand.nextInt(50) == 0)
                             {
-                                block.updateTick(par2World, ix, iy, iz, par2World.rand);
+                                block.getBlock().updateTick(par2World, new BlockPos(ix, iy, iz), block, par2World.rand);
                             }
                         }
                     }
@@ -205,17 +153,17 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
         }
     }
 
-    public static boolean applyBonemeal(ItemStack p_150919_0_, World p_150919_1_, int p_150919_2_, int p_150919_3_, int p_150919_4_, EntityPlayer player)
+    public static boolean applyBonemeal(ItemStack p_179234_0_, World world, BlockPos blockPos, EntityPlayer player)
     {
-        Block block = p_150919_1_.getBlock(p_150919_2_, p_150919_3_, p_150919_4_);
+        IBlockState block = world.getBlockState(blockPos);
 
-        BonemealEvent event = new BonemealEvent(player, p_150919_1_, block, p_150919_2_, p_150919_3_, p_150919_4_);
+        BonemealEvent event = new BonemealEvent(player, world, blockPos, block);
         if (MinecraftForge.EVENT_BUS.post(event))
         {
             return false;
         }
 
-        if (event.getResult() == Result.ALLOW)
+        if (event.getResult() == Event.Result.ALLOW)
         {
             return true;
         }
@@ -224,16 +172,14 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
         {
             IGrowable igrowable = (IGrowable) block;
 
-            if (igrowable.func_149851_a(p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_, p_150919_1_.isRemote))
+            if (igrowable.isStillGrowing(world, blockPos, block, world.isRemote))
             {
-                if (!p_150919_1_.isRemote)
+                if (!world.isRemote)
                 {
-                    if (igrowable.func_149852_a(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_))
+                    if (igrowable.canUseBonemeal(world, world.rand, blockPos, block))
                     {
-                        igrowable.func_149853_b(p_150919_1_, p_150919_1_.rand, p_150919_2_, p_150919_3_, p_150919_4_);
+                        igrowable.grow(world, world.rand, blockPos, block);
                     }
-
-
                 }
 
                 return true;
@@ -263,13 +209,13 @@ public class SigilOfGrowth extends BindableItems implements ArmourUpgrade, ISigi
             {
                 for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                 {
-                    Block block = world.getBlock(ix, iy, iz);
+                    IBlockState block = world.getBlockState(new BlockPos(ix, iy, iz));
 
                     if (block instanceof IPlantable)
                     {
                         if (world.rand.nextInt(100) == 0)
                         {
-                            block.updateTick(world, ix, iy, iz, world.rand);
+                            block.getBlock().updateTick(world, new BlockPos(ix, iy, iz), block, world.rand);
                         }
                     }
                 }

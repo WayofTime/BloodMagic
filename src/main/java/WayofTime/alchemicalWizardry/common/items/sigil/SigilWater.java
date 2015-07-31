@@ -5,7 +5,7 @@ import java.util.List;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBucket;
@@ -14,17 +14,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
 {
@@ -34,9 +33,7 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
     public SigilWater()
     {
         super(Blocks.water);
-        this.maxStackSize = 1;
         setEnergyUsed(100);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -46,13 +43,6 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
         {
             stack.setTagCompound(new NBTTagCompound());
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:WaterSigil");
     }
 
     @Override
@@ -72,6 +62,7 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
         }
     }
 
+    @Override
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
@@ -81,27 +72,27 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
     }
     
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote || !BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return false;
         }
         
-        if (!world.canMineBlock(player, x, y, z))
+        if (!world.canMineBlockBody(player, blockPos))
         {
             return false;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof IFluidHandler)
         {
             FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
-            int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, false);
+            int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
             if (amount > 0 && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
-                ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, true);
+                ((IFluidHandler) tile).fill(side, fluid, true);
             }
 
             return false;
@@ -111,48 +102,50 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
             return false;
         }
 
+        int x = blockPos.getX();
+        int y = blockPos.getY();
+        int z = blockPos.getZ();
         {
-            if (side == 0)
+            if (side.getIndex() == 0)
             {
                 --y;
             }
 
-            if (side == 1)
+            if (side.getIndex() == 1)
             {
                 ++y;
             }
 
-            if (side == 2)
+            if (side.getIndex() == 2)
             {
                 --z;
             }
 
-            if (side == 3)
+            if (side.getIndex() == 3)
             {
                 ++z;
             }
 
-            if (side == 4)
+            if (side.getIndex() == 4)
             {
                 --x;
             }
 
-            if (side == 5)
+            if (side.getIndex() == 5)
             {
                 ++x;
             }
 
-            if (!player.canPlayerEdit(x, y, z, side, stack))
+            if (!player.func_175151_a(new BlockPos(x, y, z), side, stack)) // was canPlayerEdit
             {
                 return false;
             }
 
-            if(this.canPlaceContainedLiquid(world, x, y, z, x, y, z) && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
+            if(this.canPlaceContainedLiquid(world, new BlockPos(x, y, z)) && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
-            	return this.tryPlaceContainedLiquid(world, x, y, z, x, y, z);
+            	return this.func_180616_a(world, new BlockPos(x, y, z));
             }
         }
-            
 
         return false;
         
@@ -161,40 +154,56 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
     /**
      * Attempts to place the liquid contained inside the bucket.
      */
-    public boolean tryPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9, int par10)
+    public boolean func_180616_a(World world, BlockPos blockPos) //was tryPlaceContainedLiquid
     {
-        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
+        if (this.isFull == Blocks.air)
         {
             return false;
-        } else if ((par1World.getBlock(par8, par9, par10) == Blocks.water || par1World.getBlock(par8, par9, par10) == Blocks.flowing_water) && par1World.getBlockMetadata(par8, par9, par10) == 0)
+        }
+        else
         {
-            return false;
-        } else
-        {
-            if (par1World.provider.isHellWorld)
-            {
-                par1World.playSoundEffect(par2 + 0.5D, par4 + 0.5D, par6 + 0.5D, "random.fizz", 0.5F, 2.6F + (par1World.rand.nextFloat() - par1World.rand.nextFloat()) * 0.8F);
+            Material material = world.getBlockState(blockPos).getBlock().getMaterial();
+            boolean flag = !material.isSolid();
 
-                for (int l = 0; l < 8; ++l)
-                {
-                    par1World.spawnParticle("largesmoke", (double) par8 + Math.random(), (double) par9 + Math.random(), (double) par10 + Math.random(), 0.0D, 0.0D, 0.0D);
-                }
-            } else
+            if (!world.isAirBlock(blockPos) && !flag)
             {
-                par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
-                par1World.markBlockForUpdate(par8, par9, par10);
+                return false;
             }
+            else
+            {
+                if (world.provider.func_177500_n() && this.isFull == Blocks.flowing_water)
+                {
+                    int i = blockPos.getX();
+                    int j = blockPos.getY();
+                    int k = blockPos.getZ();
+                    world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
-            return true;
+                    for (int l = 0; l < 8; ++l)
+                    {
+                        world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)i + Math.random(), (double)j + Math.random(), (double)k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
+                    }
+                }
+                else
+                {
+                    if (!world.isRemote && flag && !material.isLiquid())
+                    {
+                        world.destroyBlock(blockPos, true);
+                    }
+
+                    world.setBlockState(blockPos, this.isFull.getDefaultState(), 3);
+                }
+
+                return true;
+            }
         }
     }
     
-    public boolean canPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9, int par10)
+    public boolean canPlaceContainedLiquid(World world, BlockPos blockPos)
     {
-        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
+        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid())
         {
             return false;
-        } else if ((par1World.getBlock(par8, par9, par10) == Blocks.water || par1World.getBlock(par8, par9, par10) == Blocks.flowing_water) && par1World.getBlockMetadata(par8, par9, par10) == 0)
+        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
         {
             return false;
         } else
@@ -216,7 +225,7 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 9, true));
+        player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 9));
     }
 
     @Override
