@@ -3,35 +3,24 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgrade, ISigil
+public class SigilHarvest extends SigilToggleable implements IHolding, ArmourUpgrade, ISigil
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon activeIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon passiveIcon;
-
     public SigilHarvest()
     {
         super();
-        this.maxStackSize = 1;
         setEnergyUsed(500);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -41,7 +30,7 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+            if (this.getActivated(par1ItemStack))
             {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else
@@ -50,47 +39,6 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
             }
 
             par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_deactivated");
-        this.activeIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_activated");
-        this.passiveIcon = iconRegister.registerIcon("AlchemicalWizardry:HarvestGoddessSigil_deactivated");
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
-    {
-        if (stack.getTagCompound() == null)
-        {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-
-        NBTTagCompound tag = stack.getTagCompound();
-
-        if (tag.getBoolean("isActive"))
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (par1 == 1)
-        {
-            return this.activeIcon;
-        } else
-        {
-            return this.passiveIcon;
         }
     }
 
@@ -108,9 +56,9 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
         }
 
         NBTTagCompound tag = par1ItemStack.getTagCompound();
-        tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
+        this.setActivated(par1ItemStack, !(this.getActivated(par1ItemStack)));
 
-        if (tag.getBoolean("isActive"))
+        if (this.getActivated(par1ItemStack))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
@@ -119,7 +67,7 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
             {
                 if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
-                	tag.setBoolean("isActive", false);
+                	this.setActivated(par1ItemStack, false);
                 }
             }
         } else
@@ -145,7 +93,7 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
             par1ItemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (this.getActivated(par1ItemStack))
         {
         	int range = 3;
             int verticalRange = 1;
@@ -159,18 +107,18 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
                 {
                     for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                     {
-                        HarvestRegistry.harvestBlock(par2World, ix, iy, iz);
+                        HarvestRegistry.harvestBlock(par2World, new BlockPos(ix, iy, iz));
                     }
                 }
             }
         }
-        if (par2World.getWorldTime() % 200 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && par1ItemStack.getTagCompound().getBoolean("isActive"))
+        if (par2World.getWorldTime() % 200 == par1ItemStack.getTagCompound().getInteger("worldTimeDelay") && this.getActivated(par1ItemStack))
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
                 if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
-                	par1ItemStack.getTagCompound().setBoolean("isActive", false);
+                	this.setActivated(par1ItemStack, false);
                 }
             }
         }
@@ -195,7 +143,7 @@ public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgra
             {
                 for (int iy = posY - verticalRange; iy <= posY + verticalRange; iy++)
                 {
-                    HarvestRegistry.harvestBlock(world, ix, iy, iz);
+                    HarvestRegistry.harvestBlock(world, new BlockPos(ix, iy, iz));
                 }
             }
         }

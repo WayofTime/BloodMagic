@@ -8,23 +8,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import codechicken.lib.render.TextureUtils.IIconRegister;
 
 public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
 {
     public SigilAir()
     {
         super();
-        this.maxStackSize = 1;
-        //setMaxDamage(1000);
         setEnergyUsed(50);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -36,13 +30,6 @@ public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
         {
             par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:AirSigil");
     }
 
     @Override
@@ -121,8 +108,7 @@ public class SigilAir extends BindableItems implements ArmourUpgrade, ISigil
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player,
-                               ItemStack thisItemStack)
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
         // TODO Auto-generated method stub
         player.fallDistance = 0;

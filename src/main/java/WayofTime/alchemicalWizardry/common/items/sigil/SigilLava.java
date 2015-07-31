@@ -5,7 +5,6 @@ import java.util.List;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESocket;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -14,18 +13,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.common.items.Orb;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
 {
@@ -38,16 +35,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
     public SigilLava()
     {
         super(Blocks.lava);
-        this.maxStackSize = 1;
         setEnergyUsed(1000);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:LavaSigil");
     }
 
     @Override
@@ -80,27 +68,27 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
     }
     
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote || !BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return false;
         }
         
-        if (!world.canMineBlock(player, x, y, z))
+        if (!world.canMineBlockBody(player, blockPos))
         {
             return false;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof IFluidHandler)
         {
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
-            int amount = ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, false);
+            int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
             if (amount > 0 && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
-                ((IFluidHandler) tile).fill(ForgeDirection.getOrientation(side), fluid, true);
+                ((IFluidHandler) tile).fill(side, fluid, true);
             }
 
             return false;
@@ -111,74 +99,79 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
         }
 
         {
-            if (side == 0)
+            int x = blockPos.getX();
+            int y = blockPos.getY();
+            int z = blockPos.getZ();
+
+            if (side.getIndex() == 0)
             {
                 --y;
             }
 
-            if (side == 1)
+            if (side.getIndex() == 1)
             {
                 ++y;
             }
 
-            if (side == 2)
+            if (side.getIndex() == 2)
             {
                 --z;
             }
 
-            if (side == 3)
+            if (side.getIndex() == 3)
             {
                 ++z;
             }
 
-            if (side == 4)
+            if (side.getIndex() == 4)
             {
                 --x;
             }
 
-            if (side == 5)
+            if (side.getIndex() == 5)
             {
                 ++x;
             }
 
-            if (!player.canPlayerEdit(x, y, z, side, stack))
+            if (!player.func_175151_a(new BlockPos(x, y, z), side, stack))
             {
                 return false;
             }
 
-            if(this.canPlaceContainedLiquid(world, x, y, z, x, y, z) && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
+            if(this.canPlaceContainedLiquid(world, new BlockPos(x, y, z)) && BindableItems.syphonBatteries(stack, player, getEnergyUsed()))
             {
-            	return this.tryPlaceContainedLiquid(world, x, y, z, x, y, z);
+            	return this.func_180616_a(world, new BlockPos(x, y, z));
             }
         }
 
         return false;
     }
 
+    @Override
     /**
      * Attempts to place the liquid contained inside the bucket.
      */
-    public boolean tryPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9, int par10)
+    public boolean func_180616_a(World par1World, BlockPos blockPos)
     {
-        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
+        if (!par1World.isAirBlock(blockPos) && par1World.getBlockState(blockPos).getBlock().getMaterial().isSolid())
         {
             return false;
-        } else if ((par1World.getBlock(par8, par9, par10) == Blocks.lava || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava) && par1World.getBlockMetadata(par8, par9, par10) == 0)
+        } else if ((par1World.getBlockState(blockPos).getBlock() == Blocks.lava || par1World.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && par1World.getBlockState(blockPos).getBlock().getMetaFromState(par1World.getBlockState(blockPos)) == 0)
         {
             return false;
         } else
         {
-            par1World.setBlock(par8, par9, par10, this.isFull, 0, 3);
+            par1World.setBlockState(blockPos, this.isFull.getBlockState().getBaseState());
             return true;
         }
     }
     
-    public boolean canPlaceContainedLiquid(World par1World, double par2, double par4, double par6, int par8, int par9, int par10)
+    public boolean canPlaceContainedLiquid(World par1World, BlockPos blockPos)
     {
-        if (!par1World.isAirBlock(par8, par9, par10) && par1World.getBlock(par8, par9, par10).getMaterial().isSolid())
+        if (!par1World.isAirBlock(blockPos) && par1World.getBlockState(blockPos).getBlock().getMaterial().isSolid())
         {
             return false;
-        } else if ((par1World.getBlock(par8, par9, par10) == Blocks.lava || par1World.getBlock(par8, par9, par10) == Blocks.flowing_lava) && par1World.getBlockMetadata(par8, par9, par10) == 0)
+        } else if ((par1World.getBlockState(blockPos).getBlock() == Blocks.lava || par1World.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && par1World.getBlockState(blockPos).getBlock().getMetaFromState(par1World.getBlockState(blockPos)) == 0)
         {
             return false;
         } else
@@ -232,7 +225,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 9, true));
+        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 9, true, false));
         player.extinguish();
     }
 

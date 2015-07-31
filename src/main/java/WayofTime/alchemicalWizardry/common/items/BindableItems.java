@@ -20,6 +20,7 @@ public class BindableItems extends Item implements IBindable
     public BindableItems()
     {
         super();
+        setMaxStackSize(1);
     }
 
     protected void setEnergyUsed(int par1int)

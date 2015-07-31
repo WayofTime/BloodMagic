@@ -17,15 +17,14 @@ import WayofTime.alchemicalWizardry.common.items.BindableItems;
 
 public class SigilOfHolding extends BindableItems
 {
-    private static int invSize = 4;
+    private static int invSize = 5;
 
     private static final String NBT_CURRENT_SIGIL = "CurrentSigil";
 
     public SigilOfHolding()
     {
         super();
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setMaxStackSize(1);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class SigilOfHolding extends BindableItems
                 par3List.add(StatCollector.translateToLocal("tooltip.item.currentitem") + " " + item.getDisplayName());
             }
 
-            for (int i = 0; i <= invSize; i++)
+            for (int i = 0; i < invSize; i++)
             {
                 if (inv[i] != null)
                 {
@@ -208,7 +207,7 @@ public class SigilOfHolding extends BindableItems
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             int slot = tag.getByte("Slot");
 
-            if (slot >= 0 && slot <= invSize)
+            if (slot >= 0 && slot < invSize)
             {
                 inv[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
@@ -228,7 +227,7 @@ public class SigilOfHolding extends BindableItems
 
         NBTTagList itemList = new NBTTagList();
 
-        for (int i = 0; i <= invSize; i++)
+        for (int i = 0; i < invSize; i++)
         {
             if (inventory[i] != null)
             {
@@ -269,7 +268,7 @@ public class SigilOfHolding extends BindableItems
             return;
         }
 
-        for (int i = 0; i <= invSize; i++)
+        for (int i = 0; i < invSize; i++)
         {
             if (inv[i] == null)
             {

@@ -3,113 +3,105 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import java.util.List;
 
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityBloodLightProjectile;
 import WayofTime.alchemicalWizardry.common.items.BindableItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class SigilBloodLight extends BindableItems implements IHolding, ArmourUpgrade, ISigil
 {
     public SigilBloodLight()
     {
         super();
-        this.maxStackSize = 1;
         setEnergyUsed(10);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
         par3List.add(StatCollector.translateToLocal("tooltip.bloodlightsigil.desc"));
 
-        if (!(par1ItemStack.getTagCompound() == null))
+        if (!(itemStack.getTagCompound() == null))
         {
-            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + par1ItemStack.getTagCompound().getString("ownerName"));
+            par3List.add(StatCollector.translateToLocal("tooltip.owner.currentowner") + " " + itemStack.getTagCompound().getString("ownerName"));
         }
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        this.itemIcon = iconRegister.registerIcon("AlchemicalWizardry:BloodLightSigil");
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-    {
-        if(!BindableItems.checkAndSetItemOwner(par1ItemStack, par2EntityPlayer) || !BindableItems.syphonBatteries(par1ItemStack, par2EntityPlayer, getEnergyUsed()))
+        if(!BindableItems.checkAndSetItemOwner(itemStack, player) || !BindableItems.syphonBatteries(itemStack, player, getEnergyUsed()))
         {
         	return true;
         }
 
-        if (par3World.isRemote)
+        if (world.isRemote)
         {
             return true;
         }
 
-        if (par7 == 0 && par3World.isAirBlock(par4, par5 - 1, par6))
+        IBlockState light = ModBlocks.blockBloodLight.getBlockState().getBaseState();
+
+        if (side.getIndex() == 0 && world.isAirBlock(blockPos.add(0, -1, 0)))
         {
-            par3World.setBlock(par4, par5 - 1, par6, ModBlocks.blockBloodLight);
+            world.setBlockState(blockPos.add(0, -1, 0), light);
         }
 
-        if (par7 == 1 && par3World.isAirBlock(par4, par5 + 1, par6))
+        if (side.getIndex() == 1 && world.isAirBlock(blockPos.add(0, 1, 0)))
         {
-            par3World.setBlock(par4, par5 + 1, par6, ModBlocks.blockBloodLight);
+            world.setBlockState(blockPos.add(0, 1, 0), light);
         }
 
-        if (par7 == 2 && par3World.isAirBlock(par4, par5, par6 - 1))
+        if (side.getIndex() == 2 && world.isAirBlock(blockPos.add(0, 0, -1)))
         {
-            par3World.setBlock(par4, par5, par6 - 1, ModBlocks.blockBloodLight);
+            world.setBlockState(blockPos.add(0, 0, -1), light);
         }
 
-        if (par7 == 3 && par3World.isAirBlock(par4, par5, par6 + 1))
+        if (side.getIndex() == 3 && world.isAirBlock(blockPos.add(0, 0, 1)))
         {
-            par3World.setBlock(par4, par5, par6 + 1, ModBlocks.blockBloodLight);
+            world.setBlockState(blockPos.add(0, 0, 1), light);
         }
 
-        if (par7 == 4 && par3World.isAirBlock(par4 - 1, par5, par6))
+        if (side.getIndex() == 4 && world.isAirBlock(blockPos.add(-1, 0, 0)))
         {
-            par3World.setBlock(par4 - 1, par5, par6, ModBlocks.blockBloodLight);
+            world.setBlockState(blockPos.add(-1, 0, 0), light);
         }
 
-        if (par7 == 5 && par3World.isAirBlock(par4 + 1, par5, par6))
+        if (side.getIndex() == 5 && world.isAirBlock(blockPos.add(1, 0, 0)))
         {
-            par3World.setBlock(par4 + 1, par5, par6, ModBlocks.blockBloodLight);
+            world.setBlockState(blockPos.add(1, 0, 0), light);
         }
 
         return true;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    public ItemStack onItemRightClick(ItemStack itemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(itemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
-            return par1ItemStack;
+            return itemStack;
         }
 
-        if (par1ItemStack.getTagCompound() == null)
+        if (itemStack.getTagCompound() == null)
         {
-            par1ItemStack.setTagCompound(new NBTTagCompound());
+            itemStack.setTagCompound(new NBTTagCompound());
         }
 
-        if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed() * 5))
+        if(!BindableItems.syphonBatteries(itemStack, par3EntityPlayer, getEnergyUsed() * 5))
         {
-        	return par1ItemStack;
+        	return itemStack;
         }
 
         if (!par2World.isRemote)
@@ -117,13 +109,13 @@ public class SigilBloodLight extends BindableItems implements IHolding, ArmourUp
             par2World.spawnEntityInWorld(new EntityBloodLightProjectile(par2World, par3EntityPlayer, 10));
         }
 
-        return par1ItemStack;
+        return itemStack;
     }
     
     @Override
     public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
     {
-        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9, true));
+        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 400, 9, true, false));
     }
 
     @Override
