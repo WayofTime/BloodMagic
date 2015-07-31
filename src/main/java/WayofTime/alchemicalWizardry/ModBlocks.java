@@ -107,7 +107,7 @@ public class ModBlocks
 
     public static void init()
     {
-        blockAltar = (BlockAltar) registerBlock(new BlockAltar(), "altar");
+        blockAltar = (BlockAltar) registerBlock(new BlockAltar(), "altar"); 
         bloodRune = (BlockBloodRune) registerBlock(new BlockBloodRune(), ItemBloodRuneBlock.class, "base_rune");
         speedRune = (BlockSpeedRune) registerBlock(new BlockSpeedRune(), "speed_rune");
         efficiencyRune = (BlockEfficiencyRune) registerBlock(new BlockEfficiencyRune(), "efficiency_rune");
