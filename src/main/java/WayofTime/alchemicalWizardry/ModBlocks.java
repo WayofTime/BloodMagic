@@ -107,13 +107,13 @@ public class ModBlocks
 
     public static void init()
     {
-/*        blockAltar = (BlockAltar) registerBlock(new BlockAltar(), "altar");
+        blockAltar = (BlockAltar) registerBlock(new BlockAltar(), "altar");
         bloodRune = (BlockBloodRune) registerBlock(new BlockBloodRune(), ItemBloodRuneBlock.class, "base_rune");
         speedRune = (BlockSpeedRune) registerBlock(new BlockSpeedRune(), "speed_rune");
         efficiencyRune = (BlockEfficiencyRune) registerBlock(new BlockEfficiencyRune(), "efficiency_rune");
         runeOfSacrifice = (BlockRuneOfSacrifice) registerBlock(new BlockRuneOfSacrifice(), "sacrifice_rune");
         runeOfSelfSacrifice = (BlockRuneOfSelfSacrifice) registerBlock(new BlockRuneOfSelfSacrifice(), "self_sacrifice_rune");
- */       blockTeleposer = registerBlock(new BlockTeleposer(), "teleposer");
+        blockTeleposer = registerBlock(new BlockTeleposer(), "teleposer");
         spectralBlock = registerBlock(new BlockSpectral(), "spectral_block");
         ritualStone = registerBlock(new BlockRitualStone(), "ritual_stone");
         blockMasterStone = registerBlock(new BlockMasterStone(), "master_ritual_stone");
@@ -155,26 +155,25 @@ public class ModBlocks
         block.setUnlocalizedName(unlocalizedName);
 
 //        if (!) //creative tab blacklist
-        {
+//        {
             block.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        }
+//        }
 
-//        blocksNotToBeRegistered.clear();
-//        for (String unlocName : BloodMagicConfiguration.blocksToBeDisabled)
+        blocksNotToBeRegistered.clear();
+        for (String unlocName : BloodMagicConfiguration.blocksToBeDisabled)
         {
-//            if (unlocName.equals(unlocalizedName))
+            if (unlocName.equals(unlocalizedName))
             {
-//                blocksNotToBeRegistered.add(unlocName);
+                blocksNotToBeRegistered.add(unlocName);
             }
         }
- //       if (!blocksNotToBeRegistered.contains(unlocalizedName))
+        if (!blocksNotToBeRegistered.contains(unlocalizedName))
         {
-//            GameRegistry.registerBlock(block, unlocalizedName);
+            GameRegistry.registerBlock(block, unlocalizedName);
         }
 
 //        BlockRenderer.registerBlock(block);
 
-        GameRegistry.registerBlock(block, unlocalizedName);
         return block;
     }
 
@@ -182,14 +181,14 @@ public class ModBlocks
     {
         block.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
 
-//        for (String unlocName : BloodMagicConfiguration.blocksToBeDisabled)
+        for (String unlocName : BloodMagicConfiguration.blocksToBeDisabled)
         {
-//            if (unlocName.equals(unlocalizedName))
+            if (unlocName.equals(unlocalizedName))
             {
-//                blocksNotToBeRegistered.add(unlocName);
+                blocksNotToBeRegistered.add(unlocName);
             }
         }
-//        if (!blocksNotToBeRegistered.contains(unlocalizedName))
+        if (!blocksNotToBeRegistered.contains(unlocalizedName))
         {
             GameRegistry.registerBlock(block, itemBlockClass, unlocalizedName);
         }
