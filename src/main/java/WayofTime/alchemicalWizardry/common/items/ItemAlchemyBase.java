@@ -15,18 +15,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 
 public class ItemAlchemyBase extends Item
 {
-    private static final String[] ITEM_NAMES = new String[]{"Offensa", "Praesidium", "OrbisTerrae", "StrengthenedCatalyst", "ConcentratedCatalyst", "FracturedBone", "Virtus", "Reductus", "Potentia"};
+    private final String[] ITEM_NAMES = new String[]{"offensa", "praesidium", "orbis_terrae", "strengthened_catalyst", "concentrated_catalyst", "fractured_bone", "virtus", "reductus", "potentia"};
 
     public ItemAlchemyBase()
     {
         super();
-        this.maxStackSize = 64;
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
     }
 
@@ -67,7 +64,7 @@ public class ItemAlchemyBase extends Item
     public String getUnlocalizedName(ItemStack itemStack)
     {
         int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ITEM_NAMES.length - 1);
-        return ("" + "item.bloodMagicAlchemyItem." + ITEM_NAMES[meta]);
+        return (getUnlocalizedName() + "." + ITEM_NAMES[meta]);
     }
 
     @Override

@@ -13,9 +13,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 
-public class SigilOfHolding extends EnergyItems
+public class SigilOfHolding extends BindableItems
 {
     private static int invSize = 4;
 

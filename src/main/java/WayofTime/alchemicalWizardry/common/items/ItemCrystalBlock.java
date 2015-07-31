@@ -10,9 +10,9 @@ public class ItemCrystalBlock extends ItemBlock
     {
         super(par1);
         setHasSubtypes(true);
-
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
         String name;
@@ -20,16 +20,12 @@ public class ItemCrystalBlock extends ItemBlock
         switch (itemstack.getItemDamage())
         {
             case 0:
-            {
                 name = "fullCrystal";
                 break;
-            }
 
             case 1:
-            {
                 name = "crystalBrick";
                 break;
-            }
 
             default:
                 name = "broken";
@@ -38,6 +34,7 @@ public class ItemCrystalBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
+    @Override
     public int getMetadata(int par1)
 
     {

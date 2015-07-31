@@ -12,7 +12,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
@@ -28,7 +27,6 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     public ItemBloodLetterPack()
     {
         super(ArmorMaterial.CHAIN, 0, 1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -140,10 +138,7 @@ public class ItemBloodLetterPack extends ItemArmor implements ArmourUpgrade, IAl
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
-    {
-
-    }
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
 
     @Override
     public boolean isUpgrade()

@@ -16,7 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.IAltarManipulator;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.Orb;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import net.minecraftforge.fml.relauncher.Side;
@@ -46,9 +46,9 @@ public class BlockAltar extends BlockContainer
         {
             ItemStack stack = ((TEAltar) tile).getStackInSlot(0);
 
-            if (stack != null && stack.getItem() instanceof EnergyBattery)
+            if (stack != null && stack.getItem() instanceof Orb)
             {
-                EnergyBattery bloodOrb = (EnergyBattery) stack.getItem();
+                Orb bloodOrb = (Orb) stack.getItem();
                 int maxEssence = bloodOrb.getMaxEssence();
                 int currentEssence = bloodOrb.getCurrentEssence(stack);
                 int level = currentEssence * 15 / maxEssence;

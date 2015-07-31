@@ -14,20 +14,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.ShapelessBloodOrbRecipe;
 import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 
 public class ItemIncense extends Item implements IIncense
 {
-    private static final String[] ITEM_NAMES = new String[]{"Woodash", "Byrrus", "Livens", "Viridis", "Purpura"};
+    private final String[] ITEM_NAMES = new String[]{"wood_ash", "byrrus", "livens", "viridis", "purpura"};
 
     public ItemIncense()
     {
         super();
-        this.maxStackSize = 64;
-        this.setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.hasSubtypes = true;
     }
 
@@ -41,7 +38,7 @@ public class ItemIncense extends Item implements IIncense
     public String getUnlocalizedName(ItemStack itemStack)
     {
         int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ITEM_NAMES.length - 1);
-        return ("" + "item.bloodMagicIncenseItem." + ITEM_NAMES[meta]);
+        return (getUnlocalizedName() + "." + ITEM_NAMES[meta]);
     }
 
     @Override

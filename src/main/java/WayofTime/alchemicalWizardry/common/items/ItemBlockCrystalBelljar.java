@@ -27,6 +27,7 @@ public class ItemBlockCrystalBelljar extends ItemBlock
         this.setMaxStackSize(16);
     }
 
+    @Override
     public int getMetadata(int par1)
     {
         return par1;

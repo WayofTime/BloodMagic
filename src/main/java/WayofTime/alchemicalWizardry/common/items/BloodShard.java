@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 
@@ -13,8 +12,6 @@ public class BloodShard extends Item implements ArmourUpgrade
     public BloodShard()
     {
         super();
-        this.maxStackSize = 64;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     public int getBloodShardLevel()
@@ -31,9 +28,7 @@ public class BloodShard extends Item implements ArmourUpgrade
     }
 
     @Override
-    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack)
-    {
-    }
+    public void onArmourUpdate(World world, EntityPlayer player, ItemStack thisItemStack) {}
 
     @Override
     public boolean isUpgrade()

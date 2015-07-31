@@ -15,11 +15,11 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade, ISigil
+public class SigilHarvest extends BindableItems implements IHolding, ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
@@ -97,7 +97,7 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -117,7 +117,7 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
 
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	tag.setBoolean("isActive", false);
                 }
@@ -168,7 +168,7 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }

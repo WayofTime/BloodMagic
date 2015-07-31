@@ -13,7 +13,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.entity.projectile.FireProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 
 public class SpellFireBurst extends HomSpell
 {
@@ -28,14 +28,14 @@ public class SpellFireBurst extends HomSpell
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
         }
 
         world.playSoundAtEntity(player, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -52,14 +52,14 @@ public class SpellFireBurst extends HomSpell
     @Override
     public ItemStack onOffensiveMeleeRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
         }
 
         world.playSoundAtEntity(player, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -81,14 +81,14 @@ public class SpellFireBurst extends HomSpell
     @Override
     public ItemStack onDefensiveRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getDefensiveEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getDefensiveEnergy());
         }
 
         world.playSoundAtEntity(player, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -118,14 +118,14 @@ public class SpellFireBurst extends HomSpell
     @Override
     public ItemStack onEnvironmentalRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getEnvironmentalEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getEnvironmentalEnergy());
         }
 
         world.playSoundAtEntity(player, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));

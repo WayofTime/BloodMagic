@@ -11,7 +11,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.entity.projectile.MudProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class SpellEarthBender extends HomSpell
@@ -27,14 +27,14 @@ public class SpellEarthBender extends HomSpell
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
         }
 
         world.spawnEntityInWorld(new MudProjectile(world, player, 8, false));
@@ -45,14 +45,14 @@ public class SpellEarthBender extends HomSpell
     @Override
     public ItemStack onOffensiveMeleeRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
         }
 
         if (!world.isRemote)
@@ -72,7 +72,7 @@ public class SpellEarthBender extends HomSpell
     @Override
     public ItemStack onDefensiveRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
@@ -138,7 +138,7 @@ public class SpellEarthBender extends HomSpell
     @Override
     public ItemStack onEnvironmentalRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }

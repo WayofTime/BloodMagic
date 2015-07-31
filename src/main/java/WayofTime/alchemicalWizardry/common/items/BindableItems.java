@@ -1,6 +1,5 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
@@ -14,14 +13,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class EnergyItems extends Item implements IBindable
+public class BindableItems extends Item implements IBindable
 {
     private int energyUsed;
 
-    public EnergyItems()
+    public BindableItems()
     {
         super();
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     protected void setEnergyUsed(int par1int)

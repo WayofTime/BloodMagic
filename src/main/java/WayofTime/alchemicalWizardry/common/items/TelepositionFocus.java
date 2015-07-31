@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 
-public class TelepositionFocus extends EnergyItems
+public class TelepositionFocus extends BindableItems
 {
     private int focusLevel;
 
@@ -45,7 +45,7 @@ public class TelepositionFocus extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
+        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer))
         {
             if (par3EntityPlayer.isSneaking())
             {

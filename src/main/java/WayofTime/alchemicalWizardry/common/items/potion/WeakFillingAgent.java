@@ -11,7 +11,6 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.IFillingAgent;
 
@@ -20,7 +19,6 @@ public class WeakFillingAgent extends Item implements IFillingAgent
     public WeakFillingAgent()
     {
         super();
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override

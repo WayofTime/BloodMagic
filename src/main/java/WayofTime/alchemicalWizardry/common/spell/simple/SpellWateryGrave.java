@@ -16,7 +16,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.common.entity.projectile.WaterProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class SpellWateryGrave extends HomSpell
@@ -32,14 +32,14 @@ public class SpellWateryGrave extends HomSpell
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveRangedEnergy());
         }
 
         par2World.spawnEntityInWorld(new WaterProjectile(par2World, par3EntityPlayer, 8));
@@ -50,14 +50,14 @@ public class SpellWateryGrave extends HomSpell
     @Override
     public ItemStack onOffensiveMeleeRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getOffensiveMeleeEnergy());
         }
 
         if (!par2World.isRemote)
@@ -77,14 +77,14 @@ public class SpellWateryGrave extends HomSpell
     @Override
     public ItemStack onDefensiveRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getDefensiveEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getDefensiveEnergy());
         }
 
         int d0 = 3;
@@ -130,14 +130,14 @@ public class SpellWateryGrave extends HomSpell
     @Override
     public ItemStack onEnvironmentalRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
 
         if (!par3EntityPlayer.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getEnvironmentalEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(par1ItemStack, par3EntityPlayer, this.getEnvironmentalEnergy());
         }
 
         int range = 2;

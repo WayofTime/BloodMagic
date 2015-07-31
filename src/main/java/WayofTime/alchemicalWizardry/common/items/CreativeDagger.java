@@ -11,7 +11,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.alchemicalWizardry.api.sacrifice.PlayerSacrificeHandler;
 import WayofTime.alchemicalWizardry.api.tile.IBloodAltar;
@@ -23,7 +22,6 @@ public class CreativeDagger extends Item
     {
         super();
         setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setFull3D();
     }
 

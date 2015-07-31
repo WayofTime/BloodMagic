@@ -1,7 +1,6 @@
 package WayofTime.alchemicalWizardry.common.items;
 
-
-public class MasterBloodOrb extends EnergyBattery
+public class MasterBloodOrb extends Orb
 {
     public MasterBloodOrb(int damage)
     {

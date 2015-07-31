@@ -19,7 +19,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.common.IDemon;
-import WayofTime.alchemicalWizardry.common.items.DemonPlacer;
+import WayofTime.alchemicalWizardry.common.items.DemonCrystal;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
 
 public class EntityDemon extends EntityTameable implements IDemon
@@ -103,11 +103,11 @@ public class EntityDemon extends EntityTameable implements IDemon
     	{
     		ItemStack drop = new ItemStack(ModItems.demonPlacer);
             
-            DemonPlacer.setDemonString(drop, this.getDemonID());
+            DemonCrystal.setDemonString(drop, this.getDemonID());
 
             if ((this.getOwner() instanceof EntityPlayer))
             {
-                DemonPlacer.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer) this.getOwner()));
+                DemonCrystal.setOwnerName(drop, SpellHelper.getUsername((EntityPlayer) this.getOwner()));
             }
 
             if (this.hasCustomName())

@@ -3,7 +3,7 @@ package WayofTime.alchemicalWizardry.common.items.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, ISigil
+public class SigilOfTheFastMiner extends BindableItems implements ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
@@ -97,7 +97,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, I
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -110,7 +110,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, I
         NBTTagCompound tag = par1ItemStack.getTagCompound();
         tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
 
-        if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+        if (tag.getBoolean("isActive") && BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 200);
@@ -147,7 +147,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, I
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if (!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+                if (!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
                 {
                 	par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }

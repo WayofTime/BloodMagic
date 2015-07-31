@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.common.entity.projectile.IceProjectile;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 
 public class SpellFrozenWater extends HomSpell
 {
@@ -24,14 +24,14 @@ public class SpellFrozenWater extends HomSpell
     @Override
     public ItemStack onOffensiveRangedRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveRangedEnergy());
         }
 
         world.playSoundAtEntity(player, "random.fizz", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -47,14 +47,14 @@ public class SpellFrozenWater extends HomSpell
     @Override
     public ItemStack onOffensiveMeleeRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }
 
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, this.getOffensiveMeleeEnergy());
         }
 
         for (int i = -2; i <= 2; i++)
@@ -70,7 +70,7 @@ public class SpellFrozenWater extends HomSpell
     {
         if (!player.capabilities.isCreativeMode)
         {
-            EnergyItems.syphonAndDamageWhileInContainer(stack, player, getDefensiveEnergy());
+            BindableItems.syphonAndDamageWhileInContainer(stack, player, getDefensiveEnergy());
         }
 
         float yaw = player.rotationYaw;
@@ -178,7 +178,7 @@ public class SpellFrozenWater extends HomSpell
     @Override
     public ItemStack onEnvironmentalRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!EnergyItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(stack, player) || player.isSneaking())
         {
             return stack;
         }

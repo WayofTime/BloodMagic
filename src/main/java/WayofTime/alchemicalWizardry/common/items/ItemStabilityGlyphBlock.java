@@ -19,12 +19,12 @@ public class ItemStabilityGlyphBlock extends ItemBlock
 
         switch (itemstack.getItemDamage())
         {
-        case 0:
-            name = "stability1";
-            break;
+            case 0:
+                name = "stability1";
+                break;
 
-        default:
-            name = "broken";
+            default:
+                name = "broken";
         }
 
         return getUnlocalizedName() + "." + name;

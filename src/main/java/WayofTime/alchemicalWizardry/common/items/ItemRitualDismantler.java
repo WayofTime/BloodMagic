@@ -9,20 +9,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.Rituals;
 import WayofTime.alchemicalWizardry.common.block.BlockRitualStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 
-public class ItemRitualDismantler extends EnergyItems
+public class ItemRitualDismantler extends BindableItems
 {
     public ItemRitualDismantler()
     {
         super();
         setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class ItemRitualDismantler extends EnergyItems
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return EnergyItems.checkAndSetItemOwner(stack, player) && breakRitualStoneAtMasterStone(stack, player, world, pos);
+        return BindableItems.checkAndSetItemOwner(stack, player) && breakRitualStoneAtMasterStone(stack, player, world, pos);
     }
 
     public boolean breakRitualStoneAtMasterStone(ItemStack stack, EntityPlayer player, World world, BlockPos pos)
@@ -72,7 +70,7 @@ public class ItemRitualDismantler extends EnergyItems
                 {
                     if (freeSpace >= 0)
                     {
-                        if (EnergyItems.syphonBatteries(stack, player, getEnergyUsed()) || player.capabilities.isCreativeMode)
+                        if (BindableItems.syphonBatteries(stack, player, getEnergyUsed()) || player.capabilities.isCreativeMode)
                         {
                             world.setBlockToAir(newPos);
                             player.inventory.addItemStackToInventory(new ItemStack(ModBlocks.ritualStone));

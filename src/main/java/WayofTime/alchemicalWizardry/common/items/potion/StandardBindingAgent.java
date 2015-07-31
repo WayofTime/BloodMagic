@@ -10,7 +10,6 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.common.IBindingAgent;
 
@@ -19,7 +18,6 @@ public class StandardBindingAgent extends Item implements IBindingAgent
     public StandardBindingAgent()
     {
         super();
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override

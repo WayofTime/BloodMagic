@@ -17,11 +17,11 @@ import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IHolding;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHolding, ISigil
+public class SigilOfMagnetism extends BindableItems implements ArmourUpgrade, IHolding, ISigil
 {
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
@@ -100,7 +100,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -113,7 +113,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
         NBTTagCompound tag = par1ItemStack.getTagCompound();
         tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
 
-        if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+        if (tag.getBoolean("isActive") && BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
@@ -144,7 +144,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
+                if(!BindableItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, getEnergyUsed()))
                 {
                 	par1ItemStack.getTagCompound().setBoolean("isActive", false);
                 }

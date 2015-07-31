@@ -10,9 +10,9 @@ public class ItemBloodRuneBlock extends ItemBlock
     {
         super(block);
         setHasSubtypes(true);
-
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
         String name;
@@ -20,16 +20,12 @@ public class ItemBloodRuneBlock extends ItemBlock
         switch (itemstack.getItemDamage())
         {
             case 0:
-            {
                 name = "blank";
                 break;
-            }
 
             case 1:
-            {
                 name = "fill";
                 break;
-            }
 
             case 2:
                 name = "empty";
@@ -54,6 +50,7 @@ public class ItemBloodRuneBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
+    @Override
     public int getMetadata(int par1)
 
     {

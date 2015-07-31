@@ -20,7 +20,7 @@ import WayofTime.alchemicalWizardry.api.summoningRegistry.SummoningRegistryCompo
 import WayofTime.alchemicalWizardry.common.IDemon;
 import WayofTime.alchemicalWizardry.common.NewPacketHandler;
 import WayofTime.alchemicalWizardry.common.PlinthComponent;
-import WayofTime.alchemicalWizardry.common.items.EnergyBattery;
+import WayofTime.alchemicalWizardry.common.items.Orb;
 
 public class TEPlinth extends TEInventory implements IUpdatePlayerListBox
 {
@@ -173,9 +173,9 @@ public class TEPlinth extends TEInventory implements IUpdatePlayerListBox
 
         if (!isActive())
         {
-            if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof EnergyBattery)
+            if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof Orb)
             {
-                int bloodOrbLevel = ((EnergyBattery) getStackInSlot(0).getItem()).getOrbLevel();
+                int bloodOrbLevel = ((Orb) getStackInSlot(0).getItem()).getOrbLevel();
 
                 if (SummoningRegistry.isRecipeValid(bloodOrbLevel, composeItemsForRingAndParadigm(1, true), composeItemsForRingAndParadigm(2, true), composeItemsForRingAndParadigm(3, true)))
                 {
@@ -203,7 +203,7 @@ public class TEPlinth extends TEInventory implements IUpdatePlayerListBox
             }
         } else
         {
-            if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof EnergyBattery)
+            if (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof Orb)
             {
                 if (progress % progressInterval == 0)
                 {
@@ -246,7 +246,7 @@ public class TEPlinth extends TEInventory implements IUpdatePlayerListBox
 
                 if (progress >= progressInterval * 18)
                 {
-                    int bloodOrbLevel = ((EnergyBattery) getStackInSlot(0).getItem()).getOrbLevel();
+                    int bloodOrbLevel = ((Orb) getStackInSlot(0).getItem()).getOrbLevel();
                     EntityLivingBase entity = SummoningRegistry.getEntity(worldObj, bloodOrbLevel, ring1Inv, ring2Inv, ring3Inv);
 
                     if (entity != null)

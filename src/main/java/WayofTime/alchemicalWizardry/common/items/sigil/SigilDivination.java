@@ -22,7 +22,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IReagentManipulator;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -57,14 +57,14 @@ public class SigilDivination extends Item implements ArmourUpgrade, IReagentMani
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
 
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.worldObj.isRemote)
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.worldObj.isRemote)
         {
             return par1ItemStack;
         }
         
-        if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 0))
+        if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 0))
         {
         	return par1ItemStack;
         }

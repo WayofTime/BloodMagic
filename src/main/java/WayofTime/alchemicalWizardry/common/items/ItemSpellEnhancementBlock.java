@@ -10,9 +10,9 @@ public class ItemSpellEnhancementBlock extends ItemBlock
     {
         super(par1);
         setHasSubtypes(true);
-
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
         String name;
@@ -86,6 +86,7 @@ public class ItemSpellEnhancementBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
+    @Override
     public int getMetadata(int par1)
 
     {

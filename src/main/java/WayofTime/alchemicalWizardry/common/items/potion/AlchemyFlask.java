@@ -23,7 +23,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyPotionHelper;
 
 import com.google.common.collect.HashMultimap;
@@ -33,16 +32,15 @@ public class AlchemyFlask extends Item
     public AlchemyFlask()
     {
         super();
-        this.setMaxDamage(8);
-        this.setMaxStackSize(1);
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setMaxDamage(8);
+        setMaxStackSize(1);
     }
 
     public static ArrayList<AlchemyPotionHelper> getEffects(ItemStack par1ItemStack)
     {
         if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().hasKey("CustomFlaskEffects"))
         {
-            ArrayList<AlchemyPotionHelper> arraylist = new ArrayList();
+            ArrayList<AlchemyPotionHelper> arraylist = new ArrayList<AlchemyPotionHelper>();
             NBTTagList nbttaglist = par1ItemStack.getTagCompound().getTagList("CustomFlaskEffects", Constants.NBT.TAG_COMPOUND);
 
             for (int i = 0; i < nbttaglist.tagCount(); ++i)
@@ -63,7 +61,7 @@ public class AlchemyFlask extends Item
 
         if (list != null)
         {
-            ArrayList<PotionEffect> newList = new ArrayList();
+            ArrayList<PotionEffect> newList = new ArrayList<PotionEffect>();
 
             for (AlchemyPotionHelper aph : list)
             {

@@ -26,8 +26,7 @@ public class BoundBlade extends ItemSword
     public BoundBlade()
     {
         super(AlchemicalWizardry.bloodBoundToolMaterial);
-        this.maxStackSize = 1;
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
+        setMaxStackSize(1);
         setEnergyUsed(50);
         setFull3D();
         setMaxDamage(100);
@@ -72,7 +71,7 @@ public class BoundBlade extends ItemSword
     {
         if (par3EntityLivingBase instanceof EntityPlayer)
         {
-            if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase) || !EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
+            if (!BindableItems.checkAndSetItemOwner(par1ItemStack, (EntityPlayer) par3EntityLivingBase) || !BindableItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3EntityLivingBase, this.getEnergyUsed()))
             {
             	return false;
             }
@@ -85,7 +84,7 @@ public class BoundBlade extends ItemSword
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
@@ -125,7 +124,7 @@ public class BoundBlade extends ItemSword
         {
             if (!par3EntityPlayer.capabilities.isCreativeMode)
             {
-                if(!EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50))
+                if(!BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, 50))
                 {
                 	this.setActivated(par1ItemStack, false);
                 }

@@ -12,6 +12,7 @@ public class ItemSpellEffectBlock extends ItemBlock
         setHasSubtypes(true);
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
         String name;
@@ -19,16 +20,12 @@ public class ItemSpellEffectBlock extends ItemBlock
         switch (itemstack.getItemDamage())
         {
             case 0:
-            {
                 name = "fire";
                 break;
-            }
 
             case 1:
-            {
                 name = "ice";
                 break;
-            }
 
             case 2:
                 name = "wind";
@@ -45,6 +42,7 @@ public class ItemSpellEffectBlock extends ItemBlock
         return getUnlocalizedName() + "." + name;
     }
 
+    @Override
     public int getMetadata(int par1)
 
     {

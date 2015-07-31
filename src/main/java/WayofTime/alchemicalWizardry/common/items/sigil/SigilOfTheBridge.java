@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ArmourUpgrade;
 import WayofTime.alchemicalWizardry.api.items.interfaces.ISigil;
-import WayofTime.alchemicalWizardry.common.items.EnergyItems;
+import WayofTime.alchemicalWizardry.common.items.BindableItems;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpectralBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISigil
+public class SigilOfTheBridge extends BindableItems implements ArmourUpgrade, ISigil
 {
     @SideOnly(Side.CLIENT)
     private IIcon activeIcon;
@@ -101,7 +101,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        if (!EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
+        if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
             return par1ItemStack;
         }
@@ -114,7 +114,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
         NBTTagCompound tag = par1ItemStack.getTagCompound();
         tag.setBoolean("isActive", !(tag.getBoolean("isActive")));
 
-        if (tag.getBoolean("isActive") && EnergyItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
+        if (tag.getBoolean("isActive") && BindableItems.syphonBatteries(par1ItemStack, par3EntityPlayer, getEnergyUsed()))
         {
             par1ItemStack.setItemDamage(1);
             tag.setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % tickDelay);
@@ -145,7 +145,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
         {
             if (par2World.getWorldTime() % tickDelay == par1ItemStack.getTagCompound().getInteger("worldTimeDelay"))
             {
-                if(EnergyItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, this.getLPUsed(par1ItemStack)))
+                if(BindableItems.syphonBatteries(par1ItemStack, (EntityPlayer) par3Entity, this.getLPUsed(par1ItemStack)))
                 {
                     this.setLPUsed(par1ItemStack, 0);
                 }else

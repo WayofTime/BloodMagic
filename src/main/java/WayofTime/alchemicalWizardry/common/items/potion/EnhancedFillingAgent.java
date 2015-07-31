@@ -1,13 +1,10 @@
 package WayofTime.alchemicalWizardry.common.items.potion;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-
 public class EnhancedFillingAgent extends WeakFillingAgent
 {
     public EnhancedFillingAgent()
     {
         super();
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
     @Override

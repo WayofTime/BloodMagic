@@ -10,7 +10,6 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 
 public class AlchemyReagent extends Item
@@ -18,8 +17,7 @@ public class AlchemyReagent extends Item
     public AlchemyReagent()
     {
         super();
-        setCreativeTab(AlchemicalWizardry.tabBloodMagic);
-        this.setMaxStackSize(64);
+        setMaxStackSize(64);
     }
 
     @Override

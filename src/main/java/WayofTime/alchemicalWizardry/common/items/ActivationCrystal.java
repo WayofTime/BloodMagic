@@ -15,12 +15,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.input.Keyboard;
 
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 
-public class ActivationCrystal extends EnergyItems
+public class ActivationCrystal extends BindableItems
 {
-    private static final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"weak", "awakened", "creative"};
+    private final String[] ACTIVATION_CRYSTAL_NAMES = new String[]{"weak", "awakened", "creative"};
 
     public ActivationCrystal()
     {
@@ -86,7 +85,7 @@ public class ActivationCrystal extends EnergyItems
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-        EnergyItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
+        BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer);
         return par1ItemStack;
     }
 
