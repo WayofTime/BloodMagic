@@ -565,9 +565,6 @@ public class AlchemicalWizardry
     {
         int craftingConstant = OreDictionary.WILDCARD_VALUE;
 
-        ModBlocks.init();
-        //blocks
-
         proxy.registerRenderers();
         proxy.registerEntities();
         proxy.registerEntityTrackers();
