@@ -31,29 +31,29 @@ public class ModelBloodAltar extends ModelBase
 
     public void renderBloodAltar(TEAltar altar, double x, double y, double z)
     {
-        float scale = 0.1f;
-        // Push a blank matrix onto the stack
-        GL11.glPushMatrix();
-        // Move the object into the correct position on the block (because the OBJ's origin is the center of the object)
-        GL11.glTranslatef((float) x + 0.5f, (float) y, (float) z + 0.5f);
-        // Scale our object to about half-size in all directions (the OBJ file is a little large)
-        GL11.glScalef(scale, scale, scale);
-        // Bind the texture, so that OpenGL properly textures our block.
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(altar_texture);
-        // Render the object, using modelTutBox.renderAll();
-        this.renderBloodAltar();
-        // Pop this matrix from the stack.
-        GL11.glPopMatrix();
+//        float scale = 0.1f;
+//        // Push a blank matrix onto the stack
+//        GL11.glPushMatrix();
+//        // Move the object into the correct position on the block (because the OBJ's origin is the center of the object)
+//        GL11.glTranslatef((float) x + 0.5f, (float) y, (float) z + 0.5f);
+//        // Scale our object to about half-size in all directions (the OBJ file is a little large)
+//        GL11.glScalef(scale, scale, scale);
+//        // Bind the texture, so that OpenGL properly textures our block.
+//        FMLClientHandler.instance().getClient().renderEngine.bindTexture(altar_texture);
+//        // Render the object, using modelTutBox.renderAll();
+//        this.renderBloodAltar();
+//        // Pop this matrix from the stack.
+//        GL11.glPopMatrix();
     }
 
     public void renderBloodLevel(TEAltar altar, double x, double y, double z)
     {
-        GL11.glPushMatrix();
-        float level = altar.getFluidAmount();
-        GL11.glTranslatef((float) x , (float) y + 0.6499f + 0.12f * (level / altar.getCapacity()), (float) z);
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-        renderBloodLevel(AlchemicalWizardry.lifeEssenceFluid.getStillIcon());
-        GL11.glPopMatrix();
+//        GL11.glPushMatrix();
+//        float level = altar.getFluidAmount();
+//        GL11.glTranslatef((float) x , (float) y + 0.6499f + 0.12f * (level / altar.getCapacity()), (float) z);
+//        FMLClientHandler.instance().getClient().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+//        renderBloodLevel(AlchemicalWizardry.lifeEssenceFluid.getStillIcon());
+//        GL11.glPopMatrix();
     }
     
     public void renderBloodLevel(TextureAtlasSprite icon)
