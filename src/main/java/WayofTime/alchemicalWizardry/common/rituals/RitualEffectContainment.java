@@ -20,10 +20,7 @@ import java.util.List;
 
 public class RitualEffectContainment extends RitualEffect
 {
-    public static final String[] TIME_SINCE_IGNITED = new String[]{"timeSinceIgnited", "field_70833_d", "bq"};
-    public static final int crepitousDrain = 1;
-    public static final int terraeDrain = 3;
-    public static final int magicalesDrain = 10;
+    public final String[] TIME_SINCE_IGNITED = new String[]{"timeSinceIgnited", "field_70833_d", "bq"};
 
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
@@ -41,12 +38,16 @@ public class RitualEffectContainment extends RitualEffect
             SoulNetworkHandler.causeNauseaToPlayer(owner);
         } else
         {
-            int d0 = 5;
-            List<Entity> entityList = SpellHelper.getEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
+            final int crepitousDrain = 1;
+            final int terraeDrain = 5;
+            final int magicalesDrain = 10;
+
             boolean flag = false;
             boolean hasCrepitous = this.canDrainReagent(ritualStone, ReagentRegistry.crepitousReagent, crepitousDrain, false);
             boolean hasTerrae = this.canDrainReagent(ritualStone, ReagentRegistry.terraeReagent, terraeDrain, false);
             boolean hasMagicales = this.canDrainReagent(ritualStone, ReagentRegistry.magicalesReagent, magicalesDrain, false);
+            int d0 = hasTerrae ? 10 : 5;
+            List<Entity> entityList = SpellHelper.getEntitiesInRange(world, x + 0.5, y + 0.5, z + 0.5, d0, d0);
 
             for (Entity entity : entityList)
             {
@@ -61,7 +62,6 @@ public class RitualEffectContainment extends RitualEffect
                 {
                     continue;
                 }
-
 
                 double xDif = livingEntity.posX - (x + 0.5);
                 double yDif = livingEntity.posY - (y + 3);
@@ -109,7 +109,7 @@ public class RitualEffectContainment extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> containmentRitual = new ArrayList();
+        ArrayList<RitualComponent> containmentRitual = new ArrayList<RitualComponent>();
         containmentRitual.add(new RitualComponent(1, 0, 0, 3));
         containmentRitual.add(new RitualComponent(-1, 0, 0, 3));
         containmentRitual.add(new RitualComponent(0, 0, 1, 3));

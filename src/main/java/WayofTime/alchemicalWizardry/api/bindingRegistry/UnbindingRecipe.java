@@ -2,15 +2,26 @@ package WayofTime.alchemicalWizardry.api.bindingRegistry;
 
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UnbindingRecipe
 {
     public ItemStack requiredItem;
-    public ItemStack outputItem;
+    public List<ItemStack> outputItem;
 
-    public UnbindingRecipe(ItemStack outputItem, ItemStack requiredItem)
+    public UnbindingRecipe(ItemStack inputItem, List<ItemStack> outputItem)
     {
-        this.requiredItem = requiredItem;
+        this.requiredItem = inputItem;
         this.outputItem = outputItem;
+    }
+
+    public UnbindingRecipe(ItemStack inputItem, ItemStack outputItem)
+    {
+        this.requiredItem = inputItem;
+        List<ItemStack> newList = new ArrayList<ItemStack>();
+        newList.add(outputItem);
+        this.outputItem = newList;
     }
 
     public boolean doesRequiredItemMatch(ItemStack testStack)
@@ -18,12 +29,7 @@ public class UnbindingRecipe
         return !(testStack == null || this.requiredItem == null) && this.requiredItem.isItemEqual(testStack);
     }
 
-    public ItemStack getResult(ItemStack inputItem)
-    {
-        return this.getResult();
-    }
-
-    public ItemStack getResult()
+    public List<ItemStack> getResult()
     {
         return this.outputItem;
     }

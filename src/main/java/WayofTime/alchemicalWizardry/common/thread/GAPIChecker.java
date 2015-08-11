@@ -72,7 +72,7 @@ public class GAPIChecker
 
     private List<File> modFiles()
     {
-        List<File> list = new LinkedList();
+        List<File> list = new LinkedList<File>();
         list.addAll(Arrays.asList(this.modsDir.listFiles()));
         return list;
     }
