@@ -170,6 +170,8 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier), new TESpellModifierBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAlchemicalCalcinator), new TEAlchemicalCalcinatorItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockCrystalBelljar), new TEBellJarItemRenderer());
+        
+        InventoryRenderHelper.registerItems();
     }
 
     @Override

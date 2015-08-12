@@ -1,48 +1,50 @@
 package WayofTime.alchemicalWizardry;
 
+import java.util.ArrayList;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.alchemicalWizardry.api.items.ItemSpellMultiTool;
 import WayofTime.alchemicalWizardry.api.spell.SpellParadigmTool;
-import WayofTime.alchemicalWizardry.common.items.BaseItems;
 import WayofTime.alchemicalWizardry.common.items.ActivationCrystal;
 import WayofTime.alchemicalWizardry.common.items.AirScribeTool;
 import WayofTime.alchemicalWizardry.common.items.ApprenticeBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.ArchmageBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.ArmourInhibitor;
+import WayofTime.alchemicalWizardry.common.items.BaseItems;
 import WayofTime.alchemicalWizardry.common.items.BlankSpell;
 import WayofTime.alchemicalWizardry.common.items.BloodShard;
 import WayofTime.alchemicalWizardry.common.items.BoundAxe;
+import WayofTime.alchemicalWizardry.common.items.BoundBlade;
 import WayofTime.alchemicalWizardry.common.items.BoundPickaxe;
 import WayofTime.alchemicalWizardry.common.items.BoundShovel;
-import WayofTime.alchemicalWizardry.common.items.CreativeOrb;
 import WayofTime.alchemicalWizardry.common.items.CreativeDagger;
+import WayofTime.alchemicalWizardry.common.items.CreativeOrb;
 import WayofTime.alchemicalWizardry.common.items.DaggerOfSacrifice;
 import WayofTime.alchemicalWizardry.common.items.DawnScribeTool;
 import WayofTime.alchemicalWizardry.common.items.DemonCrystal;
 import WayofTime.alchemicalWizardry.common.items.DemonicTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.DuskScribeTool;
 import WayofTime.alchemicalWizardry.common.items.EarthScribeTool;
-import WayofTime.alchemicalWizardry.common.items.Orb;
 import WayofTime.alchemicalWizardry.common.items.EnergyBazooka;
 import WayofTime.alchemicalWizardry.common.items.EnergyBlaster;
-import WayofTime.alchemicalWizardry.common.items.BoundBlade;
 import WayofTime.alchemicalWizardry.common.items.EnhancedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.FireScribeTool;
 import WayofTime.alchemicalWizardry.common.items.ItemAlchemyBase;
 import WayofTime.alchemicalWizardry.common.items.ItemBloodLetterPack;
 import WayofTime.alchemicalWizardry.common.items.ItemComplexSpellCrystal;
 import WayofTime.alchemicalWizardry.common.items.ItemComponents;
-import WayofTime.alchemicalWizardry.common.items.KeyOfBinding;
 import WayofTime.alchemicalWizardry.common.items.ItemIncense;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDismantler;
 import WayofTime.alchemicalWizardry.common.items.ItemRitualDiviner;
+import WayofTime.alchemicalWizardry.common.items.KeyOfBinding;
 import WayofTime.alchemicalWizardry.common.items.LavaCrystal;
 import WayofTime.alchemicalWizardry.common.items.LifeBucket;
 import WayofTime.alchemicalWizardry.common.items.MagicianBloodOrb;
 import WayofTime.alchemicalWizardry.common.items.MasterBloodOrb;
+import WayofTime.alchemicalWizardry.common.items.Orb;
 import WayofTime.alchemicalWizardry.common.items.ReinforcedTelepositionFocus;
 import WayofTime.alchemicalWizardry.common.items.SacrificialDagger;
 import WayofTime.alchemicalWizardry.common.items.TelepositionFocus;
@@ -53,8 +55,8 @@ import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourEarth;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourFire;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWater;
 import WayofTime.alchemicalWizardry.common.items.armour.OmegaArmourWind;
-import WayofTime.alchemicalWizardry.common.items.energy.AlchemicalRouter;
 import WayofTime.alchemicalWizardry.common.items.energy.AlchemicalCleanser;
+import WayofTime.alchemicalWizardry.common.items.energy.AlchemicalRouter;
 import WayofTime.alchemicalWizardry.common.items.energy.AlchemicalSegmenter;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyFlask;
 import WayofTime.alchemicalWizardry.common.items.potion.AlchemyReagent;
@@ -74,6 +76,7 @@ import WayofTime.alchemicalWizardry.common.items.routing.InputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.routing.OutputRoutingFocus;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilAir;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilBloodLight;
+import WayofTime.alchemicalWizardry.common.items.sigil.SigilCompress;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilDivination;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilFluid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilHarvest;
@@ -88,13 +91,10 @@ import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheAssassin;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheBridge;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfTheFastMiner;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilOfWind;
-import WayofTime.alchemicalWizardry.common.items.sigil.SigilCompress;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilSeer;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilVoid;
 import WayofTime.alchemicalWizardry.common.items.sigil.SigilWater;
 import WayofTime.alchemicalWizardry.common.items.sigil.holding.SigilOfHolding;
-
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -401,4 +401,6 @@ public class ModItems
 
         return item;
     }
+    
+    
 }

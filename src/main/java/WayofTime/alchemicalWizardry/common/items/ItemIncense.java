@@ -20,7 +20,7 @@ import WayofTime.alchemicalWizardry.api.sacrifice.IIncense;
 
 public class ItemIncense extends Item implements IIncense
 {
-    private final String[] ITEM_NAMES = new String[]{"wood_ash", "byrrus", "livens", "viridis", "purpura"};
+    public static final String[] ITEM_NAMES = new String[]{"wood_ash", "byrrus", "livens", "viridis", "purpura"};
 
     public ItemIncense()
     {

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemComponents extends Item
 {
-    private final String[] ITEM_NAMES = new String[]{"quartz_rod", "empty_core", "magicales_cable", "wood_brace", "stone_brace", "projectile_core", "self_core", "melee_core", "paradigm_back_plate", "output_cable", "flame_core", "icy_core", "gust_core", "earthen_core", "input_cable", "cracked_runic_plate", "runic_plate", "scribed_runic_plate", "default_core", "offensive_core", "defensive_core", "environmental_core", "power_core", "cost_core", "potency_core", "obsidian_brace", "tool_core", "ethereal_slate", "life_shard", "soul_shard", "soul_runic_plate", "life_brace", "ender_shard"};
+    public static final String[] ITEM_NAMES = new String[]{"quartz_rod", "empty_core", "magicales_cable", "wood_brace", "stone_brace", "projectile_core", "self_core", "melee_core", "paradigm_back_plate", "output_cable", "flame_core", "icy_core", "gust_core", "earthen_core", "input_cable", "cracked_runic_plate", "runic_plate", "scribed_runic_plate", "default_core", "offensive_core", "defensive_core", "environmental_core", "power_core", "cost_core", "potency_core", "obsidian_brace", "tool_core", "ethereal_slate", "life_shard", "soul_shard", "soul_runic_plate", "life_brace", "ender_shard"};
 
     public ItemComponents()
     {

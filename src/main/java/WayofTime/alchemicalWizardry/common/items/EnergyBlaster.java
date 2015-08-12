@@ -31,6 +31,7 @@ public class EnergyBlaster extends BindableItems
 
         if (!BindableItems.checkAndSetItemOwner(par1ItemStack, par3EntityPlayer) || par3EntityPlayer.isSneaking())
         {
+        	System.out.println("Toggle");
             this.setActivated(par1ItemStack, !getActivated(par1ItemStack));
             par1ItemStack.getTagCompound().setInteger("worldTimeDelay", (int) (par2World.getWorldTime() - 1) % 100);
             return par1ItemStack;
@@ -108,7 +109,7 @@ public class EnergyBlaster extends BindableItems
 
         if (!(par1ItemStack.getTagCompound() == null))
         {
-            if (par1ItemStack.getTagCompound().getBoolean("isActive"))
+            if (getActivated(par1ItemStack))
             {
                 par3List.add(StatCollector.translateToLocal("tooltip.sigil.state.activated"));
             } else

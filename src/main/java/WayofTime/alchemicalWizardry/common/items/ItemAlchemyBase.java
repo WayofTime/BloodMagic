@@ -19,7 +19,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 
 public class ItemAlchemyBase extends Item
 {
-    private final String[] ITEM_NAMES = new String[]{"offensa", "praesidium", "orbis_terrae", "strengthened_catalyst", "concentrated_catalyst", "fractured_bone", "virtus", "reductus", "potentia"};
+    public static final String[] ITEM_NAMES = new String[]{"offensa", "praesidium", "orbis_terrae", "strengthened_catalyst", "concentrated_catalyst", "fractured_bone", "virtus", "reductus", "potentia"};
 
     public ItemAlchemyBase()
     {
