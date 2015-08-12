@@ -1,0 +1,8 @@
+{
+    "parent":"alchemicalwizardry:item/standard_item",
+    "textures": {
+        "layer0":"alchemicalwizardry:items/DemonicTeleposerFocus"
+    }
+}
+
+

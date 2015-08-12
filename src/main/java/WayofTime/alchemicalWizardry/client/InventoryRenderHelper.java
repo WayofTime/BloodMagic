@@ -73,7 +73,7 @@ public class InventoryRenderHelper {
     	registerSimpleItem(ModItems.fireScribeTool);
     	registerSimpleItem(ModItems.earthScribeTool);
     	registerSimpleItem(ModItems.airScribeTool);
-    	registerSimpleItem(ModItems.activationCrystal);
+    	registerSimpleItem(ModItems.activationCrystal); 	//TODO
     	registerSimpleItem(ModItems.boundHelmet);
     	registerSimpleItem(ModItems.boundChestplate);
     	registerSimpleItem(ModItems.boundLeggings);
