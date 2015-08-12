@@ -19,13 +19,12 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class RitualEffectUnbinding extends RitualEffect
 {
-    public static final int sanctusDrain = 1000;
-
     @Override
     public void performEffect(IMasterRitualStone ritualStone)
     {
@@ -52,6 +51,7 @@ public class RitualEffectUnbinding extends RitualEffect
 
             while (iterator.hasNext())
             {
+                final int sanctusDrain = 1000;
                 item = (EntityItem) iterator.next();
                 ItemStack itemStack = item.getEntityItem();
 
@@ -101,7 +101,20 @@ public class RitualEffectUnbinding extends RitualEffect
                     item.setDead();
                     doLightning(world, x, y, z);
                     ItemStack[] inv = ((BoundArmour) itemStack.getItem()).getInternalInventory(itemStack);
-
+                    int bloodSockets = 0;
+                    if (itemStack.getItem() == ModItems.boundHelmet)
+                    {
+                        bloodSockets = 5;
+                    } else if (itemStack.getItem() == ModItems.boundPlate)
+                    {
+                        bloodSockets = 8;
+                    } else if (itemStack.getItem() == ModItems.boundLeggings)
+                    {
+                        bloodSockets = 7;
+                    } else if (itemStack.getItem() == ModItems.boundBoots)
+                    {
+                        bloodSockets = 4;
+                    }
                     if (inv != null)
                     {
                         for (ItemStack internalItem : inv)
@@ -115,7 +128,7 @@ public class RitualEffectUnbinding extends RitualEffect
                         }
                     }
 
-                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, ritualStone.getVar1()));
+                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, new ItemStack(ModBlocks.bloodSocket, bloodSockets));
                     world.spawnEntityInWorld(newItem);
                     ritualStone.setActive(false);
                     drain = true;
@@ -125,9 +138,17 @@ public class RitualEffectUnbinding extends RitualEffect
                 {
                     item.setDead();
                     doLightning(world, x, y, z);
-                    ItemStack spawnedItem = UnbindingRegistry.getOutputForIndex(ritualStone.getVar1() - 9);
-                    EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, spawnedItem.copy());
-                    world.spawnEntityInWorld(newItem);
+                    List<ItemStack> spawnedItem = UnbindingRegistry.getOutputForIndex(ritualStone.getVar1() - 9);
+
+                    if (spawnedItem != null)
+                    {
+                        for (ItemStack itemStack1 : spawnedItem)
+                        {
+                            EntityItem newItem = new EntityItem(world, x + 0.5, y + 1, z + 0.5, itemStack1.copy());
+                            world.spawnEntityInWorld(newItem);
+                        }
+                    }
+
                     ritualStone.setActive(false);
                     drain = true;
                     break;
@@ -163,7 +184,7 @@ public class RitualEffectUnbinding extends RitualEffect
     @Override
     public List<RitualComponent> getRitualComponentList()
     {
-        ArrayList<RitualComponent> unbindingRitual = new ArrayList();
+        ArrayList<RitualComponent> unbindingRitual = new ArrayList<RitualComponent>();
         unbindingRitual.add(new RitualComponent(-2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(2, 0, 0, 4));
         unbindingRitual.add(new RitualComponent(0, 0, 2, 4));

@@ -1,25 +1,40 @@
 package WayofTime.alchemicalWizardry.api.bindingRegistry;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class UnbindingRegistry
 {
-    public static List<UnbindingRecipe> unbindingRecipes = new LinkedList();
+    public static List<UnbindingRecipe> unbindingRecipes = new LinkedList<UnbindingRecipe>();
 
     public static void addAllUnbindingRecipesFromBinding()
     {
         for (BindingRecipe bindingRecipe : BindingRegistry.bindingRecipes)
         {
-            unbindingRecipes.add(new UnbindingRecipe(bindingRecipe.requiredItem, bindingRecipe.outputItem));
+            List<ItemStack> subList = new ArrayList<ItemStack>();
+            subList.add(bindingRecipe.outputItem);
+            unbindingRecipes.add(new UnbindingRecipe(bindingRecipe.requiredItem, subList));
         }
     }
 
-    public static void registerRecipe(ItemStack output, ItemStack input)
+    public static void registerRecipe(ItemStack input, List<ItemStack> output)
     {
-        unbindingRecipes.add(new UnbindingRecipe(output, input));
+        unbindingRecipes.add(new UnbindingRecipe(input, output));
+    }
+
+    public static void registerRecipe(Item input, List<ItemStack> output)
+    {
+        unbindingRecipes.add(new UnbindingRecipe(new ItemStack(input), output));
+    }
+
+    public static void registerRecipe(Block input, List<ItemStack> output)
+    {
+        unbindingRecipes.add(new UnbindingRecipe(new ItemStack(input), output));
     }
 
     public static boolean isRequiredItemValid(ItemStack testItem)
@@ -50,7 +65,7 @@ public class UnbindingRegistry
         return -1;
     }
 
-    public static ItemStack getOutputForIndex(int index)
+    public static List<ItemStack> getOutputForIndex(int index)
     {
         if (unbindingRecipes.size() <= index)
         {
