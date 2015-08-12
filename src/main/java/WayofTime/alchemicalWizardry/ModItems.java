@@ -264,7 +264,7 @@ public class ModItems
         voidSigil = registerItem(new SigilVoid(), "void_sigil");
         blankSlate = registerItem(new BaseItems(), "blank_slate");
         reinforcedSlate = registerItem(new BaseItems(), "reinforced_slate");
-        sacrificialDagger = registerItem(new SacrificialDagger(), "sacrificial_agger");
+        sacrificialDagger = registerItem(new SacrificialDagger(), "sacrificial_dagger");
         daggerOfSacrifice = registerItem(new DaggerOfSacrifice(), "dagger_of_sacrifice");
         airSigil = registerItem(new SigilAir(), "air_sigil");
         sigilOfTheFastMiner = registerItem(new SigilOfTheFastMiner(), "sigil_of_the_fast_miner");

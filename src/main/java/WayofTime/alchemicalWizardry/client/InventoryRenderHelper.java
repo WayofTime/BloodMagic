@@ -127,7 +127,6 @@ public class InventoryRenderHelper {
     	for(String name : ItemComponents.ITEM_NAMES)
     	{
     		itemRender(ModItems.baseItems, i, ModItems.baseItems.getUnlocalizedName().substring(5) + "_" + name);
-    		
     		i++;
     	}
     	
@@ -135,7 +134,6 @@ public class InventoryRenderHelper {
     	for(String name : ItemAlchemyBase.ITEM_NAMES)
     	{
     		itemRender(ModItems.baseAlchemyItems, i, ModItems.baseAlchemyItems.getUnlocalizedName().substring(5) + "_" + name);
-    		
     		i++;
     	}
     	
@@ -143,7 +141,6 @@ public class InventoryRenderHelper {
     	for(String name : ItemIncense.ITEM_NAMES)
     	{
     		itemRender(ModItems.itemIncense, i, ModItems.itemIncense.getUnlocalizedName().substring(5) + "_" + name);
-    		
     		i++;
     	}
     	
