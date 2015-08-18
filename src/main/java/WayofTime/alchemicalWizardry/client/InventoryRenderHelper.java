@@ -1,5 +1,8 @@
 package WayofTime.alchemicalWizardry.client;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -116,7 +119,7 @@ public class InventoryRenderHelper {
     	registerSimpleItem(ModItems.weakBindingAgent);
     	registerSimpleItem(ModItems.itemRitualDiviner); //TODO Make it work for all 3 metas
     	registerSimpleItem(ModItems.itemKeyOfDiablo);
-    	registerToggleItem(ModItems.itemBloodLightSigil);
+    	registerSimpleItem(ModItems.itemBloodLightSigil);
     	registerSimpleItem(ModItems.itemComplexSpellCrystal);
     	registerSimpleItem(ModItems.bucketLife);
     	registerToggleItem(ModItems.itemSigilOfEnderSeverance);
@@ -126,21 +129,39 @@ public class InventoryRenderHelper {
     	int i = 0;
     	for(String name : ItemComponents.ITEM_NAMES)
     	{
-    		itemRender(ModItems.baseItems, i, ModItems.baseItems.getUnlocalizedName().substring(5) + "_" + name);
+    		String funName = ModItems.baseItems.getUnlocalizedName().substring(5) + "_" + name;
+    		itemRender(ModItems.baseItems, i, funName);
+//    		try {
+//        		PrintWriter writer = new PrintWriter(funName + ".json");
+//    			writer.println("{");
+//    			writer.println("    " + '"' + "parent" + '"' + ":" + '"' + "alchemicalwizardry:item/standard_item" + '"' + ",");
+//    			writer.println("    "+ '"' + "textures" + '"' + ": {");
+//    			writer.println("        " + '"' + "layer0" + '"' + ":" + '"' + "alchemicalwizardry:items/" + "baseItem" + "_" + name + '"');
+//    			writer.println("    }");
+//    			writer.println("}");
+//    			writer.close();
+//    		} catch (FileNotFoundException e1) {
+//    			// TODO Auto-generated catch block
+//    			e1.printStackTrace();
+//    		}
     		i++;
     	}
     	
     	i = 0;
     	for(String name : ItemAlchemyBase.ITEM_NAMES)
     	{
-    		itemRender(ModItems.baseAlchemyItems, i, ModItems.baseAlchemyItems.getUnlocalizedName().substring(5) + "_" + name);
+    		String funName = ModItems.baseAlchemyItems.getUnlocalizedName().substring(5) + "_" + name;
+    		itemRender(ModItems.baseAlchemyItems, i, funName);
+    		
     		i++;
     	}
     	
     	i = 0;
     	for(String name : ItemIncense.ITEM_NAMES)
     	{
-    		itemRender(ModItems.itemIncense, i, ModItems.itemIncense.getUnlocalizedName().substring(5) + "_" + name);
+    		String funName = ModItems.itemIncense.getUnlocalizedName().substring(5) + "_" + name;
+    		itemRender(ModItems.itemIncense, i, funName);
+    		
     		i++;
     	}
     	

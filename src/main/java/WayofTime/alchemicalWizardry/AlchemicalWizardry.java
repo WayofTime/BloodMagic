@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import WayofTime.alchemicalWizardry.common.potion.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -130,6 +129,7 @@ import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmFire;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWater;
 import WayofTime.alchemicalWizardry.common.omega.OmegaParadigmWind;
 import WayofTime.alchemicalWizardry.common.omega.OmegaRegistry;
+import WayofTime.alchemicalWizardry.common.potion.PotionBloodMagic;
 import WayofTime.alchemicalWizardry.common.renderer.AlchemyCircleRenderer;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAnimalGrowth;
 import WayofTime.alchemicalWizardry.common.rituals.RitualEffectAutoAlchemy;
@@ -246,9 +246,9 @@ import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicalCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TECrucible;
-import WayofTime.alchemicalWizardry.common.tileEntity.TESpellTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMimicBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEOrientable;
@@ -263,8 +263,8 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEffectBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellEnhancementBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellModifierBlock;
 import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
+import WayofTime.alchemicalWizardry.common.tileEntity.TESpellTable;
 import WayofTime.alchemicalWizardry.common.tileEntity.TETeleposer;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEChemistrySet;
 import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
 //import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 
@@ -472,7 +472,7 @@ public class AlchemicalWizardry
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
-    {
+    {   	
         File bmDirectory = new File("config/BloodMagic/schematics");
 
         if (!bmDirectory.exists() && bmDirectory.mkdirs())

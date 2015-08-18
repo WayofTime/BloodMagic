@@ -1,0 +1,6 @@
+{
+    "parent":"alchemicalwizardry:item/standard_item",
+    "textures": {
+        "layer0":"alchemicalwizardry:items/baseItem_input_cable"
+    }
+}
