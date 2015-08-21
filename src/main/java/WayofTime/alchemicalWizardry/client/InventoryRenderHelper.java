@@ -1,8 +1,5 @@
 package WayofTime.alchemicalWizardry.client;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
