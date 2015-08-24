@@ -28,6 +28,12 @@ public class BlockFilledSocket extends BlockContainer
     }
 
     @Override
+    public int getRenderType()
+    {
+        return 3;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState blockState, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TESocket tileEntity = (TESocket) world.getTileEntity(blockPos);

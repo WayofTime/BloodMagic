@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.client;
 
+import WayofTime.alchemicalWizardry.common.block.BlockBloodRune;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;

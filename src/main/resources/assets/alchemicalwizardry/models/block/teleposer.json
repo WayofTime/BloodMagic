@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "alchemicalwizardry:blocks/Teleposer_Side",
+        "down": "alchemicalwizardry:blocks/Teleposer_Side",
+        "up": "alchemicalwizardry:blocks/Teleposer_Top",
+        "north": "alchemicalwizardry:blocks/Teleposer_Side",
+        "east": "alchemicalwizardry:blocks/Teleposer_Side",
+        "south": "alchemicalwizardry:blocks/Teleposer_Side",
+        "west": "alchemicalwizardry:blocks/Teleposer_Side"
+    }
+}

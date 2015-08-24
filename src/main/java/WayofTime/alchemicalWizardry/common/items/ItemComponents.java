@@ -32,7 +32,7 @@ public class ItemComponents extends Item
     {
         //This is what will do all the localisation things on the alchemy components so you dont have to set it :D
         int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, ITEM_NAMES.length - 1);
-        return (getUnlocalizedName() + "." + ITEM_NAMES[meta]);
+        return getUnlocalizedName() + "." + ITEM_NAMES[meta];
     }
 
     @Override

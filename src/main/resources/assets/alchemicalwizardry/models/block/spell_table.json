@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "alchemicalwizardry:blocks/spell_table_top",
+        "down": "alchemicalwizardry:blocks/spell_table_bottom",
+        "up": "alchemicalwizardry:blocks/spell_table_top",
+        "north": "alchemicalwizardry:blocks/spell_table_side",
+        "east": "alchemicalwizardry:blocks/spell_table_side",
+        "south": "alchemicalwizardry:blocks/spell_table_side",
+        "west": "alchemicalwizardry:blocks/spell_table_side"
+    }
+}

@@ -1,5 +1,5 @@
 {
-    "parent":"alchemicalwizardry:block/soul_armour_forge",
+    "parent":"alchemicalwizardry:block/spectral_block",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
