@@ -1,5 +1,5 @@
 {
-    "parent":"alchemicalwizardry:block/soul_armour_forge",
+    "parent":"alchemicalwizardry:block/spell_table",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

@@ -104,8 +104,6 @@ import WayofTime.alchemicalWizardry.common.tileEntity.TESpellParadigmBlock;
 
 public class ClientProxy extends CommonProxy
 {
-    public static int renderPass;
-
     @Override
     public void registerPostSideObjects()
     {
@@ -170,7 +168,8 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockSpellModifier), new TESpellModifierBlockItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockAlchemicalCalcinator), new TEAlchemicalCalcinatorItemRenderer());
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockCrystalBelljar), new TEBellJarItemRenderer());
-        
+
+        BlockRenderer.registerBlockRenders();
         InventoryRenderHelper.registerItems();
     }
 

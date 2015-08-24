@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,6 +24,25 @@ public class BlockSpectral extends BlockContainer
     public BlockSpectral()
     {
         super(Material.rock);
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return 3;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer()
+    {
+        return EnumWorldBlockLayer.TRANSLUCENT;
+    }
+
+    @Override
+    public boolean isFullCube()
+    {
+        return false;
     }
 
     @Override

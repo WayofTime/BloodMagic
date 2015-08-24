@@ -39,6 +39,12 @@ public class BlockTeleposer extends BlockContainer
     }
 
     @Override
+    public int getRenderType()
+    {
+        return 3;
+    }
+
+    @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         ItemStack playerItem = player.getCurrentEquippedItem();

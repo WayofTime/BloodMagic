@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -22,7 +21,7 @@ public class BlockBloodRune extends Block
     public BlockBloodRune()
     {
         super(Material.iron);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(INTEGER, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(INTEGER, 0));
         setHardness(2.0F);
         setResistance(5.0F);
     }
@@ -30,13 +29,13 @@ public class BlockBloodRune extends Block
     @Override
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {INTEGER});
+        return new BlockState(this, INTEGER);
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(INTEGER, Integer.valueOf(meta));
+        return this.getDefaultState().withProperty(INTEGER, meta);
     }
     
     @Override
@@ -45,9 +44,9 @@ public class BlockBloodRune extends Block
         return ((Integer)state.getValue(INTEGER)).intValue();
     }
 
-    public int getRuneEffect(int metaData)
+    public int getRuneEffect(int meta)
     {
-        switch (metaData)
+        switch (meta)
         {
             case 0:
                 return 0;

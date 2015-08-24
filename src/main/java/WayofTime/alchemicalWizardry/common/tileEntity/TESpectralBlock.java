@@ -35,11 +35,6 @@ public class TESpectralBlock extends TileEntity implements IUpdatePlayerListBox
     @Override
     public void update()
     {
-        if (worldObj.isRemote)
-        {
-            return;
-        }
-
         this.ticksRemaining--;
 
         if (this.ticksRemaining <= 0)

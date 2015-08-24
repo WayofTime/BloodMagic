@@ -269,7 +269,7 @@ import WayofTime.alchemicalWizardry.common.tileEntity.gui.GuiHandler;
 //import WayofTime.alchemicalWizardry.common.tweaker.MineTweakerIntegration;
 
 
-@Mod(modid = "AWWayofTime", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
+@Mod(modid = "AlchemicalWizardry", name = "AlchemicalWizardry", version = "v1.3.3", guiFactory = "WayofTime.alchemicalWizardry.client.gui.ConfigGuiFactory")
 public class AlchemicalWizardry
 {
     public static String MODID = "AWWayofTime"; //Temporary
@@ -461,7 +461,7 @@ public class AlchemicalWizardry
     public static Fluid lifeEssenceFluid;
 
     // The instance of your mod that Forge uses.
-    @Instance("AWWayofTime")
+    @Instance("AlchemicalWizardry")
     public static AlchemicalWizardry instance;
 
     // Says where the client and server 'proxy' code is loaded.

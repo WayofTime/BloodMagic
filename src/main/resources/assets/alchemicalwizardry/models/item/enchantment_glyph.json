@@ -1,5 +1,5 @@
 {
-    "parent":"alchemicalwizardry:block/soul_armour_forge",
+    "parent":"alchemicalwizardry:block/enchantment_glyph",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
