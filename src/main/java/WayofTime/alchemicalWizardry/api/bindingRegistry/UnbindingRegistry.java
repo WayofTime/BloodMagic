@@ -17,8 +17,8 @@ public class UnbindingRegistry
         for (BindingRecipe bindingRecipe : BindingRegistry.bindingRecipes)
         {
             List<ItemStack> subList = new ArrayList<ItemStack>();
-            subList.add(bindingRecipe.outputItem);
-            unbindingRecipes.add(new UnbindingRecipe(bindingRecipe.requiredItem, subList));
+            subList.add(bindingRecipe.requiredItem);
+            unbindingRecipes.add(new UnbindingRecipe(bindingRecipe.outputItem, subList));
         }
     }
 

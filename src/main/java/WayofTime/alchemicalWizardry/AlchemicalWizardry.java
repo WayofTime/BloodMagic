@@ -258,7 +258,7 @@ import WayofTime.alchemicalWizardry.common.summoning.SummoningHelperAW;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TECrucible;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEHomHeart;
@@ -792,7 +792,7 @@ public class AlchemicalWizardry
         GameRegistry.registerTileEntity(TESchematicSaver.class, "containerSchematicSaver");
         GameRegistry.registerTileEntity(TESpectralBlock.class, "containerSpectralBlock");
         GameRegistry.registerTileEntity(TEReagentConduit.class, "containerReagentConduit");
-        GameRegistry.registerTileEntity(TEBellJar.class, "containerBellJar");
+        GameRegistry.registerTileEntity(TEBelljar.class, "containerBellJar");
         GameRegistry.registerTileEntity(TEAlchemicCalcinator.class, "containerAlchemicCalcinator");
         GameRegistry.registerTileEntity(TEDemonChest.class, "containerDemonChest");
         GameRegistry.registerTileEntity(TEMimicBlock.class, "containerMimic");
