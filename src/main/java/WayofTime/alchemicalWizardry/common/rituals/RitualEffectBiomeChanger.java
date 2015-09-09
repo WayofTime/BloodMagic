@@ -140,6 +140,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
             float temperature = 0.5f;
             float humidity = 0.5f;
             float acceptableRange = 0.1f;
+            int biomeSkip = 0;
 
             for (int i = -1; i <= 1; i++)
             {
@@ -202,6 +203,11 @@ public class RitualEffectBiomeChanger extends RitualEffect
                                 {
                                     temperature -= 0.2f;
                                     isItemConsumed = true;
+                                } else if (item == (Blocks.wool))
+                                {
+                                    int skip = itemStack.getItemDamage() + 1;
+                                    biomeSkip += skip;
+                                    isItemConsumed = true;
                                 }
                             } else if (itemTest.equals(Items.dye) && itemStack.getItemDamage() == 4)
                             {
@@ -257,7 +263,10 @@ public class RitualEffectBiomeChanger extends RitualEffect
                 if (Math.abs(rainfall - humidity) < acceptableRange && Math.abs(temperature - temp) < acceptableRange)
                 {
                     biomeID = iteration;
-                    break;
+                    if (biomeSkip == 0)
+                        break;
+                    else
+                        biomeSkip--;
                 }
 
                 iteration++;
