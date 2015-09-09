@@ -264,12 +264,21 @@ public class RitualEffectBiomeChanger extends RitualEffect
                 {
                     biomeID = iteration;
                     if (biomeSkip == 0)
+                    {
                         break;
-                    else
+                    } else
+                    {
                         biomeSkip--;
+                    }
                 }
 
                 iteration++;
+            }
+            
+            // Default to Plains if too much biome skip is used
+            if (biomeSkip != 0)
+            {
+                biomeID = 1;
             }
 
             for (int i = 0; i < 2 * range + 1; i++)
