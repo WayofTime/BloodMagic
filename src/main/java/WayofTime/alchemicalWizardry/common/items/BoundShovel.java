@@ -50,6 +50,7 @@ public class BoundShovel extends ItemSpade implements IBindable
         this.damageVsEntity = 5;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setEnergyUsed(5);
+        setHarvestLevel("shovel", 5);
     }
 
     public void setEnergyUsed(int i)
@@ -332,11 +333,6 @@ public class BoundShovel extends ItemSpade implements IBindable
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-        if (getActivated(stack) && "shovel".equals(toolClass))
-        {
-            return 5;
-        }
-
-        return 0;
+        return getActivated(stack) ? super.getHarvestLevel(stack, toolClass) : -1;
     }
 }
