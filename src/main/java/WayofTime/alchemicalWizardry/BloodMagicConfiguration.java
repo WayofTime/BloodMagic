@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import WayofTime.alchemicalWizardry.api.BlockStack;
+import WayofTime.alchemicalWizardry.common.AlchemicalWizardryEventHooks;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.common.config.Configuration;
@@ -18,6 +22,7 @@ import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorParadigm;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Created with IntelliJ IDEA.
@@ -145,6 +150,11 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledPhantomHands = config.get("Ritual Blacklist", "Orchestra of the Phantom Hands", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledSphereIsland = config.get("Ritual Blacklist", "Birth of the Bastion", false).getBoolean(false);
 
+		AlchemicalWizardry.ritualWeakDisabledNight = config.get("Ritual Blacklist.Weak", "Night", false).getBoolean(false);
+		AlchemicalWizardry.ritualWeakDisabledResistance = config.get("Ritual Blacklist.Weak", "Resistance", false).getBoolean(false);
+		AlchemicalWizardry.ritualWeakDisabledThunderstorm = config.get("Ritual Blacklist.Weak", "Thunderstorm", false).getBoolean(false);
+		AlchemicalWizardry.ritualWeakDisabledZombie = config.get("Ritual Blacklist.Weak", "Zombie", false).getBoolean(false);
+
 		AlchemicalWizardry.potionDisableRegen = config.get("Alchemy Potion Blacklist", "Regeneration", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableNightVision = config.get("Alchemy Potion Blacklist", "Night Vision", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableFireResistance = config.get("Alchemy Potion Blacklist", "Fire Resistance", false).getBoolean(false);
@@ -173,6 +183,7 @@ public class BloodMagicConfiguration
 	    AlchemicalWizardry.potionDisableDeafness = config.get("Alchemy Potion Blacklist", "Deafness", false).getBoolean(false);
 
         teleposerBlacklist = config.get("Teleposer Blacklist", "Blacklist", blacklist, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is: \nmodid:blockname:meta").getStringList();
+		buildTeleposerBlacklist();
 
 		String tempDemonConfigs = "Demon Configs";
 		TEDemonPortal.buildingGridDelay = config.get(tempDemonConfigs, "Building Grid Delay", 25).getInt();
@@ -290,5 +301,39 @@ public class BloodMagicConfiguration
 	{
 		Rituals.ritualMap.remove(ritualID);
 		Rituals.keyList.remove(ritualID);
+	}
+
+	private static void buildTeleposerBlacklist() {
+		for (String blockSet : BloodMagicConfiguration.teleposerBlacklist) {
+			String[] blockData = blockSet.split(":");
+
+			Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+			int meta = 0;
+
+			// If the block follows full syntax: modid:blockname:meta
+			if (blockData.length == 3) {
+				// Check if it's an int, if so, parse it. If not, set meta to 0 to avoid crashing.
+				if (isInteger(blockData[2]))
+					meta = Integer.parseInt(blockData[2]);
+				else if (blockData[2].equals("*"))
+					meta = OreDictionary.WILDCARD_VALUE;
+				else
+					meta = 0;
+			}
+
+			AlchemicalWizardryEventHooks.teleposerBlacklist.add(new BlockStack(block, meta));
+		}
+	}
+
+	private static boolean isInteger(String s) {
+		try {
+			Integer.parseInt(s);
+		} catch(NumberFormatException e) {
+			return false;
+		} catch(NullPointerException e) {
+			return false;
+		}
+		// only got here if we didn't return false
+		return true;
 	}
 }

@@ -44,7 +44,7 @@ public class ImperfectRitualStone extends Block
         {
             Block block = world.getBlock(x, y + 1, z);
 
-            if (block == Blocks.water)
+            if (block == Blocks.water && !AlchemicalWizardry.ritualWeakDisabledThunderstorm)
             {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
@@ -67,8 +67,7 @@ public class ImperfectRitualStone extends Block
                 world.getWorldInfo().setThunderTime(0);
                 world.getWorldInfo().setThundering(true);
                 return true;
-            } else if (block == Blocks.coal_block)
-            {
+            } else if (block == Blocks.coal_block && !AlchemicalWizardry.ritualWeakDisabledZombie) {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
                     EnergyItems.drainPlayerNetwork(player, 5000);
@@ -87,7 +86,7 @@ public class ImperfectRitualStone extends Block
                 }
 
                 return true;
-            } else if (block == Blocks.lapis_block)
+            } else if (block == Blocks.lapis_block && !AlchemicalWizardry.ritualWeakDisabledNight)
             {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
@@ -99,7 +98,7 @@ public class ImperfectRitualStone extends Block
                     world.addWeatherEffect(new EntityLightningBolt(world, x, y + 2, z));
                     world.setWorldTime((world.getWorldTime() / 24000) * 24000 + 13800);
                 }
-            } else if (block == Blocks.bedrock)
+            } else if (block == Blocks.bedrock && !AlchemicalWizardry.ritualWeakDisabledResistance)
             {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {

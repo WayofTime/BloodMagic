@@ -44,6 +44,10 @@ repositories {
     	name 'TehNut Repo'
     	url 'http://tehnut.info/maven/'
     }
+    maven {
+        name 'tterrag Repo'
+        url 'http://maven.tterrag.com/'
+    }
 	ivy {
 		name "MineTweaker3"
         artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
@@ -57,6 +61,7 @@ dependencies {
 	compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
 	compile "codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev"
 	compile "info.amerifrance.guideapi:Guide-API:" + config.mc_version + "-" + config.guideapi_version + ":deobf"
+    compile "team.chisel:Chisel:" + config.chisel_version + ":api"
 }
 
 minecraft {

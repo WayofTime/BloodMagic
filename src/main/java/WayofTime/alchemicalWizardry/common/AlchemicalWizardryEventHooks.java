@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import WayofTime.alchemicalWizardry.api.BlockStack;
 import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
 import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import net.minecraft.block.Block;
@@ -68,6 +69,7 @@ public class AlchemicalWizardryEventHooks
 
 	public static Map<Integer, List<CoordAndRange>> respawnMap = new HashMap();
 	public static Map<Integer, List<CoordAndRange>> forceSpawnMap = new HashMap();
+	public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
 	
 	public static Random rand = new Random();
 
@@ -771,41 +773,62 @@ public class AlchemicalWizardryEventHooks
 		}
 	}
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onTelepose(TeleposeEvent event) {
-        for (int i = 0; i < BloodMagicConfiguration.teleposerBlacklist.length; i++) {
-            String[] blockData = BloodMagicConfiguration.teleposerBlacklist[i].split(":");
+//    @SubscribeEvent(priority = EventPriority.LOWEST)
+//    public void onTelepose(TeleposeEvent event) {
+//
+//		AlchemicalWizardry.logger.info(event.initialBlock + ":" + event.initialMetadata);
+//		AlchemicalWizardry.logger.info(event.finalBlock + ":" + event.finalMetadata);
+//
+//        for (int i = 0; i < BloodMagicConfiguration.teleposerBlacklist.length; i++) {
+//            String[] blockData = BloodMagicConfiguration.teleposerBlacklist[i].split(":");
+//
+//            // If the block follows full syntax: modid:blockname:meta
+//            if (blockData.length == 3) {
+//
+//                Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+//                int meta;
+//
+//                // Check if it's an int, if so, parse it. If not, set meta to 0 to avoid crashing.
+//                if (isInteger(blockData[2]))
+//                    meta = Integer.parseInt(blockData[2]);
+//                else if (blockData[2].equals("*"))
+//                    meta = OreDictionary.WILDCARD_VALUE;
+//                else
+//                    meta = 0;
+//
+//				AlchemicalWizardry.logger.info(block + ":" + meta);
+//
+//                if (block != null) {
+//					if ((block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE)) {
+//						event.setCanceled(true);
+//						return;
+//					}
+//				}
+//
+//            // If the block uses shorthand syntax: modid:blockname
+//            } else if (blockData.length == 2) {
+//
+//                Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+//                int meta = 0;
+//
+//                if (block != null) {
+//					if ((block == event.initialBlock && (meta == event.initialMetadata || meta == OreDictionary.WILDCARD_VALUE)) || (block == event.finalBlock && (meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))) {
+//						event.setCanceled(true);
+//						return;
+//					}
+//				}
+//            }
+//        }
+//    }
 
-            // If the block follows full syntax: modid:blockname:meta
-            if (blockData.length == 3) {
+	@SubscribeEvent
+	public void onTelepose(TeleposeEvent event) {
+		BlockStack initialBlock = new BlockStack(event.initialBlock, event.initialMetadata);
+		BlockStack finalBlock = new BlockStack(event.finalBlock, event.finalMetadata);
 
-                Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
-                int meta;
-
-                // Check if it's an int, if so, parse it. If not, set meta to 0 to avoid crashing.
-                if (blockData[2].matches("-?\\d+"))
-                    meta = Integer.parseInt(blockData[2]);
-                else if (blockData[2].equals("*"))
-                    meta = OreDictionary.WILDCARD_VALUE;
-                else
-                    meta = 0;
-
-                if (block != null)
-                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
-                        event.setCanceled(true);
-
-            // If the block uses shorthand syntax: modid:blockname
-            } else if (blockData.length == 2) {
-
-                Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
-                int meta = 0;
-
-                if (block != null)
-                    if (( block == event.initialBlock || block == event.finalBlock) && (meta == event.initialMetadata || meta == event.finalMetadata || meta == OreDictionary.WILDCARD_VALUE))
-                        event.setCanceled(true);
-            }
-        }
-    }
+		if (teleposerBlacklist.contains(initialBlock) || teleposerBlacklist.contains(finalBlock))
+			event.setCanceled(true);
+	}
 
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event)

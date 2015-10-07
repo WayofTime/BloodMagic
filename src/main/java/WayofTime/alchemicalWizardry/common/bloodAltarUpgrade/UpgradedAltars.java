@@ -3,7 +3,10 @@ package WayofTime.alchemicalWizardry.common.bloodAltarUpgrade;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.BlockStack;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBeacon;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -45,10 +48,12 @@ public class UpgradedAltars
                     if (ac.isBloodRune())
                     {
                         Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                        int testMeta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
                         if (!(testBlock instanceof BloodRune))
                         {
-                            return false;
+                            if (!checkRuneSpecials(ac, new BlockStack(testBlock, testMeta)))
+                                return false;
                         }
                     } else
                     {
@@ -57,7 +62,8 @@ public class UpgradedAltars
 
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
-                            return false;
+                            if (!checkSpecials(ac, new BlockStack(block, metadata)))
+                                return false;
                         }
                     }
                 }
@@ -70,10 +76,12 @@ public class UpgradedAltars
                     if (ac.isBloodRune())
                     {
                         Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                        int testMeta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
                         if (!(testBlock instanceof BloodRune))
                         {
-                            return false;
+                            if (!checkRuneSpecials(ac, new BlockStack(testBlock, testMeta)))
+                                return false;
                         }
                     } else
                     {
@@ -82,7 +90,8 @@ public class UpgradedAltars
 
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
-                            return false;
+                            if (!checkSpecials(ac, new BlockStack(block, metadata)))
+                                return false;
                         }
                     }
                 }
@@ -95,10 +104,12 @@ public class UpgradedAltars
                     if (ac.isBloodRune())
                     {
                         Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                        int testMeta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
                         if (!(testBlock instanceof BloodRune))
                         {
-                            return false;
+                            if (!checkRuneSpecials(ac, new BlockStack(testBlock, testMeta)))
+                                return false;
                         }
                     } else
                     {
@@ -107,7 +118,8 @@ public class UpgradedAltars
 
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
-                            return false;
+                            if (!checkSpecials(ac, new BlockStack(block, metadata)))
+                                return false;
                         }
                     }
                 }
@@ -120,19 +132,21 @@ public class UpgradedAltars
                     if (ac.isBloodRune())
                     {
                         Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                        int testMeta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
                         if (!(testBlock instanceof BloodRune))
                         {
-                            return false;
+                            if (!checkRuneSpecials(ac, new BlockStack(testBlock, testMeta)))
+                                return false;
                         }
-                    } else
-                    {
+                    } else {
                         Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
-                            return false;
+                            if (!checkSpecials(ac, new BlockStack(block, metadata)))
+                                return false;
                         }
                     }
                 }
@@ -145,10 +159,12 @@ public class UpgradedAltars
                     if (ac.isBloodRune())
                     {
                         Block testBlock = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+                        int testMeta = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
                         if (!(testBlock instanceof BloodRune))
                         {
-                            return false;
+                            if (!checkRuneSpecials(ac, new BlockStack(testBlock, testMeta)))
+                                return false;
                         }
                     } else
                     {
@@ -157,7 +173,8 @@ public class UpgradedAltars
 
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
-                            return false;
+                            if (!checkSpecials(ac, new BlockStack(block, metadata)))
+                                return false;
                         }
                     }
                 }
@@ -336,6 +353,31 @@ public class UpgradedAltars
             sixthTierAltar.add(new AltarComponent(i, -5, 11, ModBlocks.bloodRune, 0, true, true));
             sixthTierAltar.add(new AltarComponent(i, -5, -11, ModBlocks.bloodRune, 0, true, true));
         }
+    }
+
+    private static boolean checkRuneSpecials(AltarComponent altarComponent, BlockStack blockStack) {
+        if (AlchemicalWizardry.isChiselLoaded) {
+            if (altarComponent.getBlock() == ModBlocks.bloodRune && CompatChecks.checkChiselBlock(blockStack, "bloodRune"))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static boolean checkSpecials(AltarComponent altarComponent, BlockStack blockStack) {
+
+        if (AlchemicalWizardry.isChiselLoaded) {
+            if (altarComponent.getBlock() == Blocks.glowstone && CompatChecks.checkChiselBlock(blockStack, "glowstone"))
+                return true;
+
+            if (altarComponent.getBlock() == ModBlocks.largeBloodStoneBrick && CompatChecks.checkChiselBlock(blockStack, "bloodBrick"))
+                return true;
+        }
+
+        if (altarComponent.getBlock() == Blocks.beacon && blockStack.getBlock() instanceof BlockBeacon)
+            return true;
+
+        return false;
     }
 
     public static List<AltarComponent> getAltarUpgradeListForTier(int tier)

@@ -36,11 +36,14 @@ public class TEAltarRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
     {
-        modelBloodAltar.renderBloodAltar((TEAltar) tileEntity, d0, d1, d2);
-        modelBloodAltar.renderBloodLevel((TEAltar) tileEntity, d0, d1, d2);
-
         if (tileEntity instanceof TEAltar)
         {
+
+            modelBloodAltar.renderBloodAltar((TEAltar) tileEntity, d0, d1, d2);
+
+            if (((TEAltar)tileEntity).getCurrentBlood() > 0)
+                modelBloodAltar.renderBloodLevel((TEAltar) tileEntity, d0, d1, d2);
+
             TEAltar tileAltar = (TEAltar) tileEntity;
             GL11.glPushMatrix();
 
