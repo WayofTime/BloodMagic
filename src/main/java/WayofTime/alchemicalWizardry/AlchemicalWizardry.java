@@ -424,6 +424,7 @@ public class AlchemicalWizardry
     public static boolean isThaumcraftLoaded;
     public static boolean isForestryLoaded;
     public static boolean isBotaniaLoaded;
+    public static boolean isChiselLoaded;
     public static boolean isFMPLoaded;
     public static boolean isPneumaticCraftLoaded;
 
@@ -1262,6 +1263,7 @@ public class AlchemicalWizardry
         isBotaniaLoaded = Loader.isModLoaded("Botania");
         isPneumaticCraftLoaded = Loader.isModLoaded("PneumaticCraft");
         isFMPLoaded = Loader.isModLoaded("ForgeMultipart");
+        isChiselLoaded = Loader.isModLoaded("chisel");
 
         BloodMagicConfiguration.loadBlacklist();
 	    BloodMagicConfiguration.blacklistRituals();
