@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.ModItems;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -15,12 +16,13 @@ public class LifeBucketHandler
     @SubscribeEvent
     public void onBucketFill(FillBucketEvent event)
     {
+        if (event.current.getItem() != Items.bucket)
+            return;
+
         ItemStack result = fillCustomBucket(event.world, event.target);
 
         if (result == null)
-        {
             return;
-        }
 
         event.result = result;
         event.setResult(Result.ALLOW);
