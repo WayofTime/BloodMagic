@@ -387,6 +387,11 @@ public class AlchemicalWizardry
     public static boolean ritualDisabledPhantomHands;
     public static boolean ritualDisabledSphereIsland;
 
+    public static boolean ritualWeakDisabledNight;
+    public static boolean ritualWeakDisabledResistance;
+    public static boolean ritualWeakDisabledThunderstorm;
+    public static boolean ritualWeakDisabledZombie;
+
     public static boolean displayRitualAnimation;
 
     public static boolean potionDisableRegen;

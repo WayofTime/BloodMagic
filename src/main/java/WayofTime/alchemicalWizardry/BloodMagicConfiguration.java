@@ -145,6 +145,11 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualDisabledPhantomHands = config.get("Ritual Blacklist", "Orchestra of the Phantom Hands", false).getBoolean(false);
 		AlchemicalWizardry.ritualDisabledSphereIsland = config.get("Ritual Blacklist", "Birth of the Bastion", false).getBoolean(false);
 
+		AlchemicalWizardry.ritualWeakDisabledNight = config.get("Ritual Blacklist.Weak", "Night", false).getBoolean(false);
+		AlchemicalWizardry.ritualWeakDisabledResistance = config.get("Ritual Blacklist.Weak", "Resistance", false).getBoolean(false);
+		AlchemicalWizardry.ritualWeakDisabledThunderstorm = config.get("Ritual Blacklist.Weak", "Thunderstorm", false).getBoolean(false);
+		AlchemicalWizardry.ritualWeakDisabledZombie = config.get("Ritual Blacklist.Weak", "Zombie", false).getBoolean(false);
+
 		AlchemicalWizardry.potionDisableRegen = config.get("Alchemy Potion Blacklist", "Regeneration", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableNightVision = config.get("Alchemy Potion Blacklist", "Night Vision", false).getBoolean(false);
 	    AlchemicalWizardry.potionDisableFireResistance = config.get("Alchemy Potion Blacklist", "Fire Resistance", false).getBoolean(false);
