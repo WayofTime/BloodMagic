@@ -130,15 +130,10 @@ public class UpgradedAltars
                         Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
 
-                        if (ac.getBlock() == Blocks.beacon) {
-
-                            if (block instanceof BlockBeacon)
-                                return true;
-                        }
-
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
-                            return false;
+                            if (!(ac.getBlock() == Blocks.beacon && block instanceof BlockBeacon))
+                                return false;
                         }
                     }
                 }
