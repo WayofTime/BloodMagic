@@ -48,6 +48,7 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
         this.damageVsEntity = 5;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         this.setEnergyUsed(5);
+        setHarvestLevel("pickaxe", 5);
     }
 
     public void setEnergyUsed(int i)
@@ -351,11 +352,6 @@ public class BoundPickaxe extends ItemPickaxe implements IBindable
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-        if (getActivated(stack) && "pickaxe".equals(toolClass))
-        {
-            return 5;
-        }
-
-        return 0;
+        return getActivated(stack) ? super.getHarvestLevel(stack, toolClass) : -1;
     }
 }

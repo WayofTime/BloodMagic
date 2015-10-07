@@ -46,6 +46,7 @@ public class BoundAxe extends ItemAxe implements IBindable
         this.damageVsEntity = 5;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
         setEnergyUsed(5);
+        this.setHarvestLevel("axe", 5);
     }
 
     public void setEnergyUsed(int i)
@@ -321,11 +322,6 @@ public class BoundAxe extends ItemAxe implements IBindable
     @Override
     public int getHarvestLevel(ItemStack stack, String toolClass)
     {
-        if (getActivated(stack) && "axe".equals(toolClass))
-        {
-            return 5;
-        }
-
-        return 0;
+        return getActivated(stack) ? super.getHarvestLevel(stack, toolClass) : -1;
     }
 }
