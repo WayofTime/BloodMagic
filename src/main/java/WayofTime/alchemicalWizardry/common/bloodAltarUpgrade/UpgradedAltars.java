@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBeacon;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -125,10 +126,15 @@ public class UpgradedAltars
                         {
                             return false;
                         }
-                    } else
-                    {
+                    } else {
                         Block block = world.getBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ());
                         int metadata = world.getBlockMetadata(x + ac.getX(), y + ac.getY(), z + ac.getZ());
+
+                        if (ac.getBlock() == Blocks.beacon) {
+
+                            if (block instanceof BlockBeacon)
+                                return true;
+                        }
 
                         if (((ac.getBlock() != block) || (ac.getMetadata() != metadata)) && !(ac.getBlock() == Blocks.stonebrick && !world.isAirBlock(x + ac.getX(), y + ac.getY(), z + ac.getZ())))
                         {
