@@ -52,7 +52,11 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             if (tileAltar.getStackInSlot(0) != null)
             {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
-                float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+                float rotationAngle;
+                if(FMLClientHandler.instance().getClient().gameSettings.fancyGraphics==true)
+                	rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+                else
+                	rotationAngle = 0;
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
