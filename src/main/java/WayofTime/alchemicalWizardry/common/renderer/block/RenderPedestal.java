@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.renderer.block;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelPedestal;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
 import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -52,7 +53,8 @@ public class RenderPedestal extends TileEntitySpecialRenderer
             if (tileAltar.getStackInSlot(0) != null)
             {
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
-                float rotationAngle = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+                float rotationAngle = Minecraft.isFancyGraphicsEnabled() ?  (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) : 0;
+
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
                 ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
