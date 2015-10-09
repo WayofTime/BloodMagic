@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import WayofTime.alchemicalWizardry.common.commands.CommandBloodMagic;
 import WayofTime.alchemicalWizardry.common.thread.CommandDownloadGAPI;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -1911,9 +1912,10 @@ public class AlchemicalWizardry
     @Mod.EventHandler
     public void initCommands(FMLServerStartingEvent event)
     {
-        event.registerServerCommand(new CommandBind());
-        event.registerServerCommand(new CommandUnbind());
-        event.registerServerCommand(new CommandSN());
+//        event.registerServerCommand(new CommandBind());
+//        event.registerServerCommand(new CommandUnbind());
+//        event.registerServerCommand(new CommandSN());
         event.registerServerCommand(new CommandDownloadGAPI());
+        event.registerServerCommand(new CommandBloodMagic());
     }
 }
