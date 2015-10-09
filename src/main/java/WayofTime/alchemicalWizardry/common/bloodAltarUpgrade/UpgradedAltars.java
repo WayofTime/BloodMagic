@@ -5,8 +5,13 @@ import java.util.List;
 
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.BlockStack;
+import WayofTime.alchemicalWizardry.api.tile.IAltarComponent;
+import WayofTime.alchemicalWizardry.common.block.BlockCrystal;
+import WayofTime.alchemicalWizardry.common.block.BloodStoneBrick;
+import WayofTime.alchemicalWizardry.common.block.LargeBloodStoneBrick;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeacon;
+import net.minecraft.block.BlockGlowstone;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import WayofTime.alchemicalWizardry.ModBlocks;
@@ -361,6 +366,10 @@ public class UpgradedAltars
                 return true;
         }
 
+        if (altarComponent.getBlock() == ModBlocks.bloodRune)
+            if ((blockStack.getBlock() instanceof BloodRune) || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType() == IAltarComponent.ComponentType.BLOODRUNE)))
+                return true;
+
         return false;
     }
 
@@ -374,8 +383,21 @@ public class UpgradedAltars
                 return true;
         }
 
-        if (altarComponent.getBlock() == Blocks.beacon && blockStack.getBlock() instanceof BlockBeacon)
-            return true;
+        if (altarComponent.getBlock() == ModBlocks.largeBloodStoneBrick)
+            if ((blockStack.getBlock() instanceof BloodStoneBrick || blockStack.getBlock() instanceof LargeBloodStoneBrick) || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType() == IAltarComponent.ComponentType.BLOODSTONE)))
+                return true;
+
+        if (altarComponent.getBlock() == ModBlocks.blockCrystal)
+            if ((blockStack.getBlock() instanceof BlockCrystal) || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType() == IAltarComponent.ComponentType.CRYSTAL)))
+                return true;
+
+        if (altarComponent.getBlock() == Blocks.glowstone)
+            if ((blockStack.getBlock() instanceof BlockGlowstone) || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType() == IAltarComponent.ComponentType.GLOWSTONE)))
+                return true;
+
+        if (altarComponent.getBlock() == Blocks.beacon)
+            if ((blockStack.getBlock() instanceof BlockBeacon) || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType() == IAltarComponent.ComponentType.BEACON)))
+                return true;
 
         return false;
     }
