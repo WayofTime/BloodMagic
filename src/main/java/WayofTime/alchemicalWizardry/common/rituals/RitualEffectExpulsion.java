@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -157,6 +158,12 @@ public class RitualEffectExpulsion extends RitualEffect
 
     public boolean teleportRandomly(EntityLivingBase entityLiving, double distance)
     {
+        if (entityLiving instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entityLiving;
+            if (player.capabilities.isCreativeMode)
+                return false;
+        }
+
         double x = entityLiving.posX;
         double y = entityLiving.posY;
         double z = entityLiving.posZ;

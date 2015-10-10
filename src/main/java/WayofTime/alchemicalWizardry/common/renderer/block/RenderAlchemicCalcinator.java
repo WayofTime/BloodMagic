@@ -6,6 +6,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelAlchemicalCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -59,6 +60,10 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
             if (tileAltar.getStackInSlot(1) != null)
             {
+
+                boolean fancySaved = Minecraft.isFancyGraphicsEnabled();
+                Minecraft.getMinecraft().gameSettings.fancyGraphics = true;
+
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(1));
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
@@ -80,6 +85,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 }
 
                 customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+                Minecraft.getMinecraft().gameSettings.fancyGraphics = fancySaved;
             }
 
 
@@ -88,6 +94,10 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
 
             if (tileAltar.getStackInSlot(0) != null)
             {
+
+                boolean fancySaved = Minecraft.isFancyGraphicsEnabled();
+                Minecraft.getMinecraft().gameSettings.fancyGraphics = true;
+
                 float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
                 EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
@@ -109,6 +119,7 @@ public class RenderAlchemicCalcinator extends TileEntitySpecialRenderer
                 }
 
                 customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+                Minecraft.getMinecraft().gameSettings.fancyGraphics = fancySaved;
             }
 
             GL11.glPopMatrix();

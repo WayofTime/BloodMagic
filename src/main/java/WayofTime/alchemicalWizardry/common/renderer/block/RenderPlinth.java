@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.renderer.block;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelPlinth;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPlinth;
 import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -37,7 +38,7 @@ public class RenderPlinth extends TileEntitySpecialRenderer
     {
         if (tileEntity instanceof TEPlinth)
         {
-            TEPlinth tileAltar = (TEPlinth) tileEntity;
+            TEPlinth tilePlinth = (TEPlinth) tileEntity;
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/Plinth.png");
@@ -49,12 +50,16 @@ public class RenderPlinth extends TileEntitySpecialRenderer
             GL11.glPopMatrix();
             GL11.glPushMatrix();
 
-            if (tileAltar.getStackInSlot(0) != null)
+            if (tilePlinth.getStackInSlot(0) != null)
             {
-                float scaleFactor = getGhostItemScaleFactor(tileAltar.getStackInSlot(0));
-                EntityItem ghostEntityItem = new EntityItem(tileAltar.getWorldObj());
+
+                boolean fancySaved = Minecraft.isFancyGraphicsEnabled();
+                Minecraft.getMinecraft().gameSettings.fancyGraphics = true;
+
+                float scaleFactor = getGhostItemScaleFactor(tilePlinth.getStackInSlot(0));
+                EntityItem ghostEntityItem = new EntityItem(tilePlinth.getWorldObj());
                 ghostEntityItem.hoverStart = 0.0F;
-                ghostEntityItem.setEntityItemStack(tileAltar.getStackInSlot(0));
+                ghostEntityItem.setEntityItemStack(tilePlinth.getStackInSlot(0));
                 float displacement = 0.2F;
 
                 if (ghostEntityItem.getEntityItem().getItem() instanceof ItemBlock)
@@ -72,6 +77,8 @@ public class RenderPlinth extends TileEntitySpecialRenderer
                 }
 
                 customRenderItem.doRender(ghostEntityItem, 0, 0, 0, 0, 0);
+
+                Minecraft.getMinecraft().gameSettings.fancyGraphics = fancySaved;
             }
 
             GL11.glPopMatrix();
