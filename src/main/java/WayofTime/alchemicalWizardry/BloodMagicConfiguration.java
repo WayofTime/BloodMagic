@@ -268,6 +268,11 @@ public class BloodMagicConfiguration
 		AlchemicalWizardry.ritualCostPhantomHands = config.get(lpCosts, "Orchestra of the Phantom Hands", new int[]{10000, 0}).getIntList();
 		AlchemicalWizardry.ritualCostSphereIsland = config.get(lpCosts, "Blood of the New Moon", new int[]{10000, 0}).getIntList();
 
+		AlchemicalWizardry.ritualWeakCostNight = config.get(lpCosts, "[Weak Ritual] Night", 5000).getInt();
+		AlchemicalWizardry.ritualWeakCostResistance = config.get(lpCosts, "[Weak Ritual] Resistance", 5000).getInt();
+		AlchemicalWizardry.ritualWeakCostThunderstorm = config.get(lpCosts, "[Weak Ritual] Thunderstorm", 5000).getInt();
+		AlchemicalWizardry.ritualWeakCostZombie = config.get(lpCosts, "[Weak Ritual] Zombie", 5000).getInt();
+
 		Side side = FMLCommonHandler.instance().getSide();
 		if (side == Side.CLIENT)
 		{

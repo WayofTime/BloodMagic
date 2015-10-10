@@ -48,7 +48,7 @@ public class ImperfectRitualStone extends Block
             {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
-                    EnergyItems.drainPlayerNetwork(player, 5000);
+                    EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostThunderstorm);
                 }
 
                 if (!world.isRemote)
@@ -70,7 +70,7 @@ public class ImperfectRitualStone extends Block
             } else if (block == Blocks.coal_block && !AlchemicalWizardry.ritualWeakDisabledZombie) {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
-                    EnergyItems.drainPlayerNetwork(player, 5000);
+                    EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostZombie);
                 }
 
                 EntityZombie zomb = new EntityZombie(world);
@@ -90,7 +90,7 @@ public class ImperfectRitualStone extends Block
             {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
-                    EnergyItems.drainPlayerNetwork(player, 5000);
+                    EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostNight);
                 }
 
                 if (!world.isRemote)
@@ -102,7 +102,7 @@ public class ImperfectRitualStone extends Block
             {
                 if (!player.capabilities.isCreativeMode && !world.isRemote)
                 {
-                    EnergyItems.drainPlayerNetwork(player, 5000);
+                    EnergyItems.drainPlayerNetwork(player, AlchemicalWizardry.ritualWeakCostResistance);
                 }
 
                 if (!world.isRemote)
