@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -111,7 +112,7 @@ public class RitualEffectDemonPortal extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostConvocation[1];
     }
     
     public void createRandomLightning(World world, int x, int y, int z)

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -130,7 +131,7 @@ public class RitualEffectFeatheredKnife extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 20;
+        return AlchemicalWizardry.ritualCostFeatheredKnife[1];
     }
 
     @Override

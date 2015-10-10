@@ -29,7 +29,7 @@ public class SigilOfElementalAffinity extends EnergyItems implements ISigil
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(200);
+        setEnergyUsed(AlchemicalWizardry.sigilElementalAffinityCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

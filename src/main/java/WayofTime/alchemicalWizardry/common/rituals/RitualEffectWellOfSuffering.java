@@ -111,7 +111,7 @@ public class RitualEffectWellOfSuffering extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 2;
+        return AlchemicalWizardry.ritualCostSuffering[1];
     }
 
     @Override

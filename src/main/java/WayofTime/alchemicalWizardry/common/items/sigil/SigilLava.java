@@ -39,7 +39,7 @@ public class SigilLava extends ItemBucket implements ArmourUpgrade, ISigil
     {
         super(Blocks.lava);
         this.maxStackSize = 1;
-        setEnergyUsed(1000);
+        setEnergyUsed(AlchemicalWizardry.sigilLavaCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

@@ -26,7 +26,7 @@ public class SigilBloodLight extends EnergyItems implements IHolding, ArmourUpgr
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(10);
+        setEnergyUsed(AlchemicalWizardry.sigilBloodLightCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

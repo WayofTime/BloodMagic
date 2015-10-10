@@ -31,7 +31,7 @@ public class SigilPackRat extends EnergyItems implements IHolding, ArmourUpgrade
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(200);
+        setEnergyUsed(AlchemicalWizardry.sigilCompressCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -101,7 +102,6 @@ public class RitualEffectItemSuction extends RitualEffect
             if (count > 0)
             {
                 SoulNetworkHandler.syphonFromNetwork(owner, this.getCostPerRefresh() * Math.min(count, 100));
-                return;
             }
         }
     }
@@ -109,7 +109,7 @@ public class RitualEffectItemSuction extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 5;
+        return AlchemicalWizardry.ritualCostZephyr[1];
     }
 
     @Override

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFood;
@@ -108,7 +109,7 @@ public class RitualEffectFullStomach extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 100;
+        return AlchemicalWizardry.ritualCostFullStomach[1];
     }
 
     @Override

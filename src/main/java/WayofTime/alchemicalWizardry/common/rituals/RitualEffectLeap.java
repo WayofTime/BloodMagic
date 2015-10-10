@@ -203,7 +203,7 @@ public class RitualEffectLeap extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 5;
+        return AlchemicalWizardry.ritualCostSpeed[1];
     }
 
     @Override

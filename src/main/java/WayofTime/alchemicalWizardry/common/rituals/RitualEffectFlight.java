@@ -84,7 +84,7 @@ public class RitualEffectFlight extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostCondor[1];
     }
 
     @Override

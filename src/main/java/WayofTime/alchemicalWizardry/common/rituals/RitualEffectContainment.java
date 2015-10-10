@@ -103,7 +103,7 @@ public class RitualEffectContainment extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 1;
+        return AlchemicalWizardry.ritualCostContainment[1];
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
@@ -182,7 +183,7 @@ public class RitualEffectMagnetic extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 50;
+        return AlchemicalWizardry.ritualCostMagnetism[1];
     }
     
     public Int3 getLastPosition(NBTTagCompound tag)

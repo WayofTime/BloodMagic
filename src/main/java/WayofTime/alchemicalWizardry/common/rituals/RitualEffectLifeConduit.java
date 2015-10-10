@@ -91,7 +91,7 @@ public class RitualEffectLifeConduit extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostConduit[1];
     }
 
     @Override

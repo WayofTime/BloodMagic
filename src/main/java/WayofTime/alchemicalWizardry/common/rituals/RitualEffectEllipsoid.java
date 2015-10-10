@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -193,7 +194,7 @@ public class RitualEffectEllipsoid extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostEllipsoid[1];
     }
 
     @Override

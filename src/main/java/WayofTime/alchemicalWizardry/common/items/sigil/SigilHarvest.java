@@ -30,7 +30,7 @@ public class SigilHarvest extends EnergyItems implements IHolding, ArmourUpgrade
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(500);
+        setEnergyUsed(AlchemicalWizardry.sigilHarvestCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

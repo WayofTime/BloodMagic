@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -166,7 +167,7 @@ public class RitualEffectOmegaTest extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostSymmetry[1];
     }
 
     @Override

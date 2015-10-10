@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -90,7 +91,7 @@ public class RitualEffectFeatheredEarth extends RitualEffect //Nullifies all fal
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostFeatheredEarth[1];
     }
 
     @Override

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -76,7 +77,7 @@ public class RitualEffectHarvest extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 20;
+        return AlchemicalWizardry.ritualCostHarvest[1];
     }
 
     public int getRadiusForModifierBlock(Block block)

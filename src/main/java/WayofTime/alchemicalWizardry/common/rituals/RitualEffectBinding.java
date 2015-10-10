@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -147,7 +148,7 @@ public class RitualEffectBinding extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostBinding[1];
     }
 
     @Override

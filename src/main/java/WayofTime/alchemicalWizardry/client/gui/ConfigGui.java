@@ -32,6 +32,7 @@ public class ConfigGui extends GuiConfig {
 		list.add(new ConfigElement<ConfigCategory>(config.getCategory("ritual blacklist".toLowerCase())));
 		list.add(new ConfigElement<ConfigCategory>(config.getCategory("teleposer blacklist".toLowerCase())));
 		list.add(new ConfigElement<ConfigCategory>(config.getCategory("demon configs".toLowerCase())));
+		list.add(new ConfigElement<ConfigCategory>(config.getCategory("lp costs".toLowerCase())));
 
 		return list;
 	}

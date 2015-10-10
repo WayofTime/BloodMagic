@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -398,7 +399,7 @@ public class RitualEffectAutoAlchemy extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 10;
+        return AlchemicalWizardry.ritualCostBalladOfAlchemy[1];
     }
 
     @Override

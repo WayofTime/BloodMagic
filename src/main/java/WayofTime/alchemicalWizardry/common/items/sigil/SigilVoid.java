@@ -29,7 +29,7 @@ public class SigilVoid extends ItemBucket implements ArmourUpgrade, ISigil
     {
         super(null);
         this.maxStackSize = 1;
-        setEnergyUsed(50);
+        setEnergyUsed(AlchemicalWizardry.sigilVoidCost);
         isFull = 0;
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }

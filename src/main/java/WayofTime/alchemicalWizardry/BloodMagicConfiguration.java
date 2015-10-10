@@ -212,6 +212,62 @@ public class BloodMagicConfiguration
 //		PlayerSacrificeHandler.scalingOfSacrifice = (float) config.get("TestIncenseSettings", "ScalingFactor", 0.0025f).getDouble();
 //		PlayerSacrificeHandler.soulFrayDuration = config.get("TestIncenseSettings", "SoulFrayDuration", 400).getInt();
 
+		String lpCosts = "Lp Costs";
+		AlchemicalWizardry.sigilAirCost = config.get(lpCosts, "Air Sigil", 50).getInt();
+		AlchemicalWizardry.sigilBloodLightCost = config.get(lpCosts, "Sigil of the Blood Lamp", 10).getInt();
+		AlchemicalWizardry.sigilHarvestCost = config.get(lpCosts, "Harvest Goddess Sigil", 500).getInt();
+		AlchemicalWizardry.sigilLavaCost = config.get(lpCosts, "Lava Sigil", 1000).getInt();
+		AlchemicalWizardry.sigilElementalAffinityCost = config.get(lpCosts, "Sigil of Elemental Affinity", 200).getInt();
+		AlchemicalWizardry.sigilEnderSeveranceCost = config.get(lpCosts, "Sigil of Ender Severance", 200).getInt();
+		AlchemicalWizardry.sigilGrowthCost = config.get(lpCosts, "Sigil of the Green Grove", 150).getInt();
+		AlchemicalWizardry.sigilHasteCost = config.get(lpCosts, "Sigil of Haste", 250).getInt();
+		AlchemicalWizardry.sigilMagnetismCost = config.get(lpCosts, "Sigil of Magnetism", 50).getInt();
+		AlchemicalWizardry.sigilSuppressionCost = config.get(lpCosts, "Sigil of Suppression", 400).getInt();
+		AlchemicalWizardry.sigilBridgeCost = config.get(lpCosts, "Sigil of the Phantom Bridge", 100).getInt();
+		AlchemicalWizardry.sigilFastMinerCost = config.get(lpCosts, "Sigil of the Fast Miner", 100).getInt();
+		AlchemicalWizardry.sigilWhirlwindCost = config.get(lpCosts, "Sigil of the Whirlwind", 250).getInt();
+		AlchemicalWizardry.sigilCompressCost = config.get(lpCosts, "Sigil of Compression", 200).getInt();
+		AlchemicalWizardry.sigilVoidCost = config.get(lpCosts, "Void Sigil", 50).getInt();
+		AlchemicalWizardry.sigilWaterCost = config.get(lpCosts, "Water Sigil", 100).getInt();
+
+		config.addCustomCategoryComment(lpCosts, "For rituals, the first number indicates the activation cost while the second indicates the refresh cost");
+		AlchemicalWizardry.ritualCostWater = config.get(lpCosts, "Ritual of the Full Spring", new int[]{500, 25}).getIntList();
+		AlchemicalWizardry.ritualCostLava = config.get(lpCosts, "Serenade of the Nether", new int[]{10000, 500}).getIntList();
+		AlchemicalWizardry.ritualCostGreenGrove = config.get(lpCosts, "Ritual of the Green Grove", new int[]{1000, 20}).getIntList();
+		AlchemicalWizardry.ritualCostInterdiction = config.get(lpCosts, "Interdiction Ritual", new int[]{1000, 1}).getIntList();
+		AlchemicalWizardry.ritualCostContainment = config.get(lpCosts, "Ritual of Containment", new int[]{2000, 1}).getIntList();
+		AlchemicalWizardry.ritualCostBinding = config.get(lpCosts, "Ritual of Binding", new int[]{5000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostUnbinding = config.get(lpCosts, "Ritual of Unbinding", new int[]{30000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostHighJump = config.get(lpCosts, "Ritual of the High Jump", new int[]{1000, 5}).getIntList();
+		AlchemicalWizardry.ritualCostMagnetism = config.get(lpCosts, "Ritual of Magnetism", new int[]{5000, 50}).getIntList();
+		AlchemicalWizardry.ritualCostCrusher = config.get(lpCosts, "Ritual of the Crusher", new int[]{2500, 7}).getIntList();
+		AlchemicalWizardry.ritualCostSpeed = config.get(lpCosts, "Ritual of Speed", new int[]{1000, 5}).getIntList();
+		AlchemicalWizardry.ritualCostAnimalGrowth = config.get(lpCosts, "Ritual of the Shepherd", new int[]{10000, 2}).getIntList();
+		AlchemicalWizardry.ritualCostSuffering = config.get(lpCosts, "Well of Suffering", new int[]{50000, 2}).getIntList();
+		AlchemicalWizardry.ritualCostRegen = config.get(lpCosts, "Ritual of Regeneration", new int[]{25000, 20}).getIntList();
+		AlchemicalWizardry.ritualCostFeatheredKnife = config.get(lpCosts, "Ritual of the Feathered Knife", new int[]{50000, 20}).getIntList();
+		AlchemicalWizardry.ritualCostFeatheredEarth = config.get(lpCosts, "Ritual of the Feathered Earth", new int[]{100000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostGaia = config.get(lpCosts, "Gaia's Transformation", new int[]{1000000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostCondor = config.get(lpCosts, "Reverence of the Condor", new int[]{1000000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostFallingTower = config.get(lpCosts, "Mark of the Falling Tower", new int[]{1000000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostBalladOfAlchemy = config.get(lpCosts, "Ballad of Alchemy", new int[]{20000, 10}).getIntList();
+		AlchemicalWizardry.ritualCostExpulsion = config.get(lpCosts, "Aura of Expulsion", new int[]{1000000, 1000}).getIntList();
+		AlchemicalWizardry.ritualCostSuppression = config.get(lpCosts, "Dome of Suppression", new int[]{10000, 2}).getIntList();
+		AlchemicalWizardry.ritualCostZephyr = config.get(lpCosts, "Call of the Zephyr", new int[]{25000, 5}).getIntList();
+		AlchemicalWizardry.ritualCostHarvest = config.get(lpCosts, "Reap of the Harvest Moon", new int[]{20000, 20}).getIntList();
+		AlchemicalWizardry.ritualCostConduit = config.get(lpCosts, "Cry of the Eternal Soul", new int[]{2000000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostEllipsoid = config.get(lpCosts, "Focus of the Ellipsoid", new int[]{25000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostEvaporation = config.get(lpCosts, "Song of Evaporation", new int[]{20000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostSpawnWard = config.get(lpCosts, "Ward of Sacrosanctity", new int[]{150000, 15}).getIntList();
+		AlchemicalWizardry.ritualCostVeilOfEvil = config.get(lpCosts, "Veil of Evil", new int[]{150000, 20}).getIntList();
+		AlchemicalWizardry.ritualCostFullStomach = config.get(lpCosts, "Requiem of the Satiated Stomach", new int[]{100000, 100}).getIntList();
+		AlchemicalWizardry.ritualCostConvocation = config.get(lpCosts, "Convocation of the Damned", new int[]{15000000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostSymmetry = config.get(lpCosts, "Symmetry of the Omega", new int[]{15000000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostStalling = config.get(lpCosts, "Duet of the Fused Souls", new int[]{15000000, 5000}).getIntList();
+		AlchemicalWizardry.ritualCostCrafting = config.get(lpCosts, "Rhythm of the Beating Anvil", new int[]{15000, 10}).getIntList();
+		AlchemicalWizardry.ritualCostPhantomHands = config.get(lpCosts, "Orchestra of the Phantom Hands", new int[]{10000, 0}).getIntList();
+		AlchemicalWizardry.ritualCostSphereIsland = config.get(lpCosts, "Blood of the New Moon", new int[]{10000, 0}).getIntList();
+
 		Side side = FMLCommonHandler.instance().getSide();
 		if (side == Side.CLIENT)
 		{

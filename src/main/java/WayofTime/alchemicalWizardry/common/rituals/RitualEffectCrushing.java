@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -303,7 +304,7 @@ public class RitualEffectCrushing extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 7;
+        return AlchemicalWizardry.ritualCostCrusher[1];
     }
 
     @Override
