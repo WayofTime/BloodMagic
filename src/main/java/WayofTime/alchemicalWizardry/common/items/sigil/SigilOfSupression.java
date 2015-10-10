@@ -35,7 +35,7 @@ public class SigilOfSupression extends EnergyItems implements ArmourUpgrade, ISi
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(400);
+        setEnergyUsed(AlchemicalWizardry.sigilSuppressionCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

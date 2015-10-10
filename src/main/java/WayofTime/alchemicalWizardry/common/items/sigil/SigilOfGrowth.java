@@ -36,7 +36,7 @@ public class SigilOfGrowth extends EnergyItems implements ArmourUpgrade, ISigil
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(150);
+        setEnergyUsed(AlchemicalWizardry.sigilGrowthCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

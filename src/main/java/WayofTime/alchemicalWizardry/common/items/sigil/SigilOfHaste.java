@@ -29,7 +29,7 @@ public class SigilOfHaste extends EnergyItems implements ArmourUpgrade, ISigil
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(250);
+        setEnergyUsed(AlchemicalWizardry.sigilHasteCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

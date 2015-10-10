@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -384,7 +385,7 @@ public class RitualEffectCrafting extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 10;
+        return AlchemicalWizardry.ritualCostCrafting[1];
     }
 
     @Override

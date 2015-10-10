@@ -35,7 +35,7 @@ public class SigilWater extends ItemBucket implements ArmourUpgrade, ISigil
     {
         super(Blocks.water);
         this.maxStackSize = 1;
-        setEnergyUsed(100);
+        setEnergyUsed(AlchemicalWizardry.sigilWaterCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

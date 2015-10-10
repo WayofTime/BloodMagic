@@ -33,7 +33,7 @@ public class SigilOfTheBridge extends EnergyItems implements ArmourUpgrade, ISig
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(100);
+        setEnergyUsed(AlchemicalWizardry.sigilBridgeCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

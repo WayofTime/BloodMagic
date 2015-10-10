@@ -183,7 +183,7 @@ public class RitualEffectWater extends RitualEffect
 
     public int getCostPerRefresh()
     {
-        return 25;
+        return AlchemicalWizardry.ritualCostWater[1];
     }
 
     @Override

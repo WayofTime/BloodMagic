@@ -30,7 +30,7 @@ public class SigilOfTheFastMiner extends EnergyItems implements ArmourUpgrade, I
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(100);
+        setEnergyUsed(AlchemicalWizardry.sigilFastMinerCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

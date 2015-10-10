@@ -29,7 +29,7 @@ public class SigilOfWind extends EnergyItems implements ArmourUpgrade, ISigil
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(250);
+        setEnergyUsed(AlchemicalWizardry.sigilWhirlwindCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

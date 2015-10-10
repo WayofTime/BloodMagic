@@ -33,7 +33,7 @@ public class SigilOfMagnetism extends EnergyItems implements ArmourUpgrade, IHol
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(50);
+        setEnergyUsed(AlchemicalWizardry.sigilMagnetismCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

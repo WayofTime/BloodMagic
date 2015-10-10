@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
@@ -153,7 +154,7 @@ public class RitualEffectExpulsion extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 1000;
+        return AlchemicalWizardry.ritualCostExpulsion[1];
     }
 
     public boolean teleportRandomly(EntityLivingBase entityLiving, double distance)

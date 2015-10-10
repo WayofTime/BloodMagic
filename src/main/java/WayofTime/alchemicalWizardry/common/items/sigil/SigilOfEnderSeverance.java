@@ -31,7 +31,7 @@ public class SigilOfEnderSeverance extends EnergyItems implements IHolding, ISig
     {
         super();
         this.maxStackSize = 1;
-        setEnergyUsed(200);
+        setEnergyUsed(AlchemicalWizardry.sigilEnderSeveranceCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 

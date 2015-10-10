@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -166,15 +167,13 @@ public class RitualEffectSphereCreator extends RitualEffect
             
             ritualStone.setActive(false);
             this.setLastPosition(ritualStone.getCustomRitualTag(), new Int3(i, j, k));
-            return;
-            
         }
     }
 
     @Override
     public int getCostPerRefresh()
     {
-        return 0;
+        return AlchemicalWizardry.ritualCostSphereIsland[1];
     }
     
     public Int3 getLastPosition(NBTTagCompound tag, int radius)

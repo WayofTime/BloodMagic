@@ -121,7 +121,7 @@ public class RitualEffectLava extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 500;
+        return AlchemicalWizardry.ritualCostLava[1];
     }
 
     @Override

@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
@@ -79,7 +80,7 @@ public class RitualEffectVeilOfEvil extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 20;
+        return AlchemicalWizardry.ritualCostVeilOfEvil[1];
     }
 
     @Override

@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.rituals;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityBeacon;
@@ -67,7 +68,7 @@ public class RitualEffectOmegaStalling extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-        return 5000;
+        return AlchemicalWizardry.ritualCostStalling[1];
     }
 
     @Override

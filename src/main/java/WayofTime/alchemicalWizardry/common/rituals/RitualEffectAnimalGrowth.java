@@ -1,5 +1,6 @@
 package WayofTime.alchemicalWizardry.common.rituals;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentRegistry;
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
@@ -127,8 +128,7 @@ public class RitualEffectAnimalGrowth extends RitualEffect
     @Override
     public int getCostPerRefresh()
     {
-
-        return 2;
+        return AlchemicalWizardry.ritualCostAnimalGrowth[1];
     }
 
     @Override

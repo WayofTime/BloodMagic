@@ -23,7 +23,7 @@ public class SigilAir extends EnergyItems implements ArmourUpgrade, ISigil
         super();
         this.maxStackSize = 1;
         //setMaxDamage(1000);
-        setEnergyUsed(50);
+        setEnergyUsed(AlchemicalWizardry.sigilAirCost);
         setCreativeTab(AlchemicalWizardry.tabBloodMagic);
     }
 
