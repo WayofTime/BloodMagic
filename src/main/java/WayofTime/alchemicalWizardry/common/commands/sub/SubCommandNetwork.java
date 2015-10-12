@@ -90,6 +90,23 @@ public class SubCommandNetwork extends SubCommandBase {
 
                         break;
                     }
+                    case SET: {
+                        if (displayHelp) {
+                            displayHelpString(commandSender, ValidCommands.SET.help);
+                            break;
+                        }
+
+                        if (args.length == 3) {
+                            if (isInteger(args[2])) {
+                                int amount = Integer.parseInt(args[2]);
+                                SoulNetworkHandler.setCurrentEssence(givenName, amount);
+                            } else {
+                                displayErrorString(commandSender, "Invalid arguments");
+                            }
+                        } else {
+                            displayErrorString(commandSender, "Not enough arguments");
+                        }
+                    }
                     case GET: {
                         if (displayHelp) {
                             displayHelpString(commandSender, ValidCommands.GET.help);
@@ -135,6 +152,7 @@ public class SubCommandNetwork extends SubCommandBase {
     private enum ValidCommands {
         SYPHON("Removes the given amount of LP from the given player's LP network."),
         ADD("Adds the given amount of LP to the given player's LP network."),
+        SET("Sets the given player's LP to the given amount"),
         GET("Returns the amount of LP in the given player's LP network."),
         FILL(String.format("Fills the given player's LP network to %d", Integer.MAX_VALUE)),
         CAP("Fills the given player's LP network to the max that their highest Blood Orb can store.");
