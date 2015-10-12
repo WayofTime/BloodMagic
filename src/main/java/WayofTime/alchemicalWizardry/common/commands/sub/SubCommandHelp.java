@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 
 public class SubCommandHelp extends SubCommandBase {
 
@@ -17,12 +18,12 @@ public class SubCommandHelp extends SubCommandBase {
 
     @Override
     public String getArgUsage(ICommandSender commandSender) {
-        return "/bloodmagic help";
+        return StatCollector.translateToLocal("commands.help.usage");
     }
 
     @Override
     public String getHelpText() {
-        return "Displays the help information for the \"/bloodmagic\" command.";
+        return StatCollector.translateToLocal("commands.help.help");
     }
 
     @Override
@@ -38,6 +39,6 @@ public class SubCommandHelp extends SubCommandBase {
             return;
 
         for (ISubCommand subCommand : ((CommandBloodMagic)getParentCommand()).getSubCommands().values())
-            commandSender.addChatMessage(new ChatComponentText(String.format("%s - %s", capitalizeFirstLetter(subCommand.getSubCommandName()), subCommand.getArgUsage(commandSender))).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
+            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("commands.format.help", capitalizeFirstLetter(subCommand.getSubCommandName()), subCommand.getArgUsage(commandSender))).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
     }
 }

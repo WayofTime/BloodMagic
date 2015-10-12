@@ -6,6 +6,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 
 import java.util.Locale;
 
@@ -17,12 +18,12 @@ public class SubCommandNetwork extends SubCommandBase {
 
     @Override
     public String getArgUsage(ICommandSender commandSender) {
-        return "/bloodmagic network [syphon|add|get|fill|cap] player [amount]";
+        return StatCollector.translateToLocal("commands.network.usage");
     }
 
     @Override
     public String getHelpText() {
-        return "LP network utilities";
+        return StatCollector.translateToLocal("commands.network.help");
     }
 
     @Override
@@ -61,11 +62,12 @@ public class SubCommandNetwork extends SubCommandBase {
                             if (isInteger(args[2])) {
                                 int amount = Integer.parseInt(args[2]);
                                 SoulNetworkHandler.syphonAndDamageFromNetwork(givenName, player, amount);
+                                displaySuccessString(commandSender, "commands.network.syphon.success", amount, givenName);
                             } else {
-                                displayErrorString(commandSender, "Invalid arguments");
+                                displayErrorString(commandSender, "commands.error.arg.invalid");
                             }
                         } else {
-                            displayErrorString(commandSender, "Not enough arguments");
+                            displayErrorString(commandSender, "commands.error.arg.missing");
                         }
 
                         break;
@@ -81,11 +83,12 @@ public class SubCommandNetwork extends SubCommandBase {
                                 int amount = Integer.parseInt(args[2]);
                                 int maxOrb = SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(givenName));
                                 SoulNetworkHandler.addCurrentEssenceToMaximum(givenName, amount, maxOrb);
+                                displaySuccessString(commandSender, "commands.network.add.success", amount, givenName);
                             } else {
-                                displayErrorString(commandSender, "Invalid arguments");
+                                displayErrorString(commandSender, "commands.error.arg.invalid");
                             }
                         } else {
-                            displayErrorString(commandSender, "Not enough arguments");
+                            displayErrorString(commandSender, "commands.error.arg.missing");
                         }
 
                         break;
@@ -100,12 +103,15 @@ public class SubCommandNetwork extends SubCommandBase {
                             if (isInteger(args[2])) {
                                 int amount = Integer.parseInt(args[2]);
                                 SoulNetworkHandler.setCurrentEssence(givenName, amount);
+                                displaySuccessString(commandSender, "commands.network.set.success", givenName, amount);
                             } else {
-                                displayErrorString(commandSender, "Invalid arguments");
+                                displayErrorString(commandSender, "commands.error.arg.invalid");
                             }
                         } else {
-                            displayErrorString(commandSender, "Not enough arguments");
+                            displayErrorString(commandSender, "commands.error.arg.missing");
                         }
+
+                        break;
                     }
                     case GET: {
                         if (displayHelp) {
@@ -114,18 +120,20 @@ public class SubCommandNetwork extends SubCommandBase {
                         }
 
                         if (args.length > 1)
-                            commandSender.addChatMessage(new ChatComponentText("Current Essence: " + SoulNetworkHandler.getCurrentEssence(givenName)));
+                            commandSender.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("message.divinationsigil.currentessence") + " " + SoulNetworkHandler.getCurrentEssence(givenName) + "LP"));
 
                         break;
                     }
                     case FILL: {
                         if (displayHelp) {
-                            displayHelpString(commandSender, ValidCommands.FILL.help);
+                            displayHelpString(commandSender, ValidCommands.FILL.help, Integer.MAX_VALUE);
                             break;
                         }
 
-                        if (args.length > 1)
+                        if (args.length > 1) {
                             SoulNetworkHandler.setCurrentEssence(givenName, Integer.MAX_VALUE);
+                            displaySuccessString(commandSender, "commands.network.fill.success", givenName);
+                        }
 
                         break;
                     }
@@ -138,24 +146,25 @@ public class SubCommandNetwork extends SubCommandBase {
                         if (args.length > 1) {
                             int maxOrb = SoulNetworkHandler.getMaximumForOrbTier(SoulNetworkHandler.getCurrentMaxOrb(givenName));
                             SoulNetworkHandler.setCurrentEssence(givenName, maxOrb);
+                            displaySuccessString(commandSender, "commands.network.cap.success", givenName);
                         }
 
                         break;
                     }
                 }
             } catch (IllegalArgumentException e) {
-                displayErrorString(commandSender, "Command not found!");
+                displayErrorString(commandSender, "commands.error.404");
             }
         }
     }
 
     private enum ValidCommands {
-        SYPHON("Removes the given amount of LP from the given player's LP network."),
-        ADD("Adds the given amount of LP to the given player's LP network."),
-        SET("Sets the given player's LP to the given amount"),
-        GET("Returns the amount of LP in the given player's LP network."),
-        FILL(String.format("Fills the given player's LP network to %d", Integer.MAX_VALUE)),
-        CAP("Fills the given player's LP network to the max that their highest Blood Orb can store.");
+        SYPHON("commands.network.syphon.help"),
+        ADD("commands.network.add.help"),
+        SET("commands.network.set.help"),
+        GET("commands.network.get.help"),
+        FILL("commands.network.fill.help"),
+        CAP("commands.network.cap.help");
 
         public String help;
 

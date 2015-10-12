@@ -8,6 +8,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.StatCollector;
 
 public class SubCommandBind extends SubCommandBase {
 
@@ -17,12 +19,12 @@ public class SubCommandBind extends SubCommandBase {
 
     @Override
     public String getArgUsage(ICommandSender commandSender) {
-        return "/bloodmagic bind [true|false] [player]";
+        return StatCollector.translateToLocal("commands.bind.usage");
     }
 
     @Override
     public String getHelpText() {
-        return "Attempts to (un)bind the currently held item.";
+        return StatCollector.translateToLocal("commands.bind.help");
     }
 
     @Override
@@ -57,11 +59,11 @@ public class SubCommandBind extends SubCommandBase {
 
             if (bind) {
                 EnergyItems.setItemOwner(held, playerName);
-                commandSender.addChatMessage(new ChatComponentText("Binding successful"));
+                commandSender.addChatMessage(new ChatComponentTranslation("commands.bind.success"));
             } else {
                 if (!EnergyItems.getOwnerName(held).isEmpty()) {
                     held.stackTagCompound.removeTag("ownerName");
-                    commandSender.addChatMessage(new ChatComponentText("Unbinding successful"));
+                    commandSender.addChatMessage(new ChatComponentTranslation("commands.bind.remove.success"));
                 }
             }
         }
