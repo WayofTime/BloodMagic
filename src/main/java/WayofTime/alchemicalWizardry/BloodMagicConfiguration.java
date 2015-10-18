@@ -365,6 +365,11 @@ public class BloodMagicConfiguration
 	}
 
 	private static void buildTeleposerBlacklist() {
+		
+	        // Make sure it's empty before setting the blacklist.
+        	// Otherwise, reloading the config while in-game will duplicate the list.
+        	AlchemicalWizardryEventHooks.teleposerBlacklist.clear();
+		
 		for (String blockSet : BloodMagicConfiguration.teleposerBlacklist) {
 			String[] blockData = blockSet.split(":");
 
