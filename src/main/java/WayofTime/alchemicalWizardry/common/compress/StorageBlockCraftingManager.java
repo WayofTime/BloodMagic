@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.common.compress;
 import java.util.LinkedList;
 import java.util.List;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -26,7 +27,7 @@ public class StorageBlockCraftingManager
     {
     	this.recipes = new StorageBlockCraftingRecipeAssimilator().getPackingRecipes();
     	
-    	System.out.println("Total number of compression recipes: " + this.recipes.size());
+    	AlchemicalWizardry.logger.info("Total number of compression recipes: " + this.recipes.size());
 //    	List<IRecipe> tempRecipeList = new LinkedList();
 //    	
 //		World world = DimensionManager.getWorld(0);
