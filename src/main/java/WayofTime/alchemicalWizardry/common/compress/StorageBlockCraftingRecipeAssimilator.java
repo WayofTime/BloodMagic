@@ -21,6 +21,11 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class StorageBlockCraftingRecipeAssimilator {
+
+    public static String[] problemMods = {
+            "BiblioWoodsForestry"
+    };
+
 	public List<IRecipe> getPackingRecipes() {
 		// grab all recipes potentially suitable for packing or unpacking
 
@@ -220,12 +225,26 @@ public class StorageBlockCraftingRecipeAssimilator {
 	}
 
 	private boolean areInputsIdentical(ItemStack a, ItemStack b) {
-		if (a.getItem() != b.getItem()) return false;
 
-		int dmgA = a.getItemDamage();
-		int dmgB = b.getItemDamage();
+        try {
+            if (a.getItem() != b.getItem())
+                return false;
 
-		return dmgA == dmgB || dmgA == OreDictionary.WILDCARD_VALUE || dmgB == OreDictionary.WILDCARD_VALUE;
+            int dmgA = a.getItemDamage();
+            int dmgB = b.getItemDamage();
+
+            return dmgA == dmgB || dmgA == OreDictionary.WILDCARD_VALUE || dmgB == OreDictionary.WILDCARD_VALUE;
+        } catch (NullPointerException e) {
+
+            AlchemicalWizardry.logger.error("A mod in this instance has registered an item with a null input. Known problem mods are:");
+
+            String err = "";
+            for (String problem : problemMods)
+                err += (err.length() > 0 ? ", " : "") + problem;
+            AlchemicalWizardry.logger.error(err);
+
+            return false;
+        }
 	}
 
 	private static class PackingRecipe {
