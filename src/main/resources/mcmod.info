@@ -1,13 +1,13 @@
 [
 {
-  "modid": "AWWayofTime",
+  "modid": "AlchemicalWizardry",
   "name": "Blood Magic: Alchemical Wizardry",
   "description": "Rituals, spells, and more!",
-  "version": "v1.3.0Beta(1.7.10)",
+  "version": "${version}",
   "mcversion": "1.7.10",
-  "url": "http://www.minecraftforum.net/topic/1899223-",
+  "url": "http://www.minecraftforum.net/topic/1899223-bloodmagic",
   "updateUrl": "",
-  "authorList": ["WayofTime"],
+  "authorList": [ "WayofTime" ],
   "credits": "",
   "logoFile": "",
   "screenshots": [],

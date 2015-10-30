@@ -1,70 +1,59 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "http://files.minecraftforge.net/maven" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-		classpath 'org.ajoberstar:gradle-git:0.10.1'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.0-SNAPSHOT'
+        classpath 'org.ajoberstar:gradle-git:0.10.1'
     }
 }
 
-apply plugin: 'forge'
-
-ext.configFile = file "build.properties"
-configFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.0.1'
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
+    id 'net.franz-becker.gradle-lombok' version '1.5'
 }
 
-version = config.mc_version + "-" + config.mod_version + "-" + config.build_number
-group= config.package_group
-archivesBaseName = config.mod_name
+apply plugin: 'maven-publish'
 
-import org.ajoberstar.grgit.Grgit
+def build_number = 'CUSTOM'
 
+if (System.getenv('BUILD_NUMBER') != null)
+    build_number = System.getenv('BUILD_NUMBER')
+
+group = package_group
+archivesBaseName = mod_name
+version = "${mc_version}-${mod_version}-${build_number}"
+
+// Ignore this error. It'll work just fine when building.
+import org.ajoberstar.grgit.*
+
+ext.repo = Grgit.open(project.file('.'))
 def gitHash = 'unknown'
-if (new File(projectDir, '.git').exists()) {
-    def repo = Grgit.open(project.file('.'))
+
+if (new File(projectDir, '.git').exists())
     gitHash = repo.log().find().abbreviatedId
-}
 
 repositories {
-    maven {
-        name 'CB Maven FS'
-        url "http://chickenbones.net/maven/"
-    }
-    maven {
-        name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven'
-    }
-    maven {
-    	name 'TehNut Repo'
-    	url 'http://tehnut.info/maven/'
-    }
-	ivy {
-		name "MineTweaker3"
-        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
-    }	
+
 }
 
 dependencies {
-//    compile "codechicken:CodeChickenLib:" + config.mc_version + "-" + config.cclib_version + ":dev"
-//    compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":dev"
-//    compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
-//	compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
-//	compile "codechicken:ForgeMultipart:1.7.10-1.1.0.314:dev"
-//	compile "info.amerifrance.guideapi:Guide-API:" + config.mc_version + "-" + config.guideapi_version + ":deobf"
+
 }
 
 minecraft {
-    version = config.mc_version + "-" + config.forge_version
+    version = "${mc_version}-${forge_version}"
     runDir = "run"
-	
-	replaceIn "GAPIChecker.java"
-	replace "@VERSION@", config.guideapi_version
+
+    replace "@VERSION@", project.version
+    replaceIn "AlchemicalWizardry.java"
+    replaceIn "AlchemicalWizardryAPI.java"
+
+    if (project.hasProperty('mappings_version'))
+        mappings = project.mappings_version
 }
 
 processResources {
@@ -77,61 +66,91 @@ processResources {
 
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
+
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info'
         exclude '**/*.properties'
-		exclude '**/*.db'
     }
 }
 
 jar {
-    dependsOn "incrementBuildNumber"
-	classifier = ''
-	 manifest.mainAttributes(
-            "Built-By": System.getProperty('user.name'),
-            "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
-            "Implementation-Title": project.name,
-            "Implementation-Version": project.version,
-            "Git-Hash": gitHash
+    classifier = ''
+    manifest.mainAttributes(
+        "Built-By": System.getProperty('user.name'),
+        "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
+        "Implementation-Title": project.name,
+        "Implementation-Version": project.version,
+        "Git-Hash": gitHash
     )
 }
 
-// add a source jar
-task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = 'sources'
+lombok {
+    version = "1.16.6"
+    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
 }
 
-// add a javadoc jar
+// Ignore this one, too
+import net.franz_becker.gradle.lombok.task.DelombokTask
+
+task delombok(type: DelombokTask) {
+    args("src/main/java", "-d", "build/sources/delomboked/java")
+}
+
+tasks.eclipse.dependsOn installLombok
+
+// Javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
     classifier = 'javadoc'
 }
 
-// because the normal output has been made to be obfuscated
+// Deobfuscated jar
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
 }
 
+javadoc {
+    source = projectDir.path + "/build/sources/delomboked/java"
+}
+
+tasks.javadoc.dependsOn delombok
 tasks.build.dependsOn sourceJar, javadocJar, deobfJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
 }
 
-task("incrementBuildNumber") {
-	// increment build number
-	doFirst {
-		// increment
-		config.build_number = (config.build_number.toString().toInteger()) + 1
-
-		// write back to the file
-		configFile.withWriter {
-			config.toProperties().store(it, "")
-		}
-	}
+publishing {
+    tasks.publish.dependsOn 'build'
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact sourceJar
+            artifact javadocJar
+            artifact deobfJar
+        }
+    }
+    repositories {
+        if (project.hasProperty('maven_repo')) {
+            maven { url maven_repo }
+        } else {
+            mavenLocal()
+        }
+    }
 }
 
-// Uncomment this line if you want to auto-upload to CurseForge when you build. This requires you to setup curse.gradle yourself.
-// fileTree('gradle').include('curse.gradle').collect().sort().each { apply from: it }
+curseforge {
+    if (project.hasProperty('curse_key'))
+        apiKey = project.curse_key
+
+    project {
+        id = "${curse_id}"
+        changelog = project.hasProperty('changelog') ? project.changelog : ''
+        releaseType = 'alpha'
+
+        addArtifact deobfJar
+        addArtifact sourceJar
+        addArtifact javadocJar
+    }
+}
