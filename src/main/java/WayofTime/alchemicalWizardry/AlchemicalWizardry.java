@@ -1,6 +1,7 @@
 package WayofTime.alchemicalWizardry;
 
 import WayofTime.alchemicalWizardry.api.util.helper.LogHelper;
+import WayofTime.alchemicalWizardry.network.AlchemicalWizardryPacketHandler;
 import WayofTime.alchemicalWizardry.registry.ModBlocks;
 import WayofTime.alchemicalWizardry.registry.ModEntities;
 import WayofTime.alchemicalWizardry.registry.ModItems;
@@ -67,6 +68,8 @@ public class AlchemicalWizardry {
 
     @Mod.EventHandler
     public void init(FMLPreInitializationEvent event) {
+        AlchemicalWizardryPacketHandler.init();
+
         proxy.init();
     }
 

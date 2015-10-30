@@ -3,7 +3,8 @@ package WayofTime.alchemicalWizardry.item.sigil;
 import WayofTime.alchemicalWizardry.api.iface.IBloodAltar;
 import WayofTime.alchemicalWizardry.api.util.helper.BindableHelper;
 import WayofTime.alchemicalWizardry.api.util.helper.NetworkHelper;
-import WayofTime.alchemicalWizardry.api.util.helper.TextHelper;
+import WayofTime.alchemicalWizardry.util.ChatUtil;
+import WayofTime.alchemicalWizardry.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,14 +27,14 @@ public class ItemSigilDivination extends ItemSigilBase {
             int currentEssence = NetworkHelper.getCurrentEssence(BindableHelper.getOwnerName(stack));
 
             if (position == null) {
-                player.addChatComponentMessage(new ChatComponentText(TextHelper.localize("message.divinationsigil.currentessence", currentEssence)));
+                ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
                 return stack;
             } else {
                 if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                     TileEntity tile = world.getTileEntity(position.getBlockPos());
 
                     if (!(tile instanceof IBloodAltar)) {
-                        player.addChatComponentMessage(new ChatComponentText(TextHelper.localize("message.divinationsigil.currentessence", currentEssence)));
+                        ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
                         return stack;
                     }
                 }

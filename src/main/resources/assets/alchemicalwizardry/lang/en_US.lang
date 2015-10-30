@@ -62,8 +62,9 @@ tile.AlchemicalWizardry.fluid.lifeEssence.name=Life Essence
 # Tooltips
 tooltip.AlchemicalWizardry.orb.desc=Stores raw Life Essence
 tooltip.AlchemicalWizardry.orb.owner=Added by: %s
-tooltip.AlchemicalWizardry.currentOwner=&oOwner: %s
-tooltip.sigil.air.desc=I feel lighter already...
-tooltip.sigil.bloodLight.desc=I see a light!
-tooltip.sigil.compression.desc=Hands of Diamonds
-tooltip.sigil.divination.desc=Peer into the soul
+tooltip.AlchemicalWizardry.currentOwner=Owner: %s
+tooltip.AlchemicalWizardry.sigil.air.desc=&oI feel lighter already...
+tooltip.AlchemicalWizardry.sigil.bloodLight.desc=&oI see a light!
+tooltip.AlchemicalWizardry.sigil.compression.desc=&oHands of Diamonds
+tooltip.AlchemicalWizardry.sigil.divination.desc=&oPeer into the soul
+tooltip.AlchemicalWizardry.sigil.divination.currentEssence=Current Essence: %d LP

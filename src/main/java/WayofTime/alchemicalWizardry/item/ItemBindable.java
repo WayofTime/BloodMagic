@@ -6,7 +6,7 @@ import WayofTime.alchemicalWizardry.api.NBTHolder;
 import WayofTime.alchemicalWizardry.api.iface.IBindable;
 import WayofTime.alchemicalWizardry.api.util.helper.BindableHelper;
 import WayofTime.alchemicalWizardry.api.util.helper.NetworkHelper;
-import WayofTime.alchemicalWizardry.api.util.helper.TextHelper;
+import WayofTime.alchemicalWizardry.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

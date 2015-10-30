@@ -3,6 +3,7 @@ package WayofTime.alchemicalWizardry.item.sigil;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.api.NBTHolder;
 import WayofTime.alchemicalWizardry.api.iface.ISigil;
+import WayofTime.alchemicalWizardry.util.helper.TextHelper;
 import WayofTime.alchemicalWizardry.item.ItemBindable;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +22,7 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
 
     private final String name;
     private boolean toggleable;
+    protected final String tooltipBase;
 
     public ItemSigilBase(String name, int energyUsed) {
         super();
@@ -29,6 +31,7 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
         setEnergyUsed(energyUsed);
 
         this.name = name;
+        this.tooltipBase = "tooltip.AlchemicalWizardry.sigil." + name + ".";
     }
 
     public ItemSigilBase(String name) {
@@ -54,10 +57,8 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
     @SuppressWarnings("unchecked")
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
 
-        String desc = "tooltip.sigil." + name + ".desc";
-
-        if (StatCollector.canTranslate(desc))
-            tooltip.add(StatCollector.translateToLocal(desc));
+        if (StatCollector.canTranslate(tooltipBase + "desc"))
+            tooltip.add(TextHelper.localize(tooltipBase + "desc"));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
