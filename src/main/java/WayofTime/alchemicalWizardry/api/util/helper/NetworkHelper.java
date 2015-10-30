@@ -136,6 +136,23 @@ public class NetworkHelper {
         return newEss - currEss;
     }
 
+    // Get
+
+    public static int getCurrentEssence(String ownerName) {
+        if (MinecraftServer.getServer() == null)
+            return 0;
+
+        World world = MinecraftServer.getServer().worldServers[0];
+        SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
+
+        if (network == null) {
+            network = new SoulNetwork(ownerName);
+            world.setItemData(ownerName, network);
+        }
+
+        return network.getCurrentEssence();
+    }
+
     // Do damage
 
     public static void hurtPlayer(EntityPlayer user, int energySyphoned) {

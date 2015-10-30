@@ -6,6 +6,7 @@ import WayofTime.alchemicalWizardry.api.AlchemicalWizardryAPI;
 import WayofTime.alchemicalWizardry.api.orb.BloodOrb;
 import WayofTime.alchemicalWizardry.api.registry.OrbRegistry;
 import WayofTime.alchemicalWizardry.item.ItemBloodOrb;
+import WayofTime.alchemicalWizardry.item.sigil.ItemSigilDivination;
 import WayofTime.alchemicalWizardry.util.helper.InventoryRenderHelper;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -20,6 +21,7 @@ public class ModItems {
     public static BloodOrb orbArchmage;
     public static BloodOrb orbTranscendent;
 
+    public static Item sigilDivination;
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
@@ -36,6 +38,8 @@ public class ModItems {
         OrbRegistry.registerOrb(orbArchmage);
         orbTranscendent = new BloodOrb("transcendent", 6, 30000000);
         OrbRegistry.registerOrb(orbTranscendent);
+
+        sigilDivination = registerItem(new ItemSigilDivination());
     }
 
     public static void initRenders() {

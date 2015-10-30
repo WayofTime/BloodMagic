@@ -7,6 +7,7 @@ public class NBTHolder {
 
     public static final String NBT_OWNER = "ownerName";
     public static final String NBT_USES = "uses";
+    public static final String NBT_UNUSABLE  = "unusable";
     public static final String NBT_SACRIFICE = "sacrifice";
     public static final String NBT_DIMID = "dimensionId";
     public static final String NBT_COORDX = "xCoord";
