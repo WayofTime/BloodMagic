@@ -3,11 +3,10 @@ package WayofTime.alchemicalWizardry.api.registry;
 import WayofTime.alchemicalWizardry.api.AlchemicalWizardryAPI;
 import WayofTime.alchemicalWizardry.api.orb.BloodOrb;
 import lombok.Getter;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,10 +33,8 @@ public class OrbRegistry {
     public static void registerOrbTexture(BloodOrb orb, String resourceLocation) {
         int meta = getIndexOf(orb);
 
-        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-
         ModelBakery.addVariantName(AlchemicalWizardryAPI.getOrbItem(), resourceLocation);
-        renderItem.getItemModelMesher().register(AlchemicalWizardryAPI.getOrbItem(), meta, new ModelResourceLocation(resourceLocation, "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AlchemicalWizardryAPI.getOrbItem(), meta, new ModelResourceLocation(resourceLocation, "inventory"));
     }
 
     public static BloodOrb getOrb(int index) {
