@@ -5,11 +5,14 @@ import WayofTime.alchemicalWizardry.api.AlchemicalWizardryAPI;
 import WayofTime.alchemicalWizardry.api.NBTHolder;
 import WayofTime.alchemicalWizardry.api.iface.IBindable;
 import WayofTime.alchemicalWizardry.api.util.helper.BindableHelper;
+import WayofTime.alchemicalWizardry.api.util.helper.NetworkHelper;
 import WayofTime.alchemicalWizardry.api.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -46,9 +49,16 @@ public class ItemBindable extends Item implements IBindable {
         return stack;
     }
 
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+        BindableHelper.checkAndSetItemOwner(stack, player);
+
+        return false;
+    }
+
     public static boolean syphonBatteries(ItemStack ist, EntityPlayer player, int damageToBeDone) {
         if (!player.worldObj.isRemote) {
-//            return SoulNetworkHandler.syphonAndDamageFromNetwork(ist, player, damageToBeDone);
+            return NetworkHelper.syphonAndDamageFromNetwork(ist, player, damageToBeDone);
         } else {
             double posX = player.posX;
             double posY = player.posY;
