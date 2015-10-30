@@ -7,19 +7,24 @@ import lombok.Getter;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.awt.*;
+
 public class BlockLifeEssence extends BlockFluidClassic {
 
-    @Getter(AccessLevel.PUBLIC)
-    private static Fluid lifeEssence = new FluidLifeEssence("lifeEssence");
+    @Getter
+    private static Fluid lifeEssence = new FluidLifeEssence();
 
     public BlockLifeEssence() {
         super(lifeEssence, Material.water);
+
+        setUnlocalizedName(AlchemicalWizardry.MODID + ".fluid.lifeEssence");
 
         lifeEssence.setBlock(this);
         AlchemicalWizardryAPI.setLifeEssence(lifeEssence);
@@ -37,8 +42,8 @@ public class BlockLifeEssence extends BlockFluidClassic {
 
     public static class FluidLifeEssence extends Fluid {
 
-        public FluidLifeEssence(String fluidName) {
-            super(fluidName, new ResourceLocation(AlchemicalWizardry.DOMAIN + "lifeEssenceStill"), new ResourceLocation(AlchemicalWizardry.DOMAIN + "lifeEssenceFlowing"));
+        public FluidLifeEssence() {
+            super("lifeEssence", new ResourceLocation(AlchemicalWizardry.DOMAIN + "blocks/lifeEssenceStill"), new ResourceLocation(AlchemicalWizardry.DOMAIN + "blocks/lifeEssenceFlowing"));
 
             setDensity(2000);
             setViscosity(2000);
@@ -46,12 +51,12 @@ public class BlockLifeEssence extends BlockFluidClassic {
 
         @Override
         public int getColor() {
-            return 0xEEEEEE;
+            return Color.WHITE.getRGB();
         }
 
         @Override
         public String getLocalizedName(FluidStack fluidStack) {
-            return "Life Essence";
+            return StatCollector.translateToLocal("tile.AlchemicalWizardry.fluid.lifeEssence.name");
         }
     }
 }

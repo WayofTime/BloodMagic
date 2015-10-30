@@ -9,6 +9,8 @@ item.AlchemicalWizardry.bindable.activationCrystal.creative.name=Creative Activa
 item.AlchemicalWizardry.dagger.name=Sacrificial Dagger
 item.AlchemicalWizardry.dagger.creative.name=Creative Sacrificial Dagger
 
+item.AlchemicalWizardry.bucket.lifeEssence.name=Bucket of Life
+
 item.AlchemicalWizardry.scribe.water.name=Water Scribing Tools
 item.AlchemicalWizardry.scribe.fire.name=Fire Scribing Tools
 item.AlchemicalWizardry.scribe.earth.name=Earth Scribing Tools
@@ -53,6 +55,9 @@ item.AlchemicalWizardry.sigil.air.name=Air Sigil
 item.AlchemicalWizardry.sigil.bloodLight.name=Sigil of the Blood Lamp
 item.AlchemicalWizardry.sigil.compression.name=Sigil of Compression
 item.AlchemicalWizardry.sigil.divination.name=Divination Sigil
+
+# Blocks
+tile.AlchemicalWizardry.fluid.lifeEssence.name=Life Essence
 
 # Tooltips
 tooltip.AlchemicalWizardry.orb.desc=Stores raw Life Essence

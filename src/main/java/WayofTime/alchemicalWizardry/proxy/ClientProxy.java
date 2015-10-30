@@ -7,7 +7,8 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void preInit() {
-
+        ModBlocks.initRenders();
+        ModItems.initRenders();
     }
 
     @Override
@@ -17,7 +18,6 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void postInit() {
-        ModItems.initRenders();
-        ModBlocks.initRenders();
+
     }
 }

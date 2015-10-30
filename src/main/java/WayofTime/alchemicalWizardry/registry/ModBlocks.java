@@ -34,6 +34,8 @@ public class ModBlocks {
 
     public static void initRenders() {
         InventoryRenderHelper renderHelper = AlchemicalWizardry.instance.getRenderHelper();
+
+        renderHelper.fluidRender(lifeEssence);
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {

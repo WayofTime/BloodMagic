@@ -1,13 +1,17 @@
 package WayofTime.alchemicalWizardry.util.helper;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
 
 /**
  * @author <a href="https://github.com/TehNut">TehNut</a>
@@ -81,6 +85,30 @@ public class InventoryRenderHelper {
             @Override
             public ModelResourceLocation getModelLocation(ItemStack stack) {
                 return new ModelResourceLocation(domain + toRender.getClass().getSimpleName(), "inventory");
+            }
+        });
+    }
+
+    public void itemRenderToggle(Item item, String name) {
+        itemRender(item, 0, name + "_deactivated");
+        itemRender(item, 1, name + "_activated");
+    }
+
+    public void fluidRender(Block block) {
+
+        final Block toRender = block;
+
+        ModelBakery.addVariantName(InventoryRenderHelper.getItemFromBlock(block));
+        ModelLoader.setCustomMeshDefinition(InventoryRenderHelper.getItemFromBlock(block), new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+                return new ModelResourceLocation(AlchemicalWizardry.DOMAIN + toRender.getClass().getSimpleName(), "fluid");
+            }
+        });
+        ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return new ModelResourceLocation(domain + toRender.getClass().getSimpleName(), "fluid");
             }
         });
     }

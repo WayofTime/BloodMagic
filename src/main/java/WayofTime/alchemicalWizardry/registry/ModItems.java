@@ -6,6 +6,7 @@ import WayofTime.alchemicalWizardry.api.AlchemicalWizardryAPI;
 import WayofTime.alchemicalWizardry.api.orb.BloodOrb;
 import WayofTime.alchemicalWizardry.api.registry.OrbRegistry;
 import WayofTime.alchemicalWizardry.item.ItemBloodOrb;
+import WayofTime.alchemicalWizardry.item.ItemBucketEssence;
 import WayofTime.alchemicalWizardry.item.sigil.ItemSigilDivination;
 import WayofTime.alchemicalWizardry.util.helper.InventoryRenderHelper;
 import net.minecraft.item.Item;
@@ -20,6 +21,8 @@ public class ModItems {
     public static BloodOrb orbMaster;
     public static BloodOrb orbArchmage;
     public static BloodOrb orbTranscendent;
+
+    public static Item bucketEssence;
 
     public static Item sigilDivination;
 
@@ -39,6 +42,8 @@ public class ModItems {
         orbTranscendent = new BloodOrb("transcendent", 6, 30000000);
         OrbRegistry.registerOrb(orbTranscendent);
 
+        bucketEssence = registerItem(new ItemBucketEssence());
+
         sigilDivination = registerItem(new ItemSigilDivination());
     }
 
@@ -52,6 +57,10 @@ public class ModItems {
         OrbRegistry.registerOrbTexture(orbMaster, AlchemicalWizardry.DOMAIN + "ItemBloodOrbMaster");
         OrbRegistry.registerOrbTexture(orbArchmage, AlchemicalWizardry.DOMAIN + "ItemBloodOrbArchmage");
         OrbRegistry.registerOrbTexture(orbTranscendent, AlchemicalWizardry.DOMAIN + "ItemBloodOrbTranscendent");
+
+        renderHelper.itemRender(bucketEssence);
+
+        renderHelper.itemRender(sigilDivination);
     }
 
     private static Item registerItem(Item item, String name) {
