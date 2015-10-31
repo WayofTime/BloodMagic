@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.item.block;
 
-import WayofTime.alchemicalWizardry.block.BlockRitualHome;
+import WayofTime.alchemicalWizardry.block.BlockRitualController;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -15,7 +15,7 @@ public class ItemBlockRitualHome extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + BlockRitualHome.names[stack.getItemDamage()];
+        return super.getUnlocalizedName(stack) + BlockRitualController.names[stack.getItemDamage()];
     }
 
     @Override

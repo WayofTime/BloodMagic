@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "meta=0": { "model": "alchemicalwizardry:BlockRitualHome0" },
-    "meta=1": { "model": "alchemicalwizardry:BlockRitualHome1" }
-  }
-}

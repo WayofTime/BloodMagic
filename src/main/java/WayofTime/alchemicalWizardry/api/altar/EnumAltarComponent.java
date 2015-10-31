@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.api.enumeration;
+package WayofTime.alchemicalWizardry.api.altar;
 
 public enum  EnumAltarComponent {
 

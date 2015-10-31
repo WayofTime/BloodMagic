@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.api.enumeration;
+package WayofTime.alchemicalWizardry.api.altar;
 
 import WayofTime.alchemicalWizardry.api.BlockStack;
 import WayofTime.alchemicalWizardry.api.altar.AltarComponent;

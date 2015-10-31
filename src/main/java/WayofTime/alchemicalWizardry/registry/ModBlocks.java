@@ -4,14 +4,11 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ConfigHandler;
 import WayofTime.alchemicalWizardry.block.BlockAltar;
 import WayofTime.alchemicalWizardry.block.BlockLifeEssence;
-import WayofTime.alchemicalWizardry.block.BlockRitualHome;
+import WayofTime.alchemicalWizardry.block.BlockRitualController;
 import WayofTime.alchemicalWizardry.item.block.ItemBlockRitualHome;
 import WayofTime.alchemicalWizardry.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -31,7 +28,7 @@ public class ModBlocks {
         lifeEssence = registerBlock(new BlockLifeEssence());
 
         altar = registerBlock(new BlockAltar());
-        ritualStone = registerBlock(new BlockRitualHome(), ItemBlockRitualHome.class);
+        ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualHome.class);
 
         initTiles();
     }

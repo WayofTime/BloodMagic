@@ -1,10 +1,10 @@
-package WayofTime.alchemicalWizardry.api.enumeration;
+package WayofTime.alchemicalWizardry.api.ritual;
 
 import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
 
-public enum  EnumStoneType implements IStringSerializable {
+public enum EnumRuneType implements IStringSerializable {
 
     BLANK,
     WATER,
@@ -24,7 +24,7 @@ public enum  EnumStoneType implements IStringSerializable {
         return this.toString();
     }
 
-    public static EnumStoneType byMetadata(int meta) {
+    public static EnumRuneType byMetadata(int meta) {
         if (meta < 0 || meta >= values().length)
             meta = 0;
 

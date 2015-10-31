@@ -18,12 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockRitualHome extends Block {
+public class BlockRitualController extends Block {
 
     public static final String[] names = { "master", "imperfect" };
     public static final PropertyInteger META = PropertyInteger.create("meta", 0, names.length - 1);
 
-    public BlockRitualHome() {
+    public BlockRitualController() {
         super(Material.rock);
 
         setUnlocalizedName(AlchemicalWizardry.MODID + ".stone.ritual.");

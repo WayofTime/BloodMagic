@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "alchemicalwizardry:blocks/MasterRitualStone"
+    },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "meta": {
+      "0": {
+        "textures": {
+          "all": "alchemicalwizardry:blocks/MasterRitualStone"
+        }
+      },
+      "1": {
+        "textures": {
+          "all": "alchemicalwizardry:blocks/ImperfectRitualStone"
+        }
+      }
+    }
+  }
+}

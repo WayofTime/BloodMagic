@@ -1,4 +1,4 @@
-package WayofTime.alchemicalWizardry.api.iface;
+package WayofTime.alchemicalWizardry.api.altar;
 
 public interface IBloodAltar {
 

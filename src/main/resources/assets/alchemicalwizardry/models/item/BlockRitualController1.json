@@ -1,5 +1,5 @@
 {
-  "parent": "alchemicalwizardry:block/BlockRitualHome1",
+  "parent": "alchemicalwizardry:block/BlockRitualController1",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

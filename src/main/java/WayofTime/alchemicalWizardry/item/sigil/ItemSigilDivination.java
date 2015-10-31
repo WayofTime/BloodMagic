@@ -1,6 +1,6 @@
 package WayofTime.alchemicalWizardry.item.sigil;
 
-import WayofTime.alchemicalWizardry.api.iface.IBloodAltar;
+import WayofTime.alchemicalWizardry.api.altar.IBloodAltar;
 import WayofTime.alchemicalWizardry.api.util.helper.BindableHelper;
 import WayofTime.alchemicalWizardry.api.util.helper.NetworkHelper;
 import WayofTime.alchemicalWizardry.util.ChatUtil;

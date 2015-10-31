@@ -2,9 +2,9 @@ package WayofTime.alchemicalWizardry.altar;
 
 import WayofTime.alchemicalWizardry.api.BlockStack;
 import WayofTime.alchemicalWizardry.api.altar.AltarComponent;
-import WayofTime.alchemicalWizardry.api.iface.IAltarComponent;
-import WayofTime.alchemicalWizardry.api.enumeration.EnumAltarComponent;
-import WayofTime.alchemicalWizardry.api.enumeration.EnumAltarTier;
+import WayofTime.alchemicalWizardry.api.altar.IAltarComponent;
+import WayofTime.alchemicalWizardry.api.altar.EnumAltarComponent;
+import WayofTime.alchemicalWizardry.api.altar.EnumAltarTier;
 import net.minecraft.block.BlockBeacon;
 import net.minecraft.block.BlockGlowstone;
 import net.minecraft.init.Blocks;
