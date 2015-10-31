@@ -45,9 +45,6 @@ public class InventoryRenderHelper {
      * @param name - Name of the model JSON
      */
     public void itemRender(Item item, int meta, String name) {
-        if (item instanceof ItemBlock && name.startsWith("ItemBlock"))
-            name = name.replace("Item", "");
-
         String resName = domain + name;
 
         ModelBakery.addVariantName(item, resName);
@@ -61,7 +58,7 @@ public class InventoryRenderHelper {
      * @param meta - Meta of Item
      */
     public void itemRender(Item item, int meta) {
-        itemRender(item, meta, item.getClass().getSimpleName() + meta);
+        itemRender(item, meta, getClassName(item) + meta);
     }
 
     public void itemRender(Item item, String name) {
@@ -74,7 +71,7 @@ public class InventoryRenderHelper {
      * @param item - Item to register Model for
      */
     public void itemRender(Item item) {
-        itemRender(item, 0, item.getClass().getSimpleName());
+        itemRender(item, 0, getClassName(item));
     }
 
     /**
@@ -88,7 +85,7 @@ public class InventoryRenderHelper {
         ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
             @Override
             public ModelResourceLocation getModelLocation(ItemStack stack) {
-                return new ModelResourceLocation(domain + toRender.getClass().getSimpleName(), "inventory");
+                return new ModelResourceLocation(domain + getClassName(toRender), "inventory");
             }
         });
     }
@@ -124,5 +121,9 @@ public class InventoryRenderHelper {
      */
     public static Item getItemFromBlock(Block block) {
         return Item.getItemFromBlock(block);
+    }
+
+    private static String getClassName(Item item) {
+        return item instanceof ItemBlock ? Block.getBlockFromItem(item).getClass().getSimpleName() : item.getClass().getSimpleName();
     }
 }

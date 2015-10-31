@@ -58,6 +58,9 @@ item.AlchemicalWizardry.sigil.divination.name=Divination Sigil
 
 # Blocks
 tile.AlchemicalWizardry.fluid.lifeEssence.name=Life Essence
+tile.AlchemicalWizardry.stone.ritual.master.name=Master Ritual Stone
+tile.AlchemicalWizardry.stone.ritual.imperfect.name=Imperfect Ritual Stone
+tile.AlchemicalWizardry.altar.name=Blood Altar
 
 # Tooltips
 tooltip.AlchemicalWizardry.orb.desc=Stores raw Life Essence
