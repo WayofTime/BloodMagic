@@ -64,6 +64,10 @@ public class InventoryRenderHelper {
         itemRender(item, meta, item.getClass().getSimpleName() + meta);
     }
 
+    public void itemRender(Item item, String name) {
+        itemRender(item, 0, name);
+    }
+
     /**
      * Shorthand of {@code itemRender(Item, int)}
      *

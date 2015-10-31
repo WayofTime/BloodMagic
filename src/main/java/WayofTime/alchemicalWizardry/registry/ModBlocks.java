@@ -4,6 +4,8 @@ import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ConfigHandler;
 import WayofTime.alchemicalWizardry.block.BlockAltar;
 import WayofTime.alchemicalWizardry.block.BlockLifeEssence;
+import WayofTime.alchemicalWizardry.block.BlockRitualHome;
+import WayofTime.alchemicalWizardry.item.block.ItemBlockRitualHome;
 import WayofTime.alchemicalWizardry.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModBlocks {
 
     public static Block altar;
+    public static Block ritualStone;
 
     public static Block lifeEssence;
 
@@ -23,7 +26,9 @@ public class ModBlocks {
     public static void init() {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         lifeEssence = registerBlock(new BlockLifeEssence());
+
         altar = registerBlock(new BlockAltar());
+        ritualStone = registerBlock(new BlockRitualHome(), ItemBlockRitualHome.class);
 
         initTiles();
     }
@@ -36,6 +41,8 @@ public class ModBlocks {
         InventoryRenderHelper renderHelper = AlchemicalWizardry.instance.getRenderHelper();
 
         renderHelper.fluidRender(lifeEssence);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 1);
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
@@ -43,6 +50,10 @@ public class ModBlocks {
             GameRegistry.registerBlock(block, itemBlock, name);
 
         return block;
+    }
+
+    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock) {
+        return registerBlock(block, itemBlock, block.getClass().getSimpleName());
     }
 
     private static Block registerBlock(Block block, String name) {
