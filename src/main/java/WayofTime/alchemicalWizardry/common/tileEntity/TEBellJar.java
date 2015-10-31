@@ -11,9 +11,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 
-public class TEBelljar extends TEReagentConduit
+public class TEBellJar extends TEReagentConduit
 {
-    public TEBelljar()
+    public TEBellJar()
     {
         super(1, 16000);
         this.maxConnextions = 1;

@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentContainerInfo;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.ReagentStack;
 import WayofTime.alchemicalWizardry.common.renderer.model.ModelCrystalBelljar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -24,9 +24,9 @@ public class RenderCrystalBelljar extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double d0, double d1, double d2, float f)
     {
-        if (tileEntity instanceof TEBelljar)
+        if (tileEntity instanceof TEBellJar)
         {
-            TEBelljar tileAltar = (TEBelljar) tileEntity;
+            TEBellJar tileAltar = (TEBellJar) tileEntity;
             GL11.glPushMatrix();
             GL11.glTranslatef((float) d0 + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F);
             ResourceLocation test = new ResourceLocation("alchemicalwizardry:textures/models/CrystalBelljar.png");

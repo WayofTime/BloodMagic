@@ -87,7 +87,7 @@ import WayofTime.alchemicalWizardry.common.renderer.projectile.RenderMeteor;
 import WayofTime.alchemicalWizardry.common.thread.GAPIChecker;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAlchemicCalcinator;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEAltar;
-import WayofTime.alchemicalWizardry.common.tileEntity.TEBelljar;
+import WayofTime.alchemicalWizardry.common.tileEntity.TEBellJar;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEConduit;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEMasterStone;
 import WayofTime.alchemicalWizardry.common.tileEntity.TEPedestal;
@@ -164,7 +164,7 @@ public class ClientProxy extends CommonProxy
             ClientRegistry.bindTileEntitySpecialRenderer(TEMasterStone.class, new RenderMasterStone());
         }
         ClientRegistry.bindTileEntitySpecialRenderer(TEAlchemicCalcinator.class, new RenderAlchemicCalcinator());
-        ClientRegistry.bindTileEntitySpecialRenderer(TEBelljar.class, new RenderCrystalBelljar());
+        ClientRegistry.bindTileEntitySpecialRenderer(TEBellJar.class, new RenderCrystalBelljar());
 
         //Item Renderer stuff
         MinecraftForgeClient.registerItemRenderer(ItemBlock.getItemFromBlock(ModBlocks.blockConduit), new TEConduitItemRenderer());
