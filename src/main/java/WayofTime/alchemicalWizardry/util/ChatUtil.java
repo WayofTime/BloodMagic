@@ -17,6 +17,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ChatUtil {
 
+    /**
+     * @author tterrag1098
+     *
+     * Ripped from EnderCore (and slightly altered)
+     */
     public static class PacketNoSpamChat implements IMessage {
 
         private IChatComponent[] chatLines;
@@ -56,7 +61,7 @@ public class ChatUtil {
         }
     }
 
-    private static final int DELETION_ID = 8675309;
+    private static final int DELETION_ID = 2525277;
     private static int lastAdded;
 
     private static void sendNoSpamMessages(IChatComponent[] messages) {
