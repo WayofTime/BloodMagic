@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import WayofTime.alchemicalWizardry.api.BlockStack;
-import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
-import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -37,14 +33,16 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.internal.IManaBurst;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.BloodMagicConfiguration;
+import WayofTime.alchemicalWizardry.api.BlockStack;
 import WayofTime.alchemicalWizardry.api.alchemy.energy.Reagent;
 import WayofTime.alchemicalWizardry.api.event.TeleposeEvent;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.api.spell.APISpellHelper;
+import WayofTime.alchemicalWizardry.common.achievements.ModAchievements;
+import WayofTime.alchemicalWizardry.common.demonVillage.demonHoard.demon.IHoardDemon;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EnergyBlastProjectile;
 import WayofTime.alchemicalWizardry.common.items.EnergySword;
 import WayofTime.alchemicalWizardry.common.items.armour.BoundArmour;
@@ -60,7 +58,6 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AlchemicalWizardryEventHooks
 {
