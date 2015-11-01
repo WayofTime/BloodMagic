@@ -3,39 +3,62 @@ package WayofTime.alchemicalWizardry.api.ritual;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 
 @Getter
 @RequiredArgsConstructor
-public class Ritual {
+public abstract class Ritual {
 
     private final String name;
     private final int crystalLevel;
     private final int activationCost;
-    private final RitualEffect ritualEffect;
     private final RitualRenderer renderer;
 
-    public Ritual(String name, int crystalLevel, int activationCost, RitualEffect ritualEffect) {
-        this(name, crystalLevel, activationCost, ritualEffect, null);
+    public final ArrayList<RitualComponent> ritualComponents = new ArrayList<RitualComponent>();
+
+    public Ritual(String name, int crystalLevel, int activationCost) {
+        this(name, crystalLevel, activationCost, null);
     }
 
-    public ArrayList<RitualComponent> getComponents() {
-        return this.getRitualEffect().getComponents();
+    public abstract boolean startRitual(IMasterRitualStone masterRitualStone, EntityPlayer player);
+
+    public abstract void performEffect(IMasterRitualStone masterRitualStone);
+
+    public abstract void onRitualBroken(IMasterRitualStone masterRitualStone, Ritual.BreakType breakType);
+
+    public abstract int getRefreshCost();
+
+    public abstract ArrayList<RitualComponent> getComponents();
+
+    public LocalRitualStorage getNewLocalStorage() {
+        return new LocalRitualStorage();
     }
 
-    public void performEffect(IMasterRitualStone masterRitualStone) {
-        if (ritualEffect != null && RitualRegistry.ritualEnabled(this))
-            ritualEffect.performEffect(masterRitualStone);
+    public void addOffsetRunes(ArrayList<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune) {
+        components.add(new RitualComponent(new BlockPos(offset1, y, offset2), rune));
+        components.add(new RitualComponent(new BlockPos(offset2, y, offset1), rune));
+        components.add(new RitualComponent(new BlockPos(offset1, y, -offset2), rune));
+        components.add(new RitualComponent(new BlockPos(-offset2, y, offset1), rune));
+        components.add(new RitualComponent(new BlockPos(-offset1, y, offset2), rune));
+        components.add(new RitualComponent(new BlockPos(offset2, y, -offset1), rune));
+        components.add(new RitualComponent(new BlockPos(-offset1, y, -offset2), rune));
+        components.add(new RitualComponent(new BlockPos(-offset2, y, -offset1), rune));
     }
 
-    public boolean startRitual(IMasterRitualStone masterRitualStone, EntityPlayer player) {
-        return ritualEffect != null && RitualRegistry.ritualEnabled(this) && ritualEffect.startRitual(masterRitualStone, player);
+    public void addCornerRunes(ArrayList<RitualComponent> components, int offset, int y, EnumRuneType rune) {
+        components.add(new RitualComponent(new BlockPos(offset, y, offset), rune));
+        components.add(new RitualComponent(new BlockPos(offset, y, -offset), rune));
+        components.add(new RitualComponent(new BlockPos(-offset, y, -offset), rune));
+        components.add(new RitualComponent(new BlockPos(-offset, y, offset), rune));
     }
 
-    public void onBreak(IMasterRitualStone masterRitualStone, BreakType breakType) {
-        if (ritualEffect != null && RitualRegistry.ritualEnabled(this))
-            ritualEffect.onRitualBroken(masterRitualStone, breakType);
+    public void addParallelRunes(ArrayList<RitualComponent> components, int offset, int y, EnumRuneType rune) {
+        components.add(new RitualComponent(new BlockPos(offset, y, 0), rune));
+        components.add(new RitualComponent(new BlockPos(-offset, y, 0), rune));
+        components.add(new RitualComponent(new BlockPos(0, y, -offset), rune));
+        components.add(new RitualComponent(new BlockPos(0, y, offset), rune));
     }
 
     public enum BreakType {

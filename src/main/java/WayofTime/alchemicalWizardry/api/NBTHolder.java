@@ -15,6 +15,10 @@ public class NBTHolder {
     public static final String NBT_COORDZ = "zCoord";
     public static final String NBT_MAXORB = "maxOrb";
     public static final String NBT_CURRENTESSENCE = "currentEssence";
+    public static final String NBT_CURRENTRITUAL = "currentRitual";
+    public static final String NBT_RUNNING = "isRunning";
+    public static final String NBT_RUNTIME = "runtime";
+    public static final String NBT_REAGENTTANK = "reagentTanks";
 
     public static ItemStack checkNBT(ItemStack stack) {
         if (stack.getTagCompound() == null)
