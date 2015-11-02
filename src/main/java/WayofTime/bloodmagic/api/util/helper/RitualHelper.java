@@ -1,15 +1,8 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.event.RitualEvent;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import sun.misc.Launcher;
 
 import java.io.File;
@@ -33,38 +26,6 @@ public class RitualHelper {
         int previousIndex = RitualRegistry.getIds().listIterator(currentIndex).previousIndex();
 
         return RitualRegistry.getIds().get(previousIndex);
-    }
-
-    public static boolean activate(IMasterRitualStone masterRitualStone, Ritual ritual, EntityPlayer player) {
-        String owner = masterRitualStone.getOwner();
-
-        RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(masterRitualStone, owner, ritual, player, player.getHeldItem(), player.getHeldItem().getItemDamage());
-
-        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-            return false;
-
-        return RitualRegistry.ritualEnabled(ritual) && ritual.startRitual(masterRitualStone, player);
-    }
-
-    public static void perform(IMasterRitualStone masterRitualStone, Ritual ritual) {
-        String owner = masterRitualStone.getOwner();
-
-        RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(masterRitualStone, owner, ritual);
-
-        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-            return;
-
-        if (RitualRegistry.ritualEnabled(ritual))
-            ritual.performEffect(masterRitualStone);
-    }
-
-    public static void stop(IMasterRitualStone masterRitualStone, Ritual ritual, Ritual.BreakType breakType) {
-        String owner = masterRitualStone.getOwner();
-
-        RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(masterRitualStone, owner, ritual, breakType);
-        MinecraftForge.EVENT_BUS.post(event);
-
-        ritual.onRitualBroken(masterRitualStone, breakType);
     }
 
     /**
@@ -111,21 +72,6 @@ public class RitualHelper {
                     }
                 }
             }
-        }
-    }
-
-    public static class Imperfect {
-
-        public static boolean activate(IImperfectRitualStone imperfectRitualStone, ImperfectRitual imperfectRitual, EntityPlayer player) {
-            String owner = imperfectRitualStone.getOwner();
-
-            RitualEvent.ImperfectRitualActivatedEvent event = new RitualEvent.ImperfectRitualActivatedEvent(imperfectRitualStone, owner, imperfectRitual);
-
-            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                return false;
-
-
-            return imperfectRitual.onActivate(imperfectRitualStone, player);
         }
     }
 }
