@@ -1,6 +1,0 @@
-{
-  "parent":"alchemicalwizardry:item/ItemModelBase",
-  "textures": {
-    "layer0":"alchemicalwizardry:items/MagicianBloodOrb"
-  }
-}

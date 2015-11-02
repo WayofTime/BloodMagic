@@ -1,0 +1,73 @@
+#Creative Tab
+itemGroup.BloodMagic.creativeTab=Blood Magic
+
+#Items
+item.BloodMagic.activationCrystal.weak.name=Weak Activation Crystal
+item.BloodMagic.activationCrystal.awakened.name=Awakened Activation Crystal
+item.BloodMagic.activationCrystal.creative.name=Creative Activation Crystal
+
+item.BloodMagic.dagger.name=Sacrificial Dagger
+item.BloodMagic.dagger.creative.name=Creative Sacrificial Dagger
+
+item.BloodMagic.bucket.lifeEssence.name=Bucket of Life
+
+item.BloodMagic.scribe.water.name=Water Scribing Tools
+item.BloodMagic.scribe.fire.name=Fire Scribing Tools
+item.BloodMagic.scribe.earth.name=Earth Scribing Tools
+item.BloodMagic.scribe.air.name=Air Scribing Tools
+item.BloodMagic.scribe.dusk.name=Dusk Scribing Tools
+item.BloodMagic.scribe.dawn.name=Dawn Scribing Tools
+
+item.BloodMagic.slate.blank.name=Blank Slate
+item.BloodMagic.slate.reinforced.name=Reinforced Slate
+item.BloodMagic.slate.imbued.name=Imbued Slate
+item.BloodMagic.slate.demonic.name=Demonic Slate
+
+item.BloodMagic.focus.weak.name=Teleposition Focus
+item.BloodMagic.focus.enhanced.name=Enhanced Teleposition Focus
+item.BloodMagic.focus.reinforced.name=Reinforced Teleposition Focus
+item.BloodMagic.focus.demonic.name=Demonic Teleposition Focus
+
+item.BloodMagic.orb.weak.name=Weak Blood Orb
+item.BloodMagic.orb.apprentice.name=Apprentice Blood Orb
+item.BloodMagic.orb.magician.name=Magician Blood Orb
+item.BloodMagic.orb.master.name=Master Blood Orb
+item.BloodMagic.orb.archmage.name=Archmage Blood Orb
+item.BloodMagic.orb.transcendent.name=Transcendent Blood Orb
+
+item.BloodMagic.reagent.incendium.name=Incendium
+item.BloodMagic.reagent.magicales.name=Magicales
+item.BloodMagic.reagent.sanctus.name=Sanctus
+item.BloodMagic.reagent.aether.name=Aether
+item.BloodMagic.reagent.crepitous.name=Crepitous
+item.BloodMagic.reagent.crystallos.name=Crystallos
+item.BloodMagic.reagent.terrae.name=Terrae
+item.BloodMagic.reagent.aquasalus.name=Aquasalus
+item.BloodMagic.reagent.tennebrae.name=Tennebrae
+item.BloodMagic.reagent.offensa.name=Offensa
+item.BloodMagic.reagent.praesidium.name=Praesidium
+item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
+item.BloodMagic.reagent.virtus.name=Virtus
+item.BloodMagic.reagent.reductus.name=Reductus
+item.BloodMagic.reagent.potentia.name=Potentia
+
+item.BloodMagic.sigil.air.name=Air Sigil
+item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
+item.BloodMagic.sigil.compression.name=Sigil of Compression
+item.BloodMagic.sigil.divination.name=Divination Sigil
+
+# Blocks
+tile.BloodMagic.fluid.lifeEssence.name=Life Essence
+tile.BloodMagic.stone.ritual.master.name=Master Ritual Stone
+tile.BloodMagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
+tile.BloodMagic.altar.name=Blood Altar
+
+# Tooltips
+tooltip.BloodMagic.orb.desc=Stores raw Life Essence
+tooltip.BloodMagic.orb.owner=Added by: %s
+tooltip.BloodMagic.currentOwner=Owner: %s
+tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
+tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
+tooltip.BloodMagic.sigil.compression.desc=&oHands of Diamonds
+tooltip.BloodMagic.sigil.divination.desc=&oPeer into the soul
+tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %d LP
