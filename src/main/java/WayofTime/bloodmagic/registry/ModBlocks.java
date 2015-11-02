@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockRitualController;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualHome;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -28,7 +28,7 @@ public class ModBlocks {
         lifeEssence = registerBlock(new BlockLifeEssence());
 
         altar = registerBlock(new BlockAltar());
-        ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualHome.class);
+        ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
 
         initTiles();
     }
