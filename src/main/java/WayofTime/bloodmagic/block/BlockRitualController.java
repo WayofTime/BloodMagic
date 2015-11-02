@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -43,6 +44,11 @@ public class BlockRitualController extends BlockContainer {
     }
 
     @Override
+    public int getRenderType() {
+        return 3;
+    }
+
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(META, meta);
     }
@@ -69,6 +75,6 @@ public class BlockRitualController extends BlockContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return meta == 0 ? null : null;
+        return meta == 0 ? new TileMasterRitualStone() : null;
     }
 }
