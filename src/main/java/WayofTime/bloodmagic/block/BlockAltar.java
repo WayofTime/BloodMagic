@@ -16,6 +16,26 @@ public class BlockAltar extends BlockContainer {
     }
 
     @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube() {
+        return false;
+    }
+
+    @Override
+    public boolean isVisuallyOpaque() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return 3;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int meta) {
 //        return new TileAltar();
         return null;
