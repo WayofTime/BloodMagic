@@ -5,6 +5,7 @@ import WayofTime.alchemicalWizardry.ConfigHandler;
 import WayofTime.alchemicalWizardry.api.AlchemicalWizardryAPI;
 import WayofTime.alchemicalWizardry.api.orb.BloodOrb;
 import WayofTime.alchemicalWizardry.api.registry.OrbRegistry;
+import WayofTime.alchemicalWizardry.item.ItemActivationCrystal;
 import WayofTime.alchemicalWizardry.item.ItemBloodOrb;
 import WayofTime.alchemicalWizardry.item.ItemBucketEssence;
 import WayofTime.alchemicalWizardry.item.sigil.ItemSigilDivination;
@@ -23,6 +24,8 @@ public class ModItems {
     public static BloodOrb orbTranscendent;
 
     public static Item bucketEssence;
+
+    public static Item activationCrystal;
 
     public static Item sigilDivination;
 
@@ -44,6 +47,8 @@ public class ModItems {
 
         bucketEssence = registerItem(new ItemBucketEssence());
 
+        activationCrystal = registerItem(new ItemActivationCrystal());
+
         sigilDivination = registerItem(new ItemSigilDivination());
     }
 
@@ -59,6 +64,9 @@ public class ModItems {
         OrbRegistry.registerOrbTexture(orbTranscendent, AlchemicalWizardry.DOMAIN + "ItemBloodOrbTranscendent");
 
         renderHelper.itemRender(bucketEssence);
+
+        renderHelper.itemRender(activationCrystal, 0);
+        renderHelper.itemRender(activationCrystal, 1);
 
         renderHelper.itemRender(sigilDivination);
     }

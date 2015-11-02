@@ -15,6 +15,19 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class NetworkHelper {
 
+    // Get
+
+    public static SoulNetwork getSoulNetwork(String ownerName, World world) {
+        SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, ownerName);
+
+        if (network == null) {
+            network = new SoulNetwork(ownerName);
+            world.getMapStorage().setData(ownerName, network);
+        }
+
+        return network;
+    }
+
     // Syphon
 
     /**

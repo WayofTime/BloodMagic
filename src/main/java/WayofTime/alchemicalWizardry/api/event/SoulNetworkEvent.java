@@ -30,9 +30,11 @@ public class SoulNetworkEvent extends Event {
     public static class PlayerDrainNetworkEvent extends SoulNetworkEvent {
 
         public final EntityPlayer player;
+        public boolean shouldDamage; //If true, will damage regardless of if the network had enough inside it
 
         public PlayerDrainNetworkEvent(EntityPlayer player, String ownerNetwork, int drainAmount) {
             super(ownerNetwork, drainAmount);
+            this.shouldDamage = false;
             this.player = player;
         }
     }
@@ -41,7 +43,6 @@ public class SoulNetworkEvent extends Event {
     public static class ItemDrainNetworkEvent extends PlayerDrainNetworkEvent {
 
         public final ItemStack itemStack;
-        public boolean shouldDamage; //If true, will damage regardless of if the network had enough inside it
         public float damageAmount; //Amount of damage that would incur if the network could not drain properly
 
         /**
@@ -55,7 +56,6 @@ public class SoulNetworkEvent extends Event {
         public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, ItemStack itemStack, int drainAmount) {
             super(player, ownerNetwork, drainAmount);
             this.itemStack = itemStack;
-            this.shouldDamage = false;
             this.damageAmount = (float)(drainAmount) / 100.0f;
         }
     }

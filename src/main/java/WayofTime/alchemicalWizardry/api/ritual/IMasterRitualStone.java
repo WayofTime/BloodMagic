@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public interface IMasterRitualStone extends IImperfectRitualStone {
 
-    void performRitual(World world, BlockPos pos, String ritualID);
+    void performRitual(World world, BlockPos pos, Ritual ritual);
 
     void setCooldown(int cooldown);
 

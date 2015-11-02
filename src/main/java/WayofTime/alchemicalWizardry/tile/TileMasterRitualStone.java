@@ -1,20 +1,32 @@
 package WayofTime.alchemicalWizardry.tile;
 
 import WayofTime.alchemicalWizardry.api.NBTHolder;
+import WayofTime.alchemicalWizardry.api.event.RitualEvent;
+import WayofTime.alchemicalWizardry.api.network.SoulNetwork;
 import WayofTime.alchemicalWizardry.api.registry.RitualRegistry;
 import WayofTime.alchemicalWizardry.api.ritual.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.ritual.LocalRitualStorage;
 import WayofTime.alchemicalWizardry.api.ritual.Ritual;
+import WayofTime.alchemicalWizardry.api.util.helper.NetworkHelper;
+import WayofTime.alchemicalWizardry.item.ItemActivationCrystal;
+import WayofTime.alchemicalWizardry.util.ChatUtil;
+import com.google.common.base.Strings;
 import lombok.Getter;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 @Getter
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, IUpdatePlayerListBox {
+
+    public static final int REFRESH_TIME = 0;
 
     private String owner;
     private boolean active;
@@ -47,9 +59,32 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     }
 
-    @Override
-    public void performRitual(World world, BlockPos pos, String ritualID) {
+    public void activateRitual(ItemStack activationCrystal, EntityPlayer activator) {
+        activationCrystal = NBTHolder.checkNBT(activationCrystal);
+        String crystalOwner = activationCrystal.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        Ritual ritual = null;
 
+        if (!Strings.isNullOrEmpty(crystalOwner)) {
+            if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
+                int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
+
+                RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
+
+                if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
+                    ChatUtil.sendNoSpamUnloc(activator, "chat.AlchemicalWizardry.ritual.prevent");
+                    return;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void performRitual(World world, BlockPos pos, Ritual ritual) {
+        if (ritual != null && RitualRegistry.ritualEnabled(ritual)) {
+            SoulNetwork network = NetworkHelper.getSoulNetwork(getOwner(), getWorld());
+            network.syphonAndDamage(ritual.getRefreshCost());
+            ritual.performEffect(this);
+        }
     }
 
     @Override
