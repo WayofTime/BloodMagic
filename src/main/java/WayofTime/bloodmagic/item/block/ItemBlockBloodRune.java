@@ -5,17 +5,15 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockBloodRune extends ItemBlock
-{
-    public ItemBlockBloodRune(Block block)
-    {
+public class ItemBlockBloodRune extends ItemBlock {
+
+    public ItemBlockBloodRune(Block block) {
         super(block);
         setHasSubtypes(true);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+    public String getUnlocalizedName(ItemStack stack) {
         return super.getUnlocalizedName(stack) + BlockBloodRune.names[stack.getItemDamage()];
     }
 

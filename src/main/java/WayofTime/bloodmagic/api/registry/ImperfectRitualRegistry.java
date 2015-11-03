@@ -30,12 +30,9 @@ public class ImperfectRitualRegistry {
     }
 
     public static ImperfectRitual getRitualForBlock(BlockStack blockStack) {
-        for (ImperfectRitual imperfectRitual : getRegistry().values()) {
-            if (imperfectRitual.getRequiredBlock().equals(blockStack)) {
-                System.out.println(imperfectRitual.toString());
+        for (ImperfectRitual imperfectRitual : getRegistry().values())
+            if (imperfectRitual.getRequiredBlock().equals(blockStack))
                 return imperfectRitual;
-            }
-        }
 
         return null;
     }

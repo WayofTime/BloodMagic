@@ -12,15 +12,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BloodAltar
-{
+public class BloodAltar {
 
-    public static EnumAltarTier getAltarTier(World world, BlockPos pos)
-    {
-        for (int i = EnumAltarTier.MAXTIERS; i >= 2; i--)
-        {
-            if (checkAltarIsValid(world, pos, i))
-            {
+    public static EnumAltarTier getAltarTier(World world, BlockPos pos) {
+        for (int i = EnumAltarTier.MAXTIERS; i >= 2; i--) {
+            if (checkAltarIsValid(world, pos, i)) {
                 return EnumAltarTier.values()[i];
             }
 
@@ -29,27 +25,19 @@ public class BloodAltar
         return EnumAltarTier.ONE;
     }
 
-    public static boolean checkAltarIsValid(World world, BlockPos worldPos, int altarTier)
-    {
-        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents())
-        {
+    public static boolean checkAltarIsValid(World world, BlockPos worldPos, int altarTier) {
+        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents()) {
 
             BlockPos componentPos = worldPos.add(altarComponent.getOffset());
             BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
 
-            if (altarComponent.isBloodRune())
-            {
-                if (!checkRune(altarComponent, worldBlock))
-                {
+            if (altarComponent.isBloodRune()) {
+                if (!checkRune(altarComponent, worldBlock)) {
                     return false;
                 }
-            }
-            else
-            {
-                if (((altarComponent.getBlockStack().getBlock() != worldBlock.getBlock()) || (altarComponent.getBlockStack().getMeta() != worldBlock.getMeta())) && (altarComponent.getBlockStack().getBlock() == Blocks.air && !world.isAirBlock(componentPos)))
-                {
-                    if (!checkSpecials(altarComponent, worldBlock))
-                    {
+            } else {
+                if (((altarComponent.getBlockStack().getBlock() != worldBlock.getBlock()) || (altarComponent.getBlockStack().getMeta() != worldBlock.getMeta())) && (altarComponent.getBlockStack().getBlock() == Blocks.air && !world.isAirBlock(componentPos))) {
+                    if (!checkSpecials(altarComponent, worldBlock)) {
                         return false;
                     }
                 }
@@ -59,28 +47,22 @@ public class BloodAltar
         return true;
     }
 
-    public static AltarUpgrade getUpgrades(World world, BlockPos pos, int altarTier)
-    {
-        if (world.isRemote)
-        {
+    public static AltarUpgrade getUpgrades(World world, BlockPos pos, int altarTier) {
+        if (world.isRemote) {
             return null;
         }
 
         AltarUpgrade upgrades = new AltarUpgrade();
         List<AltarComponent> list = EnumAltarTier.values()[altarTier].getAltarComponents();
 
-        for (AltarComponent altarComponent : list)
-        {
+        for (AltarComponent altarComponent : list) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
 
-            if (altarComponent.isUpgradeSlot())
-            {
+            if (altarComponent.isUpgradeSlot()) {
                 BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
 
-                if (worldBlock.getBlock() instanceof BlockBloodRune)
-                {
-                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta()))
-                    {
+                if (worldBlock.getBlock() instanceof BlockBloodRune) {
+                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta())) {
                         case 1:
                             upgrades.addSpeed();
                             break;
@@ -98,19 +80,19 @@ public class BloodAltar
                             break;
 
                         case 5:
-                            upgrades.addCapacity();
-                            break;
-
-                        case 6:
                             upgrades.addDisplacement();
                             break;
 
+                        case 6:
+                            upgrades.addCapacity();
+                            break;
+
                         case 7:
-                            upgrades.addOrbCapacity();
+                            upgrades.addBetterCapacity();
                             break;
 
                         case 8:
-                            upgrades.addBetterCapacity();
+                            upgrades.addOrbCapacity();
                             break;
 
                         case 9:
@@ -124,12 +106,9 @@ public class BloodAltar
         return upgrades;
     }
 
-    private static boolean checkRune(AltarComponent altarComponent, BlockStack blockStack)
-    {
-        if (altarComponent.getBlockStack().getBlock() == ModBlocks.blood_rune)
-        {
-            if (blockStack.getBlock() instanceof BlockBloodRune || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODRUNE)))
-            {
+    private static boolean checkRune(AltarComponent altarComponent, BlockStack blockStack) {
+        if (altarComponent.getBlockStack().getBlock() == ModBlocks.bloodRune) {
+            if (blockStack.getBlock() instanceof BlockBloodRune || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODRUNE))) {
                 return true;
             }
 
@@ -137,15 +116,14 @@ public class BloodAltar
         return false;
     }
 
-    private static boolean checkSpecials(AltarComponent altarComponent, BlockStack blockStack)
-    {
+    private static boolean checkSpecials(AltarComponent altarComponent, BlockStack blockStack) {
         if (altarComponent.getBlockStack().getBlock() == ModBlocks.bloodStone)
 //            if (blockStack.getBlock() instanceof BlockBloodStone || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODSTONE)))
-                return true;
+            return true;
 
         if (altarComponent.getBlockStack().getBlock() == ModBlocks.crystal)
 //            if (blockStack.getBlock() instanceof BlockCrystal || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.CRYSTAL)))
-                return true;
+            return true;
 
         if (altarComponent.getBlockStack().getBlock() == Blocks.glowstone)
             if (blockStack.getBlock() instanceof BlockGlowstone || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.GLOWSTONE)))

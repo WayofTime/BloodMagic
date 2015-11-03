@@ -40,6 +40,11 @@ public class SoulNetwork extends WorldSavedData {
         nbttagcompound.setInteger(NBTHolder.NBT_MAXORB, maxOrb);
     }
 
+    /**
+     * Used to syphon LP from the network.
+     *
+     * @return - .
+     */
     public int syphon(int syphon) {
         if (getCurrentEssence() >= syphon) {
             setCurrentEssence(getCurrentEssence() - syphon);
@@ -50,18 +55,27 @@ public class SoulNetwork extends WorldSavedData {
         return 0;
     }
 
-    public boolean syphonAndDamage(int syphon) {
-        SoulNetworkEvent.PlayerDrainNetworkEvent event = new SoulNetworkEvent.PlayerDrainNetworkEvent(getPlayer(), mapName, syphon);
+    public boolean syphonAndDamage(int toSyphon) {
+//        SoulNetworkEvent.PlayerDrainNetworkEvent event = new SoulNetworkEvent.PlayerDrainNetworkEvent(getPlayer(), mapName, syphon);
+//
+//        if (MinecraftForge.EVENT_BUS.post(event))
+//            return false;
+//
+//        syphon(syphon);
+//        int drain = Math.max(0, getCurrentEssence() - syphon);
+//
+//        if (drain == 0 || event.shouldDamage)
+//            hurtPlayer(event.syphon);
+//
+//        return event.getResult() != Event.Result.DENY;
 
-        if (MinecraftForge.EVENT_BUS.post(event))
+        if (player.worldObj.isRemote)
             return false;
 
-        int drain = syphon(event.syphon);
+        int drain = syphon(toSyphon);
+        hurtPlayer(toSyphon - drain);
 
-        if (drain == 0 || event.shouldDamage)
-            hurtPlayer(event.syphon);
-
-        return event.getResult() != Event.Result.DENY;
+        return true;
     }
 
     public void hurtPlayer(int syphon) {

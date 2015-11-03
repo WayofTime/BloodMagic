@@ -10,7 +10,7 @@ import net.minecraft.init.Blocks;
 public class ImperfectRitualNight extends ImperfectRitual {
 
     public ImperfectRitualNight() {
-        super("night", new BlockStack(Blocks.lapis_block), 5000, true);
+        super("night", new BlockStack(Blocks.lapis_block), 100, true);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class ImperfectRitualNight extends ImperfectRitual {
         boolean retFlag = false;
 
         if (!imperfectRitualStone.getWorld().isRemote) {
-            imperfectRitualStone.getWorld().addWeatherEffect(new EntityLightningBolt(imperfectRitualStone.getWorld(), imperfectRitualStone.getPos().getX(), imperfectRitualStone.getPos().getY() + 2, imperfectRitualStone.getPos().getZ()));
+//            imperfectRitualStone.getWorld().addWeatherEffect(new EntityLightningBolt(imperfectRitualStone.getWorld(), imperfectRitualStone.getPos().getX(), imperfectRitualStone.getPos().getY() + 2, imperfectRitualStone.getPos().getZ()));
             imperfectRitualStone.getWorld().setWorldTime((imperfectRitualStone.getWorld().getWorldTime() / 24000) * 24000 + 13800);
             retFlag = true;
         }

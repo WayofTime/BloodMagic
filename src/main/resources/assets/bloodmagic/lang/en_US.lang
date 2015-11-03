@@ -58,9 +58,21 @@ item.BloodMagic.sigil.divination.name=Divination Sigil
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
+
 tile.BloodMagic.stone.ritual.master.name=Master Ritual Stone
 tile.BloodMagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
+
 tile.BloodMagic.altar.name=Blood Altar
+tile.BloodMagic.rune.blank.name=Blank Rune
+tile.BloodMagic.rune.speed.name=Speed Rune
+tile.BloodMagic.rune.efficiency.name=Efficiency Rune
+tile.BloodMagic.rune.sacrifice.name=Rune of Sacrifice
+tile.BloodMagic.rune.selfSacrifice.name=Rune of Self Sacrifice
+tile.BloodMagic.rune.displacement.name=Displacement Rune
+tile.BloodMagic.rune.capacity.name=Rune of Capacity
+tile.BloodMagic.rune.augCapacity.name=Rune of Augmented Capacity
+tile.BloodMagic.rune.orb.name=Rune of the Orb
+tile.BloodMagic.rune.acceleration.name=Acceleration Rune
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
@@ -71,3 +83,6 @@ tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
 tooltip.BloodMagic.sigil.compression.desc=&oHands of Diamonds
 tooltip.BloodMagic.sigil.divination.desc=&oPeer into the soul
 tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %d LP
+tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
+tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
+tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual

@@ -21,7 +21,6 @@ public class TileImperfectRitualStone extends TileEntity implements IImperfectRi
     public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player) {
 
         if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual)) {
-            System.out.println(imperfectRitual.toString());
             NetworkHelper.getSoulNetwork(player.getDisplayNameString(), world).syphonAndDamage(imperfectRitual.getActivationCost());
             return imperfectRitual.onActivate(this, player);
         }

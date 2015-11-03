@@ -67,6 +67,7 @@ public class ModItems {
 
         renderHelper.itemRender(activationCrystal, 0);
         renderHelper.itemRender(activationCrystal, 1);
+        renderHelper.itemRender(activationCrystal, 2, "ItemActivationCrystal0");
 
         renderHelper.itemRender(sigilDivination);
     }

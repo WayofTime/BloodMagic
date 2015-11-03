@@ -1,9 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "textures": {
-      "all": "bloodmagic:blocks/MasterRitualStone"
-    },
+    "textures": { },
     "model": "cube_all",
     "uvlock": true
   },

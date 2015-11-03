@@ -16,10 +16,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ModBlocks
-{
+public class ModBlocks {
     public static Block altar;
-    public static Block blood_rune;
+    public static Block bloodRune;
     public static Block ritualStone;
 
     public static Block lifeEssence;
@@ -27,54 +26,52 @@ public class ModBlocks
     public static Block crystal;
     public static Block bloodStone;
 
-    public static void init()
-    {
+    public static void init() {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         lifeEssence = registerBlock(new BlockLifeEssence());
 
         altar = registerBlock(new BlockAltar());
-        blood_rune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
+        bloodRune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
         ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
 
         initTiles();
     }
 
-    public static void initTiles()
-    {
+    public static void initTiles() {
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
     }
 
-    public static void initRenders()
-    {
+    public static void initRenders() {
         InventoryRenderHelper renderHelper = BloodMagic.instance.getRenderHelper();
 
         renderHelper.fluidRender(lifeEssence);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(blood_rune), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(blood_rune), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(blood_rune), 2);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(blood_rune), 3);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(blood_rune), 4);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(blood_rune), 5);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 2);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 3);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 4);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 5);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 6);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 7);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 8);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 9);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 1);
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
-    {
+    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
         if (!ConfigHandler.blockBlacklist.contains(name))
             GameRegistry.registerBlock(block, itemBlock, name);
 
         return block;
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock)
-    {
+    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock) {
         return registerBlock(block, itemBlock, block.getClass().getSimpleName());
     }
 
-    private static Block registerBlock(Block block, String name)
-    {
+    private static Block registerBlock(Block block, String name) {
         if (!ConfigHandler.blockBlacklist.contains(name))
             GameRegistry.registerBlock(block, name);
 

@@ -3,8 +3,7 @@ package WayofTime.bloodmagic.api.altar;
 import lombok.Getter;
 
 @Getter
-public class AltarUpgrade
-{
+public class AltarUpgrade {
     private int speedCount;
     private int efficiencyCount;
     private int sacrificeCount;
@@ -15,63 +14,53 @@ public class AltarUpgrade
     private int betterCapacityCount;
     private int accelerationCount;
 
-    public AltarUpgrade()
-    {
+    public AltarUpgrade() {
 
     }
 
     // Adders
 
-    public AltarUpgrade addSpeed()
-    {
+    public AltarUpgrade addSpeed() {
         speedCount++;
         return this;
     }
 
-    public AltarUpgrade addEfficiency()
-    {
+    public AltarUpgrade addEfficiency() {
         efficiencyCount++;
         return this;
     }
 
-    public AltarUpgrade addSacrifice()
-    {
+    public AltarUpgrade addSacrifice() {
         sacrificeCount++;
         return this;
     }
 
-    public AltarUpgrade addSelfSacrifice()
-    {
+    public AltarUpgrade addSelfSacrifice() {
         selfSacrificeCount++;
         return this;
     }
 
-    public AltarUpgrade addDisplacement()
-    {
+    public AltarUpgrade addDisplacement() {
         displacementCount++;
         return this;
     }
 
-    public AltarUpgrade addCapacity()
-    {
+    public AltarUpgrade addCapacity() {
         capacityCount++;
         return this;
     }
 
-    public AltarUpgrade addOrbCapacity()
-    {
+    public AltarUpgrade addOrbCapacity() {
         orbCapacityCount++;
         return this;
     }
 
-    public AltarUpgrade addBetterCapacity()
-    {
+    public AltarUpgrade addBetterCapacity() {
         betterCapacityCount++;
         return this;
     }
 
-    public AltarUpgrade addAcceleration()
-    {
+    public AltarUpgrade addAcceleration() {
         accelerationCount++;
         return this;
     }

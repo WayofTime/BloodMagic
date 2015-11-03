@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.altar;
 
-public enum  EnumAltarComponent {
+public enum EnumAltarComponent {
 
     GLOWSTONE,
     BLOODSTONE,

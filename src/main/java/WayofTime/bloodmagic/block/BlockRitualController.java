@@ -36,6 +36,7 @@ public class BlockRitualController extends BlockContainer {
         setCreativeTab(BloodMagic.tabBloodMagic);
         setStepSound(soundTypeStone);
         setHardness(2.0F);
+        setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
     }
 
