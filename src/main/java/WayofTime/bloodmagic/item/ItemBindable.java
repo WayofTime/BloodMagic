@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.NBTHolder;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.SoulNetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,7 +58,7 @@ public class ItemBindable extends Item implements IBindable {
 
     public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone) {
         if (!player.worldObj.isRemote) {
-            return NetworkHelper.getSoulNetwork(BindableHelper.getOwnerName(stack), player.worldObj).syphonAndDamage(damageToBeDone);
+            return SoulNetworkHelper.getSoulNetwork(BindableHelper.getOwnerName(stack), player.worldObj).syphonAndDamage(damageToBeDone);
         } else {
             double posX = player.posX;
             double posY = player.posY;

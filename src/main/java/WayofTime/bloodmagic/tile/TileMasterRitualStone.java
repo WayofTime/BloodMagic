@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.SoulNetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -83,7 +83,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void performRitual(World world, BlockPos pos, Ritual ritual) {
         if (ritual != null && RitualRegistry.ritualEnabled(ritual)) {
-            SoulNetwork network = NetworkHelper.getSoulNetwork(getOwner(), getWorld());
+            SoulNetwork network = SoulNetworkHelper.getSoulNetwork(getOwner(), getWorld());
             network.syphonAndDamage(ritual.getRefreshCost());
             ritual.performEffect(this);
         }

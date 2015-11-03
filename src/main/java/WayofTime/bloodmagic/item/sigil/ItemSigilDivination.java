@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.SoulNetworkHelper;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +26,7 @@ public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltar
 
         if (!world.isRemote && syphonBatteries(stack, player, getEnergyUsed())) {
             MovingObjectPosition position = getMovingObjectPositionFromPlayer(world, player, false);
-            int currentEssence = NetworkHelper.getCurrentEssence(BindableHelper.getOwnerName(stack));
+            int currentEssence = SoulNetworkHelper.getCurrentEssence(BindableHelper.getOwnerName(stack));
 
             if (position == null) {
                 ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));

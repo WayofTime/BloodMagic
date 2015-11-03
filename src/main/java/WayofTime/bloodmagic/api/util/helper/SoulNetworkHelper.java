@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-public class NetworkHelper {
+public class SoulNetworkHelper {
 
     // Get
 
@@ -61,7 +61,7 @@ public class NetworkHelper {
             return event.getResult() != Event.Result.DENY;
         }
 
-        int amount = NetworkHelper.syphonFromNetwork(stack, syphon);
+        int amount = SoulNetworkHelper.syphonFromNetwork(stack, syphon);
 
         hurtPlayer(player, syphon - amount);
 

@@ -7,7 +7,9 @@ import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.altar.AltarUpgrade;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.api.util.helper.SoulNetworkHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import com.google.common.base.Enums;
 import net.minecraft.item.ItemStack;
@@ -151,22 +153,34 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     }
 
     private void everySecond() {
-        startCycle();
+        int syphonMax = (int) (20 * this.dislocationMultiplier);
+        int fluidInputted;
+        int fluidOutputted;
+        fluidInputted = Math.min(syphonMax, -this.fluid.amount + capacity);
+        fluidInputted = Math.min(this.fluidInput.amount, fluidInputted);
+        this.fluid.amount += fluidInputted;
+        this.fluidInput.amount -= fluidInputted;
+        fluidOutputted = Math.min(syphonMax, this.bufferCapacity - this.fluidOutput.amount);
+        fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
+        this.fluidOutput.amount += fluidOutputted;
+        this.fluid.amount -= fluidOutputted;
     }
 
     private void everyFiveSeconds() {
-        checkTier();
+        startCycle();
+        updat();
     }
 
     public void startCycle() {
         if (worldObj != null)
             worldObj.markBlockForUpdate(pos);
 
+        checkTier();
+
         if (fluid == null || fluid.amount <= 0)
             return;
 
-        if (!isActive)
-        {
+        if (!isActive) {
             progress = 0;
         }
 
@@ -186,6 +200,97 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         }
 
         isActive = false;
+    }
+
+    private void updat() {
+        if (!isActive) {
+            if (cooldownAfterCrafting > 0) {
+                cooldownAfterCrafting--;
+            }
+        }
+
+        if (getStackInSlot(0) == null) {
+            return;
+        }
+
+        int worldTime = (int) (worldObj.getWorldTime() % 24000);
+
+        if (worldObj.isRemote) {
+            return;
+        }
+
+        if (!canBeFilled) {
+            if (fluid != null && fluid.amount >= 1) {
+                int stackSize = getStackInSlot(0).stackSize;
+                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+
+                if (liquidDrained > (liquidRequired * stackSize - progress)) {
+                    liquidDrained = liquidRequired * stackSize - progress;
+                }
+
+                fluid.amount = fluid.amount - liquidDrained;
+                progress += liquidDrained;
+
+                if (worldTime % 4 == 0) {
+//                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                }
+
+                if (progress >= liquidRequired * stackSize) {
+                    ItemStack result = AltarRecipeRegistry.getResultFromInput(getStackInSlot(0));
+                    if (result != null) {
+                        result.stackSize *= stackSize;
+                    }
+
+                    setInventorySlotContents(0, result);
+                    progress = 0;
+
+                    for (int i = 0; i < 8; i++) {
+//                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
+                    }
+                    this.isActive = false;
+                }
+            } else if (progress > 0) {
+                progress -= (int) (efficiencyMultiplier * drainRate);
+
+                if (worldTime % 2 == 0) {
+//                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
+                }
+            }
+        } else {
+            ItemStack returnedItem = getStackInSlot(0);
+
+            if (!(returnedItem.getItem() instanceof IBloodOrb)) {
+                return;
+            }
+
+            IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
+            NBTTagCompound itemTag = returnedItem.getTagCompound();
+
+            if (itemTag == null) {
+                return;
+            }
+
+            String ownerName = itemTag.getString("ownerName");
+
+            if (ownerName.equals("")) {
+                return;
+            }
+
+            if (fluid != null && fluid.amount >= 1) {
+                int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
+
+                int drain = SoulNetworkHelper.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
+
+                fluid.amount = fluid.amount - drain;
+
+                if (worldTime % 4 == 0) {
+//                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                }
+            }
+        }
+        if (worldObj != null) {
+            worldObj.markBlockForUpdate(pos);
+        }
     }
 
     private void checkTier() {
@@ -289,13 +394,11 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         this.demonBloodDuration = Math.max(0, this.demonBloodDuration - 1);
     }
 
-    public void setActive()
-    {
+    public void setActive() {
         isActive = false;
     }
 
-    public boolean isActive()
-    {
+    public boolean isActive() {
         return isActive;
     }
 

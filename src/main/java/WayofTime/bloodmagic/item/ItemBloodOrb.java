@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.SoulNetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
 import net.minecraft.creativetab.CreativeTabs;
@@ -63,9 +63,9 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
             return stack;
 
         if(stack.getTagCompound().getString(NBTHolder.NBT_OWNER).equals(PlayerHelper.getUsernameFromPlayer(player)))
-            NetworkHelper.setMaxOrbToMax(stack.getTagCompound().getString(NBTHolder.NBT_OWNER), getOrbLevel(stack.getItemDamage()));
+            SoulNetworkHelper.setMaxOrbToMax(stack.getTagCompound().getString(NBTHolder.NBT_OWNER), getOrbLevel(stack.getItemDamage()));
 
-        NetworkHelper.addCurrentEssenceToMaximum(stack.getTagCompound().getString(NBTHolder.NBT_OWNER), 200, getMaxEssence(stack.getItemDamage()));
+        SoulNetworkHelper.addCurrentEssenceToMaximum(stack.getTagCompound().getString(NBTHolder.NBT_OWNER), 200, getMaxEssence(stack.getItemDamage()));
         hurtPlayer(player, 200);
         return stack;
     }

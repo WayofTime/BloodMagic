@@ -30,4 +30,12 @@ public class AltarRecipeRegistry {
     public static AltarRecipe getRecipeForInput(ItemStack input) {
         return recipes.get(input);
     }
+
+    public static ItemStack getResultFromInput(ItemStack input) {
+        return recipes.get(input).getOutput();
+    }
+
+    public static BiMap<ItemStack, AltarRecipe> getRecipes() {
+        return AltarRecipeRegistry.recipes;
+    }
 }
