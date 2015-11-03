@@ -35,6 +35,9 @@ item.BloodMagic.orb.master.name=Master Blood Orb
 item.BloodMagic.orb.archmage.name=Archmage Blood Orb
 item.BloodMagic.orb.transcendent.name=Transcendent Blood Orb
 
+item.BloodMagic.sacrificialDagger.normal.name=Sacrificial Dagger
+item.BloodMagic.sacrificialDagger.creative.name=Creative Dagger
+
 item.BloodMagic.reagent.incendium.name=Incendium
 item.BloodMagic.reagent.magicales.name=Magicales
 item.BloodMagic.reagent.sanctus.name=Sanctus

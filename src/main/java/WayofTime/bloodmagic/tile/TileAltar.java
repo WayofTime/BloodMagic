@@ -34,7 +34,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     private float efficiencyMultiplier;
     private float sacrificeEfficiencyMultiplier;
     private float selfSacrificeEfficiencyMultiplier;
-    private float capacityMultiplier;
+    private float capacityMultiplier = 1;
     private float orbCapacityMultiplier;
     private float dislocationMultiplier;
     private int accelerationUpgrades;
@@ -55,20 +55,6 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
         this.capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
         this.bufferCapacity = FluidContainerRegistry.BUCKET_VOLUME;
-        this.resultID = 0;
-        this.resultDamage = 0;
-        this.isActive = false;
-        this.consumptionRate = 0;
-        this.drainRate = 0;
-        this.consumptionMultiplier = 0;
-        this.efficiencyMultiplier = 0;
-        this.capacityMultiplier = 1;
-        this.isUpgraded = false;
-        this.isResultBlock = false;
-        this.upgradeLevel = 0;
-        this.progress = 0;
-        this.lockdownDuration = 0;
-        this.demonBloodDuration = 0;
     }
 
     @Override
