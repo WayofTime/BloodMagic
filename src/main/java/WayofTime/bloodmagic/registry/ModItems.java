@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.item.ItemBloodOrb;
 import WayofTime.bloodmagic.item.ItemBucketEssence;
+import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.item.Item;
@@ -28,6 +29,7 @@ public class ModItems {
     public static Item activationCrystal;
 
     public static Item sigilDivination;
+    public static Item sigilAir;
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
@@ -50,6 +52,7 @@ public class ModItems {
         activationCrystal = registerItem(new ItemActivationCrystal());
 
         sigilDivination = registerItem(new ItemSigilDivination());
+        sigilAir = registerItem(new ItemSigilAir());
     }
 
     public static void initRenders() {
@@ -70,6 +73,7 @@ public class ModItems {
         renderHelper.itemRender(activationCrystal, 2, "ItemActivationCrystal0");
 
         renderHelper.itemRender(sigilDivination);
+        renderHelper.itemRender(sigilAir);
     }
 
     private static Item registerItem(Item item, String name) {

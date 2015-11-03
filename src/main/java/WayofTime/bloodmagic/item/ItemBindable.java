@@ -56,9 +56,9 @@ public class ItemBindable extends Item implements IBindable {
         return false;
     }
 
-    public static boolean syphonBatteries(ItemStack ist, EntityPlayer player, int damageToBeDone) {
+    public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone) {
         if (!player.worldObj.isRemote) {
-            return NetworkHelper.syphonAndDamageFromNetwork(ist, player, damageToBeDone);
+            return NetworkHelper.getSoulNetwork(BindableHelper.getOwnerName(stack), player.worldObj).syphonAndDamage(damageToBeDone);
         } else {
             double posX = player.posX;
             double posY = player.posY;
