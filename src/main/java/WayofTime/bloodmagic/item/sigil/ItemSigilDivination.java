@@ -14,8 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltarReader
-{
+public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltarReader {
 
     public ItemSigilDivination() {
         super("divination");
@@ -32,24 +31,20 @@ public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltar
             if (position == null) {
                 ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
                 return stack;
-            }
-            else
-            {
+            } else {
                 if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 
                     TileEntity tile = world.getTileEntity(position.getBlockPos());
 
-                    if (tile != null && tile instanceof IBloodAltar)
-                    {
-                        int tier = ((IBloodAltar) tile).getTier() + 1;
-                        currentEssence = ((IBloodAltar) tile).getCurrentBlood();
-                        int capacity = ((IBloodAltar) tile).getCapacity();
+                    if (tile != null && tile instanceof IBloodAltar) {
+                        IBloodAltar altar = (IBloodAltar) tile;
+                        int tier = altar.getTier().ordinal() + 1;
+                        currentEssence = altar.getCurrentBlood();
+                        int capacity = altar.getCapacity();
 
-                        ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentAltarTier", tier)), new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)), new ChatComponentText(TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity)));
-                    }
-                    else
-                    {
-                        ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
+                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+                    } else {
+                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
                     }
 
                     return stack;

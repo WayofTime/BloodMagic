@@ -1,9 +1,14 @@
 package WayofTime.bloodmagic.api.altar;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AltarUpgrade {
+
     private int speedCount;
     private int efficiencyCount;
     private int sacrificeCount;
@@ -13,23 +18,6 @@ public class AltarUpgrade {
     private int orbCapacityCount;
     private int betterCapacityCount;
     private int accelerationCount;
-
-    public AltarUpgrade() {
-
-    }
-
-    public AltarUpgrade(int speedCount, int efficiencyCount, int sacrificeCount, int selfSacrificeCount, int displacementCount, int capacityCount, int orbCapacityCount, int betterCapacityCount, int accelerationCount)
-    {
-        this.speedCount = speedCount;
-        this.efficiencyCount = efficiencyCount;
-        this.sacrificeCount = sacrificeCount;
-        this.selfSacrificeCount = selfSacrificeCount;
-        this.displacementCount = displacementCount;
-        this.capacityCount = capacityCount;
-        this.orbCapacityCount = orbCapacityCount;
-        this.betterCapacityCount = betterCapacityCount;
-        this.accelerationCount = accelerationCount;
-    }
 
     // Adders
 
@@ -77,5 +65,4 @@ public class AltarUpgrade {
         accelerationCount++;
         return this;
     }
-
 }
