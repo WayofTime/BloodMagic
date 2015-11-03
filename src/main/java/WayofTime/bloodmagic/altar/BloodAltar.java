@@ -44,7 +44,7 @@ public class BloodAltar {
             }
         }
 
-        return true;
+        return false;
     }
 
     public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier)

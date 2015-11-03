@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.tile;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -57,10 +58,7 @@ public class TileInventory extends TileEntity implements IInventory {
     }
 
     public void dropItems() {
-        if (inventory != null) {
-            for (ItemStack stack : inventory)
-                getWorld().spawnEntityInWorld(new EntityItem(getWorld(), getPos().getX(), pos.getY(), pos.getZ(), stack));
-        }
+        InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
     }
 
     // IInventory
