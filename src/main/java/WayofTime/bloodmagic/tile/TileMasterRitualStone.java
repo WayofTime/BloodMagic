@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.util.ChatUtil;
 import com.google.common.base.Strings;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 @Getter
+@NoArgsConstructor
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, IUpdatePlayerListBox {
 
     public static final int REFRESH_TIME = 0;
@@ -34,10 +36,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private int cooldown;
     private Ritual currentRitual;
     private EnumFacing direction;
-
-    public TileMasterRitualStone() {
-
-    }
 
     public void readClientNBT(NBTTagCompound tag) {
         currentRitual = RitualRegistry.getRitualForId(tag.getString(NBTHolder.NBT_CURRENTRITUAL));

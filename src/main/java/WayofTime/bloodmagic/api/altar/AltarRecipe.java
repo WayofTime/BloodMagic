@@ -2,10 +2,12 @@ package WayofTime.bloodmagic.api.altar;
 
 import WayofTime.bloodmagic.api.ItemStackWrapper;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.annotation.Nullable;
 
 @Getter
+@ToString
 public class AltarRecipe {
 
     public final int syphon, consumeRate, drainRate;
