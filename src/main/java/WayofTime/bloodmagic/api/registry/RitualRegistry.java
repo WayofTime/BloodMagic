@@ -2,13 +2,14 @@ package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import java.util.ArrayList;
 
 public class RitualRegistry {
 
-    public static final BiMap<Ritual, Boolean> enabledRituals = HashBiMap.create();
+    private static final BiMap<Ritual, Boolean> enabledRituals = HashBiMap.create();
     private static final BiMap<String, Ritual> registry = HashBiMap.create();
 
     /**
@@ -43,11 +44,20 @@ public class RitualRegistry {
     }
 
     public static boolean ritualEnabled(Ritual ritual) {
-        return enabledRituals.get(ritual);
+        try {
+            return enabledRituals.get(ritual);
+        } catch (NullPointerException e) {
+            BloodMagicAPI.getLogger().error("Invalid Ritual was called");
+            return false;
+        }
     }
 
     public static BiMap<String, Ritual> getRegistry() {
         return HashBiMap.create(registry);
+    }
+
+    public static BiMap<Ritual, Boolean> getEnabledMap() {
+        return HashBiMap.create(enabledRituals);
     }
 
     public static ArrayList<String> getIds() {

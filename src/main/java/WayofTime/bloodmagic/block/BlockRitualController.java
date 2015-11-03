@@ -1,6 +1,9 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,6 +45,21 @@ public class BlockRitualController extends BlockContainer {
     public void getSubBlocks(Item item, CreativeTabs tab, List list) {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(this, 1, i));
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntity tile = world.getTileEntity(pos);
+
+        if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone) {
+
+            IBlockState determinerState = world.getBlockState(pos.up());
+            BlockStack determiner = new BlockStack(determinerState.getBlock(), determinerState.getBlock().getMetaFromState(determinerState));
+
+            return ((TileImperfectRitualStone) tile).performRitual(world, pos, ImperfectRitualRegistry.getRitualForBlock(determiner), player);
+        }
+
+        return false;
     }
 
     @Override
@@ -75,6 +94,6 @@ public class BlockRitualController extends BlockContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return meta == 0 ? new TileMasterRitualStone() : null;
+        return meta == 0 ? new TileMasterRitualStone() : new TileImperfectRitualStone();
     }
 }

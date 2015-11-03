@@ -32,10 +32,6 @@ public abstract class Ritual {
 
     public abstract ArrayList<RitualComponent> getComponents();
 
-    public LocalRitualStorage getNewLocalStorage() {
-        return new LocalRitualStorage();
-    }
-
     public void addOffsetRunes(ArrayList<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune) {
         components.add(new RitualComponent(new BlockPos(offset1, y, offset2), rune));
         components.add(new RitualComponent(new BlockPos(offset2, y, offset1), rune));
