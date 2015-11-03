@@ -236,7 +236,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 }
 
                 if (progress >= liquidRequired * stackSize) {
-                    ItemStack result = AltarRecipeRegistry.getResultFromInput(getStackInSlot(0));
+                    ItemStack result = AltarRecipeRegistry.getRecipeForInput(getStackInSlot(0)).getOutput();
                     if (result != null) {
                         result.stackSize *= stackSize;
                     }

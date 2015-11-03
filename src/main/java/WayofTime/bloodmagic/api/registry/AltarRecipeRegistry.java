@@ -23,19 +23,14 @@ public class AltarRecipeRegistry {
     }
 
     public static void registerRecipe(ItemStack input, @Nullable ItemStack output, int minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
-        AltarRecipe recipe = new AltarRecipe(input, output, EnumAltarTier.values()[minTier], syphon, consumeRate, drainRate, useTag);
-        registerRecipe(recipe);
+        registerRecipe(new AltarRecipe(input, output, EnumAltarTier.values()[minTier], syphon, consumeRate, drainRate, useTag));
     }
 
     public static AltarRecipe getRecipeForInput(ItemStack input) {
-        return recipes.get(input);
-    }
+        for (ItemStack stack : recipes.keySet())
+            if (stack.getIsItemStackEqual(input))
+                return recipes.get(stack);
 
-    public static ItemStack getResultFromInput(ItemStack input) {
-        return recipes.get(input).getOutput();
-    }
-
-    public static BiMap<ItemStack, AltarRecipe> getRecipes() {
-        return AltarRecipeRegistry.recipes;
+        return null;
     }
 }

@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.block;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.tile.TileInventory;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -88,10 +87,11 @@ public class BlockAltar extends BlockContainer {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
-    {
-        TileInventory tileInventory = (TileInventory) world.getTileEntity(blockPos);
-        if (tileInventory != null) tileInventory.dropItems();
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+        TileAltar tileAltar = (TileAltar) world.getTileEntity(blockPos);
+        if (tileAltar != null)
+            tileAltar.dropItems();
+
         super.breakBlock(world, blockPos, blockState);
     }
 
