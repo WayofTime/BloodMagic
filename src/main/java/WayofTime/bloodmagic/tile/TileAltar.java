@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
+import com.google.common.base.Enums;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
@@ -70,7 +71,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
             setInputFluid(fluidIn);
         }
 
-        altarTier = EnumAltarTier.valueOf(tagCompound.getString(NBTHolder.NBT_ALTAR_TIER));
+        altarTier = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(NBTHolder.NBT_ALTAR_TIER)).get();
         isActive = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_ACTIVE);
         liquidRequired = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ);
         canBeFilled = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_FILLABLE);
