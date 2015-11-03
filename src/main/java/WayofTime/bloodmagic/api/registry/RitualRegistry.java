@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class RitualRegistry {
 
-    private static final BiMap<Ritual, Boolean> enabledRituals = HashBiMap.create();
+    public static final BiMap<Ritual, Boolean> enabledRituals = HashBiMap.create();
     private static final BiMap<String, Ritual> registry = HashBiMap.create();
 
     /**

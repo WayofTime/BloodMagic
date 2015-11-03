@@ -204,5 +204,6 @@ public class ConfigHandler {
 
     public static void checkRituals() {
         RitualHelper.checkImperfectRituals(config, "WayofTime.bloodmagic.ritual.imperfect", "Rituals.imperfect");
+        config.save();
     }
 }

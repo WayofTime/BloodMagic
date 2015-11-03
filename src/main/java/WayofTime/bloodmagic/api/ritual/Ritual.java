@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.api.ritual;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 @Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public abstract class Ritual {
 
     private final String name;

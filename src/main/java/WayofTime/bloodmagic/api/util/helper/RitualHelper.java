@@ -32,11 +32,11 @@ public class RitualHelper {
     }
 
     public static void checkImperfectRituals(Configuration config, String packageName, String category) {
-        checkRituals(config, packageName, category, ImperfectRitual.class, ImperfectRitualRegistry.getEnabledMap());
+        checkRituals(config, packageName, category, ImperfectRitual.class, ImperfectRitualRegistry.enabledRituals);
     }
 
     public static void checkRituals(Configuration config, String packageName, String category) {
-        checkRituals(config, packageName, category, Ritual.class, RitualRegistry.getEnabledMap());
+        checkRituals(config, packageName, category, Ritual.class, RitualRegistry.enabledRituals);
     }
 
     /**
