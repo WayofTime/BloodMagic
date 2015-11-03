@@ -2,8 +2,12 @@ package WayofTime.bloodmagic;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.Utils;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -16,7 +20,9 @@ import java.util.List;
 
 public class ConfigHandler {
 
-    public static Configuration config;
+    @Getter
+    @Setter
+    private static Configuration config;
 
     // Teleposer
     public static String[] teleposerBlacklisting;
@@ -159,6 +165,9 @@ public class ConfigHandler {
         vanillaPotionWaterBreathingEnabled = config.getBoolean("vanillaPotionWaterBreathingEnabled", category + ".toggle", true, "Enables the Water Breathing potion in Alchemy");
         vanillaPotionWeaknessEnabled = config.getBoolean("vanillaPotionWeaknessEnabled", category + ".toggle", true, "Enables the Weakness potion in Alchemy");
 
+        category = "Rituals";
+        config.addCustomCategoryComment(category, "Ritual toggling");
+
         category = "General";
         config.addCustomCategoryComment(category, "General settings");
         BloodMagicAPI.setLoggingEnabled(config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this"));
@@ -191,5 +200,10 @@ public class ConfigHandler {
 
             teleposerBlacklist.add(new BlockStack(block, meta));
         }
+    }
+
+    public static void checkRituals() {
+        RitualHelper.checkImperfectRituals(config, "WayofTime.bloodmagic.ritual.imperfect", "Rituals.imperfect");
+        config.save();
     }
 }

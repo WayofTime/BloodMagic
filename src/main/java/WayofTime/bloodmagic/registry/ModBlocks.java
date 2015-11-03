@@ -7,7 +7,9 @@ import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualHome;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
+import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -32,14 +34,15 @@ public class ModBlocks
 
         altar = registerBlock(new BlockAltar());
         blood_rune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
-        ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualHome.class);
+        ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
 
         initTiles();
     }
 
     public static void initTiles()
     {
-
+        GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
     }
 
     public static void initRenders()

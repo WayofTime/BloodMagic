@@ -1,14 +1,20 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public interface IMasterRitualStone extends IImperfectRitualStone {
+public interface IMasterRitualStone {
+
+    String getOwner();
+
+    boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator);
 
     void performRitual(World world, BlockPos pos, Ritual ritual);
+
+    void stopRitual();
 
     void setCooldown(int cooldown);
 
@@ -18,15 +24,11 @@ public interface IMasterRitualStone extends IImperfectRitualStone {
 
     EnumFacing getDirection();
 
-    NBTTagCompound getCustomRitualTag();
-
-    void setCustomRitualTag(NBTTagCompound tag);
-
     boolean areTanksEmpty();
 
     int getRunningTime();
 
-    LocalRitualStorage getLocalStorage();
+    World getWorld();
 
-    void setLocalStorage(LocalRitualStorage storage);
+    BlockPos getPos();
 }

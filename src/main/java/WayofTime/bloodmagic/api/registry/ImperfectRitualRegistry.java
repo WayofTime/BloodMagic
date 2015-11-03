@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.api.registry;
 
+import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import net.minecraft.block.Block;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,17 @@ public class ImperfectRitualRegistry {
         }
     }
 
+    public static ImperfectRitual getRitualForBlock(BlockStack blockStack) {
+        for (ImperfectRitual imperfectRitual : getRegistry().values()) {
+            if (imperfectRitual.getRequiredBlock().equals(blockStack)) {
+                System.out.println(imperfectRitual.toString());
+                return imperfectRitual;
+            }
+        }
+
+        return null;
+    }
+
     public static ImperfectRitual getRitualForId(String id) {
         return registry.get(id);
     }
@@ -44,11 +57,20 @@ public class ImperfectRitualRegistry {
     }
 
     public static boolean ritualEnabled(ImperfectRitual imperfectRitual) {
-        return enabledRituals.get(imperfectRitual);
+        try {
+            return enabledRituals.get(imperfectRitual);
+        } catch (NullPointerException e) {
+            BloodMagicAPI.getLogger().error("Invalid Imperfect Ritual was called");
+            return false;
+        }
     }
 
     public static BiMap<String, ImperfectRitual> getRegistry() {
         return HashBiMap.create(registry);
+    }
+
+    public static BiMap<ImperfectRitual, Boolean> getEnabledMap() {
+        return HashBiMap.create(enabledRituals);
     }
 
     public static ArrayList<String> getIds() {

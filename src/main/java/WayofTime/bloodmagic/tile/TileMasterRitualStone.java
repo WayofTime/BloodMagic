@@ -5,9 +5,9 @@ import WayofTime.bloodmagic.api.event.RitualEvent;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.LocalRitualStorage;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.util.ChatUtil;
 import com.google.common.base.Strings;
@@ -35,9 +35,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private Ritual currentRitual;
     private EnumFacing direction;
 
-    public LocalRitualStorage storage;
-    public NBTTagCompound customTag;
-
     public TileMasterRitualStone() {
 
     }
@@ -59,23 +56,28 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     }
 
-    public void activateRitual(ItemStack activationCrystal, EntityPlayer activator) {
+    @Override
+    public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator) {
         activationCrystal = NBTHolder.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(NBTHolder.NBT_OWNER);
-        Ritual ritual = null;
+        Ritual ritual = RitualRegistry.getRitualForId("");
 
-        if (!Strings.isNullOrEmpty(crystalOwner)) {
+        if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
+                if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
 
-                RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
+                    RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
 
-                if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
-                    ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
-                    return;
+                    if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
+                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
+                        return false;
+                    }
                 }
             }
         }
+
+        return false;
     }
 
     @Override
@@ -85,6 +87,11 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
             network.syphonAndDamage(ritual.getRefreshCost());
             ritual.performEffect(this);
         }
+    }
+
+    @Override
+    public void stopRitual() {
+
     }
 
     @Override
@@ -108,16 +115,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public NBTTagCompound getCustomRitualTag() {
-        return customTag;
-    }
-
-    @Override
-    public void setCustomRitualTag(NBTTagCompound tag) {
-        this.customTag = tag;
-    }
-
-    @Override
     public boolean areTanksEmpty() {
         return false;
     }
@@ -125,16 +122,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public int getRunningTime() {
         return activeTime;
-    }
-
-    @Override
-    public LocalRitualStorage getLocalStorage() {
-        return storage;
-    }
-
-    @Override
-    public void setLocalStorage(LocalRitualStorage storage) {
-        this.storage = storage;
     }
 
     @Override

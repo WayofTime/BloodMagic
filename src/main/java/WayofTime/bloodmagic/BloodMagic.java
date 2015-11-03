@@ -2,11 +2,8 @@ package WayofTime.bloodmagic;
 
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.network.AlchemicalWizardryPacketHandler;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModEntities;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.proxy.CommonProxy;
+import WayofTime.bloodmagic.registry.*;
 import WayofTime.bloodmagic.util.handler.EventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import lombok.Getter;
@@ -16,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -67,8 +65,12 @@ public class BloodMagic {
     }
 
     @Mod.EventHandler
-    public void init(FMLPreInitializationEvent event) {
+    public void init(FMLInitializationEvent event) {
         AlchemicalWizardryPacketHandler.init();
+
+        ModRituals.initRituals();
+        ModRituals.initImperfectRituals();
+        ConfigHandler.checkRituals();
 
         proxy.init();
     }

@@ -21,10 +21,11 @@ public class ConfigGui extends GuiConfig {
         List<IConfigElement> list = new ArrayList<IConfigElement>();
 
         // adds sections declared in ConfigHandler. toLowerCase() is used because the configuration class automatically does this, so must we.
-        list.add(new ConfigElement(ConfigHandler.config.getCategory("Potions".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.config.getCategory("Teleposer Blacklist".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.config.getCategory("Item/Block Blacklisting".toLowerCase())));
-        list.add(new ConfigElement(ConfigHandler.config.getCategory("General".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Potions".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Teleposer Blacklist".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Item/Block Blacklisting".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("General".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Rituals".toLowerCase())));
 
         return list;
     }

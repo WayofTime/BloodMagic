@@ -5,9 +5,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockRitualHome extends ItemBlock {
+public class ItemBlockRitualController extends ItemBlock {
 
-    public ItemBlockRitualHome(Block block) {
+    public ItemBlockRitualController(Block block) {
         super(block);
 
         setHasSubtypes(true);

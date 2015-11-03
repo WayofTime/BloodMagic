@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.api.ritual;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 @Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public abstract class Ritual {
 
     private final String name;
@@ -31,10 +33,6 @@ public abstract class Ritual {
     public abstract int getRefreshCost();
 
     public abstract ArrayList<RitualComponent> getComponents();
-
-    public LocalRitualStorage getNewLocalStorage() {
-        return new LocalRitualStorage();
-    }
 
     public void addOffsetRunes(ArrayList<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune) {
         components.add(new RitualComponent(new BlockPos(offset1, y, offset2), rune));
