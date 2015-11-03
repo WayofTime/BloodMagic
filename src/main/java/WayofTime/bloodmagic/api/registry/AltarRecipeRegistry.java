@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import com.google.common.collect.BiMap;
@@ -13,7 +14,7 @@ import javax.annotation.Nullable;
 public class AltarRecipeRegistry {
 
     @Getter
-    private static BiMap<ItemStack, AltarRecipe> recipes = HashBiMap.create();
+    private static BiMap<ItemStackWrapper, AltarRecipe> recipes = HashBiMap.create();
 
     public static void registerRecipe(AltarRecipe recipe) {
         if (!recipes.containsValue(recipe))
@@ -23,12 +24,12 @@ public class AltarRecipeRegistry {
     }
 
     public static void registerRecipe(ItemStack input, @Nullable ItemStack output, int minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
-        registerRecipe(new AltarRecipe(input, output, EnumAltarTier.values()[minTier], syphon, consumeRate, drainRate, useTag));
+        registerRecipe(new AltarRecipe(new ItemStackWrapper(input.getItem()), new ItemStackWrapper(output.getItem()), EnumAltarTier.values()[minTier], syphon, consumeRate, drainRate, useTag));
     }
 
     public static AltarRecipe getRecipeForInput(ItemStack input) {
-        for (ItemStack stack : recipes.keySet())
-            if (stack.getIsItemStackEqual(input))
+        for (ItemStackWrapper stack : recipes.keySet())
+            if (stack.equals(new ItemStackWrapper(input.getItem())))
                 return recipes.get(stack);
 
         return null;

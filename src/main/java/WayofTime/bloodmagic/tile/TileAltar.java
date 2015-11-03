@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.NBTHolder;
 import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.altar.AltarUpgrade;
@@ -76,7 +77,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
             setInputFluid(fluidIn);
         }
 
-        altarTier = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(NBTHolder.NBT_ALTAR_TIER)).get();
+        altarTier = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(NBTHolder.NBT_ALTAR_TIER)).or(EnumAltarTier.ONE);
         isActive = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_ACTIVE);
         liquidRequired = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ);
         canBeFilled = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_FILLABLE);
@@ -186,8 +187,8 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
         if (getStackInSlot(0) != null) {
             // Do recipes
-            if (AltarRecipeRegistry.getRecipes().containsKey(getStackInSlot(0))) {
-                AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(getStackInSlot(0));
+            if (AltarRecipeRegistry.getRecipes().containsKey(ItemStackWrapper.getHolder(getStackInSlot(0)))) {
+                AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0)).toStack());
 
                 if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
                     this.liquidRequired = recipe.getSyphon();
@@ -236,7 +237,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 }
 
                 if (progress >= liquidRequired * stackSize) {
-                    ItemStack result = AltarRecipeRegistry.getRecipeForInput(getStackInSlot(0)).getOutput();
+                    ItemStack result = AltarRecipeRegistry.getRecipeForInput(getStackInSlot(0)).getOutput().toStack();
                     if (result != null) {
                         result.stackSize *= stackSize;
                     }
