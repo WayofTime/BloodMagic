@@ -19,6 +19,10 @@ public class NBTHolder {
     public static final String NBT_RUNNING = "isRunning";
     public static final String NBT_RUNTIME = "runtime";
     public static final String NBT_REAGENTTANK = "reagentTanks";
+    public static final String NBT_ALTAR_TIER = "upgradeLevel";
+    public static final String NBT_ALTAR_ACTIVE = "isActive";
+    public static final String NBT_ALTAR_LIQUID_REQ = "liquidRequired";
+    public static final String NBT_ALTAR_FILLABLE = "canBeFilled";
 
     public static ItemStack checkNBT(ItemStack stack) {
         if (stack.getTagCompound() == null)

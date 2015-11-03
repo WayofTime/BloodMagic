@@ -8,9 +8,10 @@ import javax.annotation.Nullable;
 @Getter
 public class AltarRecipe {
 
-    public final int minTier, syphon, consumeRate, drainRate;
+    public final int syphon, consumeRate, drainRate;
     public final boolean useTag;
     public final ItemStack input, output;
+    public final EnumAltarTier minTier;
 
     /**
      * Allows creation of a recipe for the {@link WayofTime.bloodmagic.block.BlockAltar} / {@link WayofTime.bloodmagic.tile.TileAltar}.
@@ -24,7 +25,7 @@ public class AltarRecipe {
      * @param drainRate   - The rate at which LP is drained during crafting
      * @param useTag      -
      */
-    public AltarRecipe(ItemStack input, @Nullable ItemStack output, int minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
+    public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
         this.input = input;
         this.output = output;
         this.minTier = minTier;
@@ -34,11 +35,11 @@ public class AltarRecipe {
         this.useTag = useTag;
     }
 
-    public AltarRecipe(ItemStack input, ItemStack output, int minTier, int syphon, int consumeRate, int drainRate) {
+    public AltarRecipe(ItemStack input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
         this(input, output, minTier, syphon, consumeRate, drainRate, false);
     }
 
-    public AltarRecipe (ItemStack input, int minTier, int consumeRate, int drainRate) {
+    public AltarRecipe (ItemStack input, EnumAltarTier minTier, int consumeRate, int drainRate) {
         this(input, null, minTier, 0, consumeRate, drainRate);
     }
 }
