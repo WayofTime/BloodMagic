@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
+import com.google.common.base.Enums;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
@@ -73,7 +74,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
             setInputFluid(fluidIn);
         }
 
-        altarTier = EnumAltarTier.valueOf(tagCompound.getString(NBTHolder.NBT_ALTAR_TIER));
+        altarTier = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(NBTHolder.NBT_ALTAR_TIER)).get();
         isActive = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_ACTIVE);
         liquidRequired = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ);
         canBeFilled = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_FILLABLE);
@@ -164,6 +165,11 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (fluid == null || fluid.amount <= 0)
             return;
 
+        if (!isActive)
+        {
+            progress = 0;
+        }
+
         if (getStackInSlot(0) != null) {
             // Do recipes
             if (AltarRecipeRegistry.getRecipes().containsKey(getStackInSlot(0))) {
@@ -171,13 +177,15 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
                 if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
                     this.liquidRequired = recipe.getSyphon();
-//                this.canBeFilled = recipe
+                    this.canBeFilled = recipe.isUseTag();
                     this.consumptionRate = recipe.getConsumeRate();
                     this.drainRate = recipe.getDrainRate();
                     this.isActive = true;
                 }
             }
         }
+
+        isActive = false;
     }
 
     private void checkTier() {
@@ -279,6 +287,16 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
     public void decrementDemonBlood() {
         this.demonBloodDuration = Math.max(0, this.demonBloodDuration - 1);
+    }
+
+    public void setActive()
+    {
+        isActive = false;
+    }
+
+    public boolean isActive()
+    {
+        return isActive;
     }
 
     @Override

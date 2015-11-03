@@ -75,13 +75,13 @@ public class BlockAltar extends BlockContainer {
             newItem.stackSize = 1;
             --playerItem.stackSize;
             altar.setInventorySlotContents(0, newItem);
-//            altar.startCycle();
+            altar.startCycle();
         }
         else if (altar.getStackInSlot(0) != null && playerItem == null)
         {
             player.inventory.addItemStackToInventory(altar.getStackInSlot(0));
             altar.setInventorySlotContents(0, null);
-//            altar.setActive();
+            altar.setActive();
         }
         world.markBlockForUpdate(pos);
         return true;
