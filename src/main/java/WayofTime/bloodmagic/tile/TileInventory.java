@@ -22,8 +22,11 @@ public class TileInventory extends TileEntity implements IInventory {
     }
 
     public void dropItems() {
-        for (ItemStack stack : inventory)
-            getWorld().spawnEntityInWorld(new EntityItem(getWorld(), getPos().getX(), pos.getY(), pos.getZ(), stack));
+        if (inventory != null)
+        {
+            for (ItemStack stack : inventory)
+                getWorld().spawnEntityInWorld(new EntityItem(getWorld(), getPos().getX(), pos.getY(), pos.getZ(), stack));
+        }
     }
 
     // IInventory
@@ -51,13 +54,19 @@ public class TileInventory extends TileEntity implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int index) {
-        return inventory[index];
+    public ItemStack getStackInSlotOnClosing(int slot) {
+        ItemStack stack = getStackInSlot(slot);
+        if (stack != null)
+            setInventorySlotContents(slot, null);
+        return stack;
     }
 
     @Override
-    public void setInventorySlotContents(int index, ItemStack stack) {
-
+    public void setInventorySlotContents(int slot, ItemStack stack) {
+        inventory[slot] = stack;
+        worldObj.markBlockForUpdate(pos);
+        if (stack != null && stack.stackSize > getInventoryStackLimit())
+            stack.stackSize = getInventoryStackLimit();
     }
 
     @Override

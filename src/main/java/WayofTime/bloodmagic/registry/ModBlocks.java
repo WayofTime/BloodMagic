@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
+import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
@@ -16,7 +17,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ModBlocks {
+public class ModBlocks
+{
     public static Block altar;
     public static Block bloodRune;
     public static Block ritualStone;
@@ -26,7 +28,8 @@ public class ModBlocks {
     public static Block crystal;
     public static Block bloodStone;
 
-    public static void init() {
+    public static void init()
+    {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         lifeEssence = registerBlock(new BlockLifeEssence());
 
@@ -37,12 +40,15 @@ public class ModBlocks {
         initTiles();
     }
 
-    public static void initTiles() {
+    public static void initTiles()
+    {
+        GameRegistry.registerTileEntity(TileAltar.class, BloodMagic.MODID + ":" + TileAltar.class.getSimpleName());
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
     }
 
-    public static void initRenders() {
+    public static void initRenders()
+    {
         InventoryRenderHelper renderHelper = BloodMagic.instance.getRenderHelper();
 
         renderHelper.fluidRender(lifeEssence);

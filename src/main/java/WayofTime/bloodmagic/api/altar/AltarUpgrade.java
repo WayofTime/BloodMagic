@@ -18,6 +18,19 @@ public class AltarUpgrade {
 
     }
 
+    public AltarUpgrade(int speedCount, int efficiencyCount, int sacrificeCount, int selfSacrificeCount, int displacementCount, int capacityCount, int orbCapacityCount, int betterCapacityCount, int accelerationCount)
+    {
+        this.speedCount = speedCount;
+        this.efficiencyCount = efficiencyCount;
+        this.sacrificeCount = sacrificeCount;
+        this.selfSacrificeCount = selfSacrificeCount;
+        this.displacementCount = displacementCount;
+        this.capacityCount = capacityCount;
+        this.orbCapacityCount = orbCapacityCount;
+        this.betterCapacityCount = betterCapacityCount;
+        this.accelerationCount = accelerationCount;
+    }
+
     // Adders
 
     public AltarUpgrade addSpeed() {
