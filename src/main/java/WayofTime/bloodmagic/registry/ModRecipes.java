@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -9,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class ModRecipes {
 
     public static void init() {
-
+        addAltarRecipes();
     }
 
     public static void addAltarRecipes() {

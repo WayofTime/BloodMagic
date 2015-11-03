@@ -60,6 +60,7 @@ public class BloodMagic {
         ModItems.init();
         ModPotions.init();
         ModEntities.init();
+        ModRecipes.init();
 
         proxy.preInit();
     }
