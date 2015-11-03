@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
+import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -12,7 +14,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ItemSigilDivination extends ItemSigilBase {
+public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltarReader
+{
 
     public ItemSigilDivination() {
         super("divination");
@@ -29,14 +32,27 @@ public class ItemSigilDivination extends ItemSigilBase {
             if (position == null) {
                 ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
                 return stack;
-            } else {
+            }
+            else
+            {
                 if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+
                     TileEntity tile = world.getTileEntity(position.getBlockPos());
 
-                    if (!(tile instanceof IBloodAltar)) {
-                        ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
-                        return stack;
+                    if (tile != null && tile instanceof IBloodAltar)
+                    {
+                        int tier = ((IBloodAltar) tile).getTier() + 1;
+                        currentEssence = ((IBloodAltar) tile).getCurrentBlood();
+                        int capacity = ((IBloodAltar) tile).getCapacity();
+
+                        ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentAltarTier", tier)), new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)), new ChatComponentText(TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity)));
                     }
+                    else
+                    {
+                        ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
+                    }
+
+                    return stack;
                 }
             }
         }

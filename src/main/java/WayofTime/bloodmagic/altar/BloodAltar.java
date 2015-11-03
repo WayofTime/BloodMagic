@@ -15,7 +15,7 @@ import java.util.List;
 public class BloodAltar {
 
     public static EnumAltarTier getAltarTier(World world, BlockPos pos) {
-        for (int i = EnumAltarTier.MAXTIERS; i >= 2; i--) {
+        for (int i = EnumAltarTier.MAXTIERS - 1; i >= 2; i--) {
             if (checkAltarIsValid(world, pos, i)) {
                 return EnumAltarTier.values()[i];
             }
@@ -47,13 +47,15 @@ public class BloodAltar {
         return true;
     }
 
-    public static AltarUpgrade getUpgrades(World world, BlockPos pos, int altarTier) {
-        if (world.isRemote) {
+    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier)
+    {
+        if (world.isRemote)
+        {
             return null;
         }
 
         AltarUpgrade upgrades = new AltarUpgrade();
-        List<AltarComponent> list = EnumAltarTier.values()[altarTier].getAltarComponents();
+        List<AltarComponent> list = altarTier.getAltarComponents();
 
         for (AltarComponent altarComponent : list) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
