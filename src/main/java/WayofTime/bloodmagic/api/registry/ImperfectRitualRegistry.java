@@ -5,13 +5,14 @@ import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.minecraft.block.Block;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ImperfectRitualRegistry {
 
-    public static final BiMap<ImperfectRitual, Boolean> enabledRituals = HashBiMap.create();
+    public static final Map<ImperfectRitual, Boolean> enabledRituals = new HashMap<ImperfectRitual, Boolean>();
     private static final BiMap<String, ImperfectRitual> registry = HashBiMap.create();
 
     /**
@@ -27,6 +28,10 @@ public class ImperfectRitualRegistry {
             else
                 registry.put(id, imperfectRitual);
         }
+    }
+
+    public static void registerRitual(ImperfectRitual imperfectRitual) {
+        registerRitual(imperfectRitual, imperfectRitual.getName());
     }
 
     public static ImperfectRitual getRitualForBlock(BlockStack blockStack) {

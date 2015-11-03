@@ -4,12 +4,12 @@ import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import com.google.common.collect.BiMap;
 import net.minecraftforge.common.config.Configuration;
 import sun.misc.Launcher;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Map;
 
 public class RitualHelper {
 
@@ -55,7 +55,7 @@ public class RitualHelper {
      * @param category    - The config category to write to.
      */
     @SuppressWarnings("unchecked")
-    private static void checkRituals(Configuration config, String packageName, String category, Class ritualClass, BiMap enabledMap) {
+    private static void checkRituals(Configuration config, String packageName, String category, Class ritualClass, Map enabledMap) {
         String name = packageName;
         if (!name.startsWith("/"))
             name = "/" + name;
@@ -75,8 +75,7 @@ public class RitualHelper {
                         Object o = Class.forName(packageName + "." + className).newInstance();
 
                         if (ritualClass.isInstance(o))
-                            enabledMap.put(ritualClass.cast(o),
-                                    config.get(category, className, true).getBoolean());
+                            enabledMap.put(ritualClass.cast(o), config.get(category, className, true).getBoolean());
 
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
