@@ -20,6 +20,10 @@ public class AltarRecipeRegistry {
     }
 
     public static AltarRecipe getRecipeForInput(ItemStack input) {
-        return recipes.get(input);
+        for (ItemStack stack : recipes.keySet())
+            if (stack.getIsItemStackEqual(input))
+                return recipes.get(stack);
+
+        return null;
     }
 }
