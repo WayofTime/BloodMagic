@@ -10,7 +10,7 @@ import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.util.helper.SoulNetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import com.google.common.base.Enums;
 import net.minecraft.item.ItemStack;
@@ -188,7 +188,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (getStackInSlot(0) != null) {
             // Do recipes
             if (AltarRecipeRegistry.getRecipes().containsKey(ItemStackWrapper.getHolder(getStackInSlot(0)))) {
-                AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0)).toStack());
+                AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0)));
 
                 if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
                     this.liquidRequired = recipe.getSyphon();
@@ -237,7 +237,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 }
 
                 if (progress >= liquidRequired * stackSize) {
-                    ItemStack result = AltarRecipeRegistry.getRecipeForInput(getStackInSlot(0)).getOutput().toStack();
+                    ItemStack result = AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0))).getOutput().toStack();
                     if (result != null) {
                         result.stackSize *= stackSize;
                     }
@@ -280,7 +280,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
             if (fluid != null && fluid.amount >= 1) {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                int drain = SoulNetworkHelper.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
+                int drain = NetworkHelper.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
 
                 fluid.amount = fluid.amount - drain;
 

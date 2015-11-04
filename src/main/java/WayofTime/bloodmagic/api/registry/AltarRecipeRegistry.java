@@ -24,14 +24,10 @@ public class AltarRecipeRegistry {
     }
 
     public static void registerRecipe(ItemStack input, @Nullable ItemStack output, int minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
-        registerRecipe(new AltarRecipe(new ItemStackWrapper(input.getItem()), new ItemStackWrapper(output.getItem()), EnumAltarTier.values()[minTier], syphon, consumeRate, drainRate, useTag));
+        registerRecipe(new AltarRecipe(ItemStackWrapper.getHolder(input), ItemStackWrapper.getHolder(output), EnumAltarTier.values()[minTier], syphon, consumeRate, drainRate, useTag));
     }
 
-    public static AltarRecipe getRecipeForInput(ItemStack input) {
-        for (ItemStackWrapper stack : recipes.keySet())
-            if (stack.equals(new ItemStackWrapper(input.getItem())))
-                return recipes.get(stack);
-
-        return null;
+    public static AltarRecipe getRecipeForInput(ItemStackWrapper input) {
+        return recipes.get(input);
     }
 }
