@@ -73,7 +73,6 @@ public class BloodMagic {
         AlchemicalWizardryPacketHandler.init();
 
         ModRecipes.init();
-        logger.info(AltarRecipeRegistry.getRecipeForInput(new ItemStackWrapper(Items.diamond)));
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
         ConfigHandler.checkRituals();
