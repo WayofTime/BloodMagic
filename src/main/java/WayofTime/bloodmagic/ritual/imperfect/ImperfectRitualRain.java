@@ -15,12 +15,8 @@ public class ImperfectRitualRain extends ImperfectRitual {
 
     @Override
     public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player) {
-        boolean retFlag = false;
-
         if (!imperfectRitualStone.getWorld().isRemote) {
-            imperfectRitualStone.getWorld().addWeatherEffect(new EntityLightningBolt(imperfectRitualStone.getWorld(), imperfectRitualStone.getPos().getX(), imperfectRitualStone.getPos().getY() + 2, imperfectRitualStone.getPos().getZ()));
             imperfectRitualStone.getWorld().getWorldInfo().setRaining(true);
-            retFlag = true;
         }
 
         if (imperfectRitualStone.getWorld().isRemote) {
@@ -28,6 +24,6 @@ public class ImperfectRitualRain extends ImperfectRitual {
             imperfectRitualStone.getWorld().setThunderStrength(1.0F);
         }
 
-        return retFlag;
+        return true;
     }
 }

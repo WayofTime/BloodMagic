@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import lombok.NoArgsConstructor;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -20,7 +21,9 @@ public class TileImperfectRitualStone extends TileEntity implements IImperfectRi
 
         if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual)) {
             NetworkHelper.getSoulNetwork(player.getDisplayNameString(), world).syphonAndDamage(imperfectRitual.getActivationCost());
-            return imperfectRitual.onActivate(this, player);
+            if (imperfectRitual.onActivate(this, player))
+                if (imperfectRitual.isLightshow())
+                    getWorld().addWeatherEffect(new EntityLightningBolt(getWorld(), getPos().getX(), getPos().getY() + 2, getPos().getZ()));
         }
 
         return false;
