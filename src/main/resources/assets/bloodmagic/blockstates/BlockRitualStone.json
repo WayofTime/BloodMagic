@@ -1,0 +1,47 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "blank": {
+        "textures": {
+          "all": "bloodmagic:blocks/RitualStone"
+        }
+      },
+      "water": {
+        "textures": {
+          "all": "bloodmagic:blocks/WaterRitualStone"
+        }
+      },
+      "fire": {
+        "textures": {
+          "all": "bloodmagic:blocks/FireRitualStone"
+        }
+      },
+      "earth": {
+        "textures": {
+          "all": "bloodmagic:blocks/EarthRitualStone"
+        }
+      },
+      "air": {
+        "textures": {
+          "all": "bloodmagic:blocks/AirRitualStone"
+        }
+      },
+      "dusk": {
+        "textures": {
+          "all": "bloodmagic:blocks/DuskRitualStone"
+        }
+      },
+      "dawn": {
+        "textures": {
+          "all": "bloodmagic:blocks/LightRitualStone"
+        }
+      }
+    }
+  }
+}

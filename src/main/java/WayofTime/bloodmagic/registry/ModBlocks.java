@@ -10,9 +10,11 @@ import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockRitualController;
+import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.block.BlockTestSpellBlock;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
@@ -22,6 +24,7 @@ public class ModBlocks
 {
     public static Block altar;
     public static Block bloodRune;
+    public static Block ritualController;
     public static Block ritualStone;
     public static Block testSpellBlock;
 
@@ -37,7 +40,8 @@ public class ModBlocks
 
         altar = registerBlock(new BlockAltar());
         bloodRune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
-        ritualStone = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
+        ritualController = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
+        ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
         initTiles();
@@ -65,8 +69,15 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 7);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 8);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 9);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 2);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 3);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 4);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 5);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 6);
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
