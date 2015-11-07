@@ -1,0 +1,19 @@
+{
+    "textures": {
+        "particle": "#model"
+    },
+    "elements": [
+        {   "from": [ 5, 5, 5 ],
+            "to": [ 11, 11, 11 ],
+            "faces": {
+                "down":  { "uv": [ 3, 0, 4.5, 1.5 ], "texture": "#model" },
+                "up":    { "uv": [ 1.5, 0, 3, 1.5 ], "texture": "#model" },
+                "north": { "uv": [ 1.5, 1.5, 3, 3 ], "texture": "#model" },
+                "south": { "uv": [ 4.5, 1.5, 6, 3 ], "texture": "#model" },
+                "west":  { "uv": [ 3, 1.5, 4.5, 3 ], "texture": "#model" },
+                "east":  { "uv": [ 0, 1.5, 1.5, 3 ], "texture": "#model" }
+            },
+            "__comment": "This is the core of the model"
+        }
+    ]
+}

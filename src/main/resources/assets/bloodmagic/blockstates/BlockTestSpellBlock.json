@@ -1,0 +1,29 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "bloodmagic:sub/BlockSpellModifierCore",
+		"textures": {
+			"model": "bloodmagic:models/SpellModifierDefault"
+		},
+		
+		"uvlock": false
+	},
+	"variants": {
+		"input": {
+			"up": {"submodel": "bloodmagic:sub/BlockSpellModifierInput", "x": 90},
+			"down": {"submodel": "bloodmagic:sub/BlockSpellModifierInput", "x": -90},
+			"east": {"submodel": "bloodmagic:sub/BlockSpellModifierInput", "y": -90},
+			"west": {"submodel": "bloodmagic:sub/BlockSpellModifierInput", "y": 90},
+			"north": {"submodel": "bloodmagic:sub/BlockSpellModifierInput", "y": 180},
+			"south": {"submodel": "bloodmagic:sub/BlockSpellModifierInput"}
+		},
+		"output": {
+			"up": {"submodel": "bloodmagic:sub/BlockSpellModifierOutput", "transform": {"rotation": {"z": 90}} },
+			"down": {"submodel": "bloodmagic:sub/BlockSpellModifierOutput", "transform": {"rotation": {"z": -90}} },
+			"west": {"submodel": "bloodmagic:sub/BlockSpellModifierOutput", "y": 180},
+			"east": {"submodel": "bloodmagic:sub/BlockSpellModifierOutput"},
+			"north": {"submodel": "bloodmagic:sub/BlockSpellModifierOutput", "y": -90},
+			"south": {"submodel": "bloodmagic:sub/BlockSpellModifierOutput", "y": 90}
+		}
+	}
+}
