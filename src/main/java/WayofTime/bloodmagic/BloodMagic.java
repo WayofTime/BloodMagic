@@ -68,6 +68,7 @@ public class BloodMagic {
     public void init(FMLInitializationEvent event) {
         AlchemicalWizardryPacketHandler.init();
 
+        ModRecipes.init();
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
         ConfigHandler.checkRituals();

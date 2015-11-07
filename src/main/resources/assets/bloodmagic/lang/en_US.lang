@@ -6,8 +6,8 @@ item.BloodMagic.activationCrystal.weak.name=Weak Activation Crystal
 item.BloodMagic.activationCrystal.awakened.name=Awakened Activation Crystal
 item.BloodMagic.activationCrystal.creative.name=Creative Activation Crystal
 
-item.BloodMagic.dagger.name=Sacrificial Dagger
-item.BloodMagic.dagger.creative.name=Creative Sacrificial Dagger
+item.BloodMagic.sacrificialDagger.normal.name=Sacrificial Dagger
+item.BloodMagic.sacrificialDagger.creative.name=Creative Sacrificial Dagger
 
 item.BloodMagic.bucket.lifeEssence.name=Bucket of Life
 
