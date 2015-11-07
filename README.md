@@ -45,6 +45,31 @@ Please include the following:
 
 [Setup video](https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be) by LexManos. For more information, refer to the [Forge Forums](http://www.minecraftforge.net/forum/index.php/topic,14048.0.html).
 
+##Contributing
+
+With the 1.8 rewrite comes a need to keep the code *clean*. Pull Requests will be looked over a bit stricter from now on.
+
+When you wish to contribute, please keep these points in mind:
+
+###Do:
+* Only make 1 commit for each major change. 
+    * This helps avoid "polluting" the Git history.
+* Squash extra commits.
+    * See above.
+* Describe each and every change you make in your Pull Request.
+    * This lets everybody know exactly what is going on for easy discussion.
+* Make short yet descriptive commit titles.
+    * Feel free to give a very basic overview of the commit in the message, then use the description to go into detail.
+* Keep your formatting the same as the project. 
+    * This will be expanded upon at a later date.
+
+###Do not:
+* Make unnecessary changes to files.
+    * If you don't need to touch it, don't touch it. 
+    * This includes: *renaming args*, *renaming files*, *editing formatting*, etc.
+* Use obfuscated names for parameters. 
+    * This makes the code look messier and less "professional".
+
 ##Custom Builds
 
 **Custom builds are *unsupported*. If you have an issue while using an unofficial build, it is not guaranteed that you will get support.**
