@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic;
 
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.network.AlchemicalWizardryPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
@@ -8,6 +10,7 @@ import WayofTime.bloodmagic.util.handler.EventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -61,6 +64,7 @@ public class BloodMagic {
         ModPotions.init();
         ModEntities.init();
 
+
         proxy.preInit();
     }
 
@@ -68,6 +72,7 @@ public class BloodMagic {
     public void init(FMLInitializationEvent event) {
         AlchemicalWizardryPacketHandler.init();
 
+        ModRecipes.init();
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
         ConfigHandler.checkRituals();

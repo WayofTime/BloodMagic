@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.item.ItemBloodOrb;
 import WayofTime.bloodmagic.item.ItemBucketEssence;
+import WayofTime.bloodmagic.item.ItemSacrificialDagger;
 import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
 import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
@@ -27,6 +28,8 @@ public class ModItems {
     public static Item bucketEssence;
 
     public static Item activationCrystal;
+
+    public static Item sacrificialDagger;
 
     public static Item sigilDivination;
     public static Item sigilAir;
@@ -51,6 +54,8 @@ public class ModItems {
 
         activationCrystal = registerItem(new ItemActivationCrystal());
 
+        sacrificialDagger = registerItem(new ItemSacrificialDagger());
+
         sigilDivination = registerItem(new ItemSigilDivination());
         sigilAir = registerItem(new ItemSigilAir());
     }
@@ -71,6 +76,9 @@ public class ModItems {
         renderHelper.itemRender(activationCrystal, 0);
         renderHelper.itemRender(activationCrystal, 1);
         renderHelper.itemRender(activationCrystal, 2, "ItemActivationCrystal0");
+
+        renderHelper.itemRender(sacrificialDagger, 0);
+        renderHelper.itemRender(sacrificialDagger, 1);
 
         renderHelper.itemRender(sigilDivination);
         renderHelper.itemRender(sigilAir);
