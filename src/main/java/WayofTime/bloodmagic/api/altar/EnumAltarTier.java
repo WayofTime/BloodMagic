@@ -76,10 +76,10 @@ public enum EnumAltarTier {
                 altarComponents.add(new AltarComponent(new BlockPos(-5, i, 5)));
             }
 
-            altarComponents.add(new AltarComponent(new BlockPos(5, 2, 5), new BlockStack(ModBlocks.bloodStone, 1)));
-            altarComponents.add(new AltarComponent(new BlockPos(5, 2, -5), new BlockStack(ModBlocks.bloodStone, 1)));
-            altarComponents.add(new AltarComponent(new BlockPos(-5, 2, -5), new BlockStack(ModBlocks.bloodStone, 1)));
-            altarComponents.add(new AltarComponent(new BlockPos(-5, 2, 5), new BlockStack(ModBlocks.bloodStone, 1)));
+            altarComponents.add(new AltarComponent(new BlockPos(5, 2, 5), new BlockStack(ModBlocks.bloodStoneBrick, 1)));
+            altarComponents.add(new AltarComponent(new BlockPos(5, 2, -5), new BlockStack(ModBlocks.bloodStoneBrick, 1)));
+            altarComponents.add(new AltarComponent(new BlockPos(-5, 2, -5), new BlockStack(ModBlocks.bloodStoneBrick, 1)));
+            altarComponents.add(new AltarComponent(new BlockPos(-5, 2, 5), new BlockStack(ModBlocks.bloodStoneBrick, 1)));
         }
     },
     FIVE() {

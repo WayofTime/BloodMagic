@@ -1,17 +1,13 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.block.*;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.block.BlockBloodRune;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.block.BlockRitualController;
-import WayofTime.bloodmagic.block.BlockRitualStone;
-import WayofTime.bloodmagic.block.BlockTestSpellBlock;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
@@ -31,7 +27,7 @@ public class ModBlocks
     public static Block lifeEssence;
 
     public static Block crystal;
-    public static Block bloodStone;
+    public static Block bloodStoneBrick;
 
     public static void init()
     {
@@ -43,6 +39,8 @@ public class ModBlocks
         ritualController = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
         ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
+
+        bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
         initTiles();
     }
@@ -78,6 +76,8 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 4);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 5);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 6);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 1);
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {

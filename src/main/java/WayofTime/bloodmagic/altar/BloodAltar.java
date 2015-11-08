@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.altar;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import net.minecraft.block.BlockBeacon;
 import net.minecraft.block.BlockGlowstone;
@@ -19,7 +20,6 @@ public class BloodAltar {
             if (checkAltarIsValid(world, pos, i)) {
                 return EnumAltarTier.values()[i];
             }
-
         }
 
         return EnumAltarTier.ONE;
@@ -47,10 +47,8 @@ public class BloodAltar {
         return false;
     }
 
-    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier)
-    {
-        if (world.isRemote)
-        {
+    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier) {
+        if (world.isRemote) {
             return null;
         }
 
@@ -119,8 +117,8 @@ public class BloodAltar {
     }
 
     private static boolean checkSpecials(AltarComponent altarComponent, BlockStack blockStack) {
-        if (altarComponent.getBlockStack().getBlock() == ModBlocks.bloodStone)
-//            if (blockStack.getBlock() instanceof BlockBloodStone || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODSTONE)))
+        if (altarComponent.getBlockStack().getBlock() == ModBlocks.bloodStoneBrick)
+            if (blockStack.getBlock() instanceof BlockBloodStoneBrick || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODSTONE)))
             return true;
 
         if (altarComponent.getBlockStack().getBlock() == ModBlocks.crystal)
