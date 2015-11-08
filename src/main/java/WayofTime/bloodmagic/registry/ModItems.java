@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
@@ -9,10 +11,13 @@ import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.item.ItemBloodOrb;
 import WayofTime.bloodmagic.item.ItemBucketEssence;
 import WayofTime.bloodmagic.item.ItemSacrificialDagger;
-import WayofTime.bloodmagic.item.sigil.*;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
+import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
+import WayofTime.bloodmagic.item.sigil.ItemSigilLava;
+import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
+import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
@@ -35,6 +40,11 @@ public class ModItems {
     public static Item sigilWater;
     public static Item sigilLava;
     public static Item sigilVoid;
+    
+    public static Item livingArmourHelmet;
+    public static Item livingArmourChest;
+    public static Item livingArmourLegs;
+    public static Item livingArmourBoots;
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
@@ -63,6 +73,11 @@ public class ModItems {
         sigilWater = registerItem(new ItemSigilWater());
         sigilLava = registerItem(new ItemSigilLava());
         sigilVoid = registerItem(new ItemSigilVoid());
+        
+        livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
+        livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
+        livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
+        livingArmourBoots = registerItem(new ItemLivingArmour(3), "ItemLivingArmourBoots");
     }
 
     public static void initRenders() {
@@ -90,6 +105,11 @@ public class ModItems {
         renderHelper.itemRender(sigilWater);
         renderHelper.itemRender(sigilLava);
         renderHelper.itemRender(sigilVoid);
+        
+        renderHelper.itemRender(livingArmourHelmet);
+        renderHelper.itemRender(livingArmourChest);
+        renderHelper.itemRender(livingArmourLegs);
+        renderHelper.itemRender(livingArmourBoots);
     }
 
     private static Item registerItem(Item item, String name) {
