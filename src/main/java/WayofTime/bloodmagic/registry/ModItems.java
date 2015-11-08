@@ -9,8 +9,7 @@ import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.item.ItemBloodOrb;
 import WayofTime.bloodmagic.item.ItemBucketEssence;
 import WayofTime.bloodmagic.item.ItemSacrificialDagger;
-import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
-import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
+import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -33,6 +32,9 @@ public class ModItems {
 
     public static Item sigilDivination;
     public static Item sigilAir;
+    public static Item sigilWater;
+    public static Item sigilLava;
+    public static Item sigilVoid;
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
@@ -58,6 +60,9 @@ public class ModItems {
 
         sigilDivination = registerItem(new ItemSigilDivination());
         sigilAir = registerItem(new ItemSigilAir());
+        sigilWater = registerItem(new ItemSigilWater());
+        sigilLava = registerItem(new ItemSigilLava());
+        sigilVoid = registerItem(new ItemSigilVoid());
     }
 
     public static void initRenders() {
@@ -82,6 +87,9 @@ public class ModItems {
 
         renderHelper.itemRender(sigilDivination);
         renderHelper.itemRender(sigilAir);
+        renderHelper.itemRender(sigilWater);
+        renderHelper.itemRender(sigilLava);
+        renderHelper.itemRender(sigilVoid);
     }
 
     private static Item registerItem(Item item, String name) {

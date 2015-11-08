@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.*;
 
 public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlayerListBox, IFluidTank, IFluidHandler {
 
-    private EnumAltarTier altarTier = EnumAltarTier.ONE;
+    private EnumAltarTier altarTier;
     private AltarUpgrade upgrade = new AltarUpgrade();
     private int capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
 
@@ -298,6 +298,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         // TODO - Write checking for tier stuff
 
         EnumAltarTier tier = BloodAltar.getAltarTier(getWorld(), getPos());
+        this.altarTier = tier;
 
         if (tier.equals(EnumAltarTier.ONE))
             upgrade = new AltarUpgrade();

@@ -38,8 +38,7 @@ public class BlockRitualStone extends Block implements IRitualStone {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState()
-				.withProperty(TYPE, EnumRuneType.byMetadata(meta));
+		return this.getDefaultState().withProperty(TYPE, EnumRuneType.byMetadata(meta));
 	}
 
 	@Override

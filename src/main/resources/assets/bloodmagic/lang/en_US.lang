@@ -55,6 +55,9 @@ item.BloodMagic.sigil.air.name=Air Sigil
 item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
 item.BloodMagic.sigil.compression.name=Sigil of Compression
 item.BloodMagic.sigil.divination.name=Divination Sigil
+item.BloodMagic.sigil.water.name=Water Sigil
+item.BloodMagic.sigil.lava.name=Lava Sigil
+item.BloodMagic.sigil.void.name=Void Sigil
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -74,6 +77,9 @@ tile.BloodMagic.rune.augCapacity.name=Rune of Augmented Capacity
 tile.BloodMagic.rune.orb.name=Rune of the Orb
 tile.BloodMagic.rune.acceleration.name=Acceleration Rune
 
+tile.BloodMagic.bloodstonebrick.normal.name=Bloodstone Brick
+tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
+
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s
@@ -85,6 +91,9 @@ tooltip.BloodMagic.sigil.divination.desc=&oPeer into the soul
 tooltip.BloodMagic.sigil.divination.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %d LP
 tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Current Capacity: %d LP
+tooltip.BloodMagic.sigil.water.desc=Infinite water, anyone?
+tooltip.BloodMagic.sigil.lava.desc=HOT! DO NOT EAT
+tooltip.BloodMagic.sigil.void.desc=Better than a Swiffer®!
 tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
 tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual

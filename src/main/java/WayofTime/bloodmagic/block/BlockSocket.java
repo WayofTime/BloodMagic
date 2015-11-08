@@ -18,24 +18,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockBloodRune extends Block {
+public class BlockSocket extends Block {
 
-    public static final String[] names = { "blank", "speed", "efficiency", "sacrifice", "selfSacrifice", "displacement", "capacity", "augCapacity", "orb", "acceleration" };
+    public static final String[] names = { "empty", "filled" };
     public static final PropertyInteger META = PropertyInteger.create("META", 0, names.length - 1);
 
-    public BlockBloodRune() {
-        super(Material.rock);
+    public BlockSocket() {
+        super(Material.iron);
 
-        setUnlocalizedName(BloodMagic.MODID + ".rune.");
-        setCreativeTab(BloodMagic.tabBloodMagic);
-        setStepSound(soundTypeStone);
+        setUnlocalizedName(BloodMagic.MODID + ".socket.");
         setHardness(2.0F);
         setResistance(5.0F);
+        setStepSound(soundTypeMetal);
         setHarvestLevel("pickaxe", 2);
-    }
-
-    public int getRuneEffect(int meta) {
-        return meta;
+        setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
     @Override

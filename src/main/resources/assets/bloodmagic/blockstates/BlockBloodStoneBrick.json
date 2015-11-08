@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "meta": {
+      "0": {
+        "textures": {
+          "all": "bloodmagic:blocks/BloodStoneBrick"
+        }
+      },
+      "1": {
+        "textures": {
+          "all": "bloodmagic:blocks/LargeBloodStoneBrick"
+        }
+      }
+    }
+  }
+}
