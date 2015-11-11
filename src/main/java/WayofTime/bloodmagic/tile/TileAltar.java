@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.*;
 
 public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlayerListBox, IFluidTank, IFluidHandler {
 
-    private EnumAltarTier altarTier;
+    private EnumAltarTier altarTier = EnumAltarTier.ONE;
     private AltarUpgrade upgrade = new AltarUpgrade();
     private int capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
 
