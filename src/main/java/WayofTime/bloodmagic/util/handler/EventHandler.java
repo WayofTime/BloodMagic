@@ -1,15 +1,40 @@
 package WayofTime.bloodmagic.util.handler;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
+
+    @SubscribeEvent
+    public void onEntityDeath(LivingHurtEvent event) {
+
+        int chestIndex = 2;
+
+        if (event.source.getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.source.getEntity())) {
+            EntityPlayer player = (EntityPlayer) event.source.getEntity();
+
+            if (player.getCurrentArmor(chestIndex) != null && player.getCurrentArmor(chestIndex).getItem() instanceof ItemPackSacrifice) {
+                ItemPackSacrifice pack = (ItemPackSacrifice) player.getCurrentArmor(chestIndex).getItem();
+
+                boolean shouldSyphon = pack.getStoredLP(player.getCurrentArmor(chestIndex)) < pack.CAPACITY;
+                int totalLP = Math.round(event.ammount * pack.CONVERSION);
+
+                if (shouldSyphon)
+                    pack.addLP(player.getCurrentArmor(chestIndex), totalLP);
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onBucketFill(FillBucketEvent event) {

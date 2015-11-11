@@ -192,10 +192,8 @@ public class NetworkHelper {
 
     public static void hurtPlayer(EntityPlayer user, float damage) {
         if (!user.capabilities.isCreativeMode) {
+            user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F);
             user.setHealth((user.getHealth() - damage));
-
-            if (user.getHealth() <= 0.0005f)
-                user.onDeath(BloodMagicAPI.getDamageSource());
         }
     }
 

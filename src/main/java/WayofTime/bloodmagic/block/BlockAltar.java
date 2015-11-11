@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.block.BlockContainer;
@@ -48,40 +49,33 @@ public class BlockAltar extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileAltar altar = (TileAltar) world.getTileEntity(pos);
 
         if (altar == null || player.isSneaking())
-        {
             return false;
-        }
 
         ItemStack playerItem = player.getCurrentEquippedItem();
 
-        if (playerItem != null)
-        {
-            if (playerItem.getItem() instanceof IAltarReader)
-            {
+        if (playerItem != null) {
+            if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator) {
                 playerItem.getItem().onItemRightClick(playerItem, world, player);
                 return true;
             }
         }
 
-        if (altar.getStackInSlot(0) == null && playerItem != null)
-        {
+        if (altar.getStackInSlot(0) == null && playerItem != null) {
             ItemStack newItem = playerItem.copy();
             newItem.stackSize = 1;
-            --playerItem.stackSize;
+            playerItem.stackSize--;
             altar.setInventorySlotContents(0, newItem);
 //            altar.startCycle();
-        }
-        else if (altar.getStackInSlot(0) != null && playerItem == null)
-        {
+        } else if (altar.getStackInSlot(0) != null && playerItem == null) {
             player.inventory.addItemStackToInventory(altar.getStackInSlot(0));
-            altar.setInventorySlotContents(0, null);
+            altar.clear();
 //            altar.setActive();
         }
+
         world.markBlockForUpdate(pos);
         return true;
     }

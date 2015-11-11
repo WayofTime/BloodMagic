@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
+import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
@@ -34,6 +36,8 @@ public class ModItems {
     public static Item activationCrystal;
 
     public static Item sacrificialDagger;
+    public static Item packSelfSacrifice;
+    public static Item packSacrifice;
 
     public static Item sigilDivination;
     public static Item sigilAir;
@@ -67,6 +71,8 @@ public class ModItems {
         activationCrystal = registerItem(new ItemActivationCrystal());
 
         sacrificialDagger = registerItem(new ItemSacrificialDagger());
+        packSacrifice = registerItem(new ItemPackSacrifice());
+        packSelfSacrifice = registerItem(new ItemPackSelfSacrifice());
 
         sigilDivination = registerItem(new ItemSigilDivination());
         sigilAir = registerItem(new ItemSigilAir());
@@ -99,6 +105,8 @@ public class ModItems {
 
         renderHelper.itemRender(sacrificialDagger, 0);
         renderHelper.itemRender(sacrificialDagger, 1);
+        renderHelper.itemRender(packSacrifice);
+        renderHelper.itemRender(packSelfSacrifice);
 
         renderHelper.itemRender(sigilDivination);
         renderHelper.itemRender(sigilAir);

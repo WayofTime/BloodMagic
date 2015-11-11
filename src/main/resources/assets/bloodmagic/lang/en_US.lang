@@ -8,6 +8,8 @@ item.BloodMagic.activationCrystal.creative.name=Creative Activation Crystal
 
 item.BloodMagic.sacrificialDagger.normal.name=Sacrificial Dagger
 item.BloodMagic.sacrificialDagger.creative.name=Creative Sacrificial Dagger
+item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
+item.BloodMagic.pack.sacrifice.name=Coat of Arms
 
 item.BloodMagic.bucket.lifeEssence.name=Bucket of Life
 
@@ -84,6 +86,7 @@ tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s
 tooltip.BloodMagic.currentOwner=Owner: %s
+
 tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
 tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
 tooltip.BloodMagic.sigil.compression.desc=&oHands of Diamonds
@@ -91,9 +94,14 @@ tooltip.BloodMagic.sigil.divination.desc=&oPeer into the soul
 tooltip.BloodMagic.sigil.divination.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %d LP
 tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Current Capacity: %d LP
-tooltip.BloodMagic.sigil.water.desc=Infinite water, anyone?
-tooltip.BloodMagic.sigil.lava.desc=HOT! DO NOT EAT
-tooltip.BloodMagic.sigil.void.desc=Better than a Swiffer®!
+tooltip.BloodMagic.sigil.water.desc=&oInfinite water, anyone?
+tooltip.BloodMagic.sigil.lava.desc=&oHOT! DO NOT EAT
+tooltip.BloodMagic.sigil.void.desc=&oBetter than a Swiffer®!
+
+tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
+tooltip.BloodMagic.pack.sacrifice.desc=Description
+tooltip.BloodMagic.pack.stored=Stored: %d LP
+
 tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
 tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual

@@ -24,6 +24,7 @@ public class NBTHolder {
     public static final String NBT_ALTAR_ACTIVE = "isActive";
     public static final String NBT_ALTAR_LIQUID_REQ = "liquidRequired";
     public static final String NBT_ALTAR_FILLABLE = "canBeFilled";
+    public static final String NBT_STORED_LP = "storedLP";
 
     public static ItemStack checkNBT(ItemStack stack) {
         if (stack.getTagCompound() == null)

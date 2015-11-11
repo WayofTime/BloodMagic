@@ -311,6 +311,13 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         worldObj.markBlockForUpdate(pos);
     }
 
+    public int fillMainTank(int amount) {
+        int filledAmount = Math.min(capacity - fluid.amount, amount);
+        fluid.amount += filledAmount;
+
+        return filledAmount;
+    }
+
     public void sacrificialDaggerCall(int amount, boolean isSacrifice) {
         if (this.lockdownDuration > 0) {
             int amt = (int) Math.min(bufferCapacity - fluidInput.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
