@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -64,17 +65,7 @@ public class BlockAltar extends BlockContainer {
             }
         }
 
-        if (altar.getStackInSlot(0) == null && playerItem != null) {
-            ItemStack newItem = playerItem.copy();
-            newItem.stackSize = 1;
-            playerItem.stackSize--;
-            altar.setInventorySlotContents(0, newItem);
-//            altar.startCycle();
-        } else if (altar.getStackInSlot(0) != null && playerItem == null) {
-            player.inventory.addItemStackToInventory(altar.getStackInSlot(0));
-            altar.clear();
-//            altar.setActive();
-        }
+        Utils.insertItemToTile(altar, player);
 
         world.markBlockForUpdate(pos);
         return true;
