@@ -6,13 +6,13 @@
     "uvlock": true
   },
   "variants": {
-    "meta": {
-      "0": {
+    "type": {
+      "normal": {
         "textures": {
           "all": "bloodmagic:blocks/BloodStoneBrick"
         }
       },
-      "1": {
+      "large": {
         "textures": {
           "all": "bloodmagic:blocks/LargeBloodStoneBrick"
         }

@@ -6,53 +6,53 @@
     "uvlock": true
   },
   "variants": {
-    "meta": {
-      "0": {
+    "type": {
+      "blank": {
         "textures": {
           "all": "bloodmagic:blocks/BlankRune"
         }
       },
-      "1": {
+      "speed": {
         "textures": {
           "all": "bloodmagic:blocks/SpeedRune"
         }
       },
-      "2": {
+      "efficiency": {
         "textures": {
           "all": "bloodmagic:blocks/EfficiencyRune"
         }
       },
-      "3": {
+      "sacrifice": {
         "textures": {
           "all": "bloodmagic:blocks/RuneOfSacrifice"
         }
       },
-      "4": {
+      "selfsacrifice": {
         "textures": {
           "all": "bloodmagic:blocks/RuneOfSelfSacrifice"
         }
       },
-      "5": {
+      "displacement": {
         "textures": {
           "all": "bloodmagic:blocks/DislocationRune"
         }
       },
-      "6": {
+      "capacity": {
         "textures": {
           "all": "bloodmagic:blocks/AltarCapacityRune"
         }
       },
-      "7": {
+      "augcapacity": {
         "textures": {
           "all": "bloodmagic:blocks/BetterCapacityRune"
         }
       },
-      "8": {
+      "orb": {
         "textures": {
           "all": "bloodmagic:blocks/OrbCapacityRune"
         }
       },
-      "9": {
+      "acceleration": {
         "textures": {
           "all": "bloodmagic:blocks/AccelerationRune"
         }

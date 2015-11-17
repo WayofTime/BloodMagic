@@ -6,13 +6,13 @@
     "uvlock": true
   },
   "variants": {
-    "meta": {
-      "0": {
+    "type": {
+      "master": {
         "textures": {
           "all": "bloodmagic:blocks/MasterRitualStone"
         }
       },
-      "1": {
+      "imperfect": {
         "textures": {
           "all": "bloodmagic:blocks/ImperfectRitualStone"
         }
