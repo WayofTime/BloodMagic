@@ -45,6 +45,8 @@ public class BlockString extends Block {
     public BlockString(Material material, String[] values, String propName) {
         super(material);
 
+        values = Arrays.copyOfRange(values, 0, 15);
+
         this.maxMeta = values.length - 1;
         this.values = Arrays.asList(values);
 
