@@ -42,7 +42,6 @@ public class BlockInteger extends Block {
     public BlockInteger(Material material, int maxMeta, String propName) {
         super(material);
 
-        maxMeta = Math.min(maxMeta, 15);
         this.maxMeta = maxMeta;
 
         this.metaProp = PropertyInteger.create(propName, 0, maxMeta);
