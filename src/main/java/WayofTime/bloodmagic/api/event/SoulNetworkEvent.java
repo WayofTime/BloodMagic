@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class SoulNetworkEvent extends Event {
 
-    public String ownerName;
+    public final String ownerName;
     public int syphon;
 
     public SoulNetworkEvent(String ownerName, int syphon) {

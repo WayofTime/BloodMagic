@@ -24,9 +24,9 @@ public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltar
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         super.onItemRightClick(stack, world, player);
 
-        if (!world.isRemote && syphonBatteries(stack, player, getEnergyUsed())) {
+        if (!world.isRemote) {
             MovingObjectPosition position = getMovingObjectPositionFromPlayer(world, player, false);
-            int currentEssence = NetworkHelper.getCurrentEssence(BindableHelper.getOwnerName(stack));
+            int currentEssence = NetworkHelper.getSoulNetwork(BindableHelper.getOwnerName(stack), world).getCurrentEssence();
 
             if (position == null) {
                 ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));

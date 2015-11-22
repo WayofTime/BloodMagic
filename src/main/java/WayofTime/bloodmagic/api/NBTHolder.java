@@ -13,7 +13,7 @@ public class NBTHolder {
     public static final String NBT_COORDX = "xCoord";
     public static final String NBT_COORDY = "yCoord";
     public static final String NBT_COORDZ = "zCoord";
-    public static final String NBT_MAXORB = "maxOrb";
+    public static final String NBT_ORBTIER = "orbTier";
     public static final String NBT_CURRENTESSENCE = "currentEssence";
     public static final String NBT_CURRENTRITUAL = "currentRitual";
     public static final String NBT_RUNNING = "isRunning";
