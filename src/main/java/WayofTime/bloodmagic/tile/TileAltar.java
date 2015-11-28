@@ -111,7 +111,6 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         else
             tagCompound.setString(NBTHolder.NBT_EMPTY, "");
 
-
         if (fluidOutput != null)
             tagCompound.setInteger(NBTHolder.NBT_OUTPUT_AMOUNT, fluidOutput.amount);
 
@@ -313,7 +312,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
             if (fluid != null && fluid.amount >= 1) {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                int drain = NetworkHelper.addCurrentEssenceToMaximum(ownerName, liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
+                int drain = NetworkHelper.getSoulNetwork(ownerName, getWorld()).addLifeEssence(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
 
                 fluid.amount = fluid.amount - drain;
 

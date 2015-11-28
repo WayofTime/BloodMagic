@@ -28,7 +28,46 @@ public class NetworkHelper {
         return network;
     }
 
+    public static int getCurrentMaxOrb(SoulNetwork soulNetwork) {
+        return soulNetwork.getOrbTier();
+    }
+
     // Syphon
+
+    /**
+     * Handles null-checking the player for you.
+     *
+     * @return - Whether the action should be performed.
+     */
+    public static boolean syphonAndDamage(SoulNetwork soulNetwork, int toSyphon) {
+        if (soulNetwork.getPlayer() == null) {
+            soulNetwork.syphon(toSyphon);
+            return true;
+        }
+
+        return soulNetwork.syphonAndDamage(toSyphon);
+    }
+
+    public static boolean syphonFromContainer(ItemStack stack, SoulNetwork soulNetwork, int toSyphon) {
+        stack = NBTHolder.checkNBT(stack);
+        String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+
+        if (Strings.isNullOrEmpty(ownerName))
+            return false;
+
+        SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, ownerName, toSyphon);
+
+        return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && soulNetwork.syphon(event.syphon) >= toSyphon;
+    }
+
+    // Set
+
+    public static void setMaxOrbToMax(SoulNetwork soulNetwork, int maxOrb) {
+        soulNetwork.setOrbTier(Math.max(maxOrb, soulNetwork.getOrbTier()));
+        soulNetwork.markDirty();
+    }
+
+    // TODO - Remove everything below. It is deprecated and should not be used.
 
     /**
      * Master method used to syphon from the player's network, and will damage them accordingly if they do not have enough LP.
@@ -39,6 +78,7 @@ public class NetworkHelper {
      * @param syphon
      * @return True if the action should be executed and false if it should not. Always returns false if client-sided.
      */
+    @Deprecated
     public static boolean syphonAndDamageFromNetwork(ItemStack stack, EntityPlayer player, int syphon) {
         if (player.worldObj.isRemote)
             return false;
@@ -68,6 +108,7 @@ public class NetworkHelper {
         return true;
     }
 
+    @Deprecated
     public static boolean syphonFromNetworkWhileInContainer(ItemStack stack, int syphon) {
         stack = NBTHolder.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
@@ -83,6 +124,7 @@ public class NetworkHelper {
         return syphonFromNetwork(event.ownerName, event.syphon) >= syphon;
     }
 
+    @Deprecated
     public static int syphonFromNetwork(ItemStack stack, int syphon) {
         stack = NBTHolder.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
@@ -92,6 +134,7 @@ public class NetworkHelper {
         return 0;
     }
 
+    @Deprecated
     public static int syphonFromNetwork(String ownerName, int syphon) {
         if (MinecraftServer.getServer() == null)
             return 0;
@@ -120,6 +163,7 @@ public class NetworkHelper {
      *
      * @return amount added to the network
      */
+    @Deprecated
     public static int addCurrentEssenceToMaximum(String ownerName, int addedEssence, int maximum) {
         AddToNetworkEvent event = new AddToNetworkEvent(ownerName, addedEssence, maximum);
 
@@ -151,6 +195,7 @@ public class NetworkHelper {
 
     // Get
 
+    @Deprecated
     public static int getCurrentEssence(String ownerName) {
         if (MinecraftServer.getServer() == null)
             return 0;
@@ -168,6 +213,7 @@ public class NetworkHelper {
 
     // Do damage
 
+    @Deprecated
     public static void hurtPlayer(EntityPlayer user, int energySyphoned) {
         if (energySyphoned < 100 && energySyphoned > 0) {
             if (!user.capabilities.isCreativeMode) {
@@ -190,41 +236,11 @@ public class NetworkHelper {
         }
     }
 
+    @Deprecated
     public static void hurtPlayer(EntityPlayer user, float damage) {
         if (!user.capabilities.isCreativeMode) {
             user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F);
             user.setHealth((user.getHealth() - damage));
         }
-    }
-
-    public static void setMaxOrbToMax(String ownerName, int maxOrb) {
-        if (MinecraftServer.getServer() == null)
-            return;
-
-        World world = MinecraftServer.getServer().worldServers[0];
-        SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
-
-        if (network == null) {
-            network = new SoulNetwork(ownerName);
-            world.setItemData(ownerName, network);
-        }
-
-        network.setMaxOrb(Math.max(maxOrb, network.getMaxOrb()));
-        network.markDirty();
-    }
-
-    public static int getCurrentMaxOrb(String ownerName) {
-        if (MinecraftServer.getServer() == null)
-            return 0;
-
-        World world = MinecraftServer.getServer().worldServers[0];
-        SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
-
-        if (network == null) {
-            network = new SoulNetwork(ownerName);
-            world.setItemData(ownerName, network);
-        }
-
-        return network.getMaxOrb();
     }
 }
