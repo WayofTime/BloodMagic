@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic;
 
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
-import WayofTime.bloodmagic.network.AlchemicalWizardryPacketHandler;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
 import WayofTime.bloodmagic.registry.*;
 import WayofTime.bloodmagic.util.handler.EventHandler;
@@ -66,7 +66,7 @@ public class BloodMagic {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        AlchemicalWizardryPacketHandler.init();
+        BloodMagicPacketHandler.init();
 
         ModRecipes.init();
         ModRituals.initRituals();

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.api.altar;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
 import lombok.Getter;
 import lombok.ToString;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
 
@@ -12,7 +12,7 @@ public class AltarRecipe {
 
     public final int syphon, consumeRate, drainRate;
     public final boolean useTag;
-    public final ItemStackWrapper input, output;
+    public final ItemStack input, output;
     public final EnumAltarTier minTier;
 
     /**
@@ -27,7 +27,26 @@ public class AltarRecipe {
      * @param drainRate   - The rate at which LP is drained during crafting
      * @param useTag      -
      */
-    public AltarRecipe(ItemStackWrapper input, @Nullable ItemStackWrapper output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
+//    public AltarRecipe(ItemStackWrapper input, @Nullable ItemStackWrapper output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
+//        this.input = input;
+//        this.output = output;
+//        this.minTier = minTier;
+//        this.syphon = syphon;
+//        this.consumeRate = consumeRate;
+//        this.drainRate = drainRate;
+//        this.useTag = useTag;
+//    }
+//
+//    public AltarRecipe(ItemStackWrapper input, ItemStackWrapper output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
+//        this(input, output, minTier, syphon, consumeRate, drainRate, false);
+//    }
+//
+//    public AltarRecipe(ItemStackWrapper input, EnumAltarTier minTier, int consumeRate, int drainRate) {
+//        this(input, null, minTier, 0, consumeRate, drainRate);
+//    }
+
+
+    public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
         this.input = input;
         this.output = output;
         this.minTier = minTier;
@@ -37,11 +56,11 @@ public class AltarRecipe {
         this.useTag = useTag;
     }
 
-    public AltarRecipe(ItemStackWrapper input, ItemStackWrapper output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
+    public AltarRecipe(ItemStack input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
         this(input, output, minTier, syphon, consumeRate, drainRate, false);
     }
 
-    public AltarRecipe (ItemStackWrapper input, EnumAltarTier minTier, int consumeRate, int drainRate) {
+    public AltarRecipe(ItemStack input, EnumAltarTier minTier, int consumeRate, int drainRate) {
         this(input, null, minTier, 0, consumeRate, drainRate);
     }
 }

@@ -65,7 +65,10 @@ public class BlockAltar extends BlockContainer {
             }
         }
 
-        Utils.insertItemToTile(altar, player);
+        if (Utils.insertItemToTile(altar, player))
+            altar.startCycle();
+        else
+            altar.setActive();
 
         world.markBlockForUpdate(pos);
         return true;

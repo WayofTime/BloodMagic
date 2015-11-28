@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.NBTHolder;
 import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.altar.AltarUpgrade;
@@ -13,10 +12,13 @@ import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import com.google.common.base.Enums;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fluids.*;
 
 public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlayerListBox, IFluidTank, IFluidHandler {
@@ -46,34 +48,33 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     private int bufferCapacity = FluidContainerRegistry.BUCKET_VOLUME;
     private int progress;
 
-    public boolean isActive;
+    public boolean isActive = false;
 
     private int lockdownDuration;
     private int demonBloodDuration;
 
     private int cooldownAfterCrafting = 500;
 
+    private ItemStack result;
+
     public TileAltar() {
         super(1, "altar");
-
-        this.capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
-        this.bufferCapacity = FluidContainerRegistry.BUCKET_VOLUME;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
 
-        if (!tagCompound.hasKey("Empty")) {
+        if (!tagCompound.hasKey(NBTHolder.NBT_EMPTY)) {
             FluidStack fluid = FluidStack.loadFluidStackFromNBT(tagCompound);
 
             if (fluid != null)
                 setMainFluid(fluid);
 
-            FluidStack fluidOut = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger("outputAmount"));
+            FluidStack fluidOut = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(NBTHolder.NBT_OUTPUT_AMOUNT));
             setOutputFluid(fluidOut);
 
-            FluidStack fluidIn = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger("inputAmount"));
+            FluidStack fluidIn = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(NBTHolder.NBT_INPUT_AMOUNT));
             setInputFluid(fluidIn);
         }
 
@@ -81,24 +82,24 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         isActive = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_ACTIVE);
         liquidRequired = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ);
         canBeFilled = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_FILLABLE);
-        isUpgraded = tagCompound.getBoolean("isUpgraded");
-        consumptionRate = tagCompound.getInteger("consumptionRate");
-        drainRate = tagCompound.getInteger("drainRate");
-        consumptionMultiplier = tagCompound.getFloat("consumptionMultiplier");
-        efficiencyMultiplier = tagCompound.getFloat("efficiencyMultiplier");
-        selfSacrificeEfficiencyMultiplier = tagCompound.getFloat("selfSacrificeEfficiencyMultiplier");
-        sacrificeEfficiencyMultiplier = tagCompound.getFloat("sacrificeEfficiencyMultiplier");
-        capacityMultiplier = tagCompound.getFloat("capacityMultiplier");
-        orbCapacityMultiplier = tagCompound.getFloat("orbCapacityMultiplier");
-        dislocationMultiplier = tagCompound.getFloat("dislocationMultiplier");
-        capacity = tagCompound.getInteger("capacity");
-        bufferCapacity = tagCompound.getInteger("bufferCapacity");
-        progress = tagCompound.getInteger("progress");
-        isResultBlock = tagCompound.getBoolean("isResultBlock");
-        lockdownDuration = tagCompound.getInteger("lockdownDuration");
-        accelerationUpgrades = tagCompound.getInteger("accelerationUpgrades");
-        demonBloodDuration = tagCompound.getInteger("demonBloodDuration");
-        cooldownAfterCrafting = tagCompound.getInteger("cooldownAfterCrafting");
+        isUpgraded = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_UPGRADED);
+        consumptionRate = tagCompound.getInteger(NBTHolder.NBT_ALTAR_CONSUMPTION_RATE);
+        drainRate = tagCompound.getInteger(NBTHolder.NBT_ALTAR_DRAIN_RATE);
+        consumptionMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_CONSUMPTION_MULTIPLIER);
+        efficiencyMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_EFFICIENCY_MULTIPLIER);
+        selfSacrificeEfficiencyMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_SELF_SACRIFICE_MULTIPLIER);
+        sacrificeEfficiencyMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_SACRIFICE_MULTIPLIER);
+        capacityMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_CAPACITY_MULTIPLIER);
+        orbCapacityMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_ORB_CAPACITY_MULTIPLIER);
+        dislocationMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_DISLOCATION_MULTIPLIER);
+        capacity = tagCompound.getInteger(NBTHolder.NBT_ALTAR_CAPACITY);
+        bufferCapacity = tagCompound.getInteger(NBTHolder.NBT_ALTAR_BUFFER_CAPACITY);
+        progress = tagCompound.getInteger(NBTHolder.NBT_ALTAR_PROGRESS);
+        isResultBlock = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_IS_RESULT_BLOCK);
+        lockdownDuration = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LOCKDOWN_DURATION);
+        accelerationUpgrades = tagCompound.getInteger(NBTHolder.NBT_ALTAR_ACCELERATION_UPGRADES);
+        demonBloodDuration = tagCompound.getInteger(NBTHolder.NBT_ALTAR_DEMON_BLOOD_DURATION);
+        cooldownAfterCrafting = tagCompound.getInteger(NBTHolder.NBT_ALTAR_COOLDOWN_AFTER_CRAFTING);
     }
 
     @Override
@@ -108,37 +109,37 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (fluid != null)
             fluid.writeToNBT(tagCompound);
         else
-            tagCompound.setString("Empty", "");
+            tagCompound.setString(NBTHolder.NBT_EMPTY, "");
 
 
         if (fluidOutput != null)
-            tagCompound.setInteger("outputAmount", fluidOutput.amount);
+            tagCompound.setInteger(NBTHolder.NBT_OUTPUT_AMOUNT, fluidOutput.amount);
 
         if (fluidInput != null)
-            tagCompound.setInteger("inputAmount", fluidInput.amount);
+            tagCompound.setInteger(NBTHolder.NBT_INPUT_AMOUNT, fluidInput.amount);
 
-        tagCompound.setString("upgradeLevel", altarTier.name());
-        tagCompound.setBoolean("isActive", isActive);
-        tagCompound.setInteger("liquidRequired", liquidRequired);
-        tagCompound.setBoolean("canBeFilled", canBeFilled);
-        tagCompound.setBoolean("isUpgraded", isUpgraded);
-        tagCompound.setInteger("consumptionRate", consumptionRate);
-        tagCompound.setInteger("drainRate", drainRate);
-        tagCompound.setFloat("consumptionMultiplier", consumptionMultiplier);
-        tagCompound.setFloat("efficiencyMultiplier", efficiencyMultiplier);
-        tagCompound.setFloat("sacrificeEfficiencyMultiplier", sacrificeEfficiencyMultiplier);
-        tagCompound.setFloat("selfSacrificeEfficiencyMultiplier", selfSacrificeEfficiencyMultiplier);
-        tagCompound.setBoolean("isResultBlock", isResultBlock);
-        tagCompound.setFloat("capacityMultiplier", capacityMultiplier);
-        tagCompound.setFloat("orbCapacityMultiplier", orbCapacityMultiplier);
-        tagCompound.setFloat("dislocationMultiplier", dislocationMultiplier);
-        tagCompound.setInteger("capacity", capacity);
-        tagCompound.setInteger("progress", progress);
-        tagCompound.setInteger("bufferCapacity", bufferCapacity);
-        tagCompound.setInteger("lockdownDuration", lockdownDuration);
-        tagCompound.setInteger("accelerationUpgrades", this.accelerationUpgrades);
-        tagCompound.setInteger("demonBloodDuration", demonBloodDuration);
-        tagCompound.setInteger("cooldownAfterCrafting", cooldownAfterCrafting);
+        tagCompound.setString(NBTHolder.NBT_ALTAR_TIER, altarTier.name());
+        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_ACTIVE, isActive);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ, liquidRequired);
+        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_FILLABLE, canBeFilled);
+        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_UPGRADED, isUpgraded);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_CONSUMPTION_RATE, consumptionRate);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_DRAIN_RATE, drainRate);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_CONSUMPTION_MULTIPLIER, consumptionMultiplier);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_EFFICIENCY_MULTIPLIER, efficiencyMultiplier);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_SACRIFICE_MULTIPLIER, sacrificeEfficiencyMultiplier);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_SELF_SACRIFICE_MULTIPLIER, selfSacrificeEfficiencyMultiplier);
+        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_IS_RESULT_BLOCK, isResultBlock);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_CAPACITY_MULTIPLIER, capacityMultiplier);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_ORB_CAPACITY_MULTIPLIER, orbCapacityMultiplier);
+        tagCompound.setFloat(NBTHolder.NBT_ALTAR_DISLOCATION_MULTIPLIER, dislocationMultiplier);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_CAPACITY, capacity);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_PROGRESS, progress);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_BUFFER_CAPACITY, bufferCapacity);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_LOCKDOWN_DURATION, lockdownDuration);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_ACCELERATION_UPGRADES, accelerationUpgrades);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
+        tagCompound.setInteger(NBTHolder.NBT_ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
     }
 
     @Override
@@ -146,11 +147,34 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (getWorld().isRemote)
             return;
 
-        if (getWorld().getTotalWorldTime() % (Math.max(20 - getUpgrade().getSpeedCount(), 1)) == 0)
+        this.decrementDemonBlood();
+
+        if (lockdownDuration > 0)
+            lockdownDuration--;
+
+        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0) {
+            {
+                IBlockState block = worldObj.getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()));
+                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()), block, block.getBlock());
+                block = worldObj.getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()));
+                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()), block, block.getBlock());
+                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()));
+                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX() , this.pos.getY() + 1, this.pos.getZ()), block, block.getBlock());
+                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()));
+                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()), block, block.getBlock());
+                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1));
+                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1), block, block.getBlock());
+                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1));
+                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1), block, block.getBlock());
+            }
+        }
+        if (getWorld().getTotalWorldTime() % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
             everySecond();
 
-        if (getWorld().getTotalWorldTime() % 100 == 0)
+        if (getWorld().getTotalWorldTime() % 100 == 0  && (this.isActive || this.cooldownAfterCrafting <= 0))
             everyFiveSeconds();
+
+        updat();
     }
 
     private void everySecond() {
@@ -169,9 +193,9 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
     private void everyFiveSeconds() {
         startCycle();
-        updat();
     }
 
+    @Override
     public void startCycle() {
         if (worldObj != null)
             worldObj.markBlockForUpdate(pos);
@@ -187,15 +211,19 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
         if (getStackInSlot(0) != null) {
             // Do recipes
-            if (AltarRecipeRegistry.getRecipes().containsKey(ItemStackWrapper.getHolder(getStackInSlot(0)))) {
-                AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0)));
+            for (ItemStack itemStack : AltarRecipeRegistry.getRecipes().keySet()) {
+                if (getStackInSlot(0).getIsItemStackEqual(AltarRecipeRegistry.getRecipes().get(itemStack).getInput())) {
+                    AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(itemStack);
 
-                if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
-                    this.liquidRequired = recipe.getSyphon();
-                    this.canBeFilled = recipe.isUseTag();
-                    this.consumptionRate = recipe.getConsumeRate();
-                    this.drainRate = recipe.getDrainRate();
-                    this.isActive = true;
+                    if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
+                        this.isActive = true;
+                        this.result = new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
+                        this.liquidRequired = recipe.getSyphon();
+                        this.canBeFilled = recipe.isUseTag();
+                        this.consumptionRate = recipe.getConsumeRate();
+                        this.drainRate = recipe.getDrainRate();
+                        return;
+                    }
                 }
             }
         }
@@ -208,6 +236,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
             if (cooldownAfterCrafting > 0) {
                 cooldownAfterCrafting--;
             }
+            return;
         }
 
         if (getStackInSlot(0) == null) {
@@ -216,9 +245,13 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
         int worldTime = (int) (worldObj.getWorldTime() % 24000);
 
-        if (worldObj.isRemote) {
+        if (worldObj.isRemote)
             return;
-        }
+
+        float f = 1.0F;
+        float f1 = f * 0.6F + 0.4F;
+        float f2 = f * f * 0.7F - 0.5F;
+        float f3 = f * f * 0.6F - 0.7F;
 
         if (!canBeFilled) {
             if (fluid != null && fluid.amount >= 1) {
@@ -233,11 +266,11 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 progress += liquidDrained;
 
                 if (worldTime % 4 == 0) {
-//                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 1, xCoord, yCoord, zCoord);
+                    worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
                 }
 
                 if (progress >= liquidRequired * stackSize) {
-                    ItemStack result = AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0))) != null ? (AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0))).getOutput() != null ? AltarRecipeRegistry.getRecipeForInput(ItemStackWrapper.getHolder(getStackInSlot(0))).getOutput().toStack() : null) : null;
+                    ItemStack result = this.result;
                     if (result != null) {
                         result.stackSize *= stackSize;
                     }
@@ -246,7 +279,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                     progress = 0;
 
                     for (int i = 0; i < 8; i++) {
-//                        SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 4, xCoord + 0.5f, yCoord + 1.0f, zCoord + 0.5f);
+                        worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
                     }
                     this.isActive = false;
                 }
@@ -254,7 +287,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 progress -= (int) (efficiencyMultiplier * drainRate);
 
                 if (worldTime % 2 == 0) {
-//                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 2, xCoord, yCoord, zCoord);
+                    worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
                 }
             }
         } else {
@@ -271,7 +304,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 return;
             }
 
-            String ownerName = itemTag.getString("ownerName");
+            String ownerName = itemTag.getString(NBTHolder.NBT_OWNER);
 
             if (ownerName.equals("")) {
                 return;
@@ -285,7 +318,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 fluid.amount = fluid.amount - drain;
 
                 if (worldTime % 4 == 0) {
-//                    SpellHelper.sendIndexedParticleToAllAround(worldObj, xCoord, yCoord, zCoord, 20, worldObj.provider.dimensionId, 3, xCoord, yCoord, zCoord);
+                    worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
                 }
             }
         }
@@ -318,6 +351,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         return filledAmount;
     }
 
+    @Override
     public void sacrificialDaggerCall(int amount, boolean isSacrifice) {
         if (this.lockdownDuration > 0) {
             int amt = (int) Math.min(bufferCapacity - fluidInput.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
