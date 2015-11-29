@@ -16,13 +16,13 @@ import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.*;
 
-public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlayerListBox, IFluidTank, IFluidHandler {
+public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidTank, IFluidHandler {
 
     public boolean isActive;
     protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);

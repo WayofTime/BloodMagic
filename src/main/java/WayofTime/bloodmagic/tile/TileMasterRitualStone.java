@@ -17,17 +17,17 @@ import lombok.NoArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 @Getter
 @NoArgsConstructor
-public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, IUpdatePlayerListBox {
+public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable {
 
     public static final int REFRESH_TIME = 0;
 
