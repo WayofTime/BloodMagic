@@ -28,7 +28,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     protected FluidStack fluidInput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     private EnumAltarTier altarTier = EnumAltarTier.ONE;
-    private AltarUpgrade upgrade = new AltarUpgrade();
+    private AltarUpgrade upgrade;
     private int capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
     private FluidStack fluid = new FluidStack(BloodMagicAPI.getLifeEssence(), 0);
     private int liquidRequired; //mB
@@ -316,15 +316,40 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         EnumAltarTier tier = BloodAltar.getAltarTier(getWorld(), getPos());
         this.altarTier = tier;
 
-        if (tier.equals(EnumAltarTier.ONE))
-            upgrade = new AltarUpgrade();
-        else
-            upgrade = BloodAltar.getUpgrades(getWorld(), pos, tier);
+        upgrade = BloodAltar.getUpgrades(getWorld(), pos, tier);
 
-        if (this.fluid.amount > this.capacity)
-            this.fluid.amount = this.capacity;
+        if (tier.equals(EnumAltarTier.ONE)) {
+            upgrade = null;
+            isUpgraded = false;
+            this.consumptionMultiplier = 0;
+            this.efficiencyMultiplier = 1;
+            this.sacrificeEfficiencyMultiplier = 0;
+            this.selfSacrificeEfficiencyMultiplier = 0;
+            this.capacityMultiplier = 1;
+            this.orbCapacityMultiplier = 1;
+            this.dislocationMultiplier = 1;
+            this.accelerationUpgrades = 0;
+            return;
+        }
+        else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null) {
+            this.isUpgraded = true;
+            this.consumptionMultiplier = (float) (0.20 * upgrade.getSpeedCount());
+            this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getEfficiencyCount());
+            this.sacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getSacrificeCount());
+            this.selfSacrificeEfficiencyMultiplier = (float) (0.10 * upgrade.getSelfSacrificeCount());
+            this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrade.getBetterCapacityCount()) + 0.20 * upgrade.getCapacityCount()));
+            this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getDisplacementCount()));
+            this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getOrbCapacityCount());
+            this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
+            this.bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
+            this.accelerationUpgrades = upgrade.getAccelerationCount();
+        }
 
-        getWorld().markBlockForUpdate(pos);
+        if (this.fluid.amount > this.capacity) this.fluid.amount = this.capacity;
+        if (this.fluidOutput.amount > this.bufferCapacity) this.fluidOutput.amount = this.bufferCapacity;
+        if (this.fluidInput.amount > this.bufferCapacity) this.fluidInput.amount = this.bufferCapacity;
+
+        worldObj.markBlockForUpdate(pos);
     }
 
     public int fillMainTank(int amount) {

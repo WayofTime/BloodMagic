@@ -20,6 +20,7 @@ public class ModBlocks {
     public static Block bloodRune;
     public static Block ritualController;
     public static Block ritualStone;
+    public static Block bloodLight;
     public static Block testSpellBlock;
     public static Block pedestal;
     public static Block teleposer;
@@ -37,6 +38,7 @@ public class ModBlocks {
         bloodRune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
         ritualController = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
         ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
+        bloodLight = registerBlock(new BlockBloodLight());
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());

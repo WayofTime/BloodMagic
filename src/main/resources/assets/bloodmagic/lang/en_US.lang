@@ -86,6 +86,7 @@ tile.BloodMagic.rune.acceleration.name=Acceleration Rune
 
 tile.BloodMagic.bloodstonebrick.normal.name=Bloodstone Brick
 tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
+tile.BloodMagic.bloodLight.name=Blood Light
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence

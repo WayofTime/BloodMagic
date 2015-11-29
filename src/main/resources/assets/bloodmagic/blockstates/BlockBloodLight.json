@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "normal": {
+            "model": "bloodmagic:BlockBloodLight",
+            "textures": {
+                "all": "bloodmagic:blocks/BlockBloodLight"
+            }
+        }
+    }
+}
