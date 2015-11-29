@@ -17,7 +17,7 @@ public class TextHelper {
     }
 
     public static String localizeEffect(String input, Object... format) {
-        return localize(input.replaceAll("&", "\u00A7"), format);
+        return getFormattedText(localize(input, format));
     }
 
     public static String[] localizeAll(String[] input) {
