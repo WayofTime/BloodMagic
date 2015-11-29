@@ -42,6 +42,7 @@ public class ModBlocks {
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());
+        crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
         initTiles();
@@ -79,6 +80,9 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 6);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(crystal), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(crystal), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodLight));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
