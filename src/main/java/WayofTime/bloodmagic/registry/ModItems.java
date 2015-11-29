@@ -6,10 +6,7 @@ import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.item.ItemActivationCrystal;
-import WayofTime.bloodmagic.item.ItemBloodOrb;
-import WayofTime.bloodmagic.item.ItemBucketEssence;
-import WayofTime.bloodmagic.item.ItemSacrificialDagger;
+import WayofTime.bloodmagic.item.*;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
@@ -47,6 +44,8 @@ public class ModItems {
     public static Item livingArmourLegs;
     public static Item livingArmourBoots;
 
+    public static Item altarMaker;
+
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
         BloodMagicAPI.setOrbItem(bloodOrb);
@@ -81,6 +80,8 @@ public class ModItems {
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
         livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
         livingArmourBoots = registerItem(new ItemLivingArmour(3), "ItemLivingArmourBoots");
+
+        altarMaker = registerItem(new ItemAltarMaker());
     }
 
     public static void initRenders() {
@@ -115,6 +116,8 @@ public class ModItems {
         renderHelper.itemRender(livingArmourChest);
         renderHelper.itemRender(livingArmourLegs);
         renderHelper.itemRender(livingArmourBoots);
+
+        renderHelper.itemRender(altarMaker);
     }
 
     private static Item registerItem(Item item, String name) {

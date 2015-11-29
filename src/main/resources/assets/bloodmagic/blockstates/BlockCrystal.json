@@ -12,7 +12,7 @@
           "all": "bloodmagic:blocks/ShardCluster"
         }
       },
-      "large": {
+      "brick": {
         "textures": {
           "all": "bloodmagic:blocks/ShardClusterBrick"
         }
