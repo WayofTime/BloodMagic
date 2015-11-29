@@ -94,6 +94,8 @@ tile.BloodMagic.ritualStone.dawn.name=Ritual Stone of Dawn
 
 tile.BloodMagic.bloodstonebrick.normal.name=Bloodstone Brick
 tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
+tile.BloodMagic.crystal.normal.name=Crystal Cluster
+tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
 tile.BloodMagic.bloodLight.name=Blood Light
 
 # Tooltips
