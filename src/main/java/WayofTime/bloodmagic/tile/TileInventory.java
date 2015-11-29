@@ -133,7 +133,7 @@ public class TileInventory extends TileEntity implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot) {
+    public ItemStack removeStackFromSlot(int slot) {
         if (inventory[slot] != null) {
             ItemStack itemStack = inventory[slot];
             setInventorySlotContents(slot, null);
