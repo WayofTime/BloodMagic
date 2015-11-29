@@ -110,3 +110,8 @@ tooltip.BloodMagic.pack.stored=Stored: %d LP
 tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
 tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual
+
+# JustEnoughItems
+jei.BloodMagic.recipe.altar=Blood Altar
+jei.BloodMagic.recipe.requiredLP=LP: %d
+jei.BloodMagic.recipe.requiredTier=Tier: %d

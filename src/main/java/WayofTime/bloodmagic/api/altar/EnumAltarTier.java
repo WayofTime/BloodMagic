@@ -132,4 +132,8 @@ public enum EnumAltarTier {
     public void buildComponents() {
 
     }
+
+    public int toInt() {
+        return ordinal() + 1;
+    }
 }
