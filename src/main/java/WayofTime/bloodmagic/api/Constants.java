@@ -48,6 +48,8 @@ public class Constants {
         public static final String ALTAR_ACCELERATION_UPGRADES = "accelerationUpgrades";
         public static final String ALTAR_DEMON_BLOOD_DURATION = "demonBloodDuration";
         public static final String ALTAR_COOLDOWN_AFTER_CRAFTING = "cooldownAfterCrafting";
+
+        public static final String ALTARMAKER_CURRENT_TIER = "currentTier";
     }
 
     public static class Mod {
