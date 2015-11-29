@@ -65,6 +65,7 @@ public class BloodMagic {
         ModRecipes.init();
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
+        ModCompatibility.registerModCompat();
         ConfigHandler.checkRituals();
 
         proxy.init();
