@@ -51,8 +51,7 @@ public class ItemSigilLava extends ItemSigilBase {
                         this.tryPlaceLava(world, blockpos1);
                     }
                 }
-            }
-            else {
+            } else {
                 return stack;
             }
 
@@ -114,11 +113,9 @@ public class ItemSigilLava extends ItemSigilBase {
     public boolean canPlaceLava(World world, BlockPos blockPos) {
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid()) {
             return false;
-        }
-        else if ((world.getBlockState(blockPos).getBlock() == Blocks.lava || world.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0) {
+        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.lava || world.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0) {
             return false;
-        }
-        else {
+        } else {
             world.setBlockState(blockPos, Blocks.lava.getBlockState().getBaseState());
             return true;
         }

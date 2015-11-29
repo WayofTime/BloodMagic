@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.proxy;
 
-import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
@@ -15,8 +15,8 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.initRenders();
         ModItems.initRenders();
 
-        OBJLoader.instance.addDomain(BloodMagic.MODID);
-        ModelLoader.setCustomModelResourceLocation(InventoryRenderHelper.getItemFromBlock(ModBlocks.altar), 0, new ModelResourceLocation(BloodMagic.DOMAIN + "BlockAltar", "inventory"));
+        OBJLoader.instance.addDomain(Constants.Mod.MODID);
+        ModelLoader.setCustomModelResourceLocation(InventoryRenderHelper.getItemFromBlock(ModBlocks.altar), 0, new ModelResourceLocation(Constants.Mod.DOMAIN + "BlockAltar", "inventory"));
     }
 
     @Override

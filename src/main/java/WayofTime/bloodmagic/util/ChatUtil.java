@@ -17,50 +17,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ChatUtil {
 
-    /**
-     * @author tterrag1098
-     *
-     * Ripped from EnderCore (and slightly altered)
-     */
-    public static class PacketNoSpamChat implements IMessage {
-
-        private IChatComponent[] chatLines;
-
-        public PacketNoSpamChat() {
-            chatLines = new IChatComponent[0];
-        }
-
-        private PacketNoSpamChat(IChatComponent... lines) {
-            // this is guaranteed to be >1 length by accessing methods
-            this.chatLines = lines;
-        }
-
-        @Override
-        public void toBytes(ByteBuf buf) {
-            buf.writeInt(chatLines.length);
-            for (IChatComponent c : chatLines) {
-                ByteBufUtils.writeUTF8String(buf, IChatComponent.Serializer.componentToJson(c));
-            }
-        }
-
-        @Override
-        public void fromBytes(ByteBuf buf) {
-            chatLines = new IChatComponent[buf.readInt()];
-            for (int i = 0; i < chatLines.length; i++) {
-                chatLines[i] = IChatComponent.Serializer.jsonToComponent(ByteBufUtils.readUTF8String(buf));
-            }
-        }
-
-        public static class Handler implements IMessageHandler<PacketNoSpamChat, IMessage> {
-
-            @Override
-            public IMessage onMessage(PacketNoSpamChat message, MessageContext ctx) {
-                sendNoSpamMessages(message.chatLines);
-                return null;
-            }
-        }
-    }
-
     private static final int DELETION_ID = 2525277;
     private static int lastAdded;
 
@@ -78,8 +34,8 @@ public class ChatUtil {
     /**
      * Returns a standard {@link ChatComponentText} for the given {@link String}.
      *
-     * @param s
-     *          The string to wrap.
+     * @param s The string to wrap.
+     *
      * @return An {@link IChatComponent} containing the string.
      */
     public static IChatComponent wrap(String s) {
@@ -100,10 +56,8 @@ public class ChatUtil {
     /**
      * Returns a translatable chat component for the given string and format args.
      *
-     * @param s
-     *          The string to format
-     * @param args
-     *          The args to apply to the format
+     * @param s    The string to format
+     * @param args The args to apply to the format
      */
     public static IChatComponent wrapFormatted(String s, Object... args) {
         return new ChatComponentTranslation(s, args);
@@ -112,10 +66,8 @@ public class ChatUtil {
     /**
      * Simply sends the passed lines to the player in a chat message.
      *
-     * @param player
-     *          The player to send the chat to
-     * @param lines
-     *          The lines to send
+     * @param player The player to send the chat to
+     * @param lines  The lines to send
      */
     public static void sendChat(EntityPlayer player, String... lines) {
         sendChat(player, wrap(lines));
@@ -133,10 +85,8 @@ public class ChatUtil {
     /**
      * Sends all passed chat components to the player.
      *
-     * @param player
-     *          The player to send the chat lines to.
-     * @param lines
-     *          The {@link IChatComponent chat components} to send.yes
+     * @param player The player to send the chat lines to.
+     * @param lines  The {@link IChatComponent chat components} to send.yes
      */
     public static void sendChat(EntityPlayer player, IChatComponent... lines) {
         for (IChatComponent c : lines) {
@@ -157,8 +107,8 @@ public class ChatUtil {
      * Same as {@link #sendNoSpamClient(IChatComponent...)}, but wraps the Strings
      * automatically.
      *
-     * @param lines
-     *          The chat lines to send
+     * @param lines The chat lines to send
+     *
      * @see #wrap(String)
      */
     public static void sendNoSpamClient(String... lines) {
@@ -223,16 +173,58 @@ public class ChatUtil {
     /**
      * Sends a chat message to the client, deleting past messages also sent via
      * this method.
-     * <p>
+     * <p/>
      * Credit to RWTema for the idea
      *
-     * @param player
-     *          The player to send the chat message to
-     * @param lines
-     *          The chat lines to send.
+     * @param player The player to send the chat message to
+     * @param lines  The chat lines to send.
      */
     public static void sendNoSpam(EntityPlayerMP player, IChatComponent... lines) {
         if (lines.length > 0)
             BloodMagicPacketHandler.INSTANCE.sendTo(new PacketNoSpamChat(lines), player);
+    }
+
+    /**
+     * @author tterrag1098
+     *         <p/>
+     *         Ripped from EnderCore (and slightly altered)
+     */
+    public static class PacketNoSpamChat implements IMessage {
+
+        private IChatComponent[] chatLines;
+
+        public PacketNoSpamChat() {
+            chatLines = new IChatComponent[0];
+        }
+
+        private PacketNoSpamChat(IChatComponent... lines) {
+            // this is guaranteed to be >1 length by accessing methods
+            this.chatLines = lines;
+        }
+
+        @Override
+        public void toBytes(ByteBuf buf) {
+            buf.writeInt(chatLines.length);
+            for (IChatComponent c : chatLines) {
+                ByteBufUtils.writeUTF8String(buf, IChatComponent.Serializer.componentToJson(c));
+            }
+        }
+
+        @Override
+        public void fromBytes(ByteBuf buf) {
+            chatLines = new IChatComponent[buf.readInt()];
+            for (int i = 0; i < chatLines.length; i++) {
+                chatLines[i] = IChatComponent.Serializer.jsonToComponent(ByteBufUtils.readUTF8String(buf));
+            }
+        }
+
+        public static class Handler implements IMessageHandler<PacketNoSpamChat, IMessage> {
+
+            @Override
+            public IMessage onMessage(PacketNoSpamChat message, MessageContext ctx) {
+                sendNoSpamMessages(message.chatLines);
+                return null;
+            }
+        }
     }
 }

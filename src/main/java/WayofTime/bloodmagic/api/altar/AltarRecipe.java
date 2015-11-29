@@ -44,8 +44,6 @@ public class AltarRecipe {
 //    public AltarRecipe(ItemStackWrapper input, EnumAltarTier minTier, int consumeRate, int drainRate) {
 //        this(input, null, minTier, 0, consumeRate, drainRate);
 //    }
-
-
     public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
         this.input = input;
         this.output = output;

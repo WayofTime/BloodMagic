@@ -2,9 +2,10 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
@@ -30,30 +31,6 @@ public class ItemBindable extends Item implements IBindable {
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setMaxStackSize(1);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
-        NBTHolder.checkNBT(stack);
-
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(NBTHolder.NBT_OWNER)))
-            tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), stack.getTagCompound().getString(NBTHolder.NBT_OWNER))));
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        BindableHelper.checkAndSetItemOwner(stack, player);
-
-        return stack;
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-        BindableHelper.checkAndSetItemOwner(stack, player);
-
-        return false;
     }
 
     public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone) {
@@ -94,6 +71,30 @@ public class ItemBindable extends Item implements IBindable {
         }
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    @SuppressWarnings("unchecked")
+    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+        NBTHelper.checkNBT(stack);
+
+        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME)))
+            tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), stack.getTagCompound().getString(Constants.NBT.OWNER_NAME))));
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+        BindableHelper.checkAndSetItemOwner(stack, player);
+
+        return stack;
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+        BindableHelper.checkAndSetItemOwner(stack, player);
+
+        return false;
+    }
+
     protected void damagePlayer(World world, EntityPlayer player, int damage) {
         if (world != null) {
             double posX = player.posX;
@@ -127,9 +128,9 @@ public class ItemBindable extends Item implements IBindable {
     }
 
     public String getBindableOwner(ItemStack stack) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
 
-        return stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        return stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
     }
 
     // IBindable

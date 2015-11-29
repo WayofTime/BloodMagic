@@ -19,11 +19,10 @@ import net.minecraft.world.World;
 
 public class TileInventory extends TileEntity implements IInventory {
 
+    protected int[] syncedSlots = new int[0];
     private ItemStack[] inventory;
     private int size;
     private String name;
-
-    protected int[] syncedSlots = new int[0];
 
     public TileInventory(int size, String name) {
         this.inventory = new ItemStack[size];
@@ -49,7 +48,7 @@ public class TileInventory extends TileEntity implements IInventory {
         for (int i = 0; i < tags.tagCount(); i++) {
             if (!isSyncedSlot(i)) {
                 NBTTagCompound data = tags.getCompoundTagAt(i);
-                byte j = data.getByte("Slot")   ;
+                byte j = data.getByte("Slot");
 
                 if (j >= 0 && j < inventory.length) {
                     inventory[j] = ItemStack.loadItemStackFromNBT(data);
@@ -73,6 +72,24 @@ public class TileInventory extends TileEntity implements IInventory {
         }
 
         tagCompound.setTag("Items", tags);
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        writeToNBT(nbt);
+        return new S35PacketUpdateTileEntity(getPos(), -999, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        super.onDataPacket(net, pkt);
+        readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return oldState.getBlock() != newState.getBlock();
     }
 
     public void dropItems() {
@@ -195,26 +212,5 @@ public class TileInventory extends TileEntity implements IInventory {
     @Override
     public IChatComponent getDisplayName() {
         return new ChatComponentTranslation("tile.BloodMagic." + name + ".name");
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(getPos(), -999, nbt);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        super.onDataPacket(net, pkt);
-        readFromNBT(pkt.getNbtCompound());
-    }
-
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
-    {
-        return oldState.getBlock() != newState.getBlock();
     }
 }

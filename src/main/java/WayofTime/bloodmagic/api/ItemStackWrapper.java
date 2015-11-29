@@ -34,6 +34,10 @@ public class ItemStackWrapper {
         this(block, 1, 0);
     }
 
+    public static ItemStackWrapper getHolder(ItemStack stack) {
+        return new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());
+    }
+
     public ItemStack toStack() {
         return new ItemStack(item, stackSize, meta);
     }
@@ -45,9 +49,5 @@ public class ItemStackWrapper {
     @Override
     public String toString() {
         return stackSize + "x" + item.getUnlocalizedName() + "@" + this.meta;
-    }
-
-    public static ItemStackWrapper getHolder(ItemStack stack) {
-        return new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());
     }
 }

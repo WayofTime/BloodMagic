@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.api.util.helper;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
@@ -49,8 +49,8 @@ public class NetworkHelper {
     }
 
     public static boolean syphonFromContainer(ItemStack stack, SoulNetwork soulNetwork, int toSyphon) {
-        stack = NBTHolder.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        stack = NBTHelper.checkNBT(stack);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
 
         if (Strings.isNullOrEmpty(ownerName))
             return false;
@@ -73,9 +73,9 @@ public class NetworkHelper {
      * Master method used to syphon from the player's network, and will damage them accordingly if they do not have enough LP.
      * Does not drain on the client side.
      *
-     * @param stack          Owned itemStack
-     * @param player         Player using the item
-     * @param syphon
+     * @param stack  Owned itemStack
+     * @param player Player using the item
+     *
      * @return True if the action should be executed and false if it should not. Always returns false if client-sided.
      */
     @Deprecated
@@ -83,18 +83,18 @@ public class NetworkHelper {
         if (player.worldObj.isRemote)
             return false;
 
-        stack = NBTHolder.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        stack = NBTHelper.checkNBT(stack);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
 
         if (!Strings.isNullOrEmpty(ownerName)) {
             SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(player, ownerName, stack, syphon);
 
-            if(MinecraftForge.EVENT_BUS.post(event))
+            if (MinecraftForge.EVENT_BUS.post(event))
                 return false;
 
             int drainAmount = syphonFromNetwork(event.ownerName, event.syphon);
 
-            if(drainAmount == 0 || event.shouldDamage)
+            if (drainAmount == 0 || event.shouldDamage)
                 hurtPlayer(player, event.syphon);
 
             //The event has been told to prevent the action but allow all repercussions of using the item.
@@ -110,15 +110,15 @@ public class NetworkHelper {
 
     @Deprecated
     public static boolean syphonFromNetworkWhileInContainer(ItemStack stack, int syphon) {
-        stack = NBTHolder.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        stack = NBTHelper.checkNBT(stack);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
 
         if (Strings.isNullOrEmpty(ownerName))
             return false;
 
         SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, ownerName, syphon);
 
-        if(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
             return false;
 
         return syphonFromNetwork(event.ownerName, event.syphon) >= syphon;
@@ -126,8 +126,8 @@ public class NetworkHelper {
 
     @Deprecated
     public static int syphonFromNetwork(ItemStack stack, int syphon) {
-        stack = NBTHolder.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        stack = NBTHelper.checkNBT(stack);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
         if (!Strings.isNullOrEmpty(ownerName))
             return syphonFromNetwork(ownerName, syphon);
 
@@ -167,7 +167,7 @@ public class NetworkHelper {
     public static int addCurrentEssenceToMaximum(String ownerName, int addedEssence, int maximum) {
         AddToNetworkEvent event = new AddToNetworkEvent(ownerName, addedEssence, maximum);
 
-        if(MinecraftForge.EVENT_BUS.post(event))
+        if (MinecraftForge.EVENT_BUS.post(event))
             return 0;
 
         if (MinecraftServer.getServer() == null)
@@ -187,7 +187,7 @@ public class NetworkHelper {
             return 0;
 
         int newEss = Math.min(event.maximum, currEss + event.addedAmount);
-        if(event.getResult() != Event.Result.DENY)
+        if (event.getResult() != Event.Result.DENY)
             data.setCurrentEssence(newEss);
 
         return newEss - currEss;

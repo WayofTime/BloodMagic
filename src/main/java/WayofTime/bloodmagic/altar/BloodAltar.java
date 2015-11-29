@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.registry.ModBlocks;
-import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockBeacon;
 import net.minecraft.block.BlockGlowstone;
 import net.minecraft.init.Blocks;

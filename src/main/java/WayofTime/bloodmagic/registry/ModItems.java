@@ -1,12 +1,9 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
-import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
@@ -14,12 +11,12 @@ import WayofTime.bloodmagic.item.ItemBloodOrb;
 import WayofTime.bloodmagic.item.ItemBucketEssence;
 import WayofTime.bloodmagic.item.ItemSacrificialDagger;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
-import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
-import WayofTime.bloodmagic.item.sigil.ItemSigilLava;
-import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
-import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
+import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
+import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
+import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
@@ -44,7 +41,7 @@ public class ModItems {
     public static Item sigilWater;
     public static Item sigilLava;
     public static Item sigilVoid;
-    
+
     public static Item livingArmourHelmet;
     public static Item livingArmourChest;
     public static Item livingArmourLegs;
@@ -79,7 +76,7 @@ public class ModItems {
         sigilWater = registerItem(new ItemSigilWater());
         sigilLava = registerItem(new ItemSigilLava());
         sigilVoid = registerItem(new ItemSigilVoid());
-        
+
         livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
         livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
@@ -90,12 +87,12 @@ public class ModItems {
         InventoryRenderHelper renderHelper = BloodMagic.instance.getRenderHelper();
 
         renderHelper.itemRenderAll(bloodOrb);
-        OrbRegistry.registerOrbTexture(orbWeak, BloodMagic.DOMAIN + "ItemBloodOrbWeak");
-        OrbRegistry.registerOrbTexture(orbApprentice, BloodMagic.DOMAIN + "ItemBloodOrbApprentice");
-        OrbRegistry.registerOrbTexture(orbMagician, BloodMagic.DOMAIN + "ItemBloodOrbMagician");
-        OrbRegistry.registerOrbTexture(orbMaster, BloodMagic.DOMAIN + "ItemBloodOrbMaster");
-        OrbRegistry.registerOrbTexture(orbArchmage, BloodMagic.DOMAIN + "ItemBloodOrbArchmage");
-        OrbRegistry.registerOrbTexture(orbTranscendent, BloodMagic.DOMAIN + "ItemBloodOrbTranscendent");
+        OrbRegistry.registerOrbTexture(orbWeak, Constants.Mod.DOMAIN + "ItemBloodOrbWeak");
+        OrbRegistry.registerOrbTexture(orbApprentice, Constants.Mod.DOMAIN + "ItemBloodOrbApprentice");
+        OrbRegistry.registerOrbTexture(orbMagician, Constants.Mod.DOMAIN + "ItemBloodOrbMagician");
+        OrbRegistry.registerOrbTexture(orbMaster, Constants.Mod.DOMAIN + "ItemBloodOrbMaster");
+        OrbRegistry.registerOrbTexture(orbArchmage, Constants.Mod.DOMAIN + "ItemBloodOrbArchmage");
+        OrbRegistry.registerOrbTexture(orbTranscendent, Constants.Mod.DOMAIN + "ItemBloodOrbTranscendent");
 
         renderHelper.itemRender(bucketEssence);
 
@@ -113,7 +110,7 @@ public class ModItems {
         renderHelper.itemRender(sigilWater);
         renderHelper.itemRender(sigilLava);
         renderHelper.itemRender(sigilVoid);
-        
+
         renderHelper.itemRender(livingArmourHelmet);
         renderHelper.itemRender(livingArmourChest);
         renderHelper.itemRender(livingArmourLegs);

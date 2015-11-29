@@ -13,12 +13,11 @@ import java.util.ArrayList;
 @EqualsAndHashCode
 public abstract class Ritual {
 
+    public final ArrayList<RitualComponent> ritualComponents = new ArrayList<RitualComponent>();
     private final String name;
     private final int crystalLevel;
     private final int activationCost;
     private final RitualRenderer renderer;
-
-    public final ArrayList<RitualComponent> ritualComponents = new ArrayList<RitualComponent>();
 
     public Ritual(String name, int crystalLevel, int activationCost) {
         this(name, crystalLevel, activationCost, null);

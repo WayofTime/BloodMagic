@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
@@ -18,33 +19,26 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
-import java.util.Locale;
 
-@Mod(modid = BloodMagic.MODID, name = BloodMagic.NAME, version = BloodMagic.VERSION, dependencies = BloodMagic.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.ConfigGuiFactory")
+@Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.ConfigGuiFactory")
 @Getter
 public class BloodMagic {
-
-    public static final String MODID = "BloodMagic";
-    public static final String NAME = "Blood Magic: Alchemical Wizardry";
-    public static final String VERSION = "@VERSION@";
-    public static final String DEPEND = "";
-    public static final String DOMAIN = MODID.toLowerCase(Locale.ENGLISH) + ":";
 
     @SidedProxy(serverSide = "WayofTime.bloodmagic.proxy.CommonProxy", clientSide = "WayofTime.bloodmagic.proxy.ClientProxy")
     public static CommonProxy proxy;
 
-    @Mod.Instance(MODID)
+    @Mod.Instance(Constants.Mod.MODID)
     public static BloodMagic instance;
 
-    public static CreativeTabs tabBloodMagic = new CreativeTabs(MODID + ".creativeTab") {
+    public static CreativeTabs tabBloodMagic = new CreativeTabs(Constants.Mod.MODID + ".creativeTab") {
         @Override
         public Item getTabIconItem() {
             return ModItems.bloodOrb;
         }
     };
 
-    private InventoryRenderHelper renderHelper = new InventoryRenderHelper(DOMAIN);
-    private LogHelper logger = new LogHelper(MODID);
+    private InventoryRenderHelper renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
+    private LogHelper logger = new LogHelper(Constants.Mod.MODID);
     private File configDir;
 
     @Mod.EventHandler

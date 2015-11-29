@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.network;
 
-import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.util.ChatUtil;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class BloodMagicPacketHandler {
 
-    public static final SimpleNetworkWrapper INSTANCE = new SimpleNetworkWrapper(BloodMagic.MODID);
+    public static final SimpleNetworkWrapper INSTANCE = new SimpleNetworkWrapper(Constants.Mod.MODID);
 
     public static void init() {
         INSTANCE.registerMessage(ChatUtil.PacketNoSpamChat.Handler.class, ChatUtil.PacketNoSpamChat.class, 0, Side.CLIENT);

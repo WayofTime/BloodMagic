@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.Utils;
@@ -20,8 +19,7 @@ import java.util.List;
 
 public class ConfigHandler {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private static Configuration config;
 
     // Teleposer
@@ -104,7 +102,7 @@ public class ConfigHandler {
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] {"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[]{"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildTeleposerBlacklist();
 
         category = "Potions";

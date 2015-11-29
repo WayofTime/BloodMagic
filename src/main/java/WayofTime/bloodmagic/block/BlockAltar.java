@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.tile.TileAltar;
@@ -20,7 +21,7 @@ public class BlockAltar extends BlockContainer {
     public BlockAltar() {
         super(Material.rock);
 
-        setUnlocalizedName(BloodMagic.MODID + ".altar");
+        setUnlocalizedName(Constants.Mod.MODID + ".altar");
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 

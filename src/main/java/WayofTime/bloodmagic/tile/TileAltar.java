@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.altar.AltarUpgrade;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import com.google.common.base.Enums;
+import com.google.common.base.Strings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,14 +24,13 @@ import net.minecraftforge.fluids.*;
 
 public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlayerListBox, IFluidTank, IFluidHandler {
 
+    public boolean isActive;
+    protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
+    protected FluidStack fluidInput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     private EnumAltarTier altarTier = EnumAltarTier.ONE;
     private AltarUpgrade upgrade = new AltarUpgrade();
     private int capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
-
     private FluidStack fluid = new FluidStack(BloodMagicAPI.getLifeEssence(), 0);
-    protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
-    protected FluidStack fluidInput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
-
     private int liquidRequired; //mB
     private boolean canBeFilled;
     private int consumptionRate;
@@ -47,9 +47,6 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     private boolean isResultBlock;
     private int bufferCapacity = FluidContainerRegistry.BUCKET_VOLUME;
     private int progress;
-
-    public boolean isActive = false;
-
     private int lockdownDuration;
     private int demonBloodDuration;
 
@@ -65,41 +62,41 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
 
-        if (!tagCompound.hasKey(NBTHolder.NBT_EMPTY)) {
+        if (!tagCompound.hasKey(Constants.NBT.EMPTY)) {
             FluidStack fluid = FluidStack.loadFluidStackFromNBT(tagCompound);
 
             if (fluid != null)
                 setMainFluid(fluid);
 
-            FluidStack fluidOut = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(NBTHolder.NBT_OUTPUT_AMOUNT));
+            FluidStack fluidOut = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(Constants.NBT.OUTPUT_AMOUNT));
             setOutputFluid(fluidOut);
 
-            FluidStack fluidIn = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(NBTHolder.NBT_INPUT_AMOUNT));
+            FluidStack fluidIn = new FluidStack(BloodMagicAPI.getLifeEssence(), tagCompound.getInteger(Constants.NBT.INPUT_AMOUNT));
             setInputFluid(fluidIn);
         }
 
-        altarTier = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(NBTHolder.NBT_ALTAR_TIER)).or(EnumAltarTier.ONE);
-        isActive = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_ACTIVE);
-        liquidRequired = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ);
-        canBeFilled = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_FILLABLE);
-        isUpgraded = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_UPGRADED);
-        consumptionRate = tagCompound.getInteger(NBTHolder.NBT_ALTAR_CONSUMPTION_RATE);
-        drainRate = tagCompound.getInteger(NBTHolder.NBT_ALTAR_DRAIN_RATE);
-        consumptionMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_CONSUMPTION_MULTIPLIER);
-        efficiencyMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_EFFICIENCY_MULTIPLIER);
-        selfSacrificeEfficiencyMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_SELF_SACRIFICE_MULTIPLIER);
-        sacrificeEfficiencyMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_SACRIFICE_MULTIPLIER);
-        capacityMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_CAPACITY_MULTIPLIER);
-        orbCapacityMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_ORB_CAPACITY_MULTIPLIER);
-        dislocationMultiplier = tagCompound.getFloat(NBTHolder.NBT_ALTAR_DISLOCATION_MULTIPLIER);
-        capacity = tagCompound.getInteger(NBTHolder.NBT_ALTAR_CAPACITY);
-        bufferCapacity = tagCompound.getInteger(NBTHolder.NBT_ALTAR_BUFFER_CAPACITY);
-        progress = tagCompound.getInteger(NBTHolder.NBT_ALTAR_PROGRESS);
-        isResultBlock = tagCompound.getBoolean(NBTHolder.NBT_ALTAR_IS_RESULT_BLOCK);
-        lockdownDuration = tagCompound.getInteger(NBTHolder.NBT_ALTAR_LOCKDOWN_DURATION);
-        accelerationUpgrades = tagCompound.getInteger(NBTHolder.NBT_ALTAR_ACCELERATION_UPGRADES);
-        demonBloodDuration = tagCompound.getInteger(NBTHolder.NBT_ALTAR_DEMON_BLOOD_DURATION);
-        cooldownAfterCrafting = tagCompound.getInteger(NBTHolder.NBT_ALTAR_COOLDOWN_AFTER_CRAFTING);
+        altarTier = Enums.getIfPresent(EnumAltarTier.class, tagCompound.getString(Constants.NBT.ALTAR_TIER)).or(EnumAltarTier.ONE);
+        isActive = tagCompound.getBoolean(Constants.NBT.ALTAR_ACTIVE);
+        liquidRequired = tagCompound.getInteger(Constants.NBT.ALTAR_LIQUID_REQ);
+        canBeFilled = tagCompound.getBoolean(Constants.NBT.ALTAR_FILLABLE);
+        isUpgraded = tagCompound.getBoolean(Constants.NBT.ALTAR_UPGRADED);
+        consumptionRate = tagCompound.getInteger(Constants.NBT.ALTAR_CONSUMPTION_RATE);
+        drainRate = tagCompound.getInteger(Constants.NBT.ALTAR_DRAIN_RATE);
+        consumptionMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_CONSUMPTION_MULTIPLIER);
+        efficiencyMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_EFFICIENCY_MULTIPLIER);
+        selfSacrificeEfficiencyMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_SELF_SACRIFICE_MULTIPLIER);
+        sacrificeEfficiencyMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_SACRIFICE_MULTIPLIER);
+        capacityMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_CAPACITY_MULTIPLIER);
+        orbCapacityMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_ORB_CAPACITY_MULTIPLIER);
+        dislocationMultiplier = tagCompound.getFloat(Constants.NBT.ALTAR_DISLOCATION_MULTIPLIER);
+        capacity = tagCompound.getInteger(Constants.NBT.ALTAR_CAPACITY);
+        bufferCapacity = tagCompound.getInteger(Constants.NBT.ALTAR_BUFFER_CAPACITY);
+        progress = tagCompound.getInteger(Constants.NBT.ALTAR_PROGRESS);
+        isResultBlock = tagCompound.getBoolean(Constants.NBT.ALTAR_IS_RESULT_BLOCK);
+        lockdownDuration = tagCompound.getInteger(Constants.NBT.ALTAR_LOCKDOWN_DURATION);
+        accelerationUpgrades = tagCompound.getInteger(Constants.NBT.ALTAR_ACCELERATION_UPGRADES);
+        demonBloodDuration = tagCompound.getInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION);
+        cooldownAfterCrafting = tagCompound.getInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING);
     }
 
     @Override
@@ -109,36 +106,36 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (fluid != null)
             fluid.writeToNBT(tagCompound);
         else
-            tagCompound.setString(NBTHolder.NBT_EMPTY, "");
+            tagCompound.setString(Constants.NBT.EMPTY, "");
 
         if (fluidOutput != null)
-            tagCompound.setInteger(NBTHolder.NBT_OUTPUT_AMOUNT, fluidOutput.amount);
+            tagCompound.setInteger(Constants.NBT.OUTPUT_AMOUNT, fluidOutput.amount);
 
         if (fluidInput != null)
-            tagCompound.setInteger(NBTHolder.NBT_INPUT_AMOUNT, fluidInput.amount);
+            tagCompound.setInteger(Constants.NBT.INPUT_AMOUNT, fluidInput.amount);
 
-        tagCompound.setString(NBTHolder.NBT_ALTAR_TIER, altarTier.name());
-        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_ACTIVE, isActive);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_LIQUID_REQ, liquidRequired);
-        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_FILLABLE, canBeFilled);
-        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_UPGRADED, isUpgraded);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_CONSUMPTION_RATE, consumptionRate);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_DRAIN_RATE, drainRate);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_CONSUMPTION_MULTIPLIER, consumptionMultiplier);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_EFFICIENCY_MULTIPLIER, efficiencyMultiplier);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_SACRIFICE_MULTIPLIER, sacrificeEfficiencyMultiplier);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_SELF_SACRIFICE_MULTIPLIER, selfSacrificeEfficiencyMultiplier);
-        tagCompound.setBoolean(NBTHolder.NBT_ALTAR_IS_RESULT_BLOCK, isResultBlock);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_CAPACITY_MULTIPLIER, capacityMultiplier);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_ORB_CAPACITY_MULTIPLIER, orbCapacityMultiplier);
-        tagCompound.setFloat(NBTHolder.NBT_ALTAR_DISLOCATION_MULTIPLIER, dislocationMultiplier);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_CAPACITY, capacity);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_PROGRESS, progress);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_BUFFER_CAPACITY, bufferCapacity);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_LOCKDOWN_DURATION, lockdownDuration);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_ACCELERATION_UPGRADES, accelerationUpgrades);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
-        tagCompound.setInteger(NBTHolder.NBT_ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
+        tagCompound.setString(Constants.NBT.ALTAR_TIER, altarTier.name());
+        tagCompound.setBoolean(Constants.NBT.ALTAR_ACTIVE, isActive);
+        tagCompound.setInteger(Constants.NBT.ALTAR_LIQUID_REQ, liquidRequired);
+        tagCompound.setBoolean(Constants.NBT.ALTAR_FILLABLE, canBeFilled);
+        tagCompound.setBoolean(Constants.NBT.ALTAR_UPGRADED, isUpgraded);
+        tagCompound.setInteger(Constants.NBT.ALTAR_CONSUMPTION_RATE, consumptionRate);
+        tagCompound.setInteger(Constants.NBT.ALTAR_DRAIN_RATE, drainRate);
+        tagCompound.setFloat(Constants.NBT.ALTAR_CONSUMPTION_MULTIPLIER, consumptionMultiplier);
+        tagCompound.setFloat(Constants.NBT.ALTAR_EFFICIENCY_MULTIPLIER, efficiencyMultiplier);
+        tagCompound.setFloat(Constants.NBT.ALTAR_SACRIFICE_MULTIPLIER, sacrificeEfficiencyMultiplier);
+        tagCompound.setFloat(Constants.NBT.ALTAR_SELF_SACRIFICE_MULTIPLIER, selfSacrificeEfficiencyMultiplier);
+        tagCompound.setBoolean(Constants.NBT.ALTAR_IS_RESULT_BLOCK, isResultBlock);
+        tagCompound.setFloat(Constants.NBT.ALTAR_CAPACITY_MULTIPLIER, capacityMultiplier);
+        tagCompound.setFloat(Constants.NBT.ALTAR_ORB_CAPACITY_MULTIPLIER, orbCapacityMultiplier);
+        tagCompound.setFloat(Constants.NBT.ALTAR_DISLOCATION_MULTIPLIER, dislocationMultiplier);
+        tagCompound.setInteger(Constants.NBT.ALTAR_CAPACITY, capacity);
+        tagCompound.setInteger(Constants.NBT.ALTAR_PROGRESS, progress);
+        tagCompound.setInteger(Constants.NBT.ALTAR_BUFFER_CAPACITY, bufferCapacity);
+        tagCompound.setInteger(Constants.NBT.ALTAR_LOCKDOWN_DURATION, lockdownDuration);
+        tagCompound.setInteger(Constants.NBT.ALTAR_ACCELERATION_UPGRADES, accelerationUpgrades);
+        tagCompound.setInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
+        tagCompound.setInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
     }
 
     @Override
@@ -151,26 +148,24 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (lockdownDuration > 0)
             lockdownDuration--;
 
-        if (!worldObj.isRemote && worldObj.getWorldTime() % 20 == 0) {
-            {
-                IBlockState block = worldObj.getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()));
-                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()), block, block.getBlock());
-                block = worldObj.getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()));
-                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()), block, block.getBlock());
-                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()));
-                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX() , this.pos.getY() + 1, this.pos.getZ()), block, block.getBlock());
-                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()));
-                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()), block, block.getBlock());
-                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1));
-                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1), block, block.getBlock());
-                block = worldObj.getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1));
-                block.getBlock().onNeighborBlockChange(worldObj, new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1), block, block.getBlock());
-            }
+        if (!getWorld().isRemote && getWorld().getWorldTime() % 20 == 0) {
+            IBlockState block = getWorld().getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()));
+            block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()), block, block.getBlock());
+            block = getWorld().getBlockState(new BlockPos(this.pos.getX() + 1, this.pos.getY(), this.pos.getZ()));
+            block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX() - 1, this.pos.getY(), this.pos.getZ()), block, block.getBlock());
+            block = getWorld().getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()));
+            block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX(), this.pos.getY() + 1, this.pos.getZ()), block, block.getBlock());
+            block = getWorld().getBlockState(new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()));
+            block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX(), this.pos.getY() - 1, this.pos.getZ()), block, block.getBlock());
+            block = getWorld().getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1));
+            block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + 1), block, block.getBlock());
+            block = getWorld().getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1));
+            block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1), block, block.getBlock());
         }
         if (getWorld().getTotalWorldTime() % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
             everySecond();
 
-        if (getWorld().getTotalWorldTime() % 100 == 0  && (this.isActive || this.cooldownAfterCrafting <= 0))
+        if (getWorld().getTotalWorldTime() % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
             everyFiveSeconds();
 
         updat();
@@ -196,17 +191,16 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
     @Override
     public void startCycle() {
-        if (worldObj != null)
-            worldObj.markBlockForUpdate(pos);
+        if (getWorld() != null)
+            getWorld().markBlockForUpdate(pos);
 
         checkTier();
 
         if (fluid == null || fluid.amount <= 0)
             return;
 
-        if (!isActive) {
+        if (!isActive)
             progress = 0;
-        }
 
         if (getStackInSlot(0) != null) {
             // Do recipes
@@ -232,19 +226,17 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
     private void updat() {
         if (!isActive) {
-            if (cooldownAfterCrafting > 0) {
+            if (cooldownAfterCrafting > 0)
                 cooldownAfterCrafting--;
-            }
             return;
         }
 
-        if (getStackInSlot(0) == null) {
+        if (getStackInSlot(0) == null)
             return;
-        }
 
-        int worldTime = (int) (worldObj.getWorldTime() % 24000);
+        int worldTime = (int) (getWorld().getWorldTime() % 24000);
 
-        if (worldObj.isRemote)
+        if (getWorld().isRemote)
             return;
 
         float f = 1.0F;
@@ -257,57 +249,51 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
                 int stackSize = getStackInSlot(0).stackSize;
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                if (liquidDrained > (liquidRequired * stackSize - progress)) {
+                if (liquidDrained > (liquidRequired * stackSize - progress))
                     liquidDrained = liquidRequired * stackSize - progress;
-                }
 
                 fluid.amount = fluid.amount - liquidDrained;
                 progress += liquidDrained;
 
-                if (worldTime % 4 == 0) {
-                    worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
-                }
+                if (worldTime % 4 == 0)
+                    getWorld().spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
 
                 if (progress >= liquidRequired * stackSize) {
                     ItemStack result = this.result;
-                    if (result != null) {
+
+                    if (result != null)
                         result.stackSize *= stackSize;
-                    }
 
                     setInventorySlotContents(0, result);
                     progress = 0;
 
-                    for (int i = 0; i < 8; i++) {
-                        worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
-                    }
+                    for (int i = 0; i < 8; i++)
+                        getWorld().spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
+
                     this.isActive = false;
                 }
             } else if (progress > 0) {
                 progress -= (int) (efficiencyMultiplier * drainRate);
 
-                if (worldTime % 2 == 0) {
-                    worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
-                }
+                if (worldTime % 2 == 0)
+                    getWorld().spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
         } else {
             ItemStack returnedItem = getStackInSlot(0);
 
-            if (!(returnedItem.getItem() instanceof IBloodOrb)) {
+            if (!(returnedItem.getItem() instanceof IBloodOrb))
                 return;
-            }
 
             IBloodOrb item = (IBloodOrb) (returnedItem.getItem());
             NBTTagCompound itemTag = returnedItem.getTagCompound();
 
-            if (itemTag == null) {
+            if (itemTag == null)
                 return;
-            }
 
-            String ownerName = itemTag.getString(NBTHolder.NBT_OWNER);
+            String ownerName = itemTag.getString(Constants.NBT.OWNER_NAME);
 
-            if (ownerName.equals("")) {
+            if (Strings.isNullOrEmpty(ownerName))
                 return;
-            }
 
             if (fluid != null && fluid.amount >= 1) {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
@@ -316,14 +302,12 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
 
                 fluid.amount = fluid.amount - drain;
 
-                if (worldTime % 4 == 0) {
-                    worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
-                }
+                if (worldTime % 4 == 0)
+                    getWorld().spawnParticle(EnumParticleTypes.REDSTONE, this.pos.getX() + Math.random() - Math.random(), this.pos.getY() + Math.random() - Math.random(), this.pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
         }
-        if (worldObj != null) {
-            worldObj.markBlockForUpdate(pos);
-        }
+        if (getWorld() != null)
+            getWorld().markBlockForUpdate(pos);
     }
 
     private void checkTier() {
@@ -335,12 +319,12 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         if (tier.equals(EnumAltarTier.ONE))
             upgrade = new AltarUpgrade();
         else
-            upgrade = BloodAltar.getUpgrades(worldObj, pos, tier);
+            upgrade = BloodAltar.getUpgrades(getWorld(), pos, tier);
 
         if (this.fluid.amount > this.capacity)
             this.fluid.amount = this.capacity;
 
-        worldObj.markBlockForUpdate(pos);
+        getWorld().markBlockForUpdate(pos);
     }
 
     public int fillMainTank(int amount) {
@@ -365,17 +349,12 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
         return slot == 0;
     }
 
-    public TileAltar setUpgrade(AltarUpgrade upgrade) {
-        this.upgrade = upgrade;
-        return this;
-    }
-
     public AltarUpgrade getUpgrade() {
         return upgrade;
     }
 
-    public TileAltar setTier(EnumAltarTier tier) {
-        this.altarTier = tier;
+    public TileAltar setUpgrade(AltarUpgrade upgrade) {
+        this.upgrade = upgrade;
         return this;
     }
 
@@ -392,6 +371,11 @@ public class TileAltar extends TileInventory implements IBloodAltar, IUpdatePlay
     @Override
     public EnumAltarTier getTier() {
         return altarTier;
+    }
+
+    public TileAltar setTier(EnumAltarTier tier) {
+        this.altarTier = tier;
+        return this;
     }
 
     @Override

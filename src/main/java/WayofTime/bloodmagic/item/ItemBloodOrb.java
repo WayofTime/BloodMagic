@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
@@ -23,7 +22,7 @@ import java.util.List;
 public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
 
     public ItemBloodOrb() {
-        setUnlocalizedName(BloodMagic.MODID + ".orb.");
+        setUnlocalizedName(Constants.Mod.MODID + ".orb.");
         setHasSubtypes(true);
     }
 
@@ -53,19 +52,19 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
         world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 //        SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 
-        if(PlayerHelper.isFakePlayer(player))
+        if (PlayerHelper.isFakePlayer(player))
             return stack;
 
-        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(NBTHolder.NBT_OWNER)))
+        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME)))
             return stack;
 
         if (world.isRemote)
             return stack;
 
-        if(stack.getTagCompound().getString(NBTHolder.NBT_OWNER).equals(PlayerHelper.getUsernameFromPlayer(player)))
-            NetworkHelper.setMaxOrbToMax(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(NBTHolder.NBT_OWNER), world), getOrbLevel(stack.getItemDamage()));
+        if (stack.getTagCompound().getString(Constants.NBT.OWNER_NAME).equals(PlayerHelper.getUsernameFromPlayer(player)))
+            NetworkHelper.setMaxOrbToMax(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME), world), getOrbLevel(stack.getItemDamage()));
 
-        NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(NBTHolder.NBT_OWNER), world).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
+        NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME), world).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
         hurtPlayer(player, 200);
         return stack;
     }

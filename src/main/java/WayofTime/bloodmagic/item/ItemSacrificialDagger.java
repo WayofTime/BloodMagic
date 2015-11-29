@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
@@ -30,7 +31,7 @@ public class ItemSacrificialDagger extends Item {
     public ItemSacrificialDagger() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".sacrificialDagger.");
+        setUnlocalizedName(Constants.Mod.MODID + ".sacrificialDagger.");
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHasSubtypes(true);
         setMaxStackSize(1);

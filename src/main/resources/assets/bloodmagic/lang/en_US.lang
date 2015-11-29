@@ -20,6 +20,11 @@ item.BloodMagic.scribe.air.name=Air Scribing Tools
 item.BloodMagic.scribe.dusk.name=Dusk Scribing Tools
 item.BloodMagic.scribe.dawn.name=Dawn Scribing Tools
 
+item.BloodMagic.focus.weak.name=Teleposition Focus
+item.BloodMagic.focus.enhanced.name=Enhanced Teleposition Focus
+item.BloodMagic.focus.reinforced.name=Reinforced Teleposition Focus
+item.BloodMagic.focus.demonic.name=Demonic Teleposition Focus
+
 item.BloodMagic.slate.blank.name=Blank Slate
 item.BloodMagic.slate.reinforced.name=Reinforced Slate
 item.BloodMagic.slate.imbued.name=Imbued Slate

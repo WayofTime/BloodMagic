@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,12 +13,12 @@ import java.util.List;
 
 public class ItemActivationCrystal extends ItemBindable {
 
-    public static String[] names = { "weak", "awakened", "creative" };
+    public static String[] names = {"weak", "awakened", "creative"};
 
     public ItemActivationCrystal() {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".activationCrystal.");
+        setUnlocalizedName(Constants.Mod.MODID + ".activationCrystal.");
         setHasSubtypes(true);
         setEnergyUsed(100);
     }

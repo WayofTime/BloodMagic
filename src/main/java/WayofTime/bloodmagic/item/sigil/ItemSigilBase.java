@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.ISigil;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,14 +20,14 @@ import java.util.List;
 @Getter
 public class ItemSigilBase extends ItemBindable implements ISigil {
 
+    protected final String tooltipBase;
     private final String name;
     private boolean toggleable;
-    protected final String tooltipBase;
 
     public ItemSigilBase(String name, int energyUsed) {
         super();
 
-        setUnlocalizedName(BloodMagic.MODID + ".sigil." + name);
+        setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
         setEnergyUsed(energyUsed);
 
         this.name = name;
@@ -68,15 +68,15 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
     }
 
     public boolean isUnusable(ItemStack stack) {
-        NBTHolder.checkNBT(stack);
+        NBTHelper.checkNBT(stack);
 
-        return stack.getTagCompound().getBoolean(NBTHolder.NBT_UNUSABLE);
+        return stack.getTagCompound().getBoolean(Constants.NBT.UNUSABLE);
     }
 
     public ItemStack setUnusable(ItemStack stack, boolean unusable) {
-        NBTHolder.checkNBT(stack);
+        NBTHelper.checkNBT(stack);
 
-        stack.getTagCompound().setBoolean(NBTHolder.NBT_UNUSABLE, unusable);
+        stack.getTagCompound().setBoolean(Constants.NBT.UNUSABLE, unusable);
         return stack;
     }
 

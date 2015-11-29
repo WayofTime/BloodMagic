@@ -16,9 +16,9 @@ public interface IMasterRitualStone {
 
     void stopRitual();
 
-    void setCooldown(int cooldown);
-
     int getCooldown();
+
+    void setCooldown(int cooldown);
 
     void setActive(boolean active);
 

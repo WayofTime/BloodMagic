@@ -1,11 +1,12 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.RitualEvent;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
@@ -38,15 +39,15 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private EnumFacing direction;
 
     public void readClientNBT(NBTTagCompound tag) {
-        currentRitual = RitualRegistry.getRitualForId(tag.getString(NBTHolder.NBT_CURRENTRITUAL));
-        active = tag.getBoolean(NBTHolder.NBT_RUNNING);
-        activeTime = tag.getInteger(NBTHolder.NBT_RUNTIME);
+        currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
+        active = tag.getBoolean(Constants.NBT.IS_RUNNING);
+        activeTime = tag.getInteger(Constants.NBT.RUNTIME);
     }
 
     public void writeClientNBT(NBTTagCompound tag) {
-        tag.setString(NBTHolder.NBT_CURRENTRITUAL, RitualRegistry.getIdForRitual(currentRitual));
-        tag.setBoolean(NBTHolder.NBT_RUNNING, active);
-        tag.setInteger(NBTHolder.NBT_RUNTIME, activeTime);
+        tag.setString(Constants.NBT.CURRENT_RITUAL, RitualRegistry.getIdForRitual(currentRitual));
+        tag.setBoolean(Constants.NBT.IS_RUNNING, active);
+        tag.setInteger(Constants.NBT.RUNTIME, activeTime);
     }
 
     @Override
@@ -56,8 +57,8 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     @Override
     public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator) {
-        activationCrystal = NBTHolder.checkNBT(activationCrystal);
-        String crystalOwner = activationCrystal.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        activationCrystal = NBTHelper.checkNBT(activationCrystal);
+        String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_NAME);
         Ritual ritual = RitualRegistry.getRitualForId("");
 
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
@@ -93,13 +94,13 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
+    public int getCooldown() {
+        return cooldown;
     }
 
     @Override
-    public int getCooldown() {
-        return cooldown;
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
     }
 
     @Override

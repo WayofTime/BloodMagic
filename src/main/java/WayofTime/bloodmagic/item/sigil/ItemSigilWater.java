@@ -51,8 +51,7 @@ public class ItemSigilWater extends ItemSigilBase {
                         this.tryPlaceWater(world, blockpos1);
                     }
                 }
-            }
-            else {
+            } else {
                 return stack;
             }
 
@@ -123,8 +122,7 @@ public class ItemSigilWater extends ItemSigilBase {
 
         if (!worldIn.isAirBlock(pos) && !flag) {
             return false;
-        }
-        else {
+        } else {
             if (worldIn.provider.doesWaterVaporize()) {
                 int i = pos.getX();
                 int j = pos.getY();
@@ -134,8 +132,7 @@ public class ItemSigilWater extends ItemSigilBase {
                 for (int l = 0; l < 8; ++l) {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
                 }
-            }
-            else {
+            } else {
                 if (!worldIn.isRemote && flag && !material.isLiquid()) {
                     worldIn.destroyBlock(pos, true);
                 }

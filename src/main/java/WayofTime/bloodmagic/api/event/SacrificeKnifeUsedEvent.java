@@ -7,9 +7,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Cancelable
 public class SacrificeKnifeUsedEvent extends Event {
     public final EntityPlayer player;
+    public final int healthDrained;
     public boolean shouldDrainHealth;
     public boolean shouldFillAltar;
-    public final int healthDrained;
 
     public SacrificeKnifeUsedEvent(EntityPlayer player, boolean shouldDrainHealth, boolean shouldFillAltar, int hp) {
         this.player = player;

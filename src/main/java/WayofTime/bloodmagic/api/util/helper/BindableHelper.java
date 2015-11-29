@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import com.google.common.base.Strings;
@@ -16,6 +16,7 @@ public class BindableHelper {
      *
      * @param stack  - The ItemStack to bind
      * @param player - The Player to bind the ItemStack to
+     *
      * @return - Whether binding was successful
      */
     public static boolean checkAndSetItemOwner(ItemStack stack, EntityPlayer player) {
@@ -24,25 +25,26 @@ public class BindableHelper {
 
     /**
      * Bind an item to a username.
-     *
+     * <p/>
      * Requires the Item contained in the ItemStack to be an instanceof {@link IBindable}
-     *
+     * <p/>
      * Fires {@link ItemBindEvent}.
      *
      * @param stack     - The ItemStack to bind
      * @param ownerName - The username to bind the ItemStack to
+     *
      * @return - Whether the binding was successful
      */
     public static boolean checkAndSetItemOwner(ItemStack stack, String ownerName) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
 
         if (!(stack.getItem() instanceof IBindable))
             return false;
 
-        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(NBTHolder.NBT_OWNER))) {
+        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME))) {
             MinecraftForge.EVENT_BUS.post(new ItemBindEvent(PlayerHelper.getPlayerFromUsername(ownerName), ownerName, stack));
             ((IBindable) stack.getItem()).onBind(PlayerHelper.getPlayerFromUsername(ownerName), stack);
-            stack.getTagCompound().setString(NBTHolder.NBT_OWNER, ownerName);
+            stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, ownerName);
             return true;
         }
 
@@ -57,20 +59,21 @@ public class BindableHelper {
      * @param ownerName - The username to bind the ItemStack to
      */
     public static void setItemOwner(ItemStack stack, String ownerName) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
 
-        stack.getTagCompound().setString(NBTHolder.NBT_OWNER, ownerName);
+        stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, ownerName);
     }
 
     /**
      * Used to safely obtain the username of the ItemStack's owner
      *
      * @param stack - The ItemStack to check the owner of
+     *
      * @return - The username of the ItemStack's owner
      */
     public static String getOwnerName(ItemStack stack) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
 
-        return stack.getTagCompound().getString(NBTHolder.NBT_OWNER);
+        return stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
     }
 }

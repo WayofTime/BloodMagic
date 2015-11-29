@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,10 +36,10 @@ public class PlayerHelper {
     }
 
     public static void causeNauseaToPlayer(ItemStack stack) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(NBTHolder.NBT_OWNER)))
-            causeNauseaToPlayer(stack.getTagCompound().getString(NBTHolder.NBT_OWNER));
+        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME)))
+            causeNauseaToPlayer(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME));
     }
 
     public static void causeNauseaToPlayer(String ownerName) {

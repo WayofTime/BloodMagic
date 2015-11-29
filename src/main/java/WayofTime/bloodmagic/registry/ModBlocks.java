@@ -1,18 +1,19 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.*;
 import WayofTime.bloodmagic.item.block.*;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.tile.TilePlinth;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModBlocks {
     public static Block altar;
@@ -21,6 +22,7 @@ public class ModBlocks {
     public static Block ritualStone;
     public static Block testSpellBlock;
     public static Block pedestal;
+    public static Block teleposer;
 
     public static Block lifeEssence;
 
@@ -37,16 +39,17 @@ public class ModBlocks {
         ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
+        teleposer = registerBlock(new BlockTeleposer());
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
         initTiles();
     }
 
     public static void initTiles() {
-        GameRegistry.registerTileEntity(TileAltar.class, BloodMagic.MODID + ":" + TileAltar.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileImperfectRitualStone.class, BloodMagic.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileMasterRitualStone.class, BloodMagic.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
-        GameRegistry.registerTileEntity(TilePlinth.class, BloodMagic.MODID + ":" + TilePlinth.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileAltar.class, Constants.Mod.MODID + ":" + TileAltar.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileImperfectRitualStone.class, Constants.Mod.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileMasterRitualStone.class, Constants.Mod.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
+        GameRegistry.registerTileEntity(TilePlinth.class, Constants.Mod.MODID + ":" + TilePlinth.class.getSimpleName());
     }
 
     public static void initRenders() {
@@ -76,6 +79,7 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {

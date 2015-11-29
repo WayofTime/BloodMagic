@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -20,13 +21,13 @@ import java.util.List;
 
 public class BlockSocket extends Block {
 
-    public static final String[] names = { "empty", "filled" };
+    public static final String[] names = {"empty", "filled"};
     public static final PropertyInteger META = PropertyInteger.create("META", 0, names.length - 1);
 
     public BlockSocket() {
         super(Material.iron);
 
-        setUnlocalizedName(BloodMagic.MODID + ".socket.");
+        setUnlocalizedName(Constants.Mod.MODID + ".socket.");
         setHardness(2.0F);
         setResistance(5.0F);
         setStepSound(soundTypeMetal);

@@ -10,7 +10,7 @@ public interface IBindable {
 
     /**
      * Called when the player attempts to bind the item.
-     *
+     * <p/>
      * If false, binding fails.
      */
     boolean onBind(EntityPlayer player, ItemStack stack);

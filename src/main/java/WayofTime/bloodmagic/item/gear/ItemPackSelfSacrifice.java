@@ -1,8 +1,9 @@
 package WayofTime.bloodmagic.item.gear;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -16,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulator{
+public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulator {
 
     public final int CONVERSION = 100; // How much LP per half heart
     public final int CAPACITY = 10000; // Max LP storage
@@ -26,7 +27,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     public ItemPackSelfSacrifice() {
         super(ArmorMaterial.CHAIN, 0, 1);
 
-        setUnlocalizedName(BloodMagic.MODID + ".pack.selfSacrifice");
+        setUnlocalizedName(Constants.Mod.MODID + ".pack.selfSacrifice");
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
@@ -48,10 +49,10 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
 
                 TileAltar altar = (TileAltar) tile;
 
-                if(!altar.isActive()) {
+                if (!altar.isActive()) {
                     int amount = this.getStoredLP(stack);
 
-                    if(amount > 0) {
+                    if (amount > 0) {
                         int filledAmount = altar.fillMainTank(amount);
                         amount -= filledAmount;
                         setStoredLP(stack, amount);
@@ -79,19 +80,19 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-        return BloodMagic.DOMAIN + "models/armor/bloodPack_layer_1.png";
+        return Constants.Mod.DOMAIN + "models/armor/bloodPack_layer_1.png";
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.selfSacrifice.desc"));
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.stored", getStoredLP(stack)));
     }
 
     public void addLP(ItemStack stack, int toAdd) {
-        stack = NBTHolder.checkNBT(stack);
+        stack = NBTHelper.checkNBT(stack);
 
         if (toAdd < 0)
             toAdd = 0;
@@ -103,12 +104,12 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     public void setStoredLP(ItemStack stack, int lp) {
-        stack = NBTHolder.checkNBT(stack);
-        stack.getTagCompound().setInteger(NBTHolder.NBT_STORED_LP, lp);
+        stack = NBTHelper.checkNBT(stack);
+        stack.getTagCompound().setInteger(Constants.NBT.STORED_LP, lp);
     }
 
     public int getStoredLP(ItemStack stack) {
-        stack = NBTHolder.checkNBT(stack);
-        return stack.getTagCompound().getInteger(NBTHolder.NBT_STORED_LP);
+        stack = NBTHelper.checkNBT(stack);
+        return stack.getTagCompound().getInteger(Constants.NBT.STORED_LP);
     }
 }

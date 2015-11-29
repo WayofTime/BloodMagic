@@ -47,8 +47,7 @@ public class ItemSigilVoid extends ItemSigilBase {
                         return stack;
                     }
                 }
-            }
-            else {
+            } else {
                 return stack;
             }
 

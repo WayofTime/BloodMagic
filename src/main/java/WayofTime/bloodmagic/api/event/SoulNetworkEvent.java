@@ -48,15 +48,15 @@ public class SoulNetworkEvent extends Event {
         /**
          * Set result to deny the action i.e. damage/drain anyways. Cancelling event prevents action without penalties
          *
-         * @param player		Player using the item
-         * @param ownerNetwork	Network that the item is tied to
-         * @param itemStack		Item used
-         * @param drainAmount	Original drain amount - change to alter cost
+         * @param player       Player using the item
+         * @param ownerNetwork Network that the item is tied to
+         * @param itemStack    Item used
+         * @param drainAmount  Original drain amount - change to alter cost
          */
         public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, ItemStack itemStack, int drainAmount) {
             super(player, ownerNetwork, drainAmount);
             this.itemStack = itemStack;
-            this.damageAmount = (float)(drainAmount) / 100.0f;
+            this.damageAmount = (float) (drainAmount) / 100.0f;
         }
     }
 }

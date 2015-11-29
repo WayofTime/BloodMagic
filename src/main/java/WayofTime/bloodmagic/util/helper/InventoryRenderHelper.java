@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.util.helper;
 
-import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -14,15 +14,15 @@ import net.minecraftforge.client.model.ModelLoader;
 
 /**
  * @author <a href="https://github.com/TehNut">TehNut</a>
- *
- * The goal of this class is to make registering the inventory renders
- * for your Items/Blocks a much simpler and easier process.
- *
- * You must call this at the post initialization stage on
- * the clientside only.
- *
- * If you pass a Block through here that uses the default
- * ItemBlock, you should specify a custom name.
+ *         <p/>
+ *         The goal of this class is to make registering the inventory renders
+ *         for your Items/Blocks a much simpler and easier process.
+ *         <p/>
+ *         You must call this at the post initialization stage on
+ *         the clientside only.
+ *         <p/>
+ *         If you pass a Block through here that uses the default
+ *         ItemBlock, you should specify a custom name.
  */
 public class InventoryRenderHelper {
 
@@ -31,7 +31,7 @@ public class InventoryRenderHelper {
      * your modid in all lowercase with a colon at the end.
      */
     private final String domain;
-    
+
     public InventoryRenderHelper(String domain) {
         this.domain = domain;
     }
@@ -102,7 +102,7 @@ public class InventoryRenderHelper {
         ModelLoader.setCustomMeshDefinition(InventoryRenderHelper.getItemFromBlock(block), new ItemMeshDefinition() {
             @Override
             public ModelResourceLocation getModelLocation(ItemStack stack) {
-                return new ModelResourceLocation(BloodMagic.DOMAIN + toRender.getClass().getSimpleName(), "fluid");
+                return new ModelResourceLocation(Constants.Mod.DOMAIN + toRender.getClass().getSimpleName(), "fluid");
             }
         });
         ModelLoader.setCustomStateMapper(block, new StateMapperBase() {
@@ -114,14 +114,20 @@ public class InventoryRenderHelper {
     }
 
     /**
-     *
      * @param block - Block to get Item of
-     * @return      - The ItemBlock that corresponds to the Block.
+     *
+     * @return - The ItemBlock that corresponds to the Block.
      */
     public static Item getItemFromBlock(Block block) {
         return Item.getItemFromBlock(block);
     }
 
+    /**
+     * Finds the class name of the given Item. If handed an ItemBlock, it will
+     * use the class name of the contained Block.
+     *
+     * @return The class name of the given Item
+     */
     private static String getClassName(Item item) {
         return item instanceof ItemBlock ? Block.getBlockFromItem(item).getClass().getSimpleName() : item.getClass().getSimpleName();
     }

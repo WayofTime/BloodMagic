@@ -14,6 +14,13 @@ public enum EnumRuneType implements IStringSerializable {
     DUSK,
     DAWN;
 
+    public static EnumRuneType byMetadata(int meta) {
+        if (meta < 0 || meta >= values().length)
+            meta = 0;
+
+        return values()[meta];
+    }
+
     @Override
     public String toString() {
         return name().toLowerCase(Locale.ENGLISH);
@@ -22,12 +29,5 @@ public enum EnumRuneType implements IStringSerializable {
     @Override
     public String getName() {
         return this.toString();
-    }
-
-    public static EnumRuneType byMetadata(int meta) {
-        if (meta < 0 || meta >= values().length)
-            meta = 0;
-
-        return values()[meta];
     }
 }

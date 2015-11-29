@@ -26,9 +26,9 @@ import java.util.List;
 
 /**
  * Creates a block that has multiple meta-based states.
- *
+ * <p/>
  * These states will be numbered 0 through {@code maxMeta}.
- *
+ * <p/>
  * For {@link net.minecraft.tileentity.TileEntity}'s, use {@link BlockIntegerContainer}.
  */
 @Getter
@@ -105,6 +105,6 @@ public class BlockInteger extends Block {
     }
 
     private BlockState createRealBlockState() {
-        return new ExtendedBlockState(this, new IProperty[] { metaProp }, new IUnlistedProperty[] { unlistedMetaProp });
+        return new ExtendedBlockState(this, new IProperty[]{metaProp}, new IUnlistedProperty[]{unlistedMetaProp});
     }
 }

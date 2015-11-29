@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
 import lombok.Getter;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
@@ -23,7 +23,7 @@ public class BlockLifeEssence extends BlockFluidClassic {
     public BlockLifeEssence() {
         super(lifeEssence, Material.water);
 
-        setUnlocalizedName(BloodMagic.MODID + ".fluid.lifeEssence");
+        setUnlocalizedName(Constants.Mod.MODID + ".fluid.lifeEssence");
 
         lifeEssence.setBlock(this);
         BloodMagicAPI.setLifeEssence(lifeEssence);
@@ -42,7 +42,7 @@ public class BlockLifeEssence extends BlockFluidClassic {
     public static class FluidLifeEssence extends Fluid {
 
         public FluidLifeEssence() {
-            super("lifeEssence", new ResourceLocation(BloodMagic.DOMAIN + "blocks/lifeEssenceStill"), new ResourceLocation(BloodMagic.DOMAIN + "blocks/lifeEssenceFlowing"));
+            super("lifeEssence", new ResourceLocation(Constants.Mod.DOMAIN + "blocks/lifeEssenceStill"), new ResourceLocation(Constants.Mod.DOMAIN + "blocks/lifeEssenceFlowing"));
 
             setDensity(2000);
             setViscosity(2000);

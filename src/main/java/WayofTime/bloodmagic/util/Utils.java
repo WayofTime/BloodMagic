@@ -10,9 +10,9 @@ public class Utils {
     public static boolean isInteger(String integer) {
         try {
             Integer.parseInt(integer);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         // only got here if we didn't return false
@@ -21,7 +21,7 @@ public class Utils {
 
     /**
      * Used for inserting an ItemStack with a stacksize of 1 to a tile's inventory at slot 0.
-     *
+     * <p/>
      * EG: Block Altar
      *
      * @param tile   - The {@link TileInventory} to input the item to

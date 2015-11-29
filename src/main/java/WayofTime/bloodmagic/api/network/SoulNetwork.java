@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.api.network;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.NBTHolder;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
@@ -23,10 +23,10 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Setter
 public class SoulNetwork extends WorldSavedData {
 
-    private int currentEssence;
-    private int orbTier;
     @Nullable
     private final EntityPlayer player;
+    private int currentEssence;
+    private int orbTier;
 
     public SoulNetwork(String name) {
         super(name);
@@ -38,20 +38,20 @@ public class SoulNetwork extends WorldSavedData {
 
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound) {
-        currentEssence = nbttagcompound.getInteger(NBTHolder.NBT_CURRENTESSENCE);
-        orbTier = nbttagcompound.getInteger(NBTHolder.NBT_ORBTIER);
+        currentEssence = nbttagcompound.getInteger(Constants.NBT.CURRENT_ESSENCE);
+        orbTier = nbttagcompound.getInteger(Constants.NBT.ORB_TIER);
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound) {
-        nbttagcompound.setInteger(NBTHolder.NBT_CURRENTESSENCE, currentEssence);
-        nbttagcompound.setInteger(NBTHolder.NBT_ORBTIER, orbTier);
+        nbttagcompound.setInteger(Constants.NBT.CURRENT_ESSENCE, currentEssence);
+        nbttagcompound.setInteger(Constants.NBT.ORB_TIER, orbTier);
     }
 
     public int addLifeEssence(int toAdd, int maximum) {
         AddToNetworkEvent event = new AddToNetworkEvent(mapName, toAdd, maximum);
 
-        if(MinecraftForge.EVENT_BUS.post(event))
+        if (MinecraftForge.EVENT_BUS.post(event))
             return 0;
 
         if (MinecraftServer.getServer() == null)
@@ -71,7 +71,7 @@ public class SoulNetwork extends WorldSavedData {
             return 0;
 
         int newEss = Math.min(event.maximum, currEss + event.addedAmount);
-        if(event.getResult() != Event.Result.DENY)
+        if (event.getResult() != Event.Result.DENY)
             data.setCurrentEssence(newEss);
 
         return newEss - currEss;
@@ -93,7 +93,7 @@ public class SoulNetwork extends WorldSavedData {
     /**
      * If the player exists on the server, syphon the given amount of LP from the player's LP network and
      * damage for any remaining LP required.
-     *
+     * <p/>
      * Always returns false on the client side.
      *
      * @return - Whether the action should be performed.
@@ -105,12 +105,12 @@ public class SoulNetwork extends WorldSavedData {
         if (!Strings.isNullOrEmpty(mapName)) {
             SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(player, mapName, getPlayer().getHeldItem(), toSyphon);
 
-            if(MinecraftForge.EVENT_BUS.post(event))
+            if (MinecraftForge.EVENT_BUS.post(event))
                 return false;
 
             int drainAmount = syphon(event.syphon);
 
-            if(drainAmount == 0 || event.shouldDamage)
+            if (drainAmount == 0 || event.shouldDamage)
                 hurtPlayer(event.syphon);
 
             return event.getResult() != Event.Result.DENY;

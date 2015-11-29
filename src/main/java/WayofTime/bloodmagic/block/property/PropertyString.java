@@ -21,6 +21,10 @@ public class PropertyString extends PropertyHelper {
         allowedValues = ImmutableSet.copyOf(hashSet);
     }
 
+    public static PropertyString create(String name, String[] values) {
+        return new PropertyString(name, values);
+    }
+
     @Override
     public Collection getAllowedValues() {
         return allowedValues;
@@ -33,9 +37,5 @@ public class PropertyString extends PropertyHelper {
     @Override
     public String getName(Comparable value) {
         return this.getName0(value.toString());
-    }
-
-    public static PropertyString create(String name, String[] values) {
-        return new PropertyString(name, values);
     }
 }

@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.tile.TilePlinth;
 import WayofTime.bloodmagic.util.Utils;
@@ -15,12 +16,12 @@ import net.minecraft.world.World;
 
 public class BlockPedestal extends BlockStringContainer {
 
-    public static String[] names = { "pedestal", "plinth" };
+    public static String[] names = {"pedestal", "plinth"};
 
     public BlockPedestal() {
         super(Material.rock, names);
 
-        setUnlocalizedName(BloodMagic.MODID + ".");
+        setUnlocalizedName(Constants.Mod.MODID + ".");
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

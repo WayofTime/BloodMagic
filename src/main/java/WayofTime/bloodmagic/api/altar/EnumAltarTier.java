@@ -104,7 +104,7 @@ public enum EnumAltarTier {
         public void buildComponents() {
             altarComponents.addAll(FIVE.getAltarComponents());
 
-            for(int i = -4; i <= 2; i++) {
+            for (int i = -4; i <= 2; i++) {
                 altarComponents.add(new AltarComponent(new BlockPos(11, i, 11)));
                 altarComponents.add(new AltarComponent(new BlockPos(-11, i, -11)));
                 altarComponents.add(new AltarComponent(new BlockPos(11, i, -11)));

@@ -23,7 +23,7 @@ public class RitualEvent extends Event {
 
     /**
      * This event is called when a ritual is activated. If cancelled, it will not activate.
-     *
+     * <p/>
      * {@link WayofTime.bloodmagic.api.util.helper.RitualHelper#activate(IMasterRitualStone, Ritual, EntityPlayer)}
      */
     @Cancelable
@@ -43,7 +43,7 @@ public class RitualEvent extends Event {
 
     /**
      * This event is called when a Ritual effect is performed. If cancelled, the effect will not happen.
-     *
+     * <p/>
      * {@link WayofTime.bloodmagic.api.util.helper.RitualHelper#perform(IMasterRitualStone, Ritual)}
      */
     @Cancelable
@@ -56,7 +56,7 @@ public class RitualEvent extends Event {
 
     /**
      * This event is called when a Ritual is stopped by a {@link Ritual.BreakType}.
-     *
+     * <p/>
      * {@link WayofTime.bloodmagic.api.util.helper.RitualHelper#stop(IMasterRitualStone, Ritual, Ritual.BreakType)}
      */
     public static class RitualStopEvent extends RitualEvent {

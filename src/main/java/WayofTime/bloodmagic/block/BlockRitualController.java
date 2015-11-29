@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
@@ -16,12 +17,12 @@ import net.minecraft.world.World;
 
 public class BlockRitualController extends BlockStringContainer {
 
-    public static final String[] names = { "master", "imperfect" };
+    public static final String[] names = {"master", "imperfect"};
 
     public BlockRitualController() {
         super(Material.rock, names);
 
-        setUnlocalizedName(BloodMagic.MODID + ".stone.ritual.");
+        setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
         setCreativeTab(BloodMagic.tabBloodMagic);
         setStepSound(soundTypeStone);
         setHardness(2.0F);
