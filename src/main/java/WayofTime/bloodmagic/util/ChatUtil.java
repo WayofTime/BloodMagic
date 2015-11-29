@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.network.AlchemicalWizardryPacketHandler;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -233,6 +233,6 @@ public class ChatUtil {
      */
     public static void sendNoSpam(EntityPlayerMP player, IChatComponent... lines) {
         if (lines.length > 0)
-            AlchemicalWizardryPacketHandler.INSTANCE.sendTo(new PacketNoSpamChat(lines), player);
+            BloodMagicPacketHandler.INSTANCE.sendTo(new PacketNoSpamChat(lines), player);
     }
 }

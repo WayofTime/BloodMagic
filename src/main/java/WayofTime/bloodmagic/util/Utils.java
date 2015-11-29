@@ -27,18 +27,22 @@ public class Utils {
      * @param tile   - The {@link TileInventory} to input the item to
      * @param player - The player to take the item from.
      */
-    public static void insertItemToTile(TileInventory tile, EntityPlayer player) {
+    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player) {
         if (tile.getStackInSlot(0) == null && player.getHeldItem() != null) {
             ItemStack input = player.getHeldItem().copy();
             input.stackSize = 1;
             player.getHeldItem().stackSize--;
             tile.setInventorySlotContents(0, input);
+            return true;
         } else if (tile.getStackInSlot(0) != null && player.getHeldItem() == null) {
             if (!tile.getWorld().isRemote) {
                 EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(0));
                 tile.getWorld().spawnEntityInWorld(invItem);
             }
             tile.clear();
+            return false;
         }
+
+        return false;
     }
 }

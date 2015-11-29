@@ -1,15 +1,21 @@
 package WayofTime.bloodmagic.tile;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 public class TileInventory extends TileEntity implements IInventory {
 
@@ -17,10 +23,21 @@ public class TileInventory extends TileEntity implements IInventory {
     private int size;
     private String name;
 
+    protected int[] syncedSlots = new int[0];
+
     public TileInventory(int size, String name) {
         this.inventory = new ItemStack[size];
         this.size = size;
         this.name = name;
+    }
+
+    private boolean isSyncedSlot(int slot) {
+        for (int s : this.syncedSlots) {
+            if (s == slot) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -30,11 +47,13 @@ public class TileInventory extends TileEntity implements IInventory {
         inventory = new ItemStack[getSizeInventory()];
 
         for (int i = 0; i < tags.tagCount(); i++) {
-            NBTTagCompound data = tags.getCompoundTagAt(i);
-            int j = data.getByte("Slot") & 255;
+            if (!isSyncedSlot(i)) {
+                NBTTagCompound data = tags.getCompoundTagAt(i);
+                byte j = data.getByte("Slot")   ;
 
-            if (j >= 0 && j < inventory.length) {
-                inventory[j] = ItemStack.loadItemStackFromNBT(data);
+                if (j >= 0 && j < inventory.length) {
+                    inventory[j] = ItemStack.loadItemStackFromNBT(data);
+                }
             }
         }
     }
@@ -45,7 +64,7 @@ public class TileInventory extends TileEntity implements IInventory {
         NBTTagList tags = new NBTTagList();
 
         for (int i = 0; i < inventory.length; i++) {
-            if (inventory[i] != null) {
+            if ((inventory[i] != null) && !isSyncedSlot(i)) {
                 NBTTagCompound data = new NBTTagCompound();
                 data.setByte("Slot", (byte) i);
                 inventory[i].writeToNBT(data);
@@ -74,30 +93,46 @@ public class TileInventory extends TileEntity implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        ItemStack slotStack = getStackInSlot(index);
+        if (inventory[index] != null) {
+            if (!worldObj.isRemote)
+                worldObj.markBlockForUpdate(this.pos);
 
-        if (slotStack.stackSize > count)
-            slotStack.stackSize -= count;
-        else if (slotStack.stackSize <= count)
-            return null;
+            if (inventory[index].stackSize <= count) {
+                ItemStack itemStack = inventory[index];
+                inventory[index] = null;
+                markDirty();
+                return itemStack;
+            }
 
-        return slotStack;
+            ItemStack itemStack = inventory[index].splitStack(count);
+            if (inventory[index].stackSize == 0)
+                inventory[index] = null;
+
+            markDirty();
+            return itemStack;
+        }
+
+        return null;
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int slot) {
-        ItemStack stack = getStackInSlot(slot);
-        if (stack != null)
+        if (inventory[slot] != null) {
+            ItemStack itemStack = inventory[slot];
             setInventorySlotContents(slot, null);
-        return stack;
+            return itemStack;
+        }
+        return null;
     }
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack) {
         inventory[slot] = stack;
-        worldObj.markBlockForUpdate(pos);
         if (stack != null && stack.stackSize > getInventoryStackLimit())
             stack.stackSize = getInventoryStackLimit();
+        markDirty();
+        if (!worldObj.isRemote)
+            worldObj.markBlockForUpdate(this.pos);
     }
 
     @Override
@@ -160,5 +195,26 @@ public class TileInventory extends TileEntity implements IInventory {
     @Override
     public IChatComponent getDisplayName() {
         return new ChatComponentTranslation("tile.BloodMagic." + name + ".name");
+    }
+
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound nbt = new NBTTagCompound();
+        writeToNBT(nbt);
+        return new S35PacketUpdateTileEntity(getPos(), -999, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        super.onDataPacket(net, pkt);
+        readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
+    {
+        return oldState.getBlock() != newState.getBlock();
     }
 }
