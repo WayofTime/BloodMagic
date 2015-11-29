@@ -140,7 +140,6 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
 
     @Override
     public void update() {
-        System.out.println("UP");
         if (getWorld().isRemote)
             return;
 
