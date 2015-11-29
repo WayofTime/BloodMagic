@@ -115,7 +115,7 @@ javadoc {
 }
 
 tasks.javadoc.dependsOn delombok
-tasks.build.dependsOn sourceJar, javadocJar, deobfJar
+tasks.build.dependsOn sourceJar, javadocJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
@@ -128,7 +128,6 @@ publishing {
             artifact jar
             artifact sourceJar
             artifact javadocJar
-            artifact deobfJar
         }
     }
     repositories {
@@ -149,7 +148,6 @@ curseforge {
         changelog = project.hasProperty('changelog') ? project.changelog : ''
         releaseType = 'alpha'
 
-        addArtifact deobfJar
         addArtifact sourceJar
         addArtifact javadocJar
     }
