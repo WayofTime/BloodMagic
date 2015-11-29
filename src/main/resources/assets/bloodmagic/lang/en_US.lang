@@ -84,6 +84,14 @@ tile.BloodMagic.rune.augCapacity.name=Rune of Augmented Capacity
 tile.BloodMagic.rune.orb.name=Rune of the Orb
 tile.BloodMagic.rune.acceleration.name=Acceleration Rune
 
+tile.BloodMagic.ritualStone.blank.name=Ritual Stone
+tile.BloodMagic.ritualStone.water.name=Ritual Stone of Water
+tile.BloodMagic.ritualStone.fire.name=Ritual Stone of Fire
+tile.BloodMagic.ritualStone.earth.name=Ritual Stone of Earth
+tile.BloodMagic.ritualStone.air.name=Ritual Stone of Air
+tile.BloodMagic.ritualStone.dusk.name=Ritual Stone of Dusk
+tile.BloodMagic.ritualStone.dawn.name=Ritual Stone of Dawn
+
 tile.BloodMagic.bloodstonebrick.normal.name=Bloodstone Brick
 tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
 
