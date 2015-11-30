@@ -1,15 +1,21 @@
 package WayofTime.bloodmagic.util.handler;
 
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -54,5 +60,13 @@ public class EventHandler {
 
         event.result = result;
         event.setResult(Event.Result.ALLOW);
+    }
+
+    @SubscribeEvent
+    public void harvestEvent(PlayerEvent.HarvestCheck event) {
+        if (event.block != null && event.block instanceof BlockAltar && event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() instanceof ItemAltarMaker) {
+            ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getCurrentEquippedItem().getItem();
+            event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation(StatCollector.translateToLocal("misc.altarMaker.destroy"), altarMaker.destroyAltar(event.entityPlayer)));
+        }
     }
 }

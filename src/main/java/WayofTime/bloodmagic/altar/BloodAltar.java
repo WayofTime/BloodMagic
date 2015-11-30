@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
+import WayofTime.bloodmagic.block.BlockCrystal;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import net.minecraft.block.BlockBeacon;
 import net.minecraft.block.BlockGlowstone;
@@ -131,9 +132,9 @@ public class BloodAltar {
             if (blockStack.getBlock() instanceof BlockBloodStoneBrick || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODSTONE)))
                 return true;
 
-//        if (altarComponent.getBlockStack().getBlock() == ModBlocks.crystal)
-//            if (blockStack.getBlock() instanceof BlockCrystal || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.CRYSTAL)))
-//            return true;
+        if (altarComponent.getBlockStack().getBlock() == ModBlocks.crystal)
+            if (blockStack.getBlock() instanceof BlockCrystal || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.CRYSTAL)))
+            return true;
 
         if (altarComponent.getBlockStack().getBlock() == Blocks.glowstone)
             if (blockStack.getBlock() instanceof BlockGlowstone || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.GLOWSTONE)))

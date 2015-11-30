@@ -20,6 +20,7 @@ public class ModBlocks {
     public static Block bloodRune;
     public static Block ritualController;
     public static Block ritualStone;
+    public static Block bloodLight;
     public static Block testSpellBlock;
     public static Block pedestal;
     public static Block teleposer;
@@ -37,9 +38,11 @@ public class ModBlocks {
         bloodRune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
         ritualController = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
         ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
+        bloodLight = registerBlock(new BlockBloodLight());
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());
+        crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
         initTiles();
@@ -77,6 +80,9 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 6);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(crystal), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(crystal), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodLight));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
