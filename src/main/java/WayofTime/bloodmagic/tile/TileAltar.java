@@ -162,31 +162,24 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
             block = getWorld().getBlockState(new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1));
             block.getBlock().onNeighborBlockChange(getWorld(), new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() - 1), block, block.getBlock());
         }
-        if (getWorld().getTotalWorldTime() % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
-            everySecond();
+        if (getWorld().getTotalWorldTime() % (Math.max(20 - this.accelerationUpgrades, 1)) == 0) {
+            int syphonMax = (int) (20 * this.dislocationMultiplier);
+            int fluidInputted;
+            int fluidOutputted;
+            fluidInputted = Math.min(syphonMax, -this.fluid.amount + capacity);
+            fluidInputted = Math.min(this.fluidInput.amount, fluidInputted);
+            this.fluid.amount += fluidInputted;
+            this.fluidInput.amount -= fluidInputted;
+            fluidOutputted = Math.min(syphonMax, this.bufferCapacity - this.fluidOutput.amount);
+            fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
+            this.fluidOutput.amount += fluidOutputted;
+            this.fluid.amount -= fluidOutputted;
+        }
 
         if (getWorld().getTotalWorldTime() % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
-            everyFiveSeconds();
+            startCycle();
 
-        updat();
-    }
-
-    private void everySecond() {
-        int syphonMax = (int) (20 * this.dislocationMultiplier);
-        int fluidInputted;
-        int fluidOutputted;
-        fluidInputted = Math.min(syphonMax, -this.fluid.amount + capacity);
-        fluidInputted = Math.min(this.fluidInput.amount, fluidInputted);
-        this.fluid.amount += fluidInputted;
-        this.fluidInput.amount -= fluidInputted;
-        fluidOutputted = Math.min(syphonMax, this.bufferCapacity - this.fluidOutput.amount);
-        fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
-        this.fluidOutput.amount += fluidOutputted;
-        this.fluid.amount -= fluidOutputted;
-    }
-
-    private void everyFiveSeconds() {
-        startCycle();
+        updateAltar();
     }
 
     @Override
@@ -224,7 +217,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
         isActive = false;
     }
 
-    private void updat() {
+    private void updateAltar() {
         if (!isActive) {
             if (cooldownAfterCrafting > 0)
                 cooldownAfterCrafting--;
@@ -311,8 +304,6 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     }
 
     private void checkTier() {
-        // TODO - Write checking for tier stuff
-
         EnumAltarTier tier = BloodAltar.getAltarTier(getWorld(), getPos());
         this.altarTier = tier;
 

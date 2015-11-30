@@ -1,11 +1,14 @@
 package WayofTime.bloodmagic.util.handler;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -66,7 +69,7 @@ public class EventHandler {
     public void harvestEvent(PlayerEvent.HarvestCheck event) {
         if (event.block != null && event.block instanceof BlockAltar && event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() instanceof ItemAltarMaker) {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getCurrentEquippedItem().getItem();
-            event.entityPlayer.addChatComponentMessage(new ChatComponentTranslation(StatCollector.translateToLocal("misc.altarMaker.destroy"), altarMaker.destroyAltar(event.entityPlayer)));
+            ChatUtil.sendNoSpamClient(TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.entityPlayer)));
         }
     }
 }

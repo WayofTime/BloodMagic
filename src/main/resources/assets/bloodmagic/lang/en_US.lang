@@ -104,7 +104,7 @@ tile.BloodMagic.bloodLight.name=Blood Light
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s
 tooltip.BloodMagic.currentOwner=Owner: %s
-tooltip.BloodMagic.currentTier=Current tier:
+tooltip.BloodMagic.currentTier=Current tier: %d
 
 tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
 tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
@@ -125,10 +125,10 @@ tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
 tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual
 
-# Miscs
-misc.altarMaker.setTier=Set Tier to: %d
-misc.altarMaker.building=Building a: Tier %d Altar
-misc.altarMaker.destroy=Destroyed a: Tier %d Altar
+# Chat
+chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
+chat.BloodMagic.altarMaker.building=Building a Tier %d Altar
+chat.BloodMagic.altarMaker.destroy=Destroyed a Tier %d Altar
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar

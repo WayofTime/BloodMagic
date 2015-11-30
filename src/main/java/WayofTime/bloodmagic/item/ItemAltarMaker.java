@@ -6,7 +6,10 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -38,45 +41,44 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-        tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.currentTier") + " " + ((stack.getTagCompound() != null ? stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) : 0) + 1));
+        stack = NBTHelper.checkNBT(stack);
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER + 1)));
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-        if (!player.capabilities.isCreativeMode || world.isRemote) return itemStack;
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+        if (!player.capabilities.isCreativeMode || world.isRemote)
+            return stack;
 
-        if (itemStack.getTagCompound() == null) {
-            NBTTagCompound tag = new NBTTagCompound();
-            itemStack.setTagCompound(tag);
-            itemStack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
-        }
+        stack = NBTHelper.checkNBT(stack);
+
         if (player.isSneaking()) {
-            if (itemStack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1) {
-                itemStack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
-                setTierToBuild(EnumAltarTier.values()[itemStack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
-                player.addChatComponentMessage(new ChatComponentTranslation(StatCollector.translateToLocal("misc.altarMaker.setTier"), itemStack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
-                return itemStack;
+            if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1) {
+                stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
+                setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
+                ChatUtil.sendNoSpamClient(TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
+                return stack;
             }
             else {
-                itemStack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, itemStack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
-                setTierToBuild(EnumAltarTier.values()[itemStack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
-                player.addChatComponentMessage(new ChatComponentTranslation(StatCollector.translateToLocal("misc.altarMaker.setTier"), itemStack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
-                return itemStack;
+                stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
+                setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
+                ChatUtil.sendNoSpamClient(TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
+                return stack;
             }
         }
 
         MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
-        if (mop == null || mop.typeOfHit == MovingObjectPosition.MovingObjectType.MISS || mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) return itemStack;
+        if (mop == null || mop.typeOfHit == MovingObjectPosition.MovingObjectType.MISS || mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) return stack;
 
         if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar) {
 
-            player.addChatComponentMessage(new ChatComponentTranslation(StatCollector.translateToLocal("misc.altarMaker.building"), tierToBuild));
+            ChatUtil.sendNoSpamClient(TextHelper.localizeEffect("chat.BloodMagic.altarMaker.building", tierToBuild));
             buildAltar(world, mop.getBlockPos());
 
             world.markBlockForUpdate(mop.getBlockPos());
         }
 
-        return itemStack;
+        return stack;
     }
 
     public void setTierToBuild(EnumAltarTier tierToBuild) {
@@ -87,9 +89,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
 
         if (world.isRemote) return;
 
-        if (tierToBuild == EnumAltarTier.ONE) {
+        if (tierToBuild == EnumAltarTier.ONE)
             return;
-        }
 
         for (AltarComponent altarComponent : tierToBuild.getAltarComponents()) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
@@ -108,7 +109,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
 
     public String destroyAltar(EntityPlayer player) {
         World world = player.worldObj;
-        if (world.isRemote) return "";
+        if (world.isRemote)
+            return "";
 
         MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
         BlockPos pos = mop.getBlockPos();
@@ -125,6 +127,6 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
         }
 
         world.markBlockForUpdate(pos);
-        return "" + altarTier.toInt();
+        return String.valueOf(altarTier.toInt());
     }
 }
