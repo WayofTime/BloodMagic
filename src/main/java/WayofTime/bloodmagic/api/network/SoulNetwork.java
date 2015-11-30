@@ -6,7 +6,6 @@ import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
-import com.sun.istack.internal.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +17,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
+
+import javax.annotation.Nullable;
 
 @Getter
 @Setter
