@@ -46,9 +46,7 @@ public class BloodMagic {
         configDir = new File(event.getModConfigurationDirectory(), "BloodMagic");
         ConfigHandler.init(new File(getConfigDir(), "BloodMagic.cfg"));
 
-        EventHandler eventHandler = new EventHandler();
-        FMLCommonHandler.instance().bus().register(eventHandler);
-        MinecraftForge.EVENT_BUS.register(eventHandler);
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
 
         ModBlocks.init();
         ModItems.init();
