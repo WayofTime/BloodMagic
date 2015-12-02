@@ -330,10 +330,11 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
             this.capacityMultiplier = (float) ((1 * Math.pow(1.10, upgrade.getBetterCapacityCount()) + 0.20 * upgrade.getCapacityCount()));
             this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getDisplacementCount()));
             this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getOrbCapacityCount());
-            this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
-            this.bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
             this.accelerationUpgrades = upgrade.getAccelerationCount();
         }
+
+        this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
+        this.bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
 
         if (this.fluid.amount > this.capacity) this.fluid.amount = this.capacity;
         if (this.fluidOutput.amount > this.bufferCapacity) this.fluidOutput.amount = this.bufferCapacity;
