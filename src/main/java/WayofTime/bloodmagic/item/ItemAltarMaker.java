@@ -15,11 +15,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -58,8 +55,7 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
                 setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
                 ChatUtil.sendNoSpamClient(TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
                 return stack;
-            }
-            else {
+            } else {
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1);
                 setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
                 ChatUtil.sendNoSpamClient(TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
@@ -68,7 +64,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
         }
 
         MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
-        if (mop == null || mop.typeOfHit == MovingObjectPosition.MovingObjectType.MISS || mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) return stack;
+        if (mop == null || mop.typeOfHit == MovingObjectPosition.MovingObjectType.MISS || mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
+            return stack;
 
         if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar) {
 

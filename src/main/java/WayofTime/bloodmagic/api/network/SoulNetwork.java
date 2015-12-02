@@ -94,7 +94,7 @@ public class SoulNetwork extends WorldSavedData {
     /**
      * If the player exists on the server, syphon the given amount of LP from the player's LP network and
      * damage for any remaining LP required.
-     * <p/>
+     *
      * Always returns false on the client side.
      *
      * @return - Whether the action should be performed.

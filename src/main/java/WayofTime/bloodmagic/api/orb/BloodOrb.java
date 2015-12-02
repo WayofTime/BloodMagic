@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 
 /**
  * Base object for all Blood Orbs. Makes Orb creation quite a bit easier.
- * <p/>
+ *
  * Just create a new BloodOrb instance then register it with {@link OrbRegistry#registerOrb(BloodOrb)}
  * This will allow the use of just one item ID for all orbs. If an addon dev needs more control over the intricacies
  * of their orb (custom right clicking, renderers, etc), they can just create their own item as normal.

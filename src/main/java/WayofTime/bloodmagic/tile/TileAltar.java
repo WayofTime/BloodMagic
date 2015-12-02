@@ -321,8 +321,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
             this.dislocationMultiplier = 1;
             this.accelerationUpgrades = 0;
             return;
-        }
-        else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null) {
+        } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null) {
             this.isUpgraded = true;
             this.consumptionMultiplier = (float) (0.20 * upgrade.getSpeedCount());
             this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getEfficiencyCount());

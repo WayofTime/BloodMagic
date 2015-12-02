@@ -21,14 +21,14 @@ public class BloodMagicPlugin implements IModPlugin {
     @Override
     public Iterable<? extends IRecipeCategory> getRecipeCategories() {
         return Arrays.asList(
-            new AltarRecipeCategory()
+                new AltarRecipeCategory()
         );
     }
 
     @Override
     public Iterable<? extends IRecipeHandler> getRecipeHandlers() {
         return Arrays.asList(
-            new AltarRecipeHandler()
+                new AltarRecipeHandler()
         );
     }
 

@@ -27,10 +27,10 @@ import java.util.List;
 
 /**
  * Creates a block that has multiple meta-based states.
- * <p/>
+ *
  * These states will be named after the given string array. Somewhere along the way, each
  * value is {@code toLowerCase()}'ed, so the blockstate JSON needs all values to be lowercase.
- * <p/>
+ *
  * For {@link net.minecraft.tileentity.TileEntity}'s, use {@link BlockStringContainer}.
  */
 @Getter

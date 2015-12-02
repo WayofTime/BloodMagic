@@ -134,7 +134,7 @@ public class BloodAltar {
 
         if (altarComponent.getBlockStack().getBlock() == ModBlocks.crystal)
             if (blockStack.getBlock() instanceof BlockCrystal || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.CRYSTAL)))
-            return true;
+                return true;
 
         if (altarComponent.getBlockStack().getBlock() == Blocks.glowstone)
             if (blockStack.getBlock() instanceof BlockGlowstone || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.GLOWSTONE)))

@@ -5,7 +5,9 @@ import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class AltarRecipeMaker {
 

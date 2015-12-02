@@ -42,12 +42,12 @@ public class RitualHelper {
     /**
      * Adds your Ritual to the {@link RitualRegistry#enabledRituals} Map.
      * This is used to determine whether your effect is enabled or not.
-     * <p/>
+     *
      * The config option will be created as {@code B:ClassName=true} with a comment of
      * {@code Enables the ClassName ritual}.
-     * <p/>
+     *
      * Use {@link #}
-     * <p/>
+     *
      * Should be safe to modify at any point.
      *
      * @param config      - Your mod's Forge {@link Configuration} object.

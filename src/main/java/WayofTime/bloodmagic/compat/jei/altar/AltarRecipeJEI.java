@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.compat.jei.altar;
 
 import WayofTime.bloodmagic.compat.jei.BloodMagicRecipeWrapper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
@@ -25,7 +24,7 @@ public class AltarRecipeJEI extends BloodMagicRecipeWrapper {
         this.input = input;
         this.output = output;
 
-        this.infoString = new String[]{ TextHelper.localize("jei.BloodMagic.recipe.requiredTier", tier), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP) };
+        this.infoString = new String[]{TextHelper.localize("jei.BloodMagic.recipe.requiredTier", tier), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP)};
     }
 
     @Override

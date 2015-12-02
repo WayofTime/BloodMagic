@@ -173,7 +173,7 @@ public class ChatUtil {
     /**
      * Sends a chat message to the client, deleting past messages also sent via
      * this method.
-     * <p/>
+     *
      * Credit to RWTema for the idea
      *
      * @param player The player to send the chat message to
@@ -186,7 +186,7 @@ public class ChatUtil {
 
     /**
      * @author tterrag1098
-     *         <p/>
+     *
      *         Ripped from EnderCore (and slightly altered)
      */
     public static class PacketNoSpamChat implements IMessage {

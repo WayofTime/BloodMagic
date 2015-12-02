@@ -14,13 +14,13 @@ import net.minecraftforge.client.model.ModelLoader;
 
 /**
  * @author <a href="https://github.com/TehNut">TehNut</a>
- *         <p/>
+ *
  *         The goal of this class is to make registering the inventory renders
  *         for your Items/Blocks a much simpler and easier process.
- *         <p/>
+ *
  *         You must call this at the post initialization stage on
  *         the clientside only.
- *         <p/>
+ *
  *         If you pass a Block through here that uses the default
  *         ItemBlock, you should specify a custom name.
  */

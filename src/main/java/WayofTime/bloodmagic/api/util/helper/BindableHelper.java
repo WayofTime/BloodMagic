@@ -25,9 +25,9 @@ public class BindableHelper {
 
     /**
      * Bind an item to a username.
-     * <p/>
+     *
      * Requires the Item contained in the ItemStack to be an instanceof {@link IBindable}
-     * <p/>
+     *
      * Fires {@link ItemBindEvent}.
      *
      * @param stack     - The ItemStack to bind

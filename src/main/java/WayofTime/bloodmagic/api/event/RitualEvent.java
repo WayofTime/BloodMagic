@@ -4,8 +4,11 @@ import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -23,8 +26,8 @@ public class RitualEvent extends Event {
 
     /**
      * This event is called when a ritual is activated. If cancelled, it will not activate.
-     * <p/>
-     * {@link WayofTime.bloodmagic.api.util.helper.RitualHelper#activate(IMasterRitualStone, Ritual, EntityPlayer)}
+     *
+     * {@link TileMasterRitualStone#activateRitual(ItemStack, EntityPlayer)}
      */
     @Cancelable
     public static class RitualActivatedEvent extends RitualEvent {
@@ -43,8 +46,8 @@ public class RitualEvent extends Event {
 
     /**
      * This event is called when a Ritual effect is performed. If cancelled, the effect will not happen.
-     * <p/>
-     * {@link WayofTime.bloodmagic.api.util.helper.RitualHelper#perform(IMasterRitualStone, Ritual)}
+     *
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#performRitual(World, BlockPos, Ritual)}
      */
     @Cancelable
     public static class RitualRunEvent extends RitualEvent {
@@ -56,8 +59,8 @@ public class RitualEvent extends Event {
 
     /**
      * This event is called when a Ritual is stopped by a {@link Ritual.BreakType}.
-     * <p/>
-     * {@link WayofTime.bloodmagic.api.util.helper.RitualHelper#stop(IMasterRitualStone, Ritual, Ritual.BreakType)}
+     *
+     * {@link TileMasterRitualStone#stopRitual()}
      */
     public static class RitualStopEvent extends RitualEvent {
 

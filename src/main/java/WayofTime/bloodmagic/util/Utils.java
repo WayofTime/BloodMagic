@@ -22,7 +22,7 @@ public class Utils {
     /**
      * Used for inserting an ItemStack with a stacksize of 1 to a tile's inventory at slot 0.
      * Returns {@code true} if the ItemStack is inserted, {@code false} otherwise
-     * <p/>
+     *
      * EG: Block Altar
      *
      * @param tile   - The {@link TileInventory} to input the item to
