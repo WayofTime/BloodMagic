@@ -73,7 +73,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
         boolean shouldSyphon = player.getHealth() / player.getMaxHealth() > HEALTHREQ && getStoredLP(stack) < CAPACITY;
 
         if (shouldSyphon & world.getTotalWorldTime() % INTERVAL == 0) {
-            NetworkHelper.hurtPlayer(player, 1.0F);
+            NetworkHelper.getSoulNetwork(player.getName(), world).hurtPlayer(1.0F);
             addLP(stack, CONVERSION);
         }
     }
