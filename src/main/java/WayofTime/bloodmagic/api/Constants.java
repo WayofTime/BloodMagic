@@ -60,4 +60,8 @@ public class Constants {
         public static final String VERSION = "@VERSION@";
         public static final String DEPEND = "";
     }
+
+    public static class Compat {
+        public static final String JEI_CATEGORY_ALTAR = Mod.MODID + ":altar";
+    }
 }

@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
-import mezz.jei.api.recipe.IRecipeCategory;
+import WayofTime.bloodmagic.api.Constants;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
@@ -16,8 +16,8 @@ public class AltarRecipeHandler implements IRecipeHandler<AltarRecipeJEI> {
 
     @Nonnull
     @Override
-    public Class<? extends IRecipeCategory> getRecipeCategoryClass() {
-        return AltarRecipeCategory.class;
+    public String getRecipeCategoryUid() {
+        return Constants.Compat.JEI_CATEGORY_ALTAR;
     }
 
     @Nonnull

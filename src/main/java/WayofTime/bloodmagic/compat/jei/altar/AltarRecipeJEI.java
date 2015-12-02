@@ -28,6 +28,11 @@ public class AltarRecipeJEI extends BloodMagicRecipeWrapper {
     }
 
     @Override
+    public boolean usesOreDictionaryComparison() {
+        return false;
+    }
+
+    @Override
     public List getInputs() {
         return Collections.singletonList(input);
     }

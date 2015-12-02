@@ -4,8 +4,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.JEIManager;
 import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IGuiFluidTanks;
-import mezz.jei.api.gui.IGuiItemStacks;
+import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +23,12 @@ public class AltarRecipeCategory implements IRecipeCategory {
 
     @Nonnull
     @Override
+    public String getUid() {
+        return Constants.Compat.JEI_CATEGORY_ALTAR;
+    }
+
+    @Nonnull
+    @Override
     public String getTitle() {
         return localizedName;
     }
@@ -35,18 +40,18 @@ public class AltarRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void init(@Nonnull IGuiItemStacks guiItemStacks, @Nonnull IGuiFluidTanks guiFluidTanks) {
-        guiItemStacks.init(INPUT_SLOT, 31, 0);
-        guiItemStacks.init(OUTPUT_SLOT, 125, 30);
+    public void init(@Nonnull IRecipeLayout recipeLayout) {
+        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
+        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void setRecipe(@Nonnull IGuiItemStacks guiItemStacks, @Nonnull IGuiFluidTanks guiFluidTanks, @Nonnull IRecipeWrapper recipeWrapper) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
         if (recipeWrapper instanceof AltarRecipeJEI) {
             AltarRecipeJEI altarRecipeWrapper = (AltarRecipeJEI) recipeWrapper;
-            guiItemStacks.set(INPUT_SLOT, altarRecipeWrapper.getInputs());
-            guiItemStacks.set(OUTPUT_SLOT, altarRecipeWrapper.getOutputs());
+            recipeLayout.getItemStacks().set(INPUT_SLOT, altarRecipeWrapper.getInputs());
+            recipeLayout.getItemStacks().set(OUTPUT_SLOT, altarRecipeWrapper.getOutputs());
         }
     }
 }
