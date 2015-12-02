@@ -5,15 +5,15 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
         classpath 'org.ajoberstar:gradle-git:0.10.1'
     }
 }
 
 plugins {
-    id 'com.matthewprenger.cursegradle' version '1.0.1'
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-    id 'net.franz-becker.gradle-lombok' version '1.5'
+	id "net.minecraftforge.gradle.forge" version "2.0.2"
+    id 'com.matthewprenger.cursegradle' version '1.0.4'
+	id 'net.franz-becker.gradle-lombok' version '1.5'
 }
 
 apply plugin: 'maven-publish'
@@ -25,9 +25,8 @@ if (System.getenv('BUILD_NUMBER') != null)
 
 group = package_group
 archivesBaseName = mod_name
-version = "${mc_version}-${mod_version}-${build_number}"
+version = "${mc_version}-${mod_version}-${build_number}-ss"
 
-// Ignore this error. It'll work just fine when building.
 import org.ajoberstar.grgit.*
 
 ext.repo = Grgit.open(project.file('.'))
@@ -47,9 +46,11 @@ dependencies {
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
+	
+	makeObfSourceJar = false // Until #295 gets merged into FG2.1
 
     replace "@VERSION@", project.version
-    replaceIn "BloodMagic.java"
+    replaceIn "Constants.java"
     replaceIn "BloodMagicAPI.java"
 
     if (project.hasProperty('mappings_version'))
@@ -73,6 +74,19 @@ processResources {
     }
 }
 
+lombok {
+    version = "1.16.6"
+    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
+}
+
+import net.franz_becker.gradle.lombok.task.DelombokTask
+
+task delombok(type: DelombokTask) {
+    args("src/main/java", "-d", "build/sources/delomboked/java")
+}
+
+tasks.eclipse.dependsOn installLombok
+
 jar {
     classifier = ''
     manifest.mainAttributes(
@@ -84,19 +98,13 @@ jar {
     )
 }
 
-lombok {
-    version = "1.16.6"
-    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
+// API jar
+task apiJar(type: Jar) {
+    from sourceSets.main.allSource
+    from sourceSets.main.output
+	include 'WayofTime/bloodmagic/api/**/*'
+    classifier = 'api'
 }
-
-// Ignore this one, too
-import net.franz_becker.gradle.lombok.task.DelombokTask
-
-task delombok(type: DelombokTask) {
-    args("src/main/java", "-d", "build/sources/delomboked/java")
-}
-
-tasks.eclipse.dependsOn installLombok
 
 // Javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -104,18 +112,12 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
 }
 
-// Deobfuscated jar
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-}
-
 javadoc {
     source = projectDir.path + "/build/sources/delomboked/java"
 }
 
 tasks.javadoc.dependsOn delombok
-tasks.build.dependsOn sourceJar, javadocJar
+tasks.build.dependsOn javadoc, javadocJar, apiJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
@@ -128,6 +130,7 @@ publishing {
             artifact jar
             artifact sourceJar
             artifact javadocJar
+            artifact apiJar
         }
     }
     repositories {
@@ -150,5 +153,6 @@ curseforge {
 
         addArtifact sourceJar
         addArtifact javadocJar
+        addArtifact apiJar
     }
 }
