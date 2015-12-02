@@ -14,7 +14,7 @@ public class ModCompatibility {
         compatibilities.add(new CompatibilityJustEnoughItems());
 
         for (ICompatibility compat : compatibilities) {
-            if (Loader.isModLoaded(compat.getModId()))
+            if (compat.enableCompat() && Loader.isModLoaded(compat.getModId()))
                 compat.loadCompatibility();
         }
     }
