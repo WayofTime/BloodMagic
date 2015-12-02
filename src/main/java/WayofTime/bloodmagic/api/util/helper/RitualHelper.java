@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.util.helper;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import net.minecraftforge.common.config.Configuration;
-import sun.misc.Launcher;
 
 import java.io.File;
 import java.net.URL;
@@ -61,7 +61,7 @@ public class RitualHelper {
             name = "/" + name;
 
         name = name.replace('.', '/');
-        URL url = Launcher.class.getResource(name);
+        URL url = BloodMagic.class.getResource(name);
         File directory = new File(url.getFile());
 
         if (directory.exists()) {
