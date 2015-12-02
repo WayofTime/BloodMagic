@@ -28,6 +28,8 @@ public class ModItems {
     public static Item bucketEssence;
 
     public static Item activationCrystal;
+    public static Item slate;
+    public static Item inscriptionTool;
 
     public static Item sacrificialDagger;
     public static Item packSelfSacrifice;
@@ -65,6 +67,9 @@ public class ModItems {
         bucketEssence = registerItem(new ItemBucketEssence());
 
         activationCrystal = registerItem(new ItemActivationCrystal());
+        slate = registerItem(new ItemSlate());
+        inscriptionTool = registerItem(new ItemInscriptionTool());
+        BloodMagicAPI.setScribeItem(inscriptionTool);
 
         sacrificialDagger = registerItem(new ItemSacrificialDagger());
         packSacrifice = registerItem(new ItemPackSacrifice());
@@ -100,6 +105,18 @@ public class ModItems {
         renderHelper.itemRender(activationCrystal, 0);
         renderHelper.itemRender(activationCrystal, 1);
         renderHelper.itemRender(activationCrystal, 2, "ItemActivationCrystal0");
+
+        renderHelper.itemRender(slate, 0);
+        renderHelper.itemRender(slate, 1);
+        renderHelper.itemRender(slate, 2);
+        renderHelper.itemRender(slate, 3);
+
+        renderHelper.itemRender(inscriptionTool, 1);
+        renderHelper.itemRender(inscriptionTool, 2);
+        renderHelper.itemRender(inscriptionTool, 3);
+        renderHelper.itemRender(inscriptionTool, 4);
+        renderHelper.itemRender(inscriptionTool, 5);
+        renderHelper.itemRender(inscriptionTool, 6);
 
         renderHelper.itemRender(sacrificialDagger, 0);
         renderHelper.itemRender(sacrificialDagger, 1);

@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.api.ritual;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
@@ -21,6 +23,10 @@ public enum EnumRuneType implements IStringSerializable {
         return values()[meta];
     }
 
+    public ItemStack getScribeStack() {
+        return new ItemStack(BloodMagicAPI.getScribeItem(), 1, ordinal());
+    }
+
     @Override
     public String toString() {
         return name().toLowerCase(Locale.ENGLISH);
@@ -30,4 +36,5 @@ public enum EnumRuneType implements IStringSerializable {
     public String getName() {
         return this.toString();
     }
+
 }

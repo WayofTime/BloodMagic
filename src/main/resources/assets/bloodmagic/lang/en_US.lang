@@ -13,12 +13,12 @@ item.BloodMagic.pack.sacrifice.name=Coat of Arms
 
 item.BloodMagic.bucket.lifeEssence.name=Bucket of Life
 
-item.BloodMagic.scribe.water.name=Water Scribing Tools
-item.BloodMagic.scribe.fire.name=Fire Scribing Tools
-item.BloodMagic.scribe.earth.name=Earth Scribing Tools
-item.BloodMagic.scribe.air.name=Air Scribing Tools
-item.BloodMagic.scribe.dusk.name=Dusk Scribing Tools
-item.BloodMagic.scribe.dawn.name=Dawn Scribing Tools
+item.BloodMagic.scribe.water.name=Elemental Inscription Tool: Water
+item.BloodMagic.scribe.fire.name=Elemental Inscription Tool: Fire
+item.BloodMagic.scribe.earth.name=Elemental Inscription Tool: Earth
+item.BloodMagic.scribe.air.name=Elemental Inscription Tool: Air
+item.BloodMagic.scribe.dusk.name=Elemental Inscription Tool: Dusk
+item.BloodMagic.scribe.dawn.name=Elemental Inscription Tool: Dawn
 
 item.BloodMagic.focus.weak.name=Teleposition Focus
 item.BloodMagic.focus.enhanced.name=Enhanced Teleposition Focus
@@ -118,6 +118,8 @@ tooltip.BloodMagic.sigil.lava.desc=&oHOT! DO NOT EAT
 tooltip.BloodMagic.sigil.void.desc=&oBetter than a Swiffer®!
 
 tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
+tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar
+tooltip.BloodMagic.inscriber.desc=The writing is on the wall...
 
 tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
 tooltip.BloodMagic.pack.sacrifice.desc=Description

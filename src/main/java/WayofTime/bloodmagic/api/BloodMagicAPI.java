@@ -9,8 +9,7 @@ import net.minecraftforge.fluids.Fluid;
 
 public class BloodMagicAPI {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private static boolean loggingEnabled;
 
     @Getter
@@ -19,11 +18,12 @@ public class BloodMagicAPI {
     @Getter
     private static DamageSource damageSource = new DamageSourceBloodMagic();
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private static Item orbItem;
+    @Getter @Setter
+    private static Item scribeItem;
 
-    @Getter
-    @Setter
+
+    @Getter @Setter
     private static Fluid lifeEssence;
 }
