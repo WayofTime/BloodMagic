@@ -1,12 +1,15 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +26,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemSacrificialDagger extends Item {
@@ -52,28 +56,12 @@ public class ItemSacrificialDagger extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-//        if (AlchemicalWizardry.wimpySettings)
-        {
-//            par3List.add(StatCollector.translateToLocal("tooltip.sacrificialdagger.desc1"));
-        }
-//        else
-        {
-            par3List.add(StatCollector.translateToLocal("tooltip.sacrificialdagger.desc2"));
-            par3List.add(StatCollector.translateToLocal("tooltip.sacrificialdagger.desc3"));
-        }
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
+        list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sacrificialDagger.desc"))));
     }
 
-    /**
-     * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
-     */
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
-//        if(itemInUseCount < 32)
-//        {
-//        	return;
-//        }
-
         PlayerSacrificeHelper.sacrificePlayerHealth(player);
     }
 
@@ -82,9 +70,6 @@ public class ItemSacrificialDagger extends Item {
         return 72000;
     }
 
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.BOW;
@@ -92,6 +77,10 @@ public class ItemSacrificialDagger extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+
+        if (PlayerHelper.isFakePlayer(player))
+            return stack;
+
         if (this.canUseForSacrifice(stack)) {
             player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
             return stack;
@@ -99,21 +88,16 @@ public class ItemSacrificialDagger extends Item {
 
         if (!player.capabilities.isCreativeMode) {
             SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2);
-            if (MinecraftForge.EVENT_BUS.post(evt)) {
+            if (MinecraftForge.EVENT_BUS.post(evt))
                 return stack;
-            }
 
             if (evt.shouldDrainHealth) {
-                player.setHealth(player.getHealth() - 2);
+                player.hurtResistantTime = 0;
+                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
             }
 
-            if (!evt.shouldFillAltar) {
+            if (!evt.shouldFillAltar)
                 return stack;
-            }
-        }
-
-        if (PlayerHelper.isFakePlayer(player)) {
-            return stack;
         }
 
         double posX = player.posX;
@@ -125,37 +109,24 @@ public class ItemSacrificialDagger extends Item {
         float f2 = f * f * 0.7F - 0.5F;
         float f3 = f * f * 0.6F - 0.7F;
 
-        for (int l = 0; l < 8; ++l) {
+        for (int l = 0; l < 8; ++l)
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
-        }
 
-        if (!world.isRemote && PlayerHelper.isFakePlayer(player)) {
+        if (!world.isRemote && PlayerHelper.isFakePlayer(player))
             return stack;
-        }
 
-//        if (player.isPotionActive(AlchemicalWizardry.customPotionSoulFray))
-        {
-//            findAndFillAltar(world, player, 20);
-        }
-//        else
-        {
-            findAndFillAltar(world, player, 200);
-        }
-
-        if (player.getHealth() <= 0.001f) {
-            player.onDeath(new DamageSourceBloodMagic());
-        }
+        // TODO - Check if SoulFray is active
+        findAndFillAltar(world, player, 200);
 
         return stack;
     }
 
-    public void findAndFillAltar(World world, EntityPlayer player, int amount) {
+    private void findAndFillAltar(World world, EntityPlayer player, int amount) {
         BlockPos pos = player.getPosition();
         IBloodAltar altarEntity = getAltar(world, pos);
 
-        if (altarEntity == null) {
+        if (altarEntity == null)
             return;
-        }
 
         altarEntity.sacrificialDaggerCall(amount, false);
         altarEntity.startCycle();
@@ -182,18 +153,8 @@ public class ItemSacrificialDagger extends Item {
 
     @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
-        if (!world.isRemote && entity instanceof EntityPlayer) {
+        if (!world.isRemote && entity instanceof EntityPlayer)
             this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity));
-        }
-    }
-
-    @Override
-    public String getItemStackDisplayName(ItemStack stack) {
-//        if (AlchemicalWizardry.wimpySettings)
-        {
-//            return "Sacrificial Orb";
-        }
-        return super.getItemStackDisplayName(stack);
     }
 
     public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player) {
@@ -201,19 +162,13 @@ public class ItemSacrificialDagger extends Item {
     }
 
     public boolean canUseForSacrifice(ItemStack stack) {
-        NBTTagCompound tag = stack.getTagCompound();
-
-        return tag != null && tag.getBoolean("sacrifice");
+        stack = NBTHelper.checkNBT(stack);
+        return stack.getTagCompound().getBoolean(Constants.NBT.SACRIFICE);
     }
 
     public void setUseForSacrifice(ItemStack stack, boolean sacrifice) {
-        NBTTagCompound tag = stack.getTagCompound();
-        if (tag == null) {
-            tag = new NBTTagCompound();
-            stack.setTagCompound(tag);
-        }
-
-        tag.setBoolean("sacrifice", sacrifice);
+        stack = NBTHelper.checkNBT(stack);
+        stack.getTagCompound().setBoolean(Constants.NBT.SACRIFICE, sacrifice);
     }
 
     @Override

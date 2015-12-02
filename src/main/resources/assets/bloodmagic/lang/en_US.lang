@@ -117,6 +117,8 @@ tooltip.BloodMagic.sigil.water.desc=&oInfinite water, anyone?
 tooltip.BloodMagic.sigil.lava.desc=&oHOT! DO NOT EAT
 tooltip.BloodMagic.sigil.void.desc=&oBetter than a Swiffer®!
 
+tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
+
 tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
 tooltip.BloodMagic.pack.sacrifice.desc=Description
 tooltip.BloodMagic.pack.stored=Stored: %d LP
@@ -129,6 +131,7 @@ tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritu
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
 chat.BloodMagic.altarMaker.building=Building a Tier %d Altar
 chat.BloodMagic.altarMaker.destroy=Destroyed a Tier %d Altar
+chat.BloodMagic.damageSource=%s's soul became too weak
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar
