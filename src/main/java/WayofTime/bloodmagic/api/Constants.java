@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.api;
 
+import net.minecraft.potion.Potion;
+
 import java.util.Locale;
 
 public class Constants {
@@ -63,5 +65,9 @@ public class Constants {
 
     public static class Compat {
         public static final String JEI_CATEGORY_ALTAR = Mod.MODID + ":altar";
+    }
+
+    public static class Misc {
+        public static final int POTION_ARRAY_SIZE = Potion.potionTypes.length;
     }
 }
