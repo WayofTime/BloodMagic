@@ -17,6 +17,14 @@ public class NetworkHelper {
 
     // Get
 
+    /**
+     * Gets the SoulNetwork for the player.
+     *
+     * @param ownerName - The name of the SoulNetwork owner
+     * @param world     - The world
+     *
+     * @return - The SoulNetwork for the given name.
+     */
     public static SoulNetwork getSoulNetwork(String ownerName, World world) {
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, ownerName);
 
@@ -28,6 +36,13 @@ public class NetworkHelper {
         return network;
     }
 
+    /**
+     * Gets the current orb tier of the SoulNetwork.
+     *
+     * @param soulNetwork - SoulNetwork to get the tier of.
+     *
+     * @return - The Orb tier of the given SoulNetwork
+     */
     public static int getCurrentMaxOrb(SoulNetwork soulNetwork) {
         return soulNetwork.getOrbTier();
     }
@@ -35,7 +50,12 @@ public class NetworkHelper {
     // Syphon
 
     /**
+     * Syphons from the player and damages them if there was not enough stored LP.
+     *
      * Handles null-checking the player for you.
+     *
+     * @param soulNetwork - SoulNetwork to syphon from
+     * @param toSyphon    - Amount of LP to syphon
      *
      * @return - Whether the action should be performed.
      */
@@ -48,21 +68,39 @@ public class NetworkHelper {
         return soulNetwork.syphonAndDamage(toSyphon);
     }
 
-    public static boolean syphonFromContainer(ItemStack stack, SoulNetwork soulNetwork, int toSyphon) {
+    /**
+     * Syphons a player from within a container.
+     *
+     * @param stack    - ItemStack in the Container.
+     * @param world    - The world the Container is in
+     * @param toSyphon - Amount of LP to syphon
+     *
+     * @return - If the syphon was successful.
+     */
+    public static boolean syphonFromContainer(ItemStack stack, World world, int toSyphon) {
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
 
         if (Strings.isNullOrEmpty(ownerName))
             return false;
 
+        SoulNetwork network = getSoulNetwork(ownerName, world);
+
         SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, ownerName, toSyphon);
 
-        return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && soulNetwork.syphon(event.syphon) >= toSyphon;
+        return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && network.syphon(event.syphon) >= toSyphon;
     }
 
     // Set
 
-    public static void setMaxOrbToMax(SoulNetwork soulNetwork, int maxOrb) {
+    /**
+     * Sets the orb tier of the SoulNetwork to the given orb. Will not set
+     * if the given tier is lower than the current tier.
+     *
+     * @param soulNetwork - SoulNetwork to set the orb tier of
+     * @param maxOrb      - Tier of orb to set to
+     */
+    public static void setMaxOrb(SoulNetwork soulNetwork, int maxOrb) {
         soulNetwork.setOrbTier(Math.max(maxOrb, soulNetwork.getOrbTier()));
         soulNetwork.markDirty();
     }
