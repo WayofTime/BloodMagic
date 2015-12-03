@@ -6,15 +6,35 @@ import java.util.Map.Entry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.api.livingArmour.StatTrackerRegistry;
 
 public class LivingArmour {
 
 	public HashMap<String, StatTracker> trackerMap = new HashMap();
+	public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap();
 
+	/**
+	 * Ticks the upgrades and stat trackers, passing in the world and player as
+	 * well as the LivingArmour
+	 * 
+	 * @param world
+	 * @param player
+	 */
 	public void onTick(World world, EntityPlayer player) {
+		for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
+			LivingArmourUpgrade upgrade = entry.getValue();
+
+			if (upgrade == null) {
+				continue;
+			}
+
+			upgrade.onTick(world, player, this);
+		}
+
 		for (Entry<String, StatTracker> entry : trackerMap.entrySet()) {
 			StatTracker tracker = entry.getValue();
 
@@ -27,7 +47,18 @@ public class LivingArmour {
 	}
 
 	public void readFromNBT(NBTTagCompound tag) {
-		for (Class<? extends StatTracker> clazz : StatTrackerRegistry.trackers) {
+		NBTTagList upgradeTags = tag.getTagList("upgrades", 10);
+		if (upgradeTags != null) {
+			for (int i = 0; i < upgradeTags.tagCount(); i++) {
+				NBTTagCompound upgradeTag = upgradeTags.getCompoundTagAt(i);
+				String key = upgradeTag.getString("key");
+				int level = upgradeTag.getInteger("level");
+				NBTTagCompound nbtTag = upgradeTag.getCompoundTag("upgrade");
+				LivingArmourHandler.generateUpgradeFromKey(key, level, nbtTag);
+			}
+		}
+
+		for (Class<? extends StatTracker> clazz : LivingArmourHandler.trackers) {
 			try {
 				Constructor<?> ctor = clazz.getConstructor();
 				Object obj = ctor.newInstance();
@@ -48,6 +79,24 @@ public class LivingArmour {
 	}
 
 	public void writeToNBT(NBTTagCompound tag, boolean forceWrite) {
+		NBTTagList tags = new NBTTagList();
+
+		for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet()) {
+			NBTTagCompound upgradeTag = new NBTTagCompound();
+
+			LivingArmourUpgrade upgrade = entry.getValue();
+			NBTTagCompound nbtTag = new NBTTagCompound();
+			upgrade.writeToNBT(nbtTag);
+
+			upgradeTag.setString("key", upgrade.getUniqueIdentifier());
+			upgradeTag.setInteger("level", upgrade.getUpgradeLevel());
+			upgradeTag.setTag("upgrade", nbtTag);
+
+			tags.appendTag(upgradeTag);
+		}
+
+		tag.setTag("upgrades", tags);
+
 		for (Entry<String, StatTracker> entry : trackerMap.entrySet()) {
 			StatTracker tracker = entry.getValue();
 
