@@ -3,6 +3,9 @@ package WayofTime.bloodmagic.compat.jei;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeMaker;
+import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeCategory;
+import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeHandler;
+import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
@@ -24,7 +27,8 @@ public class BloodMagicPlugin implements IModPlugin {
     @Nonnull
     public Iterable<? extends IRecipeCategory> getRecipeCategories() {
         return Arrays.asList(
-                new AltarRecipeCategory()
+                new AltarRecipeCategory(),
+                new BindingRecipeCategory()
         );
     }
 
@@ -32,7 +36,8 @@ public class BloodMagicPlugin implements IModPlugin {
     @Nonnull
     public Iterable<? extends IRecipeHandler> getRecipeHandlers() {
         return Arrays.asList(
-                new AltarRecipeHandler()
+                new AltarRecipeHandler(),
+                new BindingRecipeHandler()
         );
     }
 
@@ -48,7 +53,8 @@ public class BloodMagicPlugin implements IModPlugin {
     public Iterable<Object> getRecipes() {
         List<Object> recipes = new ArrayList<Object>();
 
-        recipes.addAll(AltarRecipeMaker.getAltarRecipes());
+        recipes.addAll(AltarRecipeMaker.getRecipes());
+        recipes.addAll(BindingRecipeMaker.getRecipes());
 
         return recipes;
     }

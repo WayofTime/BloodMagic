@@ -65,6 +65,7 @@ public class Constants {
 
     public static class Compat {
         public static final String JEI_CATEGORY_ALTAR = Mod.MODID + ":altar";
+        public static final String JEI_CATEGORY_BINDING = Mod.MODID + ":binding";
     }
 
     public static class Misc {

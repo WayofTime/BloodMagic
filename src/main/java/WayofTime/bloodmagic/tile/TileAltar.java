@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.tile;
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.AltarRecipe;
 import WayofTime.bloodmagic.api.altar.AltarUpgrade;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
@@ -199,7 +198,7 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
             // Do recipes
             for (ItemStack itemStack : AltarRecipeRegistry.getRecipes().keySet()) {
                 if (getStackInSlot(0).getIsItemStackEqual(AltarRecipeRegistry.getRecipes().get(itemStack).getInput())) {
-                    AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(itemStack);
+                    AltarRecipeRegistry.AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(itemStack);
 
                     if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
                         this.isActive = true;
