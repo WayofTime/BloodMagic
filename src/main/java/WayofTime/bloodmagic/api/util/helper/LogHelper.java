@@ -12,23 +12,23 @@ public class LogHelper {
         this.logger = LogManager.getLogger(logger);
     }
 
-    public void info(Object info) {
+    public void info(String info, Object ... format) {
         if (BloodMagicAPI.isLoggingEnabled())
-            logger.info(info);
+            logger.info(info, format);
     }
 
-    public void error(Object error) {
+    public void error(String error, Object ... format) {
         if (BloodMagicAPI.isLoggingEnabled())
-            logger.info(error);
+            logger.info(error, format);
     }
 
-    public void debug(Object debug) {
+    public void debug(String debug, Object ... format) {
         if (BloodMagicAPI.isLoggingEnabled())
-            logger.info(debug);
+            logger.info(debug, format);
     }
 
-    public void fatal(Object fatal) {
-        logger.fatal(fatal);
+    public void fatal(String fatal, Object ... format) {
+        logger.fatal(fatal, format);
     }
 
     public Logger getLogger() {

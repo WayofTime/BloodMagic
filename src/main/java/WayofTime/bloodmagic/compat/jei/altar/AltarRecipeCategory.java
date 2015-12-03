@@ -7,6 +7,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -40,6 +41,14 @@ public class AltarRecipeCategory implements IRecipeCategory {
     }
 
     @Override
+    public void drawExtras(Minecraft minecraft) {
+
+    }
+
+    @Override
+    public void drawAnimations(Minecraft minecraft) {
+    }
+    
     public void init(@Nonnull IRecipeLayout recipeLayout) {
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
@@ -48,6 +57,10 @@ public class AltarRecipeCategory implements IRecipeCategory {
     @Override
     @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+
+        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
+        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
+
         if (recipeWrapper instanceof AltarRecipeJEI) {
             AltarRecipeJEI altarRecipeWrapper = (AltarRecipeJEI) recipeWrapper;
             recipeLayout.getItemStacks().set(INPUT_SLOT, altarRecipeWrapper.getInputs());

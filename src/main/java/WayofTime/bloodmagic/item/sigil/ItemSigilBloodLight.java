@@ -1,0 +1,60 @@
+package WayofTime.bloodmagic.item.sigil;
+
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+import org.lwjgl.Sys;
+
+public class ItemSigilBloodLight extends ItemSigilBase {
+
+    public ItemSigilBloodLight() {
+        super("bloodLight", 10);
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getEnergyUsed() * 5) && !world.isRemote)
+            world.spawnEntityInWorld(new EntityBloodLight(world, player));
+
+        return stack;
+    }
+
+    @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) return false;
+
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getEnergyUsed())) {
+            BlockPos newPos = blockPos.offset(side);
+
+            if (world.isAirBlock(newPos)) {
+                world.setBlockState(newPos, ModBlocks.bloodLight.getDefaultState());
+            }
+
+//            if (side == EnumFacing.DOWN && world.isAirBlock(newPos))
+//                world.setBlockState(blockPos.add(0, -1, 0), ModBlocks.bloodLight.getDefaultState());
+//
+//            if (side == EnumFacing.UP && world.isAirBlock(newPos))
+//                world.setBlockState(blockPos.add(0, 1, 0), ModBlocks.bloodLight.getDefaultState());
+//
+//            if (side == EnumFacing.NORTH && world.isAirBlock(newPos))
+//                world.setBlockState(blockPos.add(0, 0, -1), ModBlocks.bloodLight.getDefaultState());
+//
+//            if (side == EnumFacing.SOUTH && world.isAirBlock(newPos))
+//                world.setBlockState(blockPos.add(0, 0, 1), ModBlocks.bloodLight.getDefaultState());
+//
+//            if (side == EnumFacing.WEST && world.isAirBlock(newPos))
+//                world.setBlockState(blockPos.add(-1, 0, 0), ModBlocks.bloodLight.getDefaultState());
+//
+//            if (side == EnumFacing.EAST && world.isAirBlock(newPos))
+//                world.setBlockState(blockPos.add(1, 0, 0), ModBlocks.bloodLight.getDefaultState());
+        }
+
+        return true;
+    }
+}

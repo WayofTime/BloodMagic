@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
@@ -40,6 +39,13 @@ public class ModItems {
     public static Item sigilWater;
     public static Item sigilLava;
     public static Item sigilVoid;
+    public static Item sigilGreenGrove;
+    public static Item sigilBloodLight;
+    public static Item sigilElementalAffinity;
+    public static Item sigilHaste;
+    public static Item sigilMagnetism;
+    public static Item sigilSuppression;
+    public static Item sigilFastMiner;
 
     public static Item livingArmourHelmet;
     public static Item livingArmourChest;
@@ -50,7 +56,6 @@ public class ModItems {
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
-        BloodMagicAPI.setOrbItem(bloodOrb);
         orbWeak = new BloodOrb("weak", 1, 5000);
         OrbRegistry.registerOrb(orbWeak);
         orbApprentice = new BloodOrb("apprentice", 2, 25000);
@@ -69,7 +74,6 @@ public class ModItems {
         activationCrystal = registerItem(new ItemActivationCrystal());
         slate = registerItem(new ItemSlate());
         inscriptionTool = registerItem(new ItemInscriptionTool());
-        BloodMagicAPI.setScribeItem(inscriptionTool);
 
         sacrificialDagger = registerItem(new ItemSacrificialDagger());
         packSacrifice = registerItem(new ItemPackSacrifice());
@@ -80,6 +84,13 @@ public class ModItems {
         sigilWater = registerItem(new ItemSigilWater());
         sigilLava = registerItem(new ItemSigilLava());
         sigilVoid = registerItem(new ItemSigilVoid());
+        sigilGreenGrove = registerItem(new ItemSigilGreenGrove());
+        sigilBloodLight = registerItem(new ItemSigilBloodLight());
+        sigilElementalAffinity = registerItem(new ItemSigilElementalAffinity());
+        sigilMagnetism = registerItem(new ItemSigilMagnetism());
+        sigilSuppression = registerItem(new ItemSigilSuppression());
+        sigilHaste = registerItem(new ItemSigilHaste());
+        sigilFastMiner = registerItem(new ItemSigilFastMiner());
 
         livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
@@ -129,6 +140,19 @@ public class ModItems {
         renderHelper.itemRender(sigilWater);
         renderHelper.itemRender(sigilLava);
         renderHelper.itemRender(sigilVoid);
+        renderHelper.itemRender(sigilGreenGrove, 0);
+        renderHelper.itemRender(sigilGreenGrove, 1);
+        renderHelper.itemRender(sigilBloodLight);
+        renderHelper.itemRender(sigilElementalAffinity, 0);
+        renderHelper.itemRender(sigilElementalAffinity, 1);
+        renderHelper.itemRender(sigilMagnetism, 0);
+        renderHelper.itemRender(sigilMagnetism, 1);
+        renderHelper.itemRender(sigilSuppression, 0);
+        renderHelper.itemRender(sigilSuppression, 1);
+        renderHelper.itemRender(sigilHaste, 0);
+        renderHelper.itemRender(sigilHaste, 1);
+        renderHelper.itemRender(sigilFastMiner, 0);
+        renderHelper.itemRender(sigilFastMiner, 1);
 
         renderHelper.itemRender(livingArmourHelmet);
         renderHelper.itemRender(livingArmourChest);

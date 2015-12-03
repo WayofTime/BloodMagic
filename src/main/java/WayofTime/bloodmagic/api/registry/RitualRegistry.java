@@ -23,7 +23,7 @@ public class RitualRegistry {
     public static void registerRitual(Ritual ritual, String id) {
         if (ritual != null) {
             if (registry.containsKey(id))
-                BloodMagicAPI.getLogger().error("Duplicate ritual id: " + id);
+                BloodMagicAPI.getLogger().error("Duplicate ritual id: %s", id);
             else
                 registry.put(id, ritual);
         }

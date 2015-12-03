@@ -22,11 +22,6 @@ public class BindingRecipeJEI extends BloodMagicRecipeWrapper {
     }
 
     @Override
-    public boolean usesOreDictionaryComparison() {
-        return false;
-    }
-
-    @Override
     public List getInputs() {
         return Collections.singletonList(input);
     }
@@ -37,7 +32,12 @@ public class BindingRecipeJEI extends BloodMagicRecipeWrapper {
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft) {
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+
+    }
+
+    @Override
+    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
 
     }
 }

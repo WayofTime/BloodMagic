@@ -6,6 +6,11 @@ import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
+<<<<<<< HEAD
+import WayofTime.bloodmagic.registry.ModBlocks;
+import mezz.jei.api.*;
+import net.minecraft.item.ItemStack;
+=======
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeHandler;
@@ -15,6 +20,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+>>>>>>> parent of d51a908... Update JEI compat
 
 public class BloodMagicPlugin implements IModPlugin {
 
@@ -24,38 +30,33 @@ public class BloodMagicPlugin implements IModPlugin {
     }
 
     @Override
-    @Nonnull
-    public Iterable<? extends IRecipeCategory> getRecipeCategories() {
-        return Arrays.asList(
+    public void register(IModRegistry registry) {
+        registry.addRecipeCategories(
                 new AltarRecipeCategory(),
                 new BindingRecipeCategory()
         );
-    }
 
-    @Override
-    @Nonnull
-    public Iterable<? extends IRecipeHandler> getRecipeHandlers() {
-        return Arrays.asList(
+        registry.addRecipeHandlers(
                 new AltarRecipeHandler(),
                 new BindingRecipeHandler()
         );
-    }
 
-    @Nonnull
-    public Iterable<? extends IRecipeTransferHelper> getRecipeTransferHelpers() {
-        return Arrays.asList(
-
-        );
+        registry.addRecipes(AltarRecipeMaker.getRecipes());
+        registry.addRecipes(BindingRecipeMaker.getRecipes());
     }
 
     @Override
-    @Nonnull
-    public Iterable<Object> getRecipes() {
-        List<Object> recipes = new ArrayList<Object>();
+    public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers) {
+        jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
+    }
 
-        recipes.addAll(AltarRecipeMaker.getRecipes());
-        recipes.addAll(BindingRecipeMaker.getRecipes());
+    @Override
+    public void onItemRegistryAvailable(IItemRegistry itemRegistry) {
 
-        return recipes;
+    }
+
+    @Override
+    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry) {
+
     }
 }

@@ -25,6 +25,12 @@ public interface IBloodAltar {
     void startCycle();
 
     void checkTier();
+    
+    boolean isActive();
+    
+    void setActive();
+    
+    int fillMainTank(int amount);
 
     /**
      * Will set the altar to initiate a cooldown cycle after it crafts before starting to craft again, giving the user time to interact with the altar.
@@ -33,10 +39,4 @@ public interface IBloodAltar {
      * @param cooldown - How long the cooldown should last
      */
     void requestPauseAfterCrafting(int cooldown);
-
-    void addToDemonBloodDuration(int dur);
-
-    boolean hasDemonBlood();
-
-    void decrementDemonBlood();
 }

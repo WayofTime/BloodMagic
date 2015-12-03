@@ -18,7 +18,7 @@ public class BindingRecipeRegistry {
         if (!recipes.containsValue(recipe))
             recipes.put(recipe.getInput(), recipe);
         else
-            BloodMagicAPI.getLogger().error("Error adding binding recipe for " + recipe.input.getDisplayName() + (recipe.output == null ? "" : " -> " + recipe.output.getDisplayName()) + ". Recipe already exists.");
+            BloodMagicAPI.getLogger().error("Error adding binding recipe for %s %s. Recipe already exists.", recipe.input.getDisplayName(), recipe.output == null ? "" : " -> " + recipe.output.getDisplayName());
     }
 
     public static BindingRecipe getRecipeForInput(ItemStack input) {
