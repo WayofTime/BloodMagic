@@ -303,7 +303,8 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
             getWorld().markBlockForUpdate(pos);
     }
 
-    private void checkTier() {
+    @Override
+    public void checkTier() {
         EnumAltarTier tier = BloodAltar.getAltarTier(getWorld(), getPos());
         this.altarTier = tier;
 

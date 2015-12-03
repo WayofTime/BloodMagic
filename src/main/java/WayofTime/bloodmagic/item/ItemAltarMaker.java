@@ -6,13 +6,14 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -91,17 +92,12 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
 
         for (AltarComponent altarComponent : tierToBuild.getAltarComponents()) {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
-            IBlockState blockState = altarComponent.getBlockStack().getBlock().getStateFromMeta(altarComponent.getBlockStack().getMeta());
+            Block blockForComponent = Utils.getBlockForComponent(altarComponent.getComponent());
 
-            if (altarComponent.getBlockStack().getBlock().equals(Blocks.air))
-                world.setBlockState(componentPos, Blocks.stonebrick.getStateFromMeta(0));
-            else
-                world.setBlockState(componentPos, blockState);
-
-            world.markBlockForUpdate(componentPos);
+            world.setBlockState(componentPos, blockForComponent.getDefaultState(), 3);
         }
 
-        world.markBlockForUpdate(pos);
+        ((IBloodAltar) world.getTileEntity(pos)).checkTier();
     }
 
     public String destroyAltar(EntityPlayer player) {

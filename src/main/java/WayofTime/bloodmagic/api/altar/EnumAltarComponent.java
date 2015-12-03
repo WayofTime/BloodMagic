@@ -6,5 +6,6 @@ public enum EnumAltarComponent {
     BLOODSTONE,
     BEACON,
     BLOODRUNE,
-    CRYSTAL
+    CRYSTAL,
+    NOTAIR
 }

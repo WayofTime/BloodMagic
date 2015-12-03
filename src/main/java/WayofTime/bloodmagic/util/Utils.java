@@ -1,8 +1,13 @@
 package WayofTime.bloodmagic.util;
 
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 public class Utils {
@@ -45,5 +50,17 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static Block getBlockForComponent(EnumAltarComponent component) {
+        switch (component) {
+            case GLOWSTONE: return Blocks.glowstone;
+            case BLOODSTONE: return ModBlocks.bloodStoneBrick;
+            case BEACON: return Blocks.beacon;
+            case BLOODRUNE: return ModBlocks.bloodRune;
+            case CRYSTAL: return ModBlocks.crystal;
+            case NOTAIR: return Blocks.stonebrick;
+            default: return Blocks.air;
+        }
     }
 }

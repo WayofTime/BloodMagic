@@ -3,12 +3,7 @@ package WayofTime.bloodmagic.altar;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.block.BlockBloodRune;
-import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
-import WayofTime.bloodmagic.block.BlockCrystal;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import net.minecraft.block.BlockBeacon;
-import net.minecraft.block.BlockGlowstone;
-import net.minecraft.init.Blocks;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
@@ -42,17 +37,17 @@ public class BloodAltar {
             BlockPos componentPos = worldPos.add(altarComponent.getOffset());
             BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
 
-            if (altarComponent.isBloodRune()) {
-                if (!checkRune(altarComponent, worldBlock)) {
+            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR) {
+                if (worldBlock.getBlock() instanceof IAltarComponent) {
+                    EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
+                    if (component != altarComponent.getComponent())
+                        return false;
+                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) {
                     return false;
                 }
-            } else if (!altarComponent.isBloodRune()) {
-                if (world.isAirBlock(componentPos)) return false;
-                if (((altarComponent.getBlockStack().getBlock() != worldBlock.getBlock()) || (altarComponent.getBlockStack().getMeta() != worldBlock.getMeta()))) {
-                    if (!checkSpecials(altarComponent, worldBlock)) {
-                        return false;
-                    }
-                }
+            } else {
+                if (world.isAirBlock(componentPos))
+                    return false;
             }
         }
 
@@ -116,38 +111,5 @@ public class BloodAltar {
         }
 
         return upgrades;
-    }
-
-    private static boolean checkRune(AltarComponent altarComponent, BlockStack blockStack) {
-        if (altarComponent.getBlockStack().getBlock() == ModBlocks.bloodRune) {
-            if (blockStack.getBlock() instanceof BlockBloodRune || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODRUNE))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean checkSpecials(AltarComponent altarComponent, BlockStack blockStack) {
-        if (altarComponent.getBlockStack().getBlock() == ModBlocks.bloodStoneBrick)
-            if (blockStack.getBlock() instanceof BlockBloodStoneBrick || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BLOODSTONE)))
-                return true;
-
-        if (altarComponent.getBlockStack().getBlock() == ModBlocks.crystal)
-            if (blockStack.getBlock() instanceof BlockCrystal || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.CRYSTAL)))
-                return true;
-
-        if (altarComponent.getBlockStack().getBlock() == Blocks.glowstone)
-            if (blockStack.getBlock() instanceof BlockGlowstone || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.GLOWSTONE)))
-                return true;
-
-        if (altarComponent.getBlockStack().getBlock() == Blocks.beacon)
-            if (blockStack.getBlock() instanceof BlockBeacon || (blockStack.getBlock() instanceof IAltarComponent && (((IAltarComponent) blockStack.getBlock()).getType(blockStack.getMeta()) == EnumAltarComponent.BEACON)))
-                return true;
-
-        if (altarComponent.getBlockStack().getBlock() == Blocks.air)
-            if (blockStack.getBlock() != Blocks.air)
-                return true;
-
-        return false;
     }
 }

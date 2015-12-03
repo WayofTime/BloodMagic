@@ -5,6 +5,8 @@ import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +24,10 @@ public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltar
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+
+        if (PlayerHelper.isFakePlayer(player))
+            return stack;
+
         super.onItemRightClick(stack, world, player);
 
         if (!world.isRemote) {
@@ -41,8 +47,9 @@ public class ItemSigilDivination extends ItemSigilBase implements ISigil, IAltar
                         int tier = altar.getTier().ordinal() + 1;
                         currentEssence = altar.getCurrentBlood();
                         int capacity = altar.getCapacity();
-
+                        altar.checkTier();
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+
                     } else {
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
                     }

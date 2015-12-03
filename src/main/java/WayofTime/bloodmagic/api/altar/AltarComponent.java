@@ -1,9 +1,6 @@
 package WayofTime.bloodmagic.api.altar;
 
-import WayofTime.bloodmagic.api.BlockStack;
 import lombok.Getter;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 
 /**
@@ -13,24 +10,19 @@ import net.minecraft.util.BlockPos;
 public class AltarComponent {
 
     private BlockPos offset;
-    private BlockStack blockStack;
-    private boolean bloodRune;
     private boolean upgradeSlot;
 
-    /**
-     * @param offset     - The position in the world relative to the MasterRitualStone
-     * @param blockStack - The block and meta combination expected
-     */
-    public AltarComponent(BlockPos offset, BlockStack blockStack) {
-        this.offset = offset;
-        this.blockStack = blockStack;
-    }
+    private EnumAltarComponent component;
 
     /**
-     * Non-meta based variant for ease of use.
+     * Sets a component location for the altar.
+     *
+     * @param offset    - Where the block should be in relation to the Altar
+     * @param component - The type of Component the location should contain
      */
-    public AltarComponent(BlockPos offset, Block block) {
-        this(offset, new BlockStack(block));
+    public AltarComponent(BlockPos offset, EnumAltarComponent component) {
+        this.offset = offset;
+        this.component = component;
     }
 
     /**
@@ -38,18 +30,7 @@ public class AltarComponent {
      * of block does not matter.
      */
     public AltarComponent(BlockPos offset) {
-        this(offset, new BlockStack(Blocks.air));
-    }
-
-    /**
-     * Sets the location to a Blood Rune. This does not mean that the location
-     * can be used as an upgrade.
-     *
-     * @return the current instance for further use.
-     */
-    public AltarComponent setBloodRune() {
-        this.bloodRune = true;
-        return this;
+        this(offset, EnumAltarComponent.NOTAIR);
     }
 
     /**
