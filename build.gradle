@@ -128,7 +128,6 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact jar
-            artifact sourceJar
             artifact javadocJar
             artifact apiJar
         }
@@ -151,7 +150,6 @@ curseforge {
         changelog = project.hasProperty('changelog') ? project.changelog : ''
         releaseType = 'alpha'
 
-        addArtifact sourceJar
         addArtifact javadocJar
         addArtifact apiJar
     }
