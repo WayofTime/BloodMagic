@@ -110,6 +110,7 @@ public class ModItems {
         renderHelper.itemRender(slate, 1);
         renderHelper.itemRender(slate, 2);
         renderHelper.itemRender(slate, 3);
+        renderHelper.itemRender(slate, 4);
 
         renderHelper.itemRender(inscriptionTool, 1);
         renderHelper.itemRender(inscriptionTool, 2);

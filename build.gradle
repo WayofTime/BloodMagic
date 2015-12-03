@@ -40,7 +40,7 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.8.8:2.1.2.10"
+    deobfCompile "mezz.jei:jei_1.8.8:2.1.2.11"
 }
 
 minecraft {
