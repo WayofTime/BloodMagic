@@ -88,7 +88,6 @@ public class ConfigHandler {
     public static boolean vanillaPotionAbsorptionEnabled;
 
     // Compat
-    public static boolean compatibilityJustEnoughItems;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -176,7 +175,6 @@ public class ConfigHandler {
 
         category = "Compatibility";
         config.addCustomCategoryComment(category, "Compatibility settings");
-        compatibilityJustEnoughItems = config.getBoolean("compatibilityJustEnoughItems", category, true, "Enables the JEI recipe categories for specialized recipes.");
 
         config.save();
     }

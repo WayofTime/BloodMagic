@@ -7,6 +7,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -37,6 +38,11 @@ public class AltarRecipeCategory implements IRecipeCategory {
     @Override
     public IDrawable getBackground() {
         return background;
+    }
+
+    @Override
+    public void drawExtras(Minecraft minecraft) {
+
     }
 
     @Override

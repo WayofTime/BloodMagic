@@ -1,14 +1,15 @@
 package WayofTime.bloodmagic.compat.jei;
 
-import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.compat.ICompatibility;
+import WayofTime.bloodmagic.registry.ModBlocks;
 import mezz.jei.api.JEIManager;
+import net.minecraft.item.ItemStack;
 
 public class CompatibilityJustEnoughItems implements ICompatibility {
 
     @Override
     public void loadCompatibility() {
-        JEIManager.pluginRegistry.registerPlugin(new BloodMagicPlugin());
+        JEIManager.itemBlacklist.addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
     }
 
     @Override
@@ -18,6 +19,6 @@ public class CompatibilityJustEnoughItems implements ICompatibility {
 
     @Override
     public boolean enableCompat() {
-        return ConfigHandler.compatibilityJustEnoughItems;
+        return true;
     }
 }
