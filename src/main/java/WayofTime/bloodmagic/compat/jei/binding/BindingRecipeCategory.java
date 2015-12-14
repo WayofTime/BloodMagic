@@ -46,14 +46,17 @@ public class BindingRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void init(@Nonnull IRecipeLayout recipeLayout) {
-        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
-        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 73, 5);
+    public void drawAnimations(Minecraft minecraft) {
+
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+
+        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
+        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 73, 5);
+
         if (recipeWrapper instanceof BindingRecipeJEI) {
             BindingRecipeJEI bindingRecipeWrapper = (BindingRecipeJEI) recipeWrapper;
             recipeLayout.getItemStacks().set(INPUT_SLOT, bindingRecipeWrapper.getInputs());

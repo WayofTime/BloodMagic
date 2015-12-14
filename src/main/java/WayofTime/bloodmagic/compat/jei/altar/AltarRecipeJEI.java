@@ -28,11 +28,6 @@ public class AltarRecipeJEI extends BloodMagicRecipeWrapper {
     }
 
     @Override
-    public boolean usesOreDictionaryComparison() {
-        return false;
-    }
-
-    @Override
     public List getInputs() {
         return Collections.singletonList(input);
     }
@@ -43,8 +38,13 @@ public class AltarRecipeJEI extends BloodMagicRecipeWrapper {
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft) {
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
         minecraft.fontRendererObj.drawString(infoString[0], 90 - minecraft.fontRendererObj.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
         minecraft.fontRendererObj.drawString(infoString[1], 90 - minecraft.fontRendererObj.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
+    }
+
+    @Override
+    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+
     }
 }

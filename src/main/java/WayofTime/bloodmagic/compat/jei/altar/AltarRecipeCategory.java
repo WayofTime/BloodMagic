@@ -46,14 +46,17 @@ public class AltarRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void init(@Nonnull IRecipeLayout recipeLayout) {
-        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
-        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
+    public void drawAnimations(Minecraft minecraft) {
+
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+
+        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
+        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
+
         if (recipeWrapper instanceof AltarRecipeJEI) {
             AltarRecipeJEI altarRecipeWrapper = (AltarRecipeJEI) recipeWrapper;
             recipeLayout.getItemStacks().set(INPUT_SLOT, altarRecipeWrapper.getInputs());
