@@ -24,6 +24,7 @@ public class ModBlocks {
     public static Block testSpellBlock;
     public static Block pedestal;
     public static Block teleposer;
+    public static Block alchemyArray;
 
     public static Block lifeEssence;
 
@@ -42,6 +43,7 @@ public class ModBlocks {
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());
+        alchemyArray = registerBlock(new BlockAlchemyArray());
         crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
@@ -86,6 +88,7 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyArray));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
