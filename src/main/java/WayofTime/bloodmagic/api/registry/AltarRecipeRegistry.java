@@ -83,5 +83,15 @@ public class AltarRecipeRegistry {
         public AltarRecipe(ItemStack input, EnumAltarTier minTier, int consumeRate, int drainRate) {
             this(input, null, minTier, 0, consumeRate, drainRate);
         }
+        
+        public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck)
+        {
+            if (comparedStack == null || this.input == null)
+            {
+                return false;
+            }
+
+            return tierCheck.ordinal() >= minTier.ordinal() && this.input.isItemEqual(comparedStack);// && (this.useTag ? this.areRequiredTagsEqual(comparedStack) : true);
+        }
     }
 }

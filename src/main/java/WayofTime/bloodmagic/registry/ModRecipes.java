@@ -16,6 +16,7 @@ public class ModRecipes {
 
     public static void addAltarRecipes() {
         // ONE
+    	AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(OrbRegistry.getOrbStack(ModItems.orbWeak), OrbRegistry.getOrbStack(ModItems.orbWeak), EnumAltarTier.ONE, 5000, 2, 1, true));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.diamond), OrbRegistry.getOrbStack(ModItems.orbWeak), EnumAltarTier.ONE, 2000, 2, 1, false));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Blocks.stone), new ItemStack(ModItems.slate), EnumAltarTier.ONE, 1000, 5, 5, false));
 

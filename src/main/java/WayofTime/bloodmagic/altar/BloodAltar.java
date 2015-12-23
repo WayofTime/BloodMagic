@@ -21,6 +21,7 @@ import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IAltarComponent;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
@@ -263,19 +264,15 @@ public class BloodAltar {
 
         if (tileAltar.getStackInSlot(0) != null) {
             // Do recipes
-            for (ItemStack itemStack : AltarRecipeRegistry.getRecipes().keySet()) {
-                if (tileAltar.getStackInSlot(0).getIsItemStackEqual(AltarRecipeRegistry.getRecipes().get(itemStack).getInput())) {
-                    AltarRecipeRegistry.AltarRecipe recipe = AltarRecipeRegistry.getRecipeForInput(itemStack);
-
-                    if (altarTier.ordinal() >= recipe.getMinTier().ordinal()) {
-                        this.isActive = true;
-                        this.result = new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
-                        this.liquidRequired = recipe.getSyphon();
-                        this.canBeFilled = recipe.isUseTag();
-                        this.consumptionRate = recipe.getConsumeRate();
-                        this.drainRate = recipe.getDrainRate();
-                        return;
-                    }
+            for (AltarRecipe recipe : AltarRecipeRegistry.getRecipes().values()) {
+                if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier)) {
+                    this.isActive = true;
+                    this.result = new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
+                    this.liquidRequired = recipe.getSyphon();
+                    this.canBeFilled = recipe.isUseTag();
+                    this.consumptionRate = recipe.getConsumeRate();
+                    this.drainRate = recipe.getDrainRate();
+                    return;
                 }
             }
         }
@@ -343,7 +340,7 @@ public class BloodAltar {
         float f1 = f * 0.6F + 0.4F;
         float f2 = f * f * 0.7F - 0.5F;
         float f3 = f * f * 0.6F - 0.7F;
-
+        
         if (!canBeFilled) {
             if (fluid != null && fluid.amount >= 1) {
                 int stackSize = tileAltar.getStackInSlot(0).stackSize;
@@ -379,6 +376,7 @@ public class BloodAltar {
                     world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
         } else {
+        	System.out.println("Test2");
             ItemStack returnedItem = tileAltar.getStackInSlot(0);
 
             if (!(returnedItem.getItem() instanceof IBloodOrb))
