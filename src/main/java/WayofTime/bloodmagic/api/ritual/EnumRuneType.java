@@ -24,7 +24,7 @@ public enum EnumRuneType implements IStringSerializable {
     }
 
     public ItemStack getScribeStack() {
-        return new ItemStack(BloodMagicAPI.getScribeItem(), 1, ordinal());
+        return new ItemStack(BloodMagicAPI.getItem(BloodMagicAPI.SCRIBE), 1, ordinal());
     }
 
     @Override

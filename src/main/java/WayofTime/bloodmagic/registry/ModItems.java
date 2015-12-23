@@ -50,7 +50,6 @@ public class ModItems {
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
-        BloodMagicAPI.setOrbItem(bloodOrb);
         orbWeak = new BloodOrb("weak", 1, 5000);
         OrbRegistry.registerOrb(orbWeak);
         orbApprentice = new BloodOrb("apprentice", 2, 25000);
@@ -69,7 +68,6 @@ public class ModItems {
         activationCrystal = registerItem(new ItemActivationCrystal());
         slate = registerItem(new ItemSlate());
         inscriptionTool = registerItem(new ItemInscriptionTool());
-        BloodMagicAPI.setScribeItem(inscriptionTool);
 
         sacrificialDagger = registerItem(new ItemSacrificialDagger());
         packSacrifice = registerItem(new ItemPackSacrifice());
