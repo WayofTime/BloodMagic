@@ -42,7 +42,7 @@ public class LivingArmour {
 				continue;
 			}
 
-			tracker.onTick(world, player, this);
+			tracker.onTick(world, player, this); //TODO: Check if the upgrades need to be updated.
 		}
 	}
 
