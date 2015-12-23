@@ -26,15 +26,15 @@ public class OrbRegistry {
         if (!orbs.contains(orb))
             orbs.add(orb);
         else
-            BloodMagicAPI.getLogger().error("Error adding orb: " + orb.toString() + ". Orb already exists!");
+            BloodMagicAPI.getLogger().error("Error adding orb %s. Orb already exists!", orb.toString());
     }
 
     @SideOnly(Side.CLIENT)
     public static void registerOrbTexture(BloodOrb orb, String resourceLocation) {
         int meta = getIndexOf(orb);
 
-        ModelBakery.addVariantName(BloodMagicAPI.getOrbItem(), resourceLocation);
-        ModelLoader.setCustomModelResourceLocation(BloodMagicAPI.getOrbItem(), meta, new ModelResourceLocation(resourceLocation, "inventory"));
+        ModelBakery.addVariantName(BloodMagicAPI.getItem(BloodMagicAPI.ORB), resourceLocation);
+        ModelLoader.setCustomModelResourceLocation(BloodMagicAPI.getItem(BloodMagicAPI.ORB), meta, new ModelResourceLocation(resourceLocation, "inventory"));
     }
 
     public static BloodOrb getOrb(int index) {
@@ -54,6 +54,6 @@ public class OrbRegistry {
     }
 
     public static ItemStack getOrbStack(BloodOrb orb) {
-        return new ItemStack(BloodMagicAPI.getOrbItem(), 1, getIndexOf(orb));
+        return new ItemStack(BloodMagicAPI.getItem(BloodMagicAPI.ORB), 1, getIndexOf(orb));
     }
 }

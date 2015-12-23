@@ -24,7 +24,7 @@ public class ImperfectRitualRegistry {
     public static void registerRitual(ImperfectRitual imperfectRitual, String id) {
         if (imperfectRitual != null) {
             if (registry.containsKey(id))
-                BloodMagicAPI.getLogger().error("Duplicate imperfect ritual id: " + id);
+                BloodMagicAPI.getLogger().error("Duplicate imperfect ritual id: %s", id);
             else
                 registry.put(id, imperfectRitual);
         }

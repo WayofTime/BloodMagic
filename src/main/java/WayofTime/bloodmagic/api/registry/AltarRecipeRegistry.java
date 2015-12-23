@@ -20,7 +20,7 @@ public class AltarRecipeRegistry {
         if (!recipes.containsValue(recipe))
             recipes.put(recipe.input, recipe);
         else
-            BloodMagicAPI.getLogger().error("Error adding altar recipe for " + recipe.input.getDisplayName() + (recipe.output == null ? "" : " -> " + recipe.output.getDisplayName()) + ". Recipe already exists.");
+            BloodMagicAPI.getLogger().error("Error adding altar recipe for %s. Recipe already exists.", recipe.input.getDisplayName(), recipe.output == null ? "" : " -> " );
     }
 
     public static AltarRecipe getRecipeForInput(ItemStack input) {
@@ -49,30 +49,13 @@ public class AltarRecipeRegistry {
          * @param drainRate   - The rate at which LP is drained during crafting
          * @param useTag      -
          */
-    //    public AltarRecipe(ItemStackWrapper input, @Nullable ItemStackWrapper output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
-    //        this.input = input;
-    //        this.output = output;
-    //        this.minTier = minTier;
-    //        this.syphon = syphon;
-    //        this.consumeRate = consumeRate;
-    //        this.drainRate = drainRate;
-    //        this.useTag = useTag;
-    //    }
-    //
-    //    public AltarRecipe(ItemStackWrapper input, ItemStackWrapper output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate) {
-    //        this(input, output, minTier, syphon, consumeRate, drainRate, false);
-    //    }
-    //
-    //    public AltarRecipe(ItemStackWrapper input, EnumAltarTier minTier, int consumeRate, int drainRate) {
-    //        this(input, null, minTier, 0, consumeRate, drainRate);
-    //    }
         public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag) {
             this.input = input;
             this.output = output;
             this.minTier = minTier;
-            this.syphon = syphon;
-            this.consumeRate = consumeRate;
-            this.drainRate = drainRate;
+            this.syphon = syphon < 0 ? -syphon : syphon;
+            this.consumeRate = consumeRate < 0 ? -consumeRate : consumeRate;
+            this.drainRate = drainRate < 0 ? -drainRate : drainRate;
             this.useTag = useTag;
         }
 
@@ -85,9 +68,8 @@ public class AltarRecipeRegistry {
         }
         
         public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck) {
-            if (comparedStack == null || this.input == null) {
+            if (comparedStack == null || this.input == null)
                 return false;
-            }
 
             return tierCheck.ordinal() >= minTier.ordinal() && this.input.isItemEqual(comparedStack);// && (this.useTag ? this.areRequiredTagsEqual(comparedStack) : true);
         }
