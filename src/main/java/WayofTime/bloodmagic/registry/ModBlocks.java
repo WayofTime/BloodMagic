@@ -1,19 +1,36 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.*;
-import WayofTime.bloodmagic.item.block.*;
+import WayofTime.bloodmagic.block.BlockAlchemyArray;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.block.BlockBloodLight;
+import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
+import WayofTime.bloodmagic.block.BlockCrystal;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.block.BlockPedestal;
+import WayofTime.bloodmagic.block.BlockRitualController;
+import WayofTime.bloodmagic.block.BlockRitualStone;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.block.BlockTestSpellBlock;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
+import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.tile.TilePlinth;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
     public static Block altar;
@@ -55,6 +72,7 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, Constants.Mod.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, Constants.Mod.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TilePlinth.class, Constants.Mod.MODID + ":" + TilePlinth.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileAlchemyArray.class, Constants.Mod.MODID + ":" + TileAlchemyArray.class.getSimpleName());
     }
 
     public static void initRenders() {

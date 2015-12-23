@@ -12,8 +12,11 @@ import org.lwjgl.opengl.GL11;
 
 public class AlchemyCircleRenderer {
 
-	public AlchemyCircleRenderer() {
-
+	public float offsetFromFace = -0.9f;
+	public final ResourceLocation arrayResource;
+	
+	public AlchemyCircleRenderer(ResourceLocation arrayResource) {
+		this.arrayResource = arrayResource;
 	}
 
 	public void renderAt(TileEntity tile, double x, double y, double z) {
@@ -28,7 +31,7 @@ public class AlchemyCircleRenderer {
 		float size = 1.0F;
 
 		// Bind the texture to the circle
-		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+		Minecraft.getMinecraft().renderEngine.bindTexture(arrayResource);
 
 		GL11.glTexParameterf(3553, 10242, 10497.0F);
 		GL11.glTexParameterf(3553, 10243, 10497.0F);
@@ -42,7 +45,7 @@ public class AlchemyCircleRenderer {
 
 		EnumFacing sideHit = EnumFacing.UP; // Specify which face this "circle"
 											// is located on
-		GL11.glTranslatef(sideHit.getFrontOffsetX() * -0.9f, sideHit.getFrontOffsetY() * -0.9f, sideHit.getFrontOffsetZ() * -0.9f);
+		GL11.glTranslatef(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
 		switch (sideHit) {
 		case DOWN:
