@@ -376,7 +376,6 @@ public class BloodAltar {
                     world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
         } else {
-        	System.out.println("Test2");
             ItemStack returnedItem = tileAltar.getStackInSlot(0);
 
             if (!(returnedItem.getItem() instanceof IBloodOrb))

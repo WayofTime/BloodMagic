@@ -84,10 +84,8 @@ public class AltarRecipeRegistry {
             this(input, null, minTier, 0, consumeRate, drainRate);
         }
         
-        public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck)
-        {
-            if (comparedStack == null || this.input == null)
-            {
+        public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck) {
+            if (comparedStack == null || this.input == null) {
                 return false;
             }
 
