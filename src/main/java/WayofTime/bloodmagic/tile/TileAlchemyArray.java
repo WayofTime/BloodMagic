@@ -46,7 +46,7 @@ public class TileAlchemyArray extends TileInventory implements ITickable {
 		if (effect != null) {
 			isActive = true;
 
-			if (effect.update(this, 0)) {
+			if (effect.update(this, this.activeCounter)) {
 				this.decrStackSize(0, 1);
 				this.decrStackSize(1, 1);
 				this.worldObj.setBlockToAir(getPos());

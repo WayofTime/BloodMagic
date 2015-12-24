@@ -21,14 +21,18 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
 		if(tile.getWorld().isRemote) {
 			return false;
 		}
+				
+		if(ticksActive > 200){
+			BlockPos pos = tile.getPos();
+
+			ItemStack output = outputStack.copy();
+			EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
+
+			tile.getWorld().spawnEntityInWorld(outputEntity);
+
+			return true;
+		}
 		
-		BlockPos pos = tile.getPos();
-
-		ItemStack output = outputStack.copy();
-		EntityItem outputEntity = new EntityItem(tile.getWorld(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
-
-		tile.getWorld().spawnEntityInWorld(outputEntity);
-
-		return true;
+		return false;
 	}
 }

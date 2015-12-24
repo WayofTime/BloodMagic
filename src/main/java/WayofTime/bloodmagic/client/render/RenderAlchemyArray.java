@@ -14,8 +14,10 @@ public class RenderAlchemyArray extends TileEntitySpecialRenderer {
 			ItemStack inputStack = ((TileAlchemyArray)tileEntity).getStackInSlot(0);
 
 			AlchemyCircleRenderer renderer = AlchemyArrayRecipeRegistry.getAlchemyCircleRenderer(inputStack);
-
-			renderer.renderAt(tileEntity, x, y, z);
+			
+			int craftTime = ((TileAlchemyArray)tileEntity).activeCounter;
+			
+			renderer.renderAt(tileEntity, x, y, z, (craftTime > 0 ? craftTime + partialTicks : 0));
 		}
 	}
 }
