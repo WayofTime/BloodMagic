@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.TileInventory;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileInventory;
 
 public class Utils {
 
@@ -34,15 +33,19 @@ public class Utils {
      * @param player - The player to take the item from.
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player) {
-        if (tile.getStackInSlot(0) == null && player.getHeldItem() != null) {
+        return insertItemToTile(tile, player, 0);
+    }
+    
+    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
+        if (tile.getStackInSlot(slot) == null && player.getHeldItem() != null) {
             ItemStack input = player.getHeldItem().copy();
             input.stackSize = 1;
             player.getHeldItem().stackSize--;
-            tile.setInventorySlotContents(0, input);
+            tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (tile.getStackInSlot(0) != null && player.getHeldItem() == null) {
+        } else if (tile.getStackInSlot(slot) != null && player.getHeldItem() == null) {
             if (!tile.getWorld().isRemote) {
-                EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(0));
+                EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
                 tile.getWorld().spawnEntityInWorld(invItem);
             }
             tile.clear();

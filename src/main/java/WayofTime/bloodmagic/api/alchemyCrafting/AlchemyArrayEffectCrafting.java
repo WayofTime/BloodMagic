@@ -18,6 +18,10 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
 	@Override
 	public boolean update(TileEntity tile, int ticksActive) {
 		//TODO: Add recipe rechecking to verify nothing screwy is going on.
+		if(tile.getWorld().isRemote) {
+			return false;
+		}
+		
 		BlockPos pos = tile.getPos();
 
 		ItemStack output = outputStack.copy();

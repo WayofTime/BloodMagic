@@ -7,9 +7,12 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,6 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.util.Utils;
 
 public class BlockAlchemyArray extends BlockContainer {
 
@@ -25,6 +30,7 @@ public class BlockAlchemyArray extends BlockContainer {
 
 		setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
 		setCreativeTab(BloodMagic.tabBloodMagic);
+		this.setHardness(0.1f);
 	}
 
 	@Override
@@ -49,6 +55,28 @@ public class BlockAlchemyArray extends BlockContainer {
 	}
 
 	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+		TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
+
+		if (array == null || player.isSneaking())
+			return false;
+
+		ItemStack playerItem = player.getCurrentEquippedItem();
+
+		if (playerItem != null) {
+			if (array.getStackInSlot(0) == null) {
+				Utils.insertItemToTile(array, player, 0);
+			} else {
+				Utils.insertItemToTile(array, player, 1);
+				array.attemptCraft();
+			}
+		}
+
+		world.markBlockForUpdate(pos);
+		return true;
+	}
+
+	@Override
 	public int quantityDropped(Random random) {
 		return 0;
 	}
@@ -62,4 +90,13 @@ public class BlockAlchemyArray extends BlockContainer {
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileAlchemyArray();
 	}
+	
+	@Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+        TileAlchemyArray alchemyArray = (TileAlchemyArray) world.getTileEntity(blockPos);
+        if (alchemyArray != null)
+            alchemyArray.dropItems();
+
+        super.breakBlock(world, blockPos, blockState);
+    }
 }

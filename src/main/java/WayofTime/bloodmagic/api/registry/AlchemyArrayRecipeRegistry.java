@@ -120,6 +120,17 @@ public class AlchemyArrayRecipeRegistry {
 		return null;
 	}
 
+	public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack inputStack) {
+		for (Entry<ItemStack, AlchemyArrayRecipe> entry : recipes.entrySet()) {
+			AlchemyArrayRecipe arrayRecipe = entry.getValue();
+			if (arrayRecipe.doesInputMatchRecipe(inputStack)) {
+				return arrayRecipe.circleRenderer;
+			}
+		}
+
+		return defaultRenderer;
+	}
+
 	@Getter
 	@ToString
 	@EqualsAndHashCode
@@ -131,7 +142,10 @@ public class AlchemyArrayRecipeRegistry {
 
 		public AlchemyArrayRecipe(ItemStack inputStack, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
 			this.inputStack = inputStack;
-
+			
+			catalystMap.put(catalystStack, arrayEffect);
+			
+			this.circleRenderer = circleRenderer;
 		}
 
 		/**
