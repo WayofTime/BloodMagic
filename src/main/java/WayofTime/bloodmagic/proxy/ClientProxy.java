@@ -21,6 +21,7 @@ public class ClientProxy extends CommonProxy {
 
         OBJLoader.instance.addDomain(Constants.Mod.MODID);
         ModelLoader.setCustomModelResourceLocation(InventoryRenderHelper.getItemFromBlock(ModBlocks.altar), 0, new ModelResourceLocation(Constants.Mod.DOMAIN + "BlockAltar", "inventory"));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyArray.class, new RenderAlchemyArray());
     }
 
     @Override

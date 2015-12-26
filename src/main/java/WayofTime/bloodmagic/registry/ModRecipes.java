@@ -1,17 +1,21 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
+import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 
 public class ModRecipes {
 
     public static void init() {
         addAltarRecipes();
+        addAlchemyArrayRecipes();
     }
 
     public static void addAltarRecipes() {
@@ -42,5 +46,10 @@ public class ModRecipes {
         // SIX
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(ModBlocks.crystal), OrbRegistry.getOrbStack(ModItems.orbTranscendent), EnumAltarTier.SIX, 200000, 100, 200, false));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Blocks.glowstone), EnumRuneType.DAWN.getScribeStack(), EnumAltarTier.SIX, 200000, 100, 200, false));
+    }
+    
+    public static void addAlchemyArrayRecipes() {
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(Items.redstone), new ItemStack(ModItems.slate), new ItemStack(Items.diamond), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(Items.diamond), new ItemStack(ModItems.slate), new ItemStack(Blocks.diamond_block), new BindingAlchemyCircleRenderer());
     }
 }
