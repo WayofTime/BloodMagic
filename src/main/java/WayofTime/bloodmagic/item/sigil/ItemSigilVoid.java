@@ -80,26 +80,15 @@ public class ItemSigilVoid extends ItemSigilBase {
             return false;
         }
 
-        {
-            int x = blockPos.getX();
-            int y = blockPos.getY();
-            int z = blockPos.getZ();
+        BlockPos newPos = blockPos.offset(side);
 
-            if (side.getIndex() == 0) --y;
-            if (side.getIndex() == 1) ++y;
-            if (side.getIndex() == 2) --z;
-            if (side.getIndex() == 3) ++z;
-            if (side.getIndex() == 4) --x;
-            if (side.getIndex() == 5) ++x;
+        if (!player.canPlayerEdit(newPos, side, stack)) {
+            return false;
+        }
 
-            if (!player.canPlayerEdit(new BlockPos(x, y, z), side, stack)) {
-                return false;
-            }
-
-            if (world.getBlockState(new BlockPos(x, y, z)).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getEnergyUsed())) {
-                world.setBlockToAir(new BlockPos(x, y, z));
-                return true;
-            }
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getEnergyUsed())) {
+            world.setBlockToAir(newPos);
+            return true;
         }
 
         return false;
