@@ -20,6 +20,9 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public final int startTime = 50;
 	public final int sweepTime = 40;
 	
+	public final float arcLength = (float) Math.sqrt(2*(2*2) - 2*2*2*Math.cos(2*Math.PI*2/5));
+	public final float theta2 = (float) (18f * Math.PI / 180f);
+	
 	public final int endTime = 300;
 
 	public BindingAlchemyCircleRenderer() {
@@ -39,7 +42,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 			double sweep = (craftTime - startTime)/sweepTime;
 			if(sweep >= 0 && sweep < numberOfSweeps) {
 				float offset = ((int)sweep)*sweepTime + startTime;
-				originalAngle += 2*Math.PI*2/5*((craftTime - offset)/sweepTime + (int)sweep);
+				originalAngle += 2*Math.PI*2/5*(int)sweep + getAngle(craftTime - offset, (int)sweep);
 			}else if(sweep >= numberOfSweeps)
 			{
 				originalAngle += 2*Math.PI*2/5*numberOfSweeps + (craftTime - 5*sweepTime - startTime)*2*Math.PI*2/5/sweepTime;
@@ -52,22 +55,23 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	}
 	
 	public float getAngle(float craftTime, int sweep) {
-		return (float) (2*Math.PI*2/5*(craftTime)/sweepTime);
+		float rDP = craftTime/sweepTime*arcLength;
+		float rEnd = (float) Math.sqrt(rDP*rDP + 2*2 - 2*rDP*2*Math.cos(theta2));
+		return (float) (Math.acos((2*2 + rEnd*rEnd - rDP*rDP)/(2*rEnd*2)));
 	}
 
 	/**
 	 * Returns the center-to-center distance of this circle.
 	 */
-	public float getDistanceOfCircle(int circle, float craftTime) {
+	public float getDistanceOfCircle(int circle, float craftTime) { //TODO Change this so it doesn't use angle, since it is a constant speed.
 		double sweep = (craftTime - startTime)/sweepTime;
 		if(sweep >= 0 && sweep < numberOfSweeps) {
 			float offset = ((int)sweep)*sweepTime + startTime;
 			float angle = getAngle(craftTime - offset, (int) sweep);
-			float theta2 = (float) (Math.PI - 4*Math.PI/5)/2f;
 			float thetaPrime = (float) (Math.PI - theta2 - angle);
-			if(thetaPrime > 0 && thetaPrime < Math.PI) {
+//			if(thetaPrime > 0 && thetaPrime < Math.PI) {
 				return (float) (2 * Math.sin(theta2) / Math.sin(thetaPrime));
-			}
+//			}
 		} else if(sweep >= numberOfSweeps && craftTime < endTime) {
 			return 2 - 2 * (craftTime - startTime - numberOfSweeps * sweepTime) / (endTime - startTime - numberOfSweeps * sweepTime);
 		} else if(craftTime >= endTime) {
