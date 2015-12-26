@@ -21,6 +21,7 @@ public class ModBlocks {
     public static Block testSpellBlock;
     public static Block pedestal;
     public static Block teleposer;
+    public static Block alchemyArray;
     public static Block spectralBlock;
 
     public static Block lifeEssence;
@@ -40,6 +41,7 @@ public class ModBlocks {
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());
+        alchemyArray = registerBlock(new BlockAlchemyArray());
         spectralBlock = registerBlock(new BlockSpectral());
         crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
@@ -52,6 +54,7 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, Constants.Mod.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, Constants.Mod.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TilePlinth.class, Constants.Mod.MODID + ":" + TilePlinth.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileAlchemyArray.class, Constants.Mod.MODID + TileAlchemyArray.class.getSimpleName());
         GameRegistry.registerTileEntity(TileSpectralBlock.class, Constants.Mod.MODID + ":" + TileSpectralBlock.class.getSimpleName());
     }
 
@@ -86,6 +89,7 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyArray));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(spectralBlock));
     }
 

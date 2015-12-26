@@ -31,7 +31,7 @@ public class BlockSpectral extends BlockContainer {
     public boolean isOpaqueCube() {
         return false;
     }
-    
+
     @Override
     public boolean isFullCube() {
         return false;
