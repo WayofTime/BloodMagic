@@ -10,9 +10,15 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
 
 	@Getter
 	public final ItemStack outputStack;
+	public int tickLimit;
 
 	public AlchemyArrayEffectCrafting(ItemStack outputStack) {
+		this(outputStack, 200);
+	}
+	
+	public AlchemyArrayEffectCrafting(ItemStack outputStack, int tickLimit) {
 		this.outputStack = outputStack;
+		this.tickLimit = tickLimit;
 	}
 
 	@Override
@@ -22,7 +28,7 @@ public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect {
 			return false;
 		}
 				
-		if(ticksActive > 200){
+		if(ticksActive >= tickLimit){
 			BlockPos pos = tile.getPos();
 
 			ItemStack output = outputStack.copy();
