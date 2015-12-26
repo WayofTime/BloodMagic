@@ -1,36 +1,16 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.*;
+import WayofTime.bloodmagic.item.block.*;
+import WayofTime.bloodmagic.tile.*;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.BlockAlchemyArray;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.block.BlockBloodLight;
-import WayofTime.bloodmagic.block.BlockBloodRune;
-import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
-import WayofTime.bloodmagic.block.BlockCrystal;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.block.BlockPedestal;
-import WayofTime.bloodmagic.block.BlockRitualController;
-import WayofTime.bloodmagic.block.BlockRitualStone;
-import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.block.BlockTestSpellBlock;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
-import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
-import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import WayofTime.bloodmagic.tile.TilePlinth;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModBlocks {
     public static Block altar;
@@ -41,7 +21,7 @@ public class ModBlocks {
     public static Block testSpellBlock;
     public static Block pedestal;
     public static Block teleposer;
-    public static Block alchemyArray;
+    public static Block spectralBlock;
 
     public static Block lifeEssence;
 
@@ -60,7 +40,7 @@ public class ModBlocks {
         testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());
-        alchemyArray = registerBlock(new BlockAlchemyArray());
+        spectralBlock = registerBlock(new BlockSpectral());
         crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
@@ -72,7 +52,7 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, Constants.Mod.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, Constants.Mod.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TilePlinth.class, Constants.Mod.MODID + ":" + TilePlinth.class.getSimpleName());
-        GameRegistry.registerTileEntity(TileAlchemyArray.class, Constants.Mod.MODID + ":" + TileAlchemyArray.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileSpectralBlock.class, Constants.Mod.MODID + ":" + TileSpectralBlock.class.getSimpleName());
     }
 
     public static void initRenders() {
@@ -106,7 +86,7 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyArray));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(spectralBlock));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {

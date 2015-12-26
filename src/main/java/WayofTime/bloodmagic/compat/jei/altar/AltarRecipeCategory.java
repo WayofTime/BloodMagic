@@ -47,7 +47,11 @@ public class AltarRecipeCategory implements IRecipeCategory {
 
     @Override
     public void drawAnimations(Minecraft minecraft) {
-
+    }
+    
+    public void init(@Nonnull IRecipeLayout recipeLayout) {
+        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
+        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
     }
 
     @Override

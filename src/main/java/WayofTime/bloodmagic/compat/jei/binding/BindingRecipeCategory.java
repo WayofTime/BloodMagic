@@ -7,7 +7,6 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -48,6 +47,9 @@ public class BindingRecipeCategory implements IRecipeCategory {
     @Override
     public void drawAnimations(Minecraft minecraft) {
 
+    public void init(@Nonnull IRecipeLayout recipeLayout) {
+        recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
+        recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 73, 5);
     }
 
     @Override
