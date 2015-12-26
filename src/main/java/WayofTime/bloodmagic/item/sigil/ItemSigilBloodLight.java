@@ -35,24 +35,6 @@ public class ItemSigilBloodLight extends ItemSigilBase {
             if (world.isAirBlock(newPos)) {
                 world.setBlockState(newPos, ModBlocks.bloodLight.getDefaultState());
             }
-
-//            if (side == EnumFacing.DOWN && world.isAirBlock(newPos))
-//                world.setBlockState(blockPos.add(0, -1, 0), ModBlocks.bloodLight.getDefaultState());
-//
-//            if (side == EnumFacing.UP && world.isAirBlock(newPos))
-//                world.setBlockState(blockPos.add(0, 1, 0), ModBlocks.bloodLight.getDefaultState());
-//
-//            if (side == EnumFacing.NORTH && world.isAirBlock(newPos))
-//                world.setBlockState(blockPos.add(0, 0, -1), ModBlocks.bloodLight.getDefaultState());
-//
-//            if (side == EnumFacing.SOUTH && world.isAirBlock(newPos))
-//                world.setBlockState(blockPos.add(0, 0, 1), ModBlocks.bloodLight.getDefaultState());
-//
-//            if (side == EnumFacing.WEST && world.isAirBlock(newPos))
-//                world.setBlockState(blockPos.add(-1, 0, 0), ModBlocks.bloodLight.getDefaultState());
-//
-//            if (side == EnumFacing.EAST && world.isAirBlock(newPos))
-//                world.setBlockState(blockPos.add(1, 0, 0), ModBlocks.bloodLight.getDefaultState());
         }
 
         return true;
