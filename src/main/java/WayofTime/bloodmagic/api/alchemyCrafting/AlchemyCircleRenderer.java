@@ -9,13 +9,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-
 public class AlchemyCircleRenderer {
 
 	public float offsetFromFace = -0.9f;
 	public final ResourceLocation arrayResource;
 
+	public AlchemyCircleRenderer() {
+		this(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+	}
+	
 	public AlchemyCircleRenderer(ResourceLocation arrayResource) {
 		this.arrayResource = arrayResource;
 	}
