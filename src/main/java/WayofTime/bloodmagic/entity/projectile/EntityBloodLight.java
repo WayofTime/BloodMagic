@@ -97,28 +97,8 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
             EnumFacing sideHit = mop.sideHit;
             BlockPos blockPos = mop.getBlockPos().offset(sideHit);
 
-            if (sideHit == EnumFacing.DOWN && this.worldObj.isAirBlock(blockPos)) {
-                this.worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
-            }
-
-            if (sideHit == EnumFacing.UP && this.worldObj.isAirBlock(blockPos)) {
-                this.worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
-            }
-
-            if (sideHit == EnumFacing.NORTH && this.worldObj.isAirBlock(blockPos)) {
-                this.worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
-            }
-
-            if (sideHit == EnumFacing.SOUTH && this.worldObj.isAirBlock(blockPos)) {
-                this.worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
-            }
-
-            if (sideHit == EnumFacing.WEST && this.worldObj.isAirBlock(blockPos)) {
-                this.worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
-            }
-
-            if (sideHit == EnumFacing.EAST && this.worldObj.isAirBlock(blockPos)) {
-                this.worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
+            if (worldObj.isAirBlock(blockPos)) {
+                worldObj.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
             }
         }
 

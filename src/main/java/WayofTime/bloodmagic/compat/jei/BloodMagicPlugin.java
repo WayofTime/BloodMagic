@@ -6,22 +6,11 @@ import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
-<<<<<<< HEAD
 import WayofTime.bloodmagic.registry.ModBlocks;
 import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
-=======
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeHandler;
-import mezz.jei.api.recipe.IRecipeTransferHelper;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
->>>>>>> parent of d51a908... Update JEI compat
-
+@JEIPlugin
 public class BloodMagicPlugin implements IModPlugin {
 
     @Override
