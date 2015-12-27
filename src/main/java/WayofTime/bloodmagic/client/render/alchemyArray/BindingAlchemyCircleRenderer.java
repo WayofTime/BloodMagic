@@ -15,11 +15,16 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public float offsetFromFace = -0.9f;
 	public final ResourceLocation arrayResource;
 	public final ResourceLocation[] arraysResources;
-	
+
 	public final int numberOfSweeps = 5;
 	public final int startTime = 50;
 	public final int sweepTime = 40;
-	
+
+	public final int inwardRotationTime = 50;
+
+	public final float arcLength = (float) Math.sqrt(2*(2*2) - 2*2*2*Math.cos(2*Math.PI*2/5));
+	public final float theta2 = (float) (18f * Math.PI / 180f);
+
 	public final int endTime = 300;
 
 	public BindingAlchemyCircleRenderer() {
@@ -35,45 +40,46 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public float getAngleOfCircle(int circle, float craftTime) {
 		if (circle >= 0 && circle <= 4) {
 			float originalAngle = (float) (circle * 2 * Math.PI / 5d);
-			
+
 			double sweep = (craftTime - startTime)/sweepTime;
 			if(sweep >= 0 && sweep < numberOfSweeps) {
 				float offset = ((int)sweep)*sweepTime + startTime;
-				originalAngle += 2*Math.PI*2/5*((craftTime - offset)/sweepTime + (int)sweep);
+				originalAngle += 2*Math.PI*2/5*(int)sweep + getAngle(craftTime - offset, (int)sweep);
 			}else if(sweep >= numberOfSweeps)
 			{
 				originalAngle += 2*Math.PI*2/5*numberOfSweeps + (craftTime - 5*sweepTime - startTime)*2*Math.PI*2/5/sweepTime;
 			}
-			
+
 			return originalAngle;
 		}
 
 		return 0;
 	}
-	
+
 	public float getAngle(float craftTime, int sweep) {
-		return (float) (2*Math.PI*2/5*(craftTime)/sweepTime);
+		float rDP = craftTime/sweepTime*arcLength;
+		float rEnd = (float) Math.sqrt(rDP*rDP + 2*2 - 2*rDP*2*Math.cos(theta2));
+		return (float) (Math.acos((2*2 + rEnd*rEnd - rDP*rDP)/(2*rEnd*2)));
 	}
 
 	/**
 	 * Returns the center-to-center distance of this circle.
 	 */
-	public float getDistanceOfCircle(int circle, float craftTime) {
+	public float getDistanceOfCircle(int circle, float craftTime) { //TODO Change this so it doesn't use angle, since it is a constant speed.
 		double sweep = (craftTime - startTime)/sweepTime;
 		if(sweep >= 0 && sweep < numberOfSweeps) {
 			float offset = ((int)sweep)*sweepTime + startTime;
 			float angle = getAngle(craftTime - offset, (int) sweep);
-			float theta2 = (float) (Math.PI - 4*Math.PI/5)/2f;
 			float thetaPrime = (float) (Math.PI - theta2 - angle);
-			if(thetaPrime > 0 && thetaPrime < Math.PI) {
-				return (float) (2 * Math.sin(theta2) / Math.sin(thetaPrime));
-			}
+//			if(thetaPrime > 0 && thetaPrime < Math.PI) {
+			return (float) (2 * Math.sin(theta2) / Math.sin(thetaPrime));
+//			}
 		} else if(sweep >= numberOfSweeps && craftTime < endTime) {
 			return 2 - 2 * (craftTime - startTime - numberOfSweeps * sweepTime) / (endTime - startTime - numberOfSweeps * sweepTime);
 		} else if(craftTime >= endTime) {
 			return 0;
 		}
-		
+
 		return 2;
 	}
 
@@ -121,6 +127,19 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		return 0;
 	}
 
+	public float getInwardRotation(int circle, float craftTime) {
+		float offset = startTime + numberOfSweeps * sweepTime;
+		if(craftTime >= offset) {
+			if(craftTime <= offset + inwardRotationTime) {
+				return 90f / inwardRotationTime * (craftTime - offset);
+			} else {
+				return 90;
+			}
+		}
+
+		return 0;
+	}
+
 	public void renderAt(TileEntity tile, double x, double y, double z, float craftTime) {
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer wr = tessellator.getWorldRenderer();
@@ -128,7 +147,6 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		GlStateManager.pushMatrix();
 
 		float rot = getRotation(-1, craftTime);
-		float secondaryRot = getSecondaryRotation(craftTime);
 
 		float size = 3.0F;
 
@@ -142,32 +160,32 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		GlStateManager.translate(x, y, z);
 
 		EnumFacing sideHit = EnumFacing.UP; // Specify which face this "circle"
-											// is located on
+		// is located on
 		GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
 		switch (sideHit) {
-		case DOWN:
-			GlStateManager.translate(0, 0, 1);
-			GlStateManager.rotate(-90.0f, 1, 0, 0);
-			break;
-		case EAST:
-			GlStateManager.rotate(-90.0f, 0, 1, 0);
-			GlStateManager.translate(0, 0, -1);
-			break;
-		case NORTH:
-			break;
-		case SOUTH:
-			GlStateManager.rotate(180.0f, 0, 1, 0);
-			GlStateManager.translate(-1, 0, -1);
-			break;
-		case UP:
-			GlStateManager.translate(0, 1, 0);
-			GlStateManager.rotate(90.0f, 1, 0, 0);
-			break;
-		case WEST:
-			GlStateManager.translate(0, 0, 1);
-			GlStateManager.rotate(90.0f, 0, 1, 0);
-			break;
+			case DOWN:
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(-90.0f, 1, 0, 0);
+				break;
+			case EAST:
+				GlStateManager.rotate(-90.0f, 0, 1, 0);
+				GlStateManager.translate(0, 0, -1);
+				break;
+			case NORTH:
+				break;
+			case SOUTH:
+				GlStateManager.rotate(180.0f, 0, 1, 0);
+				GlStateManager.translate(-1, 0, -1);
+				break;
+			case UP:
+				GlStateManager.translate(0, 1, 0);
+				GlStateManager.rotate(90.0f, 1, 0, 0);
+				break;
+			case WEST:
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90.0f, 0, 1, 0);
+				break;
 		}
 
 		GlStateManager.pushMatrix();
@@ -181,8 +199,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		// GlStateManager.color(0.5f, 1f, 1f, 1f);
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(rot, 0, 0, 1);
-		// GlStateManager.rotate(secondaryRot, 1, 0, 0);
-		// GlStateManager.rotate(secondaryRot * 0.45812f, 0, 0, 1);
+
 		wr.begin(7, DefaultVertexFormats.POSITION_TEX);
 		// wr.setBrightness(200);
 		wr.pos(size / 2f, size / 2f, 0.0D).tex(var33, var37).endVertex();
@@ -199,8 +216,10 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 			float distance = this.getDistanceOfCircle(i, craftTime);
 			float angle = this.getAngleOfCircle(i, craftTime);
 			float rotation = this.getRotation(i, craftTime);
-			
+
 			GlStateManager.translate(distance * Math.sin(angle), -distance * Math.cos(angle), this.getVerticalOffset(i, craftTime));
+			GlStateManager.rotate(i * 360/5, 0, 0, 1);
+			GlStateManager.rotate(getInwardRotation(i, craftTime), 1, 0, 0);
 			GlStateManager.rotate(rotation, 0, 0, 1);
 			wr.begin(7, DefaultVertexFormats.POSITION_TEX);
 			wr.pos(newSize / 2f, newSize / 2f, 0.0D).tex(var33, var37).endVertex();
