@@ -23,7 +23,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public final int endTime = 300;
 
 	public BindingAlchemyCircleRenderer() {
-		this.arrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png");
+		this.arrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingArray.png");
 		arraysResources = new ResourceLocation[5];
 		arraysResources[0] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/AirSigil.png");
 		arraysResources[1] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png");
