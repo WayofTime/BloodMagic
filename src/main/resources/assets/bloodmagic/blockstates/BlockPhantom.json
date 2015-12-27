@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "normal": {
+            "model": "bloodmagic:BlockPhantom",
+            "textures": {
+                "all": "bloodmagic:blocks/PhantomBlock"
+            }
+        }
+    }
+}

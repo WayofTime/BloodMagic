@@ -24,7 +24,7 @@ public class ItemSigilWater extends ItemSigilBase {
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (!world.isRemote && !isUnusable(stack)) {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
 
             if (movingobjectposition != null) {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
@@ -47,12 +47,10 @@ public class ItemSigilWater extends ItemSigilBase {
                         return stack;
                     }
 
-                    if (this.canPlaceWater(world, blockpos1) && syphonBatteries(stack, player, getEnergyUsed())) {
-                        this.tryPlaceWater(world, blockpos1);
+                    if (this.canPlaceWater(world, blockpos1) && syphonBatteries(stack, player, getEnergyUsed()) && this.tryPlaceWater(world, blockpos1)) {
+                        return stack;
                     }
                 }
-            } else {
-                return stack;
             }
 
             if (!player.capabilities.isCreativeMode)
@@ -87,32 +85,27 @@ public class ItemSigilWater extends ItemSigilBase {
 //            return false;
 //        }
 
-        {
-            int x = blockPos.getX();
-            int y = blockPos.getY();
-            int z = blockPos.getZ();
+        BlockPos newPos = blockPos.offset(side);
 
-            if (side.getIndex() == 0) --y;
-            if (side.getIndex() == 1) ++y;
-            if (side.getIndex() == 2) --z;
-            if (side.getIndex() == 3) ++z;
-            if (side.getIndex() == 4) --x;
-            if (side.getIndex() == 5) ++x;
+        if (!player.canPlayerEdit(newPos, side, stack)) {
+            return false;
+        }
 
-            if (!player.canPlayerEdit(new BlockPos(x, y, z), side, stack)) {
-                return false;
-            }
-
-            if (this.canPlaceWater(world, new BlockPos(x, y, z)) && syphonBatteries(stack, player, getEnergyUsed())) {
-                return this.tryPlaceWater(world, new BlockPos(x, y, z));
-            }
+        if (this.canPlaceWater(world, newPos) && syphonBatteries(stack, player, getEnergyUsed())) {
+            return this.tryPlaceWater(world, newPos);
         }
 
         return false;
     }
 
     public boolean canPlaceWater(World world, BlockPos blockPos) {
-        return (world.isAirBlock(blockPos) && !world.getBlockState(blockPos).getBlock().getMaterial().isSolid()) && !((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0);
+        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid()) {
+            return false;
+        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean tryPlaceWater(World worldIn, BlockPos pos) {

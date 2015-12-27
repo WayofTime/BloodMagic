@@ -2,24 +2,24 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
-import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.TileInventory;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class ItemSigilDivination extends ItemSigilBase implements IAltarReader {
+public class ItemSigilSeer extends ItemSigilBase implements IAltarReader {
 
-    public ItemSigilDivination() {
-        super("divination");
+    public ItemSigilSeer() {
+        super("seer");
     }
 
     @Override
@@ -48,8 +48,17 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader {
                         currentEssence = altar.getCurrentBlood();
                         int capacity = altar.getCapacity();
                         altar.checkTier();
-                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
-
+                        if (tile instanceof IInventory) {
+                            if (((IInventory) tile).getStackInSlot(0) != null) {
+                                int progress = altar.getProgress();
+                                int totalLiquidRequired = altar.getLiquidRequired() * ((IInventory) tile).getStackInSlot(0).stackSize;
+                                int consumptionRate = (int) (altar.getConsumptionRate() * (altar.getConsumptionMultiplier() + 1));
+                                ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), TextHelper.localize(tooltipBase + "currentAltarConsumptionRate", consumptionRate), TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+                            }
+                            else {
+                                ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+                            }
+                        }
                     } else {
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
                     }

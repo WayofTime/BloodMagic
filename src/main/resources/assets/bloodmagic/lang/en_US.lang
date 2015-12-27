@@ -66,6 +66,14 @@ item.BloodMagic.sigil.divination.name=Divination Sigil
 item.BloodMagic.sigil.water.name=Water Sigil
 item.BloodMagic.sigil.lava.name=Lava Sigil
 item.BloodMagic.sigil.void.name=Void Sigil
+item.BloodMagic.sigil.greenGrove.name=Sigil of the Green Grove
+item.BloodMagic.sigil.elementalAffinity.name=Sigil of Elemental Affinity
+item.BloodMagic.sigil.haste.name=Sigil of Haste
+item.BloodMagic.sigil.suppression.name=Sigil of Suppression
+item.BloodMagic.sigil.magnetism.name=Sigil of Magnetism
+item.BloodMagic.sigil.fastMiner.name=Sigil of the Fast Miner
+item.BloodMagic.sigil.seer.name=Seer's Sigil
+item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
 
 item.BloodMagic.altarMaker.name=Altar Maker
 
@@ -104,8 +112,11 @@ tile.BloodMagic.bloodLight.name=Blood Light
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s
-tooltip.BloodMagic.currentOwner=Owner: %s
+tooltip.BloodMagic.currentOwner=Current owner: %s
 tooltip.BloodMagic.currentTier=Current tier: %d
+
+tooltip.BloodMagic.activated=Activated
+tooltip.BloodMagic.deactivated=Deactivated
 
 tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
 tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
@@ -117,6 +128,19 @@ tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Current Capacity: %d LP
 tooltip.BloodMagic.sigil.water.desc=&oInfinite water, anyone?
 tooltip.BloodMagic.sigil.lava.desc=&oHOT! DO NOT EAT
 tooltip.BloodMagic.sigil.void.desc=&oBetter than a Swiffer®!
+tooltip.BloodMagic.sigil.greenGrove.desc=&oEnvironmentally friendly
+tooltip.BloodMagic.sigil.magnetism.desc=&oI have a very magnetic personality
+tooltip.BloodMagic.sigil.suppression.desc=&oBetter than telekinesis...
+tooltip.BloodMagic.sigil.haste.desc=&o42 doses of caffeine later...
+tooltip.BloodMagic.sigil.fastMiner.desc=&oKeep mining, and mining...
+tooltip.BloodMagic.sigil.elementalAffinity.desc=&oFalling fire fishes!
+tooltip.BloodMagic.sigil.seer.desc=&oWhen seeing all is not enough
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=Current Progress: %d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=Consumption Rate: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarTier=Current Tier: %d
+tooltip.BloodMagic.sigil.seer.currentEssence=Current Essence: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Current Capacity: %d LP
+tooltip.BloodMagic.sigil.phantomBridge.desc=Walking in thin air...
 
 tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
 tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar
