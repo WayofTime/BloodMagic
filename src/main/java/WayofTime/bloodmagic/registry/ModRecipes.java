@@ -4,6 +4,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.alchemyArray.CraftingArrayEffectBinding;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
@@ -50,6 +51,6 @@ public class ModRecipes {
     
     public static void addAlchemyArrayRecipes() {
     	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(Items.redstone), new ItemStack(ModItems.slate), new ItemStack(Items.diamond), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png"));
-    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(Items.diamond), new ItemStack(ModItems.slate), new ItemStack(Blocks.diamond_block), new BindingAlchemyCircleRenderer());
+    	AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.diamond), new ItemStack(ModItems.slate), new CraftingArrayEffectBinding(new ItemStack(Blocks.diamond_block)), new BindingAlchemyCircleRenderer());
     }
 }

@@ -46,6 +46,11 @@ public class ModItems {
     public static Item sigilMagnetism;
     public static Item sigilSuppression;
     public static Item sigilFastMiner;
+    public static Item sigilSeer;
+    public static Item sigilEnderSeverance;
+    public static Item sigilHurricane;
+    public static Item sigilPhantomBridge;
+    public static Item sigilCompression;
 
     public static Item livingArmourHelmet;
     public static Item livingArmourChest;
@@ -91,6 +96,8 @@ public class ModItems {
         sigilSuppression = registerItem(new ItemSigilSuppression());
         sigilHaste = registerItem(new ItemSigilHaste());
         sigilFastMiner = registerItem(new ItemSigilFastMiner());
+        sigilSeer = registerItem(new ItemSigilSeer());
+        sigilPhantomBridge = registerItem(new ItemSigilPhantomBridge());
 
         livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
@@ -153,6 +160,9 @@ public class ModItems {
         renderHelper.itemRender(sigilHaste, 1);
         renderHelper.itemRender(sigilFastMiner, 0);
         renderHelper.itemRender(sigilFastMiner, 1);
+        renderHelper.itemRender(sigilSeer);
+        renderHelper.itemRender(sigilPhantomBridge, 0);
+        renderHelper.itemRender(sigilPhantomBridge, 1);
 
         renderHelper.itemRender(livingArmourHelmet);
         renderHelper.itemRender(livingArmourChest);

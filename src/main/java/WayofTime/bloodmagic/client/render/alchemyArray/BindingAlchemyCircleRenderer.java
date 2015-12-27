@@ -15,6 +15,12 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public float offsetFromFace = -0.9f;
 	public final ResourceLocation arrayResource;
 	public final ResourceLocation[] arraysResources;
+	
+	public final int numberOfSweeps = 5;
+	public final int startTime = 50;
+	public final int sweepTime = 40;
+	
+	public final int endTime = 300;
 
 	public BindingAlchemyCircleRenderer() {
 		this.arrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png");
@@ -28,21 +34,54 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 
 	public float getAngleOfCircle(int circle, float craftTime) {
 		if (circle >= 0 && circle <= 4) {
-			return (float) (circle * 2 * Math.PI / 5d);
+			float originalAngle = (float) (circle * 2 * Math.PI / 5d);
+			
+			double sweep = (craftTime - startTime)/sweepTime;
+			if(sweep >= 0 && sweep < numberOfSweeps) {
+				float offset = ((int)sweep)*sweepTime + startTime;
+				originalAngle += 2*Math.PI*2/5*((craftTime - offset)/sweepTime + (int)sweep);
+			}else if(sweep >= numberOfSweeps)
+			{
+				originalAngle += 2*Math.PI*2/5*numberOfSweeps + (craftTime - 5*sweepTime - startTime)*2*Math.PI*2/5/sweepTime;
+			}
+			
+			return originalAngle;
 		}
 
 		return 0;
+	}
+	
+	public float getAngle(float craftTime, int sweep) {
+		return (float) (2*Math.PI*2/5*(craftTime)/sweepTime);
 	}
 
 	/**
 	 * Returns the center-to-center distance of this circle.
 	 */
 	public float getDistanceOfCircle(int circle, float craftTime) {
+		double sweep = (craftTime - startTime)/sweepTime;
+		if(sweep >= 0 && sweep < numberOfSweeps) {
+			float offset = ((int)sweep)*sweepTime + startTime;
+			float angle = getAngle(craftTime - offset, (int) sweep);
+			float theta2 = (float) (Math.PI - 4*Math.PI/5)/2f;
+			float thetaPrime = (float) (Math.PI - theta2 - angle);
+			if(thetaPrime > 0 && thetaPrime < Math.PI) {
+				return (float) (2 * Math.sin(theta2) / Math.sin(thetaPrime));
+			}
+		} else if(sweep >= numberOfSweeps && craftTime < endTime) {
+			return 2 - 2 * (craftTime - startTime - numberOfSweeps * sweepTime) / (endTime - startTime - numberOfSweeps * sweepTime);
+		} else if(craftTime >= endTime) {
+			return 0;
+		}
+		
 		return 2;
 	}
 
 	public float getRotation(int circle, float craftTime) {
 		float offset = 2;
+		if(circle == -1) {
+			return (float) (craftTime * 360 * 2/5/sweepTime);
+		}
 		if (craftTime >= offset) {
 			float modifier = (float) Math.pow(craftTime - offset, 1.5);
 			return modifier * 0.5f;
@@ -88,7 +127,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 
 		GlStateManager.pushMatrix();
 
-		float rot = getRotation(craftTime);
+		float rot = getRotation(-1, craftTime);
 		float secondaryRot = getSecondaryRotation(craftTime);
 
 		float size = 3.0F;
@@ -141,7 +180,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 
 		// GlStateManager.color(0.5f, 1f, 1f, 1f);
 		GlStateManager.pushMatrix();
-		// GlStateManager.rotate(rot, 0, 0, 1);
+		GlStateManager.rotate(rot, 0, 0, 1);
 		// GlStateManager.rotate(secondaryRot, 1, 0, 0);
 		// GlStateManager.rotate(secondaryRot * 0.45812f, 0, 0, 1);
 		wr.begin(7, DefaultVertexFormats.POSITION_TEX);

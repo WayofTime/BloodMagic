@@ -72,6 +72,8 @@ item.BloodMagic.sigil.haste.name=Sigil of Haste
 item.BloodMagic.sigil.suppression.name=Sigil of Suppression
 item.BloodMagic.sigil.magnetism.name=Sigil of Magnetism
 item.BloodMagic.sigil.fastMiner.name=Sigil of the Fast Miner
+item.BloodMagic.sigil.seer.name=Seer's Sigil
+item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
 
 item.BloodMagic.altarMaker.name=Altar Maker
 
@@ -132,6 +134,13 @@ tooltip.BloodMagic.sigil.suppression.desc=&oBetter than telekinesis...
 tooltip.BloodMagic.sigil.haste.desc=&o42 doses of caffeine later...
 tooltip.BloodMagic.sigil.fastMiner.desc=&oKeep mining, and mining...
 tooltip.BloodMagic.sigil.elementalAffinity.desc=&oFalling fire fishes!
+tooltip.BloodMagic.sigil.seer.desc=&oWhen seeing all is not enough
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=Current Progress: %d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=Consumption Rate: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarTier=Current Tier: %d
+tooltip.BloodMagic.sigil.seer.currentEssence=Current Essence: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Current Capacity: %d LP
+tooltip.BloodMagic.sigil.phantomBridge.desc=Walking in thin air...
 
 tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
 tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar
