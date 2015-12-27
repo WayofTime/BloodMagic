@@ -527,6 +527,18 @@ public class BloodAltar {
         return dislocationMultiplier;
     }
 
+    public float getConsumptionMultiplier() {
+        return consumptionMultiplier;
+    }
+
+    public float getConsumptionRate() {
+        return consumptionRate;
+    }
+
+    public int getLiquidRequired() {
+        return liquidRequired;
+    }
+
     public int getBufferCapacity() {
         return bufferCapacity;
     }
