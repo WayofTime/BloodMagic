@@ -10,11 +10,11 @@ public interface IMasterRitualStone {
 
     String getOwner();
 
-    boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator);
+    boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual);
 
-    void performRitual(World world, BlockPos pos, Ritual ritual);
+    void performRitual(World world, BlockPos pos);
 
-    void stopRitual();
+    void stopRitual(Ritual.BreakType breakType);
 
     int getCooldown();
 
