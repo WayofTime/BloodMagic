@@ -10,8 +10,11 @@ import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
 import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
+
+import java.util.Collections;
 
 @JEIPlugin
 public class BloodMagicPlugin implements IModPlugin {
@@ -40,6 +43,8 @@ public class BloodMagicPlugin implements IModPlugin {
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
         registry.addRecipes(AlchemyArrayCraftingRecipeMaker.getRecipes());
+
+        registry.addDescription(Collections.singletonList(new ItemStack(ModItems.altarMaker)), "jei.BloodMagic.desc.altarBuilder");
     }
 
     @Override
