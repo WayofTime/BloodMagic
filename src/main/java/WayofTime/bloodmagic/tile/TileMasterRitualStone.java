@@ -8,12 +8,14 @@ import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.util.ChatUtil;
 import com.google.common.base.Strings;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,48 +31,82 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @NoArgsConstructor
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable {
 
-    public static final int REFRESH_TIME = 0;
+    public static final int REFRESH_TIME = 20;
 
     private String owner;
     private boolean active;
     private int activeTime;
     private int cooldown;
     private Ritual currentRitual;
+    @Setter
     private EnumFacing direction;
 
-    public void readClientNBT(NBTTagCompound tag) {
+    @Override
+    public void update() {
+        if (getCurrentRitual() != null && isActive()) {
+            if (activeTime % REFRESH_TIME == 0)
+                performRitual(getWorld(), getPos());
+
+            activeTime++;
+        }
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        owner = tag.getString(Constants.NBT.OWNER_NAME);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
     }
 
-    public void writeClientNBT(NBTTagCompound tag) {
-        tag.setString(Constants.NBT.CURRENT_RITUAL, RitualRegistry.getIdForRitual(currentRitual));
-        tag.setBoolean(Constants.NBT.IS_RUNNING, active);
-        tag.setInteger(Constants.NBT.RUNTIME, activeTime);
+    @Override
+    public void writeToNBT(NBTTagCompound tag) {
+        String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
+        tag.setString(Constants.NBT.OWNER_NAME, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
+        tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
+        tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
+        tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
     }
 
     @Override
-    public void update() {
+    public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual) {
 
-    }
+        if (PlayerHelper.isFakePlayer(activator))
+            return false;
 
-    @Override
-    public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator) {
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_NAME);
-        Ritual ritual = RitualRegistry.getRitualForId("");
 
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
 
+                    SoulNetwork network = NetworkHelper.getSoulNetwork(activator.getDisplayNameString(), getWorld());
+
+                    if (network.getCurrentEssence() < ritual.getActivationCost()) {
+                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
+                        return false;
+                    }
+
+                    if (currentRitual != null)
+                        currentRitual.stopRitual(this, Ritual.BreakType.ACTIVATE);
+
                     RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
 
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
                         ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
                         return false;
+                    }
+
+                    if (ritual.activateRitual(this, activator)) {
+                        network.syphon(ritual.getActivationCost());
+
+                        this.active = true;
+                        this.owner = activator.getDisplayNameString();
+                        this.currentRitual = ritual;
+
+                        return true;
                     }
                 }
             }
@@ -80,17 +116,32 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public void performRitual(World world, BlockPos pos, Ritual ritual) {
-        if (ritual != null && RitualRegistry.ritualEnabled(ritual)) {
+    public void performRitual(World world, BlockPos pos) {
+        if (getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), null)) {
+            RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
+
+            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                return;
+
             SoulNetwork network = NetworkHelper.getSoulNetwork(getOwner(), getWorld());
-            network.syphonAndDamage(ritual.getRefreshCost());
-            ritual.performEffect(this);
+            network.syphonAndDamage(getCurrentRitual().getRefreshCost());
+            getCurrentRitual().performRitual(this);
         }
     }
 
     @Override
-    public void stopRitual() {
+    public void stopRitual(Ritual.BreakType breakType) {
+        if (getCurrentRitual() != null) {
+            RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
+            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                return;
+
+            getCurrentRitual().stopRitual(this, breakType);
+            this.currentRitual = null;
+            this.active = false;
+            this.activeTime = 0;
+        }
     }
 
     @Override

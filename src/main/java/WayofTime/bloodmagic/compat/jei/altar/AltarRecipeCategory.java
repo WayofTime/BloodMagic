@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import mezz.jei.api.JEIManager;
 import mezz.jei.api.gui.IDrawable;
@@ -18,7 +19,7 @@ public class AltarRecipeCategory implements IRecipeCategory {
     private static final int OUTPUT_SLOT = 1;
 
     @Nonnull
-    private final IDrawable background = JEIManager.guiHelper.createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/altar.png"), 3, 4, 155, 65);
+    private final IDrawable background = BloodMagicPlugin.jeiHelper.getGuiHelper().createDrawable(new ResourceLocation(Constants.Mod.DOMAIN + "gui/jei/altar.png"), 3, 4, 155, 65);
     @Nonnull
     private final String localizedName = TextHelper.localize("jei.BloodMagic.recipe.altar");
 

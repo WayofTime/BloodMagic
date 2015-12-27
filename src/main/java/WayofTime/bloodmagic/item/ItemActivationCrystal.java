@@ -43,22 +43,6 @@ public class ItemActivationCrystal extends ItemBindable {
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.activationCrystal." + names[stack.getItemDamage()]));
 
         super.addInformation(stack, player, tooltip, advanced);
-
-//        if (stack.getItemDamage() == 1) {
-//            if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-//                ItemStack[] recipe = AlchemyRecipeRegistry.getRecipeForItemStack(stack);
-//
-//                if (recipe != null) {
-//                    tooltip.add(TextHelper.getFormattedText(StatCollector.translateToLocal("tooltip.alchemy.recipe")));
-//
-//                    for (ItemStack item : recipe)
-//                        if (item != null)
-//                            tooltip.add(item.getDisplayName());
-//                }
-//            } else {
-//                tooltip.add(TextHelper.getFormattedText(StatCollector.translateToLocal("tooltip.alchemy.pressShift")));
-//            }
-//        }
     }
 
     public int getCrystalLevel(ItemStack stack) {
