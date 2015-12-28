@@ -16,28 +16,28 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public final ResourceLocation arrayResource;
 	public final ResourceLocation[] arraysResources;
 	
-	public final int numberOfSweeps = 5;
-	public final int startTime = 50;
-	public final int sweepTime = 40;
+	public static final int numberOfSweeps = 5;
+	public static final int startTime = 50;
+	public static final int sweepTime = 40;
 	
-	public final int inwardRotationTime = 50;
+	public static final int inwardRotationTime = 50;
 	
-	public final float arcLength = (float) Math.sqrt(2*(2*2) - 2*2*2*Math.cos(2*Math.PI*2/5));
-	public final float theta2 = (float) (18f * Math.PI / 180f);
+	public static final float arcLength = (float) Math.sqrt(2*(2*2) - 2*2*2*Math.cos(2*Math.PI*2/5));
+	public static final float theta2 = (float) (18f * Math.PI / 180f);
 	
-	public final int endTime = 300;
+	public static final int endTime = 300;
 
 	public BindingAlchemyCircleRenderer() {
 		this.arrayResource = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingArray.png");
 		arraysResources = new ResourceLocation[5];
-		arraysResources[0] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/AirSigil.png");
-		arraysResources[1] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png");
-		arraysResources[2] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WaterSigil.png");
-		arraysResources[3] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/VoidSigil.png");
-		arraysResources[4] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/GrowthSigil.png");
+		arraysResources[0] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
+		arraysResources[1] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
+		arraysResources[2] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
+		arraysResources[3] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
+		arraysResources[4] = new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BindingLightningArray.png");
 	}
 
-	public float getAngleOfCircle(int circle, float craftTime) {
+	public static float getAngleOfCircle(int circle, float craftTime) {
 		if (circle >= 0 && circle <= 4) {
 			float originalAngle = (float) (circle * 2 * Math.PI / 5d);
 			
@@ -56,7 +56,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		return 0;
 	}
 	
-	public float getAngle(float craftTime, int sweep) {
+	public static float getAngle(float craftTime, int sweep) {
 		float rDP = craftTime/sweepTime*arcLength;
 		float rEnd = (float) Math.sqrt(rDP*rDP + 2*2 - 2*rDP*2*Math.cos(theta2));
 		return (float) (Math.acos((2*2 + rEnd*rEnd - rDP*rDP)/(2*rEnd*2)));
@@ -65,7 +65,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	/**
 	 * Returns the center-to-center distance of this circle.
 	 */
-	public float getDistanceOfCircle(int circle, float craftTime) { //TODO Change this so it doesn't use angle, since it is a constant speed.
+	public static float getDistanceOfCircle(int circle, float craftTime) { //TODO Change this so it doesn't use angle, since it is a constant speed.
 		double sweep = (craftTime - startTime)/sweepTime;
 		if(sweep >= 0 && sweep < numberOfSweeps) {
 			float offset = ((int)sweep)*sweepTime + startTime;
