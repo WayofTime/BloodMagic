@@ -18,6 +18,12 @@ public interface IBloodAltar {
 
     float getDislocationMultiplier();
 
+    float getConsumptionMultiplier();
+
+    float getConsumptionRate();
+
+    int getLiquidRequired();
+
     int getBufferCapacity();
 
     void sacrificialDaggerCall(int amount, boolean b);

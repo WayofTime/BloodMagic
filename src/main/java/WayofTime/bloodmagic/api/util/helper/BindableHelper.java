@@ -48,7 +48,7 @@ public class BindableHelper {
             return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
