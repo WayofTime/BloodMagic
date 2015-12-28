@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "normal": {
+            "model": "bloodmagic:BlockSpectral",
+            "textures": {
+                "all": "bloodmagic:blocks/SpectralBlock"
+            }
+        }
+    }
+}

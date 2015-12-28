@@ -52,6 +52,13 @@ public class Constants {
         public static final String ALTAR_COOLDOWN_AFTER_CRAFTING = "cooldownAfterCrafting";
 
         public static final String ALTARMAKER_CURRENT_TIER = "currentTier";
+
+        public static final String PROJECTILE_TICKS_IN_AIR = "projectileTicksInAir";
+        public static final String PROJECTILE_MAX_TICKS_IN_AIR = "projectileMaxTicksInAir";
+
+        public static final String TICKS_REMAINING = "ticksRemaining";
+        public static final String CONTAINED_BLOCK_NAME = "containedBlockName";
+        public static final String CONTAINED_BLOCK_META = "containedBlockMeta";
     }
 
     public static class Mod {

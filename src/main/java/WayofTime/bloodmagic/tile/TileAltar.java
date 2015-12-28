@@ -156,6 +156,21 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
 		return bloodAltar.getDislocationMultiplier();
 	}
 
+    @Override
+    public float getConsumptionMultiplier() {
+        return bloodAltar.getConsumptionMultiplier();
+    }
+
+    @Override
+    public float getConsumptionRate() {
+        return bloodAltar.getConsumptionRate();
+    }
+
+    @Override
+    public int getLiquidRequired() {
+        return bloodAltar.getLiquidRequired();
+    }
+
 	@Override
 	public int getBufferCapacity() {
 		return bloodAltar.getBufferCapacity();
