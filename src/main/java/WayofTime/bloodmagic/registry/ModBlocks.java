@@ -62,7 +62,7 @@ public class ModBlocks {
     }
 
     public static void initRenders() {
-        InventoryRenderHelper renderHelper = BloodMagic.instance.getRenderHelper();
+        InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         renderHelper.fluidRender(lifeEssence);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 0);

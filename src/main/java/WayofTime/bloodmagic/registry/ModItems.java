@@ -132,7 +132,7 @@ public class ModItems {
     }
 
     public static void initRenders() {
-        InventoryRenderHelper renderHelper = BloodMagic.instance.getRenderHelper();
+        InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         renderHelper.itemRenderAll(bloodOrb);
         OrbRegistry.registerOrbTexture(orbWeak, Constants.Mod.DOMAIN + "ItemBloodOrbWeak");

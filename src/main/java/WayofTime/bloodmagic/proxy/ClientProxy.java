@@ -17,8 +17,18 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 
+    private InventoryRenderHelper renderHelper;
+
+    @Override
+    public InventoryRenderHelper getRenderHelper() {
+        return renderHelper;
+    }
+
     @Override
     public void preInit() {
+
+        renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
+
         ModBlocks.initRenders();
         ModItems.initRenders();
 

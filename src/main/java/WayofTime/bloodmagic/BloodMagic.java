@@ -36,7 +36,6 @@ public class BloodMagic {
         }
     };
 
-    private InventoryRenderHelper renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
     private LogHelper logger = new LogHelper(Constants.Mod.MODID);
     private File configDir;
 
