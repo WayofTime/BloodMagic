@@ -15,16 +15,16 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public float offsetFromFace = -0.9f;
 	public final ResourceLocation arrayResource;
 	public final ResourceLocation[] arraysResources;
-	
+
 	public final int numberOfSweeps = 5;
 	public final int startTime = 50;
 	public final int sweepTime = 40;
-	
+
 	public final int inwardRotationTime = 50;
-	
+
 	public final float arcLength = (float) Math.sqrt(2*(2*2) - 2*2*2*Math.cos(2*Math.PI*2/5));
 	public final float theta2 = (float) (18f * Math.PI / 180f);
-	
+
 	public final int endTime = 300;
 
 	public BindingAlchemyCircleRenderer() {
@@ -40,7 +40,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 	public float getAngleOfCircle(int circle, float craftTime) {
 		if (circle >= 0 && circle <= 4) {
 			float originalAngle = (float) (circle * 2 * Math.PI / 5d);
-			
+
 			double sweep = (craftTime - startTime)/sweepTime;
 			if(sweep >= 0 && sweep < numberOfSweeps) {
 				float offset = ((int)sweep)*sweepTime + startTime;
@@ -49,13 +49,13 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 			{
 				originalAngle += 2*Math.PI*2/5*numberOfSweeps + (craftTime - 5*sweepTime - startTime)*2*Math.PI*2/5/sweepTime;
 			}
-			
+
 			return originalAngle;
 		}
 
 		return 0;
 	}
-	
+
 	public float getAngle(float craftTime, int sweep) {
 		float rDP = craftTime/sweepTime*arcLength;
 		float rEnd = (float) Math.sqrt(rDP*rDP + 2*2 - 2*rDP*2*Math.cos(theta2));
@@ -72,14 +72,14 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 			float angle = getAngle(craftTime - offset, (int) sweep);
 			float thetaPrime = (float) (Math.PI - theta2 - angle);
 //			if(thetaPrime > 0 && thetaPrime < Math.PI) {
-				return (float) (2 * Math.sin(theta2) / Math.sin(thetaPrime));
+			return (float) (2 * Math.sin(theta2) / Math.sin(thetaPrime));
 //			}
 		} else if(sweep >= numberOfSweeps && craftTime < endTime) {
 			return 2 - 2 * (craftTime - startTime - numberOfSweeps * sweepTime) / (endTime - startTime - numberOfSweeps * sweepTime);
 		} else if(craftTime >= endTime) {
 			return 0;
 		}
-		
+
 		return 2;
 	}
 
@@ -126,7 +126,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		}
 		return 0;
 	}
-	
+
 	public float getInwardRotation(int circle, float craftTime) {
 		float offset = startTime + numberOfSweeps * sweepTime;
 		if(craftTime >= offset) {
@@ -136,7 +136,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 				return 90;
 			}
 		}
-		
+
 		return 0;
 	}
 
@@ -160,32 +160,32 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 		GlStateManager.translate(x, y, z);
 
 		EnumFacing sideHit = EnumFacing.UP; // Specify which face this "circle"
-											// is located on
+		// is located on
 		GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
 		switch (sideHit) {
-		case DOWN:
-			GlStateManager.translate(0, 0, 1);
-			GlStateManager.rotate(-90.0f, 1, 0, 0);
-			break;
-		case EAST:
-			GlStateManager.rotate(-90.0f, 0, 1, 0);
-			GlStateManager.translate(0, 0, -1);
-			break;
-		case NORTH:
-			break;
-		case SOUTH:
-			GlStateManager.rotate(180.0f, 0, 1, 0);
-			GlStateManager.translate(-1, 0, -1);
-			break;
-		case UP:
-			GlStateManager.translate(0, 1, 0);
-			GlStateManager.rotate(90.0f, 1, 0, 0);
-			break;
-		case WEST:
-			GlStateManager.translate(0, 0, 1);
-			GlStateManager.rotate(90.0f, 0, 1, 0);
-			break;
+			case DOWN:
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(-90.0f, 1, 0, 0);
+				break;
+			case EAST:
+				GlStateManager.rotate(-90.0f, 0, 1, 0);
+				GlStateManager.translate(0, 0, -1);
+				break;
+			case NORTH:
+				break;
+			case SOUTH:
+				GlStateManager.rotate(180.0f, 0, 1, 0);
+				GlStateManager.translate(-1, 0, -1);
+				break;
+			case UP:
+				GlStateManager.translate(0, 1, 0);
+				GlStateManager.rotate(90.0f, 1, 0, 0);
+				break;
+			case WEST:
+				GlStateManager.translate(0, 0, 1);
+				GlStateManager.rotate(90.0f, 0, 1, 0);
+				break;
 		}
 
 		GlStateManager.pushMatrix();
@@ -216,7 +216,7 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer {
 			float distance = this.getDistanceOfCircle(i, craftTime);
 			float angle = this.getAngleOfCircle(i, craftTime);
 			float rotation = this.getRotation(i, craftTime);
-			
+
 			GlStateManager.translate(distance * Math.sin(angle), -distance * Math.cos(angle), this.getVerticalOffset(i, craftTime));
 			GlStateManager.rotate(i * 360/5, 0, 0, 1);
 			GlStateManager.rotate(getInwardRotation(i, craftTime), 1, 0, 0);
