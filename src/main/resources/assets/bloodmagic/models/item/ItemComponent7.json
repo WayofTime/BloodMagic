@@ -1,0 +1,10 @@
+{
+  "parent":"bloodmagic:item/ItemModelBase",
+  "textures": {
+    "layer0":"bloodmagic:items/ReagentSight"
+  }
+}
+
+
+
+

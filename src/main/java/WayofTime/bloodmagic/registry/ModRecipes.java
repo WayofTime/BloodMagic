@@ -50,7 +50,14 @@ public class ModRecipes {
     }
     
     public static void addAlchemyArrayRecipes() {
-    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(Items.redstone), new ItemStack(ModItems.slate), new ItemStack(Items.diamond), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png"));
     	AlchemyArrayRecipeRegistry.registerRecipe(new ItemStack(Items.diamond), new ItemStack(ModItems.slate), new CraftingArrayEffectBinding(new ItemStack(Blocks.diamond_block)), new BindingAlchemyCircleRenderer());
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 0), new ItemStack(ModItems.slate), new ItemStack(ModItems.sigilWater), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WaterSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 1), new ItemStack(ModItems.slate), new ItemStack(ModItems.sigilLava), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LavaSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 2), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilAir), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/AirSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 3), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilFastMiner), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/FastMinerSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 4), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilVoid), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/VoidSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 5), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilGreenGrove), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/GrowthSigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 6), new ItemStack(ModItems.slate, 1, 2), new ItemStack(ModItems.sigilElementalAffinity), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ElementalAffinitySigil.png"));
+    	AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(ModItems.itemComponent, 1, 7), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilSeer), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
     }
 }

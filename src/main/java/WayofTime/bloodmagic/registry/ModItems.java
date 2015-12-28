@@ -1,18 +1,38 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.item.*;
+import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemBloodOrb;
+import WayofTime.bloodmagic.item.ItemBucketEssence;
+import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.item.ItemInscriptionTool;
+import WayofTime.bloodmagic.item.ItemSacrificialDagger;
+import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
-import WayofTime.bloodmagic.item.sigil.*;
+import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
+import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
+import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
+import WayofTime.bloodmagic.item.sigil.ItemSigilElementalAffinity;
+import WayofTime.bloodmagic.item.sigil.ItemSigilFastMiner;
+import WayofTime.bloodmagic.item.sigil.ItemSigilGreenGrove;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHaste;
+import WayofTime.bloodmagic.item.sigil.ItemSigilLava;
+import WayofTime.bloodmagic.item.sigil.ItemSigilMagnetism;
+import WayofTime.bloodmagic.item.sigil.ItemSigilPhantomBridge;
+import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
+import WayofTime.bloodmagic.item.sigil.ItemSigilSuppression;
+import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
+import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
@@ -52,6 +72,8 @@ public class ModItems {
     public static Item sigilPhantomBridge;
     public static Item sigilCompression;
 
+    public static Item itemComponent;
+    
     public static Item livingArmourHelmet;
     public static Item livingArmourChest;
     public static Item livingArmourLegs;
@@ -99,6 +121,8 @@ public class ModItems {
         sigilSeer = registerItem(new ItemSigilSeer());
         sigilPhantomBridge = registerItem(new ItemSigilPhantomBridge());
 
+        itemComponent = registerItem(new ItemComponent());
+        
         livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
         livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
@@ -163,6 +187,10 @@ public class ModItems {
         renderHelper.itemRender(sigilSeer);
         renderHelper.itemRender(sigilPhantomBridge, 0);
         renderHelper.itemRender(sigilPhantomBridge, 1);
+        
+        for(int i = 0 ; i < ItemComponent.names.length ; i++) {
+        	renderHelper.itemRender(itemComponent, i);
+        }
 
         renderHelper.itemRender(livingArmourHelmet);
         renderHelper.itemRender(livingArmourChest);
