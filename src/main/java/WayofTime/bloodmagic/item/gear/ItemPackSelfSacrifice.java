@@ -84,8 +84,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
         stack = NBTHelper.checkNBT(stack);
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.selfSacrifice.desc"));
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.stored", getStoredLP(stack)));

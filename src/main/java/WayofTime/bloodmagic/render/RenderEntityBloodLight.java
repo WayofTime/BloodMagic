@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderEntityBloodLight extends Render {
+public class RenderEntityBloodLight extends Render<EntityBloodLight> {
 
     public RenderEntityBloodLight(RenderManager renderManager) {
         super(renderManager);
@@ -26,28 +26,23 @@ public class RenderEntityBloodLight extends Render {
         Tessellator tessellator = Tessellator.getInstance();
         GlStateManager.rotate(180.0F - renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(-renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        tessellator.getWorldRenderer().begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL); //startDrawingQuads
-//        tessellator.getWorldRenderer().putNormal(0.0F, 1.0F, 0.0F); //setNormal
+        tessellator.getWorldRenderer().begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
         tessellator.getWorldRenderer().pos(-0.5D, -0.25D, 0.0D).tex(0D, 1D).normal(0F, 1F, 0F).endVertex();
         tessellator.getWorldRenderer().pos(0.5D, -0.25D, 0.0D).tex(1D, 1D).normal(0F, 1F, 0F).endVertex();
         tessellator.getWorldRenderer().pos(0.5D, 0.75D, 0.0D).tex(1D, 0D).normal(0F, 1F, 0F).endVertex();
         tessellator.getWorldRenderer().pos(-0.5D, 0.75D, 0.0D).tex(0D, 1D).normal(0F, 1F, 0F).endVertex();
-//        tessellator.getWorldRenderer().addVertexWithUV(-0.5F, -0.25F, 0.0D, 0, 1);
-//        tessellator.getWorldRenderer().addVertexWithUV(0.5F, -0.25F, 0.0D, 1, 1);
-//        tessellator.getWorldRenderer().addVertexWithUV(0.5F, 0.75F, 0.0D, 1, 0);
-//        tessellator.getWorldRenderer().addVertexWithUV(-0.5F, 0.75F, 0.0D, 0, 0);
         tessellator.draw();
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
     }
 
     @Override
-    public void doRender(Entity entity, double d, double d1, double d2, float f, float f1) {
-        renderEntityAt((EntityBloodLight) entity, d, d1, d2, f, f1);
+    public void doRender(EntityBloodLight entityBloodLight, double d, double d1, double d2, float f, float f1) {
+        renderEntityAt(entityBloodLight, d, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity) {
+    protected ResourceLocation getEntityTexture(EntityBloodLight entityBloodLight) {
         return TextureMap.locationBlocksTexture;
     }
 }

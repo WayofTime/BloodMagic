@@ -49,8 +49,7 @@ public class ItemSacrificialDagger extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item id, CreativeTabs creativeTab, List list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }

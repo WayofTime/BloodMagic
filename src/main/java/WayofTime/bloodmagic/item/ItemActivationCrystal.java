@@ -30,16 +30,14 @@ public class ItemActivationCrystal extends ItemBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item id, CreativeTabs creativeTab, List list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.activationCrystal." + names[stack.getItemDamage()]));
 
         super.addInformation(stack, player, tooltip, advanced);

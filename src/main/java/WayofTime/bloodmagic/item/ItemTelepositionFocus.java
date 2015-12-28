@@ -40,8 +40,7 @@ public class ItemTelepositionFocus extends ItemBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item id, CreativeTabs creativeTab, List list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
@@ -57,8 +56,7 @@ public class ItemTelepositionFocus extends ItemBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.BloodMagic.telepositionfocus." + names[stack.getItemDamage()]))));
 
         super.addInformation(stack, player, tooltip, advanced);

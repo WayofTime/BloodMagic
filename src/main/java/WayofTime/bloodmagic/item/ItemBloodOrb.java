@@ -33,8 +33,7 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item id, CreativeTabs creativeTab, List list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
         for (int i = 0; i < OrbRegistry.getSize(); i++)
             list.add(new ItemStack(id, 1, i));
     }
@@ -71,8 +70,7 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.orb.desc"));
 
         if (advanced)

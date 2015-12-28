@@ -90,8 +90,7 @@ public class BlockString extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
+    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
         for (int i = 0; i < maxMeta + 1; i++)
             list.add(new ItemStack(this, 1, i));
     }

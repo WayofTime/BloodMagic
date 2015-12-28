@@ -12,11 +12,10 @@ public class PropertyString extends PropertyHelper {
 
     private final ImmutableSet allowedValues;
 
-    @SuppressWarnings("unchecked")
     protected PropertyString(String name, String[] values) {
         super(name, String.class);
 
-        HashSet hashSet = Sets.newHashSet();
+        HashSet<String> hashSet = Sets.newHashSet();
         hashSet.addAll(Arrays.asList(values));
         allowedValues = ImmutableSet.copyOf(hashSet);
     }

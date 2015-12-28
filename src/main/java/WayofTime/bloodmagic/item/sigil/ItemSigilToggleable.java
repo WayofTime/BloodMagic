@@ -24,8 +24,7 @@ public class ItemSigilToggleable extends ItemSigilBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
         if (getActivated(stack))
             tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
