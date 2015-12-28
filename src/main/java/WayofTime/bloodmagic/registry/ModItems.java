@@ -188,9 +188,8 @@ public class ModItems {
         renderHelper.itemRender(sigilPhantomBridge, 0);
         renderHelper.itemRender(sigilPhantomBridge, 1);
         
-        for(int i = 0 ; i < ItemComponent.names.length ; i++) {
+        for(int i = 0 ; i < ItemComponent.getNames().size() ; i++)
         	renderHelper.itemRender(itemComponent, i);
-        }
 
         renderHelper.itemRender(livingArmourHelmet);
         renderHelper.itemRender(livingArmourChest);
