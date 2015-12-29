@@ -42,16 +42,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private EnumFacing direction = EnumFacing.NORTH;
 
     @Override
-    public void update() {
-    	if(!worldObj.isRemote && worldObj.getWorldTime() % REFRESH_TIME == 0) {
-    		System.out.println("Owner: " + owner);
-    		if(isActive()) {
-        		System.out.println("Is active");
-        	}
-    		
-    		System.out.println("Active time: " + activeTime);
-    	}
-    	
+    public void update() {   	
         if (getCurrentRitual() != null && isActive()) {
             if (activeTime % REFRESH_TIME == 0)
                 performRitual(getWorld(), getPos());
@@ -62,15 +53,17 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
+    	super.readFromNBT(tag);
         owner = tag.getString(Constants.NBT.OWNER_UUID);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
-        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];  
+        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
+    	super.writeToNBT(tag);
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
         tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);

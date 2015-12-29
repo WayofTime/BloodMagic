@@ -5,7 +5,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -15,10 +14,8 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.block.base.BlockStringContainer;
-import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
@@ -41,19 +38,6 @@ public class BlockRitualController extends BlockStringContainer {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity tile = world.getTileEntity(pos);
-
-        if (player.getHeldItem() == null && tile instanceof TileMasterRitualStone) {
-            Ritual send = ((TileMasterRitualStone) tile).getCurrentRitual();
-            if (send != null)
-                player.addChatComponentMessage(new ChatComponentText(send.getName()));
-            else {
-                Ritual place = RitualRegistry.getRitualForId("ritualTest");
-                for (RitualComponent ritualComponent : place.getComponents()) {
-                    IBlockState toPlace = ModBlocks.ritualStone.getStateFromMeta(ritualComponent.getRuneType().ordinal());
-                    world.setBlockState(pos.add(ritualComponent.getOffset()), toPlace);
-                }
-            }
-        }
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.activationCrystal) {
@@ -96,6 +80,6 @@ public class BlockRitualController extends BlockStringContainer {
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
-        return meta == 0 ? new TileMasterRitualStone() : new TileImperfectRitualStone();
+        return meta == 0 ? (new TileMasterRitualStone()) : (new TileImperfectRitualStone());
     }
 }
