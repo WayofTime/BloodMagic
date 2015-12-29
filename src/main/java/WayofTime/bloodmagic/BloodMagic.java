@@ -11,7 +11,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
+import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
@@ -51,6 +55,9 @@ public class BloodMagic {
 
         MinecraftForge.EVENT_BUS.register(new EventHandler());
 
+        RecipeSorter.register("BloodMagic:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
+        RecipeSorter.register("BloodMagic:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+        
         ModBlocks.init();
         ModItems.init();
         ModPotions.init();

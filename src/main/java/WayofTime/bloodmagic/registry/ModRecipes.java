@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.alchemyArray.CraftingArrayEffectBinding;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
+import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
@@ -27,7 +29,10 @@ public class ModRecipes {
     }
 
     public static void addCraftingRecipes() {
-    	GameRegistry.addShapedRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), "xox", "o o", "xSx", 'S', new ItemStack(ModItems.slate, 1, 2), 'o', new ItemStack(Items.redstone), 'x', new ItemStack(Items.glowstone_dust));
+    	GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), "xox", "oSo", "xox", 'S', OrbRegistry.getOrbStack(ModItems.orbMagician), 'o', new ItemStack(Items.redstone), 'x', new ItemStack(Items.glowstone_dust)));
+    	//Added for testing
+    	GameRegistry.addRecipe(new ShapelessBloodOrbRecipe(new ItemStack(Items.gold_ingot), new ItemStack(ModItems.slate, 1, 1), OrbRegistry.getOrbStack(ModItems.orbApprentice)));
+    	GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(Items.diamond), "   ", " s ", " o ", 's', new ItemStack(ModItems.slate), 'o', OrbRegistry.getOrbStack(ModItems.orbWeak)));
     }
     
     public static void addAltarRecipes() {
