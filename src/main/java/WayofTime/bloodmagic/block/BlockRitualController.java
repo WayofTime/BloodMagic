@@ -57,10 +57,13 @@ public class BlockRitualController extends BlockStringContainer {
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.activationCrystal) {
-            	String key = RitualHelper.getValidRitual(world, pos, null);
+            	String key = RitualHelper.getValidRitual(world, pos);
+            	EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
             	//TODO: Give a message stating that this ritual is not a valid ritual.
-                if (!key.isEmpty() && RitualHelper.checkValidRitual(world, pos, key, null)) {
-                    ((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId(key));
+                if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction)) {
+                    if(((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId(key))) {
+                    	((TileMasterRitualStone) tile).setDirection(direction);
+                    }
                 }
             }
         } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone) {

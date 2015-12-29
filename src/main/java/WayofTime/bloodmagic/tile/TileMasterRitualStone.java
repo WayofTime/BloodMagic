@@ -39,7 +39,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     private int cooldown;
     private Ritual currentRitual;
     @Setter
-    private EnumFacing direction;
+    private EnumFacing direction = EnumFacing.NORTH;
 
     @Override
     public void update() {
@@ -57,6 +57,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
+        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
     }
 
     @Override
@@ -66,6 +67,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
         tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
+        tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
     }
 
     @Override
@@ -103,7 +105,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                         network.syphon(ritual.getActivationCost());
 
                         this.active = true;
-                        this.owner = PlayerHelper.getUUIDFromPlayer(activator).toString();
+                        this.owner = crystalOwner; //Set the owner of the ritual to the crystal's owner
                         this.currentRitual = ritual;
 
                         return true;
@@ -117,7 +119,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     @Override
     public void performRitual(World world, BlockPos pos) {
-        if (getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), null)) {
+        if (getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection())) {
             RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
             if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)

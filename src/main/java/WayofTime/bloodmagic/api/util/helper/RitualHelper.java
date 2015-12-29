@@ -48,15 +48,28 @@ public class RitualHelper {
      * @param direction
      * @return The ID of the valid ritual
      */
-    public static String getValidRitual(World world, BlockPos pos, EnumFacing direction) {
+    public static String getValidRitual(World world, BlockPos pos) {
     	for(String key : RitualRegistry.getIds()) {
-    		boolean test = checkValidRitual(world, pos, key, direction);
-    		if(test) {
-    			return key;
+    		for(EnumFacing direction : EnumFacing.HORIZONTALS) {
+    			boolean test = checkValidRitual(world, pos, key, direction);
+        		if(test) {
+        			return key;
+        		}
     		}
     	}
     	
     	return "";
+    }
+    
+    public static EnumFacing getDirectionOfRitual(World world, BlockPos pos, String key) {
+    	for(EnumFacing direction : EnumFacing.HORIZONTALS) {
+			boolean test = checkValidRitual(world, pos, key, direction);
+    		if(test) {
+    			return direction;
+    		}
+		}
+    	
+    	return null;
     }
     
     public static boolean checkValidRitual(World world, BlockPos pos, String ritualId, EnumFacing direction) {
@@ -71,7 +84,7 @@ public class RitualHelper {
             return false;
         
         for (RitualComponent component : components) {
-        	BlockPos newPos = pos.add(component.getOffset());
+        	BlockPos newPos = pos.add(component.getOffset(direction));
             IBlockState worldState = world.getBlockState(newPos);
             Block block = worldState.getBlock();
             if (block instanceof BlockRitualStone) {

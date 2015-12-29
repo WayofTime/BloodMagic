@@ -37,4 +37,8 @@ public class RitualComponent {
                 return this.getOffset().getZ();
         }
     }
+    
+    public BlockPos getOffset(EnumFacing direction) {
+    	return new BlockPos(getX(direction), offset.getY(), getZ(direction));
+    }
 }
