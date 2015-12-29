@@ -37,7 +37,7 @@ public class ItemSigilToggleable extends ItemSigilBase {
         if (!world.isRemote && !isUnusable(stack)) {
             if (player.isSneaking())
                 setActivated(stack, !getActivated(stack));
-            if (getActivated(stack) && ItemBindable.syphonBatteries(stack, player, getEnergyUsed()))
+            if (getActivated(stack) && ItemBindable.syphonBatteries(stack, player, getLPUsed()))
                 return stack;
         }
 
@@ -46,7 +46,7 @@ public class ItemSigilToggleable extends ItemSigilBase {
 
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getEnergyUsed()))
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getLPUsed()))
             return onSigilUseFirst(stack, player, world, blockPos, side, hitX, hitY, hitZ);
 
         return false;
@@ -60,7 +60,7 @@ public class ItemSigilToggleable extends ItemSigilBase {
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP && getActivated(stack)) {
             if (worldIn.getWorldTime() % 100 == 0) {
-                if (!ItemBindable.syphonBatteries(stack, (EntityPlayer) entityIn, getEnergyUsed())) {
+                if (!ItemBindable.syphonBatteries(stack, (EntityPlayer) entityIn, getLPUsed())) {
                     setActivated(stack, false);
                 }
             }

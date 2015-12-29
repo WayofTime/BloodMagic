@@ -24,11 +24,11 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
     private final String name;
     private boolean toggleable;
 
-    public ItemSigilBase(String name, int energyUsed) {
+    public ItemSigilBase(String name, int lpUsed) {
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
-        setEnergyUsed(energyUsed);
+        setLPUsed(lpUsed);
 
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.sigil." + name + ".";

@@ -42,7 +42,7 @@ public class ItemSigilVoid extends ItemSigilBase {
                         return stack;
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial().isLiquid() && syphonBatteries(stack, player, getEnergyUsed())) {
+                    if (world.getBlockState(blockpos).getBlock().getMaterial().isLiquid() && syphonBatteries(stack, player, getLPUsed())) {
                         world.setBlockToAir(blockpos);
                         return stack;
                     }
@@ -52,7 +52,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonBatteries(stack, player, getEnergyUsed()));
+                this.setUnusable(stack, !syphonBatteries(stack, player, getLPUsed()));
         }
 
         return stack;
@@ -72,7 +72,7 @@ public class ItemSigilVoid extends ItemSigilBase {
         if (tile instanceof IFluidHandler) {
             FluidStack amount = ((IFluidHandler) tile).drain(side, 1000, false);
 
-            if (amount != null && amount.amount > 0 && syphonBatteries(stack, player, getEnergyUsed())) {
+            if (amount != null && amount.amount > 0 && syphonBatteries(stack, player, getLPUsed())) {
                 ((IFluidHandler) tile).drain(side, 1000, true);
                 return true;
             }
@@ -86,7 +86,7 @@ public class ItemSigilVoid extends ItemSigilBase {
             return false;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getEnergyUsed())) {
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getLPUsed())) {
             world.setBlockToAir(newPos);
             return true;
         }

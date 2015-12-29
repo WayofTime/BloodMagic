@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
@@ -35,6 +36,11 @@ public class ModItems {
     public static Item packSacrifice;
     public static Item daggerOfSacrifice;
 
+    public static Item boundSword;
+    public static Item boundPickaxe;
+    public static Item boundAxe;
+    public static Item boundShovel;
+
     public static Item sigilDivination;
     public static Item sigilAir;
     public static Item sigilWater;
@@ -54,6 +60,8 @@ public class ModItems {
     public static Item sigilCompression;
 
     public static Item itemComponent;
+
+    public static Item bloodShard;
     
     public static Item livingArmourHelmet;
     public static Item livingArmourChest;
@@ -61,6 +69,8 @@ public class ModItems {
     public static Item livingArmourBoots;
 
     public static Item altarMaker;
+
+    public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 12, 8, 50);
 
     public static void init() {
         bloodOrb = registerItem(new ItemBloodOrb());
@@ -88,6 +98,11 @@ public class ModItems {
         packSelfSacrifice = registerItem(new ItemPackSelfSacrifice());
         daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice());
 
+        boundSword = registerItem(new ItemBoundSword());
+        boundPickaxe = registerItem(new ItemBoundPickaxe());
+        boundAxe = registerItem(new ItemBoundAxe());
+        boundShovel = registerItem(new ItemBoundShovel());
+
         sigilDivination = registerItem(new ItemSigilDivination());
         sigilAir = registerItem(new ItemSigilAir());
         sigilWater = registerItem(new ItemSigilWater());
@@ -107,6 +122,8 @@ public class ModItems {
         sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance());
 
         itemComponent = registerItem(new ItemComponent());
+
+        bloodShard = registerItem(new ItemBloodShard());
         
         livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
@@ -152,6 +169,15 @@ public class ModItems {
         renderHelper.itemRender(packSelfSacrifice);
         renderHelper.itemRender(daggerOfSacrifice);
 
+        renderHelper.itemRender(boundSword, 0);
+        renderHelper.itemRender(boundSword, 1);
+        renderHelper.itemRender(boundPickaxe, 0);
+        renderHelper.itemRender(boundPickaxe, 1);
+        renderHelper.itemRender(boundAxe, 0);
+        renderHelper.itemRender(boundAxe, 1);
+        renderHelper.itemRender(boundShovel, 0);
+        renderHelper.itemRender(boundShovel, 1);
+
         renderHelper.itemRender(sigilDivination);
         renderHelper.itemRender(sigilAir);
         renderHelper.itemRender(sigilWater);
@@ -182,6 +208,9 @@ public class ModItems {
 
         for(int i = 0 ; i < ItemComponent.getNames().size() ; i++)
         	renderHelper.itemRender(itemComponent, i);
+
+        renderHelper.itemRender(bloodShard, 0);
+        renderHelper.itemRender(bloodShard, 1);
 
         renderHelper.itemRender(livingArmourHelmet);
         renderHelper.itemRender(livingArmourChest);

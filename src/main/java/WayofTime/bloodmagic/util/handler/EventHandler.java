@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.util.handler;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemBoundSword;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -67,6 +69,15 @@ public class EventHandler {
         if (event.block != null && event.block instanceof BlockAltar && event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() instanceof ItemAltarMaker) {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getCurrentEquippedItem().getItem();
             ChatUtil.sendNoSpam(event.entityPlayer, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.entityPlayer)));
+        }
+    }
+
+    @SubscribeEvent
+    public void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (!event.world.isRemote && event.getPlayer() != null) {
+            if (event.getPlayer().capabilities.isCreativeMode && event.getPlayer().getCurrentEquippedItem().getItem() instanceof ItemBoundSword) {
+                event.setCanceled(true);
+            }
         }
     }
 }

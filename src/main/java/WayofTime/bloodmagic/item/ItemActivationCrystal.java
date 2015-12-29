@@ -20,7 +20,7 @@ public class ItemActivationCrystal extends ItemBindable {
 
         setUnlocalizedName(Constants.Mod.MODID + ".activationCrystal.");
         setHasSubtypes(true);
-        setEnergyUsed(100);
+        setLPUsed(100);
     }
 
     @Override
