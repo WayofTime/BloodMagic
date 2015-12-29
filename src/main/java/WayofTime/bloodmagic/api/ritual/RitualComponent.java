@@ -5,6 +5,10 @@ import lombok.RequiredArgsConstructor;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
+/**
+ * Used to set a {@link EnumRuneType} type to a given {@link BlockPos}
+ * for usage in Ritual creation.
+ */
 @Getter
 @RequiredArgsConstructor
 public class RitualComponent {
