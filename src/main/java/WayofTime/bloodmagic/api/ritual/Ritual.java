@@ -35,6 +35,10 @@ public abstract class Ritual {
 
     public abstract int getRefreshCost();
 
+    public int getRefreshTime() {
+        return 20;
+    }
+
     public abstract ArrayList<RitualComponent> getComponents();
 
     public void addOffsetRunes(ArrayList<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune) {

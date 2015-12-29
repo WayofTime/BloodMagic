@@ -12,7 +12,7 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
-public class RitualWater extends Ritual{
+public class RitualWater extends Ritual {
 
 	public RitualWater() {
 		super("ritualWater", 0, 1000);
@@ -20,20 +20,23 @@ public class RitualWater extends Ritual{
 
 	@Override
 	public void performRitual(IMasterRitualStone masterRitualStone) {
-		System.out.println("Performing Effect");
 		World world = masterRitualStone.getWorld();
 		SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner(), world);
 		int currentEssence = network.getCurrentEssence();
 		
-		if(currentEssence < getRefreshCost()) {
+		if(currentEssence < getRefreshCost())
 			return;
-		}
 		
 		BlockPos pos = masterRitualStone.getPos().up();
 		if(world.isAirBlock(pos)) {
 			world.setBlockState(pos, Blocks.water.getDefaultState());
 			network.syphon(getRefreshCost());
 		}
+	}
+
+	@Override
+	public int getRefreshTime() {
+		return 1;
 	}
 
 	@Override

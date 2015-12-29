@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @NoArgsConstructor
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable {
 
-    public static final int REFRESH_TIME = 20;
+    public static final int UPDATE_TIME = 20;
 
     private String owner;
     private boolean active;
@@ -44,7 +44,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void update() {   	
         if (getCurrentRitual() != null && isActive()) {
-            if (activeTime % REFRESH_TIME == 0)
+            if (activeTime % getCurrentRitual().getRefreshTime() == 0)
                 performRitual(getWorld(), getPos());
 
             activeTime++;
