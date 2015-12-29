@@ -10,6 +10,7 @@ item.BloodMagic.sacrificialDagger.normal.name=Sacrificial Dagger
 item.BloodMagic.sacrificialDagger.creative.name=Creative Sacrificial Dagger
 item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
 item.BloodMagic.pack.sacrifice.name=Coat of Arms
+item.BloodMagic.daggerOfSacrifice.name=Dagger of Sacrifice
 
 item.BloodMagic.bucket.lifeEssence.name=Bucket of Life
 
@@ -83,6 +84,8 @@ item.BloodMagic.sigil.magnetism.name=Sigil of Magnetism
 item.BloodMagic.sigil.fastMiner.name=Sigil of the Fast Miner
 item.BloodMagic.sigil.seer.name=Seer's Sigil
 item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
+item.BloodMagic.sigil.whirlwind.name=Sigil of the Whirlwind
+item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
 
 item.BloodMagic.altarMaker.name=Altar Maker
 
@@ -129,7 +132,7 @@ tooltip.BloodMagic.deactivated=Deactivated
 
 tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
 tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
-tooltip.BloodMagic.sigil.compression.desc=&oHands of Diamonds
+tooltip.BloodMagic.sigil.compression.desc=&oHands of diamonds
 tooltip.BloodMagic.sigil.divination.desc=&oPeer into the soul
 tooltip.BloodMagic.sigil.divination.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %d LP
@@ -149,7 +152,9 @@ tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=Consumption Rate: %d L
 tooltip.BloodMagic.sigil.seer.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.seer.currentEssence=Current Essence: %d LP
 tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Current Capacity: %d LP
-tooltip.BloodMagic.sigil.phantomBridge.desc=Walking in thin air...
+tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
+tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
+tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
 
 tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
 tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar
