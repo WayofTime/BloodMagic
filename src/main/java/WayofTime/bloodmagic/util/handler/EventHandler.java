@@ -75,7 +75,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event) {
         if (!event.world.isRemote && event.getPlayer() != null) {
-            if (event.getPlayer().capabilities.isCreativeMode && event.getPlayer().getCurrentEquippedItem().getItem() instanceof ItemBoundSword) {
+            if (event.getPlayer().capabilities.isCreativeMode && event.getPlayer().getCurrentEquippedItem() != null && event.getPlayer().getCurrentEquippedItem().getItem() instanceof ItemBoundSword) {
                 event.setCanceled(true);
             }
         }
