@@ -1,24 +1,23 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.block.BlockRitualStone;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.block.BlockRitualStone;
 
 public class RitualHelper {
 
@@ -40,19 +39,47 @@ public class RitualHelper {
         return RitualRegistry.getIds().get(previousIndex);
     }
 
+    /**
+     * Checks the RitualRegistry to see if the configuration of the ritual stones in the world is valid 
+     * for the given EnumFacing. 
+     * 
+     * @param world
+     * @param pos
+     * @param direction
+     * @return The ID of the valid ritual
+     */
+    public static String getValidRitual(World world, BlockPos pos, EnumFacing direction) {
+    	for(String key : RitualRegistry.getIds()) {
+    		boolean test = checkValidRitual(world, pos, key, direction);
+    		if(test) {
+    			return key;
+    		}
+    	}
+    	
+    	return "";
+    }
+    
     public static boolean checkValidRitual(World world, BlockPos pos, String ritualId, EnumFacing direction) {
-        ArrayList<RitualComponent> components = RitualRegistry.getRitualForId(ritualId).getComponents();
-
+    	Ritual ritual = RitualRegistry.getRitualForId(ritualId);
+    	if(ritual == null) {
+    		return false;
+    	}
+    	
+        ArrayList<RitualComponent> components = ritual.getComponents();
+        
         if (components == null)
             return false;
-
+        
         for (RitualComponent component : components) {
-            IBlockState worldState = world.getBlockState(pos.add(component.getOffset()));
-            if (worldState.getBlock() instanceof BlockRitualStone) {
-                EnumRuneType worldType = EnumRuneType.values()[worldState.getBlock().getMetaFromState(worldState)];
-
-                if (component.getRuneType() != worldType)
-                    return false;
+        	BlockPos newPos = pos.add(component.getOffset());
+            IBlockState worldState = world.getBlockState(newPos);
+            Block block = worldState.getBlock();
+            if (block instanceof BlockRitualStone) {
+            	if(!((BlockRitualStone)block).isRuneType(world, newPos, component.getRuneType())) {
+            		return false;
+            	}
+            }else {
+            	return false;
             }
         }
 

@@ -82,8 +82,8 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
 
-                    SoulNetwork network = NetworkHelper.getSoulNetwork(activator, getWorld());
-
+                    SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner, getWorld());
+                    
                     if (network.getCurrentEssence() < ritual.getActivationCost()) {
                         ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
                         return false;

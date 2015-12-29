@@ -1,5 +1,14 @@
 package WayofTime.bloodmagic.block;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
@@ -13,16 +22,6 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
 
 public class BlockRitualController extends BlockStringContainer {
 
@@ -58,8 +57,11 @@ public class BlockRitualController extends BlockStringContainer {
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.activationCrystal) {
-                if (RitualHelper.checkValidRitual(world, pos, "ritualTest", null))
-                    ((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId("ritualTest"));
+            	String key = RitualHelper.getValidRitual(world, pos, null);
+            	//TODO: Give a message stating that this ritual is not a valid ritual.
+                if (!key.isEmpty() && RitualHelper.checkValidRitual(world, pos, key, null)) {
+                    ((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId(key));
+                }
             }
         } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone) {
 
