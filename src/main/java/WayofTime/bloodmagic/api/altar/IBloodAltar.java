@@ -26,7 +26,7 @@ public interface IBloodAltar {
 
     int getBufferCapacity();
 
-    void sacrificialDaggerCall(int amount, boolean b);
+    void sacrificialDaggerCall(int amount, boolean isSacrifice);
 
     void startCycle();
 

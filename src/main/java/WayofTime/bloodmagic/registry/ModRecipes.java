@@ -1,6 +1,10 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
+import WayofTime.bloodmagic.compress.BaseCompressionHandler;
+import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -60,5 +64,14 @@ public class ModRecipes {
     	AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilGreenGrove), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/GrowthSigil.png"));
     	AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), new ItemStack(ModItems.slate, 1, 2), new ItemStack(ModItems.sigilElementalAffinity), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ElementalAffinitySigil.png"));
     	AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilSeer), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+    }
+
+    public static void addCompressionHandlers() {
+        StorageBlockCraftingManager.getInstance().addStorageBlockRecipes();
+        CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.glowstone_dust, 4, 0), new ItemStack(Blocks.glowstone), 64));
+        CompressionRegistry.registerHandler(new BaseCompressionHandler(new ItemStack(Items.snowball, 4, 0), new ItemStack(Blocks.snow), 8));
+        CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
+
+        CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.cobblestone), 64);
     }
 }

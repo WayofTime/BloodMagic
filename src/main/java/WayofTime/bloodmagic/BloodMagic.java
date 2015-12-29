@@ -69,6 +69,8 @@ public class BloodMagic {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        ModRecipes.addCompressionHandlers();
+
         proxy.postInit();
     }
 }
