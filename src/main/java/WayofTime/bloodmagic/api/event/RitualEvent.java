@@ -27,7 +27,7 @@ public class RitualEvent extends Event {
     /**
      * This event is called when a ritual is activated. If cancelled, it will not activate.
      *
-     * {@link TileMasterRitualStone#activateRitual(ItemStack, EntityPlayer)}
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#activateRitual(ItemStack, EntityPlayer, Ritual)}
      */
     @Cancelable
     public static class RitualActivatedEvent extends RitualEvent {
@@ -47,7 +47,7 @@ public class RitualEvent extends Event {
     /**
      * This event is called when a Ritual effect is performed. If cancelled, the effect will not happen.
      *
-     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#performRitual(World, BlockPos, Ritual)}
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#performRitual(World, BlockPos)}
      */
     @Cancelable
     public static class RitualRunEvent extends RitualEvent {
@@ -60,8 +60,8 @@ public class RitualEvent extends Event {
     /**
      * This event is called when a Ritual is stopped by a {@link Ritual.BreakType}.
      *
-     * {@link TileMasterRitualStone#stopRitual()}
-     */
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#stopRitual(Ritual.BreakType)}
+     * */
     public static class RitualStopEvent extends RitualEvent {
 
         public final Ritual.BreakType method;
