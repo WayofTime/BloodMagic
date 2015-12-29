@@ -2,9 +2,11 @@ package WayofTime.bloodmagic.api;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode
@@ -13,6 +15,8 @@ public class ItemStackWrapper {
     public final Item item;
     public final int stackSize;
     public final int meta;
+    @Setter
+    public NBTTagCompound nbtTag;
 
     public ItemStackWrapper(Item item, int stackSize) {
         this(item, stackSize, 0);
@@ -49,5 +53,11 @@ public class ItemStackWrapper {
     @Override
     public String toString() {
         return stackSize + "x" + item.getUnlocalizedName() + "@" + this.meta;
+    }
+
+    public ItemStack toStack(int count) {
+        ItemStack result = new ItemStack(item, count, meta);
+        result.setTagCompound(nbtTag);
+        return result;
     }
 }

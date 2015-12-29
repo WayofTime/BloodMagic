@@ -12,6 +12,11 @@ item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
 item.BloodMagic.pack.sacrifice.name=Coat of Arms
 item.BloodMagic.daggerOfSacrifice.name=Dagger of Sacrifice
 
+item.BloodMagic.bound.sword.name=Bound Sword
+item.BloodMagic.bound.pickaxe.name=Bound Pickaxe
+item.BloodMagic.bound.axe.name=Bound Axe
+item.BloodMagic.bound.shovel.name=Bound Shovel
+
 item.BloodMagic.bucket.lifeEssence.name=Bucket of Life
 
 item.BloodMagic.scribe.water.name=Elemental Inscription Tool: Water
@@ -59,6 +64,9 @@ item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
 item.BloodMagic.reagent.virtus.name=Virtus
 item.BloodMagic.reagent.reductus.name=Reductus
 item.BloodMagic.reagent.potentia.name=Potentia
+
+item.BloodMagic.bloodShard.weak.name=Weak Blood Shard
+item.BloodMagic.bloodShard.demon.name=Demon Blood Shard
 
 item.BloodMagic.baseComponent.reagentWater.name=Water Reagent
 item.BloodMagic.baseComponent.reagentLava.name=Lava Reagent
@@ -155,6 +163,11 @@ tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Current Capacity: %d LP
 tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
 tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
+
+tooltip.BloodMagic.bound.sword.desc=&oCulling the weak
+tooltip.BloodMagic.bound.pickaxe.desc=&oDestroying stone without mercy
+tooltip.BloodMagic.bound.axe.desc=&oDemonic deforestation
+tooltip.BloodMagic.bound.shovel.desc=&oScrubs floors clean of dirt
 
 tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffice...
 tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar

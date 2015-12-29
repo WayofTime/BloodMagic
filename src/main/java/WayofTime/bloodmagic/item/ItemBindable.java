@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ItemBindable extends Item implements IBindable {
 
-    private int energyUsed;
+    private int lpUsed;
 
     public ItemBindable() {
         super();
@@ -119,12 +119,12 @@ public class ItemBindable extends Item implements IBindable {
         }
     }
 
-    public int getEnergyUsed() {
-        return this.energyUsed;
+    public int getLPUsed() {
+        return this.lpUsed;
     }
 
-    protected void setEnergyUsed(int energyUsed) {
-        this.energyUsed = energyUsed;
+    protected void setLPUsed(int lpUsed) {
+        this.lpUsed = lpUsed;
     }
 
     public String getBindableOwner(ItemStack stack) {

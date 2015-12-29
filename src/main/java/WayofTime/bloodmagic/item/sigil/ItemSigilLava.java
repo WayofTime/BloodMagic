@@ -47,14 +47,14 @@ public class ItemSigilLava extends ItemSigilBase {
                         return stack;
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && syphonBatteries(stack, player, getEnergyUsed()) && this.tryPlaceLava(world, blockpos1)) {
+                    if (this.canPlaceLava(world, blockpos1) && syphonBatteries(stack, player, getLPUsed()) && this.tryPlaceLava(world, blockpos1)) {
                         return stack;
                     }
                 }
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonBatteries(stack, player, getEnergyUsed()));
+                this.setUnusable(stack, !syphonBatteries(stack, player, getLPUsed()));
         }
 
         return stack;
@@ -74,7 +74,7 @@ public class ItemSigilLava extends ItemSigilBase {
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
-            if (amount > 0 && syphonBatteries(stack, player, getEnergyUsed())) {
+            if (amount > 0 && syphonBatteries(stack, player, getLPUsed())) {
                 ((IFluidHandler) tile).fill(side, fluid, true);
             }
 
@@ -90,7 +90,7 @@ public class ItemSigilLava extends ItemSigilBase {
             return false;
         }
 
-        if (this.canPlaceLava(world, newPos) && syphonBatteries(stack, player, getEnergyUsed())) {
+        if (this.canPlaceLava(world, newPos) && syphonBatteries(stack, player, getLPUsed())) {
             return this.tryPlaceLava(world, newPos);
         }
 

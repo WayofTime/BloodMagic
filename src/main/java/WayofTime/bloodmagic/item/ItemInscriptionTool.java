@@ -24,7 +24,7 @@ public class ItemInscriptionTool extends ItemBindable {
     public ItemInscriptionTool() {
         super();
 
-        setEnergyUsed(100);
+        setLPUsed(100);
         setUnlocalizedName(Constants.Mod.MODID + ".scribe.");
         setHasSubtypes(true);
     }
