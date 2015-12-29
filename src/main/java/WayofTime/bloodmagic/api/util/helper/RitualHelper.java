@@ -42,10 +42,7 @@ public class RitualHelper {
     /**
      * Checks the RitualRegistry to see if the configuration of the ritual stones in the world is valid 
      * for the given EnumFacing. 
-     * 
-     * @param world
-     * @param pos
-     * @param direction
+     *
      * @return The ID of the valid ritual
      */
     public static String getValidRitual(World world, BlockPos pos) {
