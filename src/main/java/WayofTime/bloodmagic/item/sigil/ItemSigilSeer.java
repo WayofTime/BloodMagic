@@ -32,7 +32,7 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader {
 
         if (!world.isRemote) {
             MovingObjectPosition position = getMovingObjectPositionFromPlayer(world, player, false);
-            int currentEssence = NetworkHelper.getSoulNetwork(BindableHelper.getOwnerName(stack), world).getCurrentEssence();
+            int currentEssence = NetworkHelper.getSoulNetwork(BindableHelper.getOwnerUUID(stack), world).getCurrentEssence();
 
             if (position == null) {
                 ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));

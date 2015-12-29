@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.util.UUID;
+
 public class BindableHelper {
 
     /**
@@ -20,7 +22,7 @@ public class BindableHelper {
      * @return - Whether binding was successful
      */
     public static boolean checkAndSetItemOwner(ItemStack stack, EntityPlayer player) {
-        return !PlayerHelper.isFakePlayer(player) && checkAndSetItemOwner(stack, player.getGameProfile().getName());
+        return !PlayerHelper.isFakePlayer(player) && checkAndSetItemOwner(stack, PlayerHelper.getUUIDFromPlayer(player));
     }
 
     /**
@@ -31,24 +33,31 @@ public class BindableHelper {
      * Fires {@link ItemBindEvent}.
      *
      * @param stack     - The ItemStack to bind
-     * @param ownerName - The username to bind the ItemStack to
+     * @param uuid - The username to bind the ItemStack to
      *
      * @return - Whether the binding was successful
      */
-    public static boolean checkAndSetItemOwner(ItemStack stack, String ownerName) {
+    public static boolean checkAndSetItemOwner(ItemStack stack, String uuid) {
         stack = NBTHelper.checkNBT(stack);
 
         if (!(stack.getItem() instanceof IBindable))
             return false;
 
-        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME))) {
-            MinecraftForge.EVENT_BUS.post(new ItemBindEvent(PlayerHelper.getPlayerFromUsername(ownerName), ownerName, stack));
-            ((IBindable) stack.getItem()).onBind(PlayerHelper.getPlayerFromUsername(ownerName), stack);
-            stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, ownerName);
+        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID))) {
+            MinecraftForge.EVENT_BUS.post(new ItemBindEvent(PlayerHelper.getPlayerFromUUID(uuid), uuid, stack));
+            ((IBindable) stack.getItem()).onBind(PlayerHelper.getPlayerFromUUID(uuid), stack);
+            stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, uuid);
             return true;
         }
 
         return true;
+    }
+
+    /**
+     * @see BindableHelper#checkAndSetItemOwner(ItemStack, String)
+     */
+    public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid) {
+        return checkAndSetItemOwner(stack, uuid.toString());
     }
 
     /**
@@ -61,7 +70,7 @@ public class BindableHelper {
     public static void setItemOwner(ItemStack stack, String ownerName) {
         stack = NBTHelper.checkNBT(stack);
 
-        stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, ownerName);
+        stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, ownerName);
     }
 
     /**
@@ -74,6 +83,19 @@ public class BindableHelper {
     public static String getOwnerName(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
 
-        return stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        return PlayerHelper.getUsernameFromStack(stack);
+    }
+
+    /**
+     * Used to safely obtain the UUID of the ItemStack's owner
+     *
+     * @param stack - The ItemStack to check the owner of
+     *
+     * @return - The UUID of the ItemStack's owner
+     */
+    public static String getOwnerUUID(ItemStack stack) {
+        stack = NBTHelper.checkNBT(stack);
+
+        return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
     }
 }

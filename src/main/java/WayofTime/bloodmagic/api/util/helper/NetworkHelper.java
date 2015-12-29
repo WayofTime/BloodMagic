@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import java.util.UUID;
+
 public class NetworkHelper {
 
     // Get
@@ -20,20 +22,34 @@ public class NetworkHelper {
     /**
      * Gets the SoulNetwork for the player.
      *
-     * @param ownerName - The name of the SoulNetwork owner
-     * @param world     - The world
+     * @param name  - The username of the SoulNetwork owner
+     * @param world - The world
      *
      * @return - The SoulNetwork for the given name.
      */
-    public static SoulNetwork getSoulNetwork(String ownerName, World world) {
-        SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, ownerName);
+    public static SoulNetwork getSoulNetwork(String name, World world) {
+        SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 
         if (network == null) {
-            network = new SoulNetwork(ownerName);
-            world.getMapStorage().setData(ownerName, network);
+            network = new SoulNetwork(name);
+            world.getMapStorage().setData(name, network);
         }
 
         return network;
+    }
+
+    /**
+     * @see NetworkHelper#getSoulNetwork(String, World)
+     */
+    public static SoulNetwork getSoulNetwork(UUID uuid, World world) {
+        return getSoulNetwork(PlayerHelper.getUsernameFromUUID(uuid), world);
+    }
+
+    /**
+     * @see NetworkHelper#getSoulNetwork(String, World)
+     */
+    public static SoulNetwork getSoulNetwork(EntityPlayer player, World world) {
+        return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player), world);
     }
 
     /**
@@ -79,7 +95,7 @@ public class NetworkHelper {
      */
     public static boolean syphonFromContainer(ItemStack stack, World world, int toSyphon) {
         stack = NBTHelper.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
         if (Strings.isNullOrEmpty(ownerName))
             return false;
@@ -122,7 +138,7 @@ public class NetworkHelper {
             return false;
 
         stack = NBTHelper.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
         if (!Strings.isNullOrEmpty(ownerName)) {
             SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(player, ownerName, stack, syphon);
@@ -149,7 +165,7 @@ public class NetworkHelper {
     @Deprecated
     public static boolean syphonFromNetworkWhileInContainer(ItemStack stack, int syphon) {
         stack = NBTHelper.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
         if (Strings.isNullOrEmpty(ownerName))
             return false;
@@ -165,7 +181,7 @@ public class NetworkHelper {
     @Deprecated
     public static int syphonFromNetwork(ItemStack stack, int syphon) {
         stack = NBTHelper.checkNBT(stack);
-        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
         if (!Strings.isNullOrEmpty(ownerName))
             return syphonFromNetwork(ownerName, syphon);
 

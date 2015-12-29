@@ -280,8 +280,7 @@ public class BloodAltar {
         isActive = false;
     }
     
-    public void update()
-    {
+    public void update() {
     	World world = tileAltar.getWorld();
         BlockPos pos = tileAltar.getPos();
     	
@@ -387,15 +386,15 @@ public class BloodAltar {
             if (itemTag == null)
                 return;
 
-            String ownerName = itemTag.getString(Constants.NBT.OWNER_NAME);
+            String ownerUUID = itemTag.getString(Constants.NBT.OWNER_UUID);
 
-            if (Strings.isNullOrEmpty(ownerName))
+            if (Strings.isNullOrEmpty(ownerUUID))
                 return;
 
             if (fluid != null && fluid.amount >= 1) {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                int drain = NetworkHelper.getSoulNetwork(ownerName, world).addLifeEssence(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
+                int drain = NetworkHelper.getSoulNetwork(ownerUUID, world).addLifeEssence(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
 
                 fluid.amount = fluid.amount - drain;
 
@@ -403,8 +402,8 @@ public class BloodAltar {
                     world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
         }
-        if (world != null)
-            world.markBlockForUpdate(pos);
+
+        world.markBlockForUpdate(pos);
     }
     
     public void checkTier() {

@@ -22,7 +22,7 @@ public class RitualTest extends Ritual {
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
-        EntityPlayer player = PlayerHelper.getPlayerFromUsername(masterRitualStone.getOwner());
+        EntityPlayer player = PlayerHelper.getPlayerFromUUID(masterRitualStone.getOwner());
 
         if (player != null)
             player.addChatComponentMessage(new ChatComponentText("effect performed"));
@@ -30,7 +30,7 @@ public class RitualTest extends Ritual {
 
     @Override
     public void stopRitual(IMasterRitualStone masterRitualStone, BreakType breakType) {
-        EntityPlayer player = PlayerHelper.getPlayerFromUsername(masterRitualStone.getOwner());
+        EntityPlayer player = PlayerHelper.getPlayerFromUUID(masterRitualStone.getOwner());
 
         if (player != null)
             player.addChatComponentMessage(new ChatComponentText("ritual stopped - " + breakType.name()));

@@ -8,7 +8,7 @@ public class Constants {
 
     public static class NBT {
 
-        public static final String OWNER_NAME = "ownerName";
+        public static final String OWNER_UUID = "ownerUUID";
         public static final String USES = "uses";
         public static final String UNUSABLE = "unusable";
         public static final String SACRIFICE = "sacrifice";

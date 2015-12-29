@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.UUID;
@@ -17,7 +18,7 @@ public class PlayerHelper {
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
 
     public static String getUsernameFromPlayer(EntityPlayer player) {
-        return player.getGameProfile().getName();
+        return UsernameCache.getLastKnownUsername(getUUIDFromPlayer(player));
     }
 
     public static EntityPlayer getPlayerFromUsername(String username) {
@@ -27,8 +28,30 @@ public class PlayerHelper {
         return MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(username);
     }
 
+    public static EntityPlayer getPlayerFromUUID(String uuid) {
+        return getPlayerFromUsername(getUsernameFromUUID(uuid));
+    }
+
+    public static EntityPlayer getPlayerFromUUID(UUID uuid) {
+        return getPlayerFromUsername(getUsernameFromUUID(uuid));
+    }
+
     public static UUID getUUIDFromPlayer(EntityPlayer player) {
         return player.getGameProfile().getId();
+    }
+
+    public static String getUsernameFromUUID(String uuid) {
+        return UsernameCache.getLastKnownUsername(UUID.fromString(uuid));
+    }
+
+    public static String getUsernameFromUUID(UUID uuid) {
+        return UsernameCache.getLastKnownUsername(uuid);
+    }
+
+    public static String getUsernameFromStack(ItemStack stack) {
+        stack = NBTHelper.checkNBT(stack);
+
+        return PlayerHelper.getUsernameFromUUID(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID));
     }
 
     public static boolean isFakePlayer(EntityPlayer player) {
@@ -38,8 +61,8 @@ public class PlayerHelper {
     public static void causeNauseaToPlayer(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME)))
-            causeNauseaToPlayer(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME));
+        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+            causeNauseaToPlayer(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID));
     }
 
     public static void causeNauseaToPlayer(String ownerName) {

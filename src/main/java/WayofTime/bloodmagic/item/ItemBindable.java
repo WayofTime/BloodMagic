@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +36,7 @@ public class ItemBindable extends Item implements IBindable {
 
     public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone) {
         if (!player.worldObj.isRemote) {
-            return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(BindableHelper.getOwnerName(stack), player.worldObj), damageToBeDone);
+            return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player, player.worldObj), damageToBeDone);
         } else {
             double posX = player.posX;
             double posY = player.posY;
@@ -76,8 +77,8 @@ public class ItemBindable extends Item implements IBindable {
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         NBTHelper.checkNBT(stack);
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_NAME)))
-            tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), stack.getTagCompound().getString(Constants.NBT.OWNER_NAME))));
+        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+            tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), PlayerHelper.getUsernameFromStack(stack))));
     }
 
     @Override
@@ -129,7 +130,7 @@ public class ItemBindable extends Item implements IBindable {
     public String getBindableOwner(ItemStack stack) {
         stack = NBTHelper.checkNBT(stack);
 
-        return stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
     }
 
     // IBindable

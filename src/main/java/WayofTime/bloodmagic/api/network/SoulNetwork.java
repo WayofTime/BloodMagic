@@ -75,6 +75,8 @@ public class SoulNetwork extends WorldSavedData {
         if (event.getResult() != Event.Result.DENY)
             data.setCurrentEssence(newEss);
 
+        markDirty();
+
         return newEss - currEss;
     }
 

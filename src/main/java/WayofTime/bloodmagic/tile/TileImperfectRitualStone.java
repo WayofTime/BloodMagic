@@ -20,7 +20,7 @@ public class TileImperfectRitualStone extends TileEntity implements IImperfectRi
     public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player) {
 
         if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual)) {
-            NetworkHelper.getSoulNetwork(player.getDisplayNameString(), world).syphonAndDamage(imperfectRitual.getActivationCost());
+            NetworkHelper.getSoulNetwork(player, world).syphonAndDamage(imperfectRitual.getActivationCost());
             if (imperfectRitual.onActivate(this, player))
                 if (imperfectRitual.isLightshow())
                     getWorld().addWeatherEffect(new EntityLightningBolt(getWorld(), getPos().getX(), getPos().getY() + 2, getPos().getZ()));

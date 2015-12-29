@@ -53,7 +53,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-        owner = tag.getString(Constants.NBT.OWNER_NAME);
+        owner = tag.getString(Constants.NBT.OWNER_UUID);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
@@ -62,7 +62,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
-        tag.setString(Constants.NBT.OWNER_NAME, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
+        tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
         tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
@@ -75,14 +75,14 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
             return false;
 
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
-        String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_NAME);
+        String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
 
-                    SoulNetwork network = NetworkHelper.getSoulNetwork(activator.getDisplayNameString(), getWorld());
+                    SoulNetwork network = NetworkHelper.getSoulNetwork(activator, getWorld());
 
                     if (network.getCurrentEssence() < ritual.getActivationCost()) {
                         ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
@@ -103,7 +103,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                         network.syphon(ritual.getActivationCost());
 
                         this.active = true;
-                        this.owner = activator.getDisplayNameString();
+                        this.owner = PlayerHelper.getUUIDFromPlayer(activator).toString();
                         this.currentRitual = ritual;
 
                         return true;
