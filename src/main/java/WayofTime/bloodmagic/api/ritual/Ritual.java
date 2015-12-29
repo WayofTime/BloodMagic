@@ -23,11 +23,15 @@ public abstract class Ritual {
         this(name, crystalLevel, activationCost, null);
     }
 
-    public abstract boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player);
+	public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player) {
+		return true;
+	}
 
     public abstract void performRitual(IMasterRitualStone masterRitualStone);
 
-    public abstract void stopRitual(IMasterRitualStone masterRitualStone, Ritual.BreakType breakType);
+	public void stopRitual(IMasterRitualStone masterRitualStone, BreakType breakType) {
+		
+	}
 
     public abstract int getRefreshCost();
 

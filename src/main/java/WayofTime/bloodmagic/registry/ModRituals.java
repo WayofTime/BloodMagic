@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.ritual.RitualTest;
+import WayofTime.bloodmagic.ritual.RitualWater;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualNight;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
@@ -13,6 +14,7 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
 public class ModRituals {
 
     public static Ritual testRitual;
+    public static Ritual waterRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -21,7 +23,10 @@ public class ModRituals {
 
     public static void initRituals() {
         testRitual = new RitualTest();
+        waterRitual = new RitualWater();
+        
         RitualRegistry.registerRitual(testRitual, testRitual.getName());
+        RitualRegistry.registerRitual(waterRitual, waterRitual.getName());
     }
 
     public static void initImperfectRituals() {

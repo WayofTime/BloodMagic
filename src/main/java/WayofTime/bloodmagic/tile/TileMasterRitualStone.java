@@ -43,6 +43,15 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
     @Override
     public void update() {
+    	if(!worldObj.isRemote && worldObj.getWorldTime() % REFRESH_TIME == 0) {
+    		System.out.println("Owner: " + owner);
+    		if(isActive()) {
+        		System.out.println("Is active");
+        	}
+    		
+    		System.out.println("Active time: " + activeTime);
+    	}
+    	
         if (getCurrentRitual() != null && isActive()) {
             if (activeTime % REFRESH_TIME == 0)
                 performRitual(getWorld(), getPos());
@@ -57,7 +66,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
-        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];  
     }
 
     @Override
