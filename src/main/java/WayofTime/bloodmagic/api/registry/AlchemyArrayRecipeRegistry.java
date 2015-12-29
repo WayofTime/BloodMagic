@@ -13,7 +13,8 @@ import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.sun.istack.internal.Nullable;
+
+import javax.annotation.Nullable;
 
 public class AlchemyArrayRecipeRegistry {
 
