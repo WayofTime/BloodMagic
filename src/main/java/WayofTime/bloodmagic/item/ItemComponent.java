@@ -26,6 +26,7 @@ public class ItemComponent extends Item {
     public static final String REAGENT_GROWTH = "reagentGrowth";
     public static final String REAGENT_AFFINITY = "reagentAffinity";
     public static final String REAGENT_SIGHT = "reagentSight";
+    public static final String REAGENT_BINDING = "reagentBinding";
 
     public ItemComponent() {
         super();
@@ -46,6 +47,7 @@ public class ItemComponent extends Item {
         names.add(5, REAGENT_GROWTH);
         names.add(6, REAGENT_AFFINITY);
         names.add(7, REAGENT_SIGHT);
+        names.add(8, REAGENT_BINDING);
     }
 
     @Override

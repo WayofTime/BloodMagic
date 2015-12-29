@@ -76,6 +76,7 @@ item.BloodMagic.baseComponent.reagentVoid.name=Void Reagent
 item.BloodMagic.baseComponent.reagentGrowth.name=Growth Reagent
 item.BloodMagic.baseComponent.reagentAffinity.name=Elemental Affinity Reagent
 item.BloodMagic.baseComponent.reagentSight.name=Sight Reagent
+item.BloodMagic.baseComponent.reagentBinding.name=Binding Reagent
 
 item.BloodMagic.sigil.air.name=Air Sigil
 item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
