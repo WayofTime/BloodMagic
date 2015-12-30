@@ -1,0 +1,90 @@
+package WayofTime.bloodmagic.ritual;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+
+public class RitualGreenGrove extends Ritual {
+
+	public static final String GROW_RANGE = "growing";
+	public RitualGreenGrove() {
+		super("ritualGreenGrove", 0, 1000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
+		addBlockRange(GROW_RANGE, new BlockPos[] { new BlockPos(-1, 2, -1), new BlockPos(1, 2, 1) });
+	}
+
+	@Override
+	public void performRitual(IMasterRitualStone masterRitualStone) {
+		World world = masterRitualStone.getWorld();
+		SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner(), world);
+		int currentEssence = network.getCurrentEssence();
+
+		if (currentEssence < getRefreshCost())
+			return;
+		
+		int maxGrowths = currentEssence / getRefreshCost();
+		int totalGrowths = 0;
+
+		BlockPos[] growingRange = getBlockRange(GROW_RANGE);
+
+		for (int i = growingRange[0].getX(); i <= growingRange[1].getX(); i++) {
+			for (int j = growingRange[0].getY(); j <= growingRange[1].getY(); j++) {
+				for (int k = growingRange[0].getZ(); k <= growingRange[1].getZ(); k++) {
+					BlockPos newPos = masterRitualStone.getPos().add(i, j, k);
+					IBlockState state = world.getBlockState(newPos);
+					Block block = state.getBlock();
+					if (block instanceof IPlantable || block instanceof IGrowable) {
+						block.updateTick(world, newPos, state, new Random());
+						totalGrowths++;
+					}
+					
+					if (totalGrowths >= maxGrowths) {
+						break;
+					}
+				}
+				
+				if (totalGrowths >= maxGrowths) {
+					break;
+				}
+			}
+			
+			if (totalGrowths >= maxGrowths) {
+				break;
+			}
+		}
+		
+		network.syphon(totalGrowths * getRefreshCost());
+	}
+
+	@Override
+	public int getRefreshTime() {
+		return 20;
+	}
+
+	@Override
+	public int getRefreshCost() {
+		return 20;
+	}
+
+	@Override
+	public ArrayList<RitualComponent> getComponents() {
+		ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+
+		this.addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
+		this.addParallelRunes(components, 1, 0, EnumRuneType.WATER);
+
+		return components;
+	}
+}

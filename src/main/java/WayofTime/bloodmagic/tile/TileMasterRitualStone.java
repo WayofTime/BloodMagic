@@ -31,165 +31,169 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @NoArgsConstructor
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable {
 
-    public static final int UPDATE_TIME = 20;
+	public static final int UPDATE_TIME = 20;
 
-    private String owner;
-    private boolean active;
-    private int activeTime;
-    private int cooldown;
-    private Ritual currentRitual;
-    @Setter
-    private EnumFacing direction = EnumFacing.NORTH;
+	private String owner;
+	private boolean active;
+	private int activeTime;
+	private int cooldown;
+	private Ritual currentRitual;
+	@Setter
+	private EnumFacing direction = EnumFacing.NORTH;
 
-    @Override
-    public void update() {   	
-        if (getCurrentRitual() != null && isActive()) {
-            if (activeTime % getCurrentRitual().getRefreshTime() == 0)
-                performRitual(getWorld(), getPos());
+	@Override
+	public void update() {
+		if (getCurrentRitual() != null && isActive()) {
+			if (activeTime % getCurrentRitual().getRefreshTime() == 0)
+				performRitual(getWorld(), getPos());
 
-            activeTime++;
-        }
-    }
+			activeTime++;
+		}
+	}
 
-    @Override
-    public void readFromNBT(NBTTagCompound tag) {
-    	super.readFromNBT(tag);
-        owner = tag.getString(Constants.NBT.OWNER_UUID);
-        currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
-        active = tag.getBoolean(Constants.NBT.IS_RUNNING);
-        activeTime = tag.getInteger(Constants.NBT.RUNTIME);
-        direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		owner = tag.getString(Constants.NBT.OWNER_UUID);
+		currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
+		active = tag.getBoolean(Constants.NBT.IS_RUNNING);
+		activeTime = tag.getInteger(Constants.NBT.RUNTIME);
+		direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+	}
 
-    @Override
-    public void writeToNBT(NBTTagCompound tag) {
-    	super.writeToNBT(tag);
-        String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
-        tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
-        tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
-        tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
-        tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
-        tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
-    }
+	@Override
+	public void writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+		String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
+		tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
+		tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
+		tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
+		tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
+		tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
+	}
 
-    @Override
-    public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual) {
+	@Override
+	public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual) {
 
-        if (PlayerHelper.isFakePlayer(activator))
-            return false;
+		if (PlayerHelper.isFakePlayer(activator))
+			return false;
 
-        activationCrystal = NBTHelper.checkNBT(activationCrystal);
-        String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
+		activationCrystal = NBTHelper.checkNBT(activationCrystal);
+		String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
-        if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
-            if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
-                int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
-                if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
+		if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null) {
+			if (activationCrystal.getItem() instanceof ItemActivationCrystal) {
+				int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
+				if (RitualHelper.canCrystalActivate(ritual, crystalLevel)) {
 
-                    SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner, getWorld());
-                    
-                    if (network.getCurrentEssence() < ritual.getActivationCost()) {
-                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
-                        return false;
-                    }
+					SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner, getWorld());
 
-                    if (currentRitual != null)
-                        currentRitual.stopRitual(this, Ritual.BreakType.ACTIVATE);
+					if (network.getCurrentEssence() < ritual.getActivationCost()) {
+						ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
+						return false;
+					}
 
-                    RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
+					if (currentRitual != null)
+						currentRitual.stopRitual(this, Ritual.BreakType.ACTIVATE);
 
-                    if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
-                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
-                        return false;
-                    }
+					RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
 
-                    if (ritual.activateRitual(this, activator)) {
-                        network.syphon(ritual.getActivationCost());
+					if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) {
+						ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
+						return false;
+					}
 
-                        this.active = true;
-                        this.owner = crystalOwner; //Set the owner of the ritual to the crystal's owner
-                        this.currentRitual = ritual;
+					if (ritual.activateRitual(this, activator)) {
+						network.syphon(ritual.getActivationCost());
+						ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
+						this.active = true;
+						this.owner = crystalOwner; // Set the owner of the
+													// ritual to the crystal's
+													// owner
+						this.currentRitual = ritual;
 
-                        return true;
-                    }
-                }
-            }
-        }
+						return true;
+					}
+				}
+			}
+		} else {
+			ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.notValid");
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public void performRitual(World world, BlockPos pos) {
-        if (getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection())) {
-            RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
+	@Override
+	public void performRitual(World world, BlockPos pos) {
+		if (getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection())) {
+			RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
-            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                return;
+			if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+				return;
 
-            SoulNetwork network = NetworkHelper.getSoulNetwork(getOwner(), getWorld());
-            network.syphonAndDamage(getCurrentRitual().getRefreshCost());
-            getCurrentRitual().performRitual(this);
-        }
-    }
+			SoulNetwork network = NetworkHelper.getSoulNetwork(getOwner(), getWorld());
+			network.syphonAndDamage(getCurrentRitual().getRefreshCost());
+			getCurrentRitual().performRitual(this);
+		}
+	}
 
-    @Override
-    public void stopRitual(Ritual.BreakType breakType) {
-        if (getCurrentRitual() != null) {
-            RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
+	@Override
+	public void stopRitual(Ritual.BreakType breakType) {
+		if (getCurrentRitual() != null) {
+			RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
-            if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                return;
+			if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+				return;
 
-            getCurrentRitual().stopRitual(this, breakType);
-            this.currentRitual = null;
-            this.active = false;
-            this.activeTime = 0;
-        }
-    }
+			getCurrentRitual().stopRitual(this, breakType);
+			this.currentRitual = null;
+			this.active = false;
+			this.activeTime = 0;
+		}
+	}
 
-    @Override
-    public int getCooldown() {
-        return cooldown;
-    }
+	@Override
+	public int getCooldown() {
+		return cooldown;
+	}
 
-    @Override
-    public void setCooldown(int cooldown) {
-        this.cooldown = cooldown;
-    }
+	@Override
+	public void setCooldown(int cooldown) {
+		this.cooldown = cooldown;
+	}
 
-    @Override
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	@Override
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    @Override
-    public EnumFacing getDirection() {
-        return direction;
-    }
+	@Override
+	public EnumFacing getDirection() {
+		return direction;
+	}
 
-    @Override
-    public boolean areTanksEmpty() {
-        return false;
-    }
+	@Override
+	public boolean areTanksEmpty() {
+		return false;
+	}
 
-    @Override
-    public int getRunningTime() {
-        return activeTime;
-    }
+	@Override
+	public int getRunningTime() {
+		return activeTime;
+	}
 
-    @Override
-    public String getOwner() {
-        return owner;
-    }
+	@Override
+	public String getOwner() {
+		return owner;
+	}
 
-    @Override
-    public World getWorld() {
-        return super.getWorld();
-    }
+	@Override
+	public World getWorld() {
+		return super.getWorld();
+	}
 
-    @Override
-    public BlockPos getPos() {
-        return super.getPos();
-    }
+	@Override
+	public BlockPos getPos() {
+		return super.getPos();
+	}
 }

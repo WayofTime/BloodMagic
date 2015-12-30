@@ -302,7 +302,7 @@ public class ItemRitualDiviner extends Item {
 
 		for (String str : idList) {
 			Ritual ritual = RitualRegistry.getRitualForId(str);
-
+			
 			if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
 				continue;
 			}

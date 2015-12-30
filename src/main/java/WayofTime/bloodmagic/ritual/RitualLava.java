@@ -13,10 +13,10 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
-public class RitualWater extends Ritual {
+public class RitualLava extends Ritual {
 
-	public RitualWater() {
-		super("ritualWater", 0, 500, "ritual." + Constants.Mod.MODID + ".waterRitual");
+	public RitualLava() {
+		super("ritualLava", 0, 10000, "ritual." + Constants.Mod.MODID + ".lavaRitual");
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class RitualWater extends Ritual {
 		
 		BlockPos pos = masterRitualStone.getPos().up();
 		if(world.isAirBlock(pos)) {
-			world.setBlockState(pos, Blocks.water.getDefaultState());
+			world.setBlockState(pos, Blocks.lava.getDefaultState());
 			network.syphon(getRefreshCost());
 		}
 	}
@@ -42,14 +42,14 @@ public class RitualWater extends Ritual {
 
 	@Override
 	public int getRefreshCost() {
-		return 25;
+		return 500;
 	}
 
 	@Override
 	public ArrayList<RitualComponent> getComponents() {
 		ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
-        this.addCornerRunes(components, 1, 0, EnumRuneType.WATER);
+        this.addParallelRunes(components, 1, 0, EnumRuneType.FIRE);
         
         return components;
 	}
