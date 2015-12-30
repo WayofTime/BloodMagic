@@ -28,7 +28,7 @@ import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
 import WayofTime.bloodmagic.util.handler.EventHandler;
 
-@Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.ConfigGuiFactory")
+@Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, acceptedMinecraftVersions = "[1.8.8,1.8.9]", guiFactory = "WayofTime.bloodmagic.client.gui.ConfigGuiFactory")
 @Getter
 public class BloodMagic {
 
@@ -54,9 +54,6 @@ public class BloodMagic {
         ConfigHandler.init(new File(getConfigDir(), "BloodMagic.cfg"));
 
         MinecraftForge.EVENT_BUS.register(new EventHandler());
-
-        RecipeSorter.register("BloodMagic:shapedorb", ShapedBloodOrbRecipe.class, Category.SHAPED, "before:minecraft:shapeless");
-        RecipeSorter.register("BloodMagic:shapelessorb", ShapelessBloodOrbRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
         
         ModBlocks.init();
         ModItems.init();

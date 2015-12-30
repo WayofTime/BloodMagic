@@ -45,7 +45,7 @@ public class BloodMagicPlugin implements IModPlugin {
         registry.addRecipes(BindingRecipeMaker.getRecipes());
         registry.addRecipes(AlchemyArrayCraftingRecipeMaker.getRecipes());
 
-        registry.addDescription(Collections.singletonList(new ItemStack(ModItems.altarMaker)), "jei.BloodMagic.desc.altarBuilder");
+        registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
     }
 
     @Override
