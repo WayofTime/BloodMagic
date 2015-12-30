@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
@@ -25,7 +26,7 @@ public class RitualGreenGrove extends Ritual
     public RitualGreenGrove()
     {
         super("ritualGreenGrove", 0, 1000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
-        addBlockRange(GROW_RANGE, new BlockPos[] { new BlockPos(-1, 2, -1), new BlockPos(1, 2, 1) });
+        addBlockRange(GROW_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), new BlockPos(1, 2, 1)));
     }
 
     @Override
@@ -41,33 +42,16 @@ public class RitualGreenGrove extends Ritual
         int maxGrowths = currentEssence / getRefreshCost();
         int totalGrowths = 0;
 
-        BlockPos[] growingRange = getBlockRange(GROW_RANGE);
+        AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
 
-        for (int i = growingRange[0].getX(); i <= growingRange[1].getX(); i++)
+        for(BlockPos newPos : growingRange.getContainedPositions(masterRitualStone.getPos()))
         {
-            for (int j = growingRange[0].getY(); j <= growingRange[1].getY(); j++)
+            IBlockState state = world.getBlockState(newPos);
+            Block block = state.getBlock();
+            if (block instanceof IPlantable || block instanceof IGrowable)
             {
-                for (int k = growingRange[0].getZ(); k <= growingRange[1].getZ(); k++)
-                {
-                    BlockPos newPos = masterRitualStone.getPos().add(i, j, k);
-                    IBlockState state = world.getBlockState(newPos);
-                    Block block = state.getBlock();
-                    if (block instanceof IPlantable || block instanceof IGrowable)
-                    {
-                        block.updateTick(world, newPos, state, new Random());
-                        totalGrowths++;
-                    }
-
-                    if (totalGrowths >= maxGrowths)
-                    {
-                        break;
-                    }
-                }
-
-                if (totalGrowths >= maxGrowths)
-                {
-                    break;
-                }
+                block.updateTick(world, newPos, state, new Random());
+                totalGrowths++;
             }
 
             if (totalGrowths >= maxGrowths)

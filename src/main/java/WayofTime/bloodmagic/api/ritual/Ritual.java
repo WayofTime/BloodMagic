@@ -31,7 +31,7 @@ public abstract class Ritual
     private final RitualRenderer renderer;
     private final String unlocalizedName;
 
-    private final Map<String, BlockPos[]> modableRangeMap = new HashMap<String, BlockPos[]>();
+    private final Map<String, AreaDescriptor> modableRangeMap = new HashMap<String, AreaDescriptor>();
 
     /**
      * @param name
@@ -106,30 +106,26 @@ public abstract class Ritual
         return 20;
     }
 
-    public void addBlockRange(String range, BlockPos[] defaultRange)
+    public void addBlockRange(String range, AreaDescriptor defaultRange)
     {
         modableRangeMap.put(range, defaultRange);
     }
 
     /**
-     * Used to grab the range of a ritual for a given effect. The order of the
-     * blockPos array is: bottom corner, top corner.
+     * Used to grab the range of a ritual for a given effect. 
      * 
      * @param range
      *            - Range that needs to be pulled.
-     * @return - The range of the ritual effect. Array must be of size 2 and
-     *         have non-null values, with the first BlockPos having the lower
-     *         offset values and the second BlockPos having the higher offset
-     *         values
+     * @return - 
      */
-    public BlockPos[] getBlockRange(String range)
+    public AreaDescriptor getBlockRange(String range)
     {
         if (modableRangeMap.containsKey(range))
         {
             return modableRangeMap.get(range);
         }
 
-        return new BlockPos[] { new BlockPos(0, 0, 0), new BlockPos(0, 0, 0) };
+        return null;
     }
 
     /**
