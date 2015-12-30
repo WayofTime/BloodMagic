@@ -1,13 +1,14 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
-import WayofTime.bloodmagic.compat.jei.BloodMagicRecipeWrapper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import scala.actors.threadpool.Arrays;
-
-import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.compat.jei.BloodMagicRecipeWrapper;
 
 public class BindingRecipeJEI extends BloodMagicRecipeWrapper {
 
