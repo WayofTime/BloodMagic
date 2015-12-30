@@ -7,7 +7,6 @@ import net.minecraft.block.material.Material;
 
 public class BlockBloodRune extends BlockString
 {
-
     public static final String[] names = { "blank", "speed", "efficiency", "sacrifice", "selfSacrifice", "displacement", "capacity", "augCapacity", "orb", "acceleration" };
 
     public BlockBloodRune()

@@ -25,7 +25,6 @@ import java.util.List;
 
 public class ItemBindable extends Item implements IBindable
 {
-
     private int lpUsed;
 
     public ItemBindable()
@@ -36,54 +35,65 @@ public class ItemBindable extends Item implements IBindable
         setMaxStackSize(1);
     }
 
-    public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone)
+    public static boolean syphonNetwork(ItemStack stack, EntityPlayer player, int lpUsed)
     {
+        if (player == null) return false;
+
         if (!player.worldObj.isRemote)
         {
-            return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player, player.worldObj), damageToBeDone);
-        } else
+            return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player, player.worldObj), lpUsed);
+        }
+        else
         {
             double posX = player.posX;
             double posY = player.posY;
             double posZ = player.posZ;
 
-            // SpellHelper.sendIndexedParticleToAllAround(player.worldObj, posX,
-            // posY, posZ, 20, player.worldObj.provider.getDimensionId(), 4,
-            // posX, posY, posZ);
+            // SpellHelper.sendIndexedParticleToAllAround(player.worldObj, posX,posY, posZ, 20, player.worldObj.provider.getDimensionId(), 4, posX, posY, posZ);
             player.worldObj.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.8F);
         }
         return true;
     }
 
-    public static void hurtPlayer(EntityPlayer user, int energySyphoned)
+    public static boolean syphonNetwork(ItemStack itemStack, int lpUsed)
     {
-        if (energySyphoned < 100 && energySyphoned > 0)
+        if (itemStack.getItem() instanceof ItemBindable)
         {
-            if (!user.capabilities.isCreativeMode)
-            {
-                user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
-                                                                            // an
-                                                                            // attack
-                user.setHealth(user.getHealth() - 1);
+            ItemBindable itemBindable = (ItemBindable) itemStack.getItem();
+            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(itemStack)) && syphonNetwork(itemStack, PlayerHelper.getPlayerFromUUID(itemBindable.getBindableOwner(itemStack)), lpUsed);
+        }
 
-                if (user.getHealth() <= 0.0005f)
-                    user.onDeath(BloodMagicAPI.getDamageSource());
-            }
-        } else if (energySyphoned >= 100)
+        return false;
+    }
+
+    public static void hurtPlayer(EntityPlayer user, int lpSyphoned)
+    {
+        if (user != null)
         {
-            if (!user.capabilities.isCreativeMode)
+            if (lpSyphoned < 100 && lpSyphoned > 0)
             {
-                for (int i = 0; i < ((energySyphoned + 99) / 100); i++)
+                if (!user.capabilities.isCreativeMode)
                 {
-                    user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
-                                                                                // an
-                                                                                // attack
+                    user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate an attack
                     user.setHealth(user.getHealth() - 1);
 
-                    if (user.getHealth() <= 0.0005f)
+                    if (user.getHealth() <= 0.0005f) user.onDeath(BloodMagicAPI.getDamageSource());
+                }
+            }
+            else if (lpSyphoned >= 100)
+            {
+                if (!user.capabilities.isCreativeMode)
+                {
+                    for (int i = 0; i < ((lpSyphoned + 99) / 100); i++)
                     {
-                        user.onDeath(BloodMagicAPI.getDamageSource());
-                        break;
+                        user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate an attack
+                        user.setHealth(user.getHealth() - 1);
+
+                        if (user.getHealth() <= 0.0005f)
+                        {
+                            user.onDeath(BloodMagicAPI.getDamageSource());
+                            break;
+                        }
                     }
                 }
             }
@@ -134,8 +144,8 @@ public class ItemBindable extends Item implements IBindable
         for (int i = 0; i < damage; i++)
         {
             player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
-                                                                          // an
-                                                                          // attack
+            // an
+            // attack
             player.setHealth(player.getHealth() - 1);
 
             if (player.getHealth() <= 0.0005)

@@ -29,10 +29,8 @@ public class ItemSigilToggleable extends ItemSigilBase
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         super.addInformation(stack, player, tooltip, advanced);
-        if (getActivated(stack))
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
-        else
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
+        if (getActivated(stack)) tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
+        else tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
     }
 
     @Override
@@ -40,10 +38,8 @@ public class ItemSigilToggleable extends ItemSigilBase
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            if (player.isSneaking())
-                setActivated(stack, !getActivated(stack));
-            if (getActivated(stack) && ItemBindable.syphonBatteries(stack, player, getLPUsed()))
-                return stack;
+            if (player.isSneaking()) setActivated(stack, !getActivated(stack));
+            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed())) return stack;
         }
 
         return stack;
@@ -52,7 +48,7 @@ public class ItemSigilToggleable extends ItemSigilBase
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getLPUsed()))
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
             return onSigilUseFirst(stack, player, world, blockPos, side, hitX, hitY, hitZ);
 
         return false;
@@ -70,7 +66,7 @@ public class ItemSigilToggleable extends ItemSigilBase
         {
             if (worldIn.getWorldTime() % 100 == 0)
             {
-                if (!ItemBindable.syphonBatteries(stack, (EntityPlayer) entityIn, getLPUsed()))
+                if (!ItemBindable.syphonNetwork(stack, (EntityPlayer) entityIn, getLPUsed()))
                 {
                     setActivated(stack, false);
                 }
