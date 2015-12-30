@@ -1,18 +1,21 @@
 package WayofTime.bloodmagic.api.registry;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 public class RitualRegistry {
 
     public static final Map<Ritual, Boolean> enabledRituals = new HashMap<Ritual, Boolean>();
     private static final BiMap<String, Ritual> registry = HashBiMap.create();
+    // Ordered list for actions that depend on the order that the rituals were registered in
+    private static final ArrayList<String> orderedIdList = new ArrayList<String>(); 
 
     /**
      * The safe way to register a new Ritual.
@@ -24,8 +27,10 @@ public class RitualRegistry {
         if (ritual != null) {
             if (registry.containsKey(id))
                 BloodMagicAPI.getLogger().error("Duplicate ritual id: %s", id);
-            else
+            else {
                 registry.put(id, ritual);
+                orderedIdList.add(id);
+            }
         }
     }
 
@@ -64,6 +69,10 @@ public class RitualRegistry {
 
     public static ArrayList<String> getIds() {
         return new ArrayList<String>(registry.keySet());
+    }
+    
+    public static ArrayList<String> getOrderedIds() {
+    	return orderedIdList;
     }
 
     public static ArrayList<Ritual> getRituals() {

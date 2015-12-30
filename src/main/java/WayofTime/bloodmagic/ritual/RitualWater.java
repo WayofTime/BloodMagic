@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -15,7 +16,7 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 public class RitualWater extends Ritual {
 
 	public RitualWater() {
-		super("ritualWater", 0, 1000);
+		super("ritualWater", 0, 1000, "ritual." + Constants.Mod.MODID + ".waterRitual");
 	}
 
 	@Override

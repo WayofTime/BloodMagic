@@ -14,10 +14,10 @@ import net.minecraftforge.common.config.Configuration;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.block.BlockRitualStone;
 
 public class RitualHelper {
 
@@ -84,8 +84,8 @@ public class RitualHelper {
         	BlockPos newPos = pos.add(component.getOffset(direction));
             IBlockState worldState = world.getBlockState(newPos);
             Block block = worldState.getBlock();
-            if (block instanceof BlockRitualStone) {
-            	if(!((BlockRitualStone)block).isRuneType(world, newPos, component.getRuneType())) {
+            if (block instanceof IRitualStone) {
+            	if(!((IRitualStone)block).isRuneType(world, newPos, component.getRuneType())) {
             		return false;
             	}
             }else {

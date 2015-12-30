@@ -98,6 +98,8 @@ item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
 
 item.BloodMagic.altarMaker.name=Altar Maker
 
+item.BloodMagic.ritualDiviner.name=Ritual Diviner
+
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
 
@@ -181,6 +183,22 @@ tooltip.BloodMagic.pack.stored=Stored: %d LP
 tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
 tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual
+
+tooltip.BloodMagic.diviner.currentRitual=Current Ritual: 
+tooltip.BloodMagic.diviner.blankRune=Blank Runes: %d
+tooltip.BloodMagic.diviner.waterRune=Water Runes: %d
+tooltip.BloodMagic.diviner.airRune=Air Runes: %d
+tooltip.BloodMagic.diviner.fireRune=Fire Runes: %d
+tooltip.BloodMagic.diviner.earthRune=Earth Runes: %d
+tooltip.BloodMagic.diviner.duskRune=Dusk Runes: %d
+tooltip.BloodMagic.diviner.dawnRune=Dawn Runes: %d
+tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
+tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
+tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
+
+# Ritual
+ritual.BloodMagic.testRitual=Test Ritual
+ritual.BloodMagic.waterRitual=Ritual of the Full Spring
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

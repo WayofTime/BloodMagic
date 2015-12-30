@@ -1,13 +1,12 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.potion.PotionBloodMagic;
-import WayofTime.bloodmagic.potion.PotionEventHandlers;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.potion.PotionBloodMagic;
+import WayofTime.bloodmagic.potion.PotionEventHandlers;
 
 public class ModPotions {
 

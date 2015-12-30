@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.ritual;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class RitualTest extends Ritual {
 
     public RitualTest() {
-        super("ritualTest", 0, 1000);
+        super("ritualTest", 0, 1000, "ritual." + Constants.Mod.MODID + ".testRitual");
     }
 
     @Override

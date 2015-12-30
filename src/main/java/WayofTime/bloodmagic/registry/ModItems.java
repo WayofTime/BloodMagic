@@ -35,6 +35,7 @@ public class ModItems {
     public static Item packSelfSacrifice;
     public static Item packSacrifice;
     public static Item daggerOfSacrifice;
+    public static Item ritualDiviner;
 
     public static Item boundSword;
     public static Item boundPickaxe;
@@ -98,6 +99,8 @@ public class ModItems {
         packSelfSacrifice = registerItem(new ItemPackSelfSacrifice());
         daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice());
 
+        ritualDiviner = registerItem(new ItemRitualDiviner());
+        
         boundSword = registerItem(new ItemBoundSword());
         boundPickaxe = registerItem(new ItemBoundPickaxe());
         boundAxe = registerItem(new ItemBoundAxe());
@@ -168,6 +171,8 @@ public class ModItems {
         renderHelper.itemRender(packSacrifice);
         renderHelper.itemRender(packSelfSacrifice);
         renderHelper.itemRender(daggerOfSacrifice);
+        
+        renderHelper.itemRender(ritualDiviner, 0);
 
         renderHelper.itemRender(boundSword, 0);
         renderHelper.itemRender(boundSword, 1);

@@ -26,14 +26,15 @@ public abstract class Ritual {
     private final int crystalLevel;
     private final int activationCost;
     private final RitualRenderer renderer;
+    private final String unlocalizedName;
 
     /**
      * @param name           - The name of the ritual
      * @param crystalLevel   - Required Activation Crystal tier
      * @param activationCost - Base LP cost for activating the ritual
      */
-    public Ritual(String name, int crystalLevel, int activationCost) {
-        this(name, crystalLevel, activationCost, null);
+    public Ritual(String name, int crystalLevel, int activationCost, String unlocalizedName) {
+        this(name, crystalLevel, activationCost, null, unlocalizedName);
     }
 
     /**
