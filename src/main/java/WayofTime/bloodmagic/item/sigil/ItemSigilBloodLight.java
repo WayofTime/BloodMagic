@@ -21,7 +21,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getLPUsed() * 5) && !world.isRemote)
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed() * 5) && !world.isRemote)
             world.spawnEntityInWorld(new EntityBloodLight(world, player));
 
         return stack;
@@ -30,10 +30,9 @@ public class ItemSigilBloodLight extends ItemSigilBase
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
-            return false;
+        if (world.isRemote) return false;
 
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getLPUsed()))
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
         {
             BlockPos newPos = blockPos.offset(side);
 

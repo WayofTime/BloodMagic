@@ -36,7 +36,7 @@ public class ItemSigilAir extends ItemSigilBase
             player.fallDistance = 0;
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonBatteries(stack, player, getLPUsed()));
+                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
         }
 
         return super.onItemRightClick(stack, world, player);

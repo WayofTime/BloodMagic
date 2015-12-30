@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -19,13 +18,11 @@ import java.util.Random;
 
 public class BlockBloodLight extends Block
 {
-
     public BlockBloodLight()
     {
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodLight");
-        setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
     @Override

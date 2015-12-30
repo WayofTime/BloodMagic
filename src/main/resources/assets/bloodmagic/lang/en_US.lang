@@ -12,6 +12,8 @@ item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
 item.BloodMagic.pack.sacrifice.name=Coat of Arms
 item.BloodMagic.daggerOfSacrifice.name=Dagger of Sacrifice
 
+item.BloodMagic.lavaCrystal.name=Lava Crystal
+
 item.BloodMagic.bound.sword.name=Bound Sword
 item.BloodMagic.bound.pickaxe.name=Bound Pickaxe
 item.BloodMagic.bound.axe.name=Bound Axe
@@ -131,6 +133,8 @@ tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
 tile.BloodMagic.crystal.normal.name=Crystal Cluster
 tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
 tile.BloodMagic.bloodLight.name=Blood Light
+tile.BloodMagic.spectralBlock.name=Spectral Block
+tile.BloodMagic.phantomBlock.name=Phantom Block
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence

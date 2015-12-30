@@ -17,7 +17,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class ItemSigilWater extends ItemSigilBase
 {
-
     public ItemSigilWater()
     {
         super("water", 100);
@@ -33,8 +32,7 @@ public class ItemSigilWater extends ItemSigilBase
             if (movingobjectposition != null)
             {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
-                if (ret != null)
-                    return ret;
+                if (ret != null) return ret;
 
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
@@ -57,7 +55,7 @@ public class ItemSigilWater extends ItemSigilBase
                         return stack;
                     }
 
-                    if (this.canPlaceWater(world, blockpos1) && syphonBatteries(stack, player, getLPUsed()) && this.tryPlaceWater(world, blockpos1))
+                    if (this.canPlaceWater(world, blockpos1) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceWater(world, blockpos1))
                     {
                         return stack;
                     }
@@ -65,7 +63,7 @@ public class ItemSigilWater extends ItemSigilBase
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonBatteries(stack, player, getLPUsed()));
+                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
         }
 
         return stack;
@@ -90,7 +88,7 @@ public class ItemSigilWater extends ItemSigilBase
             FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
-            if (amount > 0 && syphonBatteries(stack, player, getLPUsed()))
+            if (amount > 0 && syphonNetwork(stack, player, getLPUsed()))
             {
                 ((IFluidHandler) tile).fill(side, fluid, true);
             }
@@ -108,7 +106,7 @@ public class ItemSigilWater extends ItemSigilBase
             return false;
         }
 
-        if (this.canPlaceWater(world, newPos) && syphonBatteries(stack, player, getLPUsed()))
+        if (this.canPlaceWater(world, newPos) && syphonNetwork(stack, player, getLPUsed()))
         {
             return this.tryPlaceWater(world, newPos);
         }
@@ -121,10 +119,12 @@ public class ItemSigilWater extends ItemSigilBase
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid())
         {
             return false;
-        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
+        }
+        else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
         {
             return false;
-        } else
+        }
+        else
         {
             return true;
         }
@@ -139,7 +139,8 @@ public class ItemSigilWater extends ItemSigilBase
         if (!worldIn.isAirBlock(pos) && !flag)
         {
             return false;
-        } else
+        }
+        else
         {
             if (worldIn.provider.doesWaterVaporize())
             {
@@ -152,7 +153,8 @@ public class ItemSigilWater extends ItemSigilBase
                 {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
                 }
-            } else
+            }
+            else
             {
                 if (!worldIn.isRemote && flag && !material.isLiquid())
                 {

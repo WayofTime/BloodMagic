@@ -14,7 +14,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class ItemSigilVoid extends ItemSigilBase
 {
-
     public ItemSigilVoid()
     {
         super("void", 50);
@@ -30,8 +29,7 @@ public class ItemSigilVoid extends ItemSigilBase
             if (movingobjectposition != null)
             {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
-                if (ret != null)
-                    return ret;
+                if (ret != null) return ret;
 
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
@@ -52,19 +50,20 @@ public class ItemSigilVoid extends ItemSigilBase
                         return stack;
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial().isLiquid() && syphonBatteries(stack, player, getLPUsed()))
+                    if (world.getBlockState(blockpos).getBlock().getMaterial().isLiquid() && syphonNetwork(stack, player, getLPUsed()))
                     {
                         world.setBlockToAir(blockpos);
                         return stack;
                     }
                 }
-            } else
+            }
+            else
             {
                 return stack;
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonBatteries(stack, player, getLPUsed()));
+                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
         }
 
         return stack;
@@ -88,7 +87,7 @@ public class ItemSigilVoid extends ItemSigilBase
         {
             FluidStack amount = ((IFluidHandler) tile).drain(side, 1000, false);
 
-            if (amount != null && amount.amount > 0 && syphonBatteries(stack, player, getLPUsed()))
+            if (amount != null && amount.amount > 0 && syphonNetwork(stack, player, getLPUsed()))
             {
                 ((IFluidHandler) tile).drain(side, 1000, true);
                 return true;
@@ -104,7 +103,7 @@ public class ItemSigilVoid extends ItemSigilBase
             return false;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getLPUsed()))
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonNetwork(stack, player, getLPUsed()))
         {
             world.setBlockToAir(newPos);
             return true;

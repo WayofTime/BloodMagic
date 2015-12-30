@@ -27,7 +27,6 @@ import java.util.Set;
 @Getter
 public class ItemBoundTool extends ItemBindable
 {
-
     private Set<Block> effectiveBlocks;
     protected final String tooltipBase;
     private final String name;
@@ -79,17 +78,17 @@ public class ItemBoundTool extends ItemBindable
 
         // if (!world.isRemote)
         {
-            if (player.isSneaking())
-                setActivated(stack, !getActivated(stack));
+            if (player.isSneaking()) setActivated(stack, !getActivated(stack));
             // if (getActivated(stack) && ItemBindable.syphonBatteries(stack,
             // player, getLPUsed()))
             // return stack;
+//            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
+//                return stack;
 
             if (!player.isSneaking() && getActivated(stack))
             {
                 BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
-                if (MinecraftForge.EVENT_BUS.post(event))
-                    return event.result;
+                if (MinecraftForge.EVENT_BUS.post(event)) return event.result;
 
                 player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
                 beingHeldDown = true;
@@ -102,7 +101,7 @@ public class ItemBoundTool extends ItemBindable
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonBatteries(stack, player, getLPUsed()))
+        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
             return false;
 
         return false;
@@ -123,8 +122,7 @@ public class ItemBoundTool extends ItemBindable
         {
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
             BoundToolEvent.Release event = new BoundToolEvent.Release(playerIn, stack, i);
-            if (MinecraftForge.EVENT_BUS.post(event))
-                return;
+            if (MinecraftForge.EVENT_BUS.post(event)) return;
 
             i = event.charge;
 
@@ -169,10 +167,8 @@ public class ItemBoundTool extends ItemBindable
 
         if (StatCollector.canTranslate(tooltipBase + "desc"))
             tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
-        if (getActivated(stack))
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
-        else
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
+        if (getActivated(stack)) tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
+        else tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

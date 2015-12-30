@@ -17,7 +17,6 @@ import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModItems
 {
-
     public static Item bloodOrb;
     public static BloodOrb orbWeak;
     public static BloodOrb orbApprentice;
@@ -37,6 +36,8 @@ public class ModItems
     public static Item packSacrifice;
     public static Item daggerOfSacrifice;
     public static Item ritualDiviner;
+
+    public static Item lavaCrystal;
 
     public static Item boundSword;
     public static Item boundPickaxe;
@@ -102,6 +103,9 @@ public class ModItems
         daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice());
 
         ritualDiviner = registerItem(new ItemRitualDiviner());
+        
+        lavaCrystal = registerItem(new ItemLavaCrystal());
+        GameRegistry.registerFuelHandler(new ItemLavaCrystal());
 
         boundSword = registerItem(new ItemBoundSword());
         boundPickaxe = registerItem(new ItemBoundPickaxe());
@@ -176,6 +180,8 @@ public class ModItems
         renderHelper.itemRender(daggerOfSacrifice);
 
         renderHelper.itemRender(ritualDiviner, 0);
+
+        renderHelper.itemRender(lavaCrystal);
 
         renderHelper.itemRender(boundSword, 0);
         renderHelper.itemRender(boundSword, 1);

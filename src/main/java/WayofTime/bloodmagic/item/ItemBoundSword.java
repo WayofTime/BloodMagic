@@ -27,7 +27,6 @@ import java.util.List;
 
 public class ItemBoundSword extends ItemSword
 {
-
     private int lpUsed;
 
     public ItemBoundSword()
@@ -73,7 +72,7 @@ public class ItemBoundSword extends ItemSword
         {
             if (player.isSneaking())
                 setActivated(stack, !getActivated(stack));
-            if (getActivated(stack) && ItemBindable.syphonBatteries(stack, player, lpUsed))
+            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, lpUsed))
                 return stack;
 
             if (!player.isSneaking() && getActivated(stack))

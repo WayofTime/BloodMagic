@@ -32,8 +32,7 @@ public class ItemSigilLava extends ItemSigilBase
             if (movingobjectposition != null)
             {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
-                if (ret != null)
-                    return ret;
+                if (ret != null) return ret;
 
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
@@ -56,7 +55,7 @@ public class ItemSigilLava extends ItemSigilBase
                         return stack;
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && syphonBatteries(stack, player, getLPUsed()) && this.tryPlaceLava(world, blockpos1))
+                    if (this.canPlaceLava(world, blockpos1) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceLava(world, blockpos1))
                     {
                         return stack;
                     }
@@ -64,7 +63,7 @@ public class ItemSigilLava extends ItemSigilBase
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonBatteries(stack, player, getLPUsed()));
+                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
         }
 
         return stack;
@@ -88,7 +87,7 @@ public class ItemSigilLava extends ItemSigilBase
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
-            if (amount > 0 && syphonBatteries(stack, player, getLPUsed()))
+            if (amount > 0 && syphonNetwork(stack, player, getLPUsed()))
             {
                 ((IFluidHandler) tile).fill(side, fluid, true);
             }
@@ -106,7 +105,7 @@ public class ItemSigilLava extends ItemSigilBase
             return false;
         }
 
-        if (this.canPlaceLava(world, newPos) && syphonBatteries(stack, player, getLPUsed()))
+        if (this.canPlaceLava(world, newPos) && syphonNetwork(stack, player, getLPUsed()))
         {
             return this.tryPlaceLava(world, newPos);
         }
@@ -119,10 +118,12 @@ public class ItemSigilLava extends ItemSigilBase
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid())
         {
             return false;
-        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.lava || world.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
+        }
+        else if ((world.getBlockState(blockPos).getBlock() == Blocks.lava || world.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
         {
             return false;
-        } else
+        }
+        else
         {
             world.setBlockState(blockPos, Blocks.lava.getBlockState().getBaseState(), 3);
             return true;
