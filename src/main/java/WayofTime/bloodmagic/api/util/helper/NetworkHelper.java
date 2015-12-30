@@ -15,22 +15,27 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.UUID;
 
-public class NetworkHelper {
+public class NetworkHelper
+{
 
     // Get
 
     /**
      * Gets the SoulNetwork for the player.
-     *
-     * @param name  - The username of the SoulNetwork owner
-     * @param world - The world
-     *
+     * 
+     * @param name
+     *            - The username of the SoulNetwork owner
+     * @param world
+     *            - The world
+     * 
      * @return - The SoulNetwork for the given name.
      */
-    public static SoulNetwork getSoulNetwork(String name, World world) {
+    public static SoulNetwork getSoulNetwork(String name, World world)
+    {
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 
-        if (network == null) {
+        if (network == null)
+        {
             network = new SoulNetwork(name);
             world.getMapStorage().setData(name, network);
         }
@@ -41,42 +46,51 @@ public class NetworkHelper {
     /**
      * @see NetworkHelper#getSoulNetwork(String, World)
      */
-    public static SoulNetwork getSoulNetwork(UUID uuid, World world) {
+    public static SoulNetwork getSoulNetwork(UUID uuid, World world)
+    {
         return getSoulNetwork(PlayerHelper.getUsernameFromUUID(uuid), world);
     }
 
     /**
      * @see NetworkHelper#getSoulNetwork(String, World)
      */
-    public static SoulNetwork getSoulNetwork(EntityPlayer player, World world) {
+    public static SoulNetwork getSoulNetwork(EntityPlayer player, World world)
+    {
         return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player), world);
     }
 
     /**
      * Gets the current orb tier of the SoulNetwork.
-     *
-     * @param soulNetwork - SoulNetwork to get the tier of.
-     *
+     * 
+     * @param soulNetwork
+     *            - SoulNetwork to get the tier of.
+     * 
      * @return - The Orb tier of the given SoulNetwork
      */
-    public static int getCurrentMaxOrb(SoulNetwork soulNetwork) {
+    public static int getCurrentMaxOrb(SoulNetwork soulNetwork)
+    {
         return soulNetwork.getOrbTier();
     }
 
     // Syphon
 
     /**
-     * Syphons from the player and damages them if there was not enough stored LP.
-     *
+     * Syphons from the player and damages them if there was not enough stored
+     * LP.
+     * 
      * Handles null-checking the player for you.
-     *
-     * @param soulNetwork - SoulNetwork to syphon from
-     * @param toSyphon    - Amount of LP to syphon
-     *
+     * 
+     * @param soulNetwork
+     *            - SoulNetwork to syphon from
+     * @param toSyphon
+     *            - Amount of LP to syphon
+     * 
      * @return - Whether the action should be performed.
      */
-    public static boolean syphonAndDamage(SoulNetwork soulNetwork, int toSyphon) {
-        if (soulNetwork.getPlayer() == null) {
+    public static boolean syphonAndDamage(SoulNetwork soulNetwork, int toSyphon)
+    {
+        if (soulNetwork.getPlayer() == null)
+        {
             soulNetwork.syphon(toSyphon);
             return true;
         }
@@ -86,14 +100,18 @@ public class NetworkHelper {
 
     /**
      * Syphons a player from within a container.
-     *
-     * @param stack    - ItemStack in the Container.
-     * @param world    - The world the Container is in
-     * @param toSyphon - Amount of LP to syphon
-     *
+     * 
+     * @param stack
+     *            - ItemStack in the Container.
+     * @param world
+     *            - The world the Container is in
+     * @param toSyphon
+     *            - Amount of LP to syphon
+     * 
      * @return - If the syphon was successful.
      */
-    public static boolean syphonFromContainer(ItemStack stack, World world, int toSyphon) {
+    public static boolean syphonFromContainer(ItemStack stack, World world, int toSyphon)
+    {
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
@@ -110,13 +128,16 @@ public class NetworkHelper {
     // Set
 
     /**
-     * Sets the orb tier of the SoulNetwork to the given orb. Will not set
-     * if the given tier is lower than the current tier.
-     *
-     * @param soulNetwork - SoulNetwork to set the orb tier of
-     * @param maxOrb      - Tier of orb to set to
+     * Sets the orb tier of the SoulNetwork to the given orb. Will not set if
+     * the given tier is lower than the current tier.
+     * 
+     * @param soulNetwork
+     *            - SoulNetwork to set the orb tier of
+     * @param maxOrb
+     *            - Tier of orb to set to
      */
-    public static void setMaxOrb(SoulNetwork soulNetwork, int maxOrb) {
+    public static void setMaxOrb(SoulNetwork soulNetwork, int maxOrb)
+    {
         soulNetwork.setOrbTier(Math.max(maxOrb, soulNetwork.getOrbTier()));
         soulNetwork.markDirty();
     }
@@ -124,23 +145,29 @@ public class NetworkHelper {
     // TODO - Remove everything below. It is deprecated and should not be used.
 
     /**
-     * Master method used to syphon from the player's network, and will damage them accordingly if they do not have enough LP.
-     * Does not drain on the client side.
-     *
-     * @param stack  Owned itemStack
-     * @param player Player using the item
-     *
-     * @return True if the action should be executed and false if it should not. Always returns false if client-sided.
+     * Master method used to syphon from the player's network, and will damage
+     * them accordingly if they do not have enough LP. Does not drain on the
+     * client side.
+     * 
+     * @param stack
+     *            Owned itemStack
+     * @param player
+     *            Player using the item
+     * 
+     * @return True if the action should be executed and false if it should not.
+     *         Always returns false if client-sided.
      */
     @Deprecated
-    public static boolean syphonAndDamageFromNetwork(ItemStack stack, EntityPlayer player, int syphon) {
+    public static boolean syphonAndDamageFromNetwork(ItemStack stack, EntityPlayer player, int syphon)
+    {
         if (player.worldObj.isRemote)
             return false;
 
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
-        if (!Strings.isNullOrEmpty(ownerName)) {
+        if (!Strings.isNullOrEmpty(ownerName))
+        {
             SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(player, ownerName, stack, syphon);
 
             if (MinecraftForge.EVENT_BUS.post(event))
@@ -151,7 +178,8 @@ public class NetworkHelper {
             if (drainAmount == 0 || event.shouldDamage)
                 hurtPlayer(player, event.syphon);
 
-            //The event has been told to prevent the action but allow all repercussions of using the item.
+            // The event has been told to prevent the action but allow all
+            // repercussions of using the item.
             return event.getResult() != Event.Result.DENY;
         }
 
@@ -163,7 +191,8 @@ public class NetworkHelper {
     }
 
     @Deprecated
-    public static boolean syphonFromNetworkWhileInContainer(ItemStack stack, int syphon) {
+    public static boolean syphonFromNetworkWhileInContainer(ItemStack stack, int syphon)
+    {
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
@@ -179,7 +208,8 @@ public class NetworkHelper {
     }
 
     @Deprecated
-    public static int syphonFromNetwork(ItemStack stack, int syphon) {
+    public static int syphonFromNetwork(ItemStack stack, int syphon)
+    {
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
         if (!Strings.isNullOrEmpty(ownerName))
@@ -189,19 +219,22 @@ public class NetworkHelper {
     }
 
     @Deprecated
-    public static int syphonFromNetwork(String ownerName, int syphon) {
+    public static int syphonFromNetwork(String ownerName, int syphon)
+    {
         if (MinecraftServer.getServer() == null)
             return 0;
 
         World world = MinecraftServer.getServer().worldServers[0];
         SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
 
-        if (network == null) {
+        if (network == null)
+        {
             network = new SoulNetwork(ownerName);
             world.setItemData(ownerName, network);
         }
 
-        if (network.getCurrentEssence() >= syphon) {
+        if (network.getCurrentEssence() >= syphon)
+        {
             network.setCurrentEssence(network.getCurrentEssence() - syphon);
             network.markDirty();
             return syphon;
@@ -214,11 +247,12 @@ public class NetworkHelper {
 
     /**
      * A method to add to an owner's network up to a maximum value.
-     *
+     * 
      * @return amount added to the network
      */
     @Deprecated
-    public static int addCurrentEssenceToMaximum(String ownerName, int addedEssence, int maximum) {
+    public static int addCurrentEssenceToMaximum(String ownerName, int addedEssence, int maximum)
+    {
         AddToNetworkEvent event = new AddToNetworkEvent(ownerName, addedEssence, maximum);
 
         if (MinecraftForge.EVENT_BUS.post(event))
@@ -230,7 +264,8 @@ public class NetworkHelper {
         World world = MinecraftServer.getServer().worldServers[0];
         SoulNetwork data = (SoulNetwork) world.loadItemData(SoulNetwork.class, event.ownerNetwork);
 
-        if (data == null) {
+        if (data == null)
+        {
             data = new SoulNetwork(event.ownerNetwork);
             world.setItemData(event.ownerNetwork, data);
         }
@@ -250,14 +285,16 @@ public class NetworkHelper {
     // Get
 
     @Deprecated
-    public static int getCurrentEssence(String ownerName) {
+    public static int getCurrentEssence(String ownerName)
+    {
         if (MinecraftServer.getServer() == null)
             return 0;
 
         World world = MinecraftServer.getServer().worldServers[0];
         SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
 
-        if (network == null) {
+        if (network == null)
+        {
             network = new SoulNetwork(ownerName);
             world.setItemData(ownerName, network);
         }
@@ -268,20 +305,27 @@ public class NetworkHelper {
     // Do damage
 
     @Deprecated
-    public static void hurtPlayer(EntityPlayer user, int energySyphoned) {
-        if (energySyphoned < 100 && energySyphoned > 0) {
-            if (!user.capabilities.isCreativeMode) {
+    public static void hurtPlayer(EntityPlayer user, int energySyphoned)
+    {
+        if (energySyphoned < 100 && energySyphoned > 0)
+        {
+            if (!user.capabilities.isCreativeMode)
+            {
                 user.setHealth((user.getHealth() - 1));
 
                 if (user.getHealth() <= 0.0005f)
                     user.onDeath(BloodMagicAPI.getDamageSource());
             }
-        } else if (energySyphoned >= 100) {
-            if (!user.capabilities.isCreativeMode) {
-                for (int i = 0; i < ((energySyphoned + 99) / 100); i++) {
+        } else if (energySyphoned >= 100)
+        {
+            if (!user.capabilities.isCreativeMode)
+            {
+                for (int i = 0; i < ((energySyphoned + 99) / 100); i++)
+                {
                     user.setHealth((user.getHealth() - 1));
 
-                    if (user.getHealth() <= 0.0005f) {
+                    if (user.getHealth() <= 0.0005f)
+                    {
                         user.onDeath(BloodMagicAPI.getDamageSource());
                         break;
                     }
@@ -291,8 +335,10 @@ public class NetworkHelper {
     }
 
     @Deprecated
-    public static void hurtPlayer(EntityPlayer user, float damage) {
-        if (!user.capabilities.isCreativeMode) {
+    public static void hurtPlayer(EntityPlayer user, float damage)
+    {
+        if (!user.capabilities.isCreativeMode)
+        {
             user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F);
             user.setHealth((user.getHealth() - damage));
         }

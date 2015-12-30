@@ -7,26 +7,31 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BlockStringContainer extends BlockString implements ITileEntityProvider {
+public abstract class BlockStringContainer extends BlockString implements ITileEntityProvider
+{
 
-    public BlockStringContainer(Material material, String[] values, String propName) {
+    public BlockStringContainer(Material material, String[] values, String propName)
+    {
         super(material, values, propName);
 
         this.isBlockContainer = true;
     }
 
-    public BlockStringContainer(Material material, String[] values) {
+    public BlockStringContainer(Material material, String[] values)
+    {
         this(material, values, "type");
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
         super.breakBlock(worldIn, pos, state);
         worldIn.removeTileEntity(pos);
     }
 
     @Override
-    public boolean onBlockEventReceived(World worldIn, BlockPos pos, IBlockState state, int eventID, int eventParam) {
+    public boolean onBlockEventReceived(World worldIn, BlockPos pos, IBlockState state, int eventID, int eventParam)
+    {
         super.onBlockEventReceived(worldIn, pos, state, eventID, eventParam);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         return tileentity != null && tileentity.receiveClientEvent(eventID, eventParam);

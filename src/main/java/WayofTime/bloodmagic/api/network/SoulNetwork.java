@@ -22,14 +22,16 @@ import javax.annotation.Nullable;
 
 @Getter
 @Setter
-public class SoulNetwork extends WorldSavedData {
+public class SoulNetwork extends WorldSavedData
+{
 
     @Nullable
     private final EntityPlayer player;
     private int currentEssence;
     private int orbTier;
 
-    public SoulNetwork(String name) {
+    public SoulNetwork(String name)
+    {
         super(name);
 
         currentEssence = 0;
@@ -38,18 +40,21 @@ public class SoulNetwork extends WorldSavedData {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
+    public void readFromNBT(NBTTagCompound nbttagcompound)
+    {
         currentEssence = nbttagcompound.getInteger(Constants.NBT.CURRENT_ESSENCE);
         orbTier = nbttagcompound.getInteger(Constants.NBT.ORB_TIER);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
+    public void writeToNBT(NBTTagCompound nbttagcompound)
+    {
         nbttagcompound.setInteger(Constants.NBT.CURRENT_ESSENCE, currentEssence);
         nbttagcompound.setInteger(Constants.NBT.ORB_TIER, orbTier);
     }
 
-    public int addLifeEssence(int toAdd, int maximum) {
+    public int addLifeEssence(int toAdd, int maximum)
+    {
         AddToNetworkEvent event = new AddToNetworkEvent(mapName, toAdd, maximum);
 
         if (MinecraftForge.EVENT_BUS.post(event))
@@ -61,7 +66,8 @@ public class SoulNetwork extends WorldSavedData {
         World world = MinecraftServer.getServer().worldServers[0];
         SoulNetwork data = (SoulNetwork) world.loadItemData(SoulNetwork.class, event.ownerNetwork);
 
-        if (data == null) {
+        if (data == null)
+        {
             data = new SoulNetwork(event.ownerNetwork);
             world.setItemData(event.ownerNetwork, data);
         }
@@ -83,8 +89,10 @@ public class SoulNetwork extends WorldSavedData {
     /**
      * Used to syphon LP from the network
      */
-    public int syphon(int syphon) {
-        if (getCurrentEssence() >= syphon) {
+    public int syphon(int syphon)
+    {
+        if (getCurrentEssence() >= syphon)
+        {
             setCurrentEssence(getCurrentEssence() - syphon);
             markDirty();
             return syphon;
@@ -94,19 +102,22 @@ public class SoulNetwork extends WorldSavedData {
     }
 
     /**
-     * If the player exists on the server, syphon the given amount of LP from the player's LP network and
-     * damage for any remaining LP required.
-     *
+     * If the player exists on the server, syphon the given amount of LP from
+     * the player's LP network and damage for any remaining LP required.
+     * 
      * Always returns false on the client side.
-     *
+     * 
      * @return - Whether the action should be performed.
      */
-    public boolean syphonAndDamage(int toSyphon) {
-        if (getPlayer() != null) {
+    public boolean syphonAndDamage(int toSyphon)
+    {
+        if (getPlayer() != null)
+        {
             if (getPlayer().worldObj.isRemote)
                 return false;
 
-            if (!Strings.isNullOrEmpty(mapName)) {
+            if (!Strings.isNullOrEmpty(mapName))
+            {
                 SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(player, mapName, getPlayer().getHeldItem(), toSyphon);
 
                 if (MinecraftForge.EVENT_BUS.post(event))
@@ -129,18 +140,25 @@ public class SoulNetwork extends WorldSavedData {
         return false;
     }
 
-    public void hurtPlayer(float syphon) {
-        if (getPlayer() != null) {
+    public void hurtPlayer(float syphon)
+    {
+        if (getPlayer() != null)
+        {
             getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 20));
-            if (syphon < 100 && syphon > 0) {
-                if (!getPlayer().capabilities.isCreativeMode) {
+            if (syphon < 100 && syphon > 0)
+            {
+                if (!getPlayer().capabilities.isCreativeMode)
+                {
                     getPlayer().hurtResistantTime = 0;
                     getPlayer().attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
                 }
 
-            } else if (syphon >= 100) {
-                if (!getPlayer().capabilities.isCreativeMode) {
-                    for (int i = 0; i < ((syphon + 99) / 100); i++) {
+            } else if (syphon >= 100)
+            {
+                if (!getPlayer().capabilities.isCreativeMode)
+                {
+                    for (int i = 0; i < ((syphon + 99) / 100); i++)
+                    {
                         getPlayer().hurtResistantTime = 0;
                         getPlayer().attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
                     }

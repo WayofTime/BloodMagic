@@ -15,17 +15,20 @@ import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy extends CommonProxy
+{
 
     private InventoryRenderHelper renderHelper;
 
     @Override
-    public InventoryRenderHelper getRenderHelper() {
+    public InventoryRenderHelper getRenderHelper()
+    {
         return renderHelper;
     }
 
     @Override
-    public void preInit() {
+    public void preInit()
+    {
 
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
 
@@ -38,12 +41,14 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void init() {
+    public void init()
+    {
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new RenderEntityBloodLight(Minecraft.getMinecraft().getRenderManager()));
     }
 
     @Override
-    public void postInit() {
+    public void postInit()
+    {
 
     }
 }

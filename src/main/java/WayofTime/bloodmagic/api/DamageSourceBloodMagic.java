@@ -6,9 +6,11 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IChatComponent;
 
-public class DamageSourceBloodMagic extends DamageSource {
+public class DamageSourceBloodMagic extends DamageSource
+{
 
-    public DamageSourceBloodMagic() {
+    public DamageSourceBloodMagic()
+    {
         super("bloodMagic");
 
         setDamageBypassesArmor();
@@ -16,7 +18,8 @@ public class DamageSourceBloodMagic extends DamageSource {
     }
 
     @Override
-    public IChatComponent getDeathMessage(EntityLivingBase livingBase) {
+    public IChatComponent getDeathMessage(EntityLivingBase livingBase)
+    {
         return new ChatComponentText(TextHelper.localizeEffect("chat.BloodMagic.damageSource", livingBase.getName()));
     }
 }

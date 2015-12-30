@@ -15,12 +15,14 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.awt.*;
 
-public class BlockLifeEssence extends BlockFluidClassic {
+public class BlockLifeEssence extends BlockFluidClassic
+{
 
     @Getter
     private static Fluid lifeEssence = new FluidLifeEssence();
 
-    public BlockLifeEssence() {
+    public BlockLifeEssence()
+    {
         super(lifeEssence, Material.water);
 
         setUnlocalizedName(Constants.Mod.MODID + ".fluid.lifeEssence");
@@ -30,18 +32,22 @@ public class BlockLifeEssence extends BlockFluidClassic {
     }
 
     @Override
-    public boolean canDisplace(IBlockAccess world, BlockPos blockPos) {
+    public boolean canDisplace(IBlockAccess world, BlockPos blockPos)
+    {
         return !world.getBlockState(blockPos).getBlock().getMaterial().isLiquid() && super.canDisplace(world, blockPos);
     }
 
     @Override
-    public boolean displaceIfPossible(World world, BlockPos blockPos) {
+    public boolean displaceIfPossible(World world, BlockPos blockPos)
+    {
         return !world.getBlockState(blockPos).getBlock().getMaterial().isLiquid() && super.displaceIfPossible(world, blockPos);
     }
 
-    public static class FluidLifeEssence extends Fluid {
+    public static class FluidLifeEssence extends Fluid
+    {
 
-        public FluidLifeEssence() {
+        public FluidLifeEssence()
+        {
             super("lifeEssence", new ResourceLocation(Constants.Mod.DOMAIN + "blocks/lifeEssenceStill"), new ResourceLocation(Constants.Mod.DOMAIN + "blocks/lifeEssenceFlowing"));
 
             setDensity(2000);
@@ -49,12 +55,14 @@ public class BlockLifeEssence extends BlockFluidClassic {
         }
 
         @Override
-        public int getColor() {
+        public int getColor()
+        {
             return Color.WHITE.getRGB();
         }
 
         @Override
-        public String getLocalizedName(FluidStack fluidStack) {
+        public String getLocalizedName(FluidStack fluidStack)
+        {
             return StatCollector.translateToLocal("tile.BloodMagic.fluid.lifeEssence.name");
         }
     }

@@ -12,42 +12,54 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class ItemSigilVoid extends ItemSigilBase {
+public class ItemSigilVoid extends ItemSigilBase
+{
 
-    public ItemSigilVoid() {
+    public ItemSigilVoid()
+    {
         super("void", 50);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        if (!world.isRemote && !isUnusable(stack)) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        if (!world.isRemote && !isUnusable(stack))
+        {
             MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
-            if (movingobjectposition != null) {
+            if (movingobjectposition != null)
+            {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
-                if (ret != null) return ret;
+                if (ret != null)
+                    return ret;
 
-                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                {
                     BlockPos blockpos = movingobjectposition.getBlockPos();
 
-                    if (!world.isBlockModifiable(player, blockpos)) {
+                    if (!world.isBlockModifiable(player, blockpos))
+                    {
                         return stack;
                     }
 
-                    if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack)) {
+                    if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
+                    {
                         return stack;
                     }
 
-                    if (!player.canPlayerEdit(blockpos, movingobjectposition.sideHit, stack)) {
+                    if (!player.canPlayerEdit(blockpos, movingobjectposition.sideHit, stack))
+                    {
                         return stack;
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial().isLiquid() && syphonBatteries(stack, player, getLPUsed())) {
+                    if (world.getBlockState(blockpos).getBlock().getMaterial().isLiquid() && syphonBatteries(stack, player, getLPUsed()))
+                    {
                         world.setBlockToAir(blockpos);
                         return stack;
                     }
                 }
-            } else {
+            } else
+            {
                 return stack;
             }
 
@@ -59,20 +71,25 @@ public class ItemSigilVoid extends ItemSigilBase {
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (world.isRemote || !BindableHelper.checkAndSetItemOwner(stack, player) || player.isSneaking() || isUnusable(stack)) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        if (world.isRemote || !BindableHelper.checkAndSetItemOwner(stack, player) || player.isSneaking() || isUnusable(stack))
+        {
             return false;
         }
 
-        if (!world.canMineBlockBody(player, blockPos)) {
+        if (!world.canMineBlockBody(player, blockPos))
+        {
             return false;
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
-        if (tile instanceof IFluidHandler) {
+        if (tile instanceof IFluidHandler)
+        {
             FluidStack amount = ((IFluidHandler) tile).drain(side, 1000, false);
 
-            if (amount != null && amount.amount > 0 && syphonBatteries(stack, player, getLPUsed())) {
+            if (amount != null && amount.amount > 0 && syphonBatteries(stack, player, getLPUsed()))
+            {
                 ((IFluidHandler) tile).drain(side, 1000, true);
                 return true;
             }
@@ -82,11 +99,13 @@ public class ItemSigilVoid extends ItemSigilBase {
 
         BlockPos newPos = blockPos.offset(side);
 
-        if (!player.canPlayerEdit(newPos, side, stack)) {
+        if (!player.canPlayerEdit(newPos, side, stack))
+        {
             return false;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getLPUsed())) {
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonBatteries(stack, player, getLPUsed()))
+        {
             world.setBlockToAir(newPos);
             return true;
         }

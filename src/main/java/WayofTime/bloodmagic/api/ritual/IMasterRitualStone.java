@@ -8,10 +8,11 @@ import net.minecraft.world.World;
 
 /**
  * This interface is for internal implementation only.
- *
+ * 
  * It is provided via the API for easy obtaining of basic data.
  */
-public interface IMasterRitualStone {
+public interface IMasterRitualStone
+{
 
     String getOwner();
 

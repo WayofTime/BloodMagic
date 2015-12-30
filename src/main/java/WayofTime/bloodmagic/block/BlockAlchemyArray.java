@@ -23,76 +23,90 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.Utils;
 
-public class BlockAlchemyArray extends BlockContainer {
+public class BlockAlchemyArray extends BlockContainer
+{
 
-	public BlockAlchemyArray() {
-		super(Material.cloth);
+    public BlockAlchemyArray()
+    {
+        super(Material.cloth);
 
-		setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
-		setCreativeTab(BloodMagic.tabBloodMagic);
-		this.setHardness(0.1f);
-	}
+        setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
+        setCreativeTab(BloodMagic.tabBloodMagic);
+        this.setHardness(0.1f);
+    }
 
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer()
+    {
+        return EnumWorldBlockLayer.CUTOUT;
+    }
 
-	@Override
-	public boolean isFullCube() {
-		return false;
-	}
+    @Override
+    public boolean isFullCube()
+    {
+        return false;
+    }
 
-	@Override
-	public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity) {
-		this.setBlockBounds(0, 0, 0, 1, 0.1f, 1);
-	}
+    @Override
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity)
+    {
+        this.setBlockBounds(0, 0, 0, 1, 0.1f, 1);
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
 
-		if (array == null || player.isSneaking())
-			return false;
+        if (array == null || player.isSneaking())
+            return false;
 
-		ItemStack playerItem = player.getCurrentEquippedItem();
+        ItemStack playerItem = player.getCurrentEquippedItem();
 
-		if (playerItem != null) {
-			if (array.getStackInSlot(0) == null) {
-				Utils.insertItemToTile(array, player, 0);
-			} else {
-				Utils.insertItemToTile(array, player, 1);
-				array.attemptCraft();
-			}
-		}
+        if (playerItem != null)
+        {
+            if (array.getStackInSlot(0) == null)
+            {
+                Utils.insertItemToTile(array, player, 0);
+            } else
+            {
+                Utils.insertItemToTile(array, player, 1);
+                array.attemptCraft();
+            }
+        }
 
-		world.markBlockForUpdate(pos);
-		return true;
-	}
+        world.markBlockForUpdate(pos);
+        return true;
+    }
 
-	@Override
-	public int quantityDropped(Random random) {
-		return 0;
-	}
+    @Override
+    public int quantityDropped(Random random)
+    {
+        return 0;
+    }
 
-	@Override
-	public int getRenderType() {
-		return -1;
-	}
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileAlchemyArray();
-	}
-	
-	@Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta)
+    {
+        return new TileAlchemyArray();
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
+    {
         TileAlchemyArray alchemyArray = (TileAlchemyArray) world.getTileEntity(blockPos);
         if (alchemyArray != null)
             alchemyArray.dropItems();

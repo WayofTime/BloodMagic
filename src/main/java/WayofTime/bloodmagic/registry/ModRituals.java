@@ -13,7 +13,8 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
 
-public class ModRituals {
+public class ModRituals
+{
 
     public static Ritual testRitual;
     public static Ritual waterRitual;
@@ -25,19 +26,21 @@ public class ModRituals {
     public static ImperfectRitual imperfectResistance;
     public static ImperfectRitual imperfectZombie;
 
-    public static void initRituals() {
+    public static void initRituals()
+    {
         testRitual = new RitualTest();
         waterRitual = new RitualWater();
         lavaRitual = new RitualLava();
         greenGroveRitual = new RitualGreenGrove();
-        
+
         RitualRegistry.registerRitual(testRitual, testRitual.getName());
         RitualRegistry.registerRitual(waterRitual, waterRitual.getName());
         RitualRegistry.registerRitual(lavaRitual, lavaRitual.getName());
         RitualRegistry.registerRitual(greenGroveRitual, greenGroveRitual.getName());
     }
 
-    public static void initImperfectRituals() {
+    public static void initImperfectRituals()
+    {
         imperfectNight = new ImperfectRitualNight();
         ImperfectRitualRegistry.registerRitual(imperfectNight);
         imperfectRain = new ImperfectRitualRain();

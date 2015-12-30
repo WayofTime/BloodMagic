@@ -32,393 +32,466 @@ import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemRitualDiviner extends Item {
+public class ItemRitualDiviner extends Item
+{
 
-	public static final String tooltipBase = "tooltip.BloodMagic.diviner.";
+    public static final String tooltipBase = "tooltip.BloodMagic.diviner.";
 
-	public ItemRitualDiviner() {
-		setUnlocalizedName(Constants.Mod.MODID + ".ritualDiviner");
-		setCreativeTab(BloodMagic.tabBloodMagic);
-		setHasSubtypes(true);
-		setMaxStackSize(1);
-	}
+    public ItemRitualDiviner()
+    {
+        setUnlocalizedName(Constants.Mod.MODID + ".ritualDiviner");
+        setCreativeTab(BloodMagic.tabBloodMagic);
+        setHasSubtypes(true);
+        setMaxStackSize(1);
+    }
 
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (addRuneToRitual(stack, world, pos, player)) {
-			//TODO: Have the diviner automagically build the ritual
-		}
-		
-		return false;
-	}
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        if (addRuneToRitual(stack, world, pos, player))
+        {
+            // TODO: Have the diviner automagically build the ritual
+        }
 
-	/**
-	 * Adds a single rune to the ritual.
-	 * 
-	 * @param world
-	 *            -
-	 * @param pos
-	 *            - Block Position of the MRS.
-	 * @return - True if a rune was successfully added
-	 */
-	public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player) {
-		TileEntity tile = world.getTileEntity(pos);
+        return false;
+    }
 
-		if (tile instanceof TileMasterRitualStone) {
-			Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
-			if (ritual != null) {
-				EnumFacing direction = getDirection(stack);
-				for (RitualComponent component : ritual.getComponents()) {
-					if (!canPlaceRitualStone(component.getRuneType(), stack)) {
-						return false;
-					}
-					BlockPos offset = component.getOffset(direction);
-					BlockPos newPos = pos.add(offset);
-					IBlockState state = world.getBlockState(newPos);
-					Block block = state.getBlock();
-					if (block instanceof IRitualStone) { // TODO: Check tile
-															// entity as well.
-						if (((IRitualStone) block).isRuneType(world, newPos, component.getRuneType())) {
-							continue;
-						} else {
-							// Replace existing ritual stone
-							int meta = component.getRuneType().ordinal();
-							IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
-							world.setBlockState(newPos, newState);
-							return true;
-						}
-					} else if (block.isAir(world, newPos)) {
-						if (!consumeStone(stack, world, player)) {
-							return false;
-						}
-						int meta = component.getRuneType().ordinal();
-						IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
-						world.setBlockState(newPos, newState);
-						return true;
-					} else {
-						return false; // TODO: Possibly replace the block with a
-										// ritual stone
-					}
-				}
-			}
-		}
+    /**
+     * Adds a single rune to the ritual.
+     * 
+     * @param world
+     *            -
+     * @param pos
+     *            - Block Position of the MRS.
+     * @return - True if a rune was successfully added
+     */
+    public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
+    {
+        TileEntity tile = world.getTileEntity(pos);
 
-		return false;
-	}
+        if (tile instanceof TileMasterRitualStone)
+        {
+            Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
+            if (ritual != null)
+            {
+                EnumFacing direction = getDirection(stack);
+                for (RitualComponent component : ritual.getComponents())
+                {
+                    if (!canPlaceRitualStone(component.getRuneType(), stack))
+                    {
+                        return false;
+                    }
+                    BlockPos offset = component.getOffset(direction);
+                    BlockPos newPos = pos.add(offset);
+                    IBlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
+                    if (block instanceof IRitualStone)
+                    { // TODO: Check tile
+                      // entity as well.
+                        if (((IRitualStone) block).isRuneType(world, newPos, component.getRuneType()))
+                        {
+                            continue;
+                        } else
+                        {
+                            // Replace existing ritual stone
+                            int meta = component.getRuneType().ordinal();
+                            IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
+                            world.setBlockState(newPos, newState);
+                            return true;
+                        }
+                    } else if (block.isAir(world, newPos))
+                    {
+                        if (!consumeStone(stack, world, player))
+                        {
+                            return false;
+                        }
+                        int meta = component.getRuneType().ordinal();
+                        IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
+                        world.setBlockState(newPos, newState);
+                        return true;
+                    } else
+                    {
+                        return false; // TODO: Possibly replace the block with a
+                                      // ritual stone
+                    }
+                }
+            }
+        }
 
-	// TODO: Make this work for any IRitualStone
-	public boolean consumeStone(ItemStack stack, World world, EntityPlayer player) {
-		ItemStack[] inventory = player.inventory.mainInventory;
-		for (int i = 0; i < inventory.length; i++) {
-			ItemStack newStack = inventory[i];
-			if (newStack == null) {
-				continue;
-			}
-			Item item = newStack.getItem();
-			if (item instanceof ItemBlock) {
-				Block block = ((ItemBlock) item).getBlock();
-				if (block == ModBlocks.ritualStone) {
-					newStack.stackSize--;
-					if (newStack.stackSize <= 0) {
-						inventory[i] = null;
-					}
+        return false;
+    }
 
-					return true;
-				}
-			}
-		}
+    // TODO: Make this work for any IRitualStone
+    public boolean consumeStone(ItemStack stack, World world, EntityPlayer player)
+    {
+        ItemStack[] inventory = player.inventory.mainInventory;
+        for (int i = 0; i < inventory.length; i++)
+        {
+            ItemStack newStack = inventory[i];
+            if (newStack == null)
+            {
+                continue;
+            }
+            Item item = newStack.getItem();
+            if (item instanceof ItemBlock)
+            {
+                Block block = ((ItemBlock) item).getBlock();
+                if (block == ModBlocks.ritualStone)
+                {
+                    newStack.stackSize--;
+                    if (newStack.stackSize <= 0)
+                    {
+                        inventory[i] = null;
+                    }
 
-		return false;
-	}
+                    return true;
+                }
+            }
+        }
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
-		if (ritual != null) {
-			tooltip.add(TextHelper.localize("tooltip.BloodMagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
+        return false;
+    }
 
-			boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
+        Ritual ritual = RitualRegistry.getRitualForId(this.getCurrentRitual(stack));
+        if (ritual != null)
+        {
+            tooltip.add(TextHelper.localize("tooltip.BloodMagic.diviner.currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
 
-			if (sneaking) {
-				tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", getDirection(stack)));
-				tooltip.add("");
-				ArrayList<RitualComponent> componentList = ritual.getComponents();
+            boolean sneaking = Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 
-				int blankRunes = 0;
-				int airRunes = 0;
-				int waterRunes = 0;
-				int fireRunes = 0;
-				int earthRunes = 0;
-				int duskRunes = 0;
-				int dawnRunes = 0;
-				int totalRunes = 0;
+            if (sneaking)
+            {
+                tooltip.add(TextHelper.localize(tooltipBase + "currentDirection", getDirection(stack)));
+                tooltip.add("");
+                ArrayList<RitualComponent> componentList = ritual.getComponents();
 
-				for (RitualComponent component : componentList) {
-					totalRunes++;
-					switch (component.getRuneType()) {
-					case BLANK:
-						blankRunes++;
-						break;
-					case AIR:
-						airRunes++;
-						break;
-					case EARTH:
-						earthRunes++;
-						break;
-					case FIRE:
-						fireRunes++;
-						break;
-					case WATER:
-						waterRunes++;
-						break;
-					case DUSK:
-						duskRunes++;
-						break;
-					case DAWN:
-						dawnRunes++;
-						break;
-					}
-				}
+                int blankRunes = 0;
+                int airRunes = 0;
+                int waterRunes = 0;
+                int fireRunes = 0;
+                int earthRunes = 0;
+                int duskRunes = 0;
+                int dawnRunes = 0;
+                int totalRunes = 0;
 
-				if (blankRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "blankRune", blankRunes));
-				}
-				if (waterRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "waterRune", waterRunes));
-				}
-				if (airRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "airRune", airRunes));
-				}
-				if (fireRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "fireRune", fireRunes));
-				}
-				if (earthRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "earthRune", earthRunes));
-				}
-				if (duskRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "duskRune", duskRunes));
-				}
-				if (dawnRunes > 0) {
-					tooltip.add(TextHelper.localize(tooltipBase + "dawnRune", dawnRunes));
-				}
+                for (RitualComponent component : componentList)
+                {
+                    totalRunes++;
+                    switch (component.getRuneType())
+                    {
+                    case BLANK:
+                        blankRunes++;
+                        break;
+                    case AIR:
+                        airRunes++;
+                        break;
+                    case EARTH:
+                        earthRunes++;
+                        break;
+                    case FIRE:
+                        fireRunes++;
+                        break;
+                    case WATER:
+                        waterRunes++;
+                        break;
+                    case DUSK:
+                        duskRunes++;
+                        break;
+                    case DAWN:
+                        dawnRunes++;
+                        break;
+                    }
+                }
 
-				tooltip.add("");
-				tooltip.add(TextHelper.localize(tooltipBase + "totalRune", totalRunes));
-			} else {
-				tooltip.add("");
-				tooltip.add(TextHelper.localize(tooltipBase + "extraInfo"));
-			}
-		}
-	}
+                if (blankRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "blankRune", blankRunes));
+                }
+                if (waterRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "waterRune", waterRunes));
+                }
+                if (airRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "airRune", airRunes));
+                }
+                if (fireRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "fireRune", fireRunes));
+                }
+                if (earthRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "earthRune", earthRunes));
+                }
+                if (duskRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "duskRune", duskRunes));
+                }
+                if (dawnRunes > 0)
+                {
+                    tooltip.add(TextHelper.localize(tooltipBase + "dawnRune", dawnRunes));
+                }
 
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+                tooltip.add("");
+                tooltip.add(TextHelper.localize(tooltipBase + "totalRune", totalRunes));
+            } else
+            {
+                tooltip.add("");
+                tooltip.add(TextHelper.localize(tooltipBase + "extraInfo"));
+            }
+        }
+    }
 
-		if (player.isSneaking() && !world.isRemote) {
-			cycleRitual(stack, player);
-		}
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
 
-		return stack;
-	}
+        if (player.isSneaking() && !world.isRemote)
+        {
+            cycleRitual(stack, player);
+        }
 
-	@Override
-	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
-		if (entityLiving instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entityLiving;
+        return stack;
+    }
 
-			if (!player.isSwingInProgress) {
-				if (player.isSneaking()) {
-					cycleRitualBackwards(stack, player);
-				} else {
-					cycleDirection(stack, player);
-				}
-			}
-		}
+    @Override
+    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
+    {
+        if (entityLiving instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) entityLiving;
 
-		return false;
-	}
+            if (!player.isSwingInProgress)
+            {
+                if (player.isSneaking())
+                {
+                    cycleRitualBackwards(stack, player);
+                } else
+                {
+                    cycleDirection(stack, player);
+                }
+            }
+        }
 
-	public void cycleDirection(ItemStack stack, EntityPlayer player) {
-		EnumFacing direction = getDirection(stack);
-		EnumFacing newDirection;
-		switch (direction) {
-		case NORTH:
-			newDirection = EnumFacing.EAST;
-			break;
-		case EAST:
-			newDirection = EnumFacing.SOUTH;
-			break;
-		case SOUTH:
-			newDirection = EnumFacing.WEST;
-			break;
-		case WEST:
-			newDirection = EnumFacing.NORTH;
-			break;
-		default:
-			newDirection = EnumFacing.NORTH;
-		}
+        return false;
+    }
 
-		setDirection(stack, newDirection);
-		notifyDirectionChange(newDirection, player);
-	}
+    public void cycleDirection(ItemStack stack, EntityPlayer player)
+    {
+        EnumFacing direction = getDirection(stack);
+        EnumFacing newDirection;
+        switch (direction)
+        {
+        case NORTH:
+            newDirection = EnumFacing.EAST;
+            break;
+        case EAST:
+            newDirection = EnumFacing.SOUTH;
+            break;
+        case SOUTH:
+            newDirection = EnumFacing.WEST;
+            break;
+        case WEST:
+            newDirection = EnumFacing.NORTH;
+            break;
+        default:
+            newDirection = EnumFacing.NORTH;
+        }
 
-	public void notifyDirectionChange(EnumFacing direction, EntityPlayer player) {
-		ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentDirection", direction.getName()));
-	}
+        setDirection(stack, newDirection);
+        notifyDirectionChange(newDirection, player);
+    }
 
-	public void setDirection(ItemStack stack, EnumFacing direction) {
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
+    public void notifyDirectionChange(EnumFacing direction, EntityPlayer player)
+    {
+        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentDirection", direction.getName()));
+    }
 
-		NBTTagCompound tag = stack.getTagCompound();
+    public void setDirection(ItemStack stack, EnumFacing direction)
+    {
+        if (!stack.hasTagCompound())
+        {
+            stack.setTagCompound(new NBTTagCompound());
+        }
 
-		tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
-	}
+        NBTTagCompound tag = stack.getTagCompound();
 
-	public EnumFacing getDirection(ItemStack stack) {
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-			return EnumFacing.NORTH;
-		}
+        tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
+    }
 
-		NBTTagCompound tag = stack.getTagCompound();
+    public EnumFacing getDirection(ItemStack stack)
+    {
+        if (!stack.hasTagCompound())
+        {
+            stack.setTagCompound(new NBTTagCompound());
+            return EnumFacing.NORTH;
+        }
 
-		return EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
-	}
+        NBTTagCompound tag = stack.getTagCompound();
 
-	/**
-	 * Cycles the selected ritual to the next available ritual that is enabled.
-	 * 
-	 * @param stack
-	 *            - The ItemStack of the ritual diviner
-	 * @param player
-	 *            - The player using the ritual diviner
-	 */
-	public void cycleRitual(ItemStack stack, EntityPlayer player) {
-		String key = getCurrentRitual(stack);
-		List<String> idList = RitualRegistry.getOrderedIds();
-		String firstId = "";
-		boolean foundId = false;
-		boolean foundFirst = false;
+        return EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+    }
 
-		for (String str : idList) {
-			Ritual ritual = RitualRegistry.getRitualForId(str);
-			
-			if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
-				continue;
-			}
+    /**
+     * Cycles the selected ritual to the next available ritual that is enabled.
+     * 
+     * @param stack
+     *            - The ItemStack of the ritual diviner
+     * @param player
+     *            - The player using the ritual diviner
+     */
+    public void cycleRitual(ItemStack stack, EntityPlayer player)
+    {
+        String key = getCurrentRitual(stack);
+        List<String> idList = RitualRegistry.getOrderedIds();
+        String firstId = "";
+        boolean foundId = false;
+        boolean foundFirst = false;
 
-			if (!foundFirst) {
-				firstId = str;
-				foundFirst = true;
-			}
+        for (String str : idList)
+        {
+            Ritual ritual = RitualRegistry.getRitualForId(str);
 
-			if (foundId) {
-				setCurrentRitual(stack, str);
-				notifyRitualChange(str, player);
-				return;
-			} else {
-				if (str.equals(key)) {
-					foundId = true;
-					continue;
-				}
-			}
-		}
+            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual))
+            {
+                continue;
+            }
 
-		if (foundFirst) {
-			setCurrentRitual(stack, firstId);
-			notifyRitualChange(firstId, player);
-		}
-	}
+            if (!foundFirst)
+            {
+                firstId = str;
+                foundFirst = true;
+            }
 
-	/**
-	 * Does the same as cycleRitual but instead cycles backwards.
-	 * 
-	 * @param stack
-	 * @param player
-	 */
-	public void cycleRitualBackwards(ItemStack stack, EntityPlayer player) {
-		String key = getCurrentRitual(stack);
-		List<String> idList = RitualRegistry.getOrderedIds();
-		String firstId = "";
-		boolean foundId = false;
-		boolean foundFirst = false;
+            if (foundId)
+            {
+                setCurrentRitual(stack, str);
+                notifyRitualChange(str, player);
+                return;
+            } else
+            {
+                if (str.equals(key))
+                {
+                    foundId = true;
+                    continue;
+                }
+            }
+        }
 
-		for (int i = idList.size() - 1; i >= 0; i--) {
-			String str = idList.get(i);
-			Ritual ritual = RitualRegistry.getRitualForId(str);
+        if (foundFirst)
+        {
+            setCurrentRitual(stack, firstId);
+            notifyRitualChange(firstId, player);
+        }
+    }
 
-			if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual)) {
-				continue;
-			}
+    /**
+     * Does the same as cycleRitual but instead cycles backwards.
+     * 
+     * @param stack
+     * @param player
+     */
+    public void cycleRitualBackwards(ItemStack stack, EntityPlayer player)
+    {
+        String key = getCurrentRitual(stack);
+        List<String> idList = RitualRegistry.getOrderedIds();
+        String firstId = "";
+        boolean foundId = false;
+        boolean foundFirst = false;
 
-			if (!foundFirst) {
-				firstId = str;
-				foundFirst = true;
-			}
+        for (int i = idList.size() - 1; i >= 0; i--)
+        {
+            String str = idList.get(i);
+            Ritual ritual = RitualRegistry.getRitualForId(str);
 
-			if (foundId) {
-				setCurrentRitual(stack, str);
-				notifyRitualChange(str, player);
-				return;
-			} else {
-				if (str.equals(key)) {
-					foundId = true;
-					continue;
-				}
-			}
-		}
+            if (!RitualRegistry.ritualEnabled(ritual) || !canDivinerPerformRitual(stack, ritual))
+            {
+                continue;
+            }
 
-		if (foundFirst) {
-			setCurrentRitual(stack, firstId);
-			notifyRitualChange(firstId, player);
-		}
-	}
+            if (!foundFirst)
+            {
+                firstId = str;
+                foundFirst = true;
+            }
 
-	public boolean canDivinerPerformRitual(ItemStack stack, Ritual ritual) {
-		return true;
-	}
+            if (foundId)
+            {
+                setCurrentRitual(stack, str);
+                notifyRitualChange(str, player);
+                return;
+            } else
+            {
+                if (str.equals(key))
+                {
+                    foundId = true;
+                    continue;
+                }
+            }
+        }
 
-	public void notifyRitualChange(String key, EntityPlayer player) {
-		Ritual ritual = RitualRegistry.getRitualForId(key);
-		if (ritual != null) {
-			ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
-		}
-	}
+        if (foundFirst)
+        {
+            setCurrentRitual(stack, firstId);
+            notifyRitualChange(firstId, player);
+        }
+    }
 
-	public void setCurrentRitual(ItemStack stack, String key) {
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
+    public boolean canDivinerPerformRitual(ItemStack stack, Ritual ritual)
+    {
+        return true;
+    }
 
-		NBTTagCompound tag = stack.getTagCompound();
+    public void notifyRitualChange(String key, EntityPlayer player)
+    {
+        Ritual ritual = RitualRegistry.getRitualForId(key);
+        if (ritual != null)
+        {
+            ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentRitual") + TextHelper.localize(ritual.getUnlocalizedName()));
+        }
+    }
 
-		tag.setString(Constants.NBT.CURRENT_RITUAL, key);
-	}
+    public void setCurrentRitual(ItemStack stack, String key)
+    {
+        if (!stack.hasTagCompound())
+        {
+            stack.setTagCompound(new NBTTagCompound());
+        }
 
-	public String getCurrentRitual(ItemStack stack) {
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
+        NBTTagCompound tag = stack.getTagCompound();
 
-		NBTTagCompound tag = stack.getTagCompound();
-		return tag.getString(Constants.NBT.CURRENT_RITUAL);
-	}
+        tag.setString(Constants.NBT.CURRENT_RITUAL, key);
+    }
 
-	public boolean canPlaceRitualStone(EnumRuneType rune, ItemStack stack) {
-		int meta = stack.getItemDamage();
-		switch (rune) {
-		case BLANK:
-		case AIR:
-		case EARTH:
-		case FIRE:
-		case WATER:
-			return true;
-		case DUSK:
-			return meta >= 1;
-		case DAWN:
-			return meta >= 2;
-		}
+    public String getCurrentRitual(ItemStack stack)
+    {
+        if (!stack.hasTagCompound())
+        {
+            stack.setTagCompound(new NBTTagCompound());
+        }
 
-		return false;
-	}
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getString(Constants.NBT.CURRENT_RITUAL);
+    }
+
+    public boolean canPlaceRitualStone(EnumRuneType rune, ItemStack stack)
+    {
+        int meta = stack.getItemDamage();
+        switch (rune)
+        {
+        case BLANK:
+        case AIR:
+        case EARTH:
+        case FIRE:
+        case WATER:
+            return true;
+        case DUSK:
+            return meta >= 1;
+        case DAWN:
+            return meta >= 2;
+        }
+
+        return false;
+    }
 }

@@ -9,14 +9,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemSigilPhantomBridge extends ItemSigilToggleable {
+public class ItemSigilPhantomBridge extends ItemSigilToggleable
+{
 
-    public ItemSigilPhantomBridge() {
+    public ItemSigilPhantomBridge()
+    {
         super("phantomBridge", 100);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
+    {
         if (!player.onGround && !player.isSneaking())
             return;
 
@@ -33,21 +36,27 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleable {
         int posY = (int) player.posY;
         int posZ = (int) Math.round(player.posZ - 0.5f);
 
-        for (int ix = posX - range; ix <= posX + range; ix++) {
-            for (int iz = posZ - range; iz <= posZ + range; iz++) {
+        for (int ix = posX - range; ix <= posX + range; ix++)
+        {
+            for (int iz = posZ - range; iz <= posZ + range; iz++)
+            {
                 BlockPos blockPos = new BlockPos(ix, posY + verticalOffset, iz);
                 Block block = world.getBlockState(blockPos).getBlock();
 
-                if (world.isAirBlock(blockPos)) {
+                if (world.isAirBlock(blockPos))
+                {
                     world.setBlockState(blockPos, ModBlocks.phantomBlock.getDefaultState(), 3);
 
                     TileEntity tile = world.getTileEntity(blockPos);
-                    if (tile instanceof TilePhantomBlock) {
+                    if (tile instanceof TilePhantomBlock)
+                    {
                         ((TilePhantomBlock) tile).setDuration(100);
                     }
-                } else if (block == ModBlocks.phantomBlock) {
+                } else if (block == ModBlocks.phantomBlock)
+                {
                     TileEntity tile = world.getTileEntity(blockPos);
-                    if (tile instanceof TilePhantomBlock) {
+                    if (tile instanceof TilePhantomBlock)
+                    {
                         ((TilePhantomBlock) tile).setDuration(100);
                     }
                 }

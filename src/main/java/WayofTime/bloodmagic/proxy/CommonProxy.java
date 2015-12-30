@@ -2,21 +2,26 @@ package WayofTime.bloodmagic.proxy;
 
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
-public class CommonProxy {
+public class CommonProxy
+{
 
-    public InventoryRenderHelper getRenderHelper() {
+    public InventoryRenderHelper getRenderHelper()
+    {
         return null;
     }
 
-    public void preInit() {
+    public void preInit()
+    {
 
     }
 
-    public void init() {
+    public void init()
+    {
 
     }
 
-    public void postInit() {
+    public void postInit()
+    {
 
     }
 }

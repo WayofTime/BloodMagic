@@ -6,19 +6,24 @@ import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 
-public class ImperfectRitualRain extends ImperfectRitual {
+public class ImperfectRitualRain extends ImperfectRitual
+{
 
-    public ImperfectRitualRain() {
+    public ImperfectRitualRain()
+    {
         super("rain", new BlockStack(Blocks.water), 5000, true);
     }
 
     @Override
-    public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player) {
-        if (!imperfectRitualStone.getWorld().isRemote) {
+    public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player)
+    {
+        if (!imperfectRitualStone.getWorld().isRemote)
+        {
             imperfectRitualStone.getWorld().getWorldInfo().setRaining(true);
         }
 
-        if (imperfectRitualStone.getWorld().isRemote) {
+        if (imperfectRitualStone.getWorld().isRemote)
+        {
             imperfectRitualStone.getWorld().setRainStrength(1.0F);
             imperfectRitualStone.getWorld().setThunderStrength(1.0F);
         }

@@ -2,20 +2,24 @@ package WayofTime.bloodmagic.compat.jei;
 
 import WayofTime.bloodmagic.compat.ICompatibility;
 
-public class CompatibilityJustEnoughItems implements ICompatibility {
+public class CompatibilityJustEnoughItems implements ICompatibility
+{
 
     @Override
-    public void loadCompatibility() {
+    public void loadCompatibility()
+    {
 
     }
 
     @Override
-    public String getModId() {
+    public String getModId()
+    {
         return "JEI";
     }
 
     @Override
-    public boolean enableCompat() {
+    public boolean enableCompat()
+    {
         return true;
     }
 }

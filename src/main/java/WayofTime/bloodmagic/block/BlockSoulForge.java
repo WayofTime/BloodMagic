@@ -10,9 +10,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class BlockSoulForge extends Block {
+public class BlockSoulForge extends Block
+{
 
-    public BlockSoulForge() {
+    public BlockSoulForge()
+    {
         super(Material.iron);
 
         setUnlocalizedName(Constants.Mod.MODID + ".soulforge.");
@@ -24,10 +26,10 @@ public class BlockSoulForge extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos blockPos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
         if (world.isRemote)
             return false;
-
 
         return false;
     }

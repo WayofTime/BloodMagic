@@ -19,27 +19,32 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
+public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
+{
 
-    public ItemBloodOrb() {
+    public ItemBloodOrb()
+    {
         setUnlocalizedName(Constants.Mod.MODID + ".orb.");
         setHasSubtypes(true);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + OrbRegistry.getOrb(stack.getItemDamage()).getName();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
         for (int i = 0; i < OrbRegistry.getSize(); i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
         super.onItemRightClick(stack, world, player);
 
         if (world == null)
@@ -49,7 +54,8 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
         double posY = player.posY;
         double posZ = player.posZ;
         world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-//        SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ, 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
+        // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,
+        // 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 
         if (PlayerHelper.isFakePlayer(player))
             return stack;
@@ -70,7 +76,8 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
         tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.orb.desc"));
 
         if (advanced)
@@ -80,36 +87,42 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable {
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack stack) {
+    public ItemStack getContainerItem(ItemStack stack)
+    {
         return stack;
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack stack) {
+    public boolean hasContainerItem(ItemStack stack)
+    {
         return true;
     }
 
     // IBindable
 
     @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack) {
+    public boolean onBind(EntityPlayer player, ItemStack stack)
+    {
         return true;
     }
 
     // IBloodOrb
 
     @Override
-    public BloodOrb getOrb(int meta) {
+    public BloodOrb getOrb(int meta)
+    {
         return OrbRegistry.getOrb(meta);
     }
 
     @Override
-    public int getMaxEssence(int meta) {
+    public int getMaxEssence(int meta)
+    {
         return OrbRegistry.getOrb(meta).getCapacity();
     }
 
     @Override
-    public int getOrbLevel(int meta) {
+    public int getOrbLevel(int meta)
+    {
         return OrbRegistry.getOrb(meta).getTier();
     }
 }

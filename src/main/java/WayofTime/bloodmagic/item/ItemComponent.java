@@ -13,7 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 
-public class ItemComponent extends Item {
+public class ItemComponent extends Item
+{
 
     @Getter
     private static ArrayList<String> names = new ArrayList<String>();
@@ -28,7 +29,8 @@ public class ItemComponent extends Item {
     public static final String REAGENT_SIGHT = "reagentSight";
     public static final String REAGENT_BINDING = "reagentBinding";
 
-    public ItemComponent() {
+    public ItemComponent()
+    {
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".baseComponent.");
@@ -38,7 +40,8 @@ public class ItemComponent extends Item {
         buildItemList();
     }
 
-    private void buildItemList() {
+    private void buildItemList()
+    {
         names.add(0, REAGENT_WATER);
         names.add(1, REAGENT_LAVA);
         names.add(2, REAGENT_AIR);
@@ -51,18 +54,21 @@ public class ItemComponent extends Item {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + names.get(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
         for (int i = 0; i < names.size(); i++)
             list.add(new ItemStack(id, 1, i));
     }
 
-    public static ItemStack getStack(String name) {
+    public static ItemStack getStack(String name)
+    {
         return new ItemStack(ModItems.itemComponent, 1, names.indexOf(name));
     }
 }

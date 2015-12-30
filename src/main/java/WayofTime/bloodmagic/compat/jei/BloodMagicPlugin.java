@@ -18,28 +18,23 @@ import net.minecraft.item.ItemStack;
 import java.util.Collections;
 
 @JEIPlugin
-public class BloodMagicPlugin implements IModPlugin {
+public class BloodMagicPlugin implements IModPlugin
+{
 
     public static IJeiHelpers jeiHelper;
 
     @Override
-    public boolean isModLoaded() {
+    public boolean isModLoaded()
+    {
         return true;
     }
 
     @Override
-    public void register(IModRegistry registry) {
-        registry.addRecipeCategories(
-                new AltarRecipeCategory(),
-                new BindingRecipeCategory(),
-                new AlchemyArrayCraftingCategory()
-        );
+    public void register(IModRegistry registry)
+    {
+        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory());
 
-        registry.addRecipeHandlers(
-                new AltarRecipeHandler(),
-                new BindingRecipeHandler(),
-                new AlchemyArrayCraftingRecipeHandler()
-        );
+        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler());
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
@@ -49,19 +44,22 @@ public class BloodMagicPlugin implements IModPlugin {
     }
 
     @Override
-    public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers) {
+    public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers)
+    {
         jeiHelper = jeiHelpers;
 
         jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
     }
 
     @Override
-    public void onItemRegistryAvailable(IItemRegistry itemRegistry) {
+    public void onItemRegistryAvailable(IItemRegistry itemRegistry)
+    {
 
     }
 
     @Override
-    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry) {
+    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry)
+    {
 
     }
 }

@@ -7,7 +7,8 @@ import net.minecraft.util.BlockPos;
  * Used for building the altar structure.
  */
 @Getter
-public class AltarComponent {
+public class AltarComponent
+{
 
     private BlockPos offset;
     private boolean upgradeSlot;
@@ -16,11 +17,14 @@ public class AltarComponent {
 
     /**
      * Sets a component location for the altar.
-     *
-     * @param offset    - Where the block should be in relation to the Altar
-     * @param component - The type of Component the location should contain
+     * 
+     * @param offset
+     *            - Where the block should be in relation to the Altar
+     * @param component
+     *            - The type of Component the location should contain
      */
-    public AltarComponent(BlockPos offset, EnumAltarComponent component) {
+    public AltarComponent(BlockPos offset, EnumAltarComponent component)
+    {
         this.offset = offset;
         this.component = component;
     }
@@ -29,16 +33,18 @@ public class AltarComponent {
      * Use for setting a location at which there must be a block, but the type
      * of block does not matter.
      */
-    public AltarComponent(BlockPos offset) {
+    public AltarComponent(BlockPos offset)
+    {
         this(offset, EnumAltarComponent.NOTAIR);
     }
 
     /**
      * Sets the location to an upgrade slot.
-     *
+     * 
      * @return the current instance for further use.
      */
-    public AltarComponent setUpgradeSlot() {
+    public AltarComponent setUpgradeSlot()
+    {
         this.upgradeSlot = true;
         return this;
     }

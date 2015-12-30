@@ -12,57 +12,61 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockTestSpellBlock extends Block {
-    public static final PropertyDirection INPUT = PropertyDirection
-            .create("input");
-    public static final PropertyDirection OUTPUT = PropertyDirection
-            .create("output");
+public class BlockTestSpellBlock extends Block
+{
+    public static final PropertyDirection INPUT = PropertyDirection.create("input");
+    public static final PropertyDirection OUTPUT = PropertyDirection.create("output");
 
-    public BlockTestSpellBlock() {
+    public BlockTestSpellBlock()
+    {
         super(Material.rock);
         setHardness(2.0F);
         setResistance(5.0F);
 
         setUnlocalizedName(Constants.Mod.MODID + ".testSpellBlock");
         setCreativeTab(BloodMagic.tabBloodMagic);
-        this.setDefaultState(this.blockState.getBaseState()
-                .withProperty(INPUT, EnumFacing.DOWN)
-                .withProperty(OUTPUT, EnumFacing.UP));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(INPUT, EnumFacing.DOWN).withProperty(OUTPUT, EnumFacing.UP));
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public IBlockState getStateFromMeta(int meta)
+    {
         return this.getDefaultState();
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(IBlockState state)
+    {
         return 0;
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        return state.withProperty(INPUT, EnumFacing.DOWN)
-                .withProperty(OUTPUT, EnumFacing.UP);
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        return state.withProperty(INPUT, EnumFacing.DOWN).withProperty(OUTPUT, EnumFacing.UP);
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[]{INPUT, OUTPUT});
+    protected BlockState createBlockState()
+    {
+        return new BlockState(this, new IProperty[] { INPUT, OUTPUT });
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube()
+    {
         return false;
     }
 
     @Override
-    public boolean isFullCube() {
+    public boolean isFullCube()
+    {
         return false;
     }
 
     @Override
-    public boolean isPassable(IBlockAccess blockAccess, BlockPos pos) {
+    public boolean isPassable(IBlockAccess blockAccess, BlockPos pos)
+    {
         return false;
     }
 }

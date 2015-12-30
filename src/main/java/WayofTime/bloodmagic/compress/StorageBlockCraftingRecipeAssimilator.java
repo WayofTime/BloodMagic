@@ -16,30 +16,38 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.*;
 
-public class StorageBlockCraftingRecipeAssimilator {
+public class StorageBlockCraftingRecipeAssimilator
+{
 
-    public List<IRecipe> getPackingRecipes() {
+    public List<IRecipe> getPackingRecipes()
+    {
         // grab all recipes potentially suitable for packing or unpacking
 
         List<PackingRecipe> packingRecipes = new LinkedList<PackingRecipe>();
         List<IRecipe> unpackingRecipes = new ArrayList<IRecipe>();
 
-        for (IRecipe recipe : getCraftingRecipes()) {
+        for (IRecipe recipe : getCraftingRecipes())
+        {
             ItemStack output = recipe.getRecipeOutput();
-            if (output == null || output.getItem() == null) continue;
+            if (output == null || output.getItem() == null)
+                continue;
 
-            if (output.stackSize == 1) {
+            if (output.stackSize == 1)
+            {
                 PackingRecipe packingRecipe = getPackingRecipe(recipe);
 
-                if (packingRecipe != null) {
+                if (packingRecipe != null)
+                {
                     packingRecipes.add(packingRecipe);
                 }
-            } else if ((output.stackSize == 4 || output.stackSize == 9) && recipe.getRecipeSize() == 1) {
+            } else if ((output.stackSize == 4 || output.stackSize == 9) && recipe.getRecipeSize() == 1)
+            {
                 unpackingRecipes.add(recipe);
             }
         }
 
-        // grab all packing recipes which accept the output of any of the unpacking recipes
+        // grab all packing recipes which accept the output of any of the
+        // unpacking recipes
 
         Container container = makeDummyContainer();
         InventoryCrafting inventoryUnpack = new InventoryCrafting(container, 2, 2);
@@ -49,61 +57,82 @@ public class StorageBlockCraftingRecipeAssimilator {
 
         List<IRecipe> ret = new ArrayList<IRecipe>();
 
-        for (IRecipe recipeUnpack : unpackingRecipes) {
+        for (IRecipe recipeUnpack : unpackingRecipes)
+        {
             ItemStack unpacked = recipeUnpack.getRecipeOutput();
             InventoryCrafting inventory = null;
 
-            for (Iterator<PackingRecipe> it = packingRecipes.iterator(); it.hasNext(); ) {
+            for (Iterator<PackingRecipe> it = packingRecipes.iterator(); it.hasNext();)
+            {
                 PackingRecipe recipePack = it.next();
 
-                // check if the packing recipe accepts the unpacking recipe's output
+                // check if the packing recipe accepts the unpacking recipe's
+                // output
 
                 boolean matched = false;
 
-                if (recipePack.possibleInputs != null) { // the recipe could be parsed, use its inputs directly since that's faster
-                    // verify recipe size
+                if (recipePack.possibleInputs != null)
+                { // the recipe could be parsed, use its inputs directly since
+                  // that's faster
+                  // verify recipe size
 
-                    if (recipePack.inputCount != unpacked.stackSize) continue;
+                    if (recipePack.inputCount != unpacked.stackSize)
+                        continue;
 
-                    // check if any of the input options matches the unpacked item stack
+                    // check if any of the input options matches the unpacked
+                    // item stack
 
-                    for (ItemStack stack : recipePack.possibleInputs) {
-                        if (areInputsIdentical(unpacked, stack)) {
+                    for (ItemStack stack : recipePack.possibleInputs)
+                    {
+                        if (areInputsIdentical(unpacked, stack))
+                        {
                             matched = true;
                             break;
                         }
                     }
-                } else { // unknown IRecipe, check through the recipe conventionally
-                    // verify recipe size for 3x3 to skip anything smaller quickly
+                } else
+                { // unknown IRecipe, check through the recipe conventionally
+                  // verify recipe size for 3x3 to skip anything smaller
+                  // quickly
 
-                    if (unpacked.stackSize == 9 && recipePack.recipe.getRecipeSize() < 9) continue;
+                    if (unpacked.stackSize == 9 && recipePack.recipe.getRecipeSize() < 9)
+                        continue;
 
-                    // initialize inventory late, but only once per unpack recipe
+                    // initialize inventory late, but only once per unpack
+                    // recipe
 
-                    if (inventory == null) {
-                        if (unpacked.stackSize == 4) {
+                    if (inventory == null)
+                    {
+                        if (unpacked.stackSize == 4)
+                        {
                             inventory = inventory2x2;
-                        } else {
+                        } else
+                        {
                             inventory = inventory3x3;
                         }
 
-                        for (int i = 0; i < unpacked.stackSize; i++) {
+                        for (int i = 0; i < unpacked.stackSize; i++)
+                        {
                             inventory.setInventorySlotContents(i, unpacked.copy());
                         }
                     }
 
-                    // check if the packing recipe accepts the unpacked item stack
+                    // check if the packing recipe accepts the unpacked item
+                    // stack
 
                     matched = recipePack.recipe.matches(inventory, world);
                 }
 
-                if (matched) {
-                    // check if the unpacking recipe accepts the packing recipe's output
+                if (matched)
+                {
+                    // check if the unpacking recipe accepts the packing
+                    // recipe's output
 
                     ItemStack packOutput = recipePack.recipe.getRecipeOutput();
                     inventoryUnpack.setInventorySlotContents(0, packOutput.copy());
 
-                    if (recipeUnpack.matches(inventoryUnpack, world)) {
+                    if (recipeUnpack.matches(inventoryUnpack, world))
+                    {
                         ret.add(recipePack.recipe);
                         BloodMagic.instance.getLogger().info("Adding the following recipe to the Compression Handler: " + packOutput);
                         it.remove();
@@ -116,33 +145,44 @@ public class StorageBlockCraftingRecipeAssimilator {
     }
 
     @SuppressWarnings("unchecked")
-    private List<IRecipe> getCraftingRecipes() {
+    private List<IRecipe> getCraftingRecipes()
+    {
         return CraftingManager.getInstance().getRecipeList();
     }
 
-    private Container makeDummyContainer() {
-        return new Container() {
+    private Container makeDummyContainer()
+    {
+        return new Container()
+        {
             @Override
-            public boolean canInteractWith(EntityPlayer player) {
+            public boolean canInteractWith(EntityPlayer player)
+            {
                 return true;
             }
         };
     }
 
-    private PackingRecipe getPackingRecipe(IRecipe recipe) {
-        if (recipe.getRecipeSize() < 4) return null;
+    private PackingRecipe getPackingRecipe(IRecipe recipe)
+    {
+        if (recipe.getRecipeSize() < 4)
+            return null;
 
         List<?> inputs;
 
-        if (recipe instanceof ShapedRecipes) {
+        if (recipe instanceof ShapedRecipes)
+        {
             inputs = Arrays.asList(((ShapedRecipes) recipe).recipeItems);
-        } else if (recipe instanceof ShapelessRecipes) {
+        } else if (recipe instanceof ShapelessRecipes)
+        {
             inputs = ((ShapelessRecipes) recipe).recipeItems;
-        } else if (recipe instanceof ShapedOreRecipe) {
+        } else if (recipe instanceof ShapedOreRecipe)
+        {
             inputs = Arrays.asList(((ShapedOreRecipe) recipe).getInput());
-        } else if (recipe instanceof ShapelessOreRecipe) {
+        } else if (recipe instanceof ShapelessOreRecipe)
+        {
             inputs = ((ShapelessOreRecipe) recipe).getInput();
-        } else {
+        } else
+        {
             return new PackingRecipe(recipe, null, -1);
         }
 
@@ -150,65 +190,84 @@ public class StorageBlockCraftingRecipeAssimilator {
 
         int count = 0;
 
-        for (Object o : inputs) {
-            if (o != null) count++;
+        for (Object o : inputs)
+        {
+            if (o != null)
+                count++;
         }
 
-        if (count != 4 && count != 9) return null;
+        if (count != 4 && count != 9)
+            return null;
 
         // grab identical inputs
 
         List<ItemStack> identicalInputs = getIdenticalInputs(inputs);
-        if (identicalInputs == null) return null;
+        if (identicalInputs == null)
+            return null;
 
         return new PackingRecipe(recipe, identicalInputs, count);
     }
 
     /**
-     * Determine the item stacks from the provided inputs which are suitable for every input element.
-     *
-     * @param inputs List of all inputs, null elements are being ignored.
+     * Determine the item stacks from the provided inputs which are suitable for
+     * every input element.
+     * 
+     * @param inputs
+     *            List of all inputs, null elements are being ignored.
      * @return List List of all options.
      */
     @SuppressWarnings("unchecked")
-    private List<ItemStack> getIdenticalInputs(List<?> inputs) {
+    private List<ItemStack> getIdenticalInputs(List<?> inputs)
+    {
         List<ItemStack> options = null;
 
-        for (Object input : inputs) {
-            if (input == null) continue;
+        for (Object input : inputs)
+        {
+            if (input == null)
+                continue;
 
             List<ItemStack> offers;
 
-            if (input instanceof ItemStack) {
+            if (input instanceof ItemStack)
+            {
                 offers = Collections.singletonList((ItemStack) input);
-            } else if (input instanceof List) {
+            } else if (input instanceof List)
+            {
                 offers = (List<ItemStack>) input;
 
-                if (offers.isEmpty()) return null;
-            } else {
-                throw new RuntimeException("invalid input: "+input.getClass());
+                if (offers.isEmpty())
+                    return null;
+            } else
+            {
+                throw new RuntimeException("invalid input: " + input.getClass());
             }
 
-            if (options == null) {
+            if (options == null)
+            {
                 options = new ArrayList<ItemStack>(offers);
                 continue;
             }
 
-            for (Iterator<ItemStack> it = options.iterator(); it.hasNext(); ) {
+            for (Iterator<ItemStack> it = options.iterator(); it.hasNext();)
+            {
                 ItemStack stackReq = it.next();
                 boolean found = false;
 
-                for (ItemStack stackCmp : offers) {
-                    if (areInputsIdentical(stackReq, stackCmp)) {
+                for (ItemStack stackCmp : offers)
+                {
+                    if (areInputsIdentical(stackReq, stackCmp))
+                    {
                         found = true;
                         break;
                     }
                 }
 
-                if (!found) {
+                if (!found)
+                {
                     it.remove();
 
-                    if (options.isEmpty()) return null;
+                    if (options.isEmpty())
+                        return null;
                 }
             }
         }
@@ -216,9 +275,11 @@ public class StorageBlockCraftingRecipeAssimilator {
         return options;
     }
 
-    private boolean areInputsIdentical(ItemStack a, ItemStack b) {
+    private boolean areInputsIdentical(ItemStack a, ItemStack b)
+    {
 
-        try {
+        try
+        {
             if (a.getItem() != b.getItem())
                 return false;
 
@@ -226,21 +287,24 @@ public class StorageBlockCraftingRecipeAssimilator {
             int dmgB = b.getItemDamage();
 
             return dmgA == dmgB || dmgA == OreDictionary.WILDCARD_VALUE || dmgB == OreDictionary.WILDCARD_VALUE;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e)
+        {
 
             BloodMagic.instance.getLogger().error("A mod in this instance has registered an item with a null input. Known problem mods are:");
 
-//            String err = "";
-//            for (String problem : problemMods)
-//                err += (err.length() > 0 ? ", " : "") + problem;
-//            BloodMagic.instance.getLogger().error(err);
+            // String err = "";
+            // for (String problem : problemMods)
+            // err += (err.length() > 0 ? ", " : "") + problem;
+            // BloodMagic.instance.getLogger().error(err);
 
             return false;
         }
     }
 
-    private static class PackingRecipe {
-        PackingRecipe(IRecipe recipe, List<ItemStack> possibleInputs, int inputCount) {
+    private static class PackingRecipe
+    {
+        PackingRecipe(IRecipe recipe, List<ItemStack> possibleInputs, int inputCount)
+        {
             this.recipe = recipe;
             this.possibleInputs = possibleInputs;
             this.inputCount = inputCount;

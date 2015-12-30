@@ -12,7 +12,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ModBlocks {
+public class ModBlocks
+{
     public static Block altar;
     public static Block bloodRune;
     public static Block ritualController;
@@ -30,7 +31,8 @@ public class ModBlocks {
     public static Block crystal;
     public static Block bloodStoneBrick;
 
-    public static void init() {
+    public static void init()
+    {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
         lifeEssence = registerBlock(new BlockLifeEssence());
 
@@ -51,7 +53,8 @@ public class ModBlocks {
         initTiles();
     }
 
-    public static void initTiles() {
+    public static void initTiles()
+    {
         GameRegistry.registerTileEntity(TileAltar.class, Constants.Mod.MODID + ":" + TileAltar.class.getSimpleName());
         GameRegistry.registerTileEntity(TileImperfectRitualStone.class, Constants.Mod.MODID + ":" + TileImperfectRitualStone.class.getSimpleName());
         GameRegistry.registerTileEntity(TileMasterRitualStone.class, Constants.Mod.MODID + ":" + TileMasterRitualStone.class.getSimpleName());
@@ -61,7 +64,8 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TilePhantomBlock.class, Constants.Mod.MODID + ":" + TilePhantomBlock.class.getSimpleName());
     }
 
-    public static void initRenders() {
+    public static void initRenders()
+    {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         renderHelper.fluidRender(lifeEssence);
@@ -97,25 +101,29 @@ public class ModBlocks {
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(phantomBlock));
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
+    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
+    {
         if (!ConfigHandler.blockBlacklist.contains(name))
             GameRegistry.registerBlock(block, itemBlock, name);
 
         return block;
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock) {
+    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock)
+    {
         return registerBlock(block, itemBlock, block.getClass().getSimpleName());
     }
 
-    private static Block registerBlock(Block block, String name) {
+    private static Block registerBlock(Block block, String name)
+    {
         if (!ConfigHandler.blockBlacklist.contains(name))
             GameRegistry.registerBlock(block, name);
 
         return block;
     }
 
-    private static Block registerBlock(Block block) {
+    private static Block registerBlock(Block block)
+    {
         return registerBlock(block, block.getClass().getSimpleName());
     }
 }

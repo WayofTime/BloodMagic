@@ -9,14 +9,17 @@ import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-public class ImperfectRitualZombie extends ImperfectRitual {
+public class ImperfectRitualZombie extends ImperfectRitual
+{
 
-    public ImperfectRitualZombie() {
+    public ImperfectRitualZombie()
+    {
         super("zombie", new BlockStack(Blocks.coal_block), 5000);
     }
 
     @Override
-    public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player) {
+    public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player)
+    {
         EntityZombie zombie = new EntityZombie(imperfectRitualStone.getWorld());
         zombie.setPosition(imperfectRitualStone.getPos().getX() + 0.5, imperfectRitualStone.getPos().getY() + 2.1, imperfectRitualStone.getPos().getZ() + 0.5);
         zombie.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 2000));

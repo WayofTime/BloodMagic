@@ -13,7 +13,8 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class BindingRecipeCategory implements IRecipeCategory {
+public class BindingRecipeCategory implements IRecipeCategory
+{
 
     private static final int INPUT_SLOT = 0;
     private static final int CATALYST_SLOT = 1;
@@ -26,41 +27,48 @@ public class BindingRecipeCategory implements IRecipeCategory {
 
     @Nonnull
     @Override
-    public String getUid() {
+    public String getUid()
+    {
         return Constants.Compat.JEI_CATEGORY_BINDING;
     }
 
     @Nonnull
     @Override
-    public String getTitle() {
+    public String getTitle()
+    {
         return localizedName;
     }
 
     @Nonnull
     @Override
-    public IDrawable getBackground() {
+    public IDrawable getBackground()
+    {
         return background;
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft) {
+    public void drawExtras(Minecraft minecraft)
+    {
 
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft) {
+    public void drawAnimations(Minecraft minecraft)
+    {
 
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    {
 
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
         recipeLayout.getItemStacks().init(CATALYST_SLOT, true, 50, 5);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 73, 5);
 
-        if (recipeWrapper instanceof BindingRecipeJEI) {
+        if (recipeWrapper instanceof BindingRecipeJEI)
+        {
             BindingRecipeJEI bindingRecipe = (BindingRecipeJEI) recipeWrapper;
             recipeLayout.getItemStacks().set(INPUT_SLOT, (ItemStack) bindingRecipe.getInputs().get(0));
             recipeLayout.getItemStacks().set(CATALYST_SLOT, (ItemStack) bindingRecipe.getInputs().get(1));

@@ -12,14 +12,17 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 @NoArgsConstructor
-public class TileImperfectRitualStone extends TileEntity implements IImperfectRitualStone {
+public class TileImperfectRitualStone extends TileEntity implements IImperfectRitualStone
+{
 
     // IImperfectRitualStone
 
     @Override
-    public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player) {
+    public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player)
+    {
 
-        if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual)) {
+        if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual))
+        {
             NetworkHelper.getSoulNetwork(player, world).syphonAndDamage(imperfectRitual.getActivationCost());
             if (imperfectRitual.onActivate(this, player))
                 if (imperfectRitual.isLightshow())
@@ -30,12 +33,14 @@ public class TileImperfectRitualStone extends TileEntity implements IImperfectRi
     }
 
     @Override
-    public World getWorld() {
+    public World getWorld()
+    {
         return super.getWorld();
     }
 
     @Override
-    public BlockPos getPos() {
+    public BlockPos getPos()
+    {
         return super.getPos();
     }
 }

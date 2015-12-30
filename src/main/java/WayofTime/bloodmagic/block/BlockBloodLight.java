@@ -17,9 +17,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
-public class BlockBloodLight extends Block {
+public class BlockBloodLight extends Block
+{
 
-    public BlockBloodLight() {
+    public BlockBloodLight()
+    {
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodLight");
@@ -27,30 +29,36 @@ public class BlockBloodLight extends Block {
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube()
+    {
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer() {
+    public EnumWorldBlockLayer getBlockLayer()
+    {
         return EnumWorldBlockLayer.CUTOUT;
     }
 
     @Override
-    public boolean isFullCube() {
+    public boolean isFullCube()
+    {
         return false;
     }
 
     @Override
-    public int getLightValue() {
+    public int getLightValue()
+    {
         return 15;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addDestroyEffects(World world, BlockPos pos, net.minecraft.client.particle.EffectRenderer effectRenderer) {
-        if (world.getBlockState(pos).getBlock() == this) {
+    public boolean addDestroyEffects(World world, BlockPos pos, net.minecraft.client.particle.EffectRenderer effectRenderer)
+    {
+        if (world.getBlockState(pos).getBlock() == this)
+        {
             Random random = new Random();
             float f = 1.0F;
             float f1 = f * 0.6F + 0.4F;
@@ -63,8 +71,10 @@ public class BlockBloodLight extends Block {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        if (rand.nextInt(3) != 0) {
+    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (rand.nextInt(3) != 0)
+        {
             float f = 1.0F;
             float f1 = f * 0.6F + 0.4F;
             float f2 = f * f * 0.7F - 0.5F;
@@ -74,12 +84,14 @@ public class BlockBloodLight extends Block {
     }
 
     @Override
-    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity) {
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity)
+    {
         this.setBlockBounds(0.35F, 0.35F, 0.35F, 0.65F, 0.65F, 0.65F);
     }
 
     @Override
-    public int quantityDropped(Random par1Random) {
+    public int quantityDropped(Random par1Random)
+    {
         return 0;
     }
 }

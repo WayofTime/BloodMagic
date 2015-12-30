@@ -20,11 +20,13 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 
-public class BlockRitualController extends BlockStringContainer {
+public class BlockRitualController extends BlockStringContainer
+{
 
-    public static final String[] names = {"master", "imperfect"};
+    public static final String[] names = { "master", "imperfect" };
 
-    public BlockRitualController() {
+    public BlockRitualController()
+    {
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
@@ -36,21 +38,28 @@ public class BlockRitualController extends BlockStringContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone) {
-            if (player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.activationCrystal) {
-            	String key = RitualHelper.getValidRitual(world, pos);
-            	EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
-            	//TODO: Give a message stating that this ritual is not a valid ritual.
-                if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction)) {
-                    if(((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId(key))) {
-                    	((TileMasterRitualStone) tile).setDirection(direction);
+        if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
+        {
+            if (player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.activationCrystal)
+            {
+                String key = RitualHelper.getValidRitual(world, pos);
+                EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
+                // TODO: Give a message stating that this ritual is not a valid
+                // ritual.
+                if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction))
+                {
+                    if (((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId(key)))
+                    {
+                        ((TileMasterRitualStone) tile).setDirection(direction);
                     }
                 }
             }
-        } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone) {
+        } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone)
+        {
 
             IBlockState determinerState = world.getBlockState(pos.up());
             BlockStack determiner = new BlockStack(determinerState.getBlock(), determinerState.getBlock().getMetaFromState(determinerState));
@@ -62,7 +71,8 @@ public class BlockRitualController extends BlockStringContainer {
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+    {
         TileEntity tile = world.getTileEntity(pos);
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
@@ -70,7 +80,8 @@ public class BlockRitualController extends BlockStringContainer {
     }
 
     @Override
-    public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
+    public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion explosion)
+    {
         TileEntity tile = world.getTileEntity(pos);
         IBlockState state = world.getBlockState(pos);
 
@@ -79,7 +90,8 @@ public class BlockRitualController extends BlockStringContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
         return meta == 0 ? (new TileMasterRitualStone()) : (new TileImperfectRitualStone());
     }
 }

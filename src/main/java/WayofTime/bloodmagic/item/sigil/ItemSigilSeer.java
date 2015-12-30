@@ -15,50 +15,61 @@ import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemSigilSeer extends ItemSigilBase implements IAltarReader {
+public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
+{
 
-    public ItemSigilSeer() {
+    public ItemSigilSeer()
+    {
         super("seer");
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
 
         if (PlayerHelper.isFakePlayer(player))
             return stack;
 
         super.onItemRightClick(stack, world, player);
 
-        if (!world.isRemote) {
+        if (!world.isRemote)
+        {
             MovingObjectPosition position = getMovingObjectPositionFromPlayer(world, player, false);
             int currentEssence = NetworkHelper.getSoulNetwork(BindableHelper.getOwnerUUID(stack), world).getCurrentEssence();
 
-            if (position == null) {
+            if (position == null)
+            {
                 ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
                 return stack;
-            } else {
-                if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            } else
+            {
+                if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                {
 
                     TileEntity tile = world.getTileEntity(position.getBlockPos());
 
-                    if (tile != null && tile instanceof IBloodAltar) {
+                    if (tile != null && tile instanceof IBloodAltar)
+                    {
                         IBloodAltar altar = (IBloodAltar) tile;
                         int tier = altar.getTier().ordinal() + 1;
                         currentEssence = altar.getCurrentBlood();
                         int capacity = altar.getCapacity();
                         altar.checkTier();
-                        if (tile instanceof IInventory) {
-                            if (((IInventory) tile).getStackInSlot(0) != null) {
+                        if (tile instanceof IInventory)
+                        {
+                            if (((IInventory) tile).getStackInSlot(0) != null)
+                            {
                                 int progress = altar.getProgress();
                                 int totalLiquidRequired = altar.getLiquidRequired() * ((IInventory) tile).getStackInSlot(0).stackSize;
                                 int consumptionRate = (int) (altar.getConsumptionRate() * (altar.getConsumptionMultiplier() + 1));
                                 ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), TextHelper.localize(tooltipBase + "currentAltarConsumptionRate", consumptionRate), TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
-                            }
-                            else {
+                            } else
+                            {
                                 ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
                             }
                         }
-                    } else {
+                    } else
+                    {
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
                     }
 

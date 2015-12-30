@@ -17,74 +17,88 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
-public class RitualGreenGrove extends Ritual {
+public class RitualGreenGrove extends Ritual
+{
 
-	public static final String GROW_RANGE = "growing";
-	public RitualGreenGrove() {
-		super("ritualGreenGrove", 0, 1000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
-		addBlockRange(GROW_RANGE, new BlockPos[] { new BlockPos(-1, 2, -1), new BlockPos(1, 2, 1) });
-	}
+    public static final String GROW_RANGE = "growing";
 
-	@Override
-	public void performRitual(IMasterRitualStone masterRitualStone) {
-		World world = masterRitualStone.getWorld();
-		SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner(), world);
-		int currentEssence = network.getCurrentEssence();
+    public RitualGreenGrove()
+    {
+        super("ritualGreenGrove", 0, 1000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
+        addBlockRange(GROW_RANGE, new BlockPos[] { new BlockPos(-1, 2, -1), new BlockPos(1, 2, 1) });
+    }
 
-		if (currentEssence < getRefreshCost())
-			return;
-		
-		int maxGrowths = currentEssence / getRefreshCost();
-		int totalGrowths = 0;
+    @Override
+    public void performRitual(IMasterRitualStone masterRitualStone)
+    {
+        World world = masterRitualStone.getWorld();
+        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner(), world);
+        int currentEssence = network.getCurrentEssence();
 
-		BlockPos[] growingRange = getBlockRange(GROW_RANGE);
+        if (currentEssence < getRefreshCost())
+            return;
 
-		for (int i = growingRange[0].getX(); i <= growingRange[1].getX(); i++) {
-			for (int j = growingRange[0].getY(); j <= growingRange[1].getY(); j++) {
-				for (int k = growingRange[0].getZ(); k <= growingRange[1].getZ(); k++) {
-					BlockPos newPos = masterRitualStone.getPos().add(i, j, k);
-					IBlockState state = world.getBlockState(newPos);
-					Block block = state.getBlock();
-					if (block instanceof IPlantable || block instanceof IGrowable) {
-						block.updateTick(world, newPos, state, new Random());
-						totalGrowths++;
-					}
-					
-					if (totalGrowths >= maxGrowths) {
-						break;
-					}
-				}
-				
-				if (totalGrowths >= maxGrowths) {
-					break;
-				}
-			}
-			
-			if (totalGrowths >= maxGrowths) {
-				break;
-			}
-		}
-		
-		network.syphon(totalGrowths * getRefreshCost());
-	}
+        int maxGrowths = currentEssence / getRefreshCost();
+        int totalGrowths = 0;
 
-	@Override
-	public int getRefreshTime() {
-		return 20;
-	}
+        BlockPos[] growingRange = getBlockRange(GROW_RANGE);
 
-	@Override
-	public int getRefreshCost() {
-		return 20;
-	}
+        for (int i = growingRange[0].getX(); i <= growingRange[1].getX(); i++)
+        {
+            for (int j = growingRange[0].getY(); j <= growingRange[1].getY(); j++)
+            {
+                for (int k = growingRange[0].getZ(); k <= growingRange[1].getZ(); k++)
+                {
+                    BlockPos newPos = masterRitualStone.getPos().add(i, j, k);
+                    IBlockState state = world.getBlockState(newPos);
+                    Block block = state.getBlock();
+                    if (block instanceof IPlantable || block instanceof IGrowable)
+                    {
+                        block.updateTick(world, newPos, state, new Random());
+                        totalGrowths++;
+                    }
 
-	@Override
-	public ArrayList<RitualComponent> getComponents() {
-		ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+                    if (totalGrowths >= maxGrowths)
+                    {
+                        break;
+                    }
+                }
 
-		this.addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
-		this.addParallelRunes(components, 1, 0, EnumRuneType.WATER);
+                if (totalGrowths >= maxGrowths)
+                {
+                    break;
+                }
+            }
 
-		return components;
-	}
+            if (totalGrowths >= maxGrowths)
+            {
+                break;
+            }
+        }
+
+        network.syphon(totalGrowths * getRefreshCost());
+    }
+
+    @Override
+    public int getRefreshTime()
+    {
+        return 20;
+    }
+
+    @Override
+    public int getRefreshCost()
+    {
+        return 20;
+    }
+
+    @Override
+    public ArrayList<RitualComponent> getComponents()
+    {
+        ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
+
+        this.addCornerRunes(components, 1, 0, EnumRuneType.EARTH);
+        this.addParallelRunes(components, 1, 0, EnumRuneType.WATER);
+
+        return components;
+    }
 }

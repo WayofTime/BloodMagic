@@ -26,20 +26,23 @@ import java.util.List;
 
 /**
  * Creates a block that has multiple meta-based states.
- *
+ * 
  * These states will be numbered 0 through {@code maxMeta}.
- *
- * For {@link net.minecraft.tileentity.TileEntity}'s, use {@link BlockIntegerContainer}.
+ * 
+ * For {@link net.minecraft.tileentity.TileEntity}'s, use
+ * {@link BlockIntegerContainer}.
  */
 @Getter
-public class BlockInteger extends Block {
+public class BlockInteger extends Block
+{
 
     private final int maxMeta;
     private final PropertyInteger metaProp;
     private final IUnlistedProperty unlistedMetaProp;
     private final BlockState realBlockState;
 
-    public BlockInteger(Material material, int maxMeta, String propName) {
+    public BlockInteger(Material material, int maxMeta, String propName)
+    {
         super(material);
 
         this.maxMeta = maxMeta;
@@ -50,60 +53,72 @@ public class BlockInteger extends Block {
         setupStates();
     }
 
-    public BlockInteger(Material material, int maxMeta) {
+    public BlockInteger(Material material, int maxMeta)
+    {
         this(material, maxMeta, "meta");
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public IBlockState getStateFromMeta(int meta)
+    {
         return getBlockState().getBaseState().withProperty(metaProp, meta);
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
+    public int getMetaFromState(IBlockState state)
+    {
         return (Integer) state.getValue(metaProp);
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
+    public int damageDropped(IBlockState state)
+    {
         return getMetaFromState(state);
     }
 
     @Override
-    public BlockState getBlockState() {
+    public BlockState getBlockState()
+    {
         return this.realBlockState;
     }
 
     @Override
-    public BlockState createBlockState() {
+    public BlockState createBlockState()
+    {
         return Blocks.air.getBlockState();
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player)
+    {
         return new ItemStack(this, 1, this.getMetaFromState(world.getBlockState(pos)));
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
+    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list)
+    {
         for (int i = 0; i < maxMeta + 1; i++)
             list.add(new ItemStack(this, 1, i));
     }
 
-    private void setupStates() {
+    private void setupStates()
+    {
         this.setDefaultState(getExtendedBlockState().withProperty(unlistedMetaProp, 0).withProperty(metaProp, 0));
     }
 
-    public ExtendedBlockState getBaseExtendedState() {
+    public ExtendedBlockState getBaseExtendedState()
+    {
         return (ExtendedBlockState) this.getBlockState();
     }
 
-    public IExtendedBlockState getExtendedBlockState() {
+    public IExtendedBlockState getExtendedBlockState()
+    {
         return (IExtendedBlockState) this.getBaseExtendedState().getBaseState();
     }
 
-    private BlockState createRealBlockState() {
-        return new ExtendedBlockState(this, new IProperty[]{metaProp}, new IUnlistedProperty[]{unlistedMetaProp});
+    private BlockState createRealBlockState()
+    {
+        return new ExtendedBlockState(this, new IProperty[] { metaProp }, new IUnlistedProperty[] { unlistedMetaProp });
     }
 }

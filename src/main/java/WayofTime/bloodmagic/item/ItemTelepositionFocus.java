@@ -20,11 +20,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemTelepositionFocus extends ItemBindable {
+public class ItemTelepositionFocus extends ItemBindable
+{
 
-    public static String[] names = {"weak", "enhanced", "reinforced", "demonic"};
+    public static String[] names = { "weak", "enhanced", "reinforced", "demonic" };
 
-    public ItemTelepositionFocus() {
+    public ItemTelepositionFocus()
+    {
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".focus.");
@@ -34,19 +36,22 @@ public class ItemTelepositionFocus extends ItemBindable {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
         if (BindableHelper.checkAndSetItemOwner(stack, player))
             if (player.isSneaking())
                 return stack;
@@ -56,7 +61,8 @@ public class ItemTelepositionFocus extends ItemBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.BloodMagic.telepositionfocus." + names[stack.getItemDamage()]))));
 
         super.addInformation(stack, player, tooltip, advanced);
@@ -68,17 +74,20 @@ public class ItemTelepositionFocus extends ItemBindable {
         tooltip.add(String.format(StatCollector.translateToLocal("tooltip.alchemy.dimension"), tag.getInteger(Constants.NBT.DIMENSION_ID)));
     }
 
-    public World getWorld(ItemStack stack) {
+    public World getWorld(ItemStack stack)
+    {
         stack = NBTHelper.checkNBT(stack);
         return DimensionManager.getWorld(stack.getTagCompound().getInteger(Constants.NBT.DIMENSION_ID));
     }
 
-    public BlockPos getBlockPos(ItemStack stack) {
+    public BlockPos getBlockPos(ItemStack stack)
+    {
         stack = NBTHelper.checkNBT(stack);
         return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD));
     }
 
-    public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos) {
+    public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos)
+    {
         NBTTagCompound itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());

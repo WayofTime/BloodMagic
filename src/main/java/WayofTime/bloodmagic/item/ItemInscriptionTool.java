@@ -19,9 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 // TODO - NBT based damage
-public class ItemInscriptionTool extends ItemBindable {
+public class ItemInscriptionTool extends ItemBindable
+{
 
-    public ItemInscriptionTool() {
+    public ItemInscriptionTool()
+    {
         super();
 
         setLPUsed(100);
@@ -30,23 +32,27 @@ public class ItemInscriptionTool extends ItemBindable {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + EnumRuneType.values()[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
         for (int i = 1; i < EnumRuneType.values().length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
 
         IBlockState state = world.getBlockState(pos);
 
-        if (state.getBlock() instanceof BlockRitualStone && !((BlockRitualStone)state.getBlock()).isRuneType(world, pos, getType(stack))) {
+        if (state.getBlock() instanceof BlockRitualStone && !((BlockRitualStone) state.getBlock()).isRuneType(world, pos, getType(stack)))
+        {
             world.setBlockState(pos, state.withProperty(((BlockRitualStone) state.getBlock()).getStringProp(), getType(stack).getName()));
             return true;
         }
@@ -56,12 +62,14 @@ public class ItemInscriptionTool extends ItemBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.inscriber.desc"))));
         super.addInformation(stack, player, list, advanced);
     }
 
-    public EnumRuneType getType(ItemStack stack) {
+    public EnumRuneType getType(ItemStack stack)
+    {
         return EnumRuneType.values()[stack.getItemDamage()];
     }
 }

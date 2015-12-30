@@ -10,7 +10,8 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class AlchemyArrayCraftingRecipeJEI extends BloodMagicRecipeWrapper {
+public class AlchemyArrayCraftingRecipeJEI extends BloodMagicRecipeWrapper
+{
 
     @Nonnull
     private final List<ItemStack> inputs;
@@ -19,28 +20,33 @@ public class AlchemyArrayCraftingRecipeJEI extends BloodMagicRecipeWrapper {
     private final ItemStack output;
 
     @SuppressWarnings("unchecked")
-    public AlchemyArrayCraftingRecipeJEI(@Nonnull ItemStack input, @Nullable ItemStack catalyst, @Nonnull ItemStack output) {
-        this.inputs = Arrays.asList(new ItemStack[] {input, catalyst});
+    public AlchemyArrayCraftingRecipeJEI(@Nonnull ItemStack input, @Nullable ItemStack catalyst, @Nonnull ItemStack output)
+    {
+        this.inputs = Arrays.asList(new ItemStack[] { input, catalyst });
         this.output = output;
     }
 
     @Override
-    public List getInputs() {
+    public List getInputs()
+    {
         return inputs;
     }
 
     @Override
-    public List getOutputs() {
+    public List getOutputs()
+    {
         return Collections.singletonList(output);
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
+    {
 
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
+    {
 
     }
 }

@@ -5,35 +5,42 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
-public class TilePhantomBlock extends TileEntity implements ITickable {
+public class TilePhantomBlock extends TileEntity implements ITickable
+{
 
     private int ticksRemaining;
 
-    public TilePhantomBlock() {
+    public TilePhantomBlock()
+    {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
+    public void readFromNBT(NBTTagCompound tagCompound)
+    {
         super.readFromNBT(tagCompound);
         ticksRemaining = tagCompound.getInteger(Constants.NBT.TICKS_REMAINING);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public void writeToNBT(NBTTagCompound tagCompound)
+    {
         super.writeToNBT(tagCompound);
         tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
         ticksRemaining--;
 
-        if (ticksRemaining <= 0) {
+        if (ticksRemaining <= 0)
+        {
             worldObj.setBlockToAir(pos);
         }
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(int duration)
+    {
         ticksRemaining = duration;
     }
 }

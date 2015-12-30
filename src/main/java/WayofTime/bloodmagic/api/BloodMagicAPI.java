@@ -8,12 +8,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BloodMagicAPI {
+public class BloodMagicAPI
+{
 
     public static final String ORB = "ItemBloodOrb";
     public static final String SCRIBE = "ItemInscriptionTool";
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static boolean loggingEnabled;
 
     @Getter
@@ -23,16 +25,20 @@ public class BloodMagicAPI {
     private static DamageSource damageSource = new DamageSourceBloodMagic();
 
     /**
-     * Used to obtain Items from BloodMagic. Use the constants above for common items in case internal names
-     * change.
-     *
-     * @param name - The registered name of the item. Usually the same as the class name.
+     * Used to obtain Items from BloodMagic. Use the constants above for common
+     * items in case internal names change.
+     * 
+     * @param name
+     *            - The registered name of the item. Usually the same as the
+     *            class name.
      * @return - The requested Item
      */
-    public static Item getItem(String name) {
+    public static Item getItem(String name)
+    {
         return GameRegistry.findItem(Constants.Mod.MODID, name);
     }
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static Fluid lifeEssence;
 }

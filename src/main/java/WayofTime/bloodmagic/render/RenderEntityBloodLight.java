@@ -10,14 +10,17 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderEntityBloodLight extends Render<EntityBloodLight> {
+public class RenderEntityBloodLight extends Render<EntityBloodLight>
+{
 
-    public RenderEntityBloodLight(RenderManager renderManager) {
+    public RenderEntityBloodLight(RenderManager renderManager)
+    {
         super(renderManager);
         this.shadowSize = 0.0F;
     }
 
-    public void renderEntityAt(EntityBloodLight entity, double x, double y, double z, float fq, float pticks) {
+    public void renderEntityAt(EntityBloodLight entity, double x, double y, double z, float fq, float pticks)
+    {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
         GlStateManager.enableRescaleNormal();
@@ -37,12 +40,14 @@ public class RenderEntityBloodLight extends Render<EntityBloodLight> {
     }
 
     @Override
-    public void doRender(EntityBloodLight entityBloodLight, double d, double d1, double d2, float f, float f1) {
+    public void doRender(EntityBloodLight entityBloodLight, double d, double d1, double d2, float f, float f1)
+    {
         renderEntityAt(entityBloodLight, d, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityBloodLight entityBloodLight) {
+    protected ResourceLocation getEntityTexture(EntityBloodLight entityBloodLight)
+    {
         return TextureMap.locationBlocksTexture;
     }
 }

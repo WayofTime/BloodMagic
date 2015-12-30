@@ -16,12 +16,14 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator {
+public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
+{
 
     public final int CONVERSION = 100; // How much LP per heart
     public final int CAPACITY = 10000; // Max LP storage
 
-    public ItemPackSacrifice() {
+    public ItemPackSacrifice()
+    {
         super(ArmorMaterial.CHAIN, 0, 1);
 
         setUnlocalizedName(Constants.Mod.MODID + ".pack.sacrifice");
@@ -29,16 +31,20 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
         if (world.isRemote)
             return stack;
 
         MovingObjectPosition position = this.getMovingObjectPositionFromPlayer(world, player, false);
 
-        if (position == null) {
+        if (position == null)
+        {
             return super.onItemRightClick(stack, world, player);
-        } else {
-            if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+        } else
+        {
+            if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            {
                 TileEntity tile = world.getTileEntity(position.getBlockPos());
 
                 if (!(tile instanceof TileAltar))
@@ -46,10 +52,12 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator {
 
                 TileAltar altar = (TileAltar) tile;
 
-                if (!altar.isActive()) {
+                if (!altar.isActive())
+                {
                     int amount = this.getStoredLP(stack);
 
-                    if (amount > 0) {
+                    if (amount > 0)
+                    {
                         int filledAmount = altar.fillMainTank(amount);
                         amount -= filledAmount;
                         setStoredLP(stack, amount);
@@ -63,18 +71,21 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator {
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+    {
         return Constants.Mod.DOMAIN + "models/armor/bloodPack_layer_1.png";
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    {
         stack = NBTHelper.checkNBT(stack);
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.sacrifice.desc"));
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.stored", getStoredLP(stack)));
     }
 
-    public void addLP(ItemStack stack, int toAdd) {
+    public void addLP(ItemStack stack, int toAdd)
+    {
         stack = NBTHelper.checkNBT(stack);
 
         if (toAdd < 0)
@@ -86,12 +97,14 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator {
         setStoredLP(stack, getStoredLP(stack) + toAdd);
     }
 
-    public void setStoredLP(ItemStack stack, int lp) {
+    public void setStoredLP(ItemStack stack, int lp)
+    {
         stack = NBTHelper.checkNBT(stack);
         stack.getTagCompound().setInteger(Constants.NBT.STORED_LP, lp);
     }
 
-    public int getStoredLP(ItemStack stack) {
+    public int getStoredLP(ItemStack stack)
+    {
         stack = NBTHelper.checkNBT(stack);
         return stack.getTagCompound().getInteger(Constants.NBT.STORED_LP);
     }

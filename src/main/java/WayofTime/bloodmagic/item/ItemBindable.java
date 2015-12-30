@@ -23,47 +23,65 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBindable extends Item implements IBindable {
+public class ItemBindable extends Item implements IBindable
+{
 
     private int lpUsed;
 
-    public ItemBindable() {
+    public ItemBindable()
+    {
         super();
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setMaxStackSize(1);
     }
 
-    public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone) {
-        if (!player.worldObj.isRemote) {
+    public static boolean syphonBatteries(ItemStack stack, EntityPlayer player, int damageToBeDone)
+    {
+        if (!player.worldObj.isRemote)
+        {
             return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player, player.worldObj), damageToBeDone);
-        } else {
+        } else
+        {
             double posX = player.posX;
             double posY = player.posY;
             double posZ = player.posZ;
 
-//            SpellHelper.sendIndexedParticleToAllAround(player.worldObj, posX, posY, posZ, 20, player.worldObj.provider.getDimensionId(), 4, posX, posY, posZ);
+            // SpellHelper.sendIndexedParticleToAllAround(player.worldObj, posX,
+            // posY, posZ, 20, player.worldObj.provider.getDimensionId(), 4,
+            // posX, posY, posZ);
             player.worldObj.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.8F);
         }
         return true;
     }
 
-    public static void hurtPlayer(EntityPlayer user, int energySyphoned) {
-        if (energySyphoned < 100 && energySyphoned > 0) {
-            if (!user.capabilities.isCreativeMode) {
-                user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate an attack
+    public static void hurtPlayer(EntityPlayer user, int energySyphoned)
+    {
+        if (energySyphoned < 100 && energySyphoned > 0)
+        {
+            if (!user.capabilities.isCreativeMode)
+            {
+                user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
+                                                                            // an
+                                                                            // attack
                 user.setHealth(user.getHealth() - 1);
 
                 if (user.getHealth() <= 0.0005f)
                     user.onDeath(BloodMagicAPI.getDamageSource());
             }
-        } else if (energySyphoned >= 100) {
-            if (!user.capabilities.isCreativeMode) {
-                for (int i = 0; i < ((energySyphoned + 99) / 100); i++) {
-                    user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate an attack
+        } else if (energySyphoned >= 100)
+        {
+            if (!user.capabilities.isCreativeMode)
+            {
+                for (int i = 0; i < ((energySyphoned + 99) / 100); i++)
+                {
+                    user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
+                                                                                // an
+                                                                                // attack
                     user.setHealth(user.getHealth() - 1);
 
-                    if (user.getHealth() <= 0.0005f) {
+                    if (user.getHealth() <= 0.0005f)
+                    {
                         user.onDeath(BloodMagicAPI.getDamageSource());
                         break;
                     }
@@ -74,7 +92,8 @@ public class ItemBindable extends Item implements IBindable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
         NBTHelper.checkNBT(stack);
 
         if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
@@ -82,21 +101,25 @@ public class ItemBindable extends Item implements IBindable {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
         BindableHelper.checkAndSetItemOwner(stack, player);
 
         return stack;
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
         BindableHelper.checkAndSetItemOwner(stack, player);
 
         return false;
     }
 
-    protected void damagePlayer(World world, EntityPlayer player, int damage) {
-        if (world != null) {
+    protected void damagePlayer(World world, EntityPlayer player, int damage)
+    {
+        if (world != null)
+        {
             double posX = player.posX;
             double posY = player.posY;
             double posZ = player.posZ;
@@ -108,26 +131,33 @@ public class ItemBindable extends Item implements IBindable {
             for (int l = 0; l < 8; ++l)
                 world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
         }
-        for (int i = 0; i < damage; i++) {
-            player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate an attack
+        for (int i = 0; i < damage; i++)
+        {
+            player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
+                                                                          // an
+                                                                          // attack
             player.setHealth(player.getHealth() - 1);
 
-            if (player.getHealth() <= 0.0005) {
+            if (player.getHealth() <= 0.0005)
+            {
                 player.inventory.dropAllItems();
                 break;
             }
         }
     }
 
-    public int getLPUsed() {
+    public int getLPUsed()
+    {
         return this.lpUsed;
     }
 
-    protected void setLPUsed(int lpUsed) {
+    protected void setLPUsed(int lpUsed)
+    {
         this.lpUsed = lpUsed;
     }
 
-    public String getBindableOwner(ItemStack stack) {
+    public String getBindableOwner(ItemStack stack)
+    {
         stack = NBTHelper.checkNBT(stack);
 
         return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
@@ -136,7 +166,8 @@ public class ItemBindable extends Item implements IBindable {
     // IBindable
 
     @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack) {
+    public boolean onBind(EntityPlayer player, ItemStack stack)
+    {
         return true;
     }
 }

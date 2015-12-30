@@ -5,23 +5,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class ItemSigilAir extends ItemSigilBase {
+public class ItemSigilAir extends ItemSigilBase
+{
 
-    public ItemSigilAir() {
+    public ItemSigilAir()
+    {
         super("air", 50);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        if (!world.isRemote && !isUnusable(stack)) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        if (!world.isRemote && !isUnusable(stack))
+        {
             Vec3 vec = player.getLookVec();
             double wantedVelocity = 1.7;
 
             // TODO - Revisit after potions
-//            if (player.isPotionActive(ModPotions.customPotionBoost)) {
-//                int amplifier = player.getActivePotionEffect(ModPotions.customPotionBoost).getAmplifier();
-//                wantedVelocity += (1 + amplifier) * (0.35);
-//            }
+            // if (player.isPotionActive(ModPotions.customPotionBoost)) {
+            // int amplifier =
+            // player.getActivePotionEffect(ModPotions.customPotionBoost).getAmplifier();
+            // wantedVelocity += (1 + amplifier) * (0.35);
+            // }
 
             player.motionX = vec.xCoord * wantedVelocity;
             player.motionY = vec.yCoord * wantedVelocity;

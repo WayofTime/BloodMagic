@@ -18,13 +18,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 @Getter
-public class ItemSigilBase extends ItemBindable implements ISigil {
+public class ItemSigilBase extends ItemBindable implements ISigil
+{
 
     protected final String tooltipBase;
     private final String name;
     private boolean toggleable;
 
-    public ItemSigilBase(String name, int lpUsed) {
+    public ItemSigilBase(String name, int lpUsed)
+    {
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
@@ -34,19 +36,22 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
         this.tooltipBase = "tooltip.BloodMagic.sigil." + name + ".";
     }
 
-    public ItemSigilBase(String name) {
+    public ItemSigilBase(String name)
+    {
         this(name, 0);
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
         super.onItemRightClick(stack, world, player);
 
         return stack;
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
         super.onItemRightClick(stack, world, player);
 
         return false;
@@ -54,7 +59,8 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
 
         if (StatCollector.canTranslate(tooltipBase + "desc"))
             tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
@@ -62,28 +68,33 @@ public class ItemSigilBase extends ItemBindable implements ISigil {
         super.addInformation(stack, player, tooltip, advanced);
     }
 
-    public void setToggleable() {
+    public void setToggleable()
+    {
         this.toggleable = true;
     }
 
-    public boolean isUnusable(ItemStack stack) {
+    public boolean isUnusable(ItemStack stack)
+    {
         NBTHelper.checkNBT(stack);
 
         return stack.getTagCompound().getBoolean(Constants.NBT.UNUSABLE);
     }
 
-    public ItemStack setUnusable(ItemStack stack, boolean unusable) {
+    public ItemStack setUnusable(ItemStack stack, boolean unusable)
+    {
         NBTHelper.checkNBT(stack);
 
         stack.getTagCompound().setBoolean(Constants.NBT.UNUSABLE, unusable);
         return stack;
     }
 
-    public boolean getActivated(ItemStack stack) {
+    public boolean getActivated(ItemStack stack)
+    {
         return stack.getItemDamage() > 0;
     }
 
-    public ItemStack setActivated(ItemStack stack, boolean activated) {
+    public ItemStack setActivated(ItemStack stack, boolean activated)
+    {
         if (this.toggleable)
             stack.setItemDamage(activated ? 1 : 0);
 

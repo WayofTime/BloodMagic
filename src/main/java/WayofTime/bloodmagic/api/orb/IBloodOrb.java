@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.orb;
 
-public interface IBloodOrb {
+public interface IBloodOrb
+{
 
     BloodOrb getOrb(int meta);
 

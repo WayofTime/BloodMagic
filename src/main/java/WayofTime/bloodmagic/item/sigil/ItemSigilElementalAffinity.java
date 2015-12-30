@@ -6,14 +6,17 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemSigilElementalAffinity extends ItemSigilToggleable {
+public class ItemSigilElementalAffinity extends ItemSigilToggleable
+{
 
-    public ItemSigilElementalAffinity() {
+    public ItemSigilElementalAffinity()
+    {
         super("elementalAffinity", 200);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
+    {
         player.fallDistance = 0;
         player.extinguish();
         player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 1, true, false));

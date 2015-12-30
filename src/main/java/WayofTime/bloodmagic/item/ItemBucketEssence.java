@@ -6,9 +6,11 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBucket;
 
-public class ItemBucketEssence extends ItemBucket {
+public class ItemBucketEssence extends ItemBucket
+{
 
-    public ItemBucketEssence() {
+    public ItemBucketEssence()
+    {
         super(ModBlocks.lifeEssence);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bucket.lifeEssence");

@@ -31,19 +31,20 @@ import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Enums;
 import com.google.common.base.Strings;
 
-public class BloodAltar {
+public class BloodAltar
+{
 
-	private TileAltar tileAltar;
-	private int internalCounter = 0;
-	
-	public boolean isActive;
+    private TileAltar tileAltar;
+    private int internalCounter = 0;
+
+    public boolean isActive;
     protected FluidStack fluidOutput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     protected FluidStack fluidInput = new FluidStack(BlockLifeEssence.getLifeEssence(), 0);
     private EnumAltarTier altarTier = EnumAltarTier.ONE;
     private AltarUpgrade upgrade;
     private int capacity = FluidContainerRegistry.BUCKET_VOLUME * 10;
     private FluidStack fluid = new FluidStack(BloodMagicAPI.getLifeEssence(), 0);
-    private int liquidRequired; //mB
+    private int liquidRequired; // mB
     private boolean canBeFilled;
     private int consumptionRate;
     private int drainRate;
@@ -65,13 +66,14 @@ public class BloodAltar {
     private int cooldownAfterCrafting = 500;
 
     private ItemStack result;
-	
-	public BloodAltar(TileAltar tileAltar)
-	{
-		this.tileAltar = tileAltar;
-	}
-	
-    static {
+
+    public BloodAltar(TileAltar tileAltar)
+    {
+        this.tileAltar = tileAltar;
+    }
+
+    static
+    {
         EnumAltarTier.ONE.buildComponents();
         EnumAltarTier.TWO.buildComponents();
         EnumAltarTier.THREE.buildComponents();
@@ -80,9 +82,12 @@ public class BloodAltar {
         EnumAltarTier.SIX.buildComponents();
     }
 
-    public static EnumAltarTier getAltarTier(World world, BlockPos pos) {
-        for (int i = EnumAltarTier.MAXTIERS - 1; i >= 1; i--) {
-            if (checkAltarIsValid(world, pos, i)) {
+    public static EnumAltarTier getAltarTier(World world, BlockPos pos)
+    {
+        for (int i = EnumAltarTier.MAXTIERS - 1; i >= 1; i--)
+        {
+            if (checkAltarIsValid(world, pos, i))
+            {
                 return EnumAltarTier.values()[i];
             }
         }
@@ -90,22 +95,28 @@ public class BloodAltar {
         return EnumAltarTier.ONE;
     }
 
-    public static boolean checkAltarIsValid(World world, BlockPos worldPos, int altarTier) {
+    public static boolean checkAltarIsValid(World world, BlockPos worldPos, int altarTier)
+    {
 
-        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents()) {
+        for (AltarComponent altarComponent : EnumAltarTier.values()[altarTier].getAltarComponents())
+        {
 
             BlockPos componentPos = worldPos.add(altarComponent.getOffset());
             BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
 
-            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR) {
-                if (worldBlock.getBlock() instanceof IAltarComponent) {
+            if (altarComponent.getComponent() != EnumAltarComponent.NOTAIR)
+            {
+                if (worldBlock.getBlock() instanceof IAltarComponent)
+                {
                     EnumAltarComponent component = ((IAltarComponent) worldBlock.getBlock()).getType(worldBlock.getMeta());
                     if (component != altarComponent.getComponent())
                         return false;
-                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent())) {
+                } else if (worldBlock.getBlock() != Utils.getBlockForComponent(altarComponent.getComponent()))
+                {
                     return false;
                 }
-            } else {
+            } else
+            {
                 if (world.isAirBlock(componentPos))
                     return false;
             }
@@ -114,57 +125,63 @@ public class BloodAltar {
         return true;
     }
 
-    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier) {
-        if (world.isRemote) {
+    public static AltarUpgrade getUpgrades(World world, BlockPos pos, EnumAltarTier altarTier)
+    {
+        if (world.isRemote)
+        {
             return null;
         }
 
         AltarUpgrade upgrades = new AltarUpgrade();
         List<AltarComponent> list = altarTier.getAltarComponents();
 
-        for (AltarComponent altarComponent : list) {
+        for (AltarComponent altarComponent : list)
+        {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
 
-            if (altarComponent.isUpgradeSlot()) {
+            if (altarComponent.isUpgradeSlot())
+            {
                 BlockStack worldBlock = new BlockStack(world.getBlockState(componentPos).getBlock(), world.getBlockState(componentPos).getBlock().getMetaFromState(world.getBlockState(componentPos)));
 
-                if (worldBlock.getBlock() instanceof BlockBloodRune) {
-                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta())) {
-                        case 1:
-                            upgrades.addSpeed();
-                            break;
+                if (worldBlock.getBlock() instanceof BlockBloodRune)
+                {
+                    switch (((BlockBloodRune) worldBlock.getBlock()).getRuneEffect(worldBlock.getMeta()))
+                    {
+                    case 1:
+                        upgrades.addSpeed();
+                        break;
 
-                        case 2:
-                            upgrades.addEfficiency();
-                            break;
+                    case 2:
+                        upgrades.addEfficiency();
+                        break;
 
-                        case 3:
-                            upgrades.addSacrifice();
-                            break;
+                    case 3:
+                        upgrades.addSacrifice();
+                        break;
 
-                        case 4:
-                            upgrades.addSelfSacrifice();
-                            break;
+                    case 4:
+                        upgrades.addSelfSacrifice();
+                        break;
 
-                        case 5:
-                            upgrades.addDisplacement();
-                            break;
+                    case 5:
+                        upgrades.addDisplacement();
+                        break;
 
-                        case 6:
-                            upgrades.addCapacity();
-                            break;
+                    case 6:
+                        upgrades.addCapacity();
+                        break;
 
-                        case 7:
-                            upgrades.addBetterCapacity();
-                            break;
+                    case 7:
+                        upgrades.addBetterCapacity();
+                        break;
 
-                        case 8:
-                            upgrades.addOrbCapacity();
-                            break;
+                    case 8:
+                        upgrades.addOrbCapacity();
+                        break;
 
-                        case 9:
-                            upgrades.addAcceleration();
-                            break;
+                    case 9:
+                        upgrades.addAcceleration();
+                        break;
                     }
                 }
             }
@@ -172,9 +189,11 @@ public class BloodAltar {
 
         return upgrades;
     }
-    
-    public void readFromNBT(NBTTagCompound tagCompound) {
-        if (!tagCompound.hasKey(Constants.NBT.EMPTY)) {
+
+    public void readFromNBT(NBTTagCompound tagCompound)
+    {
+        if (!tagCompound.hasKey(Constants.NBT.EMPTY))
+        {
             FluidStack fluid = FluidStack.loadFluidStackFromNBT(tagCompound);
 
             if (fluid != null)
@@ -212,7 +231,8 @@ public class BloodAltar {
         cooldownAfterCrafting = tagCompound.getInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING);
     }
 
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public void writeToNBT(NBTTagCompound tagCompound)
+    {
 
         if (fluid != null)
             fluid.writeToNBT(tagCompound);
@@ -249,10 +269,11 @@ public class BloodAltar {
         tagCompound.setInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
         tagCompound.setInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
     }
-    
-    public void startCycle() {
+
+    public void startCycle()
+    {
         if (tileAltar.getWorld() != null)
-        	tileAltar.getWorld().markBlockForUpdate(tileAltar.getPos());
+            tileAltar.getWorld().markBlockForUpdate(tileAltar.getPos());
 
         checkTier();
 
@@ -262,10 +283,13 @@ public class BloodAltar {
         if (!isActive)
             progress = 0;
 
-        if (tileAltar.getStackInSlot(0) != null) {
+        if (tileAltar.getStackInSlot(0) != null)
+        {
             // Do recipes
-            for (AltarRecipe recipe : AltarRecipeRegistry.getRecipes().values()) {
-                if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier)) {
+            for (AltarRecipe recipe : AltarRecipeRegistry.getRecipes().values())
+            {
+                if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier))
+                {
                     this.isActive = true;
                     this.result = new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
                     this.liquidRequired = recipe.getSyphon();
@@ -279,27 +303,32 @@ public class BloodAltar {
 
         isActive = false;
     }
-    
-    public void update() {
-    	World world = tileAltar.getWorld();
+
+    public void update()
+    {
+        World world = tileAltar.getWorld();
         BlockPos pos = tileAltar.getPos();
-    	
-    	if (world.isRemote)
+
+        if (world.isRemote)
             return;
 
-    	internalCounter++; //Used instead of the world time for checks that do not happen every tick
+        internalCounter++; // Used instead of the world time for checks that do
+                           // not happen every tick
 
         if (lockdownDuration > 0)
             lockdownDuration--;
 
-        if (internalCounter % 20 == 0) {
-        	for(EnumFacing facing : EnumFacing.VALUES){
-				BlockPos newPos = pos.offset(facing);
-				IBlockState block = world.getBlockState(newPos);
-				block.getBlock().onNeighborBlockChange(world, newPos, block, block.getBlock());
-			}
+        if (internalCounter % 20 == 0)
+        {
+            for (EnumFacing facing : EnumFacing.VALUES)
+            {
+                BlockPos newPos = pos.offset(facing);
+                IBlockState block = world.getBlockState(newPos);
+                block.getBlock().onNeighborBlockChange(world, newPos, block, block.getBlock());
+            }
         }
-        if (internalCounter % (Math.max(20 - this.accelerationUpgrades, 1)) == 0) {
+        if (internalCounter % (Math.max(20 - this.accelerationUpgrades, 1)) == 0)
+        {
             int syphonMax = (int) (20 * this.dislocationMultiplier);
             int fluidInputted;
             int fluidOutputted;
@@ -312,15 +341,17 @@ public class BloodAltar {
             this.fluidOutput.amount += fluidOutputted;
             this.fluid.amount -= fluidOutputted;
         }
-        
+
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
             startCycle();
 
         updateAltar();
     }
-    
-    private void updateAltar() {
-        if (!isActive) {
+
+    private void updateAltar()
+    {
+        if (!isActive)
+        {
             if (cooldownAfterCrafting > 0)
                 cooldownAfterCrafting--;
             return;
@@ -331,7 +362,7 @@ public class BloodAltar {
 
         World world = tileAltar.getWorld();
         BlockPos pos = tileAltar.getPos();
-        
+
         if (world.isRemote)
             return;
 
@@ -339,9 +370,11 @@ public class BloodAltar {
         float f1 = f * 0.6F + 0.4F;
         float f2 = f * f * 0.7F - 0.5F;
         float f3 = f * f * 0.6F - 0.7F;
-        
-        if (!canBeFilled) {
-            if (fluid != null && fluid.amount >= 1) {
+
+        if (!canBeFilled)
+        {
+            if (fluid != null && fluid.amount >= 1)
+            {
                 int stackSize = tileAltar.getStackInSlot(0).stackSize;
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
@@ -354,7 +387,8 @@ public class BloodAltar {
                 if (internalCounter % 4 == 0)
                     world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
 
-                if (progress >= liquidRequired * stackSize) {
+                if (progress >= liquidRequired * stackSize)
+                {
                     ItemStack result = this.result;
 
                     if (result != null)
@@ -368,13 +402,15 @@ public class BloodAltar {
 
                     this.isActive = false;
                 }
-            } else if (progress > 0) {
+            } else if (progress > 0)
+            {
                 progress -= (int) (efficiencyMultiplier * drainRate);
 
                 if (internalCounter % 2 == 0)
                     world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
-        } else {
+        } else
+        {
             ItemStack returnedItem = tileAltar.getStackInSlot(0);
 
             if (!(returnedItem.getItem() instanceof IBloodOrb))
@@ -391,7 +427,8 @@ public class BloodAltar {
             if (Strings.isNullOrEmpty(ownerUUID))
                 return;
 
-            if (fluid != null && fluid.amount >= 1) {
+            if (fluid != null && fluid.amount >= 1)
+            {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
                 int drain = NetworkHelper.getSoulNetwork(ownerUUID, world).addLifeEssence(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
@@ -405,14 +442,16 @@ public class BloodAltar {
 
         world.markBlockForUpdate(pos);
     }
-    
-    public void checkTier() {
+
+    public void checkTier()
+    {
         EnumAltarTier tier = BloodAltar.getAltarTier(tileAltar.getWorld(), tileAltar.getPos());
         this.altarTier = tier;
-        
+
         upgrade = BloodAltar.getUpgrades(tileAltar.getWorld(), tileAltar.getPos(), tier);
 
-        if (tier.equals(EnumAltarTier.ONE)) {
+        if (tier.equals(EnumAltarTier.ONE))
+        {
             upgrade = null;
             isUpgraded = false;
             this.consumptionMultiplier = 0;
@@ -424,7 +463,8 @@ public class BloodAltar {
             this.dislocationMultiplier = 1;
             this.accelerationUpgrades = 0;
             return;
-        } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null) {
+        } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null)
+        {
             this.isUpgraded = true;
             this.consumptionMultiplier = (float) (0.20 * upgrade.getSpeedCount());
             this.efficiencyMultiplier = (float) Math.pow(0.85, upgrade.getEfficiencyCount());
@@ -439,131 +479,165 @@ public class BloodAltar {
         this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
         this.bufferCapacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 1 * capacityMultiplier);
 
-        if (this.fluid.amount > this.capacity) this.fluid.amount = this.capacity;
-        if (this.fluidOutput.amount > this.bufferCapacity) this.fluidOutput.amount = this.bufferCapacity;
-        if (this.fluidInput.amount > this.bufferCapacity) this.fluidInput.amount = this.bufferCapacity;
+        if (this.fluid.amount > this.capacity)
+            this.fluid.amount = this.capacity;
+        if (this.fluidOutput.amount > this.bufferCapacity)
+            this.fluidOutput.amount = this.bufferCapacity;
+        if (this.fluidInput.amount > this.bufferCapacity)
+            this.fluidInput.amount = this.bufferCapacity;
 
         tileAltar.getWorld().markBlockForUpdate(tileAltar.getPos());
     }
-    
-    public int fillMainTank(int amount) {
+
+    public int fillMainTank(int amount)
+    {
         int filledAmount = Math.min(capacity - fluid.amount, amount);
         fluid.amount += filledAmount;
-        
+
         return filledAmount;
     }
-    
-    public void sacrificialDaggerCall(int amount, boolean isSacrifice) {
-        if (this.lockdownDuration > 0) {
+
+    public void sacrificialDaggerCall(int amount, boolean isSacrifice)
+    {
+        if (this.lockdownDuration > 0)
+        {
             int amt = (int) Math.min(bufferCapacity - fluidInput.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
             fluidInput.amount += amt;
-        } else {
+        } else
+        {
             fluid.amount += Math.min(capacity - fluid.amount, (isSacrifice ? 1 + sacrificeEfficiencyMultiplier : 1 + selfSacrificeEfficiencyMultiplier) * amount);
         }
     }
-    
-    public void setMainFluid(FluidStack fluid) {
+
+    public void setMainFluid(FluidStack fluid)
+    {
         this.fluid = fluid;
     }
 
-    public void setOutputFluid(FluidStack fluid) {
+    public void setOutputFluid(FluidStack fluid)
+    {
         this.fluidOutput = fluid;
     }
 
-    public void setInputFluid(FluidStack fluid) {
+    public void setInputFluid(FluidStack fluid)
+    {
         this.fluidInput = fluid;
     }
-    
-    public AltarUpgrade getUpgrade() {
+
+    public AltarUpgrade getUpgrade()
+    {
         return upgrade;
     }
 
-    public void setUpgrade(AltarUpgrade upgrade) {
+    public void setUpgrade(AltarUpgrade upgrade)
+    {
         this.upgrade = upgrade;
     }
 
-    public int getCapacity() {
+    public int getCapacity()
+    {
         return capacity;
     }
 
-    public FluidStack getFluid() {
+    public FluidStack getFluid()
+    {
         return fluid;
     }
 
-    public int getFluidAmount() {
+    public int getFluidAmount()
+    {
         return fluid.amount;
     }
-    
-    public int getCurrentBlood() {
+
+    public int getCurrentBlood()
+    {
         return getFluidAmount();
     }
 
-    public EnumAltarTier getTier() {
+    public EnumAltarTier getTier()
+    {
         return altarTier;
     }
 
-    public void setTier(EnumAltarTier tier) {
+    public void setTier(EnumAltarTier tier)
+    {
         this.altarTier = tier;
     }
 
-    public int getProgress() {
+    public int getProgress()
+    {
         return progress;
     }
 
-    public float getSacrificeMultiplier() {
+    public float getSacrificeMultiplier()
+    {
         return sacrificeEfficiencyMultiplier;
     }
 
-    public float getSelfSacrificeMultiplier() {
+    public float getSelfSacrificeMultiplier()
+    {
         return selfSacrificeEfficiencyMultiplier;
     }
 
-    public float getOrbMultiplier() {
+    public float getOrbMultiplier()
+    {
         return orbCapacityMultiplier;
     }
 
-    public float getDislocationMultiplier() {
+    public float getDislocationMultiplier()
+    {
         return dislocationMultiplier;
     }
 
-    public float getConsumptionMultiplier() {
+    public float getConsumptionMultiplier()
+    {
         return consumptionMultiplier;
     }
 
-    public float getConsumptionRate() {
+    public float getConsumptionRate()
+    {
         return consumptionRate;
     }
 
-    public int getLiquidRequired() {
+    public int getLiquidRequired()
+    {
         return liquidRequired;
     }
 
-    public int getBufferCapacity() {
+    public int getBufferCapacity()
+    {
         return bufferCapacity;
     }
 
-    public void addToDemonBloodDuration(int dur) {
+    public void addToDemonBloodDuration(int dur)
+    {
         this.demonBloodDuration += dur;
     }
 
-    public boolean hasDemonBlood() {
+    public boolean hasDemonBlood()
+    {
         return this.demonBloodDuration > 0;
     }
 
-    public void decrementDemonBlood() {
+    public void decrementDemonBlood()
+    {
         this.demonBloodDuration = Math.max(0, this.demonBloodDuration - 1);
     }
 
-    public void setActive() {
+    public void setActive()
+    {
         isActive = false;
     }
 
-    public boolean isActive() {
+    public boolean isActive()
+    {
         return isActive;
     }
 
-    public void requestPauseAfterCrafting(int amount) {
-        if (this.isActive) {
+    public void requestPauseAfterCrafting(int amount)
+    {
+        if (this.isActive)
+        {
             this.cooldownAfterCrafting = amount;
         }
     }

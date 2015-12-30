@@ -14,11 +14,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockPedestal extends BlockStringContainer {
+public class BlockPedestal extends BlockStringContainer
+{
 
-    public static String[] names = {"pedestal", "plinth"};
+    public static String[] names = { "pedestal", "plinth" };
 
-    public BlockPedestal() {
+    public BlockPedestal()
+    {
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".");
@@ -28,27 +30,32 @@ public class BlockPedestal extends BlockStringContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-        switch (getMetaFromState(state)) {
-            case 0: {
-//                TileEntity plinth = world.getTileEntity(pos);
-//
-//                if (plinth!= null && plinth instanceof TilePlinth) {
-//                    Utils.insertItemToTile((TilePlinth) plinth, player);
-//                }
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        switch (getMetaFromState(state))
+        {
+        case 0:
+        {
+            // TileEntity plinth = world.getTileEntity(pos);
+            //
+            // if (plinth!= null && plinth instanceof TilePlinth) {
+            // Utils.insertItemToTile((TilePlinth) plinth, player);
+            // }
+        }
+
+        case 1:
+        {
+            TileEntity plinth = world.getTileEntity(pos);
+
+            if (plinth == null || player.isSneaking())
+                return false;
+
+            if (plinth instanceof TilePlinth)
+            {
+                Utils.insertItemToTile((TilePlinth) plinth, player);
+                return true;
             }
-
-            case 1: {
-                TileEntity plinth = world.getTileEntity(pos);
-
-                if (plinth == null || player.isSneaking())
-                    return false;
-
-                if (plinth instanceof TilePlinth) {
-                    Utils.insertItemToTile((TilePlinth) plinth, player);
-                    return true;
-                }
-            }
+        }
         }
 
         world.markBlockForUpdate(pos);
@@ -56,7 +63,8 @@ public class BlockPedestal extends BlockStringContainer {
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, BlockPos pos) {
+    public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, BlockPos pos)
+    {
         IBlockState state = blockAccess.getBlockState(pos);
 
         if (getMetaFromState(state) == 0)
@@ -67,17 +75,20 @@ public class BlockPedestal extends BlockStringContainer {
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube()
+    {
         return false;
     }
 
     @Override
-    public boolean isFullCube() {
+    public boolean isFullCube()
+    {
         return false;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
         return meta == 0 ? null : new TilePlinth();
     }
 }

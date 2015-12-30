@@ -10,7 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode
-public class ItemStackWrapper {
+public class ItemStackWrapper
+{
 
     public final Item item;
     public final int stackSize;
@@ -18,44 +19,54 @@ public class ItemStackWrapper {
     @Setter
     public NBTTagCompound nbtTag;
 
-    public ItemStackWrapper(Item item, int stackSize) {
+    public ItemStackWrapper(Item item, int stackSize)
+    {
         this(item, stackSize, 0);
     }
 
-    public ItemStackWrapper(Item item) {
+    public ItemStackWrapper(Item item)
+    {
         this(item, 1, 0);
     }
 
-    public ItemStackWrapper(Block block, int stackSize, int meta) {
+    public ItemStackWrapper(Block block, int stackSize, int meta)
+    {
         this(Item.getItemFromBlock(block), stackSize, meta);
     }
 
-    public ItemStackWrapper(Block block, int stackSize) {
+    public ItemStackWrapper(Block block, int stackSize)
+    {
         this(block, stackSize, 0);
     }
 
-    public ItemStackWrapper(Block block) {
+    public ItemStackWrapper(Block block)
+    {
         this(block, 1, 0);
     }
 
-    public static ItemStackWrapper getHolder(ItemStack stack) {
+    public static ItemStackWrapper getHolder(ItemStack stack)
+    {
         return new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());
     }
 
-    public ItemStack toStack() {
+    public ItemStack toStack()
+    {
         return new ItemStack(item, stackSize, meta);
     }
 
-    public String getDisplayName() {
+    public String getDisplayName()
+    {
         return toStack().getDisplayName();
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return stackSize + "x" + item.getUnlocalizedName() + "@" + this.meta;
     }
 
-    public ItemStack toStack(int count) {
+    public ItemStack toStack(int count)
+    {
         ItemStack result = new ItemStack(item, count, meta);
         result.setTagCompound(nbtTag);
         return result;

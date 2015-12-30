@@ -29,10 +29,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemSacrificialDagger extends Item {
-    public static String[] names = {"normal", "creative"};
+public class ItemSacrificialDagger extends Item
+{
+    public static String[] names = { "normal", "creative" };
 
-    public ItemSacrificialDagger() {
+    public ItemSacrificialDagger()
+    {
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".sacrificialDagger.");
@@ -43,54 +45,64 @@ public class ItemSacrificialDagger extends Item {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sacrificialDagger.desc"))));
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
+    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount)
+    {
         PlayerSacrificeHelper.sacrificePlayerHealth(player);
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack) {
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
         return 72000;
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
         return EnumAction.BOW;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
 
         if (PlayerHelper.isFakePlayer(player))
             return stack;
 
-        if (this.canUseForSacrifice(stack)) {
+        if (this.canUseForSacrifice(stack))
+        {
             player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
             return stack;
         }
 
-        if (!player.capabilities.isCreativeMode) {
+        if (!player.capabilities.isCreativeMode)
+        {
             SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2);
             if (MinecraftForge.EVENT_BUS.post(evt))
                 return stack;
 
-            if (evt.shouldDrainHealth) {
+            if (evt.shouldDrainHealth)
+            {
                 player.hurtResistantTime = 0;
                 player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
             }
@@ -120,7 +132,8 @@ public class ItemSacrificialDagger extends Item {
         return stack;
     }
 
-    private void findAndFillAltar(World world, EntityPlayer player, int amount) {
+    private void findAndFillAltar(World world, EntityPlayer player, int amount)
+    {
         BlockPos pos = player.getPosition();
         IBloodAltar altarEntity = getAltar(world, pos);
 
@@ -131,16 +144,21 @@ public class ItemSacrificialDagger extends Item {
         altarEntity.startCycle();
     }
 
-    public IBloodAltar getAltar(World world, BlockPos pos) {
+    public IBloodAltar getAltar(World world, BlockPos pos)
+    {
         TileEntity tileEntity;
 
-        for (int i = -2; i <= 2; i++) {
-            for (int j = -2; j <= 2; j++) {
-                for (int k = -2; k <= 1; k++) {
+        for (int i = -2; i <= 2; i++)
+        {
+            for (int j = -2; j <= 2; j++)
+            {
+                for (int k = -2; k <= 1; k++)
+                {
                     BlockPos newPos = pos.add(i, j, k);
                     tileEntity = world.getTileEntity(newPos);
 
-                    if (tileEntity instanceof IBloodAltar) {
+                    if (tileEntity instanceof IBloodAltar)
+                    {
                         return (IBloodAltar) tileEntity;
                     }
                 }
@@ -151,28 +169,33 @@ public class ItemSacrificialDagger extends Item {
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
+    {
         if (!world.isRemote && entity instanceof EntityPlayer)
             this.setUseForSacrifice(stack, this.isPlayerPreparedForSacrifice(world, (EntityPlayer) entity));
     }
 
-    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player) {
+    public boolean isPlayerPreparedForSacrifice(World world, EntityPlayer player)
+    {
         return !world.isRemote && (PlayerSacrificeHelper.getPlayerIncense(player) > 0);
     }
 
-    public boolean canUseForSacrifice(ItemStack stack) {
+    public boolean canUseForSacrifice(ItemStack stack)
+    {
         stack = NBTHelper.checkNBT(stack);
         return stack.getTagCompound().getBoolean(Constants.NBT.SACRIFICE);
     }
 
-    public void setUseForSacrifice(ItemStack stack, boolean sacrifice) {
+    public void setUseForSacrifice(ItemStack stack, boolean sacrifice)
+    {
         stack = NBTHelper.checkNBT(stack);
         stack.getTagCompound().setBoolean(Constants.NBT.SACRIFICE, sacrifice);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack) {
+    public boolean hasEffect(ItemStack stack)
+    {
         return this.canUseForSacrifice(stack) || super.hasEffect(stack);
     }
 }

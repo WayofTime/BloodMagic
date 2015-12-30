@@ -11,17 +11,20 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 
-public class TileSpectralBlock extends TileEntity implements ITickable {
+public class TileSpectralBlock extends TileEntity implements ITickable
+{
 
     private int ticksRemaining;
     private String containedBlockName;
     private int containedBlockMeta;
 
-    public TileSpectralBlock() {
+    public TileSpectralBlock()
+    {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
+    public void readFromNBT(NBTTagCompound tagCompound)
+    {
         super.readFromNBT(tagCompound);
         ticksRemaining = tagCompound.getInteger(Constants.NBT.TICKS_REMAINING);
         containedBlockName = tagCompound.getString(Constants.NBT.CONTAINED_BLOCK_NAME);
@@ -29,7 +32,8 @@ public class TileSpectralBlock extends TileEntity implements ITickable {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public void writeToNBT(NBTTagCompound tagCompound)
+    {
         super.writeToNBT(tagCompound);
         tagCompound.setInteger(Constants.NBT.TICKS_REMAINING, ticksRemaining);
         tagCompound.setString(Constants.NBT.CONTAINED_BLOCK_NAME, containedBlockName);
@@ -37,28 +41,35 @@ public class TileSpectralBlock extends TileEntity implements ITickable {
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
         ticksRemaining--;
 
-        if (ticksRemaining <= 0) {
+        if (ticksRemaining <= 0)
+        {
             returnContainedBlock();
         }
     }
 
-    private void setContainedBlockInfo(IBlockState blockState) {
+    private void setContainedBlockInfo(IBlockState blockState)
+    {
         containedBlockName = blockState.getBlock().getUnlocalizedName().substring(5);
         containedBlockMeta = blockState.getBlock().getMetaFromState(blockState);
     }
 
-    private void setDuration(int duration) {
+    private void setDuration(int duration)
+    {
         ticksRemaining = duration;
     }
 
-    public void resetDuration(int reset) {
-        if (ticksRemaining < reset) ticksRemaining = reset;
+    public void resetDuration(int reset)
+    {
+        if (ticksRemaining < reset)
+            ticksRemaining = reset;
     }
 
-    public void returnContainedBlock() {
+    public void returnContainedBlock()
+    {
         Block block = null;
 
         if (!Strings.isNullOrEmpty(containedBlockName))
@@ -68,8 +79,10 @@ public class TileSpectralBlock extends TileEntity implements ITickable {
             worldObj.markBlockForUpdate(pos);
     }
 
-    public static void createSpectralBlock(World world, BlockPos blockPos, int duration) {
-        if (world.isAirBlock(blockPos)) return;
+    public static void createSpectralBlock(World world, BlockPos blockPos, int duration)
+    {
+        if (world.isAirBlock(blockPos))
+            return;
         IBlockState cachedState = world.getBlockState(blockPos);
         world.setBlockState(blockPos, ModBlocks.spectralBlock.getDefaultState());
         TileSpectralBlock tile = (TileSpectralBlock) world.getTileEntity(blockPos);

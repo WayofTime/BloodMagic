@@ -6,14 +6,17 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemSigilFastMiner extends ItemSigilToggleable {
+public class ItemSigilFastMiner extends ItemSigilToggleable
+{
 
-    public ItemSigilFastMiner() {
+    public ItemSigilFastMiner()
+    {
         super("fastMiner", 100);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
+    {
         player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 2, 0, true, false));
     }
 }

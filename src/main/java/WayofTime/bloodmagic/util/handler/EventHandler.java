@@ -21,17 +21,21 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventHandler {
+public class EventHandler
+{
 
     @SubscribeEvent
-    public void onEntityDeath(LivingHurtEvent event) {
+    public void onEntityDeath(LivingHurtEvent event)
+    {
 
         int chestIndex = 2;
 
-        if (event.source.getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.source.getEntity())) {
+        if (event.source.getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.source.getEntity()))
+        {
             EntityPlayer player = (EntityPlayer) event.source.getEntity();
 
-            if (player.getCurrentArmor(chestIndex) != null && player.getCurrentArmor(chestIndex).getItem() instanceof ItemPackSacrifice) {
+            if (player.getCurrentArmor(chestIndex) != null && player.getCurrentArmor(chestIndex).getItem() instanceof ItemPackSacrifice)
+            {
                 ItemPackSacrifice pack = (ItemPackSacrifice) player.getCurrentArmor(chestIndex).getItem();
 
                 boolean shouldSyphon = pack.getStoredLP(player.getCurrentArmor(chestIndex)) < pack.CAPACITY;
@@ -44,7 +48,8 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onBucketFill(FillBucketEvent event) {
+    public void onBucketFill(FillBucketEvent event)
+    {
         if (event.current.getItem() != Items.bucket)
             return;
 
@@ -52,7 +57,8 @@ public class EventHandler {
 
         Block block = event.world.getBlockState(event.target.getBlockPos()).getBlock();
 
-        if (block != null && (block.equals(ModBlocks.lifeEssence)) && block.getMetaFromState(event.world.getBlockState(event.target.getBlockPos())) == 0) {
+        if (block != null && (block.equals(ModBlocks.lifeEssence)) && block.getMetaFromState(event.world.getBlockState(event.target.getBlockPos())) == 0)
+        {
             event.world.setBlockToAir(event.target.getBlockPos());
             result = new ItemStack(ModItems.bucketEssence);
         }
@@ -65,17 +71,22 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void harvestEvent(PlayerEvent.HarvestCheck event) {
-        if (event.block != null && event.block instanceof BlockAltar && event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() instanceof ItemAltarMaker) {
+    public void harvestEvent(PlayerEvent.HarvestCheck event)
+    {
+        if (event.block != null && event.block instanceof BlockAltar && event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP && event.entityPlayer.getCurrentEquippedItem() != null && event.entityPlayer.getCurrentEquippedItem().getItem() instanceof ItemAltarMaker)
+        {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getCurrentEquippedItem().getItem();
             ChatUtil.sendNoSpam(event.entityPlayer, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.entityPlayer)));
         }
     }
 
     @SubscribeEvent
-    public void onBlockBreak(BlockEvent.BreakEvent event) {
-        if (!event.world.isRemote && event.getPlayer() != null) {
-            if (event.getPlayer().capabilities.isCreativeMode && event.getPlayer().getCurrentEquippedItem() != null && event.getPlayer().getCurrentEquippedItem().getItem() instanceof ItemBoundSword) {
+    public void onBlockBreak(BlockEvent.BreakEvent event)
+    {
+        if (!event.world.isRemote && event.getPlayer() != null)
+        {
+            if (event.getPlayer().capabilities.isCreativeMode && event.getPlayer().getCurrentEquippedItem() != null && event.getPlayer().getCurrentEquippedItem().getItem() instanceof ItemBoundSword)
+            {
                 event.setCanceled(true);
             }
         }

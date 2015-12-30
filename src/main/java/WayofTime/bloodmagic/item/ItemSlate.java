@@ -13,11 +13,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemSlate extends Item {
+public class ItemSlate extends Item
+{
 
     public String[] names = { "blank", "reinforced", "imbued", "demonic", "ethereal" };
 
-    public ItemSlate() {
+    public ItemSlate()
+    {
         super();
 
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -27,19 +29,22 @@ public class ItemSlate extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list) {
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
         for (int i = 0; i < names.length; i++)
             list.add(new ItemStack(id, 1, i));
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack)
+    {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced)
+    {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.slate.desc"))));
     }
 }

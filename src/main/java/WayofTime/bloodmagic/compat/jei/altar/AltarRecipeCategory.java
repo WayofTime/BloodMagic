@@ -13,7 +13,8 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class AltarRecipeCategory implements IRecipeCategory {
+public class AltarRecipeCategory implements IRecipeCategory
+{
 
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
@@ -25,40 +26,47 @@ public class AltarRecipeCategory implements IRecipeCategory {
 
     @Nonnull
     @Override
-    public String getUid() {
+    public String getUid()
+    {
         return Constants.Compat.JEI_CATEGORY_ALTAR;
     }
 
     @Nonnull
     @Override
-    public String getTitle() {
+    public String getTitle()
+    {
         return localizedName;
     }
 
     @Nonnull
     @Override
-    public IDrawable getBackground() {
+    public IDrawable getBackground()
+    {
         return background;
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft) {
+    public void drawExtras(Minecraft minecraft)
+    {
 
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft) {
+    public void drawAnimations(Minecraft minecraft)
+    {
 
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
+    {
 
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
 
-        if (recipeWrapper instanceof AltarRecipeJEI) {
+        if (recipeWrapper instanceof AltarRecipeJEI)
+        {
             AltarRecipeJEI altarRecipeWrapper = (AltarRecipeJEI) recipeWrapper;
             recipeLayout.getItemStacks().set(INPUT_SLOT, altarRecipeWrapper.getInputs());
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, altarRecipeWrapper.getOutputs());

@@ -25,11 +25,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBoundSword extends ItemSword {
+public class ItemBoundSword extends ItemSword
+{
 
     private int lpUsed;
 
-    public ItemBoundSword() {
+    public ItemBoundSword()
+    {
         super(ModItems.boundToolMaterial);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
@@ -40,9 +42,11 @@ public class ItemBoundSword extends ItemSword {
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft) {
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
+    {
 
-        if (!playerIn.isSneaking() && getActivated(stack)) {
+        if (!playerIn.isSneaking() && getActivated(stack))
+        {
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
             BoundToolEvent.Release event = new BoundToolEvent.Release(playerIn, stack, i);
             if (MinecraftForge.EVENT_BUS.post(event))
@@ -50,27 +54,30 @@ public class ItemBoundSword extends ItemSword {
 
             i = event.charge;
 
-            //TODO Make conical charge blast
+            // TODO Make conical charge blast
             Explosion explosion = new Explosion(worldIn, playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, (float) (i * 0.5), true, true);
-            if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(worldIn, explosion)) return;
+            if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(worldIn, explosion))
+                return;
             explosion.doExplosionA();
             explosion.doExplosionB(true);
         }
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
 
         BindableHelper.checkAndSetItemOwner(stack, player);
 
-//        if (!world.isRemote)
+        // if (!world.isRemote)
         {
             if (player.isSneaking())
                 setActivated(stack, !getActivated(stack));
             if (getActivated(stack) && ItemBindable.syphonBatteries(stack, player, lpUsed))
                 return stack;
 
-            if (!player.isSneaking() && getActivated(stack)) {
+            if (!player.isSneaking() && getActivated(stack))
+            {
                 BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return event.result;
@@ -83,10 +90,14 @@ public class ItemBoundSword extends ItemSword {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        if (getActivated(stack)) {
-            if (target != null || attacker != null) {
-                if (target instanceof EntityLiving) {
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+    {
+        if (getActivated(stack))
+        {
+            if (target != null || attacker != null)
+            {
+                if (target instanceof EntityLiving)
+                {
                     if (!target.isPotionActive(Potion.weakness))
                         target.addPotionEffect(new PotionEffect(Potion.weakness.id, 60, 2));
                 }
@@ -105,13 +116,15 @@ public class ItemBoundSword extends ItemSword {
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
         return EnumAction.BLOCK;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
         NBTHelper.checkNBT(stack);
 
         if (StatCollector.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
@@ -125,11 +138,13 @@ public class ItemBoundSword extends ItemSword {
             tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), stack.getTagCompound().getString(Constants.NBT.OWNER_UUID))));
     }
 
-    private boolean getActivated(ItemStack stack) {
+    private boolean getActivated(ItemStack stack)
+    {
         return stack.getItemDamage() > 0;
     }
 
-    private ItemStack setActivated(ItemStack stack, boolean activated) {
+    private ItemStack setActivated(ItemStack stack, boolean activated)
+    {
         stack.setItemDamage(activated ? 1 : 0);
 
         return stack;

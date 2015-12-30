@@ -4,9 +4,11 @@ import net.minecraft.potion.Potion;
 
 import java.util.Locale;
 
-public class Constants {
+public class Constants
+{
 
-    public static class NBT {
+    public static class NBT
+    {
 
         public static final String OWNER_UUID = "ownerUUID";
         public static final String USES = "uses";
@@ -62,7 +64,8 @@ public class Constants {
         public static final String CONTAINED_BLOCK_META = "containedBlockMeta";
     }
 
-    public static class Mod {
+    public static class Mod
+    {
 
         public static final String MODID = "BloodMagic";
         public static final String DOMAIN = MODID.toLowerCase(Locale.ENGLISH) + ":";
@@ -71,13 +74,15 @@ public class Constants {
         public static final String DEPEND = "";
     }
 
-    public static class Compat {
+    public static class Compat
+    {
         public static final String JEI_CATEGORY_ALTAR = Mod.MODID + ":altar";
         public static final String JEI_CATEGORY_BINDING = Mod.MODID + ":binding";
         public static final String JEI_CATEGORY_ALCHEMYARRAY = Mod.MODID + ":alchemyArray";
     }
 
-    public static class Misc {
+    public static class Misc
+    {
         public static final int POTION_ARRAY_SIZE = Potion.potionTypes.length;
     }
 }

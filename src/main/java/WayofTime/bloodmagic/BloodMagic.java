@@ -30,7 +30,8 @@ import WayofTime.bloodmagic.util.handler.EventHandler;
 
 @Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, acceptedMinecraftVersions = "[1.8.8,1.8.9]", guiFactory = "WayofTime.bloodmagic.client.gui.ConfigGuiFactory")
 @Getter
-public class BloodMagic {
+public class BloodMagic
+{
 
     @SidedProxy(serverSide = "WayofTime.bloodmagic.proxy.CommonProxy", clientSide = "WayofTime.bloodmagic.proxy.ClientProxy")
     public static CommonProxy proxy;
@@ -38,9 +39,11 @@ public class BloodMagic {
     @Mod.Instance(Constants.Mod.MODID)
     public static BloodMagic instance;
 
-    public static CreativeTabs tabBloodMagic = new CreativeTabs(Constants.Mod.MODID + ".creativeTab") {
+    public static CreativeTabs tabBloodMagic = new CreativeTabs(Constants.Mod.MODID + ".creativeTab")
+    {
         @Override
-        public Item getTabIconItem() {
+        public Item getTabIconItem()
+        {
             return ModItems.bloodOrb;
         }
     };
@@ -49,12 +52,13 @@ public class BloodMagic {
     private File configDir;
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(FMLPreInitializationEvent event)
+    {
         configDir = new File(event.getModConfigurationDirectory(), "BloodMagic");
         ConfigHandler.init(new File(getConfigDir(), "BloodMagic.cfg"));
 
         MinecraftForge.EVENT_BUS.register(new EventHandler());
-        
+
         ModBlocks.init();
         ModItems.init();
         ModPotions.init();
@@ -64,7 +68,8 @@ public class BloodMagic {
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event)
+    {
         BloodMagicPacketHandler.init();
 
         ModRecipes.init();
@@ -77,7 +82,8 @@ public class BloodMagic {
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(FMLPostInitializationEvent event)
+    {
         ModRecipes.addCompressionHandlers();
 
         proxy.postInit();

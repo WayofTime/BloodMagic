@@ -9,14 +9,19 @@ import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
 
-public class Utils {
+public class Utils
+{
 
-    public static boolean isInteger(String integer) {
-        try {
+    public static boolean isInteger(String integer)
+    {
+        try
+        {
             Integer.parseInt(integer);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException e)
+        {
             return false;
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e)
+        {
             return false;
         }
         // only got here if we didn't return false
@@ -24,27 +29,35 @@ public class Utils {
     }
 
     /**
-     * Used for inserting an ItemStack with a stacksize of 1 to a tile's inventory at slot 0.
-     * Returns {@code true} if the ItemStack is inserted, {@code false} otherwise
-     *
+     * Used for inserting an ItemStack with a stacksize of 1 to a tile's
+     * inventory at slot 0. Returns {@code true} if the ItemStack is inserted,
+     * {@code false} otherwise
+     * 
      * EG: Block Altar
-     *
-     * @param tile   - The {@link TileInventory} to input the item to
-     * @param player - The player to take the item from.
+     * 
+     * @param tile
+     *            - The {@link TileInventory} to input the item to
+     * @param player
+     *            - The player to take the item from.
      */
-    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player) {
+    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player)
+    {
         return insertItemToTile(tile, player, 0);
     }
-    
-    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot) {
-        if (tile.getStackInSlot(slot) == null && player.getHeldItem() != null) {
+
+    public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
+    {
+        if (tile.getStackInSlot(slot) == null && player.getHeldItem() != null)
+        {
             ItemStack input = player.getHeldItem().copy();
             input.stackSize = 1;
             player.getHeldItem().stackSize--;
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (tile.getStackInSlot(slot) != null && player.getHeldItem() == null) {
-            if (!tile.getWorld().isRemote) {
+        } else if (tile.getStackInSlot(slot) != null && player.getHeldItem() == null)
+        {
+            if (!tile.getWorld().isRemote)
+            {
                 EntityItem invItem = new EntityItem(tile.getWorld(), player.posX, player.posY + 0.25, player.posZ, tile.getStackInSlot(slot));
                 tile.getWorld().spawnEntityInWorld(invItem);
             }
@@ -55,15 +68,24 @@ public class Utils {
         return false;
     }
 
-    public static Block getBlockForComponent(EnumAltarComponent component) {
-        switch (component) {
-            case GLOWSTONE: return Blocks.glowstone;
-            case BLOODSTONE: return ModBlocks.bloodStoneBrick;
-            case BEACON: return Blocks.beacon;
-            case BLOODRUNE: return ModBlocks.bloodRune;
-            case CRYSTAL: return ModBlocks.crystal;
-            case NOTAIR: return Blocks.stonebrick;
-            default: return Blocks.air;
+    public static Block getBlockForComponent(EnumAltarComponent component)
+    {
+        switch (component)
+        {
+        case GLOWSTONE:
+            return Blocks.glowstone;
+        case BLOODSTONE:
+            return ModBlocks.bloodStoneBrick;
+        case BEACON:
+            return Blocks.beacon;
+        case BLOODRUNE:
+            return ModBlocks.bloodRune;
+        case CRYSTAL:
+            return ModBlocks.crystal;
+        case NOTAIR:
+            return Blocks.stonebrick;
+        default:
+            return Blocks.air;
         }
     }
 }

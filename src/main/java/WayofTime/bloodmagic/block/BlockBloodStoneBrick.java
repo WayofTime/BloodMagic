@@ -5,11 +5,13 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockString;
 import net.minecraft.block.material.Material;
 
-public class BlockBloodStoneBrick extends BlockString {
+public class BlockBloodStoneBrick extends BlockString
+{
 
-    public static final String[] names = {"normal", "large"};
+    public static final String[] names = { "normal", "large" };
 
-    public BlockBloodStoneBrick() {
+    public BlockBloodStoneBrick()
+    {
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodstonebrick.");

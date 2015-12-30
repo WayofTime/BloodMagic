@@ -12,21 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AlchemyArrayCraftingRecipeMaker {
+public class AlchemyArrayCraftingRecipeMaker
+{
 
     @Nonnull
-    public static List<AlchemyArrayCraftingRecipeJEI> getRecipes() {
+    public static List<AlchemyArrayCraftingRecipeJEI> getRecipes()
+    {
         Map<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> alchemyArrayRecipeMap = AlchemyArrayRecipeRegistry.getRecipes();
 
         ArrayList<AlchemyArrayCraftingRecipeJEI> recipes = new ArrayList<AlchemyArrayCraftingRecipeJEI>();
 
-        for (Map.Entry<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : alchemyArrayRecipeMap.entrySet()) {
+        for (Map.Entry<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : alchemyArrayRecipeMap.entrySet())
+        {
             ItemStack input = itemStackAlchemyArrayRecipeEntry.getValue().getInputStack();
             BiMap<ItemStackWrapper, AlchemyArrayEffect> catalystMap = itemStackAlchemyArrayRecipeEntry.getValue().catalystMap;
 
-            for(Map.Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet()) {
+            for (Map.Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet())
+            {
                 ItemStack catalyst = entry.getKey().toStack();
-                if (AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(input, catalyst) instanceof AlchemyArrayEffectCrafting) {
+                if (AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(input, catalyst) instanceof AlchemyArrayEffectCrafting)
+                {
                     ItemStack output = ((AlchemyArrayEffectCrafting) itemStackAlchemyArrayRecipeEntry.getValue().getAlchemyArrayEffectForCatalyst(catalyst)).getOutputStack();
 
                     AlchemyArrayCraftingRecipeJEI recipe = new AlchemyArrayCraftingRecipeJEI(input, catalyst, output);

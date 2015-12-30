@@ -9,20 +9,24 @@ import net.minecraft.util.ChatComponentText;
 
 import java.util.ArrayList;
 
-public class RitualTest extends Ritual {
+public class RitualTest extends Ritual
+{
 
-    public RitualTest() {
+    public RitualTest()
+    {
         super("ritualTest", 0, 1000, "ritual." + Constants.Mod.MODID + ".testRitual");
     }
 
     @Override
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player) {
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player)
+    {
         player.addChatComponentMessage(new ChatComponentText("ritual started"));
         return true;
     }
 
     @Override
-    public void performRitual(IMasterRitualStone masterRitualStone) {
+    public void performRitual(IMasterRitualStone masterRitualStone)
+    {
         EntityPlayer player = PlayerHelper.getPlayerFromUUID(masterRitualStone.getOwner());
 
         if (player != null)
@@ -30,7 +34,8 @@ public class RitualTest extends Ritual {
     }
 
     @Override
-    public void stopRitual(IMasterRitualStone masterRitualStone, BreakType breakType) {
+    public void stopRitual(IMasterRitualStone masterRitualStone, BreakType breakType)
+    {
         EntityPlayer player = PlayerHelper.getPlayerFromUUID(masterRitualStone.getOwner());
 
         if (player != null)
@@ -38,12 +43,14 @@ public class RitualTest extends Ritual {
     }
 
     @Override
-    public int getRefreshCost() {
+    public int getRefreshCost()
+    {
         return 0;
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents() {
+    public ArrayList<RitualComponent> getComponents()
+    {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
         components.add(new RitualComponent(new BlockPos(1, 0, 1), EnumRuneType.AIR));

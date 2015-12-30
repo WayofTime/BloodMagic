@@ -6,11 +6,13 @@ import net.minecraft.util.BlockPos;
 import java.util.ArrayList;
 
 @Getter
-public enum EnumAltarTier {
-    ONE(),
-    TWO() {
+public enum EnumAltarTier
+{
+    ONE(), TWO()
+    {
         @Override
-        public void buildComponents() {
+        public void buildComponents()
+        {
             altarComponents.add(new AltarComponent(new BlockPos(-1, -1, -1), EnumAltarComponent.BLOODRUNE));
             altarComponents.add(new AltarComponent(new BlockPos(0, -1, -1), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
             altarComponents.add(new AltarComponent(new BlockPos(1, -1, -1), EnumAltarComponent.BLOODRUNE));
@@ -21,9 +23,11 @@ public enum EnumAltarTier {
             altarComponents.add(new AltarComponent(new BlockPos(1, -1, 1), EnumAltarComponent.BLOODRUNE));
         }
     },
-    THREE() {
+    THREE()
+    {
         @Override
-        public void buildComponents() {
+        public void buildComponents()
+        {
             altarComponents.addAll(TWO.getAltarComponents());
             altarComponents.add(new AltarComponent(new BlockPos(-1, -1, -1), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
             altarComponents.add(new AltarComponent(new BlockPos(0, -1, -1), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
@@ -46,7 +50,8 @@ public enum EnumAltarTier {
             altarComponents.add(new AltarComponent(new BlockPos(-3, 1, 3), EnumAltarComponent.GLOWSTONE));
             altarComponents.add(new AltarComponent(new BlockPos(3, 1, 3), EnumAltarComponent.GLOWSTONE));
 
-            for (int i = -2; i <= 2; i++) {
+            for (int i = -2; i <= 2; i++)
+            {
                 altarComponents.add(new AltarComponent(new BlockPos(3, -2, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(-3, -2, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(i, -2, 3), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
@@ -54,19 +59,23 @@ public enum EnumAltarTier {
             }
         }
     },
-    FOUR() {
+    FOUR()
+    {
         @Override
-        public void buildComponents() {
+        public void buildComponents()
+        {
             altarComponents.addAll(THREE.getAltarComponents());
 
-            for (int i = -3; i <= 3; i++) {
+            for (int i = -3; i <= 3; i++)
+            {
                 altarComponents.add(new AltarComponent(new BlockPos(5, -3, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(-5, -3, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(i, -3, 5), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(i, -3, -5), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
             }
 
-            for (int i = -2; i <= 1; i++) {
+            for (int i = -2; i <= 1; i++)
+            {
                 altarComponents.add(new AltarComponent(new BlockPos(5, i, 5)));
                 altarComponents.add(new AltarComponent(new BlockPos(5, i, -5)));
                 altarComponents.add(new AltarComponent(new BlockPos(-5, i, -5)));
@@ -79,16 +88,19 @@ public enum EnumAltarTier {
             altarComponents.add(new AltarComponent(new BlockPos(-5, 2, 5), EnumAltarComponent.BLOODSTONE));
         }
     },
-    FIVE() {
+    FIVE()
+    {
         @Override
-        public void buildComponents() {
+        public void buildComponents()
+        {
             altarComponents.addAll(FOUR.getAltarComponents());
             altarComponents.add(new AltarComponent(new BlockPos(-8, -3, 8), EnumAltarComponent.BEACON));
             altarComponents.add(new AltarComponent(new BlockPos(-8, -3, -8), EnumAltarComponent.BEACON));
             altarComponents.add(new AltarComponent(new BlockPos(8, -3, -8), EnumAltarComponent.BEACON));
             altarComponents.add(new AltarComponent(new BlockPos(8, -3, 8), EnumAltarComponent.BEACON));
 
-            for (int i = -6; i <= 6; i++) {
+            for (int i = -6; i <= 6; i++)
+            {
                 altarComponents.add(new AltarComponent(new BlockPos(8, -4, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(-8, -4, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(i, -4, 8), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
@@ -96,12 +108,15 @@ public enum EnumAltarTier {
             }
         }
     },
-    SIX() {
+    SIX()
+    {
         @Override
-        public void buildComponents() {
+        public void buildComponents()
+        {
             altarComponents.addAll(FIVE.getAltarComponents());
 
-            for (int i = -4; i <= 2; i++) {
+            for (int i = -4; i <= 2; i++)
+            {
                 altarComponents.add(new AltarComponent(new BlockPos(11, i, 11)));
                 altarComponents.add(new AltarComponent(new BlockPos(-11, i, -11)));
                 altarComponents.add(new AltarComponent(new BlockPos(11, i, -11)));
@@ -113,7 +128,8 @@ public enum EnumAltarTier {
             altarComponents.add(new AltarComponent(new BlockPos(11, 3, -11), EnumAltarComponent.CRYSTAL));
             altarComponents.add(new AltarComponent(new BlockPos(-11, 3, 11), EnumAltarComponent.CRYSTAL));
 
-            for (int i = -9; i <= 9; i++) {
+            for (int i = -9; i <= 9; i++)
+            {
                 altarComponents.add(new AltarComponent(new BlockPos(11, -5, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(-11, -5, i), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
                 altarComponents.add(new AltarComponent(new BlockPos(i, -5, 11), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
@@ -126,11 +142,13 @@ public enum EnumAltarTier {
 
     ArrayList<AltarComponent> altarComponents = new ArrayList<AltarComponent>();
 
-    public void buildComponents() {
+    public void buildComponents()
+    {
 
     }
 
-    public int toInt() {
+    public int toInt()
+    {
         return ordinal() + 1;
     }
 }

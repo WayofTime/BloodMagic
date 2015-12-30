@@ -10,19 +10,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImperfectRitualRegistry {
+public class ImperfectRitualRegistry
+{
 
     public static final Map<ImperfectRitual, Boolean> enabledRituals = new HashMap<ImperfectRitual, Boolean>();
     private static final BiMap<String, ImperfectRitual> registry = HashBiMap.create();
 
     /**
      * The safe way to register a new Ritual.
-     *
-     * @param imperfectRitual - The imperfect ritual to register.
-     * @param id              - The ID for the imperfect ritual. Cannot be duplicated.
+     * 
+     * @param imperfectRitual
+     *            - The imperfect ritual to register.
+     * @param id
+     *            - The ID for the imperfect ritual. Cannot be duplicated.
      */
-    public static void registerRitual(ImperfectRitual imperfectRitual, String id) {
-        if (imperfectRitual != null) {
+    public static void registerRitual(ImperfectRitual imperfectRitual, String id)
+    {
+        if (imperfectRitual != null)
+        {
             if (registry.containsKey(id))
                 BloodMagicAPI.getLogger().error("Duplicate imperfect ritual id: %s", id);
             else
@@ -30,11 +35,13 @@ public class ImperfectRitualRegistry {
         }
     }
 
-    public static void registerRitual(ImperfectRitual imperfectRitual) {
+    public static void registerRitual(ImperfectRitual imperfectRitual)
+    {
         registerRitual(imperfectRitual, imperfectRitual.getName());
     }
 
-    public static ImperfectRitual getRitualForBlock(BlockStack blockStack) {
+    public static ImperfectRitual getRitualForBlock(BlockStack blockStack)
+    {
         for (ImperfectRitual imperfectRitual : getRegistry().values())
             if (imperfectRitual.getRequiredBlock().equals(blockStack))
                 return imperfectRitual;
@@ -42,44 +49,55 @@ public class ImperfectRitualRegistry {
         return null;
     }
 
-    public static ImperfectRitual getRitualForId(String id) {
+    public static ImperfectRitual getRitualForId(String id)
+    {
         return registry.get(id);
     }
 
-    public static String getIdForRitual(ImperfectRitual imperfectRitual) {
+    public static String getIdForRitual(ImperfectRitual imperfectRitual)
+    {
         return registry.inverse().get(imperfectRitual);
     }
 
-    public static boolean isMapEmpty() {
+    public static boolean isMapEmpty()
+    {
         return registry.isEmpty();
     }
 
-    public static int getMapSize() {
+    public static int getMapSize()
+    {
         return registry.size();
     }
 
-    public static boolean ritualEnabled(ImperfectRitual imperfectRitual) {
-        try {
+    public static boolean ritualEnabled(ImperfectRitual imperfectRitual)
+    {
+        try
+        {
             return enabledRituals.get(imperfectRitual);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e)
+        {
             BloodMagicAPI.getLogger().error("Invalid Imperfect Ritual was called");
             return false;
         }
     }
 
-    public static BiMap<String, ImperfectRitual> getRegistry() {
+    public static BiMap<String, ImperfectRitual> getRegistry()
+    {
         return HashBiMap.create(registry);
     }
 
-    public static BiMap<ImperfectRitual, Boolean> getEnabledMap() {
+    public static BiMap<ImperfectRitual, Boolean> getEnabledMap()
+    {
         return HashBiMap.create(enabledRituals);
     }
 
-    public static ArrayList<String> getIds() {
+    public static ArrayList<String> getIds()
+    {
         return new ArrayList<String>(registry.keySet());
     }
 
-    public static ArrayList<ImperfectRitual> getRituals() {
+    public static ArrayList<ImperfectRitual> getRituals()
+    {
         return new ArrayList<ImperfectRitual>(registry.values());
     }
 }

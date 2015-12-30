@@ -13,196 +13,231 @@ import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
-public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidTank, IFluidHandler {
+public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidTank, IFluidHandler
+{
 
-	private BloodAltar bloodAltar;
-	
-    public TileAltar() {
+    private BloodAltar bloodAltar;
+
+    public TileAltar()
+    {
         super(1, "altar");
         this.bloodAltar = new BloodAltar(this);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tagCompound) {
+    public void readFromNBT(NBTTagCompound tagCompound)
+    {
         super.readFromNBT(tagCompound);
 
         NBTTagCompound altarTag = tagCompound.getCompoundTag("bloodAltar");
-        
+
         this.bloodAltar.readFromNBT(altarTag);
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound) {
+    public void writeToNBT(NBTTagCompound tagCompound)
+    {
         super.writeToNBT(tagCompound);
 
         NBTTagCompound altarTag = new NBTTagCompound();
         this.bloodAltar.writeToNBT(altarTag);
-        
+
         tagCompound.setTag("bloodAltar", altarTag);
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
         bloodAltar.update();
     }
 
     @Override
-    public void sacrificialDaggerCall(int amount, boolean isSacrifice) {
+    public void sacrificialDaggerCall(int amount, boolean isSacrifice)
+    {
         bloodAltar.sacrificialDaggerCall(amount, isSacrifice);
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+    public boolean isItemValidForSlot(int slot, ItemStack itemstack)
+    {
         return slot == 0;
     }
-
 
     // IFluidHandler
 
     @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from) {
+    public FluidTankInfo[] getTankInfo(EnumFacing from)
+    {
         return new FluidTankInfo[0];
     }
 
     @Override
-    public int fill(EnumFacing from, FluidStack resource, boolean doFill) {
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
+    {
         return 0;
     }
 
     @Override
-    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain) {
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
+    {
         return null;
     }
 
     @Override
-    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain) {
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
+    {
         return null;
     }
 
     @Override
-    public boolean canFill(EnumFacing from, Fluid fluid) {
+    public boolean canFill(EnumFacing from, Fluid fluid)
+    {
         return false;
     }
 
     @Override
-    public boolean canDrain(EnumFacing from, Fluid fluid) {
+    public boolean canDrain(EnumFacing from, Fluid fluid)
+    {
         return false;
     }
 
     // IFluidTank
 
     @Override
-    public FluidStack getFluid() {
+    public FluidStack getFluid()
+    {
         return bloodAltar.getFluid();
     }
 
     @Override
-    public int getFluidAmount() {
+    public int getFluidAmount()
+    {
         return bloodAltar.getFluidAmount();
     }
 
     @Override
-    public FluidTankInfo getInfo() {
+    public FluidTankInfo getInfo()
+    {
         return new FluidTankInfo(this);
     }
 
     @Override
-    public int fill(FluidStack resource, boolean doFill) {
+    public int fill(FluidStack resource, boolean doFill)
+    {
         return 0;
     }
 
     @Override
-    public FluidStack drain(int maxDrain, boolean doDrain) {
+    public FluidStack drain(int maxDrain, boolean doDrain)
+    {
         return null;
     }
 
-	@Override
-	public int getCapacity() {
-		return bloodAltar.getCapacity();
-	}
-
-	@Override
-	public int getCurrentBlood() {
-		return bloodAltar.getCurrentBlood();
-	}
-
-	@Override
-	public EnumAltarTier getTier() {
-		return bloodAltar.getTier();
-	}
-
-	@Override
-	public int getProgress() {
-		return bloodAltar.getProgress();
-	}
-
-	@Override
-	public float getSacrificeMultiplier() {
-		return bloodAltar.getSacrificeMultiplier();
-	}
-
-	@Override
-	public float getSelfSacrificeMultiplier() {
-		return bloodAltar.getSelfSacrificeMultiplier();
-	}
-
-	@Override
-	public float getOrbMultiplier() {
-		return bloodAltar.getOrbMultiplier();
-	}
-
-	@Override
-	public float getDislocationMultiplier() {
-		return bloodAltar.getDislocationMultiplier();
-	}
+    @Override
+    public int getCapacity()
+    {
+        return bloodAltar.getCapacity();
+    }
 
     @Override
-    public float getConsumptionMultiplier() {
+    public int getCurrentBlood()
+    {
+        return bloodAltar.getCurrentBlood();
+    }
+
+    @Override
+    public EnumAltarTier getTier()
+    {
+        return bloodAltar.getTier();
+    }
+
+    @Override
+    public int getProgress()
+    {
+        return bloodAltar.getProgress();
+    }
+
+    @Override
+    public float getSacrificeMultiplier()
+    {
+        return bloodAltar.getSacrificeMultiplier();
+    }
+
+    @Override
+    public float getSelfSacrificeMultiplier()
+    {
+        return bloodAltar.getSelfSacrificeMultiplier();
+    }
+
+    @Override
+    public float getOrbMultiplier()
+    {
+        return bloodAltar.getOrbMultiplier();
+    }
+
+    @Override
+    public float getDislocationMultiplier()
+    {
+        return bloodAltar.getDislocationMultiplier();
+    }
+
+    @Override
+    public float getConsumptionMultiplier()
+    {
         return bloodAltar.getConsumptionMultiplier();
     }
 
     @Override
-    public float getConsumptionRate() {
+    public float getConsumptionRate()
+    {
         return bloodAltar.getConsumptionRate();
     }
 
     @Override
-    public int getLiquidRequired() {
+    public int getLiquidRequired()
+    {
         return bloodAltar.getLiquidRequired();
     }
 
-	@Override
-	public int getBufferCapacity() {
-		return bloodAltar.getBufferCapacity();
-	}
+    @Override
+    public int getBufferCapacity()
+    {
+        return bloodAltar.getBufferCapacity();
+    }
 
-	@Override
-	public void startCycle() {
-		bloodAltar.startCycle();
-	}
+    @Override
+    public void startCycle()
+    {
+        bloodAltar.startCycle();
+    }
 
-	@Override
-	public void checkTier() {
-		bloodAltar.checkTier();
-	}
+    @Override
+    public void checkTier()
+    {
+        bloodAltar.checkTier();
+    }
 
-	@Override
-	public void requestPauseAfterCrafting(int cooldown) {
-		bloodAltar.requestPauseAfterCrafting(cooldown);
-	}
+    @Override
+    public void requestPauseAfterCrafting(int cooldown)
+    {
+        bloodAltar.requestPauseAfterCrafting(cooldown);
+    }
 
-	@Override
-	public boolean isActive() {
-		return bloodAltar.isActive();
-	}
+    @Override
+    public boolean isActive()
+    {
+        return bloodAltar.isActive();
+    }
 
-	@Override
-	public int fillMainTank(int amount) {
-		return bloodAltar.fillMainTank(amount);
-	}
-	
-	@Override
-	public void setActive(){
-		bloodAltar.setActive();
-	}
+    @Override
+    public int fillMainTank(int amount)
+    {
+        return bloodAltar.fillMainTank(amount);
+    }
+
+    @Override
+    public void setActive()
+    {
+        bloodAltar.setActive();
+    }
 }

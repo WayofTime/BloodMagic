@@ -8,11 +8,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class PropertyString extends PropertyHelper {
+public class PropertyString extends PropertyHelper
+{
 
     private final ImmutableSet allowedValues;
 
-    protected PropertyString(String name, String[] values) {
+    protected PropertyString(String name, String[] values)
+    {
         super(name, String.class);
 
         HashSet<String> hashSet = Sets.newHashSet();
@@ -20,21 +22,25 @@ public class PropertyString extends PropertyHelper {
         allowedValues = ImmutableSet.copyOf(hashSet);
     }
 
-    public static PropertyString create(String name, String[] values) {
+    public static PropertyString create(String name, String[] values)
+    {
         return new PropertyString(name, values);
     }
 
     @Override
-    public Collection getAllowedValues() {
+    public Collection getAllowedValues()
+    {
         return allowedValues;
     }
 
-    public String getName0(String value) {
+    public String getName0(String value)
+    {
         return value;
     }
 
     @Override
-    public String getName(Comparable value) {
+    public String getName(Comparable value)
+    {
         return this.getName0(value.toString());
     }
 }

@@ -18,33 +18,40 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
 
-public class PotionEventHandlers {
+public class PotionEventHandlers
+{
 
-    public PotionEventHandlers() {
+    public PotionEventHandlers()
+    {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
-    public void onLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
-        if (event.entityLiving.isPotionActive(ModPotions.boost)) {
+    public void onLivingJumpEvent(LivingEvent.LivingJumpEvent event)
+    {
+        if (event.entityLiving.isPotionActive(ModPotions.boost))
+        {
             int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
             event.entityLiving.motionY += (0.1f) * (2 + i);
         }
 
-//        if (event.entityLiving.isPotionActive(ModPotions.heavyHeart)) {
-//            event.entityLiving.motionY = 0;
-//        }
+        // if (event.entityLiving.isPotionActive(ModPotions.heavyHeart)) {
+        // event.entityLiving.motionY = 0;
+        // }
     }
 
     @SubscribeEvent
-    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+    {
 
-        if (event.entityLiving.isPotionActive(ModPotions.boost)) {
+        if (event.entityLiving.isPotionActive(ModPotions.boost))
+        {
             int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
             {
                 float percentIncrease = (i + 1) * 0.05f;
 
-                if (event.entityLiving instanceof EntityPlayer) {
+                if (event.entityLiving instanceof EntityPlayer)
+                {
                     EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
                     entityPlayer.stepHeight = 1.0f;
 
@@ -54,37 +61,44 @@ public class PotionEventHandlers {
             }
         }
 
-        if (event.entityLiving.isPotionActive(ModPotions.whirlwind)) {
+        if (event.entityLiving.isPotionActive(ModPotions.whirlwind))
+        {
             int d0 = 3;
             AxisAlignedBB axisAlignedBB = AxisAlignedBB.fromBounds(event.entityLiving.posX - 0.5, event.entityLiving.posY - 0.5, event.entityLiving.posZ - 0.5, event.entityLiving.posX + 0.5, event.entityLiving.posY + 0.5, event.entityLiving.posZ + 0.5).expand(d0, d0, d0);
             List entityList = event.entityLiving.worldObj.getEntitiesWithinAABB(Entity.class, axisAlignedBB);
 
-            for (Object thing : entityList) {
+            for (Object thing : entityList)
+            {
                 Entity projectile = (Entity) thing;
 
-                if (projectile == null) continue;
-                if (!(projectile instanceof IProjectile)) continue;
+                if (projectile == null)
+                    continue;
+                if (!(projectile instanceof IProjectile))
+                    continue;
 
                 Entity throwingEntity = null;
 
-                if (projectile instanceof EntityArrow) throwingEntity = ((EntityArrow) projectile).shootingEntity;
+                if (projectile instanceof EntityArrow)
+                    throwingEntity = ((EntityArrow) projectile).shootingEntity;
                 else if (projectile instanceof EntityThrowable)
                     throwingEntity = ((EntityThrowable) projectile).getThrower();
 
-                if (throwingEntity != null && throwingEntity.equals(event.entityLiving)) continue;
+                if (throwingEntity != null && throwingEntity.equals(event.entityLiving))
+                    continue;
 
                 double delX = projectile.posX - event.entityLiving.posX;
                 double delY = projectile.posY - event.entityLiving.posY;
                 double delZ = projectile.posZ - event.entityLiving.posZ;
 
-                double angle = (delX * projectile.motionX + delY * projectile.motionY + delZ * projectile.motionZ) /
-                        (Math.sqrt(delX * delX + delY * delY + delZ * delZ) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
+                double angle = (delX * projectile.motionX + delY * projectile.motionY + delZ * projectile.motionZ) / (Math.sqrt(delX * delX + delY * delY + delZ * delZ) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
 
                 angle = Math.acos(angle);
 
-                if (angle < 3 * (Math.PI / 4)) continue; //angle is < 135 degrees
+                if (angle < 3 * (Math.PI / 4))
+                    continue; // angle is < 135 degrees
 
-                if (throwingEntity != null) {
+                if (throwingEntity != null)
+                {
                     delX = -projectile.posX + throwingEntity.posX;
                     delY = -projectile.posY + (throwingEntity.posY + throwingEntity.getEyeHeight());
                     delZ = -projectile.posZ + throwingEntity.posZ;
@@ -104,11 +118,14 @@ public class PotionEventHandlers {
     }
 
     @SubscribeEvent
-    public void onEntityDrop(LivingDropsEvent event) {
-        if (event.source.getDamageType().equals("player")) {
+    public void onEntityDrop(LivingDropsEvent event)
+    {
+        if (event.source.getDamageType().equals("player"))
+        {
             double rand = Math.random();
 
-            if (!(event.entityLiving instanceof EntityAnimal)) {
+            if (!(event.entityLiving instanceof EntityAnimal))
+            {
                 PotionEffect effect = event.entityLiving.getActivePotionEffect(Potion.weakness);
 
                 if (effect != null)
@@ -120,14 +137,17 @@ public class PotionEventHandlers {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onPlayerDamageEvent(LivingAttackEvent event) {
+    public void onPlayerDamageEvent(LivingAttackEvent event)
+    {
         if (event.entityLiving.isPotionActive(ModPotions.whirlwind) && event.isCancelable() && event.source.isProjectile())
             event.setCanceled(true);
     }
 
     @SubscribeEvent
-    public void onEndermanTeleportEvent(EnderTeleportEvent event) {
-        if (event.entityLiving.isPotionActive(ModPotions.planarBinding) && event.isCancelable()) {
+    public void onEndermanTeleportEvent(EnderTeleportEvent event)
+    {
+        if (event.entityLiving.isPotionActive(ModPotions.planarBinding) && event.isCancelable())
+        {
             event.setCanceled(true);
         }
     }

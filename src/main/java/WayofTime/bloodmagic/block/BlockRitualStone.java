@@ -9,11 +9,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockRitualStone extends BlockString implements IRitualStone {
+public class BlockRitualStone extends BlockString implements IRitualStone
+{
 
-    public static final String[] names = {"blank", "water", "fire", "earth", "air", "dusk", "dawn"};
+    public static final String[] names = { "blank", "water", "fire", "earth", "air", "dusk", "dawn" };
 
-    public BlockRitualStone() {
+    public BlockRitualStone()
+    {
         super(Material.iron, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".ritualStone.");
@@ -25,7 +27,8 @@ public class BlockRitualStone extends BlockString implements IRitualStone {
     }
 
     @Override
-    public boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType) {
+    public boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType)
+    {
         return runeType.toString().equals(names[getMetaFromState(world.getBlockState(pos))]);
     }
 }

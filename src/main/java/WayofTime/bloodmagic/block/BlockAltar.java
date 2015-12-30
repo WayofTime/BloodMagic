@@ -16,9 +16,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class BlockAltar extends BlockContainer {
+public class BlockAltar extends BlockContainer
+{
 
-    public BlockAltar() {
+    public BlockAltar()
+    {
         super(Material.rock);
 
         setUnlocalizedName(Constants.Mod.MODID + ".altar");
@@ -26,32 +28,38 @@ public class BlockAltar extends BlockContainer {
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube()
+    {
         return false;
     }
 
     @Override
-    public boolean isFullCube() {
+    public boolean isFullCube()
+    {
         return false;
     }
 
     @Override
-    public boolean isVisuallyOpaque() {
+    public boolean isVisuallyOpaque()
+    {
         return false;
     }
 
     @Override
-    public int getRenderType() {
+    public int getRenderType()
+    {
         return 3;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
         return new TileAltar();
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
         TileAltar altar = (TileAltar) world.getTileEntity(pos);
 
         if (altar == null || player.isSneaking())
@@ -59,8 +67,10 @@ public class BlockAltar extends BlockContainer {
 
         ItemStack playerItem = player.getCurrentEquippedItem();
 
-        if (playerItem != null) {
-            if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator) {
+        if (playerItem != null)
+        {
+            if (playerItem.getItem() instanceof IAltarReader || playerItem.getItem() instanceof IAltarManipulator)
+            {
                 playerItem.getItem().onItemRightClick(playerItem, world, player);
                 return true;
             }
@@ -76,7 +86,8 @@ public class BlockAltar extends BlockContainer {
     }
 
     @Override
-    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState) {
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
+    {
         TileAltar tileAltar = (TileAltar) world.getTileEntity(blockPos);
         if (tileAltar != null)
             tileAltar.dropItems();

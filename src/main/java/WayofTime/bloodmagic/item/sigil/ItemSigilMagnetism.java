@@ -9,14 +9,17 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemSigilMagnetism extends ItemSigilToggleable {
+public class ItemSigilMagnetism extends ItemSigilToggleable
+{
 
-    public ItemSigilMagnetism() {
+    public ItemSigilMagnetism()
+    {
         super("magnetism", 50);
     }
 
     @Override
-    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected) {
+    public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
+    {
         int range = 5;
         int verticalRange = 5;
         float posX = Math.round(player.posX);
@@ -25,14 +28,18 @@ public class ItemSigilMagnetism extends ItemSigilToggleable {
         List<EntityItem> entities = player.worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
         List<EntityXPOrb> xpOrbs = player.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.fromBounds(posX - 0.5f, posY - 0.5f, posZ - 0.5f, posX + 0.5f, posY + 0.5f, posZ + 0.5f).expand(range, verticalRange, range));
 
-        for (EntityItem entity : entities) {
-            if (entity != null && !world.isRemote) {
+        for (EntityItem entity : entities)
+        {
+            if (entity != null && !world.isRemote)
+            {
                 entity.onCollideWithPlayer(player);
             }
         }
 
-        for (EntityXPOrb xpOrb : xpOrbs) {
-            if (xpOrb != null && !world.isRemote) {
+        for (EntityXPOrb xpOrb : xpOrbs)
+        {
+            if (xpOrb != null && !world.isRemote)
+            {
                 xpOrb.onCollideWithPlayer(player);
             }
         }

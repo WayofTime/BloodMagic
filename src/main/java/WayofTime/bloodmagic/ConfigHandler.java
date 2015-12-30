@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConfigHandler {
+public class ConfigHandler
+{
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private static Configuration config;
 
     // Teleposer
@@ -89,23 +91,25 @@ public class ConfigHandler {
 
     // Compat
 
-    public static void init(File file) {
+    public static void init(File file)
+    {
         config = new Configuration(file);
         syncConfig();
     }
 
-    public static void syncConfig() {
+    public static void syncConfig()
+    {
         String category;
 
         category = "Item/Block Blacklisting";
         config.addCustomCategoryComment(category, "Allows disabling of specific Blocks/Items.\nNote that using this may result in crashes. Use is not supported.");
         config.setCategoryRequiresMcRestart(category, true);
-        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[]{}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
-        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[]{}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
+        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[] {}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
+        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[] {}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[]{"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildTeleposerBlacklist();
 
         category = "Potions";
@@ -179,21 +183,26 @@ public class ConfigHandler {
         config.save();
     }
 
-    private static void buildTeleposerBlacklist() {
+    private static void buildTeleposerBlacklist()
+    {
 
         // Make sure it's empty before setting the blacklist.
-        // Otherwise, reloading the config while in-game will duplicate the list.
+        // Otherwise, reloading the config while in-game will duplicate the
+        // list.
         teleposerBlacklist.clear();
 
-        for (String blockSet : teleposerBlacklisting) {
+        for (String blockSet : teleposerBlacklisting)
+        {
             String[] blockData = blockSet.split(":");
 
             Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
             int meta = 0;
 
             // If the block follows full syntax: modid:blockname:meta
-            if (blockData.length == 3) {
-                // Check if it's an int, if so, parse it. If not, set meta to 0 to avoid crashing.
+            if (blockData.length == 3)
+            {
+                // Check if it's an int, if so, parse it. If not, set meta to 0
+                // to avoid crashing.
                 if (Utils.isInteger(blockData[2]))
                     meta = Integer.parseInt(blockData[2]);
                 else if (blockData[2].equals("*"))
@@ -206,7 +215,8 @@ public class ConfigHandler {
         }
     }
 
-    public static void checkRituals() {
+    public static void checkRituals()
+    {
         RitualHelper.checkRituals(config, "WayofTime.bloodmagic.ritual", "Rituals");
         RitualHelper.checkImperfectRituals(config, "WayofTime.bloodmagic.ritual.imperfect", "Rituals.imperfect");
         config.save();

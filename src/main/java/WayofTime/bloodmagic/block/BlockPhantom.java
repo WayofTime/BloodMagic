@@ -17,21 +17,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockPhantom extends BlockContainer {
+public class BlockPhantom extends BlockContainer
+{
 
-    public BlockPhantom() {
+    public BlockPhantom()
+    {
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".phantom");
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube()
+    {
         return false;
     }
 
     @Override
-    public boolean isFullCube() {
+    public boolean isFullCube()
+    {
         return false;
     }
 
@@ -44,17 +48,20 @@ public class BlockPhantom extends BlockContainer {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer() {
+    public EnumWorldBlockLayer getBlockLayer()
+    {
         return EnumWorldBlockLayer.TRANSLUCENT;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
-        if (worldIn.getBlockState(pos.offset(side.getOpposite())) != iblockstate) {
+        if (worldIn.getBlockState(pos.offset(side.getOpposite())) != iblockstate)
+        {
             return true;
         }
 
@@ -62,12 +69,14 @@ public class BlockPhantom extends BlockContainer {
     }
 
     @Override
-    public int quantityDropped(Random par1Random) {
+    public int quantityDropped(Random par1Random)
+    {
         return 0;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
         return new TilePhantomBlock();
     }
 }

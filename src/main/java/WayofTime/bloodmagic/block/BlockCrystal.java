@@ -5,10 +5,12 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockString;
 import net.minecraft.block.material.Material;
 
-public class BlockCrystal extends BlockString {
-    public static final String[] names = {"normal", "brick"};
+public class BlockCrystal extends BlockString
+{
+    public static final String[] names = { "normal", "brick" };
 
-    public BlockCrystal() {
+    public BlockCrystal()
+    {
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".crystal.");

@@ -10,7 +10,8 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
-public class AltarRecipeJEI extends BloodMagicRecipeWrapper {
+public class AltarRecipeJEI extends BloodMagicRecipeWrapper
+{
 
     @Nonnull
     private final ItemStack input;
@@ -20,31 +21,36 @@ public class AltarRecipeJEI extends BloodMagicRecipeWrapper {
 
     private final String[] infoString;
 
-    public AltarRecipeJEI(@Nonnull ItemStack input, @Nonnull ItemStack output, int tier, int requiredLP) {
+    public AltarRecipeJEI(@Nonnull ItemStack input, @Nonnull ItemStack output, int tier, int requiredLP)
+    {
         this.input = input;
         this.output = output;
 
-        this.infoString = new String[]{TextHelper.localize("jei.BloodMagic.recipe.requiredTier", tier), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP)};
+        this.infoString = new String[] { TextHelper.localize("jei.BloodMagic.recipe.requiredTier", tier), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP) };
     }
 
     @Override
-    public List getInputs() {
+    public List getInputs()
+    {
         return Collections.singletonList(input);
     }
 
     @Override
-    public List getOutputs() {
+    public List getOutputs()
+    {
         return Collections.singletonList(output);
     }
 
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
+    {
         minecraft.fontRendererObj.drawString(infoString[0], 90 - minecraft.fontRendererObj.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
         minecraft.fontRendererObj.drawString(infoString[1], 90 - minecraft.fontRendererObj.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
     }
 
     @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight) {
+    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
+    {
 
     }
 }

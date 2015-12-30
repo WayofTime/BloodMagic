@@ -15,7 +15,8 @@ import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
-public class ModItems {
+public class ModItems
+{
 
     public static Item bloodOrb;
     public static BloodOrb orbWeak;
@@ -63,7 +64,7 @@ public class ModItems {
     public static Item itemComponent;
 
     public static Item bloodShard;
-    
+
     public static Item livingArmourHelmet;
     public static Item livingArmourChest;
     public static Item livingArmourLegs;
@@ -73,7 +74,8 @@ public class ModItems {
 
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 12, 8, 50);
 
-    public static void init() {
+    public static void init()
+    {
         bloodOrb = registerItem(new ItemBloodOrb());
         orbWeak = new BloodOrb("weak", 1, 5000);
         OrbRegistry.registerOrb(orbWeak);
@@ -100,7 +102,7 @@ public class ModItems {
         daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice());
 
         ritualDiviner = registerItem(new ItemRitualDiviner());
-        
+
         boundSword = registerItem(new ItemBoundSword());
         boundPickaxe = registerItem(new ItemBoundPickaxe());
         boundAxe = registerItem(new ItemBoundAxe());
@@ -127,7 +129,7 @@ public class ModItems {
         itemComponent = registerItem(new ItemComponent());
 
         bloodShard = registerItem(new ItemBloodShard());
-        
+
         livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
         livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
@@ -136,7 +138,8 @@ public class ModItems {
         altarMaker = registerItem(new ItemAltarMaker());
     }
 
-    public static void initRenders() {
+    public static void initRenders()
+    {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         renderHelper.itemRenderAll(bloodOrb);
@@ -171,7 +174,7 @@ public class ModItems {
         renderHelper.itemRender(packSacrifice);
         renderHelper.itemRender(packSelfSacrifice);
         renderHelper.itemRender(daggerOfSacrifice);
-        
+
         renderHelper.itemRender(ritualDiviner, 0);
 
         renderHelper.itemRender(boundSword, 0);
@@ -211,8 +214,8 @@ public class ModItems {
         renderHelper.itemRender(sigilEnderSeverance, 0);
         renderHelper.itemRender(sigilEnderSeverance, 1);
 
-        for(int i = 0 ; i < ItemComponent.getNames().size() ; i++)
-        	renderHelper.itemRender(itemComponent, i);
+        for (int i = 0; i < ItemComponent.getNames().size(); i++)
+            renderHelper.itemRender(itemComponent, i);
 
         renderHelper.itemRender(bloodShard, 0);
         renderHelper.itemRender(bloodShard, 1);
@@ -225,14 +228,16 @@ public class ModItems {
         renderHelper.itemRender(altarMaker);
     }
 
-    private static Item registerItem(Item item, String name) {
+    private static Item registerItem(Item item, String name)
+    {
         if (!ConfigHandler.itemBlacklist.contains(name))
             GameRegistry.registerItem(item, name);
 
         return item;
     }
 
-    private static Item registerItem(Item item) {
+    private static Item registerItem(Item item)
+    {
         return registerItem(item, item.getClass().getSimpleName());
     }
 }

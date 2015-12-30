@@ -19,139 +19,173 @@ import WayofTime.bloodmagic.api.orb.IBloodOrb;
 /**
  * Shapeless Blood Orb Recipe Handler by joshie *
  */
-public class ShapelessBloodOrbRecipe implements IRecipe {
-	private ItemStack output = null;
-	private ArrayList<Object> input = new ArrayList<Object>();
+public class ShapelessBloodOrbRecipe implements IRecipe
+{
+    private ItemStack output = null;
+    private ArrayList<Object> input = new ArrayList<Object>();
 
-	public ShapelessBloodOrbRecipe(Block result, Object... recipe) {
-		this(new ItemStack(result), recipe);
-	}
+    public ShapelessBloodOrbRecipe(Block result, Object... recipe)
+    {
+        this(new ItemStack(result), recipe);
+    }
 
-	public ShapelessBloodOrbRecipe(Item result, Object... recipe) {
-		this(new ItemStack(result), recipe);
-	}
+    public ShapelessBloodOrbRecipe(Item result, Object... recipe)
+    {
+        this(new ItemStack(result), recipe);
+    }
 
-	public ShapelessBloodOrbRecipe(ItemStack result, Object... recipe) {
-		output = result.copy();
-		for (Object in : recipe) {
-			if (in instanceof ItemStack) {
-				if (((ItemStack) in).getItem() instanceof IBloodOrb) {
-					input.add(((IBloodOrb) ((ItemStack) in).getItem()).getOrbLevel(((ItemStack) in).getItemDamage()));
-				} else
-					input.add(((ItemStack) in).copy());
-			} else if (in instanceof Item) {
-				input.add(new ItemStack((Item) in));
-			} else if (in instanceof Block) {
-				input.add(new ItemStack((Block) in));
-			} else if (in instanceof String) {
-				input.add(OreDictionary.getOres((String) in));
-			} else {
-				String ret = "Invalid shapeless ore recipe: ";
-				for (Object tmp : recipe) {
-					ret += tmp + ", ";
-				}
-				ret += output;
-				throw new RuntimeException(ret);
-			}
-		}
-	}
+    public ShapelessBloodOrbRecipe(ItemStack result, Object... recipe)
+    {
+        output = result.copy();
+        for (Object in : recipe)
+        {
+            if (in instanceof ItemStack)
+            {
+                if (((ItemStack) in).getItem() instanceof IBloodOrb)
+                {
+                    input.add(((IBloodOrb) ((ItemStack) in).getItem()).getOrbLevel(((ItemStack) in).getItemDamage()));
+                } else
+                    input.add(((ItemStack) in).copy());
+            } else if (in instanceof Item)
+            {
+                input.add(new ItemStack((Item) in));
+            } else if (in instanceof Block)
+            {
+                input.add(new ItemStack((Block) in));
+            } else if (in instanceof String)
+            {
+                input.add(OreDictionary.getOres((String) in));
+            } else
+            {
+                String ret = "Invalid shapeless ore recipe: ";
+                for (Object tmp : recipe)
+                {
+                    ret += tmp + ", ";
+                }
+                ret += output;
+                throw new RuntimeException(ret);
+            }
+        }
+    }
 
-	ShapelessBloodOrbRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements) {
-		output = recipe.getRecipeOutput();
+    ShapelessBloodOrbRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements)
+    {
+        output = recipe.getRecipeOutput();
 
-		for (ItemStack ingred : ((List<ItemStack>) recipe.recipeItems)) {
-			Object finalObj = ingred;
-			for (Entry<ItemStack, String> replace : replacements.entrySet()) {
-				if (OreDictionary.itemMatches(replace.getKey(), ingred, false)) {
-					finalObj = OreDictionary.getOres(replace.getValue());
-					break;
-				}
-			}
-			input.add(finalObj);
-		}
-	}
+        for (ItemStack ingred : ((List<ItemStack>) recipe.recipeItems))
+        {
+            Object finalObj = ingred;
+            for (Entry<ItemStack, String> replace : replacements.entrySet())
+            {
+                if (OreDictionary.itemMatches(replace.getKey(), ingred, false))
+                {
+                    finalObj = OreDictionary.getOres(replace.getValue());
+                    break;
+                }
+            }
+            input.add(finalObj);
+        }
+    }
 
-	@Override
-	public int getRecipeSize() {
-		return input.size();
-	}
+    @Override
+    public int getRecipeSize()
+    {
+        return input.size();
+    }
 
-	@Override
-	public ItemStack getRecipeOutput() {
-		return output;
-	}
+    @Override
+    public ItemStack getRecipeOutput()
+    {
+        return output;
+    }
 
-	@Override
-	public ItemStack getCraftingResult(InventoryCrafting var1) {
-		return output.copy();
-	}
+    @Override
+    public ItemStack getCraftingResult(InventoryCrafting var1)
+    {
+        return output.copy();
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean matches(InventoryCrafting var1, World world) {
-		ArrayList<Object> required = new ArrayList<Object>(input);
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean matches(InventoryCrafting var1, World world)
+    {
+        ArrayList<Object> required = new ArrayList<Object>(input);
 
-		for (int x = 0; x < var1.getSizeInventory(); x++) {
-			ItemStack slot = var1.getStackInSlot(x);
+        for (int x = 0; x < var1.getSizeInventory(); x++)
+        {
+            ItemStack slot = var1.getStackInSlot(x);
 
-			if (slot != null) {
-				boolean inRecipe = false;
-				Iterator<Object> req = required.iterator();
+            if (slot != null)
+            {
+                boolean inRecipe = false;
+                Iterator<Object> req = required.iterator();
 
-				while (req.hasNext()) {
-					boolean match = false;
+                while (req.hasNext())
+                {
+                    boolean match = false;
 
-					Object next = req.next();
+                    Object next = req.next();
 
-					// If target is integer, then we should be check the blood
-					// orb value of the item instead
-					if (next instanceof Integer) {
-						if (slot != null && slot.getItem() instanceof IBloodOrb) {
-							IBloodOrb orb = (IBloodOrb) slot.getItem();
-							if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) next) {
-								return false;
-							}
-						} else
-							return false;
-						match = true;
-					} else if (next instanceof ItemStack) {
-						match = OreDictionary.itemMatches((ItemStack) next, slot, false);
-					} else if (next instanceof ArrayList) {
-						Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
-						while (itr.hasNext() && !match) {
-							match = OreDictionary.itemMatches(itr.next(), slot, false);
-						}
-					}
+                    // If target is integer, then we should be check the blood
+                    // orb value of the item instead
+                    if (next instanceof Integer)
+                    {
+                        if (slot != null && slot.getItem() instanceof IBloodOrb)
+                        {
+                            IBloodOrb orb = (IBloodOrb) slot.getItem();
+                            if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) next)
+                            {
+                                return false;
+                            }
+                        } else
+                            return false;
+                        match = true;
+                    } else if (next instanceof ItemStack)
+                    {
+                        match = OreDictionary.itemMatches((ItemStack) next, slot, false);
+                    } else if (next instanceof ArrayList)
+                    {
+                        Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
+                        while (itr.hasNext() && !match)
+                        {
+                            match = OreDictionary.itemMatches(itr.next(), slot, false);
+                        }
+                    }
 
-					if (match) {
-						inRecipe = true;
-						required.remove(next);
-						break;
-					}
-				}
+                    if (match)
+                    {
+                        inRecipe = true;
+                        required.remove(next);
+                        break;
+                    }
+                }
 
-				if (!inRecipe) {
-					return false;
-				}
-			}
-		}
+                if (!inRecipe)
+                {
+                    return false;
+                }
+            }
+        }
 
-		return required.isEmpty();
-	}
+        return required.isEmpty();
+    }
 
-	public ArrayList<Object> getInput() {
-		return this.input;
-	}
+    public ArrayList<Object> getInput()
+    {
+        return this.input;
+    }
 
-	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
+    @Override
+    public ItemStack[] getRemainingItems(InventoryCrafting inv)
+    {
+        ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
 
-		for (int i = 0; i < aitemstack.length; ++i) {
-			ItemStack itemstack = inv.getStackInSlot(i);
-			aitemstack[i] = net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack);
-		}
+        for (int i = 0; i < aitemstack.length; ++i)
+        {
+            ItemStack itemstack = inv.getStackInSlot(i);
+            aitemstack[i] = net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack);
+        }
 
-		return aitemstack;
-	}
+        return aitemstack;
+    }
 }

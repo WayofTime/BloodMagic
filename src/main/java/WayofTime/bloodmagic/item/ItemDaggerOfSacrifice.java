@@ -18,9 +18,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemDaggerOfSacrifice extends Item {
+public class ItemDaggerOfSacrifice extends Item
+{
 
-    public ItemDaggerOfSacrifice() {
+    public ItemDaggerOfSacrifice()
+    {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".daggerOfSacrifice");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -29,7 +31,8 @@ public class ItemDaggerOfSacrifice extends Item {
     }
 
     @Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+    {
         if (target == null || attacker == null || attacker.worldObj.isRemote || (attacker instanceof EntityPlayer && !(attacker instanceof EntityPlayerMP)))
             return false;
 
@@ -39,14 +42,19 @@ public class ItemDaggerOfSacrifice extends Item {
         if (target.isDead || target.getHealth() < 0.5F)
             return false;
 
-        //TODO Make these configurable
+        // TODO Make these configurable
         int lifeEssence = 500;
-        if (target instanceof EntityVillager) lifeEssence = 2000;
-        else if (target instanceof EntitySlime) lifeEssence = 150;
-        else if (target instanceof EntityEnderman) lifeEssence = 200;
-        else if (target instanceof EntityAnimal) lifeEssence = 250;
+        if (target instanceof EntityVillager)
+            lifeEssence = 2000;
+        else if (target instanceof EntitySlime)
+            lifeEssence = 150;
+        else if (target instanceof EntityEnderman)
+            lifeEssence = 200;
+        else if (target instanceof EntityAnimal)
+            lifeEssence = 250;
 
-        if (findAndFillAltar(attacker.worldObj, target, lifeEssence)) {
+        if (findAndFillAltar(attacker.worldObj, target, lifeEssence))
+        {
             double posX = target.posX;
             double posY = target.posY;
             double posZ = target.posZ;
@@ -58,10 +66,12 @@ public class ItemDaggerOfSacrifice extends Item {
         return false;
     }
 
-    public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount) {
+    public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount)
+    {
         IBloodAltar bloodAltar = findBloodAltar(world, sacrifice.getPosition());
 
-        if (bloodAltar != null) {
+        if (bloodAltar != null)
+        {
             bloodAltar.sacrificialDaggerCall(amount, true);
             bloodAltar.startCycle();
             return true;
@@ -70,12 +80,16 @@ public class ItemDaggerOfSacrifice extends Item {
         return false;
     }
 
-    public IBloodAltar findBloodAltar(World world, BlockPos blockPos) {
+    public IBloodAltar findBloodAltar(World world, BlockPos blockPos)
+    {
         TileEntity tileEntity;
 
-        for (int i = -2; i <= 2; i++) {
-            for (int j = -2; j <= 2; j++) {
-                for (int k = -2; k <= 1; k++) {
+        for (int i = -2; i <= 2; i++)
+        {
+            for (int j = -2; j <= 2; j++)
+            {
+                for (int k = -2; k <= 1; k++)
+                {
                     tileEntity = world.getTileEntity(blockPos.add(i, k, j));
 
                     if ((tileEntity instanceof IBloodAltar))

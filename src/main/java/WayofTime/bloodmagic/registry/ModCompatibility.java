@@ -6,14 +6,17 @@ import net.minecraftforge.fml.common.Loader;
 
 import java.util.ArrayList;
 
-public class ModCompatibility {
+public class ModCompatibility
+{
 
     private static ArrayList<ICompatibility> compatibilities = new ArrayList<ICompatibility>();
 
-    public static void registerModCompat() {
+    public static void registerModCompat()
+    {
         compatibilities.add(new CompatibilityJustEnoughItems());
 
-        for (ICompatibility compat : compatibilities) {
+        for (ICompatibility compat : compatibilities)
+        {
             if (compat.enableCompat() && Loader.isModLoaded(compat.getModId()))
                 compat.loadCompatibility();
         }

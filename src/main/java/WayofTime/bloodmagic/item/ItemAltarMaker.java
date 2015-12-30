@@ -24,11 +24,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemAltarMaker extends Item implements IAltarManipulator {
+public class ItemAltarMaker extends Item implements IAltarManipulator
+{
 
     private EnumAltarTier tierToBuild = EnumAltarTier.ONE;
 
-    public ItemAltarMaker() {
+    public ItemAltarMaker()
+    {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".altarMaker");
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -38,19 +40,22 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    {
         stack = NBTHelper.checkNBT(stack);
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
         if (!player.capabilities.isCreativeMode || world.isRemote)
             return stack;
 
         stack = NBTHelper.checkNBT(stack);
 
-        if (player.isSneaking()) {
+        if (player.isSneaking())
+        {
             if (stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) >= EnumAltarTier.MAXTIERS - 1)
                 stack.getTagCompound().setInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER, 0);
             else
@@ -65,7 +70,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
         if (mop == null || mop.typeOfHit == MovingObjectPosition.MovingObjectType.MISS || mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
             return stack;
 
-        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar) {
+        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar)
+        {
 
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.building", tierToBuild));
             buildAltar(world, mop.getBlockPos());
@@ -76,18 +82,22 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
         return stack;
     }
 
-    public void setTierToBuild(EnumAltarTier tierToBuild) {
+    public void setTierToBuild(EnumAltarTier tierToBuild)
+    {
         this.tierToBuild = tierToBuild;
     }
 
-    public void buildAltar(World world, BlockPos pos) {
+    public void buildAltar(World world, BlockPos pos)
+    {
 
-        if (world.isRemote) return;
+        if (world.isRemote)
+            return;
 
         if (tierToBuild == EnumAltarTier.ONE)
             return;
 
-        for (AltarComponent altarComponent : tierToBuild.getAltarComponents()) {
+        for (AltarComponent altarComponent : tierToBuild.getAltarComponents())
+        {
             BlockPos componentPos = pos.add(altarComponent.getOffset());
             Block blockForComponent = Utils.getBlockForComponent(altarComponent.getComponent());
 
@@ -97,7 +107,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
         ((IBloodAltar) world.getTileEntity(pos)).checkTier();
     }
 
-    public String destroyAltar(EntityPlayer player) {
+    public String destroyAltar(EntityPlayer player)
+    {
         World world = player.worldObj;
         if (world.isRemote)
             return "";
@@ -106,9 +117,12 @@ public class ItemAltarMaker extends Item implements IAltarManipulator {
         BlockPos pos = mop.getBlockPos();
         EnumAltarTier altarTier = BloodAltar.getAltarTier(world, pos);
 
-        if (altarTier.equals(EnumAltarTier.ONE)) return "" + altarTier.toInt();
-        else {
-            for (AltarComponent altarComponent : altarTier.getAltarComponents()) {
+        if (altarTier.equals(EnumAltarTier.ONE))
+            return "" + altarTier.toInt();
+        else
+        {
+            for (AltarComponent altarComponent : altarTier.getAltarComponents())
+            {
                 BlockPos componentPos = pos.add(altarComponent.getOffset());
 
                 world.setBlockToAir(componentPos);
