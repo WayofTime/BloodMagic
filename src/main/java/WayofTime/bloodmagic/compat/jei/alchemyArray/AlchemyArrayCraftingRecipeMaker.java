@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.compat.jei.alchemyArray;
 
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import com.google.common.collect.BiMap;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -13,19 +16,22 @@ public class AlchemyArrayCraftingRecipeMaker {
 
     @Nonnull
     public static List<AlchemyArrayCraftingRecipeJEI> getRecipes() {
-        Map<ItemStack, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> altarMap = AlchemyArrayRecipeRegistry.getRecipes();
+        Map<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> alchemyArrayRecipeMap = AlchemyArrayRecipeRegistry.getRecipes();
 
         ArrayList<AlchemyArrayCraftingRecipeJEI> recipes = new ArrayList<AlchemyArrayCraftingRecipeJEI>();
 
-        for (Map.Entry<ItemStack, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : altarMap.entrySet()) {
+        for (Map.Entry<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : alchemyArrayRecipeMap.entrySet()) {
             ItemStack input = itemStackAlchemyArrayRecipeEntry.getValue().getInputStack();
-            ItemStack catalyst = itemStackAlchemyArrayRecipeEntry.getKey();
+            BiMap<ItemStackWrapper, AlchemyArrayEffect> catalystMap = itemStackAlchemyArrayRecipeEntry.getValue().catalystMap;
 
-            if (itemStackAlchemyArrayRecipeEntry.getValue().getAlchemyArrayEffectForCatalyst(catalyst) instanceof AlchemyArrayEffectCrafting) {
-                ItemStack output =((AlchemyArrayEffectCrafting) itemStackAlchemyArrayRecipeEntry.getValue().getAlchemyArrayEffectForCatalyst(catalyst)).getOutputStack();
+            for(Map.Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet()) {
+                ItemStack catalyst = entry.getKey().toStack();
+                if (AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(input, catalyst) instanceof AlchemyArrayEffectCrafting) {
+                    ItemStack output = ((AlchemyArrayEffectCrafting) itemStackAlchemyArrayRecipeEntry.getValue().getAlchemyArrayEffectForCatalyst(catalyst)).getOutputStack();
 
-                AlchemyArrayCraftingRecipeJEI recipe = new AlchemyArrayCraftingRecipeJEI(input, catalyst, output);
-                recipes.add(recipe);
+                    AlchemyArrayCraftingRecipeJEI recipe = new AlchemyArrayCraftingRecipeJEI(input, catalyst, output);
+                    recipes.add(recipe);
+                }
             }
         }
 

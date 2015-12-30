@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.compat.jei.binding;
 import WayofTime.bloodmagic.compat.jei.BloodMagicRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -11,19 +12,20 @@ import java.util.List;
 public class BindingRecipeJEI extends BloodMagicRecipeWrapper {
 
     @Nonnull
-    private final ItemStack input;
+    private final List<ItemStack> inputs;
 
     @Nonnull
     private final ItemStack output;
 
-    public BindingRecipeJEI(@Nonnull ItemStack input, @Nonnull ItemStack output) {
-        this.input = input;
+    @SuppressWarnings("unchecked")
+    public BindingRecipeJEI(@Nonnull ItemStack input, @Nonnull ItemStack catalyst, @Nonnull ItemStack output) {
+        this.inputs = Arrays.asList(new ItemStack[] {input, catalyst});
         this.output = output;
     }
 
     @Override
     public List getInputs() {
-        return Collections.singletonList(input);
+        return inputs;
     }
 
     @Override

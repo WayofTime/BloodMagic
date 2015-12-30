@@ -191,6 +191,7 @@ chat.BloodMagic.damageSource=%s's soul became too weak
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar
 jei.BloodMagic.recipe.binding=Binding Ritual
+jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
 

@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.registry;
 
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -21,7 +22,7 @@ public class AlchemyArrayRecipeRegistry {
 	public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
 
 	@Getter
-	private static BiMap<ItemStack, AlchemyArrayRecipe> recipes = HashBiMap.create();
+	private static BiMap<ItemStackWrapper, AlchemyArrayRecipe> recipes = HashBiMap.create();
 
 	/**
 	 * General case for creating an AlchemyArrayEffect for a given input.
@@ -40,14 +41,14 @@ public class AlchemyArrayRecipeRegistry {
 	 *            substituted for a special renderer
 	 */
 	public static void registerRecipe(ItemStack inputStack, @Nullable ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
-		for (Entry<ItemStack, AlchemyArrayRecipe> entry : recipes.entrySet()) {
+		for (Entry<ItemStackWrapper, AlchemyArrayRecipe> entry : recipes.entrySet()) {
 			AlchemyArrayRecipe arrayRecipe = entry.getValue();
 			if (arrayRecipe.doesInputMatchRecipe(inputStack)) {
 				AlchemyArrayEffect eff = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
 				if (eff != null) {
 					return; // Recipe already exists!
 				} else {
-					arrayRecipe.catalystMap.put(catalystStack, arrayEffect);
+					arrayRecipe.catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
 					if (circleRenderer != null) {
 						arrayRecipe.circleRenderer = circleRenderer;
 					}
@@ -57,12 +58,12 @@ public class AlchemyArrayRecipeRegistry {
 		}
 
 		if (circleRenderer == null) {
-			recipes.put(inputStack, new AlchemyArrayRecipe(inputStack, catalystStack, arrayEffect, defaultRenderer));
+			recipes.put(ItemStackWrapper.getHolder(inputStack), new AlchemyArrayRecipe(inputStack, catalystStack, arrayEffect, defaultRenderer));
 		} else {
-			recipes.put(inputStack, new AlchemyArrayRecipe(inputStack, catalystStack, arrayEffect, circleRenderer));
+			recipes.put(ItemStackWrapper.getHolder(inputStack), new AlchemyArrayRecipe(inputStack, catalystStack, arrayEffect, circleRenderer));
 		}
 
-		recipes.put(inputStack, new AlchemyArrayRecipe(inputStack, catalystStack, arrayEffect, circleRenderer));
+		recipes.put(ItemStackWrapper.getHolder(inputStack), new AlchemyArrayRecipe(inputStack, catalystStack, arrayEffect, circleRenderer));
 	}
 
 	public static void registerCraftingRecipe(ItemStack inputStack, ItemStack catalystStack, ItemStack outputStack, AlchemyCircleRenderer circleRenderer) {
@@ -96,7 +97,7 @@ public class AlchemyArrayRecipeRegistry {
 		if (circleRenderer == null) {
 			return;
 		}
-		for (Entry<ItemStack, AlchemyArrayRecipe> entry : recipes.entrySet()) {
+		for (Entry<ItemStackWrapper, AlchemyArrayRecipe> entry : recipes.entrySet()) {
 			AlchemyArrayRecipe arrayRecipe = entry.getValue();
 			if (arrayRecipe.doesInputMatchRecipe(inputStack)) {
 				arrayRecipe.circleRenderer = circleRenderer;
@@ -109,9 +110,9 @@ public class AlchemyArrayRecipeRegistry {
 	}
 
 	public static AlchemyArrayEffect getAlchemyArrayEffect(ItemStack inputStack, @Nullable ItemStack catalystStack) {
-		for (Entry<ItemStack, AlchemyArrayRecipe> entry : recipes.entrySet()) {
+		for (Entry<ItemStackWrapper, AlchemyArrayRecipe> entry : recipes.entrySet()) {
 			AlchemyArrayRecipe arrayRecipe = entry.getValue();
-			if (arrayRecipe.doesInputMatchRecipe(inputStack)) {
+			if (ItemStackWrapper.getHolder(arrayRecipe.getInputStack()).equals(ItemStackWrapper.getHolder(inputStack))) {
 				AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
 
 				return effect; // TODO: Decide if a copy should be returned.
@@ -122,7 +123,7 @@ public class AlchemyArrayRecipeRegistry {
 	}
 
 	public static AlchemyCircleRenderer getAlchemyCircleRenderer(ItemStack inputStack) {
-		for (Entry<ItemStack, AlchemyArrayRecipe> entry : recipes.entrySet()) {
+		for (Entry<ItemStackWrapper, AlchemyArrayRecipe> entry : recipes.entrySet()) {
 			AlchemyArrayRecipe arrayRecipe = entry.getValue();
 			if (arrayRecipe.doesInputMatchRecipe(inputStack)) {
 				return arrayRecipe.circleRenderer;
@@ -139,12 +140,12 @@ public class AlchemyArrayRecipeRegistry {
 
 		public AlchemyCircleRenderer circleRenderer;
 		public final ItemStack inputStack;
-		public final BiMap<ItemStack, AlchemyArrayEffect> catalystMap = HashBiMap.create();
+		public final BiMap<ItemStackWrapper, AlchemyArrayEffect> catalystMap = HashBiMap.create();
 
 		public AlchemyArrayRecipe(ItemStack inputStack, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer) {
 			this.inputStack = inputStack;
 			
-			catalystMap.put(catalystStack, arrayEffect);
+			catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
 			
 			this.circleRenderer = circleRenderer;
 		}
@@ -171,8 +172,8 @@ public class AlchemyArrayRecipeRegistry {
 		 * @return
 		 */
 		public AlchemyArrayEffect getAlchemyArrayEffectForCatalyst(@Nullable ItemStack comparedStack) {
-			for (Entry<ItemStack, AlchemyArrayEffect> entry : catalystMap.entrySet()) {
-				ItemStack catalystStack = entry.getKey();
+			for (Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet()) {
+				ItemStack catalystStack = entry.getKey().toStack();
 				if (comparedStack == null && catalystStack == null) {
 					return entry.getValue();
 				}
