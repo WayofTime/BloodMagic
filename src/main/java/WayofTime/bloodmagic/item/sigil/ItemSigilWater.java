@@ -32,7 +32,8 @@ public class ItemSigilWater extends ItemSigilBase
             if (movingobjectposition != null)
             {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
-                if (ret != null) return ret;
+                if (ret != null)
+                    return ret;
 
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
@@ -119,12 +120,10 @@ public class ItemSigilWater extends ItemSigilBase
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid())
         {
             return false;
-        }
-        else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
+        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
         {
             return false;
-        }
-        else
+        } else
         {
             return true;
         }
@@ -139,8 +138,7 @@ public class ItemSigilWater extends ItemSigilBase
         if (!worldIn.isAirBlock(pos) && !flag)
         {
             return false;
-        }
-        else
+        } else
         {
             if (worldIn.provider.doesWaterVaporize())
             {
@@ -153,8 +151,7 @@ public class ItemSigilWater extends ItemSigilBase
                 {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
                 }
-            }
-            else
+            } else
             {
                 if (!worldIn.isRemote && flag && !material.isLiquid())
                 {

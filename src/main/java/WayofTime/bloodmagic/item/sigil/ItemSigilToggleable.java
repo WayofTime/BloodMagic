@@ -29,8 +29,10 @@ public class ItemSigilToggleable extends ItemSigilBase
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         super.addInformation(stack, player, tooltip, advanced);
-        if (getActivated(stack)) tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
-        else tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
+        if (getActivated(stack))
+            tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
+        else
+            tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
     }
 
     @Override
@@ -38,8 +40,10 @@ public class ItemSigilToggleable extends ItemSigilBase
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            if (player.isSneaking()) setActivated(stack, !getActivated(stack));
-            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed())) return stack;
+            if (player.isSneaking())
+                setActivated(stack, !getActivated(stack));
+            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
+                return stack;
         }
 
         return stack;

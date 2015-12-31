@@ -112,11 +112,11 @@ public abstract class Ritual
     }
 
     /**
-     * Used to grab the range of a ritual for a given effect. 
+     * Used to grab the range of a ritual for a given effect.
      * 
      * @param range
      *            - Range that needs to be pulled.
-     * @return - 
+     * @return -
      */
     public AreaDescriptor getBlockRange(String range)
     {
@@ -165,6 +165,6 @@ public abstract class Ritual
     {
         REDSTONE, BREAK_MRS, BREAK_STONE, ACTIVATE, DEACTIVATE, EXPLOSION,
     }
-    
+
     public abstract Ritual getNewCopy();
 }

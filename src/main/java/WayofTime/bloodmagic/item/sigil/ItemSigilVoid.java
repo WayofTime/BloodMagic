@@ -29,7 +29,8 @@ public class ItemSigilVoid extends ItemSigilBase
             if (movingobjectposition != null)
             {
                 ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
-                if (ret != null) return ret;
+                if (ret != null)
+                    return ret;
 
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
@@ -56,8 +57,7 @@ public class ItemSigilVoid extends ItemSigilBase
                         return stack;
                     }
                 }
-            }
-            else
+            } else
             {
                 return stack;
             }

@@ -32,7 +32,7 @@ public class RitualLava extends Ritual
 
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
-        
+
         AreaDescriptor lavaRange = getBlockRange(LAVA_RANGE);
 
         for (BlockPos newPos : lavaRange.getContainedPositions(masterRitualStone.getPos()))
@@ -42,13 +42,13 @@ public class RitualLava extends Ritual
                 world.setBlockState(newPos, Blocks.lava.getDefaultState());
                 totalEffects++;
             }
-            
+
             if (totalEffects >= maxEffects)
             {
                 break;
             }
         }
-        
+
         network.syphon(getRefreshCost() * totalEffects);
     }
 
@@ -73,7 +73,7 @@ public class RitualLava extends Ritual
 
         return components;
     }
-    
+
     @Override
     public Ritual getNewCopy()
     {

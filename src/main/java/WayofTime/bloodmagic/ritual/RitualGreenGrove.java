@@ -43,7 +43,7 @@ public class RitualGreenGrove extends Ritual
 
         AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
 
-        for(BlockPos newPos : growingRange.getContainedPositions(masterRitualStone.getPos()))
+        for (BlockPos newPos : growingRange.getContainedPositions(masterRitualStone.getPos()))
         {
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
@@ -84,7 +84,7 @@ public class RitualGreenGrove extends Ritual
 
         return components;
     }
-    
+
     @Override
     public Ritual getNewCopy()
     {

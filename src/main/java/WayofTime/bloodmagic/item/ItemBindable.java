@@ -37,13 +37,13 @@ public class ItemBindable extends Item implements IBindable
 
     public static boolean syphonNetwork(ItemStack stack, EntityPlayer player, int lpUsed)
     {
-        if (player == null) return false;
+        if (player == null)
+            return false;
 
         if (!player.worldObj.isRemote)
         {
             return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player, player.worldObj), lpUsed);
-        }
-        else
+        } else
         {
             double posX = player.posX;
             double posY = player.posY;
@@ -77,10 +77,10 @@ public class ItemBindable extends Item implements IBindable
                     user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate an attack
                     user.setHealth(user.getHealth() - 1);
 
-                    if (user.getHealth() <= 0.0005f) user.onDeath(BloodMagicAPI.getDamageSource());
+                    if (user.getHealth() <= 0.0005f)
+                        user.onDeath(BloodMagicAPI.getDamageSource());
                 }
-            }
-            else if (lpSyphoned >= 100)
+            } else if (lpSyphoned >= 100)
             {
                 if (!user.capabilities.isCreativeMode)
                 {

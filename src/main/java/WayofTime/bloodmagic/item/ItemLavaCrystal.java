@@ -49,16 +49,17 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
             if (syphonNetwork(fuel, getLPUsed()))
             {
                 return 1;
-            }
-            else
+            } else
             {
                 NBTTagCompound tag = fuel.getTagCompound();
 
                 if (tag == null || MinecraftServer.getServer() == null || MinecraftServer.getServer().getConfigurationManager() == null)
                     return 0;
 
-                if (Strings.isNullOrEmpty(((ItemLavaCrystal) fuelItem).getBindableOwner(fuel))) return 0;
-                else hurtPlayer(PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel)), getLPUsed());
+                if (Strings.isNullOrEmpty(((ItemLavaCrystal) fuelItem).getBindableOwner(fuel)))
+                    return 0;
+                else
+                    hurtPlayer(PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel)), getLPUsed());
 
                 return 0;
             }

@@ -35,7 +35,7 @@ public class ModPotions
         boost = new PotionBloodMagic("Boost", new ResourceLocation("boost")
         // new ResourceLocation(resourceLocation +
         // boost.getName().toLowerCase())
-        , false, 0, 0, 0);
+                , false, 0, 0, 0);
         whirlwind = new PotionBloodMagic("Whirlwind", new ResourceLocation("whirlwind"), false, 0, 0, 0);
         planarBinding = new PotionBloodMagic("Planar Binding", new ResourceLocation("planarBinding"), false, 0, 0, 0);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new

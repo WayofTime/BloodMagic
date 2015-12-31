@@ -39,12 +39,12 @@ public class AreaDescriptor
         {
             setOffsets(minimumOffset, maximumOffset);
         }
-       
+
         public Rectangle(BlockPos minimumOffset, int sizeX, int sizeY, int sizeZ)
         {
             this(minimumOffset, minimumOffset.add(sizeX, sizeY, sizeZ));
         }
-        
+
         public Rectangle(BlockPos minimumOffset, int size)
         {
             this(minimumOffset, size, size, size);

@@ -30,7 +30,8 @@ public class ItemSigilBloodLight extends ItemSigilBase
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote) return false;
+        if (world.isRemote)
+            return false;
 
         if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
         {

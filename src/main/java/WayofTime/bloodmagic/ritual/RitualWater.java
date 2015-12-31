@@ -32,7 +32,7 @@ public class RitualWater extends Ritual
 
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
-        
+
         AreaDescriptor waterRange = getBlockRange(WATER_RANGE);
 
         for (BlockPos newPos : waterRange.getContainedPositions(masterRitualStone.getPos()))
@@ -42,13 +42,13 @@ public class RitualWater extends Ritual
                 world.setBlockState(newPos, Blocks.water.getDefaultState());
                 totalEffects++;
             }
-            
+
             if (totalEffects >= maxEffects)
             {
                 break;
             }
         }
-        
+
         network.syphon(getRefreshCost() * totalEffects);
     }
 
@@ -73,7 +73,7 @@ public class RitualWater extends Ritual
 
         return components;
     }
-    
+
     @Override
     public Ritual getNewCopy()
     {

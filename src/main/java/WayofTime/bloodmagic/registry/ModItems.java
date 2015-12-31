@@ -104,7 +104,7 @@ public class ModItems
         daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice());
 
         ritualDiviner = registerItem(new ItemRitualDiviner());
-        
+
         lavaCrystal = registerItem(new ItemLavaCrystal());
         GameRegistry.registerFuelHandler(new ItemLavaCrystal());
 
