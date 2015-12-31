@@ -85,7 +85,6 @@ public class ItemSacrificialDagger extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-
         if (PlayerHelper.isFakePlayer(player))
             return stack;
 

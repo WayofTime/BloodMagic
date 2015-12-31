@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -22,7 +23,6 @@ import java.util.List;
 
 public class ItemTelepositionFocus extends ItemBindable
 {
-
     public static String[] names = { "weak", "enhanced", "reinforced", "demonic" };
 
     public ItemTelepositionFocus()
@@ -53,8 +53,17 @@ public class ItemTelepositionFocus extends ItemBindable
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
         if (BindableHelper.checkAndSetItemOwner(stack, player))
+        {
             if (player.isSneaking())
-                return stack;
+            {
+                MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
+
+                if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                {
+                    setBlockPos(stack, world, mop.getBlockPos());
+                }
+            }
+        }
 
         return stack;
     }
@@ -67,11 +76,15 @@ public class ItemTelepositionFocus extends ItemBindable
 
         super.addInformation(stack, player, tooltip, advanced);
 
+        stack = NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
         BlockPos coords = getBlockPos(stack);
 
-        tooltip.add(String.format(StatCollector.translateToLocal("tooltip.alchemy.coords"), coords.getX(), coords.getY(), coords.getZ()));
-        tooltip.add(String.format(StatCollector.translateToLocal("tooltip.alchemy.dimension"), tag.getInteger(Constants.NBT.DIMENSION_ID)));
+        if (coords != null && tag != null)
+        {
+            tooltip.add(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.telepositionFocus.coords"), coords.getX(), coords.getY(), coords.getZ()));
+            tooltip.add(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.telepositionFocus.dimension"), tag.getInteger(Constants.NBT.DIMENSION_ID)));
+        }
     }
 
     public World getWorld(ItemStack stack)
