@@ -43,7 +43,8 @@ public class RitualRegistry
 
     public static Ritual getRitualForId(String id)
     {
-        return registry.get(id);
+        Ritual ritual = registry.get(id);
+        return ritual != null ? ritual.getNewCopy() : null;
     }
 
     public static String getIdForRitual(Ritual ritual)

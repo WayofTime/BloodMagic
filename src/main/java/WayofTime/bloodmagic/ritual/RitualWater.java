@@ -30,16 +30,26 @@ public class RitualWater extends Ritual
         if (currentEssence < getRefreshCost())
             return;
 
-        AreaDescriptor lavaRange = getBlockRange(WATER_RANGE);
+        int maxEffects = currentEssence / getRefreshCost();
+        int totalEffects = 0;
+        
+        AreaDescriptor waterRange = getBlockRange(WATER_RANGE);
 
-        for (BlockPos newPos : lavaRange.getContainedPositions(masterRitualStone.getPos()))
+        for (BlockPos newPos : waterRange.getContainedPositions(masterRitualStone.getPos()))
         {
             if (world.isAirBlock(newPos))
             {
                 world.setBlockState(newPos, Blocks.water.getDefaultState());
-                network.syphon(getRefreshCost());
+                totalEffects++;
+            }
+            
+            if (totalEffects >= maxEffects)
+            {
+                break;
             }
         }
+        
+        network.syphon(getRefreshCost() * totalEffects);
     }
 
     @Override
@@ -62,5 +72,11 @@ public class RitualWater extends Ritual
         this.addCornerRunes(components, 1, 0, EnumRuneType.WATER);
 
         return components;
+    }
+    
+    @Override
+    public Ritual getNewCopy()
+    {
+        return new RitualWater();
     }
 }
