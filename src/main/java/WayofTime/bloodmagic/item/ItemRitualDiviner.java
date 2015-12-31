@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,6 +36,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemRitualDiviner extends Item
 {
+    public static String[] names = { "normal", "dusk", "dawn" };
 
     public static final String tooltipBase = "tooltip.BloodMagic.diviner.";
 
@@ -45,10 +48,28 @@ public class ItemRitualDiviner extends Item
         setMaxStackSize(1);
     }
 
+    @Override
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
+    {
+        for (int i = 0; i < names.length; i++)
+            list.add(new ItemStack(id, 1, i));
+    }
+
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (addRuneToRitual(stack, world, pos, player))
         {
+            if (world.isRemote)
+            {
+                spawnParticles(world, pos.up(), 15);
+            }
             // TODO: Have the diviner automagically build the ritual
         }
 
@@ -123,6 +144,11 @@ public class ItemRitualDiviner extends Item
     // TODO: Make this work for any IRitualStone
     public boolean consumeStone(ItemStack stack, World world, EntityPlayer player)
     {
+        if (player.capabilities.isCreativeMode)
+        {
+            return true;
+        }
+
         ItemStack[] inventory = player.inventory.mainInventory;
         for (int i = 0; i < inventory.length; i++)
         {
@@ -330,6 +356,12 @@ public class ItemRitualDiviner extends Item
 
         NBTTagCompound tag = stack.getTagCompound();
 
+        int dir = tag.getInteger(Constants.NBT.DIRECTION);
+        if (dir == 0)
+        {
+            return EnumFacing.NORTH;
+        }
+
         return EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
     }
 
@@ -440,6 +472,20 @@ public class ItemRitualDiviner extends Item
 
     public boolean canDivinerPerformRitual(ItemStack stack, Ritual ritual)
     {
+        if (ritual == null)
+        {
+            return false;
+        }
+
+        ArrayList<RitualComponent> components = ritual.getComponents();
+        for (RitualComponent component : components)
+        {
+            if (!canPlaceRitualStone(component.getRuneType(), stack))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -493,5 +539,32 @@ public class ItemRitualDiviner extends Item
         }
 
         return false;
+    }
+
+    public static void spawnParticles(World worldIn, BlockPos pos, int amount)
+    {
+        Block block = worldIn.getBlockState(pos).getBlock();
+
+        if (block.isAir(worldIn, pos))
+        {
+            block.setBlockBoundsBasedOnState(worldIn, pos);
+
+            for (int i = 0; i < amount; ++i)
+            {
+                double d0 = itemRand.nextGaussian() * 0.02D;
+                double d1 = itemRand.nextGaussian() * 0.02D;
+                double d2 = itemRand.nextGaussian() * 0.02D;
+                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat() * block.getBlockBoundsMaxY(), (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
+            }
+        } else
+        {
+            for (int i1 = 0; i1 < amount; ++i1)
+            {
+                double d0 = itemRand.nextGaussian() * 0.02D;
+                double d1 = itemRand.nextGaussian() * 0.02D;
+                double d2 = itemRand.nextGaussian() * 0.02D;
+                worldIn.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, (double) ((float) pos.getX() + itemRand.nextFloat()), (double) pos.getY() + (double) itemRand.nextFloat() * 1.0f, (double) ((float) pos.getZ() + itemRand.nextFloat()), d0, d1, d2, new int[0]);
+            }
+        }
     }
 }

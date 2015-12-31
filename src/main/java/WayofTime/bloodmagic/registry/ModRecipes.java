@@ -41,6 +41,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ItemStack(ModItems.packSelfSacrifice), "aba", "cdc", "aea", 'a', Blocks.glass, 'b', Items.bucket, 'c', Items.flint, 'd', Items.leather_chestplate, 'e', ModItems.slate);
         GameRegistry.addRecipe(new ItemStack(ModItems.packSacrifice), "aba", "cdc", "aea", 'a', Blocks.glass, 'b', Items.bucket, 'c', Items.iron_ingot, 'd', Items.leather_chestplate, 'e', ModItems.slate);
         GameRegistry.addRecipe(new ItemStack(ModItems.ritualDiviner), "dfd", "ase", "dwd", 'f', EnumRuneType.FIRE.getScribeStack(), 'a', EnumRuneType.AIR.getScribeStack(), 'w', EnumRuneType.WATER.getScribeStack(), 'e', EnumRuneType.EARTH.getScribeStack(), 'd', new ItemStack(Items.diamond), 's', new ItemStack(Items.stick));
+        GameRegistry.addRecipe(new ItemStack(ModItems.ritualDiviner, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(ModItems.slate, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(ModItems.ritualDiviner));
         GameRegistry.addRecipe(new ItemStack(ModBlocks.bloodStoneBrick), "aa", "aa", 'a', new ItemStack(ModBlocks.bloodStoneBrick, 1, 1));
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), Blocks.stone, ModItems.bloodShard);
 

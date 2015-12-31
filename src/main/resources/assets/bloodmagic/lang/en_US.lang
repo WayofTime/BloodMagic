@@ -100,7 +100,9 @@ item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
 
 item.BloodMagic.altarMaker.name=Altar Maker
 
-item.BloodMagic.ritualDiviner.name=Ritual Diviner
+item.BloodMagic.ritualDivinernormal.name=Ritual Diviner
+item.BloodMagic.ritualDivinerdusk.name=Ritual Diviner [Dusk]
+item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -207,8 +209,9 @@ tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
 ritual.BloodMagic.lavaRitual=Serenade of the Nether
-ritual.BloodMagic.greenGrove=Ritual of the Green Grove
+ritual.BloodMagic.greenGroveRitual=Ritual of the Green Grove
 ritual.BloodMagic.jumpRitual=Ritual of the High Jump
+ritual.BloodMagic.wellOfSufferingRitual=Well of Suffering
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

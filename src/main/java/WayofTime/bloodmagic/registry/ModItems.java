@@ -182,6 +182,8 @@ public class ModItems
         renderHelper.itemRender(daggerOfSacrifice);
 
         renderHelper.itemRender(ritualDiviner, 0);
+        renderHelper.itemRender(ritualDiviner, 1);
+        renderHelper.itemRender(ritualDiviner, 2);
 
         renderHelper.itemRender(lavaCrystal);
 
