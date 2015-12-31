@@ -63,6 +63,7 @@ public class ModItems
     public static Item sigilCompression;
 
     public static Item itemComponent;
+    public static Item telepositionFocus;
 
     public static Item bloodShard;
 
@@ -131,6 +132,7 @@ public class ModItems
         sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance());
 
         itemComponent = registerItem(new ItemComponent());
+        telepositionFocus = registerItem(new ItemTelepositionFocus());
 
         bloodShard = registerItem(new ItemBloodShard());
 
@@ -222,6 +224,8 @@ public class ModItems
 
         for (int i = 0; i < ItemComponent.getNames().size(); i++)
             renderHelper.itemRender(itemComponent, i);
+        for (int i = 0; i < ItemTelepositionFocus.names.length; i++)
+            renderHelper.itemRender(telepositionFocus, i);
 
         renderHelper.itemRender(bloodShard, 0);
         renderHelper.itemRender(bloodShard, 1);
