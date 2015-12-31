@@ -33,11 +33,12 @@ public class RitualEffectMagnetic extends RitualEffect
     
     public static boolean isBlockOre(Block block, int meta)
     {
-        if (block == null || Item.getItemFromBlock(block) == null)
-            return false;
-        
+        //Special case for lit redstone ore
         if (block instanceof BlockOre || block instanceof BlockRedstoneOre)
             return true;
+        
+        if (block == null || Item.getItemFromBlock(block) == null)
+            return false;
         
         ItemType type = new ItemType(block, meta);
         Boolean result = oreBlockCache.get(type);
