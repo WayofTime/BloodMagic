@@ -31,7 +31,7 @@ public abstract class Ritual
     private final RitualRenderer renderer;
     private final String unlocalizedName;
 
-    private final Map<String, AreaDescriptor> modableRangeMap = new HashMap<String, AreaDescriptor>();
+    protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<String, AreaDescriptor>();
 
     /**
      * @param name
@@ -165,4 +165,6 @@ public abstract class Ritual
     {
         REDSTONE, BREAK_MRS, BREAK_STONE, ACTIVATE, DEACTIVATE, EXPLOSION,
     }
+    
+    public abstract Ritual getNewCopy();
 }

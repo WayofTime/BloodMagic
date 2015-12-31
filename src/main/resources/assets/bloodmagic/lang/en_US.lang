@@ -200,9 +200,15 @@ tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
 tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
 
+tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%d, %d, %d)
+tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
+
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
+ritual.BloodMagic.lavaRitual=Serenade of the Nether
+ritual.BloodMagic.greenGrove=Ritual of the Green Grove
+ritual.BloodMagic.jumpRitual=Ritual of the High Jump
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

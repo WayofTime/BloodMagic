@@ -84,4 +84,10 @@ public class RitualGreenGrove extends Ritual
 
         return components;
     }
+    
+    @Override
+    public Ritual getNewCopy()
+    {
+        return new RitualGreenGrove();
+    }
 }

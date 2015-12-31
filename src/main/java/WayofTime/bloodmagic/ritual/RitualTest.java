@@ -60,4 +60,10 @@ public class RitualTest extends Ritual
 
         return components;
     }
+    
+    @Override
+    public Ritual getNewCopy()
+    {
+        return new RitualTest();
+    }
 }
