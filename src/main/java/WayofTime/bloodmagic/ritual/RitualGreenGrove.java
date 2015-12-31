@@ -20,7 +20,6 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class RitualGreenGrove extends Ritual
 {
-
     public static final String GROW_RANGE = "growing";
 
     public RitualGreenGrove()

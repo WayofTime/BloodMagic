@@ -2,23 +2,22 @@ package WayofTime.bloodmagic.ritual;
 
 import java.util.ArrayList;
 
+import WayofTime.bloodmagic.api.ritual.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class RitualLava extends Ritual
 {
+    public static final String LAVA_RANGE = "lavaRange";
 
     public RitualLava()
     {
         super("ritualLava", 0, 10000, "ritual." + Constants.Mod.MODID + ".lavaRitual");
+        addBlockRange(LAVA_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), new BlockPos(0, 1, 0)));
     }
 
     @Override
@@ -31,11 +30,15 @@ public class RitualLava extends Ritual
         if (currentEssence < getRefreshCost())
             return;
 
-        BlockPos pos = masterRitualStone.getPos().up();
-        if (world.isAirBlock(pos))
+        AreaDescriptor lavaRange = getBlockRange(LAVA_RANGE);
+
+        for (BlockPos newPos : lavaRange.getContainedPositions(masterRitualStone.getPos()))
         {
-            world.setBlockState(pos, Blocks.lava.getDefaultState());
-            network.syphon(getRefreshCost());
+            if (world.isAirBlock(newPos))
+            {
+                world.setBlockState(newPos, Blocks.lava.getDefaultState());
+                network.syphon(getRefreshCost());
+            }
         }
     }
 

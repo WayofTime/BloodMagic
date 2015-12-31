@@ -23,11 +23,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler
 {
-
     @SubscribeEvent
     public void onEntityDeath(LivingHurtEvent event)
     {
-
         int chestIndex = 2;
 
         if (event.source.getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.source.getEntity()))
@@ -77,18 +75,6 @@ public class EventHandler
         {
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getCurrentEquippedItem().getItem();
             ChatUtil.sendNoSpam(event.entityPlayer, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.entityPlayer)));
-        }
-    }
-
-    @SubscribeEvent
-    public void onBlockBreak(BlockEvent.BreakEvent event)
-    {
-        if (!event.world.isRemote && event.getPlayer() != null)
-        {
-            if (event.getPlayer().capabilities.isCreativeMode && event.getPlayer().getCurrentEquippedItem() != null && event.getPlayer().getCurrentEquippedItem().getItem() instanceof ItemBoundSword)
-            {
-                event.setCanceled(true);
-            }
         }
     }
 }
