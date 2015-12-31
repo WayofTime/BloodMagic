@@ -17,6 +17,7 @@ public class ModRituals
     public static Ritual lavaRitual;
     public static Ritual greenGroveRitual;
     public static Ritual jumpRitual;
+    public static Ritual sufferingRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -30,12 +31,14 @@ public class ModRituals
         lavaRitual = new RitualLava();
         greenGroveRitual = new RitualGreenGrove();
         jumpRitual = new RitualJumping();
+        sufferingRitual = new RitualWellOfSuffering();
 
         RitualRegistry.registerRitual(testRitual, testRitual.getName());
         RitualRegistry.registerRitual(waterRitual, waterRitual.getName());
         RitualRegistry.registerRitual(lavaRitual, lavaRitual.getName());
         RitualRegistry.registerRitual(greenGroveRitual, greenGroveRitual.getName());
         RitualRegistry.registerRitual(jumpRitual, jumpRitual.getName());
+        RitualRegistry.registerRitual(sufferingRitual, sufferingRitual.getName());
     }
 
     public static void initImperfectRituals()

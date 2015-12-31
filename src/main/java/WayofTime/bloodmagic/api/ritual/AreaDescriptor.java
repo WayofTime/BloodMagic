@@ -7,7 +7,7 @@ import java.util.List;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 
-public class AreaDescriptor
+public abstract class AreaDescriptor
 {
     public List<BlockPos> getContainedPositions(BlockPos pos)
     {
@@ -19,6 +19,10 @@ public class AreaDescriptor
         return null;
     }
 
+    public abstract void resetCache();
+
+    public abstract boolean isWithinArea(BlockPos pos);
+
     public static class Rectangle extends AreaDescriptor
     {
         private BlockPos minimumOffset;
@@ -26,6 +30,8 @@ public class AreaDescriptor
 
         private ArrayList<BlockPos> blockPosCache = new ArrayList<BlockPos>();
         private BlockPos cachedPosition = new BlockPos(0, 0, 0);
+
+        private boolean cache = true;
 
         /**
          * This constructor takes in the minimum and maximum BlockPos. The
@@ -53,7 +59,7 @@ public class AreaDescriptor
         @Override
         public List<BlockPos> getContainedPositions(BlockPos pos)
         {
-            if (!pos.equals(cachedPosition) || blockPosCache.isEmpty())
+            if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty())
             {
                 ArrayList<BlockPos> posList = new ArrayList<BlockPos>();
 
@@ -94,6 +100,22 @@ public class AreaDescriptor
             this.minimumOffset = new BlockPos(Math.min(offset1.getX(), offset2.getX()), Math.min(offset1.getY(), offset2.getY()), Math.min(offset1.getZ(), offset2.getZ()));
             this.maximumOffset = new BlockPos(Math.max(offset1.getX(), offset2.getX()), Math.max(offset1.getY(), offset2.getY()), Math.max(offset1.getZ(), offset2.getZ()));
             blockPosCache = new ArrayList<BlockPos>();
+        }
+
+        @Override
+        public void resetCache()
+        {
+            this.blockPosCache = new ArrayList<BlockPos>();
+        }
+
+        @Override
+        public boolean isWithinArea(BlockPos pos)
+        {
+            int x = pos.getX();
+            int y = pos.getY();
+            int z = pos.getZ();
+
+            return x >= minimumOffset.getX() && x < maximumOffset.getX() && y >= minimumOffset.getY() && y < maximumOffset.getY() && z >= minimumOffset.getZ() && z < maximumOffset.getZ();
         }
     }
 }
