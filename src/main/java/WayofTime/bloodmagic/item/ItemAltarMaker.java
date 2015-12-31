@@ -26,7 +26,6 @@ import java.util.List;
 
 public class ItemAltarMaker extends Item implements IAltarManipulator
 {
-
     private EnumAltarTier tierToBuild = EnumAltarTier.ONE;
 
     public ItemAltarMaker()
@@ -72,7 +71,6 @@ public class ItemAltarMaker extends Item implements IAltarManipulator
 
         if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar)
         {
-
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.building", tierToBuild));
             buildAltar(world, mop.getBlockPos());
 
@@ -89,7 +87,6 @@ public class ItemAltarMaker extends Item implements IAltarManipulator
 
     public void buildAltar(World world, BlockPos pos)
     {
-
         if (world.isRemote)
             return;
 
