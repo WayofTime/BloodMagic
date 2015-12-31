@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.ritual;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.util.AxisAlignedBB;
@@ -48,13 +49,12 @@ public class AreaDescriptor
                         }
                     }
                 }
-                
+
                 blockPosCache = posList;
                 cachedPosition = pos;
             }
-            
 
-            return blockPosCache;
+            return Collections.unmodifiableList(blockPosCache);
         }
 
         @Override
