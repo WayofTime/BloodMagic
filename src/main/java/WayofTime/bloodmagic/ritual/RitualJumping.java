@@ -1,20 +1,21 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import net.minecraft.entity.Entity;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class RitualJumping extends Ritual
 {
@@ -36,37 +37,49 @@ public class RitualJumping extends Ritual
         if (currentEssence < getRefreshCost())
             return;
 
+        int maxEffects = currentEssence / getRefreshCost();
+        int totalEffects = 0;
+
         AreaDescriptor jumpRange = getBlockRange(JUMP_RANGE);
         List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, jumpRange.getAABB(masterRitualStone.getPos()));
         if (entities != null)
         {
             for (EntityLivingBase entity : entities)
             {
-                if (entity.isSneaking())
-                    continue;
+                if (totalEffects >= maxEffects)
+                {
+                    break;
+                }
 
                 double motionY = 1.5;
 
                 if (entity instanceof EntityPlayer && entity instanceof EntityPlayerMP)
                 {
-                    //TODO Packet handlers if needed
-//                    BloodMagicPacketHandler.INSTANCE.sendTo();
-                    ((EntityPlayerMP) entity).motionY = motionY;
                     ((EntityPlayerMP) entity).fallDistance = 0;
-                }
-                else
+                    if (entity.isSneaking())
+                        continue;
+                    // TODO Packet handlers if needed
+                    // BloodMagicPacketHandler.INSTANCE.sendTo();
+                    ((EntityPlayerMP) entity).motionY = motionY;
+                    totalEffects++;
+                } else
                 {
-                    entity.motionY = motionY;
                     entity.fallDistance = 0;
+                    if (entity.isSneaking())
+                        continue;
+                    entity.motionY = motionY;
+                    totalEffects++;
                 }
             }
         }
+
+        network.syphon(getRefreshCost() * totalEffects);
     }
 
     @Override
     public int getRefreshTime()
     {
-        return 20;
+        return 1;
     }
 
     @Override
@@ -84,5 +97,11 @@ public class RitualJumping extends Ritual
             this.addCornerRunes(components, 1, i, EnumRuneType.AIR);
 
         return components;
+    }
+
+    @Override
+    public Ritual getNewCopy()
+    {
+        return new RitualJumping();
     }
 }

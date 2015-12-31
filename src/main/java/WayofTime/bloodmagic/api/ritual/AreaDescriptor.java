@@ -60,7 +60,7 @@ public class AreaDescriptor
         @Override
         public AxisAlignedBB getAABB(BlockPos pos)
         {
-            AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset, maximumOffset);
+            AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset.getX(), minimumOffset.getY(), minimumOffset.getZ(), maximumOffset.getX() + 1, maximumOffset.getY() + 1, maximumOffset.getZ() + 1);
             return tempAABB.offset(pos.getX(), pos.getY(), pos.getZ());
         }
 
