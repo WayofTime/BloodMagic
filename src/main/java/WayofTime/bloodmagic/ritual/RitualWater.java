@@ -17,7 +17,7 @@ public class RitualWater extends Ritual
     public RitualWater()
     {
         super("ritualWater", 0, 500, "ritual." + Constants.Mod.MODID + ".waterRitual");
-        addBlockRange(WATER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), new BlockPos(0, 1, 0)));
+        addBlockRange(WATER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
     }
 
     @Override

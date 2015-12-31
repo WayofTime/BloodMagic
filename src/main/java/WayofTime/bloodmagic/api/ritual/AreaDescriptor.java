@@ -21,14 +21,32 @@ public class AreaDescriptor
     public static class Rectangle extends AreaDescriptor
     {
         private BlockPos minimumOffset;
-        private BlockPos maximumOffset;
+        private BlockPos maximumOffset; // Non-inclusive maximum offset.
 
         private ArrayList<BlockPos> blockPosCache = new ArrayList<BlockPos>();
         private BlockPos cachedPosition = new BlockPos(0, 0, 0);
 
+        /**
+         * This constructor takes in the minimum and maximum BlockPos. The
+         * maximum offset is non-inclusive, meaning if you pass in (0,0,0) and
+         * (1,1,1), calling getContainedPositions() will only give (0,0,0).
+         * 
+         * @param minimumOffset
+         * @param maximumOffset
+         */
         public Rectangle(BlockPos minimumOffset, BlockPos maximumOffset)
         {
             setOffsets(minimumOffset, maximumOffset);
+        }
+       
+        public Rectangle(BlockPos minimumOffset, int sizeX, int sizeY, int sizeZ)
+        {
+            this(minimumOffset, minimumOffset.add(sizeX, sizeY, sizeZ));
+        }
+        
+        public Rectangle(BlockPos minimumOffset, int size)
+        {
+            this(minimumOffset, size, size, size);
         }
 
         @Override
@@ -38,21 +56,20 @@ public class AreaDescriptor
             {
                 ArrayList<BlockPos> posList = new ArrayList<BlockPos>();
 
-                for (int i = minimumOffset.getX(); i <= maximumOffset.getX(); i++)
+                for (int i = minimumOffset.getX(); i < maximumOffset.getX(); i++)
                 {
-                    for (int j = minimumOffset.getY(); j <= maximumOffset.getY(); j++)
+                    for (int j = minimumOffset.getY(); j < maximumOffset.getY(); j++)
                     {
-                        for (int k = minimumOffset.getZ(); k <= maximumOffset.getZ(); k++)
+                        for (int k = minimumOffset.getZ(); k < maximumOffset.getZ(); k++)
                         {
                             posList.add(pos.add(i, j, k));
                         }
                     }
                 }
-                
+
                 blockPosCache = posList;
                 cachedPosition = pos;
             }
-            
 
             return blockPosCache;
         }
@@ -60,7 +77,7 @@ public class AreaDescriptor
         @Override
         public AxisAlignedBB getAABB(BlockPos pos)
         {
-            AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset.getX(), minimumOffset.getY(), minimumOffset.getZ(), maximumOffset.getX() + 1, maximumOffset.getY() + 1, maximumOffset.getZ() + 1);
+            AxisAlignedBB tempAABB = new AxisAlignedBB(minimumOffset, maximumOffset);
             return tempAABB.offset(pos.getX(), pos.getY(), pos.getZ());
         }
 
