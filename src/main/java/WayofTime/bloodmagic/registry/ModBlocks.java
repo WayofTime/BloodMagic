@@ -70,16 +70,11 @@ public class ModBlocks
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         renderHelper.fluidRender(lifeEssence);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 2);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 3);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 4);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 5);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 6);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 7);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 8);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), 9);
+        for (int i = 0; i < BlockBloodRune.names.length; i++)
+        {
+            renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), i);
+        }
+
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 0);

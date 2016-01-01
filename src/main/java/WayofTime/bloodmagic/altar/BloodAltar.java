@@ -62,6 +62,11 @@ public class BloodAltar
     private int lockdownDuration;
     private int demonBloodDuration;
 
+    private int totalCharge = 0; //TODO save
+    private int chargingRate = 0;
+    private int chargingFrequency = 0;
+    private int maxCharge = 0;
+
     private int cooldownAfterCrafting = 500;
 
     private ItemStack result;
@@ -181,6 +186,10 @@ public class BloodAltar
                     case 9:
                         upgrades.addAcceleration();
                         break;
+
+                    case 10:
+                        upgrades.addCharging();
+                        break;
                     }
                 }
             }
@@ -228,6 +237,10 @@ public class BloodAltar
         accelerationUpgrades = tagCompound.getInteger(Constants.NBT.ALTAR_ACCELERATION_UPGRADES);
         demonBloodDuration = tagCompound.getInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION);
         cooldownAfterCrafting = tagCompound.getInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING);
+        chargingRate = tagCompound.getInteger(Constants.NBT.ALTAR_CHARGE_RATE);
+        chargingFrequency = tagCompound.getInteger(Constants.NBT.ALTAR_CHARGE_FREQUENCY);
+        totalCharge = tagCompound.getInteger(Constants.NBT.ALTAR_TOTAL_CHARGE);
+        maxCharge = tagCompound.getInteger(Constants.NBT.ALTAR_MAX_CHARGE);
     }
 
     public void writeToNBT(NBTTagCompound tagCompound)
@@ -267,6 +280,10 @@ public class BloodAltar
         tagCompound.setInteger(Constants.NBT.ALTAR_ACCELERATION_UPGRADES, accelerationUpgrades);
         tagCompound.setInteger(Constants.NBT.ALTAR_DEMON_BLOOD_DURATION, demonBloodDuration);
         tagCompound.setInteger(Constants.NBT.ALTAR_COOLDOWN_AFTER_CRAFTING, cooldownAfterCrafting);
+        tagCompound.setInteger(Constants.NBT.ALTAR_CHARGE_RATE, chargingRate);
+        tagCompound.setInteger(Constants.NBT.ALTAR_CHARGE_FREQUENCY, chargingFrequency);
+        tagCompound.setInteger(Constants.NBT.ALTAR_TOTAL_CHARGE, totalCharge);
+        tagCompound.setInteger(Constants.NBT.ALTAR_MAX_CHARGE, maxCharge);
     }
 
     public void startCycle()
@@ -276,7 +293,7 @@ public class BloodAltar
 
         checkTier();
 
-        if (fluid == null || fluid.amount <= 0)
+        if ((fluid == null || fluid.amount <= 0) && totalCharge <= 0)
             return;
 
         if (!isActive)
@@ -341,6 +358,14 @@ public class BloodAltar
             this.fluid.amount -= fluidOutputted;
         }
 
+        if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
+        {
+            int chargeInputted = Math.min(chargingRate, this.fluid.amount);
+            chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
+            totalCharge += chargeInputted;
+            this.fluid.amount -= chargeInputted;
+        }
+
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
             startCycle();
 
@@ -372,9 +397,24 @@ public class BloodAltar
 
         if (!canBeFilled)
         {
+            boolean hasOperated = false;
+            int stackSize = tileAltar.getStackInSlot(0).stackSize;
+
+            if (totalCharge > 0)
+            {
+                System.out.println("Working...");
+                System.out.println("Total charge: " + totalCharge);
+
+                int chargeDrained = Math.min(liquidRequired * stackSize - progress, totalCharge);
+
+                totalCharge -= chargeDrained;
+                progress += chargeDrained;
+                System.out.println("Progress: " + progress);
+
+                hasOperated = true;
+            }
             if (fluid != null && fluid.amount >= 1)
             {
-                int stackSize = tileAltar.getStackInSlot(0).stackSize;
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
                 if (liquidDrained > (liquidRequired * stackSize - progress))
@@ -383,9 +423,21 @@ public class BloodAltar
                 fluid.amount = fluid.amount - liquidDrained;
                 progress += liquidDrained;
 
+                hasOperated = true;
+
                 if (internalCounter % 4 == 0)
                     world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
 
+            } else if (!hasOperated && progress > 0)
+            {
+                progress -= (int) (efficiencyMultiplier * drainRate);
+
+                if (internalCounter % 2 == 0)
+                    world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
+            }
+
+            if (hasOperated)
+            {
                 if (progress >= liquidRequired * stackSize)
                 {
                     ItemStack result = this.result;
@@ -401,12 +453,6 @@ public class BloodAltar
 
                     this.isActive = false;
                 }
-            } else if (progress > 0)
-            {
-                progress -= (int) (efficiencyMultiplier * drainRate);
-
-                if (internalCounter % 2 == 0)
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
             }
         } else
         {
@@ -461,6 +507,10 @@ public class BloodAltar
             this.orbCapacityMultiplier = 1;
             this.dislocationMultiplier = 1;
             this.accelerationUpgrades = 0;
+            this.chargingFrequency = 20;
+            this.chargingRate = 0;
+            this.maxCharge = 0;
+            this.totalCharge = 0;
             return;
         } else if (!tier.equals(EnumAltarTier.ONE) && upgrade != null)
         {
@@ -473,6 +523,9 @@ public class BloodAltar
             this.dislocationMultiplier = (float) (Math.pow(1.2, upgrade.getDisplacementCount()));
             this.orbCapacityMultiplier = (float) (1 + 0.02 * upgrade.getOrbCapacityCount());
             this.accelerationUpgrades = upgrade.getAccelerationCount();
+            this.chargingFrequency = Math.max(20 - upgrade.getAccelerationCount(), 1);
+            this.chargingRate = 100 * upgrade.getChargingCount();
+            this.maxCharge = (int) (FluidContainerRegistry.BUCKET_VOLUME * Math.max(0.5 * capacityMultiplier, 1) * upgrade.getChargingCount());
         }
 
         this.capacity = (int) (FluidContainerRegistry.BUCKET_VOLUME * 10 * capacityMultiplier);
@@ -484,6 +537,8 @@ public class BloodAltar
             this.fluidOutput.amount = this.bufferCapacity;
         if (this.fluidInput.amount > this.bufferCapacity)
             this.fluidInput.amount = this.bufferCapacity;
+        if (this.totalCharge > this.maxCharge)
+            this.totalCharge = this.maxCharge;
 
         tileAltar.getWorld().markBlockForUpdate(tileAltar.getPos());
     }
@@ -639,5 +694,20 @@ public class BloodAltar
         {
             this.cooldownAfterCrafting = amount;
         }
+    }
+
+    public int getChargingRate()
+    {
+        return chargingRate;
+    }
+
+    public int getTotalCharge()
+    {
+        return totalCharge;
+    }
+
+    public int getChargingFrequency()
+    {
+        return chargingFrequency == 0 ? 1 : chargingFrequency;
     }
 }

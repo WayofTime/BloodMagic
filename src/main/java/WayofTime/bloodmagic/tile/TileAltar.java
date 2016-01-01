@@ -239,4 +239,22 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
     {
         bloodAltar.setActive();
     }
+
+    @Override
+    public int getChargingRate()
+    {
+        return bloodAltar.getChargingRate();
+    }
+
+    @Override
+    public int getTotalCharge()
+    {
+        return bloodAltar.getTotalCharge();
+    }
+
+    @Override
+    public int getChargingFrequency()
+    {
+        return bloodAltar.getChargingFrequency();
+    }
 }

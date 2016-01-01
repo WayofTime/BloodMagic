@@ -22,6 +22,12 @@ public interface IBloodAltar
 
     float getConsumptionRate();
 
+    int getChargingRate();
+
+    int getChargingFrequency();
+
+    int getTotalCharge();
+
     int getLiquidRequired();
 
     int getBufferCapacity();
@@ -44,7 +50,7 @@ public interface IBloodAltar
      * This can only be set while the altar is not active.
      * 
      * @param cooldown
-     *            - How long the cooldown should last
+     *        - How long the cooldown should last
      */
     void requestPauseAfterCrafting(int cooldown);
 }

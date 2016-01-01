@@ -53,6 +53,7 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                         int tier = altar.getTier().ordinal() + 1;
                         currentEssence = altar.getCurrentBlood();
                         int capacity = altar.getCapacity();
+                        int charge = altar.getTotalCharge();
                         altar.checkTier();
                         if (tile instanceof IInventory)
                         {
@@ -61,10 +62,10 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                                 int progress = altar.getProgress();
                                 int totalLiquidRequired = altar.getLiquidRequired() * ((IInventory) tile).getStackInSlot(0).stackSize;
                                 int consumptionRate = (int) (altar.getConsumptionRate() * (altar.getConsumptionMultiplier() + 1));
-                                ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), TextHelper.localize(tooltipBase + "currentAltarConsumptionRate", consumptionRate), TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+                                ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), TextHelper.localize(tooltipBase + "currentAltarConsumptionRate", consumptionRate), TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity), TextHelper.localize(tooltipBase + "currentCharge", charge));
                             } else
                             {
-                                ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+                                ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity), TextHelper.localize(tooltipBase + "currentCharge", charge));
                             }
                         }
                     } else

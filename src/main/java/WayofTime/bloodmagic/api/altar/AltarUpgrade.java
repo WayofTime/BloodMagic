@@ -18,6 +18,7 @@ public class AltarUpgrade
     private int orbCapacityCount;
     private int betterCapacityCount;
     private int accelerationCount;
+    private int chargingCount;
 
     // Adders
 
@@ -72,6 +73,12 @@ public class AltarUpgrade
     public AltarUpgrade addAcceleration()
     {
         accelerationCount++;
+        return this;
+    }
+
+    public AltarUpgrade addCharging()
+    {
+        chargingCount++;
         return this;
     }
 }
