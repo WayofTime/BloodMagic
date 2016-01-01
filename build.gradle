@@ -46,8 +46,6 @@ dependencies {
 minecraft {
     version = "${mc_version}-${forge_version}"
     runDir = "run"
-	
-	makeObfSourceJar = false // Until #295 gets merged into FG2.1
 
     replace "@VERSION@", project.version
     replaceIn "Constants.java"
@@ -94,7 +92,8 @@ jar {
         "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
         "Implementation-Title": project.name,
         "Implementation-Version": project.version,
-        "Git-Hash": gitHash
+        "Git-Hash": gitHash,
+        "Built-On": "${mc_version}-${forge_version}"
     )
 }
 
@@ -129,6 +128,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifact jar
             artifact javadocJar
+            artifact sourceJar
             artifact apiJar
         }
     }
@@ -151,6 +151,7 @@ curseforge {
         releaseType = 'alpha'
 
         addArtifact javadocJar
+        addArtifact sourceJar
         addArtifact apiJar
     }
 }
