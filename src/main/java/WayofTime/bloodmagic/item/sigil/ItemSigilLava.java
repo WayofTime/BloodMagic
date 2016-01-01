@@ -62,9 +62,6 @@ public class ItemSigilLava extends ItemSigilBase
                     }
                 }
             }
-
-            if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
         }
 
         return stack;

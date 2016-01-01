@@ -84,7 +84,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
 
         if (shouldSyphon & world.getTotalWorldTime() % INTERVAL == 0)
         {
-            NetworkHelper.getSoulNetwork(player, world).hurtPlayer(1.0F);
+            NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 1.0F);
             addLP(stack, CONVERSION);
         }
     }

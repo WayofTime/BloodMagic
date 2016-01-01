@@ -4,12 +4,15 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
 import com.google.common.base.Strings;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,6 +38,15 @@ public class ItemBindable extends Item implements IBindable
         setMaxStackSize(1);
     }
 
+    /**
+     * Syphons from the owner's network if possible - if not enough LP is found,
+     * it will instead take the LP from the holder of the item.
+     * 
+     * @param stack
+     * @param player
+     * @param lpUsed
+     * @return
+     */
     public static boolean syphonNetwork(ItemStack stack, EntityPlayer player, int lpUsed)
     {
         if (player == null)
@@ -42,7 +54,14 @@ public class ItemBindable extends Item implements IBindable
 
         if (!player.worldObj.isRemote)
         {
-            return NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player, player.worldObj), lpUsed);
+            if (stack != null && stack.getItem() instanceof ItemBindable)
+            {
+                ItemBindable itemBindable = (ItemBindable) stack.getItem();
+                String owner = itemBindable.getBindableOwner(stack);
+                SoulNetwork network = NetworkHelper.getSoulNetwork(owner);
+                return NetworkHelper.syphonAndDamage(network, player, lpUsed);
+            }
+
         } else
         {
             double posX = player.posX;
@@ -50,17 +69,26 @@ public class ItemBindable extends Item implements IBindable
             double posZ = player.posZ;
 
             // SpellHelper.sendIndexedParticleToAllAround(player.worldObj, posX,posY, posZ, 20, player.worldObj.provider.getDimensionId(), 4, posX, posY, posZ);
-            player.worldObj.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.8F);
+            player.worldObj.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (player.worldObj.rand.nextFloat() - player.worldObj.rand.nextFloat()) * 0.8F);
         }
         return true;
     }
 
+    /**
+     * This method is to be used for when you want to drain from a network
+     * without an online player. This will not take health from the owner if it
+     * fails to find sufficient LP.
+     * 
+     * @param itemStack
+     * @param lpUsed
+     * @return
+     */
     public static boolean syphonNetwork(ItemStack itemStack, int lpUsed)
     {
         if (itemStack.getItem() instanceof ItemBindable)
         {
             ItemBindable itemBindable = (ItemBindable) itemStack.getItem();
-            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(itemStack)) && syphonNetwork(itemStack, PlayerHelper.getPlayerFromUUID(itemBindable.getBindableOwner(itemStack)), lpUsed);
+            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(itemStack)) && NetworkHelper.syphonFromContainer(itemStack, lpUsed);
         }
 
         return false;

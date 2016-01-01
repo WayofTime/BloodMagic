@@ -431,7 +431,7 @@ public class BloodAltar
             {
                 int liquidDrained = Math.min((int) (altarTier.ordinal() >= 2 ? consumptionRate * (1 + consumptionMultiplier) : consumptionRate), fluid.amount);
 
-                int drain = NetworkHelper.getSoulNetwork(ownerUUID, world).addLifeEssence(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
+                int drain = NetworkHelper.getSoulNetwork(ownerUUID).addLifeEssence(liquidDrained, (int) (item.getMaxEssence(returnedItem.getMetadata()) * this.orbCapacityMultiplier));
 
                 fluid.amount = fluid.amount - drain;
 

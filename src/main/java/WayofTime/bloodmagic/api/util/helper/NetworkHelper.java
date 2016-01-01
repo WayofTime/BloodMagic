@@ -5,11 +5,14 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
+
 import com.google.common.base.Strings;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -25,13 +28,12 @@ public class NetworkHelper
      * 
      * @param name
      *            - The username of the SoulNetwork owner
-     * @param world
-     *            - The world
      * 
      * @return - The SoulNetwork for the given name.
      */
-    public static SoulNetwork getSoulNetwork(String name, World world)
+    public static SoulNetwork getSoulNetwork(String name)
     {
+        World world = DimensionManager.getWorld(0);
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 
         if (network == null)
@@ -46,17 +48,17 @@ public class NetworkHelper
     /**
      * @see NetworkHelper#getSoulNetwork(String, World)
      */
-    public static SoulNetwork getSoulNetwork(UUID uuid, World world)
+    public static SoulNetwork getSoulNetwork(UUID uuid)
     {
-        return getSoulNetwork(PlayerHelper.getUsernameFromUUID(uuid), world);
+        return getSoulNetwork(PlayerHelper.getUsernameFromUUID(uuid));
     }
 
     /**
      * @see NetworkHelper#getSoulNetwork(String, World)
      */
-    public static SoulNetwork getSoulNetwork(EntityPlayer player, World world)
+    public static SoulNetwork getSoulNetwork(EntityPlayer player)
     {
-        return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player), world);
+        return getSoulNetwork(PlayerHelper.getUUIDFromPlayer(player));
     }
 
     /**
@@ -82,20 +84,23 @@ public class NetworkHelper
      * 
      * @param soulNetwork
      *            - SoulNetwork to syphon from
+     * @param user
+     *            - User of the item.
      * @param toSyphon
      *            - Amount of LP to syphon
      * 
      * @return - Whether the action should be performed.
      */
-    public static boolean syphonAndDamage(SoulNetwork soulNetwork, int toSyphon)
+    public static boolean syphonAndDamage(SoulNetwork soulNetwork, EntityPlayer user, int toSyphon)
     {
-        if (soulNetwork.getPlayer() == null)
-        {
-            soulNetwork.syphon(toSyphon);
-            return true;
-        }
 
-        return soulNetwork.syphonAndDamage(toSyphon);
+//        if (soulNetwork.getPlayer() == null)
+//        {
+//            soulNetwork.syphon(toSyphon);
+//            return true;
+//        }
+
+        return soulNetwork.syphonAndDamage(user, toSyphon);
     }
 
     /**
@@ -103,22 +108,21 @@ public class NetworkHelper
      * 
      * @param stack
      *            - ItemStack in the Container.
-     * @param world
-     *            - The world the Container is in
      * @param toSyphon
      *            - Amount of LP to syphon
      * 
      * @return - If the syphon was successful.
      */
-    public static boolean syphonFromContainer(ItemStack stack, World world, int toSyphon)
+    public static boolean syphonFromContainer(ItemStack stack, int toSyphon) //TODO: Change to a String, int?
     {
+        System.out.println("Test");
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
         if (Strings.isNullOrEmpty(ownerName))
             return false;
 
-        SoulNetwork network = getSoulNetwork(ownerName, world);
+        SoulNetwork network = getSoulNetwork(ownerName);
 
         SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, ownerName, toSyphon);
 

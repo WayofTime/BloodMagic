@@ -1,13 +1,11 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import com.google.common.base.Strings;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.IFuelHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
 public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
 {
@@ -15,7 +13,7 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".lavaCrystal");
-        setLPUsed(1);
+        setLPUsed(25);
     }
 
     @Override
@@ -46,20 +44,16 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
 
         if (fuelItem instanceof ItemLavaCrystal)
         {
-            if (syphonNetwork(fuel, getLPUsed()))
+            if (syphonNetwork(fuel, getLPUsed())) //TODO: change to canSyphonNetwork
             {
-                return 1;
+                return 200;
             } else
             {
-                NBTTagCompound tag = fuel.getTagCompound();
-
-                if (tag == null || MinecraftServer.getServer() == null || MinecraftServer.getServer().getConfigurationManager() == null)
-                    return 0;
-
-                if (Strings.isNullOrEmpty(((ItemLavaCrystal) fuelItem).getBindableOwner(fuel)))
-                    return 0;
-                else
-                    hurtPlayer(PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel)), getLPUsed());
+                EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
+                if (player != null)
+                {
+                    //TODO: Add nausea to the player.
+                }
 
                 return 0;
             }

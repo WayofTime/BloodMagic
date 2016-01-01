@@ -80,7 +80,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual)
     {
-
         if (PlayerHelper.isFakePlayer(activator))
             return false;
 
@@ -94,8 +93,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel))
                 {
-
-                    SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner, getWorld());
+                    SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
 
                     if (network.getCurrentEssence() < ritual.getActivationCost())
                     {
@@ -146,8 +144,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
             if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                 return;
 
-            SoulNetwork network = NetworkHelper.getSoulNetwork(getOwner(), getWorld());
-            network.syphonAndDamage(getCurrentRitual().getRefreshCost());
             getCurrentRitual().performRitual(this);
         }
     }

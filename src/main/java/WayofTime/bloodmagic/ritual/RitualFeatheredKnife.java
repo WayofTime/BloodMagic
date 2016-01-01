@@ -39,7 +39,7 @@ public class RitualFeatheredKnife extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorld();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner(), world);
+        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
 
         if (currentEssence < getRefreshCost())

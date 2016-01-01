@@ -90,6 +90,7 @@ public class SoulNetwork extends WorldSavedData
      */
     public int syphon(int syphon)
     {
+        System.out.println("Being syphoned");
         if (getCurrentEssence() >= syphon)
         {
             setCurrentEssence(getCurrentEssence() - syphon);
@@ -101,37 +102,40 @@ public class SoulNetwork extends WorldSavedData
     }
 
     /**
-     * If the player exists on the server, syphon the given amount of LP from
-     * the player's LP network and damage for any remaining LP required.
+     * Syphons from the network of the owner. If not enough LP is found, it will
+     * instead take away from the user's health.
      * 
      * Always returns false on the client side.
      * 
      * @return - Whether the action should be performed.
      */
-    public boolean syphonAndDamage(int toSyphon)
+    public boolean syphonAndDamage(EntityPlayer user, int toSyphon)
     {
-        if (getPlayer() != null)
+        BloodMagicAPI.getLogger().debug("The operation has requested a drain of " + toSyphon + " LP.");
+        if (user != null)
         {
-            if (getPlayer().worldObj.isRemote)
+            if (user.worldObj.isRemote)
                 return false;
 
             if (!Strings.isNullOrEmpty(mapName))
             {
-                SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(player, mapName, getPlayer().getHeldItem(), toSyphon);
+                SoulNetworkEvent.ItemDrainNetworkEvent event = new SoulNetworkEvent.ItemDrainNetworkEvent(user, mapName, null, toSyphon);
 
                 if (MinecraftForge.EVENT_BUS.post(event))
                     return false;
 
                 int drainAmount = syphon(event.syphon);
 
-                if (drainAmount == 0 || event.shouldDamage)
-                    hurtPlayer(event.syphon);
+                if (drainAmount <= 0 || event.shouldDamage)
+                    hurtPlayer(user, event.syphon);
 
                 return event.getResult() != Event.Result.DENY;
             }
 
+            System.out.println("I got here?!?");
+
             int amount = syphon(toSyphon);
-            hurtPlayer(toSyphon - amount);
+            hurtPlayer(user, toSyphon - amount);
 
             return true;
         }
@@ -139,27 +143,26 @@ public class SoulNetwork extends WorldSavedData
         return false;
     }
 
-    public void hurtPlayer(float syphon)
+    public void hurtPlayer(EntityPlayer user, float syphon)
     {
-        System.out.println("Called");
-        if (getPlayer() != null)
+        if (user != null)
         {
             if (syphon < 100 && syphon > 0)
             {
-                if (!getPlayer().capabilities.isCreativeMode)
+                if (!user.capabilities.isCreativeMode)
                 {
-                    getPlayer().hurtResistantTime = 0;
-                    getPlayer().attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
+                    user.hurtResistantTime = 0;
+                    user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
                 }
 
             } else if (syphon >= 100)
             {
-                if (!getPlayer().capabilities.isCreativeMode)
+                if (!user.capabilities.isCreativeMode)
                 {
                     for (int i = 0; i < ((syphon + 99) / 100); i++)
                     {
-                        getPlayer().hurtResistantTime = 0;
-                        getPlayer().attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
+                        user.hurtResistantTime = 0;
+                        user.attackEntityFrom(BloodMagicAPI.getDamageSource(), 1.0F);
                     }
                 }
             }

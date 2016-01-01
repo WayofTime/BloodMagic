@@ -67,9 +67,9 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
             return stack;
 
         if (stack.getTagCompound().getString(Constants.NBT.OWNER_UUID).equals(PlayerHelper.getUsernameFromPlayer(player)))
-            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID), world), getOrbLevel(stack.getItemDamage()));
+            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)), getOrbLevel(stack.getItemDamage()));
 
-        NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID), world).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
+        NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
         hurtPlayer(player, 200);
         return stack;
     }
