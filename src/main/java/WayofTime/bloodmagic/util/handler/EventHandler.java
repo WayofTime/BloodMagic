@@ -2,11 +2,11 @@ package WayofTime.bloodmagic.util.handler;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
-import WayofTime.bloodmagic.item.ItemBoundSword;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -82,11 +82,18 @@ public class EventHandler
     }
 
     @SubscribeEvent
-    public void onTelepose(TeleposeEvent event) {
+    public void onTelepose(TeleposeEvent event)
+    {
         BlockStack initialBlock = new BlockStack(event.initialBlock, event.initialMetadata);
         BlockStack finalBlock = new BlockStack(event.finalBlock, event.finalMetadata);
 
         if (ConfigHandler.teleposerBlacklist.contains(initialBlock) || ConfigHandler.teleposerBlacklist.contains(finalBlock))
             event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent event) {
+        if (event.modID.equals(Constants.Mod.MODID))
+            ConfigHandler.syncConfig();
     }
 }
