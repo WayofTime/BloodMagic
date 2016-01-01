@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class IncenseHelper
 {
-
     public static float getCurrentIncense(EntityPlayer player)
     {
         NBTTagCompound data = player.getEntityData();

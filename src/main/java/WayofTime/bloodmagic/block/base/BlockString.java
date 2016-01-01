@@ -38,7 +38,6 @@ import java.util.List;
 @Getter
 public class BlockString extends Block
 {
-
     private final int maxMeta;
     private final List<String> values;
     private final PropertyString stringProp;

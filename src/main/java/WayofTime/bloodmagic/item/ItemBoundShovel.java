@@ -19,7 +19,6 @@ import java.util.Set;
 
 public class ItemBoundShovel extends ItemBoundTool
 {
-
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.clay, Blocks.dirt, Blocks.farmland, Blocks.grass, Blocks.gravel, Blocks.mycelium, Blocks.sand, Blocks.snow, Blocks.snow_layer, Blocks.soul_sand);
 
     public ItemBoundShovel()

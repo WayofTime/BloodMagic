@@ -20,7 +20,6 @@ import java.util.List;
 @Getter
 public class ItemSigilBase extends ItemBindable implements ISigil
 {
-
     protected final String tooltipBase;
     private final String name;
     private boolean toggleable;

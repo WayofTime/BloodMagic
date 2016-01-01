@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockPedestal extends ItemBlock
 {
-
     public ItemBlockPedestal(Block block)
     {
         super(block);

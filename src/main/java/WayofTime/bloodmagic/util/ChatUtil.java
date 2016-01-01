@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ChatUtil
 {
-
     private static final int DELETION_ID = 2525277;
     private static int lastAdded;
 

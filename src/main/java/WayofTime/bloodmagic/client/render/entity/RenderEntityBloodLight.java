@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.render;
+package WayofTime.bloodmagic.client.render.entity;
 
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import net.minecraft.client.renderer.GlStateManager;
@@ -7,12 +7,10 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityBloodLight extends Render<EntityBloodLight>
 {
-
     public RenderEntityBloodLight(RenderManager renderManager)
     {
         super(renderManager);

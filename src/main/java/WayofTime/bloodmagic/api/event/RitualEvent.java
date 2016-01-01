@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class RitualEvent extends Event
 {
-
     public final IMasterRitualStone mrs;
     public final String ownerName;
     public final Ritual ritual;

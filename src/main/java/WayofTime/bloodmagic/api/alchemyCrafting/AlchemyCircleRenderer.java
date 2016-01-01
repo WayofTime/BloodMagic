@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class AlchemyCircleRenderer
 {
-
     public float offsetFromFace = -0.9f;
     public final ResourceLocation arrayResource;
 

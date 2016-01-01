@@ -17,7 +17,6 @@ import java.awt.*;
 
 public class BlockLifeEssence extends BlockFluidClassic
 {
-
     @Getter
     private static Fluid lifeEssence = new FluidLifeEssence();
 

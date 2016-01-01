@@ -15,7 +15,6 @@ import net.minecraftforge.fml.common.registry.IThrowableEntity;
 
 public class EntityBloodLight extends EntityThrowable implements IThrowableEntity, IEntityAdditionalSpawnData
 {
-
     public EntityLivingBase shootingEntity;
     protected int ticksInAir = 0;
     protected int maxTicksInAir = 600;

@@ -13,7 +13,6 @@ import net.minecraft.world.World;
  */
 public interface IMasterRitualStone
 {
-
     String getOwner();
 
     boolean activateRitual(ItemStack activationCrystal, EntityPlayer activator, Ritual ritual);

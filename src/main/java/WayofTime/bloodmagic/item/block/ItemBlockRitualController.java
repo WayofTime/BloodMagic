@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockRitualController extends ItemBlock
 {
-
     public ItemBlockRitualController(Block block)
     {
         super(block);

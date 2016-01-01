@@ -8,7 +8,6 @@ import net.minecraft.init.Blocks;
 
 public class ImperfectRitualRain extends ImperfectRitual
 {
-
     public ImperfectRitualRain()
     {
         super("rain", new BlockStack(Blocks.water), 5000, true);

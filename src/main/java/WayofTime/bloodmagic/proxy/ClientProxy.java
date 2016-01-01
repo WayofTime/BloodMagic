@@ -1,25 +1,20 @@
 package WayofTime.bloodmagic.proxy;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.render.RenderEntityBloodLight;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ClientProxy extends CommonProxy
 {
-
     private InventoryRenderHelper renderHelper;
 
     @Override
@@ -31,7 +26,6 @@ public class ClientProxy extends CommonProxy
     @Override
     public void preInit()
     {
-
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
 
         ModBlocks.initRenders();
@@ -46,7 +40,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void init()
     {
-        RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new RenderEntityBloodLight(Minecraft.getMinecraft().getRenderManager()));
+//        RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new RenderEntityBloodLight(Minecraft.getMinecraft().getRenderManager()));
     }
 
     @Override

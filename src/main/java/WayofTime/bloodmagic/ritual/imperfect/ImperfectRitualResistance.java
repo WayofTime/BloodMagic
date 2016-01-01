@@ -10,7 +10,6 @@ import net.minecraft.potion.PotionEffect;
 
 public class ImperfectRitualResistance extends ImperfectRitual
 {
-
     public ImperfectRitualResistance()
     {
         super("resistance", new BlockStack(Blocks.bedrock), 5000);

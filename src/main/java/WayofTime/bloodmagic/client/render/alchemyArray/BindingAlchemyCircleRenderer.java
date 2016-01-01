@@ -12,7 +12,6 @@ import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
 public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
 {
-
     public float offsetFromFace = -0.9f;
     public final ResourceLocation arrayResource;
     public final ResourceLocation[] arraysResources;

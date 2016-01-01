@@ -10,7 +10,6 @@ import java.util.HashSet;
 
 public class PropertyString extends PropertyHelper
 {
-
     private final ImmutableSet allowedValues;
 
     protected PropertyString(String name, String[] values)

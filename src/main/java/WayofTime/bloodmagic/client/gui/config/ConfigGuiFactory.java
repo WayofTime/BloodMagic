@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.gui;
+package WayofTime.bloodmagic.client.gui.config;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

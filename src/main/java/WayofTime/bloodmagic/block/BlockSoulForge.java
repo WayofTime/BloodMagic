@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 
 public class BlockSoulForge extends Block
 {
-
     public BlockSoulForge()
     {
         super(Material.iron);

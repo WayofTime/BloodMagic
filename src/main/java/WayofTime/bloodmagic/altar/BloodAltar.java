@@ -33,7 +33,6 @@ import com.google.common.base.Strings;
 
 public class BloodAltar
 {
-
     private TileAltar tileAltar;
     private int internalCounter = 0;
 

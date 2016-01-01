@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.registry.GameData;
 @EqualsAndHashCode
 public class BlockStack
 {
-
     private final Block block;
     private final int meta;
 

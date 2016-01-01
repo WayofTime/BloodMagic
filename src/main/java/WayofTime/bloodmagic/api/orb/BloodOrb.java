@@ -13,7 +13,6 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
  */
 public class BloodOrb
 {
-
     private String name;
     private int tier;
     private int capacity;

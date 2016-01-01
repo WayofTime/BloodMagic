@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class ModCompatibility
 {
-
     private static ArrayList<ICompatibility> compatibilities = new ArrayList<ICompatibility>();
 
     public static void registerModCompat()

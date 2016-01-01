@@ -15,7 +15,6 @@ import java.util.List;
 
 public class StorageBlockCraftingManager
 {
-
     private static final StorageBlockCraftingManager instance = new StorageBlockCraftingManager();
     private List recipes = new LinkedList();
 

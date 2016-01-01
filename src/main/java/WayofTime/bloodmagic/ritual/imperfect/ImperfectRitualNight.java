@@ -8,7 +8,6 @@ import net.minecraft.init.Blocks;
 
 public class ImperfectRitualNight extends ImperfectRitual
 {
-
     public ImperfectRitualNight()
     {
         super("night", new BlockStack(Blocks.lapis_block), 100, true);

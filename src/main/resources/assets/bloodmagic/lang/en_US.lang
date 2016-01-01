@@ -140,6 +140,8 @@ tile.BloodMagic.bloodLight.name=Blood Light
 tile.BloodMagic.spectralBlock.name=Spectral Block
 tile.BloodMagic.phantomBlock.name=Phantom Block
 
+tile.BloodMagic.teleposer.name=Teleposer
+
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s

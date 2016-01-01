@@ -15,7 +15,6 @@ import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
 public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidTank, IFluidHandler
 {
-
     private BloodAltar bloodAltar;
 
     public TileAltar()

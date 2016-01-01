@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public class BindableHelper
 {
-
     /**
      * Bind an item to a player. Handles checking if the player was an
      * instanceof {@link net.minecraftforge.common.util.FakePlayer} or other

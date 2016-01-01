@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 
 public class LogHelper
 {
-
     private Logger logger;
 
     public LogHelper(String logger)

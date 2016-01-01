@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 
 public class TileSpectralBlock extends TileEntity implements ITickable
 {
-
     private int ticksRemaining;
     private String containedBlockName;
     private int containedBlockMeta;

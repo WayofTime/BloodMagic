@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilFastMiner extends ItemSigilToggleable
 {
-
     public ItemSigilFastMiner()
     {
         super("fastMiner", 100);

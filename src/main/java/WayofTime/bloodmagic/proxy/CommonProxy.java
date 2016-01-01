@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class CommonProxy
 {
-
     public InventoryRenderHelper getRenderHelper()
     {
         return null;
