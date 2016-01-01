@@ -4,10 +4,13 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.tile.TileTeleposer;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -16,7 +19,6 @@ import net.minecraft.world.World;
 
 public class BlockTeleposer extends BlockContainer
 {
-
     public BlockTeleposer()
     {
         super(Material.rock);
@@ -25,6 +27,23 @@ public class BlockTeleposer extends BlockContainer
         setUnlocalizedName(Constants.Mod.MODID + ".teleposer");
         setHardness(2.0F);
         setResistance(5.0F);
+    }
+
+    @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    {
+        this.updateState(worldIn, pos);
+    }
+
+    private void updateState(World worldIn, BlockPos pos)
+    {
+        if (worldIn.isBlockPowered(pos))
+        {
+            if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileTeleposer)
+            {
+                ((TileTeleposer) worldIn.getTileEntity(pos)).initiateTeleport();
+            }
+        }
     }
 
     @Override
@@ -41,19 +60,30 @@ public class BlockTeleposer extends BlockContainer
         if (playerItem != null && playerItem.getItem() instanceof ItemTelepositionFocus)
         {
             BindableHelper.checkAndSetItemOwner(playerItem, player);
-
             ((ItemTelepositionFocus) playerItem.getItem()).setBlockPos(playerItem, world, pos);
-            return true;
+        }
+        else if (world.getTileEntity(pos) instanceof TileTeleposer)
+        {
+            player.openGui(BloodMagic.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }
 
-        // player.openGui(AlchemicalWizardry.instance, 1, world, pos.getX(),
-        // pos.getY(), pos.getZ());
         return true;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileTeleposer)
+        {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (TileTeleposer) worldIn.getTileEntity(pos));
+        }
+
+        super.breakBlock(worldIn, pos, state);
     }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return null;
+        return new TileTeleposer();
     }
 }
