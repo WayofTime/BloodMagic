@@ -8,7 +8,6 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
 public class RenderAlchemyArray extends TileEntitySpecialRenderer<TileAlchemyArray>
 {
-
     @Override
     public void renderTileEntityAt(TileAlchemyArray alchemyArray, double x, double y, double z, float partialTicks, int destroyStage)
     {
