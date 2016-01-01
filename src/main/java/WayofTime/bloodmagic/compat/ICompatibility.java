@@ -11,7 +11,7 @@ public interface ICompatibility
     void loadCompatibility();
 
     /**
-     * The {@code modid} of the mod we are adding compatibility for.
+     * @return The {@code modid} of the mod we are adding compatibility for.
      */
     String getModId();
 
@@ -20,6 +20,8 @@ public interface ICompatibility
      * found.
      * 
      * Generally a determined by a config option.
+     *
+     * @return If Compatibility should load.
      */
     boolean enableCompat();
 }

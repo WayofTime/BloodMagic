@@ -64,6 +64,11 @@ public class BindableHelper
 
     /**
      * @see BindableHelper#checkAndSetItemOwner(ItemStack, String)
+     *
+     * @param stack
+     *          - ItemStack to check
+     * @param uuid
+     *          - UUID of the Player
      */
     public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid)
     {

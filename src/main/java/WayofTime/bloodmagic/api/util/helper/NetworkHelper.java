@@ -46,6 +46,9 @@ public class NetworkHelper
 
     /**
      * @see NetworkHelper#getSoulNetwork(String)
+     *
+     * @param uuid
+     *          - The Player's Mojang UUID
      */
     public static SoulNetwork getSoulNetwork(UUID uuid)
     {
@@ -54,6 +57,9 @@ public class NetworkHelper
 
     /**
      * @see NetworkHelper#getSoulNetwork(String)
+     *
+     * @param player
+     *          - The Player
      */
     public static SoulNetwork getSoulNetwork(EntityPlayer player)
     {
@@ -127,6 +133,16 @@ public class NetworkHelper
         return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && network.syphon(event.syphon) >= toSyphon;
     }
 
+    /**
+     * Checks if the ItemStack has a user to be syphoned from.
+     *
+     * @param stack
+     *          - ItemStack to check
+     * @param toSyphon
+     *          - Amount of LP to syphon
+     *
+     * @return - If syphoning is possible
+     */
     public static boolean canSyphonFromContainer(ItemStack stack, int toSyphon)
     {
         stack = NBTHelper.checkNBT(stack);

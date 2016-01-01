@@ -31,6 +31,9 @@ public class AltarComponent
     /**
      * Use for setting a location at which there must be a block, but the type
      * of block does not matter.
+     *
+     * @param offset
+     *          - Where the block should be in relation to the Altar
      */
     public AltarComponent(BlockPos offset)
     {

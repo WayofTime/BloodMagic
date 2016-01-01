@@ -45,7 +45,12 @@ public class RitualHelper
     /**
      * Checks the RitualRegistry to see if the configuration of the ritual
      * stones in the world is valid for the given EnumFacing.
-     * 
+     *
+     * @param world
+     *          - The world
+     * @param pos
+     *          - Location of the MasterRitualStone
+     *
      * @return The ID of the valid ritual
      */
     public static String getValidRitual(World world, BlockPos pos)
@@ -126,10 +131,7 @@ public class RitualHelper
      * Adds your Ritual to the {@link RitualRegistry#enabledRituals} Map. This
      * is used to determine whether your effect is enabled or not.
      * 
-     * The config option will be created as {@code B:ClassName=true} with a
-     * comment of {@code Enables the ClassName ritual}.
-     * 
-     * Use {@link #}
+     * The config option will be created as {@code B:ClassName=true}.
      * 
      * Should be safe to modify at any point.
      * 

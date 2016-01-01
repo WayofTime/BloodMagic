@@ -43,9 +43,13 @@ public class ItemBindable extends Item implements IBindable
      * it will instead take the LP from the holder of the item.
      * 
      * @param stack
+     *          - The ItemStack to syphon from
      * @param player
+     *          -  The Player using the item
      * @param lpUsed
-     * @return
+     *          - The amount of LP to syphon
+     *
+     * @return Whether syphoning was successful or not
      */
     public static boolean syphonNetwork(ItemStack stack, EntityPlayer player, int lpUsed)
     {
@@ -79,16 +83,19 @@ public class ItemBindable extends Item implements IBindable
      * without an online player. This will not take health from the owner if it
      * fails to find sufficient LP.
      * 
-     * @param itemStack
+     * @param stack
+     *          - The ItemStack to syphon from.
      * @param lpUsed
-     * @return
+     *          - The amount of LP to syphon
+     *
+     * @return - If syphoning was successful or not
      */
-    public static boolean syphonNetwork(ItemStack itemStack, int lpUsed)
+    public static boolean syphonNetwork(ItemStack stack, int lpUsed)
     {
-        if (itemStack.getItem() instanceof ItemBindable)
+        if (stack.getItem() instanceof ItemBindable)
         {
-            ItemBindable itemBindable = (ItemBindable) itemStack.getItem();
-            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(itemStack)) && NetworkHelper.syphonFromContainer(itemStack, lpUsed);
+            ItemBindable itemBindable = (ItemBindable) stack.getItem();
+            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(stack)) && NetworkHelper.syphonFromContainer(stack, lpUsed);
         }
 
         return false;
