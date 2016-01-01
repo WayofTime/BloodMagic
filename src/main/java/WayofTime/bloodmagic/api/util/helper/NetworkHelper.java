@@ -115,7 +115,6 @@ public class NetworkHelper
      */
     public static boolean syphonFromContainer(ItemStack stack, int toSyphon) //TODO: Change to a String, int?
     {
-        System.out.println("Test");
         stack = NBTHelper.checkNBT(stack);
         String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
@@ -127,6 +126,18 @@ public class NetworkHelper
         SoulNetworkEvent.ItemDrainInContainerEvent event = new SoulNetworkEvent.ItemDrainInContainerEvent(stack, ownerName, toSyphon);
 
         return !(MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY) && network.syphon(event.syphon) >= toSyphon;
+    }
+
+    public static boolean canSyphonFromContainer(ItemStack stack, int toSyphon)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        String ownerName = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
+
+        if (Strings.isNullOrEmpty(ownerName))
+            return false;
+
+        SoulNetwork network = getSoulNetwork(ownerName);
+        return network.getCurrentEssence() >= toSyphon;
     }
 
     // Set

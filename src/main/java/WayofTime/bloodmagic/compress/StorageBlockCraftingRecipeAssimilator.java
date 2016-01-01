@@ -66,15 +66,13 @@ public class StorageBlockCraftingRecipeAssimilator
             {
                 PackingRecipe recipePack = it.next();
 
-                // check if the packing recipe accepts the unpacking recipe's
-                // output
+                // check if the packing recipe accepts the unpacking recipe's output
 
                 boolean matched = false;
 
                 if (recipePack.possibleInputs != null)
-                { // the recipe could be parsed, use its inputs directly since
-                  // that's faster
-                  // verify recipe size
+                {
+                    // the recipe could be parsed, use its inputs directly since that's faster verify recipe size
 
                     if (recipePack.inputCount != unpacked.stackSize)
                         continue;
@@ -91,15 +89,13 @@ public class StorageBlockCraftingRecipeAssimilator
                         }
                     }
                 } else
-                { // unknown IRecipe, check through the recipe conventionally
-                  // verify recipe size for 3x3 to skip anything smaller
-                  // quickly
-
+                { 
+                	// unknown IRecipe, check through the recipe conventionally verify recipe size for 3x3 to skip anything smaller quickly
+                	
                     if (unpacked.stackSize == 9 && recipePack.recipe.getRecipeSize() < 9)
                         continue;
 
-                    // initialize inventory late, but only once per unpack
-                    // recipe
+                    // initialize inventory late, but only once per unpack recipe
 
                     if (inventory == null)
                     {

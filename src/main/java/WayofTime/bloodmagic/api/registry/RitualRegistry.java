@@ -15,8 +15,10 @@ public class RitualRegistry
 
     public static final Map<Ritual, Boolean> enabledRituals = new HashMap<Ritual, Boolean>();
     private static final BiMap<String, Ritual> registry = HashBiMap.create();
-    // Ordered list for actions that depend on the order that the rituals were
-    // registered in
+    /**
+     * Ordered list for actions that depend on the order that the rituals were
+     * registered in
+     */
     private static final ArrayList<String> orderedIdList = new ArrayList<String>();
 
     /**

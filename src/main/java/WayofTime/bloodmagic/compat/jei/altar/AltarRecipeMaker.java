@@ -21,8 +21,8 @@ public class AltarRecipeMaker
         for (Map.Entry<ItemStack, AltarRecipeRegistry.AltarRecipe> itemStackAltarRecipeEntry : altarMap.entrySet())
         {
             if (itemStackAltarRecipeEntry.getValue().getOutput() != null)
-            { // Make sure output is not null. If it is, the recipe is for a
-              // filling orb, and we don't want that.
+            {
+                // Make sure output is not null. If it is, the recipe is for a filling orb, and we don't want that.
                 ItemStack input = itemStackAltarRecipeEntry.getKey();
                 ItemStack output = itemStackAltarRecipeEntry.getValue().getOutput();
                 int requiredTier = itemStackAltarRecipeEntry.getValue().getMinTier().toInt();

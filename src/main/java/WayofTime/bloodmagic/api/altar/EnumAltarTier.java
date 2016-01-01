@@ -5,6 +5,7 @@ import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 
+//@formatter:off
 @Getter
 public enum EnumAltarTier
 {
@@ -136,6 +137,7 @@ public enum EnumAltarTier
                 altarComponents.add(new AltarComponent(new BlockPos(i, -5, -11), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
             }
         }
+//@formatter:on
     };
 
     public static final int MAXTIERS = values().length;

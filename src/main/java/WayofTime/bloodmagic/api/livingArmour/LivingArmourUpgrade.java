@@ -12,8 +12,11 @@ import com.google.common.collect.Multimap;
 public abstract class LivingArmourUpgrade
 {
 
-    protected int level = 0; // Upgrade level 0 is the first upgrade. Upgrade
-                             // goes from 0 to getMaxTier() - 1.
+    /**
+     * Upgrade level 0 is the first upgrade. Upgrade goes from 0 to getMaxTier()
+     * - 1.
+     */
+    protected int level = 0;
 
     /**
      * The LivingArmourUpgrade must have a constructor that has a single integer
@@ -36,7 +39,6 @@ public abstract class LivingArmourUpgrade
     public abstract String getUniqueIdentifier();
 
     /**
-     * 
      * @return
      */
     public abstract int getMaxTier();
@@ -49,7 +51,7 @@ public abstract class LivingArmourUpgrade
 
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
-        return HashMultimap.<String, AttributeModifier> create();
+        return HashMultimap.<String, AttributeModifier>create();
     }
 
     public abstract void writeToNBT(NBTTagCompound tag);

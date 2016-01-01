@@ -117,9 +117,9 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                         network.syphon(ritual.getActivationCost());
                         ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
                         this.active = true;
-                        this.owner = crystalOwner; // Set the owner of the
-                                                   // ritual to the crystal's
-                                                   // owner
+                        // Set the owner of the ritual to the crystal's owner
+                        this.owner = crystalOwner;
+
                         this.currentRitual = ritual;
 
                         return true;
