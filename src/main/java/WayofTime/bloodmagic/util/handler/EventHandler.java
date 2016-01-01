@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.util.handler;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
@@ -88,6 +89,9 @@ public class EventHandler
         BlockStack finalBlock = new BlockStack(event.finalBlock, event.finalMetadata);
 
         if (ConfigHandler.teleposerBlacklist.contains(initialBlock) || ConfigHandler.teleposerBlacklist.contains(finalBlock))
+            event.setCanceled(true);
+
+        if (BloodMagicAPI.getTeleposerBlacklist().contains(initialBlock) || BloodMagicAPI.getTeleposerBlacklist().contains(finalBlock))
             event.setCanceled(true);
     }
 
