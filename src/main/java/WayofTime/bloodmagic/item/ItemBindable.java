@@ -94,6 +94,17 @@ public class ItemBindable extends Item implements IBindable
         return false;
     }
 
+    public static boolean canSyphonFromNetwork(ItemStack stack, int lpRequested)
+    {
+        if (stack.getItem() instanceof ItemBindable)
+        {
+            ItemBindable itemBindable = (ItemBindable) stack.getItem();
+            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(stack)) && NetworkHelper.canSyphonFromContainer(stack, lpRequested);
+        }
+
+        return false;
+    }
+
     public static void hurtPlayer(EntityPlayer user, int lpSyphoned)
     {
         if (user != null)

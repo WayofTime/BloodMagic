@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.IFuelHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
@@ -44,7 +46,8 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
 
         if (fuelItem instanceof ItemLavaCrystal)
         {
-            if (syphonNetwork(fuel, getLPUsed())) //TODO: change to canSyphonNetwork
+//            if(true)
+            if (canSyphonFromNetwork(fuel, getLPUsed()))
             {
                 return 200;
             } else
@@ -52,7 +55,7 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
                 EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
                 if (player != null)
                 {
-                    //TODO: Add nausea to the player.
+                    player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
                 }
 
                 return 0;

@@ -5,7 +5,9 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+
 import com.google.common.base.Strings;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +37,7 @@ public class SoulNetwork extends WorldSavedData
 
         currentEssence = 0;
         orbTier = 0;
-        player = PlayerHelper.getPlayerFromUsername(name);
+        player = PlayerHelper.getPlayerFromUUID(name);
     }
 
     @Override
@@ -90,7 +92,6 @@ public class SoulNetwork extends WorldSavedData
      */
     public int syphon(int syphon)
     {
-        System.out.println("Being syphoned");
         if (getCurrentEssence() >= syphon)
         {
             setCurrentEssence(getCurrentEssence() - syphon);
@@ -111,7 +112,6 @@ public class SoulNetwork extends WorldSavedData
      */
     public boolean syphonAndDamage(EntityPlayer user, int toSyphon)
     {
-        BloodMagicAPI.getLogger().debug("The operation has requested a drain of " + toSyphon + " LP.");
         if (user != null)
         {
             if (user.worldObj.isRemote)
@@ -131,8 +131,6 @@ public class SoulNetwork extends WorldSavedData
 
                 return event.getResult() != Event.Result.DENY;
             }
-
-            System.out.println("I got here?!?");
 
             int amount = syphon(toSyphon);
             hurtPlayer(user, toSyphon - amount);
@@ -171,11 +169,9 @@ public class SoulNetwork extends WorldSavedData
 
     public void causeNauseaToPlayer()
     {
-        System.out.println("Hai! I'm adding the bane of your existence!");
-
         if (getPlayer() != null)
         {
-            getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 20));
+            getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
         }
     }
 }

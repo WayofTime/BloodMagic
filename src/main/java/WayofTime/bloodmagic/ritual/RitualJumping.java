@@ -35,7 +35,10 @@ public class RitualJumping extends Ritual
         int currentEssence = network.getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
+        {
+            network.causeNauseaToPlayer();
             return;
+        }
 
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;

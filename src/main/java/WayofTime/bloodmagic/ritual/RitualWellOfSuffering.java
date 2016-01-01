@@ -44,7 +44,10 @@ public class RitualWellOfSuffering extends Ritual
         int currentEssence = network.getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
+        {
+            network.causeNauseaToPlayer();
             return;
+        }
 
         BlockPos pos = masterRitualStone.getPos();
 

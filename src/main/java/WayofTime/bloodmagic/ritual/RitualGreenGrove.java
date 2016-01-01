@@ -36,7 +36,10 @@ public class RitualGreenGrove extends Ritual
         int currentEssence = network.getCurrentEssence();
 
         if (currentEssence < getRefreshCost())
+        {
+            network.causeNauseaToPlayer();
             return;
+        }
 
         int maxGrowths = currentEssence / getRefreshCost();
         int totalGrowths = 0;
