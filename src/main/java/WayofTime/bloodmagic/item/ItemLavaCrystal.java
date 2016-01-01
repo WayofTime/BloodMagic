@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item;
 
+import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -52,10 +53,13 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
                 return 200;
             } else
             {
-                EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
-                if (player != null)
+                if (!Strings.isNullOrEmpty(getBindableOwner(fuel)))
                 {
-                    player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
+                    EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
+                    if (player != null)
+                    {
+                        player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
+                    }
                 }
 
                 return 0;
