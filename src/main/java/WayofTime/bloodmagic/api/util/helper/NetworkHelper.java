@@ -26,7 +26,7 @@ public class NetworkHelper
      * Gets the SoulNetwork for the player.
      * 
      * @param name
-     *            - The username of the SoulNetwork owner
+     *        - The username of the SoulNetwork owner
      * 
      * @return - The SoulNetwork for the given name.
      */
@@ -45,7 +45,7 @@ public class NetworkHelper
     }
 
     /**
-     * @see NetworkHelper#getSoulNetwork(String, World)
+     * @see NetworkHelper#getSoulNetwork(String)
      */
     public static SoulNetwork getSoulNetwork(UUID uuid)
     {
@@ -53,7 +53,7 @@ public class NetworkHelper
     }
 
     /**
-     * @see NetworkHelper#getSoulNetwork(String, World)
+     * @see NetworkHelper#getSoulNetwork(String)
      */
     public static SoulNetwork getSoulNetwork(EntityPlayer player)
     {
@@ -64,7 +64,7 @@ public class NetworkHelper
      * Gets the current orb tier of the SoulNetwork.
      * 
      * @param soulNetwork
-     *            - SoulNetwork to get the tier of.
+     *        - SoulNetwork to get the tier of.
      * 
      * @return - The Orb tier of the given SoulNetwork
      */
@@ -82,11 +82,11 @@ public class NetworkHelper
      * Handles null-checking the player for you.
      * 
      * @param soulNetwork
-     *            - SoulNetwork to syphon from
+     *        - SoulNetwork to syphon from
      * @param user
-     *            - User of the item.
+     *        - User of the item.
      * @param toSyphon
-     *            - Amount of LP to syphon
+     *        - Amount of LP to syphon
      * 
      * @return - Whether the action should be performed.
      */
@@ -106,9 +106,9 @@ public class NetworkHelper
      * Syphons a player from within a container.
      * 
      * @param stack
-     *            - ItemStack in the Container.
+     *        - ItemStack in the Container.
      * @param toSyphon
-     *            - Amount of LP to syphon
+     *        - Amount of LP to syphon
      * 
      * @return - If the syphon was successful.
      */
@@ -146,9 +146,9 @@ public class NetworkHelper
      * the given tier is lower than the current tier.
      * 
      * @param soulNetwork
-     *            - SoulNetwork to set the orb tier of
+     *        - SoulNetwork to set the orb tier of
      * @param maxOrb
-     *            - Tier of orb to set to
+     *        - Tier of orb to set to
      */
     public static void setMaxOrb(SoulNetwork soulNetwork, int maxOrb)
     {
@@ -164,9 +164,9 @@ public class NetworkHelper
      * client side.
      * 
      * @param stack
-     *            Owned itemStack
+     *        Owned itemStack
      * @param player
-     *            Player using the item
+     *        Player using the item
      * 
      * @return True if the action should be executed and false if it should not.
      *         Always returns false if client-sided.
