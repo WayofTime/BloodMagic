@@ -21,7 +21,6 @@ import java.util.List;
 // TODO - NBT based damage
 public class ItemInscriptionTool extends ItemBindable
 {
-
     public ItemInscriptionTool()
     {
         super();

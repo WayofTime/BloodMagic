@@ -8,7 +8,6 @@ import net.minecraft.item.ItemBucket;
 
 public class ItemBucketEssence extends ItemBucket
 {
-
     public ItemBucketEssence()
     {
         super(ModBlocks.lifeEssence);

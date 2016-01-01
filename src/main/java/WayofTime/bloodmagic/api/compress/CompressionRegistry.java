@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class CompressionRegistry
 {
-
     public static List<CompressionHandler> compressionRegistry = new ArrayList<CompressionHandler>();
     public static Map<ItemStack, Integer> thresholdMap = new HashMap<ItemStack, Integer>();
 

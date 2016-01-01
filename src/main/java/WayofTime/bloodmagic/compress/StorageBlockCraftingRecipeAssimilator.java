@@ -18,7 +18,6 @@ import java.util.*;
 
 public class StorageBlockCraftingRecipeAssimilator
 {
-
     public List<IRecipe> getPackingRecipes()
     {
         // grab all recipes potentially suitable for packing or unpacking

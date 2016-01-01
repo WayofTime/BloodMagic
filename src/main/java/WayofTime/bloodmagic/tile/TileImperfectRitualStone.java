@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 @NoArgsConstructor
 public class TileImperfectRitualStone extends TileEntity implements IImperfectRitualStone
 {
-
     // IImperfectRitualStone
 
     @Override

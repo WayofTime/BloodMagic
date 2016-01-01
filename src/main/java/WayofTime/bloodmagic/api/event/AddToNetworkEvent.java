@@ -4,7 +4,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class AddToNetworkEvent extends Event
 {
-
     public String ownerNetwork;
     public int addedAmount;
     public int maximum;

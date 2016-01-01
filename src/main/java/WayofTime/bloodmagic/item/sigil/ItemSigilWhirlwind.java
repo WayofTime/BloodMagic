@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilWhirlwind extends ItemSigilToggleable
 {
-
     public ItemSigilWhirlwind()
     {
         super("whirlwind", 250);

@@ -21,7 +21,6 @@ import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 
 public class RitualHelper
 {
-
     public static boolean canCrystalActivate(Ritual ritual, int crystalLevel)
     {
         return ritual.getCrystalLevel() <= crystalLevel && RitualRegistry.ritualEnabled(ritual);

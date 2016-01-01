@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @Cancelable
 public class ItemBindEvent extends Event
 {
-
     public final EntityPlayer player;
     public String key;
     public ItemStack itemStack;

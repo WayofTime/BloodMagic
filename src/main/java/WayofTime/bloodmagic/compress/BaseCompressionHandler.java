@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 
 public class BaseCompressionHandler extends CompressionHandler
 {
-
     private final ItemStack required;
     private final ItemStack result;
     private final int leftover;

@@ -8,7 +8,6 @@ import net.minecraft.util.IChatComponent;
 
 public class DamageSourceBloodMagic extends DamageSource
 {
-
     public DamageSourceBloodMagic()
     {
         super("bloodMagic");

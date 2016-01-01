@@ -19,7 +19,6 @@ import java.util.Random;
 
 public class BlockPhantom extends BlockContainer
 {
-
     public BlockPhantom()
     {
         super(Material.cloth);

@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities
 {
-
     public static void init()
     {
         int id = 0;

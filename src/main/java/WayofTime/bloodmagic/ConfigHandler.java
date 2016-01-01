@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ConfigHandler
 {
-
     @Getter
     @Setter
     private static Configuration config;

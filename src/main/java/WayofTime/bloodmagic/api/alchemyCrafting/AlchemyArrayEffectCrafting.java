@@ -8,7 +8,6 @@ import net.minecraft.util.BlockPos;
 
 public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 {
-
     @Getter
     public final ItemStack outputStack;
     public int tickLimit;

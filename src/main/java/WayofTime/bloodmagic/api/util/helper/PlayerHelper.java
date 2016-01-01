@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class PlayerHelper
 {
-
     private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
 
     public static String getUsernameFromPlayer(EntityPlayer player)

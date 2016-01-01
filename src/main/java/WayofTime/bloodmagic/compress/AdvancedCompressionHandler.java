@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 
 public class AdvancedCompressionHandler extends CompressionHandler
 {
-
     @Override
     public ItemStack compressInventory(ItemStack[] inv, World world)
     {

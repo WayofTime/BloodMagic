@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class ImperfectRitualRegistry
 {
-
     public static final Map<ImperfectRitual, Boolean> enabledRituals = new HashMap<ImperfectRitual, Boolean>();
     private static final BiMap<String, ImperfectRitual> registry = HashBiMap.create();
 

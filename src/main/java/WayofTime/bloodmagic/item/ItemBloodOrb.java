@@ -21,7 +21,6 @@ import java.util.List;
 
 public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
 {
-
     public ItemBloodOrb()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".orb.");

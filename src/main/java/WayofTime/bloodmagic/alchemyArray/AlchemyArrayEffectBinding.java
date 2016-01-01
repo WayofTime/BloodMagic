@@ -13,7 +13,6 @@ import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRende
 
 public class AlchemyArrayEffectBinding extends AlchemyArrayEffect
 {
-
     @Getter
     public final ItemStack outputStack;
 

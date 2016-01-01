@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilCompression extends ItemSigilToggleable
 {
-
     public ItemSigilCompression()
     {
         super("compression", 200);

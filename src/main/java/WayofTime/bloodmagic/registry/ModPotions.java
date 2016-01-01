@@ -10,7 +10,6 @@ import WayofTime.bloodmagic.potion.PotionEventHandlers;
 
 public class ModPotions
 {
-
     public static Potion drowning;
     public static Potion boost;
     public static Potion heavyHeart;

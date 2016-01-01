@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ItemSigilMagnetism extends ItemSigilToggleable
 {
-
     public ItemSigilMagnetism()
     {
         super("magnetism", 50);

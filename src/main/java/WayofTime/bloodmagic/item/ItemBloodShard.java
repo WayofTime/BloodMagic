@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ItemBloodShard extends Item
 {
-
     public String[] names = { "weak", "demon" };
 
     public ItemBloodShard()

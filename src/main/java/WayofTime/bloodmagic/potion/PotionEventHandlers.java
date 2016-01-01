@@ -20,7 +20,6 @@ import java.util.List;
 
 public class PotionEventHandlers
 {
-
     public PotionEventHandlers()
     {
         MinecraftForge.EVENT_BUS.register(this);

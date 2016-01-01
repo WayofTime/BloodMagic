@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilPhantomBridge extends ItemSigilToggleable
 {
-
     public ItemSigilPhantomBridge()
     {
         super("phantomBridge", 100);

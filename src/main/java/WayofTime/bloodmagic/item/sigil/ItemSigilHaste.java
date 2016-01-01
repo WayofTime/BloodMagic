@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilHaste extends ItemSigilToggleable
 {
-
     public ItemSigilHaste()
     {
         super("haste", 250);
