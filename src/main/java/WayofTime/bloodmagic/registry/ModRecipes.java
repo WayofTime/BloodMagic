@@ -1,13 +1,15 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import WayofTime.bloodmagic.alchemyArray.AlchemyArrayEffectBinding;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import WayofTime.bloodmagic.api.recipe.ShapedBloodOrbRecipe;
@@ -21,9 +23,6 @@ import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;
 import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.item.ItemComponent;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes
 {
@@ -58,6 +57,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER), "aba", "cde", "afa", 'a', "stone", 'b', Items.iron_pickaxe, 'c', Items.iron_shovel, 'd', Items.gunpowder, 'e', Items.iron_axe, 'f', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), "aba", "cde", "afa", 'a', Blocks.obsidian, 'b', ModItems.sigilAir, 'c', ModItems.sigilWater, 'd', "dustGlowstone", 'e', ModItems.sigilLava, 'f', OrbRegistry.getOrbStack(ModItems.orbMagician)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), "aba", "aca", "ded", 'a', "blockGlass", 'b', ModItems.sigilDivination, 'c', "dustGlowstone", 'd', ModItems.bucketEssence, 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), "wtl", "wrl", "wol", 't', new ItemStack(ModBlocks.teleposer), 'w', new ItemStack(Items.water_bucket), 'l', new ItemStack(Items.lava_bucket), 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune), "aaa", "bcb", "aaa", 'a', "stone", 'b', ModItems.slate, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 1), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', ModBlocks.bloodRune)); //Speed
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 2), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', ModBlocks.bloodRune)); //Efficiency
@@ -122,6 +122,7 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilGreenGrove), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/GrowthSigil.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), new ItemStack(ModItems.slate, 1, 2), new ItemStack(ModItems.sigilElementalAffinity), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/ElementalAffinitySigil.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), new ItemStack(ModItems.slate, 1, 1), new ItemStack(ModItems.sigilSeer), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilSuppression), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SuppressionSigil.png"));
     }
 
     public static void addCompressionHandlers()

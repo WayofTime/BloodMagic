@@ -79,6 +79,7 @@ item.BloodMagic.baseComponent.reagentGrowth.name=Growth Reagent
 item.BloodMagic.baseComponent.reagentAffinity.name=Elemental Affinity Reagent
 item.BloodMagic.baseComponent.reagentSight.name=Sight Reagent
 item.BloodMagic.baseComponent.reagentBinding.name=Binding Reagent
+item.BloodMagic.baseComponent.reagentSuppression.name=Suppression Reagent
 
 item.BloodMagic.sigil.air.name=Air Sigil
 item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
@@ -218,6 +219,8 @@ ritual.BloodMagic.lavaRitual=Serenade of the Nether
 ritual.BloodMagic.greenGroveRitual=Ritual of the Green Grove
 ritual.BloodMagic.jumpRitual=Ritual of the High Jump
 ritual.BloodMagic.wellOfSufferingRitual=Well of Suffering
+ritual.BloodMagic.featheredKnifeRitual=Ritual of the Feathered Knife
+ritual.BloodMagic.regenerationRitual=Ritual of Regeneration
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
