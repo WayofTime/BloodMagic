@@ -18,6 +18,7 @@ public class ModRituals
     public static Ritual greenGroveRitual;
     public static Ritual jumpRitual;
     public static Ritual sufferingRitual;
+    public static Ritual featheredKnifeRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -32,6 +33,7 @@ public class ModRituals
         greenGroveRitual = new RitualGreenGrove();
         jumpRitual = new RitualJumping();
         sufferingRitual = new RitualWellOfSuffering();
+        featheredKnifeRitual = new RitualFeatheredKnife();
 
         RitualRegistry.registerRitual(testRitual, testRitual.getName());
         RitualRegistry.registerRitual(waterRitual, waterRitual.getName());
@@ -39,6 +41,7 @@ public class ModRituals
         RitualRegistry.registerRitual(greenGroveRitual, greenGroveRitual.getName());
         RitualRegistry.registerRitual(jumpRitual, jumpRitual.getName());
         RitualRegistry.registerRitual(sufferingRitual, sufferingRitual.getName());
+        RitualRegistry.registerRitual(featheredKnifeRitual, featheredKnifeRitual.getName());
     }
 
     public static void initImperfectRituals()

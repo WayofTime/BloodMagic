@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 @Setter
 public class SoulNetwork extends WorldSavedData
 {
-
     @Nullable
     private final EntityPlayer player;
     private int currentEssence;
@@ -142,9 +141,9 @@ public class SoulNetwork extends WorldSavedData
 
     public void hurtPlayer(float syphon)
     {
+        System.out.println("Called");
         if (getPlayer() != null)
         {
-            getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 20));
             if (syphon < 100 && syphon > 0)
             {
                 if (!getPlayer().capabilities.isCreativeMode)
@@ -164,6 +163,16 @@ public class SoulNetwork extends WorldSavedData
                     }
                 }
             }
+        }
+    }
+
+    public void causeNauseaToPlayer()
+    {
+        System.out.println("Hai! I'm adding the bane of your existence!");
+
+        if (getPlayer() != null)
+        {
+            getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 20));
         }
     }
 }
