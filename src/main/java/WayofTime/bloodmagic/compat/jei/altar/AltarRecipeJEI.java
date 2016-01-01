@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
-import WayofTime.bloodmagic.compat.jei.BloodMagicRecipeWrapper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
-public class AltarRecipeJEI extends BloodMagicRecipeWrapper
+public class AltarRecipeJEI extends BlankRecipeWrapper
 {
 
     @Nonnull
@@ -46,11 +46,5 @@ public class AltarRecipeJEI extends BloodMagicRecipeWrapper
     {
         minecraft.fontRendererObj.drawString(infoString[0], 90 - minecraft.fontRendererObj.getStringWidth(infoString[0]) / 2, 0, Color.gray.getRGB());
         minecraft.fontRendererObj.drawString(infoString[1], 90 - minecraft.fontRendererObj.getStringWidth(infoString[1]) / 2, 10, Color.gray.getRGB());
-    }
-
-    @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
     }
 }

@@ -23,6 +23,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
 {
     private ItemStack output = null;
     private ArrayList<Object> input = new ArrayList<Object>();
+    private int tier;
 
     public ShapelessBloodOrbRecipe(Block result, Object... recipe)
     {
@@ -130,9 +131,10 @@ public class ShapelessBloodOrbRecipe implements IRecipe
                     // orb value of the item instead
                     if (next instanceof Integer)
                     {
-                        if (slot != null && slot.getItem() instanceof IBloodOrb)
+                        if (slot.getItem() instanceof IBloodOrb)
                         {
                             IBloodOrb orb = (IBloodOrb) slot.getItem();
+                            tier = (Integer) next;
                             if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) next)
                             {
                                 return false;
@@ -187,5 +189,10 @@ public class ShapelessBloodOrbRecipe implements IRecipe
         }
 
         return aitemstack;
+    }
+
+    public int getTier()
+    {
+        return tier;
     }
 }

@@ -7,11 +7,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.client.Minecraft;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.compat.jei.BloodMagicRecipeWrapper;
 
-public class AlchemyArrayCraftingRecipeJEI extends BloodMagicRecipeWrapper
+public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
 {
 
     @Nonnull
@@ -23,7 +22,7 @@ public class AlchemyArrayCraftingRecipeJEI extends BloodMagicRecipeWrapper
     @SuppressWarnings("unchecked")
     public AlchemyArrayCraftingRecipeJEI(@Nonnull ItemStack input, @Nullable ItemStack catalyst, @Nonnull ItemStack output)
     {
-        this.inputs = Arrays.asList(new ItemStack[] { input, catalyst });
+        this.inputs = Arrays.asList(input, catalyst);
         this.output = output;
     }
 
@@ -37,17 +36,5 @@ public class AlchemyArrayCraftingRecipeJEI extends BloodMagicRecipeWrapper
     public List getOutputs()
     {
         return Collections.singletonList(output);
-    }
-
-    @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
-    }
-
-    @Override
-    public void drawAnimations(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
-    {
-
     }
 }

@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.compat.jei;
 
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeMaker;
@@ -14,8 +13,6 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
-
-import java.util.Collections;
 
 @JEIPlugin
 public class BloodMagicPlugin implements IModPlugin
@@ -32,9 +29,17 @@ public class BloodMagicPlugin implements IModPlugin
     @Override
     public void register(IModRegistry registry)
     {
-        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory());
+        registry.addRecipeCategories(
+                new AltarRecipeCategory(),
+                new BindingRecipeCategory(),
+                new AlchemyArrayCraftingCategory()
+        );
 
-        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler());
+        registry.addRecipeHandlers(
+                new AltarRecipeHandler(),
+                new BindingRecipeHandler(),
+                new AlchemyArrayCraftingRecipeHandler()
+        );
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());

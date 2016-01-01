@@ -28,6 +28,7 @@ public class ShapedBloodOrbRecipe implements IRecipe
     private Object[] input = null;
     public int width = 0;
     public int height = 0;
+    private int tier;
     private boolean mirrored = true;
 
     public ShapedBloodOrbRecipe(Block result, Object... recipe)
@@ -237,6 +238,7 @@ public class ShapedBloodOrbRecipe implements IRecipe
                     if (slot != null && slot.getItem() instanceof IBloodOrb)
                     {
                         IBloodOrb orb = (IBloodOrb) slot.getItem();
+                        tier = (Integer) target;
                         if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) target)
                         {
                             return false;
@@ -295,5 +297,10 @@ public class ShapedBloodOrbRecipe implements IRecipe
         }
 
         return aitemstack;
+    }
+
+    public int getTier()
+    {
+        return tier;
     }
 }
