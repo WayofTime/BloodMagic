@@ -19,12 +19,14 @@ import java.util.List;
 
 public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulator
 {
-
-    public final int CONVERSION = 100; // How much LP per half heart
-    public final int CAPACITY = 10000; // Max LP storage
-    public final int INTERVAL = 20; // How often the pack syphons
-    public final float HEALTHREQ = 0.5f; // How much health is required for the
-                                         // pack to syphon (0 - 1)
+    /** How much LP per half heart */
+    public final int CONVERSION = 100;
+    /** Max LP storage */
+    public final int CAPACITY = 10000;
+    /** How often the pack syphons */
+    public final int INTERVAL = 20;
+    /** How much health is required for the pack to syphon (0 - 1) */
+    public final float HEALTHREQ = 0.5f;
 
     public ItemPackSelfSacrifice()
     {

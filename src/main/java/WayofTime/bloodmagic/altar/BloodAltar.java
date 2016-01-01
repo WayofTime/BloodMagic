@@ -312,8 +312,8 @@ public class BloodAltar
         if (world.isRemote)
             return;
 
-        internalCounter++; // Used instead of the world time for checks that do
-                           // not happen every tick
+        // Used instead of the world time for checks that do not happen every tick
+        internalCounter++;
 
         if (lockdownDuration > 0)
             lockdownDuration--;

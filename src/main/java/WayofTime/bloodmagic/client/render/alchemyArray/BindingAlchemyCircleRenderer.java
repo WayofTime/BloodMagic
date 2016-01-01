@@ -187,8 +187,8 @@ public class BindingAlchemyCircleRenderer extends AlchemyCircleRenderer
 
         GlStateManager.translate(x, y, z);
 
-        EnumFacing sideHit = EnumFacing.UP; // Specify which face this "circle"
-                                            // is located on
+        // Specify which face this "circle" is located on
+        EnumFacing sideHit = EnumFacing.UP;
         GlStateManager.translate(sideHit.getFrontOffsetX() * offsetFromFace, sideHit.getFrontOffsetY() * offsetFromFace, sideHit.getFrontOffsetZ() * offsetFromFace);
 
         switch (sideHit)
