@@ -13,7 +13,6 @@ import net.minecraft.util.EnumFacing;
 @RequiredArgsConstructor
 public class RitualComponent
 {
-
     private final BlockPos offset;
     private final EnumRuneType runeType;
 

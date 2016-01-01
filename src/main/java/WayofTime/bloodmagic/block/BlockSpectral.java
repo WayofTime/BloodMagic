@@ -20,7 +20,6 @@ import java.util.Random;
 
 public class BlockSpectral extends BlockContainer
 {
-
     public BlockSpectral()
     {
         super(Material.cloth);

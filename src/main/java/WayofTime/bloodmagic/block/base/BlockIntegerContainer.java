@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 
 public abstract class BlockIntegerContainer extends BlockInteger implements ITileEntityProvider
 {
-
     public BlockIntegerContainer(Material material, int maxMeta, String propName)
     {
         super(material, maxMeta, propName);

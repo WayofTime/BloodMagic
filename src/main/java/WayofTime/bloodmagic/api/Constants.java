@@ -6,10 +6,8 @@ import java.util.Locale;
 
 public class Constants
 {
-
     public static class NBT
     {
-
         public static final String OWNER_UUID = "ownerUUID";
         public static final String USES = "uses";
         public static final String UNUSABLE = "unusable";
@@ -62,16 +60,22 @@ public class Constants
         public static final String TICKS_REMAINING = "ticksRemaining";
         public static final String CONTAINED_BLOCK_NAME = "containedBlockName";
         public static final String CONTAINED_BLOCK_META = "containedBlockMeta";
+
+        public static final String PREVIOUS_INPUT = "previousInput";
     }
 
     public static class Mod
     {
-
         public static final String MODID = "BloodMagic";
         public static final String DOMAIN = MODID.toLowerCase(Locale.ENGLISH) + ":";
         public static final String NAME = "Blood Magic: Alchemical Wizardry";
         public static final String VERSION = "@VERSION@";
         public static final String DEPEND = "";
+    }
+
+    public static final class Gui
+    {
+        public static final int TELEPOSER_GUI = 0;
     }
 
     public static class Compat

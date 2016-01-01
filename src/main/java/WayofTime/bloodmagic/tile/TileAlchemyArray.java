@@ -10,7 +10,6 @@ import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 
 public class TileAlchemyArray extends TileInventory implements ITickable
 {
-
     public boolean isActive = false;
     public int activeCounter = 0;
 

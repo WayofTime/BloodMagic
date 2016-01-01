@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,23 +29,6 @@ public class BlockTeleposer extends BlockContainer
     }
 
     @Override
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
-    {
-        this.updateState(worldIn, pos);
-    }
-
-    private void updateState(World worldIn, BlockPos pos)
-    {
-        if (worldIn.isBlockPowered(pos))
-        {
-            if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileTeleposer)
-            {
-                ((TileTeleposer) worldIn.getTileEntity(pos)).initiateTeleport();
-            }
-        }
-    }
-
-    @Override
     public int getRenderType()
     {
         return 3;
@@ -64,7 +46,7 @@ public class BlockTeleposer extends BlockContainer
         }
         else if (world.getTileEntity(pos) instanceof TileTeleposer)
         {
-            player.openGui(BloodMagic.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+            player.openGui(BloodMagic.instance, Constants.Gui.TELEPOSER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
 
         return true;

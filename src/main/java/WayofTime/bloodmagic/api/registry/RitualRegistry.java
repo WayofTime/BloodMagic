@@ -12,7 +12,6 @@ import com.google.common.collect.HashBiMap;
 
 public class RitualRegistry
 {
-
     public static final Map<Ritual, Boolean> enabledRituals = new HashMap<Ritual, Boolean>();
     private static final BiMap<String, Ritual> registry = HashBiMap.create();
     /**

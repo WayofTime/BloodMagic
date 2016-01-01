@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class OrbRegistry
 {
-
     @Getter
     private static List<BloodOrb> orbs = new ArrayList<BloodOrb>();
 

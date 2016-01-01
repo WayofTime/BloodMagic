@@ -23,7 +23,6 @@ import net.minecraft.world.World;
 @ToString
 public abstract class Ritual
 {
-
     public final ArrayList<RitualComponent> ritualComponents = new ArrayList<RitualComponent>();
     private final String name;
     private final int crystalLevel;

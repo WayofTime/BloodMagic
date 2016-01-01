@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.client.gui;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -17,7 +18,7 @@ public class GuiHandler implements IGuiHandler
 
         switch (id)
         {
-            case 0:
+            case Constants.Gui.TELEPOSER_GUI:
                 return new ContainerTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
         }
 
@@ -33,7 +34,7 @@ public class GuiHandler implements IGuiHandler
 
             switch (id)
             {
-                case 0:
+                case Constants.Gui.TELEPOSER_GUI:
                     return new GuiTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
             }
         }

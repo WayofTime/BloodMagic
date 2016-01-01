@@ -11,7 +11,6 @@ import net.minecraft.potion.PotionEffect;
 
 public class ImperfectRitualZombie extends ImperfectRitual
 {
-
     public ImperfectRitualZombie()
     {
         super("zombie", new BlockStack(Blocks.coal_block), 5000);

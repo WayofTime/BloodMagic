@@ -18,7 +18,6 @@ import net.minecraft.world.World;
 
 public class BlockAltar extends BlockContainer
 {
-
     public BlockAltar()
     {
         super(Material.rock);

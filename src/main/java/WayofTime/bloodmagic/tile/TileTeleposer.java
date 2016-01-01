@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.block.BlockTeleposer;
 import WayofTime.bloodmagic.item.ItemBindable;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import com.google.common.base.Strings;
@@ -16,16 +18,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S06PacketUpdateHealth;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,19 +39,51 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import java.util.Iterator;
 import java.util.List;
 
-public class TileTeleposer extends TileInventory
+public class TileTeleposer extends TileInventory implements ITickable
 {
     //TODO FUTURE: Make AreaDescriptor for Teleposer perhaps?
     public static final String TELEPOSER_RANGE = "teleposerRange";
+
+    private int previousInput;
 
     public TileTeleposer()
     {
         super(1, "teleposer");
     }
 
+    @Override
+    public void readFromNBT(NBTTagCompound tagCompound)
+    {
+        super.readFromNBT(tagCompound);
+        previousInput = tagCompound.getInteger(Constants.NBT.PREVIOUS_INPUT);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tagCompound)
+    {
+        super.writeToNBT(tagCompound);
+        tagCompound.setInteger(Constants.NBT.PREVIOUS_INPUT, previousInput);
+    }
+
+    @Override
+    public void update()
+    {
+        if (!worldObj.isRemote)
+        {
+            int currentInput = worldObj.getStrongPower(pos);
+
+            if (previousInput == 0 && currentInput != 0)
+            {
+                initiateTeleport();
+            }
+
+            previousInput = currentInput;
+        }
+    }
+
     public void initiateTeleport()
     {
-        if (!worldObj.isRemote && worldObj.getTileEntity(pos) != null && worldObj.getTileEntity(pos) instanceof TileTeleposer && canInitiateTeleport((TileTeleposer) worldObj.getTileEntity(pos)))
+        if (!worldObj.isRemote && worldObj.getTileEntity(pos) != null && worldObj.getTileEntity(pos) instanceof TileTeleposer && canInitiateTeleport((TileTeleposer) worldObj.getTileEntity(pos)) && worldObj.getBlockState(pos).getBlock() instanceof BlockTeleposer)
         {
             TileTeleposer teleposer = (TileTeleposer) worldObj.getTileEntity(pos);
             ItemTelepositionFocus focus = (ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem();
@@ -59,6 +96,7 @@ public class TileTeleposer extends TileInventory
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
                 int entityCount = 0;
 
+                //TODO MAKE THIS SYPHON LP BETTER
                 if (ItemBindable.syphonNetwork(teleposer.getStackInSlot(0), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) + lpToBeDrained * entityCount))
                 {
                     List<EntityLivingBase> entityList1 = null;
@@ -97,7 +135,7 @@ public class TileTeleposer extends TileInventory
                         }
                     }
 
-                    NetworkHelper.syphonFromContainer(teleposer.getStackInSlot(0), worldObj, lpToBeDrained * blocksTransported + lpToBeDrained * entityCount);
+                    NetworkHelper.syphonFromContainer(teleposer.getStackInSlot(0), lpToBeDrained * blocksTransported + lpToBeDrained * entityCount);
 
                     if (focusWorld.equals(worldObj))
                     {

@@ -7,7 +7,6 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 
 public abstract class StatTracker
 {
-
     private boolean isDirty = false;
 
     public abstract String getUniqueIdentifier();

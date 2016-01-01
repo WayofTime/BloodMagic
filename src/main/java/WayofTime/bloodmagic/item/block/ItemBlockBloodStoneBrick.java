@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockBloodStoneBrick extends ItemBlock
 {
-
     public ItemBlockBloodStoneBrick(Block block)
     {
         super(block);

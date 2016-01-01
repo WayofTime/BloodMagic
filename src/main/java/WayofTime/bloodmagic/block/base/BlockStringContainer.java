@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 
 public abstract class BlockStringContainer extends BlockString implements ITileEntityProvider
 {
-
     public BlockStringContainer(Material material, String[] values, String propName)
     {
         super(material, values, propName);

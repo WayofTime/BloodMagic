@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AltarUpgrade
 {
-
     private int speedCount;
     private int efficiencyCount;
     private int sacrificeCount;

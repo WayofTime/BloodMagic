@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NBTHelper
 {
-
     public static ItemStack checkNBT(ItemStack stack)
     {
         if (stack.getTagCompound() == null)

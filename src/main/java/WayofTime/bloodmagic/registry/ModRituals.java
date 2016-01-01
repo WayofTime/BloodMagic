@@ -5,10 +5,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualNight;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
-import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
+import WayofTime.bloodmagic.ritual.imperfect.*;
 
 public class ModRituals
 {
@@ -20,6 +17,7 @@ public class ModRituals
     public static Ritual sufferingRitual;
     public static Ritual featheredKnifeRitual;
 
+    public static ImperfectRitual imperfectDay;
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
     public static ImperfectRitual imperfectResistance;
@@ -46,6 +44,8 @@ public class ModRituals
 
     public static void initImperfectRituals()
     {
+        imperfectDay = new ImperfectRitualDay();
+        ImperfectRitualRegistry.registerRitual(imperfectDay);
         imperfectNight = new ImperfectRitualNight();
         ImperfectRitualRegistry.registerRitual(imperfectNight);
         imperfectRain = new ImperfectRitualRain();

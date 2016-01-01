@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 
 public class TileInventory extends TileEntity implements IInventory
 {
-
     protected int[] syncedSlots = new int[0];
     private ItemStack[] inventory;
     private int size;

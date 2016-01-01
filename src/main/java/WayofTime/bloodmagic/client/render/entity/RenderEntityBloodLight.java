@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityBloodLight extends Render<EntityBloodLight>
 {
-
     public RenderEntityBloodLight(RenderManager renderManager)
     {
         super(renderManager);

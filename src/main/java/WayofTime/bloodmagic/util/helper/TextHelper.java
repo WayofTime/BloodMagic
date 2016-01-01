@@ -8,7 +8,6 @@ import java.util.List;
 
 public class TextHelper
 {
-
     public static String getFormattedText(String string)
     {
         return string.replaceAll("&", "\u00A7");

@@ -16,7 +16,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
-
     public ItemSigilDivination()
     {
         super("divination");

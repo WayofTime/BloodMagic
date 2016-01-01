@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
  */
 public interface IBindable
 {
-
     /**
      * Called when the player attempts to bind the item.
      * 

@@ -8,7 +8,6 @@ import net.minecraft.init.Blocks;
 
 public class ImperfectRitualDay extends ImperfectRitual
 {
-
     public ImperfectRitualDay()
     {
         super("day", new BlockStack(Blocks.gold_block), 5000, true);

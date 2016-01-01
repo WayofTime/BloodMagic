@@ -12,7 +12,6 @@ import net.minecraftforge.common.IPlantable;
 
 public class ItemSigilGreenGrove extends ItemSigilToggleable
 {
-
     public ItemSigilGreenGrove()
     {
         super("greenGrove", 150);

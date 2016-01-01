@@ -11,7 +11,6 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class BloodMagicPacketHandler
 {
-
     public static final SimpleNetworkWrapper INSTANCE = new SimpleNetworkWrapper(Constants.Mod.MODID);
 
     public static void init()

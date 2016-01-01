@@ -11,7 +11,6 @@ import net.minecraftforge.fluids.IFluidBlock;
 
 public class ItemSigilSuppression extends ItemSigilToggleable
 {
-
     public ItemSigilSuppression()
     {
         super("suppression", 400);

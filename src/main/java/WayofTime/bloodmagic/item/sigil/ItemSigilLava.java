@@ -16,7 +16,6 @@ import net.minecraftforge.fluids.IFluidHandler;
 
 public class ItemSigilLava extends ItemSigilBase
 {
-
     public ItemSigilLava()
     {
         super("lava", 1000);

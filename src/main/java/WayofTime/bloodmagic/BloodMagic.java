@@ -30,7 +30,6 @@ import WayofTime.bloodmagic.util.handler.EventHandler;
 @Getter
 public class BloodMagic
 {
-
     @SidedProxy(serverSide = "WayofTime.bloodmagic.proxy.CommonProxy", clientSide = "WayofTime.bloodmagic.proxy.ClientProxy")
     public static CommonProxy proxy;
 
