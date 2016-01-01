@@ -19,7 +19,7 @@ import com.google.common.collect.HashBiMap;
 
 public class AlchemyArrayRecipeRegistry
 {
-    public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
+    public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
 
     @Getter
     private static BiMap<ItemStackWrapper, AlchemyArrayRecipe> recipes = HashBiMap.create();

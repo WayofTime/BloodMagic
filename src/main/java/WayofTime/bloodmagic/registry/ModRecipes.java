@@ -44,7 +44,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ItemStack(ModItems.ritualDiviner, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(ModItems.slate, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(ModItems.ritualDiviner));
         GameRegistry.addRecipe(new ItemStack(ModBlocks.bloodStoneBrick), "aa", "aa", 'a', new ItemStack(ModBlocks.bloodStoneBrick, 1, 1));
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), Blocks.stone, ModItems.bloodShard);
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.arcaneAshes), new ItemStack(Items.dye, 1, 15), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder), new ItemStack(Items.redstone), new ItemStack(Items.flint), new ItemStack(ModItems.slate));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.arcaneAshes), new ItemStack(Items.dye, 1, 15), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder), new ItemStack(Items.redstone), new ItemStack(Items.flint), new ItemStack(Items.coal, 1, 1), new ItemStack(ModItems.slate));
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.lavaCrystal), "aba", "bcb", "ded", 'a', Blocks.glass, 'b', Items.lava_bucket, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak), 'd', Blocks.obsidian, 'e', Items.diamond));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), "xox", "oSo", "xox", 'S', OrbRegistry.getOrbStack(ModItems.orbMagician), 'o', new ItemStack(Items.redstone), 'x', new ItemStack(Items.glowstone_dust)));
