@@ -35,8 +35,8 @@ public class SoulNetworkEvent extends Event
     {
 
         public final EntityPlayer player;
-        public boolean shouldDamage; // If true, will damage regardless of if
-                                     // the network had enough inside it
+        // If true, will damage regardless of if the network had enough inside it
+        public boolean shouldDamage;
 
         public PlayerDrainNetworkEvent(EntityPlayer player, String ownerNetwork, int drainAmount)
         {
@@ -51,8 +51,11 @@ public class SoulNetworkEvent extends Event
     {
 
         public final ItemStack itemStack;
-        public float damageAmount; // Amount of damage that would incur if the
-                                   // network could not drain properly
+        /**
+         * Amount of damage that would incur if the network could not drain
+         * properly
+         */
+        public float damageAmount;
 
         /**
          * Set result to deny the action i.e. damage/drain anyways. Cancelling

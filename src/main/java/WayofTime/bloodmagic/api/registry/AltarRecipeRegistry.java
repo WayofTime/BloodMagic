@@ -89,11 +89,7 @@ public class AltarRecipeRegistry
                 return false;
 
             return tierCheck.ordinal() >= minTier.ordinal() && this.input.isItemEqual(comparedStack);// &&
-                                                                                                     // (this.useTag
-                                                                                                     // ?
-                                                                                                     // this.areRequiredTagsEqual(comparedStack)
-                                                                                                     // :
-                                                                                                     // true);
+            // (this.useTag this.areRequiredTagsEqual(comparedStack) : true);
         }
     }
 }
