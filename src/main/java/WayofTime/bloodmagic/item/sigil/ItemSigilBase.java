@@ -61,7 +61,6 @@ public class ItemSigilBase extends ItemBindable implements ISigil
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-
         if (StatCollector.canTranslate(tooltipBase + "desc"))
             tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
 

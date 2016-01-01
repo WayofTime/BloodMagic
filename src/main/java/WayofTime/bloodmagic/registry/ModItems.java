@@ -74,6 +74,8 @@ public class ModItems
 
     public static Item altarMaker;
 
+    public static Item arcaneAshes;
+
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 12, 8, 50);
 
     public static void init()
@@ -142,6 +144,8 @@ public class ModItems
         livingArmourBoots = registerItem(new ItemLivingArmour(3), "ItemLivingArmourBoots");
 
         altarMaker = registerItem(new ItemAltarMaker());
+
+        arcaneAshes = registerItem(new ItemArcaneAshes());
     }
 
     public static void initRenders()
@@ -238,6 +242,8 @@ public class ModItems
         renderHelper.itemRender(livingArmourBoots);
 
         renderHelper.itemRender(altarMaker);
+
+        renderHelper.itemRender(arcaneAshes);
     }
 
     private static Item registerItem(Item item, String name)

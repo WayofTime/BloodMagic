@@ -2,20 +2,20 @@ package WayofTime.bloodmagic.api.registry;
 
 import java.util.Map.Entry;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
+import javax.annotation.Nullable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
-import javax.annotation.Nullable;
 
 public class AlchemyArrayRecipeRegistry
 {
@@ -29,17 +29,16 @@ public class AlchemyArrayRecipeRegistry
      * General case for creating an AlchemyArrayEffect for a given input.
      * 
      * @param inputStack
-     *            - Input item that is used to change the Alchemy Circle into
-     *            the circle that you are making
+     *        - Input item that is used to change the Alchemy Circle into the
+     *        circle that you are making
      * @param catalystStack
-     *            - Catalyst item that, when right-clicked onto the array, will
-     *            cause an effect
+     *        - Catalyst item that, when right-clicked onto the array, will
+     *        cause an effect
      * @param arrayEffect
-     *            - The effect that will be activated once the array is
-     *            activated
+     *        - The effect that will be activated once the array is activated
      * @param circleRenderer
-     *            - Circle rendered when the array is passive - can be
-     *            substituted for a special renderer
+     *        - Circle rendered when the array is passive - can be substituted
+     *        for a special renderer
      */
     public static void registerRecipe(ItemStack inputStack, @Nullable ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
     {
@@ -127,7 +126,7 @@ public class AlchemyArrayRecipeRegistry
 
     public static AlchemyArrayRecipe getRecipeForInput(ItemStack input)
     {
-        return recipes.get(input);
+        return recipes.get(ItemStackWrapper.getHolder(input));
     }
 
     public static AlchemyArrayEffect getAlchemyArrayEffect(ItemStack inputStack, @Nullable ItemStack catalystStack)
@@ -198,7 +197,7 @@ public class AlchemyArrayRecipeRegistry
          * Gets the actual AlchemyArrayEffect for the given catalyst.
          * 
          * @param comparedStack
-         *            The catalyst that is being checked
+         *        The catalyst that is being checked
          * @return
          */
         public AlchemyArrayEffect getAlchemyArrayEffectForCatalyst(@Nullable ItemStack comparedStack)
