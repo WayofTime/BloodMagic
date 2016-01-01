@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilElementalAffinity extends ItemSigilToggleable
 {
-
     public ItemSigilElementalAffinity()
     {
         super("elementalAffinity", 200);

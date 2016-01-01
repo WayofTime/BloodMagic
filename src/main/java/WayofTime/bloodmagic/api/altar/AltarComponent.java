@@ -9,7 +9,6 @@ import net.minecraft.util.BlockPos;
 @Getter
 public class AltarComponent
 {
-
     private BlockPos offset;
     private boolean upgradeSlot;
 

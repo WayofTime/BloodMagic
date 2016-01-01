@@ -7,7 +7,6 @@ import java.util.List;
 
 public class UnlistedPropertyString implements IUnlistedProperty<String>
 {
-
     private List values;
     private String propName;
 

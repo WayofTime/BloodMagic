@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class BoundToolEvent extends Event
 {
-
     public EntityPlayer player;
 
     public BoundToolEvent(EntityPlayer player)

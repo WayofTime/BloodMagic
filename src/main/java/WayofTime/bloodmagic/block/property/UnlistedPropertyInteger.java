@@ -4,7 +4,6 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 
 public class UnlistedPropertyInteger implements IUnlistedProperty<Integer>
 {
-
     private int maxMeta;
     private String propName;
 

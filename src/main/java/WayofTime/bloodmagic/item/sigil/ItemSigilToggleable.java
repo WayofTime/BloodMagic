@@ -17,7 +17,6 @@ import java.util.List;
 
 public class ItemSigilToggleable extends ItemSigilBase
 {
-
     public ItemSigilToggleable(String name, int lpUsed)
     {
         super(name, lpUsed);

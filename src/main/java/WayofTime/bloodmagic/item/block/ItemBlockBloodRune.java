@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockBloodRune extends ItemBlock
 {
-
     public ItemBlockBloodRune(Block block)
     {
         super(block);

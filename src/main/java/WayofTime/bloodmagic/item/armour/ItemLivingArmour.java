@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 
 public class ItemLivingArmour extends ItemArmor
 {
-
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
     public ItemLivingArmour(int armorType)

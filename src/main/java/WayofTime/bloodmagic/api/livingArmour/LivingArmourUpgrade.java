@@ -11,7 +11,6 @@ import com.google.common.collect.Multimap;
 
 public abstract class LivingArmourUpgrade
 {
-
     /**
      * Upgrade level 0 is the first upgrade. Upgrade goes from 0 to getMaxTier()
      * - 1.

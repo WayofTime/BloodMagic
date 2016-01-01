@@ -12,7 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 @EqualsAndHashCode
 public class ItemStackWrapper
 {
-
     public final Item item;
     public final int stackSize;
     public final int meta;

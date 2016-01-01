@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 
 public abstract class RitualRenderer
 {
-
     public abstract void renderAt(IMasterRitualStone masterRitualStone, double x, double y, double z);
 
     protected void bindTexture(ResourceLocation resourceLocation)

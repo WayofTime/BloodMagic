@@ -19,7 +19,6 @@ import com.google.common.collect.HashBiMap;
 
 public class AlchemyArrayRecipeRegistry
 {
-
     public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SightSigil.png"));
 
     @Getter

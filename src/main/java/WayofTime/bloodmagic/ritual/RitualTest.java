@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class RitualTest extends Ritual
 {
-
     public RitualTest()
     {
         super("ritualTest", 0, 1000, "ritual." + Constants.Mod.MODID + ".testRitual");

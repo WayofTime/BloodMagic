@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BloodMagicAPI
 {
-
     public static final String ORB = "ItemBloodOrb";
     public static final String SCRIBE = "ItemInscriptionTool";
 

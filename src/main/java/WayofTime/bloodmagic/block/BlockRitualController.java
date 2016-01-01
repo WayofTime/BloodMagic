@@ -22,7 +22,6 @@ import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 
 public class BlockRitualController extends BlockStringContainer
 {
-
     public static final String[] names = { "master", "imperfect" };
 
     public BlockRitualController()

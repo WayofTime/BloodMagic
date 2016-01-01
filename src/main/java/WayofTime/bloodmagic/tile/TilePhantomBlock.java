@@ -7,7 +7,6 @@ import net.minecraft.util.ITickable;
 
 public class TilePhantomBlock extends TileEntity implements ITickable
 {
-
     private int ticksRemaining;
 
     public TilePhantomBlock()

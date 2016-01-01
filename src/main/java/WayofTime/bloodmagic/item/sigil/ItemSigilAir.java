@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 
 public class ItemSigilAir extends ItemSigilBase
 {
-
     public ItemSigilAir()
     {
         super("air", 50);

@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 
 public class BlockPedestal extends BlockStringContainer
 {
-
     public static String[] names = { "pedestal", "plinth" };
 
     public BlockPedestal()

@@ -35,7 +35,6 @@ import java.util.List;
 @Getter
 public class BlockInteger extends Block
 {
-
     private final int maxMeta;
     private final PropertyInteger metaProp;
     private final IUnlistedProperty unlistedMetaProp;

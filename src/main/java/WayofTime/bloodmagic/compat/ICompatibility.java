@@ -5,7 +5,6 @@ package WayofTime.bloodmagic.compat;
  */
 public interface ICompatibility
 {
-
     /**
      * Called after the given {@code modid} has been verified as loaded.
      */

@@ -26,7 +26,6 @@ import net.minecraftforge.client.model.ModelLoader;
  */
 public class InventoryRenderHelper
 {
-
     /**
      * This is the base string for your resources. It will usually be your modid
      * in all lowercase with a colon at the end.

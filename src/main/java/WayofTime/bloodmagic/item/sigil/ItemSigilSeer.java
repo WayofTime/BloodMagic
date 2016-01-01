@@ -17,7 +17,6 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
 {
-
     public ItemSigilSeer()
     {
         super("seer");

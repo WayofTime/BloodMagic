@@ -22,7 +22,6 @@ import WayofTime.bloodmagic.util.Utils;
 
 public class BlockAlchemyArray extends BlockContainer
 {
-
     public BlockAlchemyArray()
     {
         super(Material.cloth);

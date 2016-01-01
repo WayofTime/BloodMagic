@@ -31,7 +31,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @NoArgsConstructor
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable
 {
-
     public static final int UPDATE_TIME = 20;
 
     private String owner;

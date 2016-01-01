@@ -15,7 +15,6 @@ import java.util.List;
 
 public class ItemSlate extends Item
 {
-
     public String[] names = { "blank", "reinforced", "imbued", "demonic", "ethereal" };
 
     public ItemSlate()

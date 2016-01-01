@@ -13,7 +13,6 @@ import java.util.List;
 
 public class ItemSigilEnderSeverance extends ItemSigilToggleable
 {
-
     public ItemSigilEnderSeverance()
     {
         super("enderSeverance", 200);

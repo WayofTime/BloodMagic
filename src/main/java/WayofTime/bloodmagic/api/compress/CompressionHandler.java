@@ -5,7 +5,6 @@ import net.minecraft.world.World;
 
 public abstract class CompressionHandler
 {
-
     /**
      * Called to look at the inventory and syphons the required stack. Returns
      * resultant stack if successful, and null if not.

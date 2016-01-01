@@ -4,7 +4,5 @@ import net.minecraft.tileentity.TileEntity;
 
 public abstract class AlchemyArrayEffect
 {
-
     public abstract boolean update(TileEntity tile, int ticksActive);
-
 }

@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.api.altar;
 
 public interface IBloodAltar
 {
-
     int getCapacity();
 
     int getCurrentBlood();

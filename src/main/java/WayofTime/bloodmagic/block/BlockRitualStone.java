@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 
 public class BlockRitualStone extends BlockString implements IRitualStone
 {
-
     public static final String[] names = { "blank", "water", "fire", "earth", "air", "dusk", "dawn" };
 
     public BlockRitualStone()

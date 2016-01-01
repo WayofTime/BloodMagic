@@ -15,7 +15,6 @@ import WayofTime.bloodmagic.api.Constants;
 
 public class ItemComponent extends Item
 {
-
     @Getter
     private static ArrayList<String> names = new ArrayList<String>();
 

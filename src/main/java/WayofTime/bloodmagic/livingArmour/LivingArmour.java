@@ -14,7 +14,6 @@ import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 
 public class LivingArmour
 {
-
     public HashMap<String, StatTracker> trackerMap = new HashMap();
     public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap();
 

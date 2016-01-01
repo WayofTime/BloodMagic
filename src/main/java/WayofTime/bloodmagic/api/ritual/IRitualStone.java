@@ -10,7 +10,6 @@ import net.minecraft.world.World;
  */
 public interface IRitualStone
 {
-
     boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType);
 
     interface Tile

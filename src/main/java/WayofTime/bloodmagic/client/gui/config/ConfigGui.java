@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.gui;
+package WayofTime.bloodmagic.client.gui.config;
 
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;

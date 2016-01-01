@@ -13,7 +13,6 @@ import java.util.List;
 
 public class ItemActivationCrystal extends ItemBindable
 {
-
     public static String[] names = { "weak", "awakened", "creative" };
 
     public ItemActivationCrystal()

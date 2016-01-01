@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 
 public class ItemDaggerOfSacrifice extends Item
 {
-
     public ItemDaggerOfSacrifice()
     {
         super();
