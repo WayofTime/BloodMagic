@@ -104,6 +104,8 @@ item.BloodMagic.ritualDivinernormal.name=Ritual Diviner
 item.BloodMagic.ritualDivinerdusk.name=Ritual Diviner [Dusk]
 item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
 
+item.BloodMagic.arcaneAshes.name=Arcane Ashes
+
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
 
@@ -201,6 +203,8 @@ tooltip.BloodMagic.diviner.dawnRune=Dawn Runes: %d
 tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
 tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
+
+tooltip.BloodMagic.arcaneAshes=Ashes used to draw a rudimentary circle
 
 tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%d, %d, %d)
 tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
