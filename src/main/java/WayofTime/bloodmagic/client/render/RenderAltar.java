@@ -38,25 +38,13 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
 
-            boolean fancyRender = mc.gameSettings.fancyGraphics;
-            float rotation = fancyRender ? (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) : 0;
+            float rotation = (float) (720.0 * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
 
-            if (fancyRender)
-            {
-                GlStateManager.rotate(rotation, 0.0F, 1.0F, 0);
-            }
-
+            GlStateManager.rotate(rotation, 0.0F, 1.0F, 0);
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
-
-            //TODO: Render the item non-fancy if requested.
-            if (!itemRenderer.shouldRenderItemIn3D(entityitem.getEntityItem()))
-            {
-                GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-            }
-
             GlStateManager.pushAttrib();
             RenderHelper.enableStandardItemLighting();
-            itemRenderer.func_181564_a(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+            itemRenderer.func_181564_a(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.GROUND);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popAttrib();
 
