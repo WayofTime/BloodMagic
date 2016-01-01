@@ -16,6 +16,7 @@ public class ModRituals
     public static Ritual jumpRitual;
     public static Ritual sufferingRitual;
     public static Ritual featheredKnifeRitual;
+    public static Ritual regenerationRitual;
 
     public static ImperfectRitual imperfectDay;
     public static ImperfectRitual imperfectNight;
@@ -32,6 +33,7 @@ public class ModRituals
         jumpRitual = new RitualJumping();
         sufferingRitual = new RitualWellOfSuffering();
         featheredKnifeRitual = new RitualFeatheredKnife();
+        regenerationRitual = new RitualRegeneration();
 
         RitualRegistry.registerRitual(testRitual, testRitual.getName());
         RitualRegistry.registerRitual(waterRitual, waterRitual.getName());
@@ -40,6 +42,7 @@ public class ModRituals
         RitualRegistry.registerRitual(jumpRitual, jumpRitual.getName());
         RitualRegistry.registerRitual(sufferingRitual, sufferingRitual.getName());
         RitualRegistry.registerRitual(featheredKnifeRitual, featheredKnifeRitual.getName());
+        RitualRegistry.registerRitual(regenerationRitual, regenerationRitual.getName());
     }
 
     public static void initImperfectRituals()

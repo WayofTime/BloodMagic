@@ -94,7 +94,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 {
                     SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
 
-                    if (network.getCurrentEssence() < ritual.getActivationCost())
+                    if (network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
                     {
                         ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
                         return false;
@@ -113,7 +113,11 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
                     if (ritual.activateRitual(this, activator))
                     {
-                        network.syphon(ritual.getActivationCost());
+                        if (!activator.capabilities.isCreativeMode)
+                        {
+                            network.syphon(ritual.getActivationCost());
+                        }
+
                         ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
                         this.active = true;
                         // Set the owner of the ritual to the crystal's owner
