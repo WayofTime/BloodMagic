@@ -89,6 +89,7 @@ public class ConfigHandler
     public static boolean vanillaPotionAbsorptionEnabled;
 
     // Compat
+    public static int wailaAltarDisplayMode;
 
     public static void init(File file)
     {
@@ -178,6 +179,7 @@ public class ConfigHandler
 
         category = "Compatibility";
         config.addCustomCategoryComment(category, "Compatibility settings");
+        wailaAltarDisplayMode = config.getInt("wailaAltarDisplayMode", category + ".waila", 1, 0, 2, "The mode for the Waila display on Blood Altars.\n0 - Always display information\n1 - Only display when Divination/Seer sigil is in hand.\n2 - Only display when Divination/Seer sigil is in inventory");
 
         config.save();
     }

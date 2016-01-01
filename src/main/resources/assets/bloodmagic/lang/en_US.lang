@@ -170,6 +170,7 @@ tooltip.BloodMagic.sigil.fastMiner.desc=&oKeep mining, and mining...
 tooltip.BloodMagic.sigil.elementalAffinity.desc=&oFalling fire fishes!
 tooltip.BloodMagic.sigil.seer.desc=&oWhen seeing all is not enough
 tooltip.BloodMagic.sigil.seer.currentAltarProgress=Current Progress: %d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=Current Progress: %s
 tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=Consumption Rate: %d LP
 tooltip.BloodMagic.sigil.seer.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.seer.currentEssence=Current Essence: %d LP
@@ -241,3 +242,9 @@ jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
+
+# WAILA
+waila.BloodMagic.sneak=&oSneak for Information
+option.BloodMagic.bypassSneak=Bypass Sneak
+option.BloodMagic.bloodAltar=Blood Altar
+option.BloodMagic.teleposer=Teleposer

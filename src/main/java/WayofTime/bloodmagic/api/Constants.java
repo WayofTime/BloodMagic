@@ -29,6 +29,7 @@ public class Constants
         public static final String INPUT_AMOUNT = "inputAmount";
         public static final String STORED_LP = "storedLP";
 
+        public static final String ALTAR = "bloodAltar";
         public static final String ALTAR_TIER = "upgradeLevel";
         public static final String ALTAR_ACTIVE = "isActive";
         public static final String ALTAR_LIQUID_REQ = "liquidRequired";
@@ -87,6 +88,10 @@ public class Constants
         public static final String JEI_CATEGORY_ALTAR = Mod.MODID + ":altar";
         public static final String JEI_CATEGORY_BINDING = Mod.MODID + ":binding";
         public static final String JEI_CATEGORY_ALCHEMYARRAY = Mod.MODID + ":alchemyArray";
+
+        public static final String WAILA_CONFIG_BYPASS_SNEAK = Mod.MODID + ".bypassSneak";
+        public static final String WAILA_CONFIG_ALTAR = Mod.MODID + ".bloodAltar";
+        public static final String WAILA_CONFIG_TELEPOSER = Mod.MODID + ".teleposer";
     }
 
     public static class Misc

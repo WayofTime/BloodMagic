@@ -37,10 +37,15 @@ if (new File(projectDir, '.git').exists())
 
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven {	url "http://mobiusstrip.eu/maven" }
 }
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+
+    compile ("mcp.mobius.waila:Waila:${waila_version}_1.8.8:dev") {
+        exclude group: 'mcp.mobius.waila'
+    }
 }
 
 minecraft {
