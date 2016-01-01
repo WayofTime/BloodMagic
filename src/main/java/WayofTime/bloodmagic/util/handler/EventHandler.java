@@ -1,5 +1,8 @@
 package WayofTime.bloodmagic.util.handler;
 
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
@@ -76,5 +79,14 @@ public class EventHandler
             ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getCurrentEquippedItem().getItem();
             ChatUtil.sendNoSpam(event.entityPlayer, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.entityPlayer)));
         }
+    }
+
+    @SubscribeEvent
+    public void onTelepose(TeleposeEvent event) {
+        BlockStack initialBlock = new BlockStack(event.initialBlock, event.initialMetadata);
+        BlockStack finalBlock = new BlockStack(event.finalBlock, event.finalMetadata);
+
+        if (ConfigHandler.teleposerBlacklist.contains(initialBlock) || ConfigHandler.teleposerBlacklist.contains(finalBlock))
+            event.setCanceled(true);
     }
 }
