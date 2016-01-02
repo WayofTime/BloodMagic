@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import net.minecraft.item.ItemStack;
 
@@ -20,9 +21,9 @@ public class AltarRecipeMaker
 
         for (Map.Entry<ItemStack, AltarRecipeRegistry.AltarRecipe> itemStackAltarRecipeEntry : altarMap.entrySet())
         {
-            if (itemStackAltarRecipeEntry.getValue().getOutput() != null)
+            if (!(itemStackAltarRecipeEntry.getKey().getItem() instanceof IBloodOrb))
             {
-                // Make sure output is not null. If it is, the recipe is for a filling orb, and we don't want that.
+                // Make sure input is not a Blood Orb. If it is, the recipe is for a filling orb, and we don't want that.
                 ItemStack input = itemStackAltarRecipeEntry.getKey();
                 ItemStack output = itemStackAltarRecipeEntry.getValue().getOutput();
                 int requiredTier = itemStackAltarRecipeEntry.getValue().getMinTier().toInt();
