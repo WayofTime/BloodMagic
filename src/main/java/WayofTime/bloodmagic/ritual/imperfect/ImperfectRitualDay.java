@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.ritual.imperfect;
 
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +11,7 @@ public class ImperfectRitualDay extends ImperfectRitual
 {
     public ImperfectRitualDay()
     {
-        super("day", new BlockStack(Blocks.gold_block), 5000, true);
+        super("day", new BlockStack(Blocks.gold_block), 5000, true, "ritual." + Constants.Mod.MODID + ".imperfect.day");
     }
 
     @Override

@@ -23,6 +23,7 @@ public abstract class ImperfectRitual
     private final BlockStack requiredBlock;
     private final int activationCost;
     private final boolean lightshow;
+    private final String unlocalizedName;
 
     /**
      * @param name
@@ -32,9 +33,9 @@ public abstract class ImperfectRitual
      * @param activationCost
      *            - Base LP cost for activating the ritual
      */
-    public ImperfectRitual(String name, BlockStack requiredBlock, int activationCost)
+    public ImperfectRitual(String name, BlockStack requiredBlock, int activationCost, String unlocalizedName)
     {
-        this(name, requiredBlock, activationCost, false);
+        this(name, requiredBlock, activationCost, false, unlocalizedName);
     }
 
     /**

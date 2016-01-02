@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.ritual.imperfect;
 
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import net.minecraft.entity.monster.EntityZombie;
@@ -13,7 +14,7 @@ public class ImperfectRitualZombie extends ImperfectRitual
 {
     public ImperfectRitualZombie()
     {
-        super("zombie", new BlockStack(Blocks.coal_block), 5000);
+        super("zombie", new BlockStack(Blocks.coal_block), 5000, "ritual." + Constants.Mod.MODID + ".imperfect.zombie");
     }
 
     @Override
