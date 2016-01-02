@@ -9,7 +9,6 @@ import WayofTime.bloodmagic.ritual.imperfect.*;
 
 public class ModRituals
 {
-    public static Ritual testRitual;
     public static Ritual waterRitual;
     public static Ritual lavaRitual;
     public static Ritual greenGroveRitual;
@@ -18,7 +17,6 @@ public class ModRituals
     public static Ritual featheredKnifeRitual;
     public static Ritual regenerationRitual;
 
-    public static ImperfectRitual imperfectDay;
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
     public static ImperfectRitual imperfectResistance;
@@ -26,29 +24,24 @@ public class ModRituals
 
     public static void initRituals()
     {
-        testRitual = new RitualTest();
         waterRitual = new RitualWater();
-        lavaRitual = new RitualLava();
-        greenGroveRitual = new RitualGreenGrove();
-        jumpRitual = new RitualJumping();
-        sufferingRitual = new RitualWellOfSuffering();
-        featheredKnifeRitual = new RitualFeatheredKnife();
-        regenerationRitual = new RitualRegeneration();
-
-        RitualRegistry.registerRitual(testRitual, testRitual.getName());
         RitualRegistry.registerRitual(waterRitual, waterRitual.getName());
+        lavaRitual = new RitualLava();
         RitualRegistry.registerRitual(lavaRitual, lavaRitual.getName());
+        greenGroveRitual = new RitualGreenGrove();
         RitualRegistry.registerRitual(greenGroveRitual, greenGroveRitual.getName());
+        jumpRitual = new RitualJumping();
         RitualRegistry.registerRitual(jumpRitual, jumpRitual.getName());
+        sufferingRitual = new RitualWellOfSuffering();
         RitualRegistry.registerRitual(sufferingRitual, sufferingRitual.getName());
+        featheredKnifeRitual = new RitualFeatheredKnife();
         RitualRegistry.registerRitual(featheredKnifeRitual, featheredKnifeRitual.getName());
+        regenerationRitual = new RitualRegeneration();
         RitualRegistry.registerRitual(regenerationRitual, regenerationRitual.getName());
     }
 
     public static void initImperfectRituals()
     {
-        imperfectDay = new ImperfectRitualDay();
-        ImperfectRitualRegistry.registerRitual(imperfectDay);
         imperfectNight = new ImperfectRitualNight();
         ImperfectRitualRegistry.registerRitual(imperfectNight);
         imperfectRain = new ImperfectRitualRain();
