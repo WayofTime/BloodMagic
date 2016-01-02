@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class PropertyString extends PropertyHelper
+public class PropertyString extends PropertyHelper<String>
 {
-    private final ImmutableSet allowedValues;
+    private final ImmutableSet<String> allowedValues;
 
     protected PropertyString(String name, String[] values)
     {
@@ -27,7 +27,7 @@ public class PropertyString extends PropertyHelper
     }
 
     @Override
-    public Collection getAllowedValues()
+    public Collection<String> getAllowedValues()
     {
         return allowedValues;
     }
@@ -38,8 +38,8 @@ public class PropertyString extends PropertyHelper
     }
 
     @Override
-    public String getName(Comparable value)
+    public String getName(String value)
     {
-        return this.getName0(value.toString());
+        return this.getName0(value);
     }
 }
