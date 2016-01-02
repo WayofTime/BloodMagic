@@ -24,6 +24,10 @@ public class AltarRecipeRegistry
             BloodMagicAPI.getLogger().error("Error adding altar recipe for %s. Recipe already exists.", recipe.input.getDisplayName(), recipe.output == null ? "" : " -> ");
     }
 
+    public static void registerFillRecipe(ItemStack orbStack, EnumAltarTier tier, int maxForOrb, int consumeRate, int drainRate) {
+        registerRecipe(new AltarRecipe(orbStack, orbStack, tier, maxForOrb, consumeRate, drainRate, true));
+    }
+
     public static AltarRecipe getRecipeForInput(ItemStack input)
     {
         return recipes.get(input);
@@ -36,7 +40,7 @@ public class AltarRecipeRegistry
     {
 
         public final int syphon, consumeRate, drainRate;
-        public final boolean useTag;
+        public final boolean fillable;
         public final ItemStack input, output;
         public final EnumAltarTier minTier;
 
@@ -59,10 +63,10 @@ public class AltarRecipeRegistry
          *            - The rate at which LP is consumed during crafting
          * @param drainRate
          *            - The rate at which LP is drained during crafting
-         * @param useTag
-         *            -
+         * @param fillable
+         *            - Whether the input item can be filled with LP. IE: Orbs
          */
-        public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean useTag)
+        public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable)
         {
             this.input = input;
             this.output = output;
@@ -70,17 +74,12 @@ public class AltarRecipeRegistry
             this.syphon = syphon < 0 ? -syphon : syphon;
             this.consumeRate = consumeRate < 0 ? -consumeRate : consumeRate;
             this.drainRate = drainRate < 0 ? -drainRate : drainRate;
-            this.useTag = useTag;
+            this.fillable = fillable;
         }
 
         public AltarRecipe(ItemStack input, ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate)
         {
             this(input, output, minTier, syphon, consumeRate, drainRate, false);
-        }
-
-        public AltarRecipe(ItemStack input, EnumAltarTier minTier, int consumeRate, int drainRate)
-        {
-            this(input, null, minTier, 0, consumeRate, drainRate);
         }
 
         public boolean doesRequiredItemMatch(ItemStack comparedStack, EnumAltarTier tierCheck)
@@ -89,7 +88,7 @@ public class AltarRecipeRegistry
                 return false;
 
             return tierCheck.ordinal() >= minTier.ordinal() && this.input.isItemEqual(comparedStack);// &&
-            // (this.useTag this.areRequiredTagsEqual(comparedStack) : true);
+            // (this.fillable this.areRequiredTagsEqual(comparedStack) : true);
         }
     }
 }

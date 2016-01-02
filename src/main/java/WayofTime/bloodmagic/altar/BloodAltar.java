@@ -307,9 +307,9 @@ public class BloodAltar
                 if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier))
                 {
                     this.isActive = true;
-                    this.result = new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
+                    this.result = recipe.getOutput() == null ? null : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
                     this.liquidRequired = recipe.getSyphon();
-                    this.canBeFilled = recipe.isUseTag();
+                    this.canBeFilled = recipe.isFillable();
                     this.consumptionRate = recipe.getConsumeRate();
                     this.drainRate = recipe.getDrainRate();
                     return;
@@ -402,14 +402,10 @@ public class BloodAltar
 
             if (totalCharge > 0)
             {
-                System.out.println("Working...");
-                System.out.println("Total charge: " + totalCharge);
-
                 int chargeDrained = Math.min(liquidRequired * stackSize - progress, totalCharge);
 
                 totalCharge -= chargeDrained;
                 progress += chargeDrained;
-                System.out.println("Progress: " + progress);
 
                 hasOperated = true;
             }

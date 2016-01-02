@@ -33,7 +33,7 @@ public class Constants
         public static final String ALTAR_TIER = "upgradeLevel";
         public static final String ALTAR_ACTIVE = "isActive";
         public static final String ALTAR_LIQUID_REQ = "liquidRequired";
-        public static final String ALTAR_FILLABLE = "canBeFilled";
+        public static final String ALTAR_FILLABLE = "fillable";
         public static final String ALTAR_UPGRADED = "isUpgraded";
         public static final String ALTAR_CONSUMPTION_RATE = "consumptionRate";
         public static final String ALTAR_DRAIN_RATE = "drainRate";
