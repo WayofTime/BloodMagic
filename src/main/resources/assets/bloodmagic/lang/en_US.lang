@@ -209,10 +209,14 @@ tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
 tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
 
-tooltip.BloodMagic.arcaneAshes=Ashes used to draw a rudimentary circle
+tooltip.BloodMagic.arcaneAshes=Ashes used to draw an alchemy circle
 
 tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%d, %d, %d)
 tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
+tooltip.BloodMagic.telepositionFocus.weak=Used to move blocks in the world
+tooltip.BloodMagic.telepositionFocus.enhanced=Used to move blocks in the world
+tooltip.BloodMagic.telepositionFocus.reinforced=Used to move blocks in the world
+tooltip.BloodMagic.telepositionFocus.demonic=Used to move blocks in the world
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual

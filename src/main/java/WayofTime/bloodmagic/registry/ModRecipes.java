@@ -50,6 +50,7 @@ public class ModRecipes
 
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.telepositionFocus, 1, 2), new ItemStack(ModItems.telepositionFocus, 1, 1), new ItemStack(ModItems.bloodShard));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.telepositionFocus, 1, 3), new ItemStack(ModItems.telepositionFocus, 1, 2), new ItemStack(ModItems.bloodShard, 1, 1));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.teleposer), "ggg", "efe", "ggg", 'g', "ingotGold", 'e', new ItemStack(Items.ender_pearl), 'f', ModItems.telepositionFocus));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.lavaCrystal), "aba", "bcb", "ded", 'a', "blockGlass", 'b', Items.lava_bucket, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak), 'd', Blocks.obsidian, 'e', "gemDiamond"));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), "xox", "oSo", "xox", 'S', OrbRegistry.getOrbStack(ModItems.orbMagician), 'o', "dustRedstone", 'x', "dustGlowstone"));
