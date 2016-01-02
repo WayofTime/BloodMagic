@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -12,10 +13,26 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
 public class LivingArmour
 {
-    public HashMap<String, StatTracker> trackerMap = new HashMap();
-    public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap();
+    public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
+    public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<String, LivingArmourUpgrade>();
+
+    public Multimap<String, AttributeModifier> getAttributeModifiers()
+    {
+        HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
+
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
+        {
+            LivingArmourUpgrade upgrade = entry.getValue();
+            modifierMap.putAll(upgrade.getAttributeModifiers());
+        }
+
+        return modifierMap;
+    }
 
     /**
      * Ticks the upgrades and stat trackers, passing in the world and player as

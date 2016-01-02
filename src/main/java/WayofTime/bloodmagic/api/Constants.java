@@ -67,6 +67,8 @@ public class Constants
         public static final String CONTAINED_BLOCK_META = "containedBlockMeta";
 
         public static final String PREVIOUS_INPUT = "previousInput";
+
+        public static final String LIVING_ARMOUR = "livingArmour";
     }
 
     public static class Mod
