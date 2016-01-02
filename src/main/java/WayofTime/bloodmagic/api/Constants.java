@@ -92,6 +92,7 @@ public class Constants
         public static final String WAILA_CONFIG_BYPASS_SNEAK = Mod.MODID + ".bypassSneak";
         public static final String WAILA_CONFIG_ALTAR = Mod.MODID + ".bloodAltar";
         public static final String WAILA_CONFIG_TELEPOSER = Mod.MODID + ".teleposer";
+        public static final String WAILA_CONFIG_RITUAL = Mod.MODID + ".ritualController";
     }
 
     public static class Misc
