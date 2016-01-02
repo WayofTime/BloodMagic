@@ -30,7 +30,7 @@ public class RitualFeatheredKnife extends Ritual
 
     public RitualFeatheredKnife()
     {
-        super("ritualFeatheredKnife", 0, 1000, "ritual." + Constants.Mod.MODID + ".featheredKnifeRitual");
+        super("ritualFeatheredKnife", 0, 25000, "ritual." + Constants.Mod.MODID + ".featheredKnifeRitual");
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -20, -15), 31, 41, 31));
     }

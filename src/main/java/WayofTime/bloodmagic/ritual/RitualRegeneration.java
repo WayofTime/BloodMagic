@@ -82,7 +82,7 @@ public class RitualRegeneration extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 20;
+        return 200;
     }
 
     @Override

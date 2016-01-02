@@ -23,7 +23,7 @@ public class RitualJumping extends Ritual
 
     public RitualJumping()
     {
-        super("ritualJump", 0, 1000, "ritual." + Constants.Mod.MODID + ".jumpRitual");
+        super("ritualJump", 0, 5000, "ritual." + Constants.Mod.MODID + ".jumpRitual");
         addBlockRange(JUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 1, -1), 3, 1, 3));
     }
 

@@ -24,7 +24,7 @@ public class RitualGreenGrove extends Ritual
 
     public RitualGreenGrove()
     {
-        super("ritualGreenGrove", 0, 1000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
+        super("ritualGreenGrove", 0, 5000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
         addBlockRange(GROW_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), 3, 1, 3));
     }
 
