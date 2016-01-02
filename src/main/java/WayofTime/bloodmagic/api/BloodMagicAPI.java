@@ -39,8 +39,8 @@ public class BloodMagicAPI
      * items in case internal names change.
      * 
      * @param name
-     *            - The registered name of the item. Usually the same as the
-     *            class name.
+     *        - The registered name of the item. Usually the same as the class
+     *        name.
      * @return - The requested Item
      */
     public static Item getItem(String name)
@@ -49,11 +49,11 @@ public class BloodMagicAPI
     }
 
     /**
-     * Used to add a {@link BlockStack} to the Teleposer blacklist that
-     * cannot be changed via Configuration files.
-     *
+     * Used to add a {@link BlockStack} to the Teleposer blacklist that cannot
+     * be changed via Configuration files.
+     * 
      * @param blockStack
-     *          - The BlockStack to blacklist.
+     *        - The BlockStack to blacklist.
      */
     public static void addToTeleposerBlacklist(BlockStack blockStack)
     {
@@ -63,11 +63,11 @@ public class BloodMagicAPI
 
     /**
      * @see #addToTeleposerBlacklist(BlockStack)
-     *
+     * 
      * @param block
-     *          - The block to blacklist
+     *        - The block to blacklist
      * @param meta
-     *          - The meta of the block to blacklist
+     *        - The meta of the block to blacklist
      */
     public static void addToTeleposerBlacklist(Block block, int meta)
     {
@@ -76,9 +76,9 @@ public class BloodMagicAPI
 
     /**
      * @see #addToTeleposerBlacklist(BlockStack)
-     *
+     * 
      * @param block
-     *          - The block to blacklist
+     *        - The block to blacklist
      */
     public static void addToTeleposerBlacklist(Block block)
     {

@@ -43,12 +43,12 @@ public class ItemBindable extends Item implements IBindable
      * it will instead take the LP from the holder of the item.
      * 
      * @param stack
-     *          - The ItemStack to syphon from
+     *        - The ItemStack to syphon from
      * @param player
-     *          -  The Player using the item
+     *        - The Player using the item
      * @param lpUsed
-     *          - The amount of LP to syphon
-     *
+     *        - The amount of LP to syphon
+     * 
      * @return Whether syphoning was successful or not
      */
     public static boolean syphonNetwork(ItemStack stack, EntityPlayer player, int lpUsed)
@@ -84,10 +84,10 @@ public class ItemBindable extends Item implements IBindable
      * fails to find sufficient LP.
      * 
      * @param stack
-     *          - The ItemStack to syphon from.
+     *        - The ItemStack to syphon from.
      * @param lpUsed
-     *          - The amount of LP to syphon
-     *
+     *        - The amount of LP to syphon
+     * 
      * @return - If syphoning was successful or not
      */
     public static boolean syphonNetwork(ItemStack stack, int lpUsed)

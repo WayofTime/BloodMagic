@@ -19,9 +19,9 @@ public class ImperfectRitualRegistry
      * The safe way to register a new Ritual.
      * 
      * @param imperfectRitual
-     *            - The imperfect ritual to register.
+     *        - The imperfect ritual to register.
      * @param id
-     *            - The ID for the imperfect ritual. Cannot be duplicated.
+     *        - The ID for the imperfect ritual. Cannot be duplicated.
      */
     public static void registerRitual(ImperfectRitual imperfectRitual, String id)
     {

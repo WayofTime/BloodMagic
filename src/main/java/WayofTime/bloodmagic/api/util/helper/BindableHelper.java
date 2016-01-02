@@ -18,9 +18,9 @@ public class BindableHelper
      * type of Fake Player.
      * 
      * @param stack
-     *            - The ItemStack to bind
+     *        - The ItemStack to bind
      * @param player
-     *            - The Player to bind the ItemStack to
+     *        - The Player to bind the ItemStack to
      * 
      * @return - Whether binding was successful
      */
@@ -38,9 +38,9 @@ public class BindableHelper
      * Fires {@link ItemBindEvent}.
      * 
      * @param stack
-     *            - The ItemStack to bind
+     *        - The ItemStack to bind
      * @param uuid
-     *            - The username to bind the ItemStack to
+     *        - The username to bind the ItemStack to
      * 
      * @return - Whether the binding was successful
      */
@@ -64,11 +64,11 @@ public class BindableHelper
 
     /**
      * @see BindableHelper#checkAndSetItemOwner(ItemStack, String)
-     *
+     * 
      * @param stack
-     *          - ItemStack to check
+     *        - ItemStack to check
      * @param uuid
-     *          - UUID of the Player
+     *        - UUID of the Player
      */
     public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid)
     {
@@ -80,9 +80,9 @@ public class BindableHelper
      * bypasses {@link ItemBindEvent}.
      * 
      * @param stack
-     *            - The ItemStack to bind
+     *        - The ItemStack to bind
      * @param ownerName
-     *            - The username to bind the ItemStack to
+     *        - The username to bind the ItemStack to
      */
     public static void setItemOwner(ItemStack stack, String ownerName)
     {
@@ -95,7 +95,7 @@ public class BindableHelper
      * Used to safely obtain the username of the ItemStack's owner
      * 
      * @param stack
-     *            - The ItemStack to check the owner of
+     *        - The ItemStack to check the owner of
      * 
      * @return - The username of the ItemStack's owner
      */
@@ -110,7 +110,7 @@ public class BindableHelper
      * Used to safely obtain the UUID of the ItemStack's owner
      * 
      * @param stack
-     *            - The ItemStack to check the owner of
+     *        - The ItemStack to check the owner of
      * 
      * @return - The UUID of the ItemStack's owner
      */

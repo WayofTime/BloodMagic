@@ -39,7 +39,7 @@ public class ChatUtil
      * .
      * 
      * @param s
-     *            The string to wrap.
+     *        The string to wrap.
      * 
      * @return An {@link IChatComponent} containing the string.
      */
@@ -66,9 +66,9 @@ public class ChatUtil
      * args.
      * 
      * @param s
-     *            The string to format
+     *        The string to format
      * @param args
-     *            The args to apply to the format
+     *        The args to apply to the format
      */
     public static IChatComponent wrapFormatted(String s, Object... args)
     {
@@ -79,9 +79,9 @@ public class ChatUtil
      * Simply sends the passed lines to the player in a chat message.
      * 
      * @param player
-     *            The player to send the chat to
+     *        The player to send the chat to
      * @param lines
-     *            The lines to send
+     *        The lines to send
      */
     public static void sendChat(EntityPlayer player, String... lines)
     {
@@ -102,9 +102,9 @@ public class ChatUtil
      * Sends all passed chat components to the player.
      * 
      * @param player
-     *            The player to send the chat lines to.
+     *        The player to send the chat lines to.
      * @param lines
-     *            The {@link IChatComponent chat components} to send.yes
+     *        The {@link IChatComponent chat components} to send.yes
      */
     public static void sendChat(EntityPlayer player, IChatComponent... lines)
     {
@@ -129,7 +129,7 @@ public class ChatUtil
      * Strings automatically.
      * 
      * @param lines
-     *            The chat lines to send
+     *        The chat lines to send
      * 
      * @see #wrap(String)
      */
@@ -207,9 +207,9 @@ public class ChatUtil
      * Credit to RWTema for the idea
      * 
      * @param player
-     *            The player to send the chat message to
+     *        The player to send the chat message to
      * @param lines
-     *            The chat lines to send.
+     *        The chat lines to send.
      */
     public static void sendNoSpam(EntityPlayerMP player, IChatComponent... lines)
     {

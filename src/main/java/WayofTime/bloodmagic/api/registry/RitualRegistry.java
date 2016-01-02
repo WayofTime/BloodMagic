@@ -24,9 +24,9 @@ public class RitualRegistry
      * The safe way to register a new Ritual.
      * 
      * @param ritual
-     *            - The ritual to register.
+     *        - The ritual to register.
      * @param id
-     *            - The ID for the ritual. Cannot be duplicated.
+     *        - The ID for the ritual. Cannot be duplicated.
      */
     public static void registerRitual(Ritual ritual, String id)
     {

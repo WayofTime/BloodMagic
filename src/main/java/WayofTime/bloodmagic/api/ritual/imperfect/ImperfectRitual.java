@@ -27,11 +27,11 @@ public abstract class ImperfectRitual
 
     /**
      * @param name
-     *            - The name of the ritual
+     *        - The name of the ritual
      * @param requiredBlock
-     *            - The block required above the ImperfectRitualStone
+     *        - The block required above the ImperfectRitualStone
      * @param activationCost
-     *            - Base LP cost for activating the ritual
+     *        - Base LP cost for activating the ritual
      */
     public ImperfectRitual(String name, BlockStack requiredBlock, int activationCost, String unlocalizedName)
     {
@@ -43,10 +43,9 @@ public abstract class ImperfectRitual
      * {@link WayofTime.bloodmagic.tile.TileImperfectRitualStone#performRitual(World, BlockPos, ImperfectRitual, EntityPlayer)}
      * 
      * @param imperfectRitualStone
-     *            - The {@link IImperfectRitualStone} that the ritual is bound
-     *            to
+     *        - The {@link IImperfectRitualStone} that the ritual is bound to
      * @param player
-     *            - The player activating the ritual
+     *        - The player activating the ritual
      * @return - Whether activation was successful
      */
     public abstract boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player);

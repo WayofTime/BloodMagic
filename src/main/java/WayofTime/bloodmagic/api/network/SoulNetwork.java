@@ -89,10 +89,10 @@ public class SoulNetwork extends WorldSavedData
 
     /**
      * Used to syphon LP from the network
-     *
+     * 
      * @param syphon
-     *          - The amount of LP to syphon
-     *
+     *        - The amount of LP to syphon
+     * 
      * @return The amount of LP syphoned
      */
     public int syphon(int syphon)
@@ -112,11 +112,11 @@ public class SoulNetwork extends WorldSavedData
      * instead take away from the user's health.
      * 
      * Always returns false on the client side.
-     *
+     * 
      * @param user
-     *          - The Player to syphon from
+     *        - The Player to syphon from
      * @param toSyphon
-     *          - The amount of LP to syphon
+     *        - The amount of LP to syphon
      * 
      * @return - Whether the action should be performed.
      */

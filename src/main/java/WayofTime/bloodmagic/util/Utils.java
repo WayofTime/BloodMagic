@@ -29,13 +29,14 @@ public class Utils
 
     /**
      * @see #insertItemToTile(TileInventory, EntityPlayer, int)
-     *
+     * 
      * @param tile
-     *            - The {@link TileInventory} to input the item to
+     *        - The {@link TileInventory} to input the item to
      * @param player
-     *            - The player to take the item from.
-     *
-     * @return {@code true} if the ItemStack is inserted, {@code false} otherwise
+     *        - The player to take the item from.
+     * 
+     * @return {@code true} if the ItemStack is inserted, {@code false}
+     *         otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player)
     {
@@ -45,17 +46,18 @@ public class Utils
     /**
      * Used for inserting an ItemStack with a stacksize of 1 to a tile's
      * inventory at slot 0
-     *
+     * 
      * EG: Block Altar
-     *
+     * 
      * @param tile
-     *            - The {@link TileInventory} to input the item to
+     *        - The {@link TileInventory} to input the item to
      * @param player
-     *            - The player to take the item from.
+     *        - The player to take the item from.
      * @param slot
-     *            - The slot to attempt to insert to
-     *
-     * @return {@code true} if the ItemStack is inserted, {@code false} otherwise
+     *        - The slot to attempt to insert to
+     * 
+     * @return {@code true} if the ItemStack is inserted, {@code false}
+     *         otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
     {
@@ -82,10 +84,10 @@ public class Utils
 
     /**
      * Gets a default block for each type of {@link EnumAltarComponent}
-     *
+     * 
      * @param component
-     *          - The Component to provide a block for.
-     *
+     *        - The Component to provide a block for.
+     * 
      * @return The default Block for the EnumAltarComponent
      */
     public static Block getBlockForComponent(EnumAltarComponent component)

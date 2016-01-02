@@ -23,7 +23,7 @@ public abstract class LivingArmourUpgrade
      * these.
      * 
      * @param level
-     *            The level of the upgrade
+     *        The level of the upgrade
      */
     public LivingArmourUpgrade(int level)
     {

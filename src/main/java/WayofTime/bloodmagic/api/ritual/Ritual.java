@@ -34,11 +34,11 @@ public abstract class Ritual
 
     /**
      * @param name
-     *            - The name of the ritual
+     *        - The name of the ritual
      * @param crystalLevel
-     *            - Required Activation Crystal tier
+     *        - Required Activation Crystal tier
      * @param activationCost
-     *            - Base LP cost for activating the ritual
+     *        - Base LP cost for activating the ritual
      */
     public Ritual(String name, int crystalLevel, int activationCost, String unlocalizedName)
     {
@@ -51,9 +51,9 @@ public abstract class Ritual
      * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#activateRitual(ItemStack, EntityPlayer, Ritual)}
      * 
      * @param masterRitualStone
-     *            - The {@link IMasterRitualStone} that the ritual is bound to
+     *        - The {@link IMasterRitualStone} that the ritual is bound to
      * @param player
-     *            - The activating player
+     *        - The activating player
      * @return - Whether activation was successful
      */
     public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player)
@@ -67,7 +67,7 @@ public abstract class Ritual
      * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#performRitual(World, BlockPos)}
      * 
      * @param masterRitualStone
-     *            - The {@link IMasterRitualStone} that the ritual is bound to
+     *        - The {@link IMasterRitualStone} that the ritual is bound to
      */
     public abstract void performRitual(IMasterRitualStone masterRitualStone);
 
@@ -77,9 +77,9 @@ public abstract class Ritual
      * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#stopRitual(BreakType)}
      * 
      * @param masterRitualStone
-     *            - The {@link IMasterRitualStone} that the ritual is bound to
+     *        - The {@link IMasterRitualStone} that the ritual is bound to
      * @param breakType
-     *            - The type of break that caused the stoppage.
+     *        - The type of break that caused the stoppage.
      */
     public void stopRitual(IMasterRitualStone masterRitualStone, BreakType breakType)
     {
@@ -114,7 +114,7 @@ public abstract class Ritual
      * Used to grab the range of a ritual for a given effect.
      * 
      * @param range
-     *            - Range that needs to be pulled.
+     *        - Range that needs to be pulled.
      * @return -
      */
     public AreaDescriptor getBlockRange(String range)
@@ -162,7 +162,12 @@ public abstract class Ritual
 
     public enum BreakType
     {
-        REDSTONE, BREAK_MRS, BREAK_STONE, ACTIVATE, DEACTIVATE, EXPLOSION,
+        REDSTONE,
+        BREAK_MRS,
+        BREAK_STONE,
+        ACTIVATE,
+        DEACTIVATE,
+        EXPLOSION,
     }
 
     public abstract Ritual getNewCopy();

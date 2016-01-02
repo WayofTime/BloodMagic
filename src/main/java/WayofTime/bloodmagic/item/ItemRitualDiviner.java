@@ -78,16 +78,16 @@ public class ItemRitualDiviner extends Item
 
     /**
      * Adds a single rune to the ritual.
-     *
+     * 
      * @param stack
-     *            - The Ritual Diviner stack
+     *        - The Ritual Diviner stack
      * @param world
-     *            - The World
+     *        - The World
      * @param pos
-     *            - Block Position of the MRS.
+     *        - Block Position of the MRS.
      * @param player
-     *            - The Player attempting to place the ritual
-     *
+     *        - The Player attempting to place the ritual
+     * 
      * @return - True if a rune was successfully added
      */
     public boolean addRuneToRitual(ItemStack stack, World world, BlockPos pos, EntityPlayer player)
@@ -374,9 +374,9 @@ public class ItemRitualDiviner extends Item
      * Cycles the selected ritual to the next available ritual that is enabled.
      * 
      * @param stack
-     *            - The ItemStack of the ritual diviner
+     *        - The ItemStack of the ritual diviner
      * @param player
-     *            - The player using the ritual diviner
+     *        - The player using the ritual diviner
      */
     public void cycleRitual(ItemStack stack, EntityPlayer player)
     {

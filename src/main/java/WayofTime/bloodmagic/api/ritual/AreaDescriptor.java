@@ -39,9 +39,9 @@ public abstract class AreaDescriptor
          * (1,1,1), calling getContainedPositions() will only give (0,0,0).
          * 
          * @param minimumOffset
-         *          -
+         *        -
          * @param maximumOffset
-         *          -
+         *        -
          */
         public Rectangle(BlockPos minimumOffset, BlockPos maximumOffset)
         {
@@ -95,9 +95,9 @@ public abstract class AreaDescriptor
          * minimumOffset the lowest corner
          * 
          * @param offset1
-         *          -
+         *        -
          * @param offset2
-         *          -
+         *        -
          */
         public void setOffsets(BlockPos offset1, BlockPos offset2)
         {

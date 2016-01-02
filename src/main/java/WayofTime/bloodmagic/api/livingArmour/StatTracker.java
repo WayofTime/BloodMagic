@@ -26,11 +26,11 @@ public abstract class StatTracker
      * LivingArmour
      * 
      * @param world
-     *            World the player is in
+     *        World the player is in
      * @param player
-     *            The player that has the armour equipped
+     *        The player that has the armour equipped
      * @param livingArmour
-     *            The equipped LivingArmour
+     *        The equipped LivingArmour
      * @return True if there is a new upgrade unlocked this tick.
      */
     public abstract boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour);

@@ -41,11 +41,11 @@ public class InventoryRenderHelper
      * Registers a Model for the given Item and meta.
      * 
      * @param item
-     *            - Item to register Model for
+     *        - Item to register Model for
      * @param meta
-     *            - Meta of Item
+     *        - Meta of Item
      * @param name
-     *            - Name of the model JSON
+     *        - Name of the model JSON
      */
     public void itemRender(Item item, int meta, String name)
     {
@@ -59,9 +59,9 @@ public class InventoryRenderHelper
      * Shorthand of {@code itemRender(Item, int, String)}
      * 
      * @param item
-     *            - Item to register Model for
+     *        - Item to register Model for
      * @param meta
-     *            - Meta of Item
+     *        - Meta of Item
      */
     public void itemRender(Item item, int meta)
     {
@@ -77,7 +77,7 @@ public class InventoryRenderHelper
      * Shorthand of {@code itemRender(Item, int)}
      * 
      * @param item
-     *            - Item to register Model for
+     *        - Item to register Model for
      */
     public void itemRender(Item item)
     {
@@ -89,7 +89,7 @@ public class InventoryRenderHelper
      * item
      * 
      * @param item
-     *            - Item to register Model for
+     *        - Item to register Model for
      */
     public void itemRenderAll(Item item)
     {
@@ -137,7 +137,7 @@ public class InventoryRenderHelper
 
     /**
      * @param block
-     *            - Block to get Item of
+     *        - Block to get Item of
      * 
      * @return - The ItemBlock that corresponds to the Block.
      */

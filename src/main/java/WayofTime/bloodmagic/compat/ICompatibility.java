@@ -20,7 +20,7 @@ public interface ICompatibility
      * found.
      * 
      * Generally a determined by a config option.
-     *
+     * 
      * @return If Compatibility should load.
      */
     boolean enableCompat();

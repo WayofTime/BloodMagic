@@ -96,7 +96,8 @@ public class EventHandler
     }
 
     @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent event) {
+    public void onConfigChanged(ConfigChangedEvent event)
+    {
         if (event.modID.equals(Constants.Mod.MODID))
             ConfigHandler.syncConfig();
     }

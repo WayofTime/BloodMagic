@@ -7,8 +7,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-/** Fired when a teleposer attempts to transpose two blocks. Use this to perform special cleanup or compensation,
- or cancel it entirely to prevent the transposition. */
+/**
+ * Fired when a teleposer attempts to transpose two blocks. Use this to perform
+ * special cleanup or compensation, or cancel it entirely to prevent the
+ * transposition.
+ */
 @Cancelable
 public class TeleposeEvent extends Event
 {

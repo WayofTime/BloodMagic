@@ -43,8 +43,7 @@ public class BlockTeleposer extends BlockContainer
         {
             BindableHelper.checkAndSetItemOwner(playerItem, player);
             ((ItemTelepositionFocus) playerItem.getItem()).setBlockPos(playerItem, world, pos);
-        }
-        else if (world.getTileEntity(pos) instanceof TileTeleposer)
+        } else if (world.getTileEntity(pos) instanceof TileTeleposer)
         {
             player.openGui(BloodMagic.instance, Constants.Gui.TELEPOSER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }

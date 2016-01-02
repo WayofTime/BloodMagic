@@ -24,7 +24,8 @@ public class AltarRecipeRegistry
             BloodMagicAPI.getLogger().error("Error adding altar recipe for %s. Recipe already exists.", recipe.input.getDisplayName(), recipe.output == null ? "" : " -> ");
     }
 
-    public static void registerFillRecipe(ItemStack orbStack, EnumAltarTier tier, int maxForOrb, int consumeRate, int drainRate) {
+    public static void registerFillRecipe(ItemStack orbStack, EnumAltarTier tier, int maxForOrb, int consumeRate, int drainRate)
+    {
         registerRecipe(new AltarRecipe(orbStack, orbStack, tier, maxForOrb, consumeRate, drainRate, true));
     }
 
@@ -52,19 +53,19 @@ public class AltarRecipeRegistry
          * Orbs)
          * 
          * @param input
-         *            - The input ItemStack
+         *        - The input ItemStack
          * @param output
-         *            - The ItemStack obtained from the recipe
+         *        - The ItemStack obtained from the recipe
          * @param minTier
-         *            - The minimum tier of Altar required
+         *        - The minimum tier of Altar required
          * @param syphon
-         *            - The amount of LP to syphon from the Altar
+         *        - The amount of LP to syphon from the Altar
          * @param consumeRate
-         *            - The rate at which LP is consumed during crafting
+         *        - The rate at which LP is consumed during crafting
          * @param drainRate
-         *            - The rate at which LP is drained during crafting
+         *        - The rate at which LP is drained during crafting
          * @param fillable
-         *            - Whether the input item can be filled with LP. IE: Orbs
+         *        - Whether the input item can be filled with LP. IE: Orbs
          */
         public AltarRecipe(ItemStack input, @Nullable ItemStack output, EnumAltarTier minTier, int syphon, int consumeRate, int drainRate, boolean fillable)
         {

@@ -22,8 +22,9 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /**
- * Integrated from WailaPlugins by <a href="https://github.com/tterrag1098">tterrag1098</a>.
- * Originally implemented in ImLookingAtBlood by <a href="https://github.com/Pokefenn">Pokefenn</a>.
+ * Integrated from WailaPlugins by <a
+ * href="https://github.com/tterrag1098">tterrag1098</a>. Originally implemented
+ * in ImLookingAtBlood by <a href="https://github.com/Pokefenn">Pokefenn</a>.
  */
 public class DataProviderBloodAltar implements IWailaDataProvider
 {
@@ -50,27 +51,27 @@ public class DataProviderBloodAltar implements IWailaDataProvider
 
         switch (ConfigHandler.wailaAltarDisplayMode)
         {
-            case 0:
-            {
-                hasSigil = hasSeer = true;
-                break;
-            }
-            case 1:
-            {
-                hasSeer = accessor.getPlayer().getHeldItem() != null && accessor.getPlayer().getHeldItem().getItem() instanceof ItemSigilSeer;
-                hasSigil = hasSeer || accessor.getPlayer().getHeldItem() != null && accessor.getPlayer().getHeldItem().getItem() instanceof ItemSigilDivination;
-                break;
-            }
-            case 2:
-            {
-                hasSeer = hasStack(new ItemStack(ModItems.sigilSeer), accessor.getPlayer());
-                hasSigil = hasSeer || hasStack(new ItemStack(ModItems.sigilDivination), accessor.getPlayer());
-                break;
-            }
-            default:
-            {
-                break;
-            }
+        case 0:
+        {
+            hasSigil = hasSeer = true;
+            break;
+        }
+        case 1:
+        {
+            hasSeer = accessor.getPlayer().getHeldItem() != null && accessor.getPlayer().getHeldItem().getItem() instanceof ItemSigilSeer;
+            hasSigil = hasSeer || accessor.getPlayer().getHeldItem() != null && accessor.getPlayer().getHeldItem().getItem() instanceof ItemSigilDivination;
+            break;
+        }
+        case 2:
+        {
+            hasSeer = hasStack(new ItemStack(ModItems.sigilSeer), accessor.getPlayer());
+            hasSigil = hasSeer || hasStack(new ItemStack(ModItems.sigilDivination), accessor.getPlayer());
+            break;
+        }
+        default:
+        {
+            break;
+        }
         }
 
         if (!hasSeer && !hasSigil)

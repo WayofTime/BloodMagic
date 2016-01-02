@@ -14,11 +14,11 @@ public class AddToNetworkEvent extends Event
      * LP will still be drained but the soul network will not be added to.
      * 
      * @param ownerNetwork
-     *            Key used for the soul network
+     *        Key used for the soul network
      * @param addedAmount
-     *            Amount added
+     *        Amount added
      * @param maximum
-     *            Ceiling that the network can add to
+     *        Ceiling that the network can add to
      */
     public AddToNetworkEvent(String ownerNetwork, int addedAmount, int maximum)
     {

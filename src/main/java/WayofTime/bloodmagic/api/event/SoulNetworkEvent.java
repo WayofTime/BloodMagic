@@ -61,13 +61,13 @@ public class SoulNetworkEvent extends Event
          * event prevents action without penalties
          * 
          * @param player
-         *            Player using the item
+         *        Player using the item
          * @param ownerNetwork
-         *            Network that the item is tied to
+         *        Network that the item is tied to
          * @param itemStack
-         *            Item used
+         *        Item used
          * @param drainAmount
-         *            Original drain amount - change to alter cost
+         *        Original drain amount - change to alter cost
          */
         public ItemDrainNetworkEvent(EntityPlayer player, String ownerNetwork, ItemStack itemStack, int drainAmount)
         {

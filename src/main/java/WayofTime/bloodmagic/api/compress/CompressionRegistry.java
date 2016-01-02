@@ -26,9 +26,9 @@ public class CompressionRegistry
      * Registers an item so that it only compresses while above this threshold
      * 
      * @param stack
-     *            item/block to be compressed
+     *        item/block to be compressed
      * @param threshold
-     *            amount that is to be compressed
+     *        amount that is to be compressed
      */
     public static void registerItemThreshold(ItemStack stack, int threshold)
     {

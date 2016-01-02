@@ -88,9 +88,9 @@ public class StorageBlockCraftingRecipeAssimilator
                         }
                     }
                 } else
-                { 
-                	// unknown IRecipe, check through the recipe conventionally verify recipe size for 3x3 to skip anything smaller quickly
-                	
+                {
+                    // unknown IRecipe, check through the recipe conventionally verify recipe size for 3x3 to skip anything smaller quickly
+
                     if (unpacked.stackSize == 9 && recipePack.recipe.getRecipeSize() < 9)
                         continue;
 
@@ -208,7 +208,7 @@ public class StorageBlockCraftingRecipeAssimilator
      * every input element.
      * 
      * @param inputs
-     *            List of all inputs, null elements are being ignored.
+     *        List of all inputs, null elements are being ignored.
      * @return List List of all options.
      */
     @SuppressWarnings("unchecked")

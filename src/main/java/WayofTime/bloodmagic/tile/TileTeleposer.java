@@ -156,8 +156,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                                 entity.setPositionAndUpdate(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ());
                             }
                         }
-                    }
-                    else
+                    } else
                     {
                         if (entityList1 != null && !entityList1.isEmpty())
                         {
@@ -193,8 +192,10 @@ public class TileTeleposer extends TileInventory implements ITickable
         TileEntity finalTile = finalWorld.getTileEntity(finalPos);
         NBTTagCompound initialTag = new NBTTagCompound();
         NBTTagCompound finalTag = new NBTTagCompound();
-        if (initialTile != null) initialTile.writeToNBT(initialTag);
-        if (finalTile != null) finalTile.writeToNBT(finalTag);
+        if (initialTile != null)
+            initialTile.writeToNBT(initialTag);
+        if (finalTile != null)
+            finalTile.writeToNBT(finalTag);
 
         Block initialBlock = initialWorld.getBlockState(initialPos).getBlock();
         Block finalBlock = finalWorld.getBlockState(finalPos).getBlock();
@@ -210,7 +211,8 @@ public class TileTeleposer extends TileInventory implements ITickable
         int finalMeta = finalBlock.getMetaFromState(finalWorld.getBlockState(finalPos));
 
         TeleposeEvent event = new TeleposeEvent(initialWorld, initialPos, initialBlock, initialMeta, finalWorld, finalPos, finalBlock, finalMeta);
-        if (MinecraftForge.EVENT_BUS.post(event)) return false;
+        if (MinecraftForge.EVENT_BUS.post(event))
+            return false;
 
         initialWorld.playSoundEffect(initialPos.getX(), initialPos.getY(), initialPos.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
         finalWorld.playSoundEffect(finalPos.getX(), finalPos.getY(), finalPos.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
@@ -288,7 +290,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
                         player.worldObj.theProfiler.endSection();
-                        for (Iterator<PotionEffect> potion = player.getActivePotionEffects().iterator(); potion.hasNext(); )
+                        for (Iterator<PotionEffect> potion = player.getActivePotionEffects().iterator(); potion.hasNext();)
                         {
                             player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), potion.next()));
                         }

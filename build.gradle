@@ -18,14 +18,14 @@ plugins {
 
 apply plugin: 'maven-publish'
 
-def build_number = 'CUSTOM'
+def build_number = '1'
 
 if (System.getenv('BUILD_NUMBER') != null)
     build_number = System.getenv('BUILD_NUMBER')
 
 group = package_group
 archivesBaseName = mod_name
-version = "${mc_version}-${mod_version}-${build_number}-ss"
+version = "${mc_version}-${mod_version}-${build_number}"
 
 import org.ajoberstar.grgit.*
 
@@ -153,7 +153,7 @@ curseforge {
     project {
         id = "${curse_id}"
         changelog = project.hasProperty('changelog') ? project.changelog : ''
-        releaseType = 'alpha'
+        releaseType = 'beta'
 
         addArtifact javadocJar
         addArtifact sourceJar

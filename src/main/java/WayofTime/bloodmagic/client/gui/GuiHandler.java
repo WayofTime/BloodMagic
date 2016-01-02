@@ -18,8 +18,8 @@ public class GuiHandler implements IGuiHandler
 
         switch (id)
         {
-            case Constants.Gui.TELEPOSER_GUI:
-                return new ContainerTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
+        case Constants.Gui.TELEPOSER_GUI:
+            return new ContainerTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
         }
 
         return null;
@@ -34,8 +34,8 @@ public class GuiHandler implements IGuiHandler
 
             switch (id)
             {
-                case Constants.Gui.TELEPOSER_GUI:
-                    return new GuiTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
+            case Constants.Gui.TELEPOSER_GUI:
+                return new GuiTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
             }
         }
 

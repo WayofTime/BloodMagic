@@ -8,7 +8,13 @@ import java.util.Locale;
 
 public enum EnumRuneType implements IStringSerializable
 {
-    BLANK, WATER, FIRE, EARTH, AIR, DUSK, DAWN;
+    BLANK,
+    WATER,
+    FIRE,
+    EARTH,
+    AIR,
+    DUSK,
+    DAWN;
 
     public static EnumRuneType byMetadata(int meta)
     {

@@ -51,8 +51,7 @@ public class ContainerTeleposer extends Container
                     {
                         return null;
                     }
-                }
-                else if (!this.mergeItemStack(stackInSlot, slots, 36 + slots, false))
+                } else if (!this.mergeItemStack(stackInSlot, slots, 36 + slots, false))
                 {
                     return null;
                 }

@@ -23,11 +23,11 @@ public class BloodOrb
      * EnergyItems.
      * 
      * @param name
-     *            - A name for the Orb. Gets put into an unlocalized name.
+     *        - A name for the Orb. Gets put into an unlocalized name.
      * @param tier
-     *            - The tier of the Orb.
+     *        - The tier of the Orb.
      * @param capacity
-     *            - The max amount of LP the Orb can store.
+     *        - The max amount of LP the Orb can store.
      */
     public BloodOrb(String name, int tier, int capacity)
     {

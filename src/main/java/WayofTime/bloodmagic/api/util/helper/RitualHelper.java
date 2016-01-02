@@ -45,12 +45,12 @@ public class RitualHelper
     /**
      * Checks the RitualRegistry to see if the configuration of the ritual
      * stones in the world is valid for the given EnumFacing.
-     *
+     * 
      * @param world
-     *          - The world
+     *        - The world
      * @param pos
-     *          - Location of the MasterRitualStone
-     *
+     *        - Location of the MasterRitualStone
+     * 
      * @return The ID of the valid ritual
      */
     public static String getValidRitual(World world, BlockPos pos)
@@ -136,11 +136,11 @@ public class RitualHelper
      * Should be safe to modify at any point.
      * 
      * @param config
-     *            - Your mod's Forge {@link Configuration} object.
+     *        - Your mod's Forge {@link Configuration} object.
      * @param packageName
-     *            - The package your Rituals are located in.
+     *        - The package your Rituals are located in.
      * @param category
-     *            - The config category to write to.
+     *        - The config category to write to.
      */
     @SuppressWarnings("unchecked")
     private static void checkRituals(Configuration config, String packageName, String category, Class ritualClass, Map enabledMap)

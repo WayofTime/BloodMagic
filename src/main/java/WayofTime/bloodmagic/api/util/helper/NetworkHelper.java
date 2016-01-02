@@ -46,9 +46,9 @@ public class NetworkHelper
 
     /**
      * @see NetworkHelper#getSoulNetwork(String)
-     *
+     * 
      * @param uuid
-     *          - The Player's Mojang UUID
+     *        - The Player's Mojang UUID
      */
     public static SoulNetwork getSoulNetwork(UUID uuid)
     {
@@ -57,9 +57,9 @@ public class NetworkHelper
 
     /**
      * @see NetworkHelper#getSoulNetwork(String)
-     *
+     * 
      * @param player
-     *          - The Player
+     *        - The Player
      */
     public static SoulNetwork getSoulNetwork(EntityPlayer player)
     {
@@ -135,12 +135,12 @@ public class NetworkHelper
 
     /**
      * Checks if the ItemStack has a user to be syphoned from.
-     *
+     * 
      * @param stack
-     *          - ItemStack to check
+     *        - ItemStack to check
      * @param toSyphon
-     *          - Amount of LP to syphon
-     *
+     *        - Amount of LP to syphon
+     * 
      * @return - If syphoning is possible
      */
     public static boolean canSyphonFromContainer(ItemStack stack, int toSyphon)
