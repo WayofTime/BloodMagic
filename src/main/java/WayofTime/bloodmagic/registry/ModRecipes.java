@@ -45,8 +45,11 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ritualDiviner), "dfd", "ase", "dwd", 'f', EnumRuneType.FIRE.getScribeStack(), 'a', EnumRuneType.AIR.getScribeStack(), 'w', EnumRuneType.WATER.getScribeStack(), 'e', EnumRuneType.EARTH.getScribeStack(), 'd', "gemDiamond", 's', "stickWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ritualDiviner, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(ModItems.slate, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(ModItems.ritualDiviner)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick), "aa", "aa", 'a', new ItemStack(ModBlocks.bloodStoneBrick, 1, 1)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), "stone", ModItems.bloodShard));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), "stone", new ItemStack(ModItems.bloodShard)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.arcaneAshes), "dyeWhite", Items.gunpowder, Items.gunpowder, "dustRedstone", new ItemStack(Items.flint), new ItemStack(Items.coal, 1, 1), ModItems.slate));
+
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.telepositionFocus, 1, 2), new ItemStack(ModItems.telepositionFocus, 1, 1), new ItemStack(ModItems.bloodShard));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.telepositionFocus, 1, 3), new ItemStack(ModItems.telepositionFocus, 1, 2), new ItemStack(ModItems.bloodShard, 1, 1));
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.lavaCrystal), "aba", "bcb", "ded", 'a', "blockGlass", 'b', Items.lava_bucket, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak), 'd', Blocks.obsidian, 'e', "gemDiamond"));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), "xox", "oSo", "xox", 'S', OrbRegistry.getOrbStack(ModItems.orbMagician), 'o', "dustRedstone", 'x', "dustGlowstone"));
@@ -59,14 +62,14 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), "aba", "aca", "ded", 'a', "blockGlass", 'b', ModItems.sigilDivination, 'c', "dustGlowstone", 'd', ModItems.bucketEssence, 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), "wtl", "wrl", "wol", 't', new ItemStack(ModBlocks.teleposer), 'w', new ItemStack(Items.water_bucket), 'l', new ItemStack(Items.lava_bucket), 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune), "aaa", "bcb", "aaa", 'a', "stone", 'b', ModItems.slate, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 1), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', ModBlocks.bloodRune)); //Speed
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 2), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', ModBlocks.bloodRune)); //Efficiency
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 3), "aba", "cdc", "aea", 'a', "stone", 'b', new ItemStack(ModItems.slate, 1, 1), 'c', "ingotGold", 'd', ModBlocks.bloodRune, 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice))); //Sacrifice
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 4), "aba", "cdc", "aea", 'a', "stone", 'b', new ItemStack(ModItems.slate, 1, 1), 'c', "dustGlowstone", 'd', ModBlocks.bloodRune, 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice))); //Self-Sacrifice
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 5), "aba", "bcb", "ada", 'a', "stone", 'b', Items.water_bucket, 'c', ModBlocks.bloodRune, 'd', new ItemStack(ModItems.slate, 1, 2))); //Displacement
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 6), "aba", "bcb", "ada", 'a', "stone", 'b', Items.bucket, 'c', ModBlocks.bloodRune, 'd', new ItemStack(ModItems.slate, 1, 2))); //Capacity
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 1), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', new ItemStack(ModBlocks.bloodRune))); //Speed
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 2), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', new ItemStack(ModBlocks.bloodRune))); //Efficiency
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 3), "aba", "cdc", "aea", 'a', "stone", 'b', new ItemStack(ModItems.slate, 1, 1), 'c', "ingotGold", 'd', new ItemStack(ModBlocks.bloodRune), 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice))); //Sacrifice
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 4), "aba", "cdc", "aea", 'a', "stone", 'b', new ItemStack(ModItems.slate, 1, 1), 'c', "dustGlowstone", 'd', new ItemStack(ModBlocks.bloodRune), 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice))); //Self-Sacrifice
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 5), "aba", "bcb", "ada", 'a', "stone", 'b', Items.water_bucket, 'c', new ItemStack(ModBlocks.bloodRune), 'd', new ItemStack(ModItems.slate, 1, 2))); //Displacement
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 6), "aba", "bcb", "ada", 'a', "stone", 'b', Items.bucket, 'c', new ItemStack(ModBlocks.bloodRune), 'd', new ItemStack(ModItems.slate, 1, 2))); //Capacity
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 7), "aba", "cdc", "aea", 'a', Blocks.obsidian, 'b', new ItemStack(ModItems.slate, 1, 3), 'c', Items.bucket, 'd', new ItemStack(ModBlocks.bloodRune, 1, 6), 'e', OrbRegistry.getOrbStack(ModItems.orbMaster))); //Augmented Capacity
-        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 8), "aba", "cdc", "aba", 'a', "stone", 'b', "gemDiamond", 'c', ModBlocks.bloodRune, 'd', OrbRegistry.getOrbStack(ModItems.orbMaster))); //Orb
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 8), "aba", "cdc", "aba", 'a', "stone", 'b', "gemDiamond", 'c', new ItemStack(ModBlocks.bloodRune), 'd', OrbRegistry.getOrbStack(ModItems.orbMaster))); //Orb
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.bloodRune, 1, 9), "aba", "cdc", "aea", 'a', Items.bucket, 'b', new ItemStack(ModItems.slate, 1, 4), 'c', "ingotGold", 'd', new ItemStack(ModBlocks.bloodRune, 1, 1), 'e', OrbRegistry.getOrbStack(ModItems.orbArchmage))); //Acceleration
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.ritualStone), "aba", "bcb", "aba", 'a', Blocks.obsidian, 'b', new ItemStack(ModItems.slate, 1, 1), 'c', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModBlocks.ritualController), "aba", "bcb", "aba", 'a', Blocks.obsidian, 'b', ModBlocks.ritualStone, 'c', OrbRegistry.getOrbStack(ModItems.orbMagician)));
@@ -100,6 +103,8 @@ public class ModRecipes
         AltarRecipeRegistry.registerFillRecipe(OrbRegistry.getOrbStack(ModItems.orbMaster), EnumAltarTier.FOUR, ModItems.orbMaster.getCapacity(), 10, 10);
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(ModItems.slate, 1, 2), new ItemStack(ModItems.slate, 1, 3), EnumAltarTier.FOUR, 15000, 20, 20));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Blocks.coal_block), EnumRuneType.DUSK.getScribeStack(), EnumAltarTier.FOUR, 2000, 20, 10));
+        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.ender_pearl), new ItemStack(ModItems.telepositionFocus), EnumAltarTier.FOUR, 2000, 10, 10));
+        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(ModItems.telepositionFocus), new ItemStack(ModItems.telepositionFocus, 1, 1), EnumAltarTier.FOUR, 10000, 20, 10));
 
         // FIVE
         AltarRecipeRegistry.registerFillRecipe(OrbRegistry.getOrbStack(ModItems.orbArchmage), EnumAltarTier.FIVE, ModItems.orbArchmage.getCapacity(), 20, 20);

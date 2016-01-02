@@ -18,6 +18,13 @@ plugins {
 
 apply plugin: 'maven-publish'
 
+repositories {
+		maven {
+			name = "local"
+			url = "file:///home/Scott/Dropbox"
+		}
+}
+
 def build_number = 'CUSTOM'
 
 if (System.getenv('BUILD_NUMBER') != null)
