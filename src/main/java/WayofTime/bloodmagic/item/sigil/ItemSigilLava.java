@@ -120,7 +120,7 @@ public class ItemSigilLava extends ItemSigilBase
             return false;
         } else
         {
-            world.setBlockState(blockPos, Blocks.lava.getBlockState().getBaseState(), 3);
+            world.setBlockState(blockPos, Blocks.flowing_lava.getBlockState().getBaseState(), 3);
             return true;
         }
     }

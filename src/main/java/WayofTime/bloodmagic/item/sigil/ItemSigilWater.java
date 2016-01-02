@@ -155,7 +155,7 @@ public class ItemSigilWater extends ItemSigilBase
                     worldIn.destroyBlock(pos, true);
                 }
 
-                worldIn.setBlockState(pos, Blocks.water.getDefaultState(), 3);
+                worldIn.setBlockState(pos, Blocks.flowing_water.getDefaultState(), 3);
             }
 
             return true;
