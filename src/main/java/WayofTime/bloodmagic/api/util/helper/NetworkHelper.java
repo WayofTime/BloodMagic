@@ -52,7 +52,7 @@ public class NetworkHelper
      */
     public static SoulNetwork getSoulNetwork(UUID uuid)
     {
-        return getSoulNetwork(PlayerHelper.getUsernameFromUUID(uuid));
+        return getSoulNetwork(uuid.toString());
     }
 
     /**
