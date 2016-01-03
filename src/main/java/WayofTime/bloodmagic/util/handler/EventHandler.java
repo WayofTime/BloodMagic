@@ -1,18 +1,5 @@
 package WayofTime.bloodmagic.util.handler;
 
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.item.ItemAltarMaker;
-import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,9 +8,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class EventHandler
 {
@@ -100,5 +105,25 @@ public class EventHandler
     {
         if (event.modID.equals(Constants.Mod.MODID))
             ConfigHandler.syncConfig();
+    }
+
+    @SubscribeEvent
+    public void blockBreakEvent(BlockEvent.BreakEvent event)
+    {
+        EntityPlayer player = event.getPlayer();
+        if (player != null)
+        {
+            ItemStack chestStack = player.getCurrentArmor(2);
+            if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
+            {
+                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+
+                if (armour != null)
+                {
+                    StatTrackerDigging.incrementCounter(armour);
+                    LivingArmourUpgradeDigging.hasDug(armour);
+                }
+            }
+        }
     }
 }

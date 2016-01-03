@@ -23,8 +23,8 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        // Adds 10% per level
-        modifierMap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(895132, 1), "Speed modifier" + 1, (this.level + 1) * 0.1, 1));
+        // Adds 5% per level
+        modifierMap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(895132, 1), "Speed modifier" + 1, (this.level + 1) * 0.05, 1));
 
         return modifierMap;
     }
@@ -38,13 +38,13 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
     @Override
     public int getMaxTier()
     {
-        return 5;
+        return 10;
     }
 
     @Override
     public int getCostOfUpgrade()
     {
-        return this.level + 1;
+        return 3 * (this.level + 1) * (this.level + 1) * (this.level + 1);
     }
 
     @Override

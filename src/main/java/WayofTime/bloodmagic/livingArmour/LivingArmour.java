@@ -13,12 +13,15 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 public class LivingArmour
 {
+    public static String chatBase = "chat.BloodMagic.livingArmour.";
     public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
     public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<String, LivingArmourUpgrade>();
 
@@ -77,7 +80,7 @@ public class LivingArmour
 
     public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
     {
-        System.out.println("Upgraded!");
+        ChatUtil.sendNoSpam(user, TextHelper.localize(chatBase + "newUpgrade"));
     }
 
     /**
