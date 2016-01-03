@@ -61,7 +61,7 @@ public class StatTrackerMovement extends StatTracker
 
         double distanceTravelled = Math.sqrt(Math.pow(lastPosX.get(player) - player.posX, 2) + Math.pow(lastPosZ.get(player) - player.posZ, 2));
 
-        if (distanceTravelled > 0.0001)
+        if (distanceTravelled > 0.0001 && distanceTravelled < 2)
         {
             totalMovement += distanceTravelled;
 
@@ -69,9 +69,15 @@ public class StatTrackerMovement extends StatTracker
             lastPosZ.put(player, player.posZ);
 
             markDirty();
+
+            if (world.getWorldTime() % 20 == 0)
+            {
+                System.out.println("Total movement since activated: " + totalMovement);
+            }
+
+            return true;
         }
 
-//        System.out.println("Total movement since activated: " + totalMovement);
         return false;
     }
 
@@ -79,6 +85,16 @@ public class StatTrackerMovement extends StatTracker
     public List<LivingArmourUpgrade> getUpgrades()
     {
         // TODO Auto-generated method stub
-        return new ArrayList<LivingArmourUpgrade>();
+        List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (totalMovement > (i + 1) * (i + 1) * (i + 1) * 100)
+            {
+                upgradeList.add(new LivingArmourUpgradeSpeed(i));
+            }
+        }
+
+        return upgradeList;
     }
 }

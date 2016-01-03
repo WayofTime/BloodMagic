@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.livingArmour;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -21,6 +22,9 @@ public class LivingArmour
     public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
     public HashMap<String, LivingArmourUpgrade> upgradeMap = new HashMap<String, LivingArmourUpgrade>();
 
+    public int maxUpgradePoints = 100;
+    public int totalUpgradePoints = 0;
+
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
         HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
@@ -28,10 +32,52 @@ public class LivingArmour
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
         {
             LivingArmourUpgrade upgrade = entry.getValue();
+            if (upgrade == null)
+            {
+                continue;
+            }
             modifierMap.putAll(upgrade.getAttributeModifiers());
         }
 
         return modifierMap;
+    }
+
+    public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade)
+    {
+        String key = upgrade.getUniqueIdentifier();
+        if (upgradeMap.containsKey(key))
+        {
+            //Check if this is a higher level than the previous upgrade
+            int nextLevel = upgrade.getUpgradeLevel();
+            int currentLevel = upgradeMap.get(key).getUpgradeLevel();
+
+            if (nextLevel > currentLevel)
+            {
+                int upgradePointDifference = upgrade.getCostOfUpgrade() - upgradeMap.get(key).getCostOfUpgrade();
+                if (upgradePointDifference >= 0 && totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
+                {
+                    upgradeMap.put(key, upgrade);
+                    notifyPlayerOfUpgrade(user, upgrade);
+                    return true;
+                }
+            }
+        } else
+        {
+            int upgradePoints = upgrade.getCostOfUpgrade();
+            if (totalUpgradePoints + upgradePoints <= maxUpgradePoints)
+            {
+                upgradeMap.put(key, upgrade);
+                notifyPlayerOfUpgrade(user, upgrade);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
+    {
+        System.out.println("Upgraded!");
     }
 
     /**
@@ -64,8 +110,15 @@ public class LivingArmour
                 continue;
             }
 
-            tracker.onTick(world, player, this); // TODO: Check if the upgrades
-                                                 // need to be updated.
+            if (tracker.onTick(world, player, this))
+            {
+                List<LivingArmourUpgrade> upgradeList = tracker.getUpgrades();
+
+                for (LivingArmourUpgrade upgrade : upgradeList) //TODO: make a getNextUpgrade?
+                {
+                    upgradeArmour(player, upgrade);
+                }
+            }
         }
     }
 
@@ -80,7 +133,12 @@ public class LivingArmour
                 String key = upgradeTag.getString("key");
                 int level = upgradeTag.getInteger("level");
                 NBTTagCompound nbtTag = upgradeTag.getCompoundTag("upgrade");
-                LivingArmourHandler.generateUpgradeFromKey(key, level, nbtTag);
+                LivingArmourUpgrade upgrade = LivingArmourHandler.generateUpgradeFromKey(key, level, nbtTag);
+                if (upgrade != null)
+                {
+                    upgradeMap.put(key, upgrade);
+                    totalUpgradePoints += upgrade.getCostOfUpgrade();
+                }
             }
         }
 
