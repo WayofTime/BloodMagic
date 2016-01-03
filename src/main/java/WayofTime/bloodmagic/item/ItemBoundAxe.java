@@ -37,17 +37,22 @@ public class ItemBoundAxe extends ItemBoundTool
     @Override
     protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge)
     {
+        if (world.isRemote)
+        {
+            return;
+        }
+
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(player);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(player);
-        int range = (int) (charge * 0.25);
+        int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
 
-        BlockPos playerPos = player.getPosition().add(0, -1, 0);
+        BlockPos playerPos = player.getPosition();
 
         for (int i = -range; i <= range; i++)
         {
-            for (int j = -range; j <= range; j++)
+            for (int j = 0; j <= 2 * range; j++)
             {
                 for (int k = -range; k <= range; k++)
                 {
@@ -79,7 +84,9 @@ public class ItemBoundAxe extends ItemBoundTool
             }
         }
 
-        world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
+        ItemBindable.syphonNetwork(stack, player, (int) (charge * charge * charge / 2.7));
+
+        world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.1F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }
 

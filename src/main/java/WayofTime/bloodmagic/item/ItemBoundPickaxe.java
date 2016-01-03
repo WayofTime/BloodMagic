@@ -1,24 +1,23 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.Sets;
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
 
-import java.util.List;
-import java.util.Set;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 public class ItemBoundPickaxe extends ItemBoundTool
 {
@@ -44,17 +43,22 @@ public class ItemBoundPickaxe extends ItemBoundTool
     @Override
     protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge)
     {
+        if (world.isRemote)
+        {
+            return;
+        }
+
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(player);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(player);
-        int range = (int) (charge * 0.25);
+        int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
 
-        BlockPos playerPos = player.getPosition().add(0, -1, 0);
+        BlockPos playerPos = player.getPosition();
 
         for (int i = -range; i <= range; i++)
         {
-            for (int j = -range; j <= range; j++)
+            for (int j = 0; j <= 2 * range; j++)
             {
                 for (int k = -range; k <= range; k++)
                 {
@@ -85,6 +89,8 @@ public class ItemBoundPickaxe extends ItemBoundTool
                 }
             }
         }
+
+        ItemBindable.syphonNetwork(stack, player, (int) (charge * charge * charge / 2.7));
 
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));

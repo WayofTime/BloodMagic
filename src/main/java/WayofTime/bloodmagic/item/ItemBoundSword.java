@@ -7,7 +7,9 @@ import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
 import com.google.common.base.Strings;
+
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -55,6 +57,9 @@ public class ItemBoundSword extends ItemSword
 
             // TODO Make conical charge blast
             Explosion explosion = new Explosion(worldIn, playerIn, playerIn.posX, playerIn.posY, playerIn.posZ, (float) (i * 0.5), true, true);
+
+            ItemBindable.syphonNetwork(stack, playerIn, (int) (i * i * i / 2.7));
+
             if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(worldIn, explosion))
                 return;
             explosion.doExplosionA();
