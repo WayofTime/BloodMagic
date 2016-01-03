@@ -232,6 +232,7 @@ ritual.BloodMagic.regenerationRitual=Ritual of Regeneration
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
 chat.BloodMagic.altarMaker.building=Building a Tier %d Altar
 chat.BloodMagic.altarMaker.destroy=Destroyed a Tier %d Altar
+chat.BloodMagic.altarMaker.creativeOnly=This is a creative only item.
 chat.BloodMagic.damageSource=%s's soul became too weak
 chat.BloodMagic.ritual.weak=You feel a push, but are too weak to perform this ritual.
 chat.BloodMagic.ritual.prevent=The ritual is actively resisting you!

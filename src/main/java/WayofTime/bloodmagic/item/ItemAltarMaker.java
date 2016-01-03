@@ -48,8 +48,14 @@ public class ItemAltarMaker extends Item implements IAltarManipulator
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (!player.capabilities.isCreativeMode || world.isRemote)
+        if (world.isRemote)
             return stack;
+
+        if (!player.capabilities.isCreativeMode)
+        {
+            ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.creativeOnly"));
+            return stack;
+        }
 
         stack = NBTHelper.checkNBT(stack);
 
