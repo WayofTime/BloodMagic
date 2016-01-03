@@ -33,7 +33,7 @@ public interface IMasterRitualStone
 
     int getRunningTime();
 
-    World getWorld();
+    World getWorldObj();
 
-    BlockPos getPos();
+    BlockPos getBlockPos();
 }

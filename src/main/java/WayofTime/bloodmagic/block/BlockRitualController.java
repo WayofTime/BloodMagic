@@ -19,6 +19,7 @@ import WayofTime.bloodmagic.block.base.BlockStringContainer;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import WayofTime.bloodmagic.util.ChatUtil;
 
 public class BlockRitualController extends BlockStringContainer
 {
@@ -55,6 +56,9 @@ public class BlockRitualController extends BlockStringContainer
                     {
                         ((TileMasterRitualStone) tile).setDirection(direction);
                     }
+                } else
+                {
+                    ChatUtil.sendNoSpamUnloc(player, "chat.BloodMagic.ritual.notValid");
                 }
             }
         } else if (getMetaFromState(state) == 1 && tile instanceof TileImperfectRitualStone)

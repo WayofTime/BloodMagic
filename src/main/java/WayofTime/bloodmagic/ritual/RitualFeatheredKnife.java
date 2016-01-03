@@ -38,7 +38,7 @@ public class RitualFeatheredKnife extends Ritual
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
-        World world = masterRitualStone.getWorld();
+        World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
 
@@ -48,7 +48,7 @@ public class RitualFeatheredKnife extends Ritual
             return;
         }
 
-        BlockPos pos = masterRitualStone.getPos();
+        BlockPos pos = masterRitualStone.getBlockPos();
 
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;

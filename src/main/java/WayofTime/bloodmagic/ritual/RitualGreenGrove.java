@@ -31,7 +31,7 @@ public class RitualGreenGrove extends Ritual
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
-        World world = masterRitualStone.getWorld();
+        World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
 
@@ -46,7 +46,7 @@ public class RitualGreenGrove extends Ritual
 
         AreaDescriptor growingRange = getBlockRange(GROW_RANGE);
 
-        for (BlockPos newPos : growingRange.getContainedPositions(masterRitualStone.getPos()))
+        for (BlockPos newPos : growingRange.getContainedPositions(masterRitualStone.getBlockPos()))
         {
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();

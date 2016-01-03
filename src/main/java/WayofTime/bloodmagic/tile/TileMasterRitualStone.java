@@ -88,6 +88,8 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
+        System.out.println("Test");
+
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal)
@@ -238,5 +240,17 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     {
         super.onDataPacket(net, packet);
         readFromNBT(packet.getNbtCompound());
+    }
+
+    @Override
+    public World getWorldObj()
+    {
+        return getWorld();
+    }
+
+    @Override
+    public BlockPos getBlockPos()
+    {
+        return getPos();
     }
 }

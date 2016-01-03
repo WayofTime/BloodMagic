@@ -30,7 +30,7 @@ public class RitualJumping extends Ritual
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
-        World world = masterRitualStone.getWorld();
+        World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
 
@@ -44,7 +44,7 @@ public class RitualJumping extends Ritual
         int totalEffects = 0;
 
         AreaDescriptor jumpRange = getBlockRange(JUMP_RANGE);
-        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, jumpRange.getAABB(masterRitualStone.getPos()));
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, jumpRange.getAABB(masterRitualStone.getBlockPos()));
         if (entities != null)
         {
             for (EntityLivingBase entity : entities)
