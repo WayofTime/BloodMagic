@@ -45,7 +45,6 @@ public class ItemBoundSword extends ItemSword
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
     {
-
         if (!playerIn.isSneaking() && getActivated(stack))
         {
             int i = this.getMaxItemUseDuration(stack) - timeLeft;

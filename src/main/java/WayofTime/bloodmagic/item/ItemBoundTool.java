@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.event.BoundToolEvent;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.collect.Multiset;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -20,9 +19,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.event.BoundToolEvent;
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import java.util.List;
-import java.util.Set;
+import com.google.common.collect.Multiset;
 
 @Getter
 public class ItemBoundTool extends ItemBindable
@@ -31,8 +34,8 @@ public class ItemBoundTool extends ItemBindable
     protected final String tooltipBase;
     private final String name;
 
-    public boolean beingHeldDown;
-    private int heldDownCount;
+    public Map<ItemStack, Boolean> heldDownMap = new HashMap<ItemStack, Boolean>();
+    public Map<ItemStack, Integer> heldDownCountMap = new HashMap<ItemStack, Integer>();
 
     public final int chargeTime = 30;
 
@@ -63,11 +66,41 @@ public class ItemBoundTool extends ItemBindable
     @Override
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
-        if (entityIn instanceof EntityPlayer && getActivated(stack) && isSelected && isBeingHeldDown() && stack == ((EntityPlayer) entityIn).getCurrentEquippedItem())
+        if (entityIn instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entityIn).getCurrentEquippedItem())
         {
             EntityPlayer player = (EntityPlayer) entityIn;
-            heldDownCount = Math.min(player.getItemInUseDuration(), chargeTime);
+            setHeldDownCount(stack, Math.min(player.getItemInUseDuration(), chargeTime));
         }
+    }
+
+    protected int getHeldDownCount(ItemStack stack)
+    {
+        if (!heldDownCountMap.containsKey(stack))
+        {
+            return 0;
+        }
+
+        return heldDownCountMap.get(stack);
+    }
+
+    protected void setHeldDownCount(ItemStack stack, int count)
+    {
+        heldDownCountMap.put(stack, count);
+    }
+
+    protected boolean getBeingHeldDown(ItemStack stack)
+    {
+        if (!heldDownMap.containsKey(stack))
+        {
+            return false;
+        }
+
+        return heldDownMap.get(stack);
+    }
+
+    protected void setBeingHeldDown(ItemStack stack, boolean heldDown)
+    {
+        heldDownMap.put(stack, heldDown);
     }
 
     @Override
@@ -93,7 +126,7 @@ public class ItemBoundTool extends ItemBindable
                     return event.result;
 
                 player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-                beingHeldDown = true;
+                setBeingHeldDown(stack, true);
             }
         }
 
@@ -130,7 +163,7 @@ public class ItemBoundTool extends ItemBindable
             i = event.charge;
 
             onBoundRelease(stack, worldIn, playerIn, Math.min(i, chargeTime));
-            beingHeldDown = false;
+            setBeingHeldDown(stack, false);
         }
     }
 
@@ -181,13 +214,13 @@ public class ItemBoundTool extends ItemBindable
     @Override
     public boolean showDurabilityBar(ItemStack stack)
     {
-        return getActivated(stack) && beingHeldDown;
+        return getActivated(stack) && getBeingHeldDown(stack);
     }
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack)
     {
-        return ((double) -Math.min(getHeldDownCount(), chargeTime) / chargeTime) + 1;
+        return ((double) -Math.min(getHeldDownCount(stack), chargeTime) / chargeTime) + 1;
     }
 
     protected static void dropStacks(Multiset<ItemStackWrapper> drops, World world, BlockPos posToDrop)
