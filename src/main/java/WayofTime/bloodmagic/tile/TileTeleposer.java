@@ -1,12 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
-import com.google.common.base.Strings;
+import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.block.BlockPortal;
@@ -18,12 +14,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
 import net.minecraft.network.play.server.S1FPacketSetExperience;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
@@ -35,9 +28,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 
-import java.util.Iterator;
-import java.util.List;
+import com.google.common.base.Strings;
 
 public class TileTeleposer extends TileInventory implements ITickable
 {
@@ -125,7 +123,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                     {
                         for (int j = 0; j <= (focusLevel * 2 - 2); j++)
                         {
-                            for (int k = 0; k <= (focusLevel - 1); k++)
+                            for (int k = (focusLevel - 1); k <= (focusLevel - 1); k++)
                             {
                                 if (teleportBlocks(this, worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k)))
                                 {
