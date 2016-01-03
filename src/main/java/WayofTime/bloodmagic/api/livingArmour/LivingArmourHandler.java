@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourHandler
 {
-    public static List<Class<? extends StatTracker>> trackers = new ArrayList();
-    public static HashMap<String, Class<? extends LivingArmourUpgrade>> upgradeMap = new HashMap();
-    public static HashMap<String, Constructor<? extends LivingArmourUpgrade>> upgradeConstructorMap = new HashMap();
+    public static List<Class<? extends StatTracker>> trackers = new ArrayList<Class<? extends StatTracker>>();
+    public static HashMap<String, Class<? extends LivingArmourUpgrade>> upgradeMap = new HashMap<String, Class<? extends LivingArmourUpgrade>>();
+    public static HashMap<String, Constructor<? extends LivingArmourUpgrade>> upgradeConstructorMap = new HashMap<String, Constructor<? extends LivingArmourUpgrade>>();
 
     public static void registerStatTracker(Class<? extends StatTracker> tracker)
     {

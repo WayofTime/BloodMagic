@@ -17,6 +17,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
 import WayofTime.bloodmagic.proxy.CommonProxy;
+import WayofTime.bloodmagic.registry.ModArmourTrackers;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModCompatibility;
 import WayofTime.bloodmagic.registry.ModEntities;
@@ -73,6 +74,7 @@ public class BloodMagic
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
         ModCompatibility.registerModCompat();
+        ModArmourTrackers.init();
         ConfigHandler.checkRituals();
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
 

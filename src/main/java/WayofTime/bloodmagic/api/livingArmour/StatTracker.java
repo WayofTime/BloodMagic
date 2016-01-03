@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -35,7 +37,7 @@ public abstract class StatTracker
      */
     public abstract boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour);
 
-    public abstract LivingArmourUpgrade[] getUpgrades();
+    public abstract List<LivingArmourUpgrade> getUpgrades();
 
     public final boolean isDirty()
     {

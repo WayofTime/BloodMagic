@@ -1,10 +1,15 @@
 package WayofTime.bloodmagic.item.armour;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -15,6 +20,8 @@ import com.google.common.collect.Multimap;
 public class ItemLivingArmour extends ItemArmor
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
+
+    public static Map<ItemStack, LivingArmour> armourMap = new HashMap<ItemStack, LivingArmour>();
 
     public ItemLivingArmour(int armorType)
     {
@@ -42,6 +49,29 @@ public class ItemLivingArmour extends ItemArmor
     }
 
     @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
+    {
+        super.onArmorTick(world, player, stack);
+
+        if (world.isRemote)
+        {
+            return;
+        }
+
+        if (this == ModItems.livingArmourChest)
+        {
+            if (!armourMap.containsKey(stack))
+            {
+                armourMap.put(stack, getLivingArmour(stack));
+            }
+
+            LivingArmour armour = armourMap.get(stack);
+            armour.onTick(world, player);
+            setLivingArmour(stack, armour, false);
+        }
+    }
+
+    @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
     {
         if (this == ModItems.livingArmourChest)
@@ -62,17 +92,51 @@ public class ItemLivingArmour extends ItemArmor
 
     public LivingArmour getLivingArmour(ItemStack stack)
     {
+        NBTTagCompound livingTag = getArmourTag(stack);
+
+        LivingArmour livingArmour = new LivingArmour();
+        livingArmour.readFromNBT(livingTag);
+
+        return livingArmour;
+    }
+
+    public void setLivingArmour(ItemStack stack, LivingArmour armour, boolean forceWrite)
+    {
+
+        NBTTagCompound livingTag = new NBTTagCompound();
+
+        if (!forceWrite)
+        {
+            livingTag = getArmourTag(stack);
+            armour.writeDirtyToNBT(livingTag);
+        } else
+        {
+            armour.writeToNBT(livingTag);
+        }
+
+        setArmourTag(stack, livingTag);
+    }
+
+    public NBTTagCompound getArmourTag(ItemStack stack)
+    {
         if (!stack.hasTagCompound())
         {
             stack.setTagCompound(new NBTTagCompound());
         }
 
         NBTTagCompound tag = stack.getTagCompound();
-        NBTTagCompound livingTag = tag.getCompoundTag(Constants.NBT.LIVING_ARMOUR);
+        return tag.getCompoundTag(Constants.NBT.LIVING_ARMOUR);
+    }
 
-        LivingArmour livingArmour = new LivingArmour();
-        livingArmour.readFromNBT(livingTag);
+    public void setArmourTag(ItemStack stack, NBTTagCompound livingTag)
+    {
+        if (!stack.hasTagCompound())
+        {
+            stack.setTagCompound(new NBTTagCompound());
+        }
 
-        return livingArmour;
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setTag(Constants.NBT.LIVING_ARMOUR, livingTag);
     }
 }
