@@ -72,7 +72,7 @@ public class BlockAlchemyArray extends BlockContainer
                 array.attemptCraft();
             } else
             {
-                return false;
+                return true;
             }
         }
 
