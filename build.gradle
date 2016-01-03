@@ -12,13 +12,13 @@ buildscript {
 
 plugins {
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
-    id 'com.matthewprenger.cursegradle' version '1.0.4'
+    id 'com.matthewprenger.cursegradle' version '1.0.5'
 	id 'net.franz-becker.gradle-lombok' version '1.5'
 }
 
 apply plugin: 'maven-publish'
 
-def build_number = '1'
+def build_number = 'CUSTOM'
 
 if (System.getenv('BUILD_NUMBER') != null)
     build_number = System.getenv('BUILD_NUMBER')
@@ -146,14 +146,24 @@ publishing {
     }
 }
 
+def curseRelations = {
+    optionalLibrary 'just-enough-items-jei'
+    optionalLibrary 'waila'
+}
+
 curseforge {
-    if (project.hasProperty('curse_key'))
+    if (project.hasProperty('curse_key_WayofTime'))
         apiKey = project.curse_key
 
     project {
         id = "${curse_id}"
         changelog = project.hasProperty('changelog') ? project.changelog : ''
         releaseType = 'beta'
+
+        addGameVersion '1.8.8'
+        addGameVersion '1.8.9'
+
+        relations curseRelations
 
         addArtifact javadocJar
         addArtifact sourceJar
