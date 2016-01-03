@@ -24,6 +24,9 @@ public class BlockAltar extends BlockContainer
 
         setUnlocalizedName(Constants.Mod.MODID + ".altar");
         setCreativeTab(BloodMagic.tabBloodMagic);
+        setHardness(2.0F);
+        setResistance(5.0F);
+        setHarvestLevel("pickaxe", 2);
     }
 
     @Override
