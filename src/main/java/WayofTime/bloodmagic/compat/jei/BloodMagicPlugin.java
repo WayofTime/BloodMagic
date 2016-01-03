@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.compat.jei;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeMaker;
@@ -46,6 +47,8 @@ public class BloodMagicPlugin implements IModPlugin
         jeiHelper = jeiHelpers;
 
         jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
+
+        jeiHelpers.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
     }
 
     @Override
