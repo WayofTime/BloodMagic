@@ -27,6 +27,9 @@ group = package_group
 archivesBaseName = mod_name
 version = "${mc_version}-${mod_version}-${build_number}"
 
+if (project.hasProperty('gitpush'))
+    version += "-ss"
+
 import org.ajoberstar.grgit.*
 
 ext.repo = Grgit.open(project.file('.'))
