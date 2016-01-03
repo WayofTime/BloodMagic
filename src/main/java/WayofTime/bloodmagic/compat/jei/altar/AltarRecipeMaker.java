@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class AltarRecipeMaker
 {
-
     @Nonnull
     public static List<AltarRecipeJEI> getRecipes()
     {

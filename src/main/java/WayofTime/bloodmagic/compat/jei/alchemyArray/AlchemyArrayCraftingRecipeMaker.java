@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class AlchemyArrayCraftingRecipeMaker
 {
-
     @Nonnull
     public static List<AlchemyArrayCraftingRecipeJEI> getRecipes()
     {

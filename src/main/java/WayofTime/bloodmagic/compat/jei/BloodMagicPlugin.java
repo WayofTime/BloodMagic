@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 @JEIPlugin
 public class BloodMagicPlugin implements IModPlugin
 {
-
     public static IJeiHelpers jeiHelper;
 
     @Override
@@ -47,6 +46,8 @@ public class BloodMagicPlugin implements IModPlugin
         jeiHelper = jeiHelpers;
 
         jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
+        jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
+        jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
 
         jeiHelpers.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
     }

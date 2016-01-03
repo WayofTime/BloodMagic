@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class BindingRecipeMaker
 {
-
     @Nonnull
     public static List<BindingRecipeJEI> getRecipes()
     {

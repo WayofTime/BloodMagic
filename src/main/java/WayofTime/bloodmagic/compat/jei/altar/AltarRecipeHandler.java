@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 
 public class AltarRecipeHandler implements IRecipeHandler<AltarRecipeJEI>
 {
-
     @Nonnull
     @Override
     public Class<AltarRecipeJEI> getRecipeClass()

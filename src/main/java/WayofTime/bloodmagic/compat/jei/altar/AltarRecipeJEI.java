@@ -12,7 +12,6 @@ import java.util.List;
 
 public class AltarRecipeJEI extends BlankRecipeWrapper
 {
-
     @Nonnull
     private final ItemStack input;
 

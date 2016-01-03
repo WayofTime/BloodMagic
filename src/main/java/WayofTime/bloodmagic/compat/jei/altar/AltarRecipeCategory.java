@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.compat.jei.altar;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import mezz.jei.api.JEIManager;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
@@ -15,7 +14,6 @@ import javax.annotation.Nonnull;
 
 public class AltarRecipeCategory implements IRecipeCategory
 {
-
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
@@ -61,7 +59,6 @@ public class AltarRecipeCategory implements IRecipeCategory
     @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 31, 0);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 125, 30);
 

@@ -15,7 +15,6 @@ import javax.annotation.Nonnull;
 
 public class AlchemyArrayCraftingCategory implements IRecipeCategory
 {
-
     private static final int INPUT_SLOT = 0;
     private static final int CATALYST_SLOT = 1;
     private static final int OUTPUT_SLOT = 2;

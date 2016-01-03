@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 
 public class AlchemyArrayCraftingRecipeHandler implements IRecipeHandler<AlchemyArrayCraftingRecipeJEI>
 {
-
     @Nonnull
     @Override
     public Class<AlchemyArrayCraftingRecipeJEI> getRecipeClass()

@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 
 public class BindingRecipeJEI extends BlankRecipeWrapper
 {
-
     @Nonnull
     private final List<ItemStack> inputs;
 

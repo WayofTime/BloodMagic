@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 
 public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
 {
-
     @Nonnull
     private final List<ItemStack> inputs;
 
