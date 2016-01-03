@@ -103,14 +103,14 @@ public class TileTeleposer extends TileInventory implements ITickable
                     if (focusWorld.equals(worldObj))
                     {
                         {
-                            AxisAlignedBB area51 = AxisAlignedBB.fromBounds(pos.getX() - 0.5, pos.getY() + focusLevel, pos.getZ() - 0.5, pos.getX() + 0.5, Math.min(focusWorld.getHeight(), pos.getY() + 2 + focusLevel + focusLevel), pos.getZ() + 0.5).expand(focusLevel, focusLevel, focusLevel);
+                            AxisAlignedBB area51 = AxisAlignedBB.fromBounds(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                             entityList1 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, area51);
                             for (EntityLivingBase entity : entityList1)
                                 entityCount++;
                         }
 
                         {
-                            AxisAlignedBB area52 = AxisAlignedBB.fromBounds(focusPos.getX() - 0.5, focusPos.getY() + focusLevel, focusPos.getZ() - 0.5, focusPos.getX() + 0.5, focusPos.getY() + 1.5 + focusLevel, focusPos.getZ() + 0.5).expand(focusLevel, focusLevel, focusLevel);
+                            AxisAlignedBB area52 = AxisAlignedBB.fromBounds(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                             entityList2 = focusWorld.getEntitiesWithinAABB(EntityLivingBase.class, area52);
                             for (EntityLivingBase entity : entityList2)
                                 entityCount++;
@@ -123,7 +123,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                     {
                         for (int j = 0; j <= (focusLevel * 2 - 2); j++)
                         {
-                            for (int k = (focusLevel - 1); k <= (focusLevel - 1); k++)
+                            for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++)
                             {
                                 if (teleportBlocks(this, worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k)))
                                 {
