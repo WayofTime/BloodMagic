@@ -356,6 +356,7 @@ public class BloodAltar
             fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
             this.fluidOutput.amount += fluidOutputted;
             this.fluid.amount -= fluidOutputted;
+            world.markBlockForUpdate(pos);
         }
 
         if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
@@ -364,6 +365,7 @@ public class BloodAltar
             chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
             totalCharge += chargeInputted;
             this.fluid.amount -= chargeInputted;
+            world.markBlockForUpdate(pos);
         }
 
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
