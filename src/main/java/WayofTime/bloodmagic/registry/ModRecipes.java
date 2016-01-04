@@ -62,6 +62,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), "aba", "cde", "afa", 'a', Blocks.obsidian, 'b', ModItems.sigilAir, 'c', ModItems.sigilWater, 'd', "dustGlowstone", 'e', ModItems.sigilLava, 'f', OrbRegistry.getOrbStack(ModItems.orbMagician)));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), "aba", "aca", "ded", 'a', "blockGlass", 'b', ModItems.sigilDivination, 'c', "dustGlowstone", 'd', ModItems.bucketEssence, 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), "wtl", "wrl", "wol", 't', new ItemStack(ModBlocks.teleposer), 'w', new ItemStack(Items.water_bucket), 'l', new ItemStack(Items.lava_bucket), 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AIR), "fGf", "fgf", "fof", 'f', new ItemStack(Items.feather), 'G', new ItemStack(Items.ghast_tear), 'g', new ItemStack(Items.glowstone_dust), 'o', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune), "aaa", "bcb", "aaa", 'a', "stone", 'b', ModItems.slate, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 1), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', new ItemStack(ModBlocks.bloodRune))); //Speed
 //        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodRune, 1, 2), "aba", "cdc", "aba", 'a', "stone", 'b', ModItems.slate, 'c', Items.sugar, 'd', new ItemStack(ModBlocks.bloodRune))); //Efficiency
@@ -87,7 +88,7 @@ public class ModRecipes
 
         // TWO
         AltarRecipeRegistry.registerFillRecipe(OrbRegistry.getOrbStack(ModItems.orbApprentice), EnumAltarTier.TWO, ModItems.orbApprentice.getCapacity(), 5, 5);
-        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.emerald), OrbRegistry.getOrbStack(ModItems.orbApprentice), EnumAltarTier.TWO, 5000, 5, 5));
+        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Blocks.redstone_block), OrbRegistry.getOrbStack(ModItems.orbApprentice), EnumAltarTier.TWO, 5000, 5, 5));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(ModItems.slate), new ItemStack(ModItems.slate, 1, 1), EnumAltarTier.TWO, 2000, 5, 5));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.iron_sword), new ItemStack(ModItems.daggerOfSacrifice), EnumAltarTier.TWO, 3000, 5, 5));
 
