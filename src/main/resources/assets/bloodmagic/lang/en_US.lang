@@ -99,6 +99,11 @@ item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
 item.BloodMagic.sigil.whirlwind.name=Sigil of the Whirlwind
 item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
 
+item.BloodMagic.livingArmour.helmet.name=Living Helmet
+item.BloodMagic.livingArmour.chest.name=Living Chestplate
+item.BloodMagic.livingArmour.legs.name=Living Leggings
+item.BloodMagic.livingArmour.boots.name=Living Boots
+
 item.BloodMagic.altarMaker.name=Altar Maker
 
 item.BloodMagic.ritualDivinernormal.name=Ritual Diviner

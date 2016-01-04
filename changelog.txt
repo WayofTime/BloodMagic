@@ -1,7 +1,13 @@
 ------------------------------------------------------
-Version 2.0.1
+Version NEXT
 ------------------------------------------------------
 - Added Life Essence bucket recipe
+- Added the rendering of LP inside of the altar
+- Added Living Armour including some upgrades:
+	- Added speed upgrade
+	- Added digging upgrade
+- Modified Divination Sigil recipe - no longer uses a block of glass because of issues on servers (tempramental)
+
 
 ------------------------------------------------------
 Version 2.0.0

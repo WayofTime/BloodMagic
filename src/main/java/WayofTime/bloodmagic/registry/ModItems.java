@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -8,11 +9,44 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.item.*;
+import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemArcaneAshes;
+import WayofTime.bloodmagic.item.ItemBloodOrb;
+import WayofTime.bloodmagic.item.ItemBloodShard;
+import WayofTime.bloodmagic.item.ItemBoundAxe;
+import WayofTime.bloodmagic.item.ItemBoundPickaxe;
+import WayofTime.bloodmagic.item.ItemBoundShovel;
+import WayofTime.bloodmagic.item.ItemBoundSword;
+import WayofTime.bloodmagic.item.ItemBucketEssence;
+import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.item.ItemDaggerOfSacrifice;
+import WayofTime.bloodmagic.item.ItemInscriptionTool;
+import WayofTime.bloodmagic.item.ItemLavaCrystal;
+import WayofTime.bloodmagic.item.ItemRitualDiviner;
+import WayofTime.bloodmagic.item.ItemSacrificialDagger;
+import WayofTime.bloodmagic.item.ItemSlate;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
-import WayofTime.bloodmagic.item.sigil.*;
+import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
+import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
+import WayofTime.bloodmagic.item.sigil.ItemSigilCompression;
+import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
+import WayofTime.bloodmagic.item.sigil.ItemSigilElementalAffinity;
+import WayofTime.bloodmagic.item.sigil.ItemSigilEnderSeverance;
+import WayofTime.bloodmagic.item.sigil.ItemSigilFastMiner;
+import WayofTime.bloodmagic.item.sigil.ItemSigilGreenGrove;
+import WayofTime.bloodmagic.item.sigil.ItemSigilHaste;
+import WayofTime.bloodmagic.item.sigil.ItemSigilLava;
+import WayofTime.bloodmagic.item.sigil.ItemSigilMagnetism;
+import WayofTime.bloodmagic.item.sigil.ItemSigilPhantomBridge;
+import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
+import WayofTime.bloodmagic.item.sigil.ItemSigilSuppression;
+import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
+import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
+import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModItems
@@ -236,10 +270,10 @@ public class ModItems
         renderHelper.itemRender(bloodShard, 0);
         renderHelper.itemRender(bloodShard, 1);
 
-        renderHelper.itemRender(livingArmourHelmet);
-        renderHelper.itemRender(livingArmourChest);
-        renderHelper.itemRender(livingArmourLegs);
-        renderHelper.itemRender(livingArmourBoots);
+        renderHelper.itemRender(livingArmourHelmet, "ItemLivingArmour0");
+        renderHelper.itemRender(livingArmourChest, "ItemLivingArmour1");
+        renderHelper.itemRender(livingArmourLegs, "ItemLivingArmour2");
+        renderHelper.itemRender(livingArmourBoots, "ItemLivingArmour3");
 
         renderHelper.itemRender(altarMaker);
 
