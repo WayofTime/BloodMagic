@@ -21,6 +21,7 @@ public class ItemLivingArmour extends ItemArmor
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
+    //TODO: Save/delete cache periodically.
     public static Map<ItemStack, LivingArmour> armourMap = new HashMap<ItemStack, LivingArmour>();
 
     public ItemLivingArmour(int armorType)

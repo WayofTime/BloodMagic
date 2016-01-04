@@ -14,6 +14,12 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
 {
     public static HashMap<LivingArmour, Boolean> changeMap = new HashMap<LivingArmour, Boolean>();
 
+    public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160 };
+    public static final int[] digHasteTime = new int[] { 20, 40, 60, 100, 100, 100 };
+    public static final int[] digHasteLevel = new int[] { 0, 0, 1, 1, 2, 2, 2 };
+    public static final int[] digSpeedTime = new int[] { 0, 60, 60, 100, 100, 100, 100 };
+    public static final int[] digSpeedLevel = new int[] { 0, 0, 0, 1, 1, 1, 1 };
+
     public static void hasDug(LivingArmour armour)
     {
         changeMap.put(armour, true);
@@ -31,7 +37,11 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
         {
             changeMap.put(livingArmour, false);
 
-            player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 100, 0, false, false));
+            player.addPotionEffect(new PotionEffect(Potion.digSpeed.id, digHasteTime[this.level], digHasteLevel[this.level], false, false));
+            if (digSpeedTime[this.level] > 0)
+            {
+                player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
+            }
         }
     }
 
@@ -44,13 +54,13 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
     @Override
     public int getMaxTier()
     {
-        return 1;
+        return 5; // Set to here until I can add more upgrades to it.
     }
 
     @Override
     public int getCostOfUpgrade()
     {
-        return 0;
+        return costs[this.level];
     }
 
     @Override

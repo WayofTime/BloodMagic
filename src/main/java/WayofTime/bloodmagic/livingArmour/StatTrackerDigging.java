@@ -58,7 +58,6 @@ public class StatTrackerDigging extends StatTracker
 
                 changeMap.put(livingArmour, 0);
 
-                System.out.println("Blocks dug: " + totalBlocksDug);
                 this.markDirty();
 
                 return true;
