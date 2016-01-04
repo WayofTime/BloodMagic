@@ -149,6 +149,29 @@ publishing {
     }
 }
 
+String getChangelogText() {
+    def changelogFile = new File('changelog.txt')
+    String str = ''
+    String separator = '---'
+    int lineCount = 0
+    boolean done = false
+    changelogFile.eachLine {
+        if (done || it == null) {
+            return
+        }
+        if (lineCount < 3) {
+            lineCount++
+            if (it.startsWith(separator)) {return}
+        }
+        if (!it.startsWith(separator)) {
+            str += "$it" + (lineCount < 3 ? ':\n\n' : '\n')
+            return
+        }
+        done = true // once we go past the first version block, parse no more
+    }
+    return str
+}
+
 def curseRelations = {
     optionalLibrary 'just-enough-items-jei'
     optionalLibrary 'waila'
@@ -156,11 +179,11 @@ def curseRelations = {
 
 curseforge {
     if (project.hasProperty('curse_key_WayofTime'))
-        apiKey = project.curse_key
+        apiKey = project.curse_key_WayofTime
 
     project {
         id = "${curse_id}"
-        changelog = project.hasProperty('changelog') ? project.changelog : ''
+        changelog = getChangelogText()
         releaseType = 'beta'
 
         addGameVersion '1.8.8'

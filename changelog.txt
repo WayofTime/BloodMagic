@@ -1,0 +1,20 @@
+------------------------------------------------------
+Version 2.0.0
+------------------------------------------------------
+
+Initial release of the open beta for the mod to Minecraft v1.8.9! This mod version has a lot of changes. Because it is a full-on rewrite, some of the mechanics of the mod have changed/are going to change. As such, the feel of the mod will be slightly different than previous iterations.
+This mod has a large amount of compatibility with the recipe look-up mod, Just Enough Items (JEI). It is VERY much recommended that you download JEI, since it will make your life a lot easier with the new mechanics.
+Because this is a beta of a rewrite, there will be a lot of missing content. I am trying my hardest to add new content as fast as I can, but my team and I are only human and can only code so fast. Please give a little patience while we make the mod the best it possibly can!
+Also, please submit bug reports or feature requests to the github, https://github.com/WayofTime/BloodMagic. We'll get to the issue soon!
+
+New
+- Added "Alchemy Array" crafting - this is achieved by making some "Arcane Ash" and clicking on the ground to create an array. You then click on the array with the first ingredient and then the second - breaking the array will give the items back.
+- Added JEI compatibility
+- Added WAILA compatibility (No more needing 3rd-party addons!)
+
+Changed
+- Lots of internals have changed. Too many to list.
+- A graphical overhaul of everything has been implemented. These textures were provided by CyanideX's Unity texture pack. BBoldt and Yulife (Inap) from the Unity team are our new permanent texture artists.
+
+Bug Fixes
+-
