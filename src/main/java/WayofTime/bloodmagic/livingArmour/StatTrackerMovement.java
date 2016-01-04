@@ -17,6 +17,8 @@ public class StatTrackerMovement extends StatTracker
     public static Map<EntityPlayer, Double> lastPosX = new HashMap<EntityPlayer, Double>();
     public static Map<EntityPlayer, Double> lastPosZ = new HashMap<EntityPlayer, Double>();
 
+    public static int[] blocksRequired = new int[] { 200, 1000, 2000, 4000, 7000, 15000, 25000, 35000, 50000, 70000 };
+
     public double totalMovement = 0;
 
     @Override
@@ -70,11 +72,6 @@ public class StatTrackerMovement extends StatTracker
 
             markDirty();
 
-            if (world.getWorldTime() % 20 == 0)
-            {
-                System.out.println("Total movement since activated: " + totalMovement);
-            }
-
             return true;
         }
 
@@ -87,9 +84,9 @@ public class StatTrackerMovement extends StatTracker
         // TODO Auto-generated method stub
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
-            if (totalMovement > (i + 1) * (i + 1) * (i + 1) * 100)
+            if (totalMovement > blocksRequired[i])
             {
                 upgradeList.add(new LivingArmourUpgradeSpeed(i));
             }

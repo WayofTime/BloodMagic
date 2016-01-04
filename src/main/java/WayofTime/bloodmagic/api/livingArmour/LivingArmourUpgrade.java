@@ -27,7 +27,7 @@ public abstract class LivingArmourUpgrade
      */
     public LivingArmourUpgrade(int level)
     {
-        this.level = level;
+        this.level = Math.min(level, getMaxTier() - 1);
     }
 
     public int getUpgradeLevel()

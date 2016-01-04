@@ -125,6 +125,11 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.diamond_axe), new AlchemyArrayEffectBinding(new ItemStack(ModItems.boundAxe)));
         AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.diamond_pickaxe), new AlchemyArrayEffectBinding(new ItemStack(ModItems.boundPickaxe)));
         AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.diamond_shovel), new AlchemyArrayEffectBinding(new ItemStack(ModItems.boundShovel)));
+        AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.iron_helmet), new AlchemyArrayEffectBinding(new ItemStack(ModItems.livingArmourHelmet)));
+        AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.iron_chestplate), new AlchemyArrayEffectBinding(new ItemStack(ModItems.livingArmourChest)));
+        AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.iron_leggings), new AlchemyArrayEffectBinding(new ItemStack(ModItems.livingArmourLegs)));
+        AlchemyArrayRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), new ItemStack(Items.iron_boots), new AlchemyArrayEffectBinding(new ItemStack(ModItems.livingArmourBoots)));
+
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(new ItemStack(Items.redstone), new ItemStack(ModItems.slate), new ItemStack(ModItems.sigilDivination), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/DivinationSigil.png"));
 
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_WATER), new ItemStack(ModItems.slate), new ItemStack(ModItems.sigilWater), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WaterSigil.png"));
