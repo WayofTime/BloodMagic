@@ -76,7 +76,7 @@ public class StatTrackerDigging extends StatTracker
 
         for (int i = 0; i < 5; i++)
         {
-            if (totalBlocksDug < blocksRequired[i])
+            if (totalBlocksDug >= blocksRequired[i])
             {
                 upgradeList.add(new LivingArmourUpgradeDigging(i));
             }

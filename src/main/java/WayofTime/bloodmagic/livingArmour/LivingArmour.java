@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
@@ -19,7 +20,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class LivingArmour
+public class LivingArmour implements ILivingArmour
 {
     public static String chatBase = "chat.BloodMagic.livingArmour.";
     public HashMap<String, StatTracker> trackerMap = new HashMap<String, StatTracker>();
@@ -28,6 +29,7 @@ public class LivingArmour
     public int maxUpgradePoints = 100;
     public int totalUpgradePoints = 0;
 
+    @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
         HashMultimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
@@ -45,6 +47,7 @@ public class LivingArmour
         return modifierMap;
     }
 
+    @Override
     public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade)
     {
         String key = upgrade.getUniqueIdentifier();
@@ -78,6 +81,7 @@ public class LivingArmour
         return false;
     }
 
+    @Override
     public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
     {
         ChatUtil.sendChat(user, TextHelper.localize(chatBase + "newUpgrade"));
@@ -90,6 +94,7 @@ public class LivingArmour
      * @param world
      * @param player
      */
+    @Override
     public void onTick(World world, EntityPlayer player)
     {
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
@@ -125,6 +130,7 @@ public class LivingArmour
         }
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound tag)
     {
         NBTTagList upgradeTags = tag.getTagList("upgrades", 10);
@@ -170,6 +176,7 @@ public class LivingArmour
         }
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound tag, boolean forceWrite)
     {
         NBTTagList tags = new NBTTagList();
@@ -220,11 +227,13 @@ public class LivingArmour
      * 
      * @param tag
      */
+    @Override
     public void writeDirtyToNBT(NBTTagCompound tag)
     {
         writeToNBT(tag, false);
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound tag)
     {
         writeToNBT(tag, true);

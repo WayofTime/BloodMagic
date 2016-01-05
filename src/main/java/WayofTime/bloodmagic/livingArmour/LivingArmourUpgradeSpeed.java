@@ -10,6 +10,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
 import com.google.common.collect.HashMultimap;
@@ -30,7 +31,7 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
         if (player.isSprinting())
         {

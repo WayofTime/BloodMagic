@@ -4,7 +4,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -49,7 +48,7 @@ public abstract class LivingArmourUpgrade
 
     public abstract int getCostOfUpgrade();
 
-    public void onTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
     }
 

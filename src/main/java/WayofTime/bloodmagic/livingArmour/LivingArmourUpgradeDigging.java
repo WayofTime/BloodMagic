@@ -8,11 +8,12 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
 public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
 {
-    public static HashMap<LivingArmour, Boolean> changeMap = new HashMap<LivingArmour, Boolean>();
+    public static HashMap<ILivingArmour, Boolean> changeMap = new HashMap<ILivingArmour, Boolean>();
 
     public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160 };
     public static final int[] digHasteTime = new int[] { 20, 40, 60, 100, 100, 100 };
@@ -31,7 +32,7 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
     }
 
     @Override
-    public void onTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
         if (changeMap.containsKey(livingArmour) && changeMap.get(livingArmour))
         {
