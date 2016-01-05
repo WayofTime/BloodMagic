@@ -63,10 +63,10 @@ public class BlockAlchemyArray extends BlockContainer
 
         if (playerItem != null)
         {
-            if (array.getStackInSlot(0) == null && AlchemyArrayRecipeRegistry.getRecipeForInput(playerItem) != null)
+            if (array.getStackInSlot(0) == null)
             {
                 Utils.insertItemToTile(array, player, 0);
-            } else if (array.getStackInSlot(0) != null && AlchemyArrayRecipeRegistry.getAlchemyArrayEffect(array.getStackInSlot(0), playerItem) != null)
+            } else if (array.getStackInSlot(0) != null)
             {
                 Utils.insertItemToTile(array, player, 1);
                 array.attemptCraft();
