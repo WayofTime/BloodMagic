@@ -71,4 +71,10 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade
     {
         poisonCooldown = tag.getInteger(Constants.NBT.UPGRADE_POISON_TIMER);
     }
+
+    @Override
+    public String getUnlocalizedName()
+    {
+        return tooltipBase + "poisonResist";
+    }
 }

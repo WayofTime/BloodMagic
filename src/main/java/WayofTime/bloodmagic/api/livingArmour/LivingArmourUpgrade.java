@@ -12,6 +12,7 @@ import com.google.common.collect.Multimap;
 public abstract class LivingArmourUpgrade
 {
     public static String chatBase = "chat.BloodMagic.livingArmour.upgrade.";
+    public static String tooltipBase = "tooltip.BloodMagic.livingArmour.upgrade.";
 
     /**
      * Upgrade level 0 is the first upgrade. Upgrade goes from 0 to getMaxTier()
@@ -38,6 +39,8 @@ public abstract class LivingArmourUpgrade
     }
 
     public abstract String getUniqueIdentifier();
+
+    public abstract String getUnlocalizedName();
 
     /**
      * @return

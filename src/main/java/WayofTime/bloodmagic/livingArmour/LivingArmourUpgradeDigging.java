@@ -74,4 +74,10 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
     {
         // EMPTY
     }
+
+    @Override
+    public String getUnlocalizedName()
+    {
+        return tooltipBase + "digging";
+    }
 }

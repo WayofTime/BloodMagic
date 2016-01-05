@@ -90,4 +90,10 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
     {
         // EMPTY
     }
+
+    @Override
+    public String getUnlocalizedName()
+    {
+        return tooltipBase + "speed";
+    }
 }

@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.item.armour;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -10,10 +12,14 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.Multimap;
 
@@ -30,6 +36,26 @@ public class ItemLivingArmour extends ItemArmor
         setUnlocalizedName(Constants.Mod.MODID + ".livingArmour.");
         setMaxDamage(250);
         setCreativeTab(BloodMagic.tabBloodMagic);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    {
+        if (this == ModItems.livingArmourChest)
+        {
+            LivingArmour armour = this.getLivingArmour(stack);
+            for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
+            {
+                LivingArmourUpgrade upgrade = entry.getValue();
+                if (upgrade != null)
+                {
+                    tooltip.add(TextHelper.localize(upgrade.getUnlocalizedName()) + " " + TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", (upgrade.getUpgradeLevel() + 1)));
+                }
+            }
+        }
+
+        super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
@@ -103,7 +129,6 @@ public class ItemLivingArmour extends ItemArmor
 
     public void setLivingArmour(ItemStack stack, LivingArmour armour, boolean forceWrite)
     {
-
         NBTTagCompound livingTag = new NBTTagCompound();
 
         if (!forceWrite)
@@ -139,5 +164,25 @@ public class ItemLivingArmour extends ItemArmor
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setTag(Constants.NBT.LIVING_ARMOUR, livingTag);
+    }
+
+    public LivingArmourUpgrade getUpgrade(String uniqueIdentifier, ItemStack stack)
+    {
+        if (!armourMap.containsKey(stack))
+        {
+            armourMap.put(stack, getLivingArmour(stack));
+        }
+
+        LivingArmour armour = armourMap.get(stack);
+
+        for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
+        {
+            if (entry.getKey().equals(uniqueIdentifier))
+            {
+                return entry.getValue();
+            }
+        }
+
+        return null;
     }
 }
