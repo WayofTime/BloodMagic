@@ -1,12 +1,6 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
-import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-
-import com.google.common.base.Strings;
+import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,11 +8,14 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.relauncher.Side;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
+import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
 
-import java.util.UUID;
+import com.google.common.base.Strings;
 
 public class NetworkHelper
 {
@@ -34,11 +31,6 @@ public class NetworkHelper
      */
     public static SoulNetwork getSoulNetwork(String name)
     {
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            return null;
-        }
-
         World world = DimensionManager.getWorld(0);
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 
