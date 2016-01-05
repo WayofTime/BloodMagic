@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.event;
 
-import net.minecraft.block.Block;
+import WayofTime.bloodmagic.api.BlockStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -17,27 +17,21 @@ public class TeleposeEvent extends Event
 {
     public final World initalWorld;
     public final BlockPos initialBlockPos;
-
-    public final Block initialBlock;
-    public final int initialMetadata;
+    public final BlockStack initialStack;
 
     public final World finalWorld;
     public final BlockPos finalBlockPos;
+    public final BlockStack finalStack;
 
-    public final Block finalBlock;
-    public final int finalMetadata;
-
-    public TeleposeEvent(World initialWorld, BlockPos initialBlockPos, Block initialBlock, int initialMetadata, World finalWorld, BlockPos finalBlockPos, Block finalBlock, int finalMetadata)
+    public TeleposeEvent(World initialWorld, BlockPos initialBlockPos, World finalWorld, BlockPos finalBlockPos)
     {
         this.initalWorld = initialWorld;
         this.initialBlockPos = initialBlockPos;
-        this.initialBlock = initialBlock;
-        this.initialMetadata = initialMetadata;
+        this.initialStack = BlockStack.getStackFromPos(initialWorld, initialBlockPos);
 
         this.finalWorld = finalWorld;
         this.finalBlockPos = finalBlockPos;
-        this.finalBlock = finalBlock;
-        this.finalMetadata = finalMetadata;
+        this.finalStack = BlockStack.getStackFromPos(finalWorld, finalBlockPos);
     }
 
     public TileEntity getInitialTile()

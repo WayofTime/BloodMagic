@@ -43,6 +43,11 @@ public class ItemStackWrapper
         this(block, 1, 0);
     }
 
+    public ItemStackWrapper(BlockStack blockStack)
+    {
+        this(blockStack.getBlock(), 1, blockStack.getMeta());
+    }
+
     public static ItemStackWrapper getHolder(ItemStack stack)
     {
         return new ItemStackWrapper(stack.getItem(), stack.stackSize, stack.getItemDamage());

@@ -97,13 +97,11 @@ public class EventHandler
     @SubscribeEvent
     public void onTelepose(TeleposeEvent event)
     {
-        BlockStack initialBlock = new BlockStack(event.initialBlock, event.initialMetadata);
-        BlockStack finalBlock = new BlockStack(event.finalBlock, event.finalMetadata);
 
-        if (ConfigHandler.teleposerBlacklist.contains(initialBlock) || ConfigHandler.teleposerBlacklist.contains(finalBlock))
+        if (ConfigHandler.teleposerBlacklist.contains(event.initialStack) || ConfigHandler.teleposerBlacklist.contains(event.finalStack))
             event.setCanceled(true);
 
-        if (BloodMagicAPI.getTeleposerBlacklist().contains(initialBlock) || BloodMagicAPI.getTeleposerBlacklist().contains(finalBlock))
+        if (BloodMagicAPI.getTeleposerBlacklist().contains(event.initialStack) || BloodMagicAPI.getTeleposerBlacklist().contains(event.finalStack))
             event.setCanceled(true);
     }
 
