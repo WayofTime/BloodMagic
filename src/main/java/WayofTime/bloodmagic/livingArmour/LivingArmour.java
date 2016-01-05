@@ -80,7 +80,7 @@ public class LivingArmour
 
     public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
     {
-        ChatUtil.sendNoSpam(user, TextHelper.localize(chatBase + "newUpgrade"));
+        ChatUtil.sendChat(user, TextHelper.localize(chatBase + "newUpgrade"));
     }
 
     /**

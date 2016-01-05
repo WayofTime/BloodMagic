@@ -13,9 +13,10 @@ import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 
 public class StatTrackerDigging extends StatTracker
 {
-    public double totalBlocksDug = 0;
+    public int totalBlocksDug = 0;
 
     public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static int[] blocksRequired = new int[] { 128, 512, 1024, 2048, 8192, 16000, 32000 };
 
     public static void incrementCounter(LivingArmour armour)
     {
@@ -37,13 +38,13 @@ public class StatTrackerDigging extends StatTracker
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalBlocksDug = tag.getDouble(Constants.Mod.MODID + ".tracker.digging");
+        totalBlocksDug = tag.getInteger(Constants.Mod.MODID + ".tracker.digging");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.digging", totalBlocksDug);
+        tag.setInteger(Constants.Mod.MODID + ".tracker.digging", totalBlocksDug);
     }
 
     @Override
@@ -73,17 +74,13 @@ public class StatTrackerDigging extends StatTracker
         // TODO Auto-generated method stub
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        if (totalBlocksDug >= 10)
+        for (int i = 0; i < 5; i++)
         {
-            upgradeList.add(new LivingArmourUpgradeDigging(0));
+            if (totalBlocksDug < blocksRequired[i])
+            {
+                upgradeList.add(new LivingArmourUpgradeDigging(i));
+            }
         }
-//        for (int i = 0; i < 5; i++)
-//        {
-//            if (totalMovement > (i + 1) * (i + 1) * (i + 1) * 100)
-//            {
-//                upgradeList.add(new LivingArmourUpgradeSpeed(i));
-//            }
-//        }
 
         return upgradeList;
     }

@@ -244,6 +244,8 @@ chat.BloodMagic.ritual.prevent=The ritual is actively resisting you!
 chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
 chat.BloodMagic.ritual.notValid=You feel that these runes are not configured correctly...
 
+chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
+
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar
 jei.BloodMagic.recipe.binding=Binding Ritual
