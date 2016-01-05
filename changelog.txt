@@ -5,6 +5,7 @@ Version 2.0.0-3
 - Added poison upgrade to Living Armour
 - Fixed digging upgrade
 - Added self sacrifice upgrade to Living Armour (Tough Palms)
+- Added knockback resistance upgrade to Living Armour, trained via eating (Body Builder)
 
 
 ------------------------------------------------------

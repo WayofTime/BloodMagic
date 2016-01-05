@@ -86,7 +86,7 @@ public class StatTrackerMovement extends StatTracker
 
         for (int i = 0; i < 10; i++)
         {
-            if (totalMovement > blocksRequired[i])
+            if (totalMovement >= blocksRequired[i])
             {
                 upgradeList.add(new LivingArmourUpgradeSpeed(i));
             }

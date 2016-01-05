@@ -62,7 +62,7 @@ public class StatTrackerPoison extends StatTracker
 
         for (int i = 0; i < 3; i++)
         {
-            if (totalPoisonTicks < poisonTicksRequired[i])
+            if (totalPoisonTicks >= poisonTicksRequired[i])
             {
                 upgradeList.add(new LivingArmourUpgradePoisonResist(i));
             }
