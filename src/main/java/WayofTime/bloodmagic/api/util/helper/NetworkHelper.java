@@ -14,7 +14,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.UUID;
 
@@ -32,6 +34,11 @@ public class NetworkHelper
      */
     public static SoulNetwork getSoulNetwork(String name)
     {
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+        {
+            return null;
+        }
+
         World world = DimensionManager.getWorld(0);
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 

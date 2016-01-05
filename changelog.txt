@@ -1,5 +1,11 @@
 ------------------------------------------------------
-Version NEXT
+Version 2.0.0-3
+------------------------------------------------------
+- Fixed client-side issue when shift-clicking lava crystals into a furnace while on a server.
+
+
+------------------------------------------------------
+Version 2.0.0-2
 ------------------------------------------------------
 - Added Life Essence bucket recipe
 - Added the rendering of LP inside of the altar
