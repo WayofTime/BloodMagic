@@ -1,181 +1,256 @@
-#Block Localization
-tile.bloodAltar.name=Blutaltar
-tile.bloodRune.blank.name=Blutrune
-tile.bloodRune.fill.name=Rune der Erweiterten Kapazität
-tile.bloodRune.empty.name=Rune der Dislokation
-tile.bloodRune.test.name=Rune des Gestirns
-tile.speedRune.name=Geschwindigkeitsrune
-tile.efficiencyRune.name=Effizienzrune
-tile.runeOfSacrifice.name=Rune der Opferung
-tile.runeOfSelfSacrifice.name=Rune der Selbstopferung
-tile.ritualStone.name=Ritualstein
-tile.blockMasterStone.name=Meister-Ritualstein
-tile.bloodSocket.name=Gefüllte Fassung
-tile.imperfectRitualStone.name=Unvollkommener Ritualstein
-tile.armourForge.name=Seelrüstungsschmiede
-tile.emptySocket.name=Leere Fassung
-tile.bloodStoneBrick.name=Blutsteinziegel
-tile.largeBloodStoneBrick.name=Große Blutsteinziegel
-tile.blockWritingTable.name=Alchemisches Chemieset
-tile.blockHomHeart.name=Zaubertisch
-tile.bloodPedestal.name=Arkaner Sockel
-tile.bloodPlinth.name=Arkane Plinthe
-tile.bloodTeleposer.name=Teleposer
-tile.blockConduit.name=Zauberleitung
-tile.blockSpellParadigm.projectile.name=Partikelgenerator
-tile.blockSpellParadigm.self.name=Selbstverbesserer
-tile.blockSpellParadigm.melee.name=Nahrkampfaggregator
-tile.blockSpellEnhancement.power1.name=Instabile Zaubersteigerung
-tile.blockSpellEnhancement.power2.name=Standard-Zaubersteigerung
-tile.blockSpellEnhancement.power3.name=Verstärkte Zaubersteigerung
-tile.blockSpellEnhancement.power4.name=Erfüllte Zaubersteigerung
-tile.blockSpellEnhancement.power5.name=Dämonische Zaubersteigerung
-tile.blockSpellEnhancement.cost1.name=Instabiler Zauberdämpfer
-tile.blockSpellEnhancement.cost2.name=Standard-Zauberdämpfer
-tile.blockSpellEnhancement.cost3.name=Verstärkter Zauberdämpfer
-tile.blockSpellEnhancement.cost4.name=Erfüllter Zauberdämpfer
-tile.blockSpellEnhancement.cost5.name=Dämonischer Zauberdämpfer
-tile.blockSpellEnhancement.potency1.name=Instabiler Zauberverbesserer
-tile.blockSpellEnhancement.potency2.name=Standard-Zauberverbesserer
-tile.blockSpellEnhancement.potency3.name=Verstärkter Zauberverbesserer
-tile.blockSpellEnhancement.potency4.name=Erfüllter Zauberverbesserer
-tile.blockSpellEnhancement.potency5.name=Dämonischer Zauberverbesserer
-tile.blockSpellModifier.default.name=Standard-Zaubermodifikator
-tile.blockSpellModifier.offensive.name=Offensiv-Zaubermodifikator
-tile.blockSpellModifier.defensive.name=Defensiv-Zaubermodifikator
-tile.blockSpellModifier.environmental.name=Umwelt-Zaubermodifikator
-tile.blockSpellEffect.fire.name=Tiegel des Feuers
-tile.blockSpellEffect.ice.name=Eismacher
-tile.blockSpellEffect.wind.name=Windgenerator
-tile.blockSpellEffect.earth.name=Erdformer
-
-#Item Localization
-item.weakBloodOrb.name=Schwacher Blutorb
-item.apprenticeBloodOrb.name=Lehrlingsblutorb
-item.magicianBloodOrb.name=Blutorb des Magiers
-item.masterBloodOrb.name=Blutorb des Meisters
-item.archmageBloodOrb.name=Blutorb des Erzmagiers
-item.energyBlast.name=Energie-Blaster
-item.energySword.name=Gebundene Klinge
-item.lavaCrystal.name=Lavakristall
-item.waterSigil.name=Wassersiegel
-item.lavaSigil.name=Lavasiegel
-item.voidSigil.name=Leerensiegel
-item.blankSlate.name=Leere Tafel
-item.reinforcedSlate.name=Verstärkte Tafel
-item.sacrificialDagger.name=Opfermesser
-item.daggerOfSacrifice.name=Dolch der Opferung
-item.airSigil.name=Luftsiegel
-item.sigilOfTheFastMiner.name=Siegel des Schnellen Bergbaus
-item.sigilOfElementalAffinity.name=Siegel der Elementaraffinität
-item.sigilOfHaste.name=Siegel der Hast
-item.sigilOfHolding.name=Siegel des Haltens
-item.divinationSigil.name=Wahrheitssiegel
-item.waterScribeTool.name=Elementar-Gravurwerkzeug: Wasser
-item.fireScribeTool.name=Elementar-Gravurwerkzeug: Feuer
-item.earthScribeTool.name=Elementar-Gravurwerkzeug: Erde
-item.airScribeTool.name=Elementar-Gravurwerkzeug: Luft
-item.duskScribeTool.name=Elementar-Gravurwerkzeug: Dämmerung
-item.activationCrystalWeak.name=Schwacher Aktivierungskristall
-item.activationCrystalAwakened.name=Erweckter Aktivierungskristall
-item.boundPickaxe.name=Gebundene Spitzhacke
-item.boundAxe.name=Gebundene Axt
-item.boundShovel.name=Gebundene Schaufel
-item.boundHelmet.name=Gebundener Helm
-item.boundPlate.name=Gebundene Platte
-item.boundLeggings.name=Gebundener Beinschutz
-item.boundBoots.name=Gebundene Stiefel
-item.weakBloodShard.name=Schwache Blutscherbe
-item.growthSigil.name=Siegel des Grünen Hains
-item.blankSpell.name=Ungebundener Kristall
-item.alchemyFlask.name=Trankfläschchen
-item.standardBindingAgent.name=Standard-Bindemittel
-item.mundanePowerCatalyst.name=Gewöhnlicher Energiekatalysator
-item.averagePowerCatalyst.name=Durschschnittlicher Energiekatalysator
-item.greaterPowerCatalyst.name=Besserer Energiekatalysator
-item.mundaneLengtheningCatalyst.name=Gewöhnlicher Verlängerungskatalysator
-item.averageLengtheningCatalyst.name=Durschschnittlicher Verlängerungskatalysator
-item.greaterLengtheningCatalyst.name=Besserer Verlängerungskatalysator
-item.incendium.name=Incendium
-item.magicales.name=Magicales
-item.sanctus.name=Sanctus
-item.aether.name=Aether
-item.simpleCatalyst.name=Einfacher Katalysator
-item.crepitous.name=Crepitous
-item.crystallos.name=Crystallos
-item.terrae.name=Terrae
-item.aquasalus.name=Aquasalus
-item.tennebrae.name=Tenebrae
-item.demonBloodShard.name=Dämonenblutscherbe
-item.sigilOfWind.name=Siegel des Wirbelwindes
-item.telepositionFocus.name=Telepositionsfokus
-item.enhancedTelepositionFocus.name=Verbesserter Telepositionsfokus
-item.reinforcedTelepositionFocus.name=Verstärkter Telepositionsfokus
-item.demonicTelepositionFocus.name=Dämonischer Telepositionsfokus
-item.imbuedSlate.name=Erfüllte Tafel
-item.demonicSlate.name=Dämonische Tafel
-item.sigilOfTheBridge.name=Siegel der Phantombrücke
-item.armourInhibitor.name=Rüstungshemmer
-item.cheatyItem.name=Orb des Testens
-item.weakFillingAgent.name=Schwaches Füllmittel
-item.standardFillingAgent.name=Standard-Füllmittel
-item.enhancedFillingAgent.name=Verbessertes Füllmittel
-item.weakBindingAgent.name=Schwaches Bindemittel
-item.ritualDiviner.name=Ritualrute
-item.sigilOfMagnetism.name=Siegel des Magnetismus
-item.itemDiabloKey.name=Schlüssel der Bindung
-item.energyBazooka.name=Energie-Bazooka
-item.bloodLightSigil.name=Siegel der Blutlampe
-item.itemComplexSpellCrystal.name=Komplexer Zauberkristall
-item.itemSigilOfSupression.name=Siegel der Unterdrückung
-item.itemSigilOfEnderSeverance.name=Siegel des Endertrennens
-item.bucketLive.name=Lebenseimer
-item.bloodMagicBaseItem.quartzRod.name=Quarzstab
-item.bloodMagicBaseItem.EmptyCore.name=Leerer Kern
-item.bloodMagicBaseItem.MagicalesCable.name=Magicales-Kabel
-item.bloodMagicBaseItem.WoodBrace.name=Hölzerne Klammer
-item.bloodMagicBaseItem.StoneBrace.name=Steinklammer
-item.bloodMagicBaseItem.ProjectileCore.name=Projektilkern
-item.bloodMagicBaseItem.SelfCore.name=Selbstkern
-item.bloodMagicBaseItem.MeleeCore.name=Nahkampfkern
-item.bloodMagicBaseItem.ParadigmBackPlate.name=Paradigmaplatte
-item.bloodMagicBaseItem.OutputCable.name=Ausgangszauberkabel
-item.bloodMagicBaseItem.InputCable.name=Eingangszauberkabel
-item.bloodMagicBaseItem.FlameCore.name=Feuriger Kern
-item.bloodMagicBaseItem.IcyCore.name=Eisiger Kern
-item.bloodMagicBaseItem.GustCore.name=Windiger Kern
-item.bloodMagicBaseItem.EarthenCore.name=Irdener Kern
-item.bloodMagicBaseItem.CrackedRunicPlate.name=Brüchige Runenplatte
-item.bloodMagicBaseItem.RunicPlate.name=Runenplatte
-item.bloodMagicBaseItem.ScribedRunicPlate.name=Erfüllte Runenplatte
-item.bloodMagicBaseItem.DefaultCore.name=Unbestimmter Kern
-item.bloodMagicBaseItem.OffensiveCore.name=Offensivkern
-item.bloodMagicBaseItem.DefensiveCore.name=Defensivkern
-item.bloodMagicBaseItem.EnvironmentalCore.name=Umweltkern
-item.bloodMagicBaseItem.PowerCore.name=Energiekern
-item.bloodMagicBaseItem.CostCore.name=Reduktionskern
-item.bloodMagicBaseItem.PotencyCore.name=Machtkern
-item.bloodMagicBaseItem.ObsidianBrace.name=Obsidianklammer
-item.bloodMagicAlchemyItem.Offensa.name=Offensa
-item.bloodMagicAlchemyItem.Praesidium.name=Praesidium
-item.bloodMagicAlchemyItem.OrbisTerrae.name=Orbis Terrae
-item.bloodMagicAlchemyItem.StrengthenedCatalyst.name=Gestärkter Katalysator
-item.bloodMagicAlchemyItem.ConcentratedCatalyst.name=Konzentierter Katalysator
-item.bloodMagicAlchemyItem.FracturedBone.name=Gebrochener Knochen
-item.bloodMagicAlchemyItem.Virtus.name=Virtus
-item.bloodMagicAlchemyItem.Reductus.name=Reductus
-item.bloodMagicAlchemyItem.Potentia.name=Potentia
-item.sanguineHelmet.name=Bluthelm
-item.itemSeerSigil.name=Siegel der Sicht
-item.itemFluidSigil.name=
-
-
 #Creative Tab
-itemGroup.tabBloodMagic=Blood Magic
+itemGroup.BloodMagic.creativeTab=Blood Magic
 
-#Extra Strings
-bm.string.consume=Verbrauch
-bm.string.drain=Entzug
-bm.string.tier=Stufe
-bm.string.crafting.orb.shaped=Geformte Orb-Fertigung
-bm.string.crafting.orb.shapeless=Formfreie Orb-Fertigung
+#Items
+item.BloodMagic.activationCrystal.weak.name=Schwacher Aktivierungskristall
+item.BloodMagic.activationCrystal.awakened.name=Erweckter Aktivierungskristall
+item.BloodMagic.activationCrystal.creative.name=Kreativer Aktivierungskristall
+
+item.BloodMagic.sacrificialDagger.normal.name=Opfermesser
+item.BloodMagic.sacrificialDagger.creative.name=Kreatives Opfermesser
+item.BloodMagic.pack.selfSacrifice.name=Rucksack des Blutlassers
+item.BloodMagic.pack.sacrifice.name=Wappen
+item.BloodMagic.daggerOfSacrifice.name=Dolch der Opferung
+
+item.BloodMagic.lavaCrystal.name=Lavakristall
+
+item.BloodMagic.bound.sword.name=Gebundene Klinge
+item.BloodMagic.bound.pickaxe.name=Gebundene Spitzhacke
+item.BloodMagic.bound.axe.name=Gebundene Axt
+item.BloodMagic.bound.shovel.name=Gebundene Schaufel
+
+item.BloodMagic.bucket.lifeEssence.name=Lebenseimer
+
+item.BloodMagic.scribe.water.name=Elementar-Gravurwerkzeug: Wasser
+item.BloodMagic.scribe.fire.name=Elementar-Gravurwerkzeug: Feuer
+item.BloodMagic.scribe.earth.name=Elementar-Gravurwerkzeug: Erde
+item.BloodMagic.scribe.air.name=Elementar-Gravurwerkzeug: Luft
+item.BloodMagic.scribe.dusk.name=Elementar-Gravurwerkzeug: Morgendämmerung
+item.BloodMagic.scribe.dawn.name=Elementar-Gravurwerkzeug: Abenddämmerung
+
+item.BloodMagic.focus.weak.name=Telepositionsfokus
+item.BloodMagic.focus.enhanced.name=Verbesserter Telepositionsfokus
+item.BloodMagic.focus.reinforced.name=Verstärkter Telepositionsfokus
+item.BloodMagic.focus.demonic.name=Dämonischer Telepositionsfokus
+
+item.BloodMagic.slate.blank.name=Leere Tafel
+item.BloodMagic.slate.reinforced.name=Verstärkte Tafel
+item.BloodMagic.slate.imbued.name=Erfüllte Tafel
+item.BloodMagic.slate.demonic.name=Dämonische Tafel
+item.BloodMagic.slate.ethereal.name=Ätherische Tafel
+
+item.BloodMagic.orb.weak.name=Schwacher Blutorb
+item.BloodMagic.orb.apprentice.name=Lehrlingsblutorb
+item.BloodMagic.orb.magician.name=Blutorb des Magiers
+item.BloodMagic.orb.master.name=Blutorb des Meisters
+item.BloodMagic.orb.archmage.name=Blutorb des Erzmagiers
+item.BloodMagic.orb.transcendent.name=Transzendenter Blutorb
+
+item.BloodMagic.reagent.incendium.name=Incendium
+item.BloodMagic.reagent.magicales.name=Magicales
+item.BloodMagic.reagent.sanctus.name=Sanctus
+item.BloodMagic.reagent.aether.name=Aether
+item.BloodMagic.reagent.crepitous.name=Crepitous
+item.BloodMagic.reagent.crystallos.name=Crystallos
+item.BloodMagic.reagent.terrae.name=Terrae
+item.BloodMagic.reagent.aquasalus.name=Aquasalus
+item.BloodMagic.reagent.tennebrae.name=Tennebrae
+item.BloodMagic.reagent.offensa.name=Offensa
+item.BloodMagic.reagent.praesidium.name=Praesidium
+item.BloodMagic.reagent.orbisterrae.name=Orbis Terrae
+item.BloodMagic.reagent.virtus.name=Virtus
+item.BloodMagic.reagent.reductus.name=Reductus
+item.BloodMagic.reagent.potentia.name=Potentia
+
+item.BloodMagic.bloodShard.weak.name=Schwache Blutscherbe
+item.BloodMagic.bloodShard.demon.name=Dämonenblutscherbe
+
+item.BloodMagic.baseComponent.reagentWater.name=Wasserreagenz
+item.BloodMagic.baseComponent.reagentLava.name=Lavareagenz
+item.BloodMagic.baseComponent.reagentAir.name=Luftreagenz
+item.BloodMagic.baseComponent.reagentFastMiner.name=Abbaureagenz
+item.BloodMagic.baseComponent.reagentVoid.name=Leerenreagenz
+item.BloodMagic.baseComponent.reagentGrowth.name=Wachstumsreagenz
+item.BloodMagic.baseComponent.reagentAffinity.name=Reagenz der elementaren Verbundenheit
+item.BloodMagic.baseComponent.reagentSight.name=Sichtreagenz
+item.BloodMagic.baseComponent.reagentBinding.name=Bindendes Reagenz
+item.BloodMagic.baseComponent.reagentSuppression.name=Unterdrückendes Reagenz
+
+item.BloodMagic.sigil.air.name=Luftsiegel
+item.BloodMagic.sigil.bloodLight.name=Siegel der Blutlampe
+item.BloodMagic.sigil.compression.name=Siegel der Kompression
+item.BloodMagic.sigil.divination.name=Wahrheitssiegel
+item.BloodMagic.sigil.water.name=Wassersiegel
+item.BloodMagic.sigil.lava.name=Lavasiegel
+item.BloodMagic.sigil.void.name=Leerensiegel
+item.BloodMagic.sigil.greenGrove.name=Siegel des Grünen Hains
+item.BloodMagic.sigil.elementalAffinity.name=Siegel der elementaren Verbundenheit
+item.BloodMagic.sigil.haste.name=Siegel der Hast
+item.BloodMagic.sigil.suppression.name=Siegel der Unterdrückung
+item.BloodMagic.sigil.magnetism.name=Siegel des Magnetismus
+item.BloodMagic.sigil.fastMiner.name=Siegel des Schnellen Abbaus
+item.BloodMagic.sigil.seer.name=Siegel der Sicht
+item.BloodMagic.sigil.phantomBridge.name=Siegel der Phantombrücke
+item.BloodMagic.sigil.whirlwind.name=Siegel des Wirbelwindes
+item.BloodMagic.sigil.enderSeverance.name=Siegel des Endertrennens
+
+item.BloodMagic.livingArmour.helmet.name=Lebender Helm
+item.BloodMagic.livingArmour.chest.name=Lebender Brustpanzer
+item.BloodMagic.livingArmour.legs.name=Lebender Beinschutz
+item.BloodMagic.livingArmour.boots.name=Lebende Schuhe
+
+item.BloodMagic.altarMaker.name=Altarersteller
+
+item.BloodMagic.ritualDivinernormal.name=Ritualrute
+item.BloodMagic.ritualDivinerdusk.name=Ritualrute [Morgendämmerung]
+item.BloodMagic.ritualDivinerdawn.name=Ritualrute [Abenddämmerung]
+
+item.BloodMagic.arcaneAshes.name=Arkane Asche
+
+# Blocks
+tile.BloodMagic.fluid.lifeEssence.name=Lebensessenz
+
+tile.BloodMagic.stone.ritual.master.name=Meister-Ritualstein
+tile.BloodMagic.stone.ritual.imperfect.name=Fehlerhafter Ritualstein
+
+tile.BloodMagic.altar.name=Blutaltar
+tile.BloodMagic.rune.blank.name=Blutrune
+tile.BloodMagic.rune.speed.name=Geschwindigkeitsrune
+tile.BloodMagic.rune.efficiency.name=Effizienzrune
+tile.BloodMagic.rune.sacrifice.name=Rune der Opferung
+tile.BloodMagic.rune.selfSacrifice.name=Rune der Selbstopferung
+tile.BloodMagic.rune.displacement.name=Rune der Vertreibung
+tile.BloodMagic.rune.capacity.name=Kapazitätsrune
+tile.BloodMagic.rune.augCapacity.name=Rune der erweiterten Kapazität
+tile.BloodMagic.rune.orb.name=Orbrune
+tile.BloodMagic.rune.acceleration.name=Beschleunigungsrune
+
+tile.BloodMagic.ritualStone.blank.name=Ritualstein
+tile.BloodMagic.ritualStone.water.name=Wasserritualstein
+tile.BloodMagic.ritualStone.fire.name=Feuerritualstein
+tile.BloodMagic.ritualStone.earth.name=Erdritualstein
+tile.BloodMagic.ritualStone.air.name=Luftritualstein
+tile.BloodMagic.ritualStone.dusk.name=Morgendämmerungsritualstein
+tile.BloodMagic.ritualStone.dawn.name=Abenddämmerungsritualstein
+
+tile.BloodMagic.bloodstonebrick.normal.name=Blutsteinziegel
+tile.BloodMagic.bloodstonebrick.large.name=Großer Blutsteinziegel
+tile.BloodMagic.crystal.normal.name=Kristallklumpen
+tile.BloodMagic.crystal.brick.name=Kristallklumpenziegel
+tile.BloodMagic.bloodLight.name=Blutlampe
+tile.BloodMagic.spectralBlock.name=Spektralblock
+tile.BloodMagic.phantomBlock.name=Phantomblock
+
+tile.BloodMagic.teleposer.name=Teleposer
+
+# Tooltips
+tooltip.BloodMagic.orb.desc=Speichert Lebensessenz
+tooltip.BloodMagic.orb.owner=Hinzugefügt durch: %s
+tooltip.BloodMagic.currentOwner=Eigentümer: %s
+tooltip.BloodMagic.currentTier=Ausbaustufe: %d
+
+tooltip.BloodMagic.activated=Aktiviert
+tooltip.BloodMagic.deactivated=Deaktiviert
+
+tooltip.BloodMagic.sigil.air.desc=&oIch fühl mich schon leichter...
+tooltip.BloodMagic.sigil.bloodLight.desc=&oIch sehe ein Licht!
+tooltip.BloodMagic.sigil.compression.desc=&oDiamanthände
+tooltip.BloodMagic.sigil.divination.desc=&oSpähe in die Seele
+tooltip.BloodMagic.sigil.divination.currentAltarTier=Ausbaustufe: %d
+tooltip.BloodMagic.sigil.divination.currentEssence=Gespeicherte Lebensessenz: %d LP
+tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Maximale Kapazität: %d LP
+tooltip.BloodMagic.sigil.water.desc=&oHat jemand nach unendlichem Wasser gefragt?
+tooltip.BloodMagic.sigil.lava.desc=&oHEISS! NICHT ESSEN!
+tooltip.BloodMagic.sigil.void.desc=&oBesser als Swiffer®!
+tooltip.BloodMagic.sigil.greenGrove.desc=&oUmweltverträglich
+tooltip.BloodMagic.sigil.magnetism.desc=&oIch habe eine anziehende Persönlichkeit
+tooltip.BloodMagic.sigil.suppression.desc=&oBesser als Telekinese
+tooltip.BloodMagic.sigil.haste.desc=&o42 Dosen Koffein später...
+tooltip.BloodMagic.sigil.fastMiner.desc=&oHacke wie ein Weltmeister
+tooltip.BloodMagic.sigil.elementalAffinity.desc=&oAchtung! Fallende Feuerfische
+tooltip.BloodMagic.sigil.seer.desc=&oWenn allsehend nicht genug ist
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=Fortschritt: %d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=Fortschritt: %s
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=Verbrauch: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarTier=Ausbaustufe: %d
+tooltip.BloodMagic.sigil.seer.currentEssence=Gespeicherte Lebensessenz: %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Maximale Kapazität: %d LP
+tooltip.BloodMagic.sigil.seer.currentCharge=Ladung: %d
+tooltip.BloodMagic.sigil.phantomBridge.desc=&oLaufen auf dünner Luft...
+tooltip.BloodMagic.sigil.whirlwind.desc=&oBesser keinen Rock tragen
+tooltip.BloodMagic.sigil.enderSeverance.desc=&oBringt Enderman in Notlage
+
+tooltip.BloodMagic.bound.sword.desc=&oErlegen der Schwachen
+tooltip.BloodMagic.bound.pickaxe.desc=&oZerstören von Stein ohne Erbarmen
+tooltip.BloodMagic.bound.axe.desc=&oDämonischer Kahlschlag
+tooltip.BloodMagic.bound.shovel.desc=&oSchrubbt den Dreck vom Boden
+
+tooltip.BloodMagic.sacrificialDagger.desc=Schon ein Stich in den Finger genügt
+tooltip.BloodMagic.slate.desc=Infundierter Stein in einem Blutaltar
+tooltip.BloodMagic.inscriber.desc=Die Zeichen an der Wand.
+
+tooltip.BloodMagic.pack.selfSacrifice.desc=Dieser Rucksack scheuert richtig...
+tooltip.BloodMagic.pack.sacrifice.desc=Beschreibung
+tooltip.BloodMagic.pack.stored=Stored: %d LP
+
+tooltip.BloodMagic.activationCrystal.weak=Aktiviert niedrig-levelige Rituale
+tooltip.BloodMagic.activationCrystal.awakened=Aktiviert mächtigere Rituale
+tooltip.BloodMagic.activationCrystal.creative=Kreativmodus: Aktiviert jedes Ritual
+
+tooltip.BloodMagic.diviner.currentRitual=Ritual:
+tooltip.BloodMagic.diviner.blankRune=Leere Runen: %d
+tooltip.BloodMagic.diviner.waterRune=Wasserrunen: %d
+tooltip.BloodMagic.diviner.airRune=Luftrunen: %d
+tooltip.BloodMagic.diviner.fireRune=Feuerrunen: %d
+tooltip.BloodMagic.diviner.earthRune=Erdrunen: %d
+tooltip.BloodMagic.diviner.duskRune=Runen der Morgendämmerung: %d
+tooltip.BloodMagic.diviner.dawnRune=Runen der Abenddämmerung: %d
+tooltip.BloodMagic.diviner.totalRune=Runen insgesamt: %d
+tooltip.BloodMagic.diviner.extraInfo=Halte Shift für extra Info
+tooltip.BloodMagic.diviner.currentDirection=Richtung: %s
+
+tooltip.BloodMagic.arcaneAshes=Asche gebraucht für einen alchemischen Kreis
+
+tooltip.BloodMagic.telepositionFocus.coords=Koordinaten: (%d, %d, %d)
+tooltip.BloodMagic.telepositionFocus.dimension=Dimensions-ID: %d
+tooltip.BloodMagic.telepositionFocus.weak=Benutzt, um Blöcke zu verschieben
+tooltip.BloodMagic.telepositionFocus.enhanced=Benutzt, um Blöcke zu verschieben
+tooltip.BloodMagic.telepositionFocus.reinforced=Benutzt, um Blöcke zu verschieben
+tooltip.BloodMagic.telepositionFocus.demonic=Benutzt, um Blöcke zu teleportieren
+
+# Ritual
+ritual.BloodMagic.testRitual=Testritual
+ritual.BloodMagic.waterRitual=Ritual des vollen Frühlings
+ritual.BloodMagic.lavaRitual=Serenade des Nethers
+ritual.BloodMagic.greenGroveRitual=Ritual des grünen Hains
+ritual.BloodMagic.jumpRitual=Ritual des hohen Sprungs
+ritual.BloodMagic.wellOfSufferingRitual=Quelle des Leidens
+ritual.BloodMagic.featheredKnifeRitual=Ritual der gefederten Klinge
+ritual.BloodMagic.regenerationRitual=Ritual der Regeneration
+
+# Chat
+chat.BloodMagic.altarMaker.setTier=Setze Ausbaustufe auf: %d
+chat.BloodMagic.altarMaker.building=Baue Stufe %d-Altar
+chat.BloodMagic.altarMaker.destroy=Stufe %d-Altar zerstört
+chat.BloodMagic.altarMaker.creativeOnly=Diese Item ist nur im Kreativmodus erhältlich.
+chat.BloodMagic.damageSource=%ss Seele ist zu schwach geworden.
+chat.BloodMagic.ritual.weak=Du spürst einen Drang, bist aber zu schwach für ein Ritual.
+chat.BloodMagic.ritual.prevent=Das Ritual versucht, dir zu widerstehen.
+chat.BloodMagic.ritual.activate=Ein Energiestrom fließt durch das Ritual.
+chat.BloodMagic.ritual.notValid=Du fühlst, dass die Runen nicht richtig eingerichtet sind...
+
+# JustEnoughItems
+jei.BloodMagic.recipe.altar=Blutaltar
+jei.BloodMagic.recipe.binding=Bindungsritual
+jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemische Anordnung
+jei.BloodMagic.recipe.requiredLP=LP: %d
+jei.BloodMagic.recipe.requiredTier=Ausbaustufe: %d
+
+jei.BloodMagic.desc.altarBuilder=Ein Item zum Testen. Nur im Kreativmodus erhältlich.\n\nShift+Rechtsklick um die Ausbaustufe zu ändern. Rechtsklicke auf einen Altar, um den Bau zu starten.\n\nZerstöre einen Altar mit ihm in der Hand, um alles abzubauen.
+
+# WAILA
+waila.BloodMagic.sneak=&oSchleiche für Info
+option.BloodMagic.bypassSneak=Umgehe Schleichen
+option.BloodMagic.bloodAltar=Blutaltar
+option.BloodMagic.ritualController=Ritualsteine
+option.BloodMagic.teleposer=Teleposer
