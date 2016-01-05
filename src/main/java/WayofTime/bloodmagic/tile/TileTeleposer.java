@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.tile;
 import java.util.Iterator;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.BlockStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.block.BlockPortal;
@@ -195,20 +196,17 @@ public class TileTeleposer extends TileInventory implements ITickable
         if (finalTile != null)
             finalTile.writeToNBT(finalTag);
 
-        Block initialBlock = initialWorld.getBlockState(initialPos).getBlock();
-        Block finalBlock = finalWorld.getBlockState(finalPos).getBlock();
+        BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
+        BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
 
-        if ((initialBlock.equals(Blocks.air) && finalBlock.equals(Blocks.air)) || (initialBlock instanceof BlockMobSpawner || finalBlock instanceof BlockMobSpawner ||
+        if ((initialStack.getBlock().equals(Blocks.air) && finalStack.getBlock().equals(Blocks.air)) || (initialStack.getBlock() instanceof BlockMobSpawner || finalStack.getBlock() instanceof BlockMobSpawner ||
 //                caller instanceof TEDemonPortal ? false :
-                initialBlock instanceof BlockPortal || finalBlock instanceof BlockPortal))
+                initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal))
         {
             return false;
         }
 
-        int initialMeta = initialBlock.getMetaFromState(initialWorld.getBlockState(initialPos));
-        int finalMeta = finalBlock.getMetaFromState(finalWorld.getBlockState(finalPos));
-
-        TeleposeEvent event = new TeleposeEvent(initialWorld, initialPos, initialBlock, initialMeta, finalWorld, finalPos, finalBlock, finalMeta);
+        TeleposeEvent event = new TeleposeEvent(initialWorld, initialPos, finalWorld, finalPos);
         if (MinecraftForge.EVENT_BUS.post(event))
             return false;
 
@@ -216,10 +214,10 @@ public class TileTeleposer extends TileInventory implements ITickable
         finalWorld.playSoundEffect(finalPos.getX(), finalPos.getY(), finalPos.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
 
         //Finally, we get to do something! (CLEARING TILES)
-        if (finalBlock != null)
-            finalWorld.setTileEntity(finalPos, finalBlock.createTileEntity(finalWorld, finalWorld.getBlockState(finalPos)));
-        if (initialBlock != null)
-            initialWorld.setTileEntity(initialPos, initialBlock.createTileEntity(initialWorld, initialWorld.getBlockState(initialPos)));
+        if (finalStack.getBlock() != null)
+            finalWorld.setTileEntity(finalPos, finalStack.getBlock().createTileEntity(finalWorld, finalWorld.getBlockState(finalPos)));
+        if (initialStack.getBlock() != null)
+            initialWorld.setTileEntity(initialPos, initialStack.getBlock().createTileEntity(initialWorld, initialWorld.getBlockState(initialPos)));
 
         //TILES CLEARED
         IBlockState initialBlockState = initialWorld.getBlockState(initialPos);
@@ -248,8 +246,8 @@ public class TileTeleposer extends TileInventory implements ITickable
             newTileFinal.setPos(initialPos);
         }
 
-        initialWorld.notifyNeighborsOfStateChange(initialPos, finalBlock);
-        finalWorld.notifyNeighborsOfStateChange(finalPos, initialBlock);
+        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock());
+        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock());
 
         return true;
     }
