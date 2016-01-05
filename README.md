@@ -45,6 +45,23 @@ Please include the following:
 
 [Setup video](https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be) by LexManos. For more information, refer to the [Forge Forums](http://www.minecraftforge.net/forum/index.php/topic,14048.0.html).
 
+
+##Developing Addons
+
+Add to your build.gradle:
+
+    repositories {
+      maven {
+        url "http://tehnut.info/maven/"
+      }
+    }
+
+    dependencies {
+      deobfCompile "com.wayoftime.bloodmagic:BloodMagic:<BLOODMAGIC-VERSION>"
+    }
+    
+`<BLOODMAGIC-VERSION>` can be found on CurseForge (or via the Maven itself), check the file name of the version you want.
+
 ##Contributing
 
 With the 1.8 rewrite comes a need to keep the code *clean*. Pull Requests will be looked over a bit stricter from now on.
