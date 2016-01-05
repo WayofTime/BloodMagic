@@ -16,7 +16,9 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
@@ -24,7 +26,9 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
@@ -113,6 +117,15 @@ public class EventHandler
         EntityPlayer player = event.getPlayer();
         if (player != null)
         {
+            for (int i = 0; i < 4; i++)
+            {
+                ItemStack stack = player.getCurrentArmor(i);
+                if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+                {
+                    return;
+                }
+            }
+
             ItemStack chestStack = player.getCurrentArmor(2);
             if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
             {
@@ -123,6 +136,36 @@ public class EventHandler
                     StatTrackerDigging.incrementCounter(armour);
                     LivingArmourUpgradeDigging.hasDug(armour);
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void selfSacrificeEvent(SacrificeKnifeUsedEvent event)
+    {
+        EntityPlayer player = event.player;
+
+        for (int i = 0; i < 4; i++)
+        {
+            ItemStack stack = player.getCurrentArmor(i);
+            if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+            {
+                return;
+            }
+        }
+
+        ItemStack chestStack = player.getCurrentArmor(2);
+        LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+        if (armour != null)
+        {
+            StatTrackerSelfSacrifice.incrementCounter(armour);
+            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
+
+            if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
+            {
+                double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
+
+                event.lpAdded = (int) (event.lpAdded * (1 + modifier));
             }
         }
     }

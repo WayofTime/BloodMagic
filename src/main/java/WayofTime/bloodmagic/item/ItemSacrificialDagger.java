@@ -1,33 +1,30 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
-import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSacrificialDagger extends Item
 {
@@ -94,9 +91,11 @@ public class ItemSacrificialDagger extends Item
             return stack;
         }
 
+        int lpAdded = 200;
+
         if (!player.capabilities.isCreativeMode)
         {
-            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2);
+            SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
                 return stack;
 
@@ -108,6 +107,8 @@ public class ItemSacrificialDagger extends Item
 
             if (!evt.shouldFillAltar)
                 return stack;
+
+            lpAdded = evt.lpAdded;
         }
 
         double posX = player.posX;
@@ -126,7 +127,7 @@ public class ItemSacrificialDagger extends Item
             return stack;
 
         // TODO - Check if SoulFray is active
-        findAndFillAltar(world, player, 200);
+        findAndFillAltar(world, player, lpAdded);
 
         return stack;
     }

@@ -44,7 +44,7 @@ public class ItemLivingArmour extends ItemArmor
     {
         if (this == ModItems.livingArmourChest)
         {
-            LivingArmour armour = this.getLivingArmour(stack);
+            LivingArmour armour = getLivingArmour(stack);
             for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
             {
                 LivingArmourUpgrade upgrade = entry.getValue();
@@ -117,7 +117,7 @@ public class ItemLivingArmour extends ItemArmor
         return super.getUnlocalizedName(stack) + names[armorType];
     }
 
-    public LivingArmour getLivingArmour(ItemStack stack)
+    public static LivingArmour getLivingArmour(ItemStack stack)
     {
         NBTTagCompound livingTag = getArmourTag(stack);
 
@@ -143,7 +143,7 @@ public class ItemLivingArmour extends ItemArmor
         setArmourTag(stack, livingTag);
     }
 
-    public NBTTagCompound getArmourTag(ItemStack stack)
+    public static NBTTagCompound getArmourTag(ItemStack stack)
     {
         if (!stack.hasTagCompound())
         {
@@ -166,7 +166,7 @@ public class ItemLivingArmour extends ItemArmor
         tag.setTag(Constants.NBT.LIVING_ARMOUR, livingTag);
     }
 
-    public LivingArmourUpgrade getUpgrade(String uniqueIdentifier, ItemStack stack)
+    public static LivingArmourUpgrade getUpgrade(String uniqueIdentifier, ItemStack stack)
     {
         if (!armourMap.containsKey(stack))
         {

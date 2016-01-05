@@ -226,6 +226,7 @@ tooltip.BloodMagic.telepositionFocus.demonic=Used to move blocks in the world
 tooltip.BloodMagic.livingArmour.upgrade.speed=Quick Feet
 tooltip.BloodMagic.livingArmour.upgrade.digging=Dwarven Might
 tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Poison Resistance
+tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Tough Palms
 tooltip.BloodMagic.livingArmour.upgrade.level=(Level %d)
 
 # Ritual
