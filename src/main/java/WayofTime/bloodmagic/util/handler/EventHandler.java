@@ -1,10 +1,13 @@
 package WayofTime.bloodmagic.util.handler;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -166,6 +169,34 @@ public class EventHandler
                 double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
 
                 event.lpAdded = (int) (event.lpAdded * (1 + modifier));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityAttacked(LivingAttackEvent event)
+    {
+        Entity sourceEntity = event.source.getEntity();
+        EntityLivingBase attackedEntity = event.entityLiving;
+
+        if (sourceEntity != null && attackedEntity instanceof EntityPlayer)
+        {
+            EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
+
+            boolean hasFullSet = true;
+            for (int i = 0; i < 4; i++)
+            {
+                ItemStack stack = attackedPlayer.getCurrentArmor(i);
+                if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+                {
+                    hasFullSet = false;
+                    break;
+                }
+            }
+
+            if (hasFullSet)
+            {
+//                System.out.println(event.ammount);
             }
         }
     }
