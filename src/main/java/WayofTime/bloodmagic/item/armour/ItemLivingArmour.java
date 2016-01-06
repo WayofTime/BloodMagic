@@ -6,12 +6,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
@@ -23,7 +26,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.Multimap;
 
-public class ItemLivingArmour extends ItemArmor
+public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
@@ -36,6 +39,124 @@ public class ItemLivingArmour extends ItemArmor
         setUnlocalizedName(Constants.Mod.MODID + ".livingArmour.");
         setMaxDamage(250);
         setCreativeTab(BloodMagic.tabBloodMagic);
+    }
+
+    @Override
+    public ArmorProperties getProperties(EntityLivingBase player, ItemStack stack, DamageSource source, double damage, int slot)
+    {
+        double armourReduction = 0.0;
+        double damageAmount = 0.25;
+
+        if (this == ModItems.livingArmourBoots || this == ModItems.livingArmourHelmet)
+        {
+            damageAmount = 3f / 25f;
+        } else if (this == ModItems.livingArmourLegs)
+        {
+            damageAmount = 6f / 25f;
+        } else if (this == ModItems.livingArmourChest)
+        {
+            damageAmount = 0.52;
+        }
+
+        double armourPenetrationReduction = 0;
+
+        int maxAbsorption = 100000;
+
+        if (source.equals(DamageSource.drown))
+        {
+            return new ArmorProperties(-1, 0, 0);
+        }
+
+        if (source.equals(DamageSource.outOfWorld))
+        {
+            return new ArmorProperties(-1, 0, 0);
+        }
+
+        if (this == ModItems.livingArmourChest)
+        {
+            armourReduction = 0.32 / 0.52; // This values puts it at about iron level
+
+            ItemStack helmet = player.getEquipmentInSlot(4);
+            ItemStack leggings = player.getEquipmentInSlot(2);
+            ItemStack boots = player.getEquipmentInSlot(1);
+
+            if (helmet == null || leggings == null || boots == null)
+            {
+                damageAmount *= (armourReduction);
+
+                return new ArmorProperties(-1, damageAmount, maxAbsorption);
+            }
+
+            if (helmet.getItem() instanceof ItemLivingArmour && leggings.getItem() instanceof ItemLivingArmour && boots.getItem() instanceof ItemLivingArmour)
+            {
+                double remainder = 1; // Multiply this number by the armour upgrades for protection
+
+                if (armourMap.containsKey(stack))
+                {
+                    LivingArmour armour = armourMap.get(stack);
+                    if (armour != null)
+                    {
+                        for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
+                        {
+                            LivingArmourUpgrade upgrade = entry.getValue();
+                            remainder *= (1 - upgrade.getArmourProtection(source));
+                        }
+                    }
+                }
+
+                armourReduction = armourReduction + (1 - remainder) * (1 - armourReduction);
+                damageAmount *= (armourReduction);
+
+                if (source.isUnblockable())
+                {
+                    return new ArmorProperties(-1, damageAmount * armourPenetrationReduction, maxAbsorption);
+                }
+
+                return new ArmorProperties(-1, damageAmount, maxAbsorption);
+            }
+        } else
+        {
+            if (source.isUnblockable())
+            {
+                return new ArmorProperties(-1, damageAmount * armourPenetrationReduction, maxAbsorption);
+            }
+
+            return new ArmorProperties(-1, damageAmount, maxAbsorption);
+        }
+
+        return new ArmorProperties(-1, 0, 0);
+    }
+
+    @Override
+    public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot)
+    {
+        if (armor.getItem() == ModItems.livingArmourHelmet)
+        {
+            return 3;
+        }
+
+        if (armor.getItem() == ModItems.livingArmourChest)
+        {
+            return 8;
+        }
+
+        if (armor.getItem() == ModItems.livingArmourLegs)
+        {
+            return 6;
+        }
+
+        if (armor.getItem() == ModItems.livingArmourBoots)
+        {
+            return 3;
+        }
+
+        return 5;
+    }
+
+    @Override
+    public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot)
+    {
+        return; // Armour shouldn't get damaged... for now
     }
 
     @Override

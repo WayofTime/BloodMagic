@@ -1,10 +1,14 @@
 package WayofTime.bloodmagic.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
@@ -108,6 +112,63 @@ public class Utils
             return Blocks.stonebrick;
         default:
             return Blocks.air;
+        }
+    }
+
+    public static float getModifiedDamage(EntityLivingBase attackedEntity, DamageSource source, float amount)
+    {
+        if (!attackedEntity.isEntityInvulnerable(source))
+        {
+            if (amount <= 0)
+                return 0;
+
+            amount = net.minecraftforge.common.ISpecialArmor.ArmorProperties.applyArmor(attackedEntity, attackedEntity.getInventory(), source, amount);
+            if (amount <= 0)
+                return 0;
+            amount = applyPotionDamageCalculations(attackedEntity, source, amount);
+
+            return amount;
+        }
+
+        return 0;
+    }
+
+    public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage)
+    {
+        if (source.isDamageAbsolute())
+        {
+            return damage;
+        } else
+        {
+            if (attackedEntity.isPotionActive(Potion.resistance) && source != DamageSource.outOfWorld)
+            {
+                int i = (attackedEntity.getActivePotionEffect(Potion.resistance).getAmplifier() + 1) * 5;
+                int j = 25 - i;
+                float f = damage * (float) j;
+                damage = f / 25.0F;
+            }
+
+            if (damage <= 0.0F)
+            {
+                return 0.0F;
+            } else
+            {
+                int k = EnchantmentHelper.getEnchantmentModifierDamage(attackedEntity.getInventory(), source);
+
+                if (k > 20)
+                {
+                    k = 20;
+                }
+
+                if (k > 0 && k <= 20)
+                {
+                    int l = 25 - k;
+                    float f1 = damage * (float) l;
+                    damage = f1 / 25.0F;
+                }
+
+                return damage;
+            }
         }
     }
 }

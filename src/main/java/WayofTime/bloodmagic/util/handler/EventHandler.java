@@ -16,7 +16,6 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
@@ -35,6 +34,7 @@ import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class EventHandler
@@ -177,6 +177,11 @@ public class EventHandler
         Entity sourceEntity = event.source.getEntity();
         EntityLivingBase attackedEntity = event.entityLiving;
 
+        if (attackedEntity.hurtResistantTime > 0)
+        {
+            return;
+        }
+
         if (sourceEntity != null && attackedEntity instanceof EntityPlayer)
         {
             EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
@@ -192,9 +197,12 @@ public class EventHandler
                 }
             }
 
+            float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.source, event.ammount), attackedPlayer.getHealth());
+
             if (hasFullSet)
             {
-//                System.out.println(event.ammount);
+                System.out.println(amount);
+
             }
         }
     }

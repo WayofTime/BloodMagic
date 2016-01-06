@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.api.livingArmour;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import com.google.common.collect.HashMultimap;
@@ -30,6 +31,17 @@ public abstract class LivingArmourUpgrade
     public LivingArmourUpgrade(int level)
     {
         this.level = Math.min(level, getMaxTier() - 1);
+    }
+
+    /**
+     * Percentage of damage blocked. This stacks multiplicatively with other
+     * upgrades.
+     * 
+     * @return 0 for no damage blocked, 1 for full damage blocked
+     */
+    public double getArmourProtection(DamageSource source)
+    {
+        return 0;
     }
 
     public int getUpgradeLevel()
