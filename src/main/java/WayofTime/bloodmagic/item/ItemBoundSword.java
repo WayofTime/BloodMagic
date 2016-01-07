@@ -22,6 +22,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -59,7 +60,7 @@ public class ItemBoundSword extends ItemSword
 
             ItemBindable.syphonNetwork(stack, playerIn, (int) (i * i * i / 2.7));
 
-            if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(worldIn, explosion))
+            if (ForgeEventFactory.onExplosionStart(worldIn, explosion))
                 return;
             explosion.doExplosionA();
             explosion.doExplosionB(true);
@@ -132,13 +133,11 @@ public class ItemBoundSword extends ItemSword
 
         if (StatCollector.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.bound.sword.desc"));
-        if (getActivated(stack))
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
-        else
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
+
+        tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
         if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
-            tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), stack.getTagCompound().getString(Constants.NBT.OWNER_UUID))));
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)));
     }
 
     private boolean getActivated(ItemStack stack)

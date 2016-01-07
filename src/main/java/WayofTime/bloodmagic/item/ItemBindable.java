@@ -153,7 +153,7 @@ public class ItemBindable extends Item implements IBindable
         NBTHelper.checkNBT(stack);
 
         if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
-            tooltip.add(TextHelper.getFormattedText(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.currentOwner"), PlayerHelper.getUsernameFromStack(stack))));
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
     @Override

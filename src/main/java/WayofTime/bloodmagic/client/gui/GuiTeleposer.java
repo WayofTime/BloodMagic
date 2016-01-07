@@ -24,7 +24,7 @@ public class GuiTeleposer extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         this.fontRendererObj.drawString(TextHelper.localize("tile.BloodMagic.teleposer.name"), 64, 23, 4210752);
-        this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, 47, 4210752);
+        this.fontRendererObj.drawString(TextHelper.localize("container.inventory"), 8, 47, 4210752);
     }
 
     @Override

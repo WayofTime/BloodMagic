@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -77,10 +78,10 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.orb.desc"));
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.orb.desc"));
 
         if (advanced)
-            tooltip.add(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.orb.owner"), getOrb(stack.getItemDamage()).getOwner()));
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.orb.owner", getOrb(stack.getItemDamage()).getOwner()));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

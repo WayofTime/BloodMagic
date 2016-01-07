@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.block;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import lombok.Getter;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
@@ -62,7 +63,7 @@ public class BlockLifeEssence extends BlockFluidClassic
         @Override
         public String getLocalizedName(FluidStack fluidStack)
         {
-            return StatCollector.translateToLocal("tile.BloodMagic.fluid.lifeEssence.name");
+            return TextHelper.localize("tile.BloodMagic.fluid.lifeEssence.name");
         }
     }
 }

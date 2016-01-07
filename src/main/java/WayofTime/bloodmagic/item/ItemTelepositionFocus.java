@@ -82,8 +82,8 @@ public class ItemTelepositionFocus extends ItemBindable
 
         if (coords != null && tag != null)
         {
-            tooltip.add(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.telepositionFocus.coords"), coords.getX(), coords.getY(), coords.getZ()));
-            tooltip.add(String.format(StatCollector.translateToLocal("tooltip.BloodMagic.telepositionFocus.dimension"), tag.getInteger(Constants.NBT.DIMENSION_ID)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.coords", coords.getX(), coords.getY(), coords.getZ()));
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.telepositionFocus.dimension", tag.getInteger(Constants.NBT.DIMENSION_ID)));
         }
     }
 
