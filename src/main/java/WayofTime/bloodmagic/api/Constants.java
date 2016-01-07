@@ -74,6 +74,10 @@ public class Constants
         public static final String HELD_DOWN = "heldDown";
 
         public static final String UPGRADE_POISON_TIMER = "poisonTimer";
+
+        public static final String SOULS = "souls";
+        public static final String SOUL_SWORD_DAMAGE = "soulSwordDamage";
+        public static final String SOUL_SWORD_ACTIVE_DRAIN = "soulSwordActiveDrain";
     }
 
     public static class Mod

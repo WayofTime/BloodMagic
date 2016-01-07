@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.util.handler;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -7,6 +8,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -15,9 +17,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -29,6 +33,7 @@ import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.iface.ISoulWeapon;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
@@ -378,5 +383,37 @@ public class EventHandler
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onLivingDrops(LivingDropsEvent event)
+    {
+        EntityLivingBase attackedEntity = event.entityLiving;
+        DamageSource source = event.source;
+        Entity entity = source.getEntity();
+
+        if (entity != null && entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase attackingEntity = (EntityLivingBase) entity;
+            ItemStack heldStack = attackingEntity.getHeldItem();
+            if (heldStack != null && heldStack.getItem() instanceof ISoulWeapon)
+            {
+                List<ItemStack> droppedSouls = ((ISoulWeapon) heldStack.getItem()).getRandomSoulDrop(attackedEntity, attackingEntity, heldStack, event.lootingLevel);
+                if (!droppedSouls.isEmpty())
+                {
+                    for (ItemStack soulStack : droppedSouls)
+                    {
+                        event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemPickup(EntityItemPickupEvent event)
+    {
+        //TODO: 
+        EntityPlayer player = event.entityPlayer;
     }
 }

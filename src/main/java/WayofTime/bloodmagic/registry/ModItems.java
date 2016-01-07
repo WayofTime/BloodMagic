@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -47,6 +46,8 @@ import WayofTime.bloodmagic.item.sigil.ItemSigilSuppression;
 import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
+import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
+import WayofTime.bloodmagic.item.soul.ItemSoulSword;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModItems
@@ -109,8 +110,12 @@ public class ModItems
     public static Item altarMaker;
 
     public static Item arcaneAshes;
+    public static Item monsterSoul;
 
-    public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 12, 8, 50);
+    public static Item soulSword;
+
+    public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
+    public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 0, 7, 8, 50);
 
     public static void init()
     {
@@ -180,6 +185,9 @@ public class ModItems
         altarMaker = registerItem(new ItemAltarMaker());
 
         arcaneAshes = registerItem(new ItemArcaneAshes());
+        monsterSoul = registerItem(new ItemMonsterSoul());
+
+        soulSword = registerItem(new ItemSoulSword());
     }
 
     public static void initRenders()
@@ -278,6 +286,10 @@ public class ModItems
         renderHelper.itemRender(altarMaker);
 
         renderHelper.itemRender(arcaneAshes);
+        renderHelper.itemRender(monsterSoul, 0);
+
+        renderHelper.itemRender(soulSword, 0);
+        renderHelper.itemRender(soulSword, 1);
     }
 
     private static Item registerItem(Item item, String name)
