@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.api.iface;
+package WayofTime.bloodmagic.api.soul;
 
 import net.minecraft.item.ItemStack;
 
@@ -25,4 +25,6 @@ public interface ISoulGem
     public double getSouls(ItemStack soulGemStack);
 
     public int getMaxSouls(ItemStack soulGemStack);
+
+    public double drainSouls(ItemStack stack, double drainAmount);
 }

@@ -28,13 +28,16 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.iface.ISoulWeapon;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.soul.ISoul;
+import WayofTime.bloodmagic.api.soul.ISoulWeapon;
+import WayofTime.bloodmagic.api.soul.PlayerSoulHandler;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
@@ -413,7 +416,18 @@ public class EventHandler
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event)
     {
-        //TODO: 
-        EntityPlayer player = event.entityPlayer;
+        ItemStack stack = event.item.getEntityItem();
+        if (stack != null && stack.getItem() instanceof ISoul)
+        {
+            EntityPlayer player = event.entityPlayer;
+
+            ItemStack remainder = PlayerSoulHandler.addSouls(player, stack);
+
+            if (remainder == null)
+            {
+                stack.stackSize = 0;
+                event.setResult(Result.ALLOW);
+            }
+        }
     }
 }

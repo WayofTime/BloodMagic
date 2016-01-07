@@ -110,6 +110,7 @@ item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
 item.BloodMagic.arcaneAshes.name=Arcane Ashes
 
 item.BloodMagic.soul.sword.name=Soul Sword
+item.BloodMagic.soulGem.lesser.name=Lesser Soul Gem
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -235,6 +236,7 @@ tooltip.BloodMagic.livingArmour.upgrade.level=(Level %d)
 
 tooltip.BloodMagic.souls=Soul Quality: %1$,.3f
 tooltip.BloodMagic.soul.sword.desc=Uses souls to unleash its full potential.
+tooltip.BloodMagic.soulGem.lesser=A gem used to contain many souls
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual

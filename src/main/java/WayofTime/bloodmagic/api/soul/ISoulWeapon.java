@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.api.iface;
+package WayofTime.bloodmagic.api.soul;
 
 import java.util.List;
 
