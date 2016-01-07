@@ -224,6 +224,7 @@ tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Poison Resistance
 tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Tough Palms
 tooltip.BloodMagic.livingArmour.upgrade.knockback=Body Builder
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Tough Skin
+tooltip.BloodMagic.livingArmour.upgrade.health=Healthy
 tooltip.BloodMagic.livingArmour.upgrade.level=(Level %d)
 
 # Ritual

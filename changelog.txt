@@ -1,7 +1,8 @@
 ------------------------------------------------------
 Version 2.0.0-4
 ------------------------------------------------------
-- Added Physical resistance upgrade. 
+- Added Physical resistance upgrade (Tough skin). 
+- Added health boost upgrade (Healthy)
 
 
 ------------------------------------------------------

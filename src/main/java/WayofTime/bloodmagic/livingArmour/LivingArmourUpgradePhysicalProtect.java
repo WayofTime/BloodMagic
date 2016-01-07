@@ -8,7 +8,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160, 220, 280, 350 };
-    public static final double[] protectionLevel = new double[] { 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9 };
+    public static final double[] protectionLevel = new double[] { 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.77, 0.80, 0.83 };
 
     public LivingArmourUpgradePhysicalProtect(int level)
     {

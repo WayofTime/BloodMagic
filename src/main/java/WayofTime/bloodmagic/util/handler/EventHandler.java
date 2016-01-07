@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -31,6 +32,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
@@ -170,6 +172,34 @@ public class EventHandler
 
                 event.lpAdded = (int) (event.lpAdded * (1 + modifier));
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityHealed(LivingHealEvent event)
+    {
+        EntityLivingBase healedEntity = event.entityLiving;
+        if (!(healedEntity instanceof EntityPlayer))
+        {
+            return;
+        }
+
+        EntityPlayer player = (EntityPlayer) healedEntity;
+
+        for (int i = 0; i < 4; i++)
+        {
+            ItemStack stack = player.getCurrentArmor(i);
+            if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+            {
+                return;
+            }
+        }
+
+        ItemStack chestStack = player.getCurrentArmor(2);
+        LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+        if (armour != null)
+        {
+            StatTrackerHealthboost.incrementCounter(armour, event.amount);
         }
     }
 
