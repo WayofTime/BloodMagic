@@ -21,12 +21,6 @@ public class BloodMagicPlugin implements IModPlugin
     public static IJeiHelpers jeiHelper;
 
     @Override
-    public boolean isModLoaded()
-    {
-        return true;
-    }
-
-    @Override
     public void register(IModRegistry registry)
     {
         registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory());
