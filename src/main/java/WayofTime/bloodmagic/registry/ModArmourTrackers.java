@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeHealthboost;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeKnockbackResist;
@@ -39,5 +40,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradePhysicalProtect(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeHealthboost(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeMeleeDamage(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeArrowShot(0));
     }
 }

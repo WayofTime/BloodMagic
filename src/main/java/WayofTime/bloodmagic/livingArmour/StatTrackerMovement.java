@@ -56,7 +56,7 @@ public class StatTrackerMovement extends StatTracker
             return false;
         }
 
-        if (player.isAirBorne)
+        if (!player.onGround)
         {
             return false;
         }

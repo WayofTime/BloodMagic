@@ -1,0 +1,66 @@
+package WayofTime.bloodmagic.livingArmour;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+
+public class LivingArmourUpgradeArrowShot extends LivingArmourUpgrade
+{
+    public static final int[] costs = new int[] { 20, 50, 90, 160, 290 };
+    public static final int[] extraArrow = new int[] { 1, 2, 3, 4, 5 };
+
+    public LivingArmourUpgradeArrowShot(int level)
+    {
+        super(level);
+    }
+
+    @Override
+    public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
+    {
+
+    }
+
+    @Override
+    public String getUniqueIdentifier()
+    {
+        return Constants.Mod.MODID + ".upgrade.arrowShot";
+    }
+
+    @Override
+    public int getMaxTier()
+    {
+        return 5; // Set to here until I can add more upgrades to it.
+    }
+
+    @Override
+    public int getCostOfUpgrade()
+    {
+        return costs[this.level];
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    @Override
+    public String getUnlocalizedName()
+    {
+        return tooltipBase + "arrowShot";
+    }
+
+    public int getExtraArrows()
+    {
+        return extraArrow[this.level];
+    }
+}

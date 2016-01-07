@@ -1,16 +1,23 @@
 package WayofTime.bloodmagic.util.handler;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -29,8 +36,10 @@ import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.StatTrackerMeleeDamage;
@@ -44,6 +53,8 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class EventHandler
 {
+    Random random = new Random();
+
     @SubscribeEvent
     public void onEntityDeath(LivingHurtEvent event)
     {
@@ -274,6 +285,95 @@ public class EventHandler
                     if (sourceEntity != null && !source.isProjectile())
                     {
                         StatTrackerMeleeDamage.incrementCounter(armour, amount);
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onArrowFire(ArrowLooseEvent event)
+    {
+        World world = event.entityPlayer.worldObj;
+        ItemStack stack = event.bow;
+        EntityPlayer player = event.entityPlayer;
+
+        boolean hasFullSet = true;
+        for (int i = 0; i < 4; i++)
+        {
+            ItemStack armourStack = player.getCurrentArmor(i);
+            if (armourStack == null || !(armourStack.getItem() instanceof ItemLivingArmour))
+            {
+                hasFullSet = false;
+                break;
+            }
+        }
+
+        if (hasFullSet)
+        {
+            ItemStack chestStack = player.getCurrentArmor(2);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+            if (armour != null)
+            {
+                StatTrackerArrowShot.incrementCounter(armour);
+
+                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.arrowShot", chestStack);
+                if (upgrade instanceof LivingArmourUpgradeArrowShot)
+                {
+                    int i = event.charge;
+                    float f = (float) i / 20.0F;
+                    f = (f * f + f * 2.0F) / 3.0F;
+
+                    if ((double) f < 0.1D)
+                    {
+                        return;
+                    }
+
+                    if (f > 1.0F)
+                    {
+                        f = 1.0F;
+                    }
+
+                    int numberExtra = ((LivingArmourUpgradeArrowShot) upgrade).getExtraArrows();
+                    for (int n = 0; n < numberExtra; n++)
+                    {
+                        EntityArrow entityarrow = new EntityArrow(world, player, f * 2.0F);
+
+                        double velocityModifier = 0.6 * f;
+                        entityarrow.motionX += (random.nextDouble() - 0.5) * velocityModifier;
+                        entityarrow.motionY += (random.nextDouble() - 0.5) * velocityModifier;
+                        entityarrow.motionZ += (random.nextDouble() - 0.5) * velocityModifier;
+
+                        if (f == 1.0F)
+                        {
+                            entityarrow.setIsCritical(true);
+                        }
+
+                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
+
+                        if (j > 0)
+                        {
+                            entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
+                        }
+
+                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
+
+                        if (k > 0)
+                        {
+                            entityarrow.setKnockbackStrength(k);
+                        }
+
+                        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack) > 0)
+                        {
+                            entityarrow.setFire(100);
+                        }
+
+                        entityarrow.canBePickedUp = 2;
+
+                        if (!world.isRemote)
+                        {
+                            world.spawnEntityInWorld(entityarrow);
+                        }
                     }
                 }
             }

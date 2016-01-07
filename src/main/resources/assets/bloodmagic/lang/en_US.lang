@@ -226,6 +226,7 @@ tooltip.BloodMagic.livingArmour.upgrade.knockback=Body Builder
 tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Tough Skin
 tooltip.BloodMagic.livingArmour.upgrade.health=Healthy
 tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
+tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
 tooltip.BloodMagic.livingArmour.upgrade.level=(Level %d)
 
 # Ritual
