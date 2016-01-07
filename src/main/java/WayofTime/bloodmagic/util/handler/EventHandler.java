@@ -33,6 +33,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.StatTrackerHealthboost;
+import WayofTime.bloodmagic.livingArmour.StatTrackerMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
@@ -234,7 +235,6 @@ public class EventHandler
 
             if (hasFullSet)
             {
-                System.out.println(amount);
                 ItemStack chestStack = attackedPlayer.getCurrentArmor(2);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
@@ -243,6 +243,37 @@ public class EventHandler
                     {
                         // Add resistance to the upgrade that protects against non-magic damage
                         StatTrackerPhysicalProtect.incrementCounter(armour, amount);
+                    }
+                }
+            }
+        }
+
+        if (sourceEntity instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) sourceEntity;
+
+            boolean hasFullSet = true;
+            for (int i = 0; i < 4; i++)
+            {
+                ItemStack stack = player.getCurrentArmor(i);
+                if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+                {
+                    hasFullSet = false;
+                    break;
+                }
+            }
+
+            float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.source, event.ammount), attackedEntity.getHealth());
+
+            if (hasFullSet)
+            {
+                ItemStack chestStack = player.getCurrentArmor(2);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    if (sourceEntity != null && !source.isProjectile())
+                    {
+                        StatTrackerMeleeDamage.incrementCounter(armour, amount);
                     }
                 }
             }
