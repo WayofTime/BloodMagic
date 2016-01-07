@@ -1,0 +1,9 @@
+{
+  "parent": "bloodmagic:block/sub/BlockSoulForge",
+  "textures": {
+    "base": "minecraft:blocks/iron_block",
+	"base_bottom": "minecraft:blocks/gold_block",
+	"glass": "minecraft:blocks/glass",
+	"attachment": "minecraft:blocks/stone"
+  }
+}

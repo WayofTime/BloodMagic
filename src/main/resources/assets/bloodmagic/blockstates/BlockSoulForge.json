@@ -1,0 +1,20 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"base": "minecraft:blocks/iron_block",
+			"base_bottom": "minecraft:blocks/gold_block",
+			"glass": "minecraft:blocks/glass",
+			"attachment": "minecraft:blocks/stone"
+		},
+		"uvlock": true
+	},
+	"variants": {
+		"normal": {
+			"model": "bloodmagic:sub/BlockSoulForge",
+			"submodel": {
+				
+			}
+		}
+	}
+}

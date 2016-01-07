@@ -25,6 +25,7 @@ public class ModBlocks
     public static Block alchemyArray;
     public static Block spectralBlock;
     public static Block phantomBlock;
+    public static Block soulForge;
 
     public static Block lifeEssence;
 
@@ -47,6 +48,7 @@ public class ModBlocks
         alchemyArray = registerBlock(new BlockAlchemyArray());
         spectralBlock = registerBlock(new BlockSpectral());
         phantomBlock = registerBlock(new BlockPhantom());
+        soulForge = registerBlock(new BlockSoulForge());
         crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
 
@@ -95,6 +97,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyArray));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(spectralBlock));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(phantomBlock));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(soulForge));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)

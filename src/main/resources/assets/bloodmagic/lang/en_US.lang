@@ -147,6 +147,7 @@ tile.BloodMagic.spectralBlock.name=Spectral Block
 tile.BloodMagic.phantomBlock.name=Phantom Block
 
 tile.BloodMagic.teleposer.name=Teleposer
+tile.BloodMagic.soulforge.name=Soul Forge
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence

@@ -19,6 +19,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.ISoul;
 import WayofTime.bloodmagic.api.soul.ISoulWeapon;
+import WayofTime.bloodmagic.api.soul.PlayerSoulHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -28,6 +29,10 @@ import com.google.common.collect.Multimap;
 
 public class ItemSoulSword extends ItemSword implements ISoulWeapon
 {
+    public int[] soulBracket = new int[] { 16 };
+    public double[] damageAdded = new double[] { 1 };
+    public double[] soulDrainPerSwing = new double[] { 0.1 };
+
     public ItemSoulSword()
     {
         super(ModItems.soulToolMaterial);
@@ -46,10 +51,31 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
 
         if (getActivated(stack))
         {
-            setDamageOfActivatedSword(stack, 7);
+            double soulsRemaining = PlayerSoulHandler.getTotalSouls(player);
+            int level = getLevel(stack, soulsRemaining);
+
+            double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
+            double extraDamage = level >= 0 ? damageAdded[level] : 0;
+
+            setDrainOfActivatedSword(stack, drain);
+            setDamageOfActivatedSword(stack, 7 + extraDamage);
         }
 
         return stack;
+    }
+
+    private int getLevel(ItemStack stack, double soulsRemaining)
+    {
+        int lvl = -1;
+        for (int i = 0; i < soulBracket.length; i++)
+        {
+            if (soulsRemaining >= soulBracket[i])
+            {
+                lvl = i;
+            }
+        }
+
+        return lvl;
     }
 
     @Override
@@ -78,6 +104,21 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
     {
         if (getActivated(stack))
         {
+            double drain = this.getDrainOfActivatedSword(stack);
+            if (drain > 0)
+            {
+                double soulsRemaining = PlayerSoulHandler.getTotalSouls(player);
+
+                if (drain > soulsRemaining)
+                {
+                    setActivated(stack, false);
+                    return false;
+                } else
+                {
+                    PlayerSoulHandler.consumeSouls(player, drain);
+                }
+            }
+
             return super.onLeftClickEntity(stack, player, entity);
         }
 
@@ -126,6 +167,23 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DAMAGE, damage);
+    }
+
+    public double getDrainOfActivatedSword(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN);
+    }
+
+    public void setDrainOfActivatedSword(ItemStack stack, double drain)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
     }
 
     @Override
