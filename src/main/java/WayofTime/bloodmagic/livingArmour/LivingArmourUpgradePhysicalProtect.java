@@ -1,29 +1,34 @@
 package WayofTime.bloodmagic.livingArmour;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-public class LivingArmourUpgradeSelfSacrifice extends LivingArmourUpgrade
+public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
 {
-    //TODO: Add extra effects for higher levels
-    public static final int[] costs = new int[] { 7, 13, 22, 40, 65, 90, 130, 180, 250, 350 };
-    public static final double[] sacrificeModifier = new double[] { 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2, 1.35, 1.5 };
+    public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160, 220, 280, 350 };
+    public static final double[] protectionLevel = new double[] { 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9 };
 
-    public LivingArmourUpgradeSelfSacrifice(int level)
+    public LivingArmourUpgradePhysicalProtect(int level)
     {
         super(level);
     }
 
-    public double getSacrificeModifier()
+    public double getArmourProtection(DamageSource source)
     {
-        return sacrificeModifier[this.level];
+        if (source.getEntity() != null)
+        {
+            return protectionLevel[this.level];
+        }
+
+        return 0;
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.selfSacrifice";
+        return Constants.Mod.MODID + ".upgrade.physicalProtect";
     }
 
     @Override
@@ -53,6 +58,6 @@ public class LivingArmourUpgradeSelfSacrifice extends LivingArmourUpgrade
     @Override
     public String getUnlocalizedName()
     {
-        return tooltipBase + "selfSacrifice";
+        return tooltipBase + "physicalProtect";
     }
 }

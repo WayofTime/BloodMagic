@@ -11,41 +11,40 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 
-public class StatTrackerSelfSacrifice extends StatTracker
+public class StatTrackerPhysicalProtect extends StatTracker
 {
-    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
-    public static int[] sacrificesRequired = new int[] { 30, 200, 400, 700, 1100, 1500, 2000, 2800, 3600, 5000 }; //testing
+    public int totalDamage = 0;
 
-    public int totalSacrifices = 0;
+    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
+    public static int[] damageRequired = new int[] { 30, 200, 400, 800, 1500, 2500, 3500, 5000, 6000 };
 
-    public static void incrementCounter(LivingArmour armour)
+    public static void incrementCounter(LivingArmour armour, double damage)
     {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + damage : damage);
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.selfSacrifice";
+        return Constants.Mod.MODID + ".tracker.physicalProtect";
     }
 
     @Override
     public void resetTracker()
     {
-        this.totalSacrifices = 0;
+        this.totalDamage = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalSacrifices = tag.getInteger(Constants.Mod.MODID + ".tracker.selfSacrifice");
+        totalDamage = tag.getInteger(Constants.Mod.MODID + ".tracker.physicalProtect");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.selfSacrifice", totalSacrifices);
-
+        tag.setInteger(Constants.Mod.MODID + ".tracker.physicalProtect", totalDamage);
     }
 
     @Override
@@ -53,12 +52,12 @@ public class StatTrackerSelfSacrifice extends StatTracker
     {
         if (changeMap.containsKey(livingArmour))
         {
-            int change = Math.abs(changeMap.get(livingArmour));
+            double change = Math.abs(changeMap.get(livingArmour));
             if (change > 0)
             {
-                totalSacrifices += Math.abs(changeMap.get(livingArmour));
+                totalDamage += Math.abs(changeMap.get(livingArmour));
 
-                changeMap.put(livingArmour, 0);
+                changeMap.put(livingArmour, 0d);
 
                 this.markDirty();
 
@@ -72,13 +71,14 @@ public class StatTrackerSelfSacrifice extends StatTracker
     @Override
     public List<LivingArmourUpgrade> getUpgrades()
     {
+        // TODO Auto-generated method stub
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
         {
-            if (totalSacrifices >= sacrificesRequired[i])
+            if (totalDamage >= damageRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradeSelfSacrifice(i));
+                upgradeList.add(new LivingArmourUpgradePhysicalProtect(i));
             }
         }
 

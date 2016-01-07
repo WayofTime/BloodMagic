@@ -49,13 +49,13 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
 
         if (this == ModItems.livingArmourBoots || this == ModItems.livingArmourHelmet)
         {
-            damageAmount = 3f / 25f;
+            damageAmount = 3d / 20d * 0.6;
         } else if (this == ModItems.livingArmourLegs)
         {
-            damageAmount = 6f / 25f;
+            damageAmount = 6d / 20d * 0.6;
         } else if (this == ModItems.livingArmourChest)
         {
-            damageAmount = 0.52;
+            damageAmount = 0.64;
         }
 
         double armourPenetrationReduction = 0;
@@ -74,7 +74,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
 
         if (this == ModItems.livingArmourChest)
         {
-            armourReduction = 0.32 / 0.52; // This values puts it at about iron level
+            armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
             ItemStack helmet = player.getEquipmentInSlot(4);
             ItemStack leggings = player.getEquipmentInSlot(2);
@@ -100,6 +100,11 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
                         {
                             LivingArmourUpgrade upgrade = entry.getValue();
                             remainder *= (1 - upgrade.getArmourProtection(source));
+                            /*
+                             * Just as a side note, if one upgrade provides
+                             * upgrade.getArmourProtection(source) = 0.5, the
+                             * armour would have a diamond level protection
+                             */
                         }
                     }
                 }

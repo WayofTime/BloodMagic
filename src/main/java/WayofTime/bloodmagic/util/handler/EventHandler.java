@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -30,6 +31,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -174,6 +176,7 @@ public class EventHandler
     @SubscribeEvent
     public void onEntityAttacked(LivingAttackEvent event)
     {
+        DamageSource source = event.source;
         Entity sourceEntity = event.source.getEntity();
         EntityLivingBase attackedEntity = event.entityLiving;
 
@@ -182,7 +185,7 @@ public class EventHandler
             return;
         }
 
-        if (sourceEntity != null && attackedEntity instanceof EntityPlayer)
+        if (attackedEntity instanceof EntityPlayer)
         {
             EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
 
@@ -202,7 +205,16 @@ public class EventHandler
             if (hasFullSet)
             {
                 System.out.println(amount);
-
+                ItemStack chestStack = attackedPlayer.getCurrentArmor(2);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    if (sourceEntity != null && !source.isMagicDamage())
+                    {
+                        // Add resistance to the upgrade that protects against non-magic damage
+                        StatTrackerPhysicalProtect.incrementCounter(armour, amount);
+                    }
+                }
             }
         }
     }
