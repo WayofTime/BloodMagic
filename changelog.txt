@@ -6,6 +6,8 @@ Version 2.0.0-4
 - Added melee damage upgrade (Fierce strike)
 - Added trick shot upgrade (Have fun finding it! :D)
 - Added T5 orb recipe and Demonic Activation Crystal
+- Added Rituals:
+	- Animal Growth ritual
 
 ------------------------------------------------------
 Version 2.0.0-3

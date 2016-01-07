@@ -16,6 +16,7 @@ public class ModRituals
     public static Ritual sufferingRitual;
     public static Ritual featheredKnifeRitual;
     public static Ritual regenerationRitual;
+    public static Ritual animalGrowthRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -38,6 +39,8 @@ public class ModRituals
         RitualRegistry.registerRitual(featheredKnifeRitual, featheredKnifeRitual.getName());
         regenerationRitual = new RitualRegeneration();
         RitualRegistry.registerRitual(regenerationRitual, regenerationRitual.getName());
+        animalGrowthRitual = new RitualAnimalGrowth();
+        RitualRegistry.registerRitual(animalGrowthRitual, animalGrowthRitual.getName());
     }
 
     public static void initImperfectRituals()
