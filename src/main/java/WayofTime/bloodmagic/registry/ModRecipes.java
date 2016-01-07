@@ -47,6 +47,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick), "aa", "aa", 'a', new ItemStack(ModBlocks.bloodStoneBrick, 1, 1)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), "stone", new ItemStack(ModItems.bloodShard)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.arcaneAshes), "dyeWhite", Items.gunpowder, Items.gunpowder, "dustRedstone", new ItemStack(Items.flint), new ItemStack(Items.coal, 1, 1), ModItems.slate));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.activationCrystal, 1, 1), new ItemStack(Items.nether_star), OrbRegistry.getOrbStack(ModItems.orbArchmage));
 
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.telepositionFocus, 1, 2), new ItemStack(ModItems.telepositionFocus, 1, 1), new ItemStack(ModItems.bloodShard));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.telepositionFocus, 1, 3), new ItemStack(ModItems.telepositionFocus, 1, 2), new ItemStack(ModItems.bloodShard, 1, 1));
@@ -112,6 +113,7 @@ public class ModRecipes
 
         // FIVE
         AltarRecipeRegistry.registerFillRecipe(OrbRegistry.getOrbStack(ModItems.orbArchmage), EnumAltarTier.FIVE, ModItems.orbArchmage.getCapacity(), 50, 50);
+        AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(Items.nether_star), OrbRegistry.getOrbStack(ModItems.orbArchmage), EnumAltarTier.FIVE, 80000, 50, 100));
         AltarRecipeRegistry.registerRecipe(new AltarRecipeRegistry.AltarRecipe(new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.slate, 1, 4), EnumAltarTier.FIVE, 30000, 40, 100));
 
         // SIX
