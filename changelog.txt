@@ -4,6 +4,7 @@ Version 2.0.0-4
 - Added Physical resistance upgrade (Tough skin)
 - Added health boost upgrade (Healthy)
 - Added melee damage upgrade (Fierce strike)
+- Added T5 orb recipe and Demonic Activation Crystal
 
 ------------------------------------------------------
 Version 2.0.0-3
