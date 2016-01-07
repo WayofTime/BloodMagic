@@ -92,6 +92,7 @@ public class Constants
     public static final class Gui
     {
         public static final int TELEPOSER_GUI = 0;
+        public static final int SOUL_FORGE_GUI = 1;
     }
 
     public static class Compat

@@ -1,13 +1,15 @@
 package WayofTime.bloodmagic.client.gui;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileTeleposer;
-import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileSoulForge;
+import WayofTime.bloodmagic.tile.TileTeleposer;
+import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
+import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -20,6 +22,8 @@ public class GuiHandler implements IGuiHandler
         {
         case Constants.Gui.TELEPOSER_GUI:
             return new ContainerTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
+        case Constants.Gui.SOUL_FORGE_GUI:
+            return new ContainerSoulForge(player.inventory, (TileSoulForge) world.getTileEntity(pos));
         }
 
         return null;
@@ -36,6 +40,8 @@ public class GuiHandler implements IGuiHandler
             {
             case Constants.Gui.TELEPOSER_GUI:
                 return new GuiTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
+            case Constants.Gui.SOUL_FORGE_GUI:
+                return new GuiSoulForge(player.inventory, (TileSoulForge) world.getTileEntity(pos));
             }
         }
 
