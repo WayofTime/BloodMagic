@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -77,7 +78,8 @@ public class EventHandler
                 ItemPackSacrifice pack = (ItemPackSacrifice) player.getCurrentArmor(chestIndex).getItem();
 
                 boolean shouldSyphon = pack.getStoredLP(player.getCurrentArmor(chestIndex)) < pack.CAPACITY;
-                int totalLP = Math.round(event.ammount * pack.CONVERSION);
+                float damageDone = event.entityLiving.getHealth() < event.ammount ? event.ammount - event.entityLiving.getHealth() : event.ammount;
+                int totalLP = Math.round(damageDone * pack.CONVERSION);
 
                 if (shouldSyphon)
                     pack.addLP(player.getCurrentArmor(chestIndex), totalLP);
@@ -121,7 +123,6 @@ public class EventHandler
     @SubscribeEvent
     public void onTelepose(TeleposeEvent event)
     {
-
         if (ConfigHandler.teleposerBlacklist.contains(event.initialStack) || ConfigHandler.teleposerBlacklist.contains(event.finalStack))
             event.setCanceled(true);
 

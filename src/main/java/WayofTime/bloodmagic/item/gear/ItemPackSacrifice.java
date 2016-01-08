@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
 {
-    public final int CONVERSION = 50; // How much LP per heart
+    public final int CONVERSION = 20; // How much LP per heart
     public final int CAPACITY = 10000; // Max LP storage
 
     public ItemPackSacrifice()
