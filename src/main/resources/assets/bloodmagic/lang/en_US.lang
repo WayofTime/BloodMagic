@@ -129,6 +129,8 @@ tile.BloodMagic.rune.capacity.name=Rune of Capacity
 tile.BloodMagic.rune.augCapacity.name=Rune of Augmented Capacity
 tile.BloodMagic.rune.orb.name=Rune of the Orb
 tile.BloodMagic.rune.acceleration.name=Acceleration Rune
+tile.BloodMagic.rune.charging.name=Charging Rune
+
 
 tile.BloodMagic.ritualStone.blank.name=Ritual Stone
 tile.BloodMagic.ritualStone.water.name=Ritual Stone of Water
