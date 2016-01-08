@@ -1,5 +1,5 @@
 #
-#Fri Jan 01 22:21:11 EST 2016
+#Thu Jan 07 22:26:15 EST 2016
 org.eclipse.jdt.core.formatter.insert_space_before_comma_in_for_inits=do not insert
 org.eclipse.jdt.core.formatter.brace_position_for_block=next_line
 org.eclipse.jdt.core.formatter.insert_space_after_at_in_annotation_type_declaration=do not insert
@@ -268,9 +268,9 @@ org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_try=do not i
 org.eclipse.jdt.core.formatter.continuation_indentation_for_array_initializer=2
 org.eclipse.jdt.core.formatter.lineSplit=600
 org.eclipse.jdt.core.compiler.source=1.6
-org.eclipse.jdt.core.formatter.tabulation.size=4
 org.eclipse.jdt.core.formatter.insert_new_line_in_empty_anonymous_type_declaration=insert
 org.eclipse.jdt.core.formatter.insert_new_line_in_empty_method_body=insert
+org.eclipse.jdt.core.formatter.tabulation.size=4
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
 org.eclipse.jdt.core.formatter.brace_position_for_array_initializer=end_of_line
 org.eclipse.jdt.core.formatter.insert_space_before_comma_in_explicitconstructorcall_arguments=do not insert
@@ -288,10 +288,10 @@ org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_catch=do not 
 org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_cast=do not insert
 org.eclipse.jdt.core.formatter.insert_space_before_comma_in_type_arguments=do not insert
 org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_annotation=do not insert
-eclipse.preferences.version=1
 org.eclipse.jdt.core.formatter.brace_position_for_lambda_body=next_line
-org.eclipse.jdt.core.formatter.insert_space_before_closing_bracket_in_array_reference=do not insert
+eclipse.preferences.version=1
 org.eclipse.jdt.core.formatter.enabling_tag=@formatter\:on
+org.eclipse.jdt.core.formatter.insert_space_before_closing_bracket_in_array_reference=do not insert
 org.eclipse.jdt.core.compiler.compliance=1.6
 org.eclipse.jdt.core.formatter.blank_lines_after_package=1
 org.eclipse.jdt.core.formatter.alignment_for_superinterfaces_in_type_declaration=16

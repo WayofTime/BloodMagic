@@ -19,14 +19,14 @@ public class GuiSoulForge extends GuiContainer
     {
         super(new ContainerSoulForge(playerInventory, tileTeleposer));
         this.xSize = 176;
-        this.ySize = 157;
+        this.ySize = 205;
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString(TextHelper.localize("tile.BloodMagic.soulForge.name"), 64, 23, 4210752);
-        this.fontRendererObj.drawString(TextHelper.localize("container.inventory"), 8, 47, 4210752);
+        this.fontRendererObj.drawString(TextHelper.localize("tile.BloodMagic.soulForge.name"), 8, 5, 4210752);
+        this.fontRendererObj.drawString(TextHelper.localize("container.inventory"), 8, 111, 4210752);
     }
 
     @Override
@@ -39,13 +39,13 @@ public class GuiSoulForge extends GuiContainer
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        int l = this.getCookProgressScaled(36);
-        this.drawTexturedModalRect(i + 79, j + 32, 176, 0, l, 18);
+        int l = this.getCookProgressScaled(90);
+        this.drawTexturedModalRect(i + 115, j + 14 + 90 - l, 176, 90 - l, 18, l);
     }
 
     public int getCookProgressScaled(int scale)
     {
-        double progress = 1;
+        double progress = 0.5;
         return (int) (progress * scale);
     }
 }
