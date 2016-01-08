@@ -435,7 +435,7 @@ public class EventHandler
 
             ItemStack remainder = PlayerSoulHandler.addSouls(player, stack);
 
-            if (remainder == null)
+            if (remainder == null || ((ISoul) stack.getItem()).getSouls(stack) < 0.0001)
             {
                 stack.stackSize = 0;
                 event.setResult(Result.ALLOW);
