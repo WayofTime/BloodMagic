@@ -55,11 +55,15 @@ public class RitualEffectGrowth extends RitualEffect
                 {
                     for (int j = -hydrationRange; j <= hydrationRange; j++)
                     {
-                        if (this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false))
+                        for (int k = -hydrationRange; k <= hydrationRange; k++) 
                         {
-                            if (SpellHelper.hydrateSoil(world, x + i, y + 1, z + j))
+                            
+                            if (this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, false))
                             {
-                                this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
+                                if (SpellHelper.hydrateSoil(world, x + i, y + k, z + j))
+                                {
+                                    this.canDrainReagent(ritualStone, ReagentRegistry.aquasalusReagent, aquasalusDrain, true);
+                                }
                             }
                         }
                     }
@@ -73,14 +77,19 @@ public class RitualEffectGrowth extends RitualEffect
             {
                 for (int j = -range; j <= range; j++)
                 {
-                    Block block = world.getBlock(x + i, y + 2, z + j);
-
-                    if (block instanceof IPlantable || block instanceof IGrowable)
+                    
+                    for (int k = -range; k <= range; k++) 
                     {
+                        
+                        Block block = world.getBlock(x + i, y + k, z + j);
+    
+                        if (block instanceof IPlantable || block instanceof IGrowable)
                         {
-                            SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
-                            block.updateTick(world, x + i, y + 2, z + j, world.rand);
-                            flag++;
+                            {
+                                SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 3, x, y, z);
+                                block.updateTick(world, x + i, y + k, z + j, world.rand);
+                                flag++;
+                            }
                         }
                     }
                 }
