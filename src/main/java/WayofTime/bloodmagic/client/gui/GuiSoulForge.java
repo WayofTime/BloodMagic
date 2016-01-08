@@ -8,15 +8,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiSoulForge extends GuiContainer
 {
-    public GuiSoulForge(InventoryPlayer playerInventory, IInventory tileTeleposer)
+    public IInventory tileSoulForge;
+
+    public GuiSoulForge(InventoryPlayer playerInventory, IInventory tileSoulForge)
     {
-        super(new ContainerSoulForge(playerInventory, tileTeleposer));
+        super(new ContainerSoulForge(playerInventory, tileSoulForge));
+        this.tileSoulForge = tileSoulForge;
         this.xSize = 176;
         this.ySize = 205;
     }
@@ -44,7 +48,7 @@ public class GuiSoulForge extends GuiContainer
 
     public int getCookProgressScaled(int scale)
     {
-        double progress = 0.5;
+        double progress = ((TileSoulForge) tileSoulForge).getProgressForGui();
         return (int) (progress * scale);
     }
 }

@@ -78,6 +78,9 @@ public class Constants
         public static final String SOULS = "souls";
         public static final String SOUL_SWORD_DAMAGE = "soulSwordDamage";
         public static final String SOUL_SWORD_ACTIVE_DRAIN = "soulSwordActiveDrain";
+
+        public static final String SOUL_FORGE_BURN = "burnTime";
+        public static final String SOUL_FORGE_CONSUMED = "consumedSouls";
     }
 
     public static class Mod

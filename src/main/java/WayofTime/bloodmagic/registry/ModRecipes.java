@@ -17,6 +17,7 @@ import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.api.registry.SoulForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
@@ -34,6 +35,7 @@ public class ModRecipes
         addCraftingRecipes();
         addAltarRecipes();
         addAlchemyArrayRecipes();
+        addSoulForgeRecipes();
     }
 
     public static void addCraftingRecipes()
@@ -154,5 +156,10 @@ public class ModRecipes
         CompressionRegistry.registerHandler(new AdvancedCompressionHandler());
 
         CompressionRegistry.registerItemThreshold(new ItemStack(Blocks.cobblestone), 64);
+    }
+
+    public static void addSoulForgeRecipes()
+    {
+        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(Items.diamond), 1, 0.5, new ItemStack(Items.redstone), new ItemStack(Items.redstone), new ItemStack(Items.redstone));
     }
 }

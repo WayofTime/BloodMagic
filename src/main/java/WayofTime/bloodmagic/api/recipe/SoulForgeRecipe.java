@@ -34,6 +34,8 @@ public class SoulForgeRecipe
     public SoulForgeRecipe(ItemStack result, double minSouls, double drain, Object... recipe)
     {
         output = result.copy();
+        this.minimumSouls = minSouls;
+        this.soulsDrained = drain;
         for (Object in : recipe)
         {
             if (in instanceof ItemStack)
@@ -71,7 +73,7 @@ public class SoulForgeRecipe
 
     public ItemStack getRecipeOutput()
     {
-        return output;
+        return output.copy();
     }
 
     /**
