@@ -198,7 +198,6 @@ public class TileSoulForge extends TileInventory implements ITickable
 
             if (soulStack.getItem() instanceof ISoulGem)
             {
-                System.out.println("Test");
                 ISoulGem soul = (ISoulGem) soulStack.getItem();
                 return soul.drainSouls(soulStack, requested);
             }
