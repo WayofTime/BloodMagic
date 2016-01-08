@@ -37,6 +37,7 @@ public class ItemSigilToggleable extends ItemSigilBase
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
+        BindableHelper.checkAndSetItemOwner(stack, player);
         if (!world.isRemote && !isUnusable(stack))
         {
             if (player.isSneaking())

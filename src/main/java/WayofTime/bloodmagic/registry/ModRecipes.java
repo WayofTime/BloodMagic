@@ -160,6 +160,7 @@ public class ModRecipes
 
     public static void addSoulForgeRecipes()
     {
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(Items.diamond), 1, 0.5, new ItemStack(Items.redstone), new ItemStack(Items.redstone), new ItemStack(Items.redstone));
+        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem), 1, 1, "dustRedstone", "gemDiamond", "blockGlass", "dyeBlue");
+        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulSword), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.iron_sword));
     }
 }
