@@ -14,7 +14,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -28,8 +28,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -56,6 +56,7 @@ import WayofTime.bloodmagic.livingArmour.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -395,6 +396,16 @@ public class EventHandler
         EntityLivingBase attackedEntity = event.entityLiving;
         DamageSource source = event.source;
         Entity entity = source.getEntity();
+
+        if (attackedEntity.isPotionActive(ModPotions.soulSnare))
+        {
+            PotionEffect eff = attackedEntity.getActivePotionEffect(ModPotions.soulSnare);
+            int lvl = eff.getAmplifier();
+
+            double amountOfSouls = random.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
+            ItemStack soulStack = ((ISoul) ModItems.monsterSoul).createSoul(0, amountOfSouls);
+            event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+        }
 
         if (entity != null && entity instanceof EntityLivingBase)
         {

@@ -145,8 +145,12 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
         if (getActivated(stack))
         {
             ISoul soul = ((ISoul) ModItems.monsterSoul);
-            ItemStack soulStack = soul.createSoul(0, looting * 0.5 + 1);
-            soulList.add(soulStack);
+
+            for (int i = 0; i <= looting; i++)
+            {
+                ItemStack soulStack = soul.createSoul(0, (getDamageOfActivatedSword(stack) - 7) / 2 * attackingEntity.worldObj.rand.nextDouble() + 0.5);
+                soulList.add(soulStack);
+            }
         }
 
         return soulList;

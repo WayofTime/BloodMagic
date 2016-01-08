@@ -38,7 +38,7 @@ public class ModPotions
                 , false, 0, 0, 0);
         whirlwind = new PotionBloodMagic("Whirlwind", new ResourceLocation("whirlwind"), false, 0, 0, 0);
         planarBinding = new PotionBloodMagic("Planar Binding", new ResourceLocation("planarBinding"), false, 0, 0, 0);
-        soulSnare = new PotionBloodMagic("Soul Snare", new ResourceLocation("soulSnare"), false, 0, 0, 0);
+        soulSnare = new PotionBloodMagic("Soul Snare", new ResourceLocation("soulSnare"), false, 0xFFFFFF, 0, 0);
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);

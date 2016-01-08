@@ -48,6 +48,7 @@ import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
 import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
+import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
 import WayofTime.bloodmagic.item.soul.ItemSoulSword;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
@@ -113,6 +114,7 @@ public class ModItems
     public static Item arcaneAshes;
     public static Item monsterSoul;
     public static Item soulGem;
+    public static Item soulSnare;
 
     public static Item soulSword;
 
@@ -189,6 +191,7 @@ public class ModItems
         arcaneAshes = registerItem(new ItemArcaneAshes());
         monsterSoul = registerItem(new ItemMonsterSoul());
         soulGem = registerItem(new ItemSoulGem());
+        soulSnare = registerItem(new ItemSoulSnare());
 
         soulSword = registerItem(new ItemSoulSword());
     }
@@ -291,6 +294,7 @@ public class ModItems
         renderHelper.itemRender(arcaneAshes);
         renderHelper.itemRender(monsterSoul, 0);
         renderHelper.itemRender(soulGem, 0);
+        renderHelper.itemRender(soulSnare);
 
         renderHelper.itemRender(soulSword, 0);
         renderHelper.itemRender(soulSword, 1);

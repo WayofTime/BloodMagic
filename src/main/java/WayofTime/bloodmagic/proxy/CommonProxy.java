@@ -17,7 +17,7 @@ public class CommonProxy
         Object obj = new EventHandler();
         MinecraftForge.EVENT_BUS.register(obj);
         FMLCommonHandler.instance().bus().register(obj);
-
+        registerRenderers();
     }
 
     public void init()
@@ -26,6 +26,11 @@ public class CommonProxy
     }
 
     public void postInit()
+    {
+
+    }
+
+    public void registerRenderers()
     {
 
     }
