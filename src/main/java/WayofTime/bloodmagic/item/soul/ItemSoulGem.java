@@ -18,7 +18,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSoulGem extends Item implements ISoulGem
 {
-    public static String[] names = { "lesser" };
+    public static String[] names = { "petty", "lesser", "common", "greater", "grand" };
 
     public ItemSoulGem()
     {
@@ -111,6 +111,19 @@ public class ItemSoulGem extends Item implements ISoulGem
     @Override
     public int getMaxSouls(ItemStack soulGemStack)
     {
+        switch (soulGemStack.getMetadata())
+        {
+        case 0:
+            return 64;
+        case 1:
+            return 256;
+        case 2:
+            return 1024;
+        case 3:
+            return 4096;
+        case 4:
+            return 16384;
+        }
         return 64;
     }
 }

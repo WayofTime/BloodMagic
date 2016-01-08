@@ -294,6 +294,10 @@ public class ModItems
         renderHelper.itemRender(arcaneAshes);
         renderHelper.itemRender(monsterSoul, 0);
         renderHelper.itemRender(soulGem, 0);
+        renderHelper.itemRender(soulGem, 1);
+        renderHelper.itemRender(soulGem, 2);
+        renderHelper.itemRender(soulGem, 3);
+        renderHelper.itemRender(soulGem, 4);
         renderHelper.itemRender(soulSnare);
 
         renderHelper.itemRender(soulSword, 0);

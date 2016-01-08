@@ -49,7 +49,6 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ritualDiviner, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(ModItems.slate, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(ModItems.ritualDiviner)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick), "aa", "aa", 'a', new ItemStack(ModBlocks.bloodStoneBrick, 1, 1)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), "stone", new ItemStack(ModItems.bloodShard)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.arcaneAshes), "dyeWhite", Items.gunpowder, Items.gunpowder, "dustRedstone", new ItemStack(Items.flint), new ItemStack(Items.coal, 1, 1), ModItems.slate));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.activationCrystal, 1, 1), new ItemStack(Items.nether_star), OrbRegistry.getOrbStack(ModItems.orbArchmage));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.soulSnare, 4, 0), "sis", "iri", "sis", 's', new ItemStack(Items.string), 'i', "ingotIron", 'r', "dustRedstone"));
 
@@ -59,8 +58,6 @@ public class ModRecipes
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.lavaCrystal), "aba", "bcb", "ded", 'a', "blockGlass", 'b', Items.lava_bucket, 'c', OrbRegistry.getOrbStack(ModItems.orbWeak), 'd', Blocks.obsidian, 'e', "gemDiamond"));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), "xox", "oSo", "xox", 'S', OrbRegistry.getOrbStack(ModItems.orbMagician), 'o', "dustRedstone", 'x', "dustGlowstone"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_VOID), "aba", "aca", "ada", 'a', Items.bucket, 'b', Items.string, 'c', Items.gunpowder, 'd', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), "aba", "bcb", "ada", 'a', "treeSapling", 'b', Items.reeds, 'c', Items.sugar, 'd', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER), "aba", "cde", "afa", 'a', "stone", 'b', Items.iron_pickaxe, 'c', Items.iron_shovel, 'd', Items.gunpowder, 'e', Items.iron_axe, 'f', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), "aba", "cde", "afa", 'a', Blocks.obsidian, 'b', ModItems.sigilAir, 'c', ModItems.sigilWater, 'd', "dustGlowstone", 'e', ModItems.sigilLava, 'f', OrbRegistry.getOrbStack(ModItems.orbMagician)));
         GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), "aba", "aca", "ded", 'a', "blockGlass", 'b', ModItems.sigilDivination, 'c', "dustGlowstone", 'd', ModItems.bucketEssence, 'e', OrbRegistry.getOrbStack(ModItems.orbApprentice)));
@@ -165,5 +162,7 @@ public class ModRecipes
         SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.arcaneAshes), 0, 0, "dustRedstone", "dyeWhite", new ItemStack(Items.gunpowder), Items.coal);
         SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_WATER), 10, 3, "sugar", new ItemStack(Items.water_bucket), new ItemStack(Items.water_bucket));
         SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_LAVA), 32, 10, Items.lava_bucket, "dustRedstone", "cobblestone", "blockCoal");
+        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_VOID), 64, 10, Items.bucket, Items.string, Items.string, Items.gunpowder);
+        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), 120, 30, "treeSapling", "treeSapling", Items.reeds, Items.sugar);
     }
 }

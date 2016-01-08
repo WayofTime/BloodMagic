@@ -110,7 +110,11 @@ item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
 item.BloodMagic.arcaneAshes.name=Arcane Ashes
 
 item.BloodMagic.soul.sword.name=Soul Sword
+item.BloodMagic.soulGem.petty.name=Petty Soul Gem
 item.BloodMagic.soulGem.lesser.name=Lesser Soul Gem
+item.BloodMagic.soulGem.common.name=Common Soul Gem
+item.BloodMagic.soulGem.greater.name=Greater Soul Gem
+item.BloodMagic.soulGem.grand.name=Grand Soul Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Soul Snare
 
 # Blocks
