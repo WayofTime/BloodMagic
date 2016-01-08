@@ -8,7 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.soul.ISoul;
 import WayofTime.bloodmagic.api.soul.ISoulGem;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.tile.TileSoulForge;
 
 public class ContainerSoulForge extends Container
 {
@@ -17,7 +17,12 @@ public class ContainerSoulForge extends Container
     public ContainerSoulForge(InventoryPlayer inventoryPlayer, IInventory tileForge)
     {
         this.tileForge = tileForge;
-        this.addSlotToContainer(new SlotSoul(tileForge, 0, 152, 51));
+        this.addSlotToContainer(new Slot(tileForge, 0, 8, 15));
+        this.addSlotToContainer(new Slot(tileForge, 1, 80, 15));
+        this.addSlotToContainer(new Slot(tileForge, 2, 80, 87));
+        this.addSlotToContainer(new Slot(tileForge, 3, 8, 87));
+        this.addSlotToContainer(new SlotSoul(tileForge, TileSoulForge.soulSlot, 152, 51));
+        this.addSlotToContainer(new SlotOutput(tileForge, TileSoulForge.outputSlot, 44, 51));
 
         for (int i = 0; i < 3; i++)
         {
@@ -34,48 +39,58 @@ public class ContainerSoulForge extends Container
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot)
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        ItemStack stack = null;
-        Slot slotObject = inventorySlots.get(slot);
-        int slots = inventorySlots.size();
+        ItemStack itemstack = null;
+        Slot slot = (Slot) this.inventorySlots.get(index);
 
-        if (slotObject != null && slotObject.getHasStack())
+        if (slot != null && slot.getHasStack())
         {
-            ItemStack stackInSlot = slotObject.getStack();
-            stack = stackInSlot.copy();
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-            if (stack.getItem() instanceof ItemTelepositionFocus)
+            if (index == 5)
             {
-                if (slot <= slots)
-                {
-                    if (!this.mergeItemStack(stackInSlot, 0, slots, false))
-                    {
-                        return null;
-                    }
-                } else if (!this.mergeItemStack(stackInSlot, slots, 36 + slots, false))
+                if (!this.mergeItemStack(itemstack1, 6, 6 + 36, true))
                 {
                     return null;
                 }
-            }
 
-            if (stackInSlot.stackSize == 0)
+                slot.onSlotChange(itemstack1, itemstack);
+            } else if (index > 5)
             {
-                slotObject.putStack(null);
-            } else
-            {
-                slotObject.onSlotChanged();
-            }
-
-            if (stackInSlot.stackSize == stack.stackSize)
+                if (itemstack1.getItem() instanceof ISoul || itemstack1.getItem() instanceof ISoulGem)
+                {
+                    if (!this.mergeItemStack(itemstack1, 4, 5, false))
+                    {
+                        return null;
+                    }
+                } else if (!this.mergeItemStack(itemstack1, 0, 4, false))
+                {
+                    return null;
+                }
+            } else if (!this.mergeItemStack(itemstack1, 6, 42, false))
             {
                 return null;
             }
 
-            slotObject.onPickupFromSlot(player, stackInSlot);
+            if (itemstack1.stackSize == 0)
+            {
+                slot.putStack((ItemStack) null);
+            } else
+            {
+                slot.onSlotChanged();
+            }
+
+            if (itemstack1.stackSize == itemstack.stackSize)
+            {
+                return null;
+            }
+
+            slot.onPickupFromSlot(playerIn, itemstack1);
         }
 
-        return stack;
+        return itemstack;
     }
 
     @Override
@@ -95,6 +110,20 @@ public class ContainerSoulForge extends Container
         public boolean isItemValid(ItemStack itemStack)
         {
             return itemStack.getItem() instanceof ISoulGem || itemStack.getItem() instanceof ISoul;
+        }
+    }
+
+    private class SlotOutput extends Slot
+    {
+        public SlotOutput(IInventory inventory, int slotIndex, int x, int y)
+        {
+            super(inventory, slotIndex, x, y);
+        }
+
+        @Override
+        public boolean isItemValid(ItemStack stack)
+        {
+            return false;
         }
     }
 }
