@@ -41,7 +41,17 @@ public class ItemSoulGem extends Item implements ISoulGem
     public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
-            list.add(new ItemStack(id, 1, i));
+        {
+            ItemStack stack = new ItemStack(this, 1, i);
+            list.add(stack);
+        }
+
+        for (int i = 0; i < names.length; i++)
+        {
+            ItemStack stack = new ItemStack(this, 1, i);
+            this.setSouls(stack, this.getMaxSouls(stack));
+            list.add(stack);
+        }
     }
 
     @Override
