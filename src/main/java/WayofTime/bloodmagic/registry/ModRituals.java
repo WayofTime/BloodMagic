@@ -1,10 +1,12 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.ritual.*;
+import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.imperfect.*;
 
 public class ModRituals
@@ -17,6 +19,7 @@ public class ModRituals
     public static Ritual featheredKnifeRitual;
     public static Ritual regenerationRitual;
     public static Ritual animalGrowthRitual;
+    public static Ritual harvestRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -41,6 +44,9 @@ public class ModRituals
         RitualRegistry.registerRitual(regenerationRitual, regenerationRitual.getName());
         animalGrowthRitual = new RitualAnimalGrowth();
         RitualRegistry.registerRitual(animalGrowthRitual, animalGrowthRitual.getName());
+        harvestRitual = new RitualHarvest();
+        RitualRegistry.registerRitual(harvestRitual, harvestRitual.getName());
+        initHarvestHandlers();
     }
 
     public static void initImperfectRituals()
@@ -53,5 +59,10 @@ public class ModRituals
         ImperfectRitualRegistry.registerRitual(imperfectResistance);
         imperfectZombie = new ImperfectRitualZombie();
         ImperfectRitualRegistry.registerRitual(imperfectZombie);
+    }
+
+    public static void initHarvestHandlers()
+    {
+        HarvestRegistry.registerHandler(new HarvestHandlerPlantable());
     }
 }

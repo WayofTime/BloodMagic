@@ -9,16 +9,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameData;
 
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = { "state" })
 public class BlockStack
 {
     private final Block block;
     private final int meta;
+    private final IBlockState state;
 
     public BlockStack(Block block, int meta)
     {
         this.block = block;
         this.meta = meta;
+        this.state = block.getStateFromMeta(meta);
     }
 
     public BlockStack(Block block)
@@ -35,6 +37,6 @@ public class BlockStack
     @Override
     public String toString()
     {
-        return GameData.getBlockRegistry().getNameForObject(block) + ":" + meta;
+        return GameData.getBlockRegistry().getNameForObject(getBlock()) + ":" + getMeta();
     }
 }
