@@ -17,6 +17,18 @@
       "transform": {
         "translation": [ 0.05, -0.1, 0.05 ],
         "scale": [ 0.07, 0.07, 0.07 ],
+        "firstperson": {
+          "translation": [ 0, 0, 0 ],
+          "scale": [ 1, 1, 1 ]
+        },
+        "thirdperson": {
+          "translation": [ 0, 0.09375, -0.171875 ],
+          "rotation": [{ "x": 10 }, { "y": -45 }, { "z": 170 }],
+          "scale": [ 0.375, 0.375, 0.375 ]
+        },
+        "fixed": {
+          "scale": [ 1, 1, 1 ]
+        },
         "gui": {
           "translation": [ 0, -0.15, -0.03 ],
           "scale": [ 1.04, 1.04, 1.04 ]

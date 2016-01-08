@@ -67,16 +67,12 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         double vMin = (double) fluidStillSprite.getMinV();
         double vMax = (double) fluidStillSprite.getMaxV();
 
-        double var31 = uMin;
-        double var33 = uMax;
-        double var35 = vMin;
-        double var37 = vMax;
         wr.begin(7, DefaultVertexFormats.POSITION_TEX);
-        // wr.setBrightness(200);
-        wr.pos(size / 2f, 0, size / 2f).tex(var33, var37).endVertex();
-        wr.pos(size / 2f, 0, -size / 2f).tex(var33, var35).endVertex();
-        wr.pos(-size / 2f, 0, -size / 2f).tex(var31, var35).endVertex();
-        wr.pos(-size / 2f, 0, size / 2f).tex(var31, var37).endVertex();
+//        wr.setBrightness(200);
+        wr.pos(size / 2f, 0, size / 2f).tex(uMax, vMax).endVertex();
+        wr.pos(size / 2f, 0, -size / 2f).tex(uMax, vMin).endVertex();
+        wr.pos(-size / 2f, 0, -size / 2f).tex(uMin, vMin).endVertex();
+        wr.pos(-size / 2f, 0, size / 2f).tex(uMin, vMax).endVertex();
         tessellator.draw();
 
         GlStateManager.popMatrix();
@@ -109,7 +105,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
             GlStateManager.pushAttrib();
             RenderHelper.enableStandardItemLighting();
-            itemRenderer.func_181564_a(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.GROUND);
+            itemRenderer.func_181564_a(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popAttrib();
 
