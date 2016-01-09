@@ -88,8 +88,6 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
 
-        System.out.println("Test");
-
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
             if (activationCrystal.getItem() instanceof ItemActivationCrystal)
