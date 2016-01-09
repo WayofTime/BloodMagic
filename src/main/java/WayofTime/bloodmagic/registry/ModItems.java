@@ -27,6 +27,7 @@ import WayofTime.bloodmagic.item.ItemSacrificialDagger;
 import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
 import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
@@ -110,6 +111,11 @@ public class ModItems
     public static Item livingArmourLegs;
     public static Item livingArmourBoots;
 
+    public static Item sentientArmourHelmet;
+    public static Item sentientArmourChest;
+    public static Item sentientArmourLegs;
+    public static Item sentientArmourBoots;
+
     public static Item altarMaker;
 
     public static Item arcaneAshes;
@@ -187,6 +193,11 @@ public class ModItems
         livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
         livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
         livingArmourBoots = registerItem(new ItemLivingArmour(3), "ItemLivingArmourBoots");
+
+        sentientArmourHelmet = registerItem(new ItemSentientArmour(0), "ItemSentientArmourHelmet");
+        sentientArmourChest = registerItem(new ItemSentientArmour(1), "ItemSentientArmourChest");
+        sentientArmourLegs = registerItem(new ItemSentientArmour(2), "ItemSentientArmourLegs");
+        sentientArmourBoots = registerItem(new ItemSentientArmour(3), "ItemSentientArmourBoots");
 
         altarMaker = registerItem(new ItemAltarMaker());
 
@@ -291,6 +302,11 @@ public class ModItems
         renderHelper.itemRender(livingArmourChest, "ItemLivingArmour1");
         renderHelper.itemRender(livingArmourLegs, "ItemLivingArmour2");
         renderHelper.itemRender(livingArmourBoots, "ItemLivingArmour3");
+
+        renderHelper.itemRender(sentientArmourHelmet, "ItemSentientArmour0");
+        renderHelper.itemRender(sentientArmourChest, "ItemSentientArmour1");
+        renderHelper.itemRender(sentientArmourLegs, "ItemSentientArmour2");
+        renderHelper.itemRender(sentientArmourBoots, "ItemSentientArmour3");
 
         renderHelper.itemRender(altarMaker);
 

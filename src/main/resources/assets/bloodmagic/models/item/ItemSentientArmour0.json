@@ -1,0 +1,8 @@
+{
+  "parent":"bloodmagic:item/ItemModelBase",
+  "textures": {
+    "layer0":"bloodmagic:items/SentientHelmet"
+  }
+}
+
+
