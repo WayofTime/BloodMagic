@@ -72,7 +72,7 @@ public class ItemTelepositionFocus extends ItemBindable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.BloodMagic.telepositionfocus." + names[stack.getItemDamage()]))));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localize("tooltip.BloodMagic.telepositionFocus." + names[stack.getItemDamage()]))));
 
         super.addInformation(stack, player, tooltip, advanced);
 
