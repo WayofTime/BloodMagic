@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -64,14 +65,13 @@ public class BlockSoulForge extends BlockContainer
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileTeleposer)
-        {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileTeleposer) worldIn.getTileEntity(pos));
-        }
+        TileSoulForge tileSoulForge = (TileSoulForge) world.getTileEntity(blockPos);
+        if (tileSoulForge != null)
+            tileSoulForge.dropItems();
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(world, blockPos, blockState);
     }
 
     @Override

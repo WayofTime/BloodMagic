@@ -52,14 +52,13 @@ public class BlockTeleposer extends BlockContainer
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof TileTeleposer)
-        {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileTeleposer) worldIn.getTileEntity(pos));
-        }
+        TileTeleposer tileTeleposer = (TileTeleposer) world.getTileEntity(blockPos);
+        if (tileTeleposer != null)
+            tileTeleposer.dropItems();
 
-        super.breakBlock(worldIn, pos, state);
+        super.breakBlock(world, blockPos, blockState);
     }
 
     @Override
