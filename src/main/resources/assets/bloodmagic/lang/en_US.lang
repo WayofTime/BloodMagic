@@ -245,7 +245,11 @@ tooltip.BloodMagic.livingArmour.upgrade.level=(Level %d)
 
 tooltip.BloodMagic.souls=Soul Quality: %1$,.2f
 tooltip.BloodMagic.soul.sword.desc=Uses souls to unleash its full potential.
-tooltip.BloodMagic.soulGem.lesser=A gem used to contain many souls
+tooltip.BloodMagic.soulGem.petty=A gem used to contain a few souls
+tooltip.BloodMagic.soulGem.lesser=A gem used to contain more souls
+tooltip.BloodMagic.soulGem.common=A gem used to contain many souls
+tooltip.BloodMagic.soulGem.greater=A gem used to contain a great amount of souls
+tooltip.BloodMagic.soulGem.grand=A gem that can hold a LOT of souls
 tooltip.BloodMagic.soulSnare.desc1=Throw at a monster and then
 tooltip.BloodMagic.soulSnare.desc2=kill them to get a monster soul
 
