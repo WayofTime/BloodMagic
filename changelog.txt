@@ -8,6 +8,8 @@ Version 2.0.0-4
 - Added T5 orb recipe and Demonic Activation Crystal
 - Added Rituals:
 	- Animal Growth ritual
+	- Harvest ritual
+	- Magnetism ritual
 	
 - Added parts for the new Soul System
 	- Added the Monster Soul
@@ -16,8 +18,11 @@ Version 2.0.0-4
 	- SSSSSSSSoooooooouuuuuuulllllllllsssssss
 	- Added Soul Forge block
 	- Added soul snare and recipe - has 10% chance for monster to drop its soul
+	- Added bow
+	- Added Sentient Armour
 	
 - Fixed binding of togglable sigils
+- Added saving for ritual tags
 
 ------------------------------------------------------
 Version 2.0.0-3

@@ -65,9 +65,9 @@ public abstract class AreaDescriptor
             {
                 ArrayList<BlockPos> posList = new ArrayList<BlockPos>();
 
-                for (int i = minimumOffset.getX(); i < maximumOffset.getX(); i++)
+                for (int j = minimumOffset.getY(); j < maximumOffset.getY(); j++)
                 {
-                    for (int j = minimumOffset.getY(); j < maximumOffset.getY(); j++)
+                    for (int i = minimumOffset.getX(); i < maximumOffset.getX(); i++)
                     {
                         for (int k = minimumOffset.getZ(); k < maximumOffset.getZ(); k++)
                         {
