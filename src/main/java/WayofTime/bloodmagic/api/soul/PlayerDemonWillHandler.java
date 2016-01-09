@@ -12,9 +12,9 @@ import net.minecraft.item.ItemStack;
  * @author WayofTime
  * 
  */
-public class PlayerSoulHandler
+public class PlayerDemonWillHandler
 {
-    public static double getTotalSouls(EntityPlayer player)
+    public static double getTotalDemonWill(EntityPlayer player)
     {
         ItemStack[] inventory = player.inventory.mainInventory;
         double souls = 0;
@@ -24,12 +24,12 @@ public class PlayerSoulHandler
             ItemStack stack = inventory[i];
             if (stack != null)
             {
-                if (stack.getItem() instanceof ISoul)
+                if (stack.getItem() instanceof IDemonWill)
                 {
-                    souls += ((ISoul) stack.getItem()).getSouls(stack);
-                } else if (stack.getItem() instanceof ISoulGem)
+                    souls += ((IDemonWill) stack.getItem()).getWill(stack);
+                } else if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    souls += ((ISoulGem) stack.getItem()).getSouls(stack);
+                    souls += ((IDemonWillGem) stack.getItem()).getWill(stack);
                 }
             }
         }
@@ -43,7 +43,7 @@ public class PlayerSoulHandler
      * @param amount
      * @return - amount consumed
      */
-    public static double consumeSouls(EntityPlayer player, double amount)
+    public static double consumeDemonWill(EntityPlayer player, double amount)
     {
         double consumed = 0;
 
@@ -59,16 +59,16 @@ public class PlayerSoulHandler
             ItemStack stack = inventory[i];
             if (stack != null)
             {
-                if (stack.getItem() instanceof ISoul)
+                if (stack.getItem() instanceof IDemonWill)
                 {
-                    consumed += ((ISoul) stack.getItem()).drainSouls(stack, amount - consumed);
-                    if (((ISoul) stack.getItem()).getSouls(stack) <= 0)
+                    consumed += ((IDemonWill) stack.getItem()).drainWill(stack, amount - consumed);
+                    if (((IDemonWill) stack.getItem()).getWill(stack) <= 0)
                     {
                         inventory[i] = null;
                     }
-                } else if (stack.getItem() instanceof ISoulGem)
+                } else if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    consumed += ((ISoulGem) stack.getItem()).drainSouls(stack, amount - consumed);
+                    consumed += ((IDemonWillGem) stack.getItem()).drainWill(stack, amount - consumed);
                 }
             }
         }
@@ -77,15 +77,15 @@ public class PlayerSoulHandler
     }
 
     /**
-     * Adds an ISoul contained in an ItemStack to one of the Soul Gems in the
-     * player's inventory.
+     * Adds an IDemonWill contained in an ItemStack to one of the Soul Gems in
+     * the player's inventory.
      * 
      * @param player
      * @param soulStack
-     *        - ItemStack that contains an ISoul to be added
+     *        - ItemStack that contains an IDemonWill to be added
      * @return
      */
-    public static ItemStack addSouls(EntityPlayer player, ItemStack soulStack)
+    public static ItemStack addDemonWill(EntityPlayer player, ItemStack soulStack)
     {
         if (soulStack == null)
         {
@@ -99,9 +99,9 @@ public class PlayerSoulHandler
             ItemStack stack = inventory[i];
             if (stack != null)
             {
-                if (stack.getItem() instanceof ISoulGem)
+                if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    ItemStack newStack = ((ISoulGem) stack.getItem()).fillSoulGem(stack, soulStack);
+                    ItemStack newStack = ((IDemonWillGem) stack.getItem()).fillDemonWillGem(stack, soulStack);
                     if (newStack == null)
                     {
                         return null;
@@ -113,7 +113,7 @@ public class PlayerSoulHandler
         return soulStack;
     }
 
-    public static double addSouls(EntityPlayer player, double amount)
+    public static double addDemonWill(EntityPlayer player, double amount)
     {
         ItemStack[] inventory = player.inventory.mainInventory;
         double remaining = amount;
@@ -123,11 +123,11 @@ public class PlayerSoulHandler
             ItemStack stack = inventory[i];
             if (stack != null)
             {
-                if (stack.getItem() instanceof ISoulGem)
+                if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    double souls = ((ISoulGem) stack.getItem()).getSouls(stack);
-                    double fill = Math.min(((ISoulGem) stack.getItem()).getMaxSouls(stack) - souls, remaining);
-                    ((ISoulGem) stack.getItem()).setSouls(stack, fill + souls);
+                    double souls = ((IDemonWillGem) stack.getItem()).getWill(stack);
+                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(stack) - souls, remaining);
+                    ((IDemonWillGem) stack.getItem()).setWill(stack, fill + souls);
                     remaining -= fill;
 
                     if (remaining <= 0)

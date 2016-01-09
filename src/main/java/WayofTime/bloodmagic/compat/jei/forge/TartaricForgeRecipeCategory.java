@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -12,12 +14,11 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Set;
-
-public class SoulForgeRecipeCategory implements IRecipeCategory
+public class TartaricForgeRecipeCategory implements IRecipeCategory
 {
     private static final int OUTPUT_SLOT = 0;
     private static final int GEM_SLOT = 1;
@@ -30,7 +31,8 @@ public class SoulForgeRecipeCategory implements IRecipeCategory
     @Nonnull
     private final ICraftingGridHelper craftingGridHelper;
 
-    public SoulForgeRecipeCategory() {
+    public TartaricForgeRecipeCategory()
+    {
         craftingGridHelper = BloodMagicPlugin.jeiHelper.getGuiHelper().createCraftingGridHelper(INPUT_SLOT, OUTPUT_SLOT);
     }
 
@@ -76,15 +78,18 @@ public class SoulForgeRecipeCategory implements IRecipeCategory
         guiItemStacks.init(OUTPUT_SLOT, false, 73, 13);
         guiItemStacks.init(GEM_SLOT, true, 42, 0);
 
-        for (int y = 0; y < 3; ++y) {
-            for (int x = 0; x < 3; ++x) {
+        for (int y = 0; y < 3; ++y)
+        {
+            for (int x = 0; x < 3; ++x)
+            {
                 int index = INPUT_SLOT + x + (y * 3);
                 guiItemStacks.init(index, true, x * 18, y * 18);
             }
         }
 
-        if (recipeWrapper instanceof SoulForgeRecipeJEI) {
-            SoulForgeRecipeJEI recipe = (SoulForgeRecipeJEI) recipeWrapper;
+        if (recipeWrapper instanceof TartaricForgeRecipeJEI)
+        {
+            TartaricForgeRecipeJEI recipe = (TartaricForgeRecipeJEI) recipeWrapper;
             guiItemStacks.set(GEM_SLOT, (Set<ItemStack>) recipe.getInputs().get(1));
             craftingGridHelper.setOutput(guiItemStacks, recipe.getOutputs());
             craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 2, 3);

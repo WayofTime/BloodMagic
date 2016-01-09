@@ -17,9 +17,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.ISoul;
-import WayofTime.bloodmagic.api.soul.ISoulWeapon;
-import WayofTime.bloodmagic.api.soul.PlayerSoulHandler;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -27,17 +27,17 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemSoulSword extends ItemSword implements ISoulWeapon
+public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 {
     public int[] soulBracket = new int[] { 16 };
     public double[] damageAdded = new double[] { 1 };
     public double[] soulDrainPerSwing = new double[] { 0.1 };
 
-    public ItemSoulSword()
+    public ItemSentientSword()
     {
         super(ModItems.soulToolMaterial);
 
-        setUnlocalizedName(Constants.Mod.MODID + ".soul.sword");
+        setUnlocalizedName(Constants.Mod.MODID + ".sentientSword");
         setHasSubtypes(true);
         setNoRepair();
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -51,7 +51,7 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
 
         if (getActivated(stack))
         {
-            double soulsRemaining = PlayerSoulHandler.getTotalSouls(player);
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(player);
             int level = getLevel(stack, soulsRemaining);
 
             double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
@@ -90,7 +90,7 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
     {
         NBTHelper.checkNBT(stack);
 
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.soul.sword.desc"));
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sentientSword.desc"));
 
         if (getActivated(stack))
             tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
@@ -107,7 +107,7 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
             double drain = this.getDrainOfActivatedSword(stack);
             if (drain > 0)
             {
-                double soulsRemaining = PlayerSoulHandler.getTotalSouls(player);
+                double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(player);
 
                 if (drain > soulsRemaining)
                 {
@@ -115,7 +115,7 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
                     return false;
                 } else
                 {
-                    PlayerSoulHandler.consumeSouls(player, drain);
+                    PlayerDemonWillHandler.consumeDemonWill(player, drain);
                 }
             }
 
@@ -138,17 +138,17 @@ public class ItemSoulSword extends ItemSword implements ISoulWeapon
     }
 
     @Override
-    public List<ItemStack> getRandomSoulDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting)
+    public List<ItemStack> getRandomDemonWillDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting)
     {
         List<ItemStack> soulList = new ArrayList<ItemStack>();
 
         if (getActivated(stack))
         {
-            ISoul soul = ((ISoul) ModItems.monsterSoul);
+            IDemonWill soul = ((IDemonWill) ModItems.monsterSoul);
 
             for (int i = 0; i <= looting; i++)
             {
-                ItemStack soulStack = soul.createSoul(0, (getDamageOfActivatedSword(stack) - 7) / 2 * attackingEntity.worldObj.rand.nextDouble() + 0.5);
+                ItemStack soulStack = soul.createWill(0, (getDamageOfActivatedSword(stack) - 7) / 2 * attackingEntity.worldObj.rand.nextDouble() + 0.5);
                 soulList.add(soulStack);
             }
         }

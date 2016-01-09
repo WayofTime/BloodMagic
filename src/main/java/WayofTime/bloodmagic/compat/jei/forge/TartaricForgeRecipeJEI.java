@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.api.recipe.SoulForgeRecipe;
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.registry.ModItems;
 import lombok.Getter;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
@@ -11,14 +11,14 @@ import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.List;
 
-public class SoulForgeRecipeJEI extends BlankRecipeWrapper
+public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
 {
     @Getter
-    private SoulForgeRecipe recipe;
+    private TartaricForgeRecipe recipe;
     @Getter
     private Set<ItemStack> validGems = new HashSet<ItemStack>();
 
-    public SoulForgeRecipeJEI(SoulForgeRecipe recipe)
+    public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe)
     {
         this.recipe = recipe;
 

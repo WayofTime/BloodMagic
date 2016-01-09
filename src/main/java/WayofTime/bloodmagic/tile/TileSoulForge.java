@@ -7,10 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.recipe.SoulForgeRecipe;
-import WayofTime.bloodmagic.api.registry.SoulForgeRecipeRegistry;
-import WayofTime.bloodmagic.api.soul.ISoul;
-import WayofTime.bloodmagic.api.soul.ISoulGem;
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 
 public class TileSoulForge extends TileInventory implements ITickable
 {
@@ -53,7 +53,7 @@ public class TileSoulForge extends TileInventory implements ITickable
             return;
         }
 
-        double soulsInGem = getSouls();
+        double soulsInGem = getWill();
 
         List<ItemStack> inputList = new ArrayList<ItemStack>();
 
@@ -65,7 +65,7 @@ public class TileSoulForge extends TileInventory implements ITickable
             }
         }
 
-        SoulForgeRecipe recipe = SoulForgeRecipeRegistry.getMatchingRecipe(inputList, getWorld(), getPos());
+        TartaricForgeRecipe recipe = TartaricForgeRecipeRegistry.getMatchingRecipe(inputList, getWorld(), getPos());
         if (recipe != null && (soulsInGem >= recipe.getMinimumSouls() || burnTime > 0))
         {
             if (canCraft(recipe))
@@ -103,7 +103,7 @@ public class TileSoulForge extends TileInventory implements ITickable
         return ((double) burnTime) / ticksRequired;
     }
 
-    private boolean canCraft(SoulForgeRecipe recipe)
+    private boolean canCraft(TartaricForgeRecipe recipe)
     {
         if (recipe == null)
         {
@@ -123,7 +123,7 @@ public class TileSoulForge extends TileInventory implements ITickable
 
     }
 
-    public void craftItem(SoulForgeRecipe recipe)
+    public void craftItem(TartaricForgeRecipe recipe)
     {
         if (this.canCraft(recipe))
         {
@@ -148,7 +148,7 @@ public class TileSoulForge extends TileInventory implements ITickable
 
         if (soulStack != null)
         {
-            if (soulStack.getItem() instanceof ISoul || soulStack.getItem() instanceof ISoulGem)
+            if (soulStack.getItem() instanceof IDemonWill || soulStack.getItem() instanceof IDemonWillGem)
             {
                 return true;
             }
@@ -157,22 +157,22 @@ public class TileSoulForge extends TileInventory implements ITickable
         return false;
     }
 
-    public double getSouls()
+    public double getWill()
     {
         ItemStack soulStack = getStackInSlot(soulSlot);
 
         if (soulStack != null)
         {
-            if (soulStack.getItem() instanceof ISoul)
+            if (soulStack.getItem() instanceof IDemonWill)
             {
-                ISoul soul = (ISoul) soulStack.getItem();
-                return soul.getSouls(soulStack);
+                IDemonWill soul = (IDemonWill) soulStack.getItem();
+                return soul.getWill(soulStack);
             }
 
-            if (soulStack.getItem() instanceof ISoulGem)
+            if (soulStack.getItem() instanceof IDemonWillGem)
             {
-                ISoulGem soul = (ISoulGem) soulStack.getItem();
-                return soul.getSouls(soulStack);
+                IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
+                return soul.getWill(soulStack);
             }
         }
 
@@ -185,21 +185,21 @@ public class TileSoulForge extends TileInventory implements ITickable
 
         if (soulStack != null)
         {
-            if (soulStack.getItem() instanceof ISoul)
+            if (soulStack.getItem() instanceof IDemonWill)
             {
-                ISoul soul = (ISoul) soulStack.getItem();
-                double souls = soul.drainSouls(soulStack, requested);
-                if (soul.getSouls(soulStack) <= 0)
+                IDemonWill soul = (IDemonWill) soulStack.getItem();
+                double souls = soul.drainWill(soulStack, requested);
+                if (soul.getWill(soulStack) <= 0)
                 {
                     setInventorySlotContents(soulSlot, null);
                 }
                 return souls;
             }
 
-            if (soulStack.getItem() instanceof ISoulGem)
+            if (soulStack.getItem() instanceof IDemonWillGem)
             {
-                ISoulGem soul = (ISoulGem) soulStack.getItem();
-                return soul.drainSouls(soulStack, requested);
+                IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
+                return soul.drainWill(soulStack, requested);
             }
         }
 

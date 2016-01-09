@@ -15,14 +15,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.entity.projectile.EntitySoulArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 
-public class ItemSoulBow extends ItemBow
+public class ItemSentientBow extends ItemBow
 {
-    public ItemSoulBow()
+    public ItemSentientBow()
     {
         super();
-        setUnlocalizedName(Constants.Mod.MODID + ".soulBow");
+        setUnlocalizedName(Constants.Mod.MODID + ".sentientBow");
         this.setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
@@ -51,7 +51,7 @@ public class ItemSoulBow extends ItemBow
                 f = 1.0F;
             }
 
-            EntityArrow entityarrow = new EntitySoulArrow(worldIn, playerIn, f * 2.0F, 0);
+            EntityArrow entityarrow = new EntitySentientArrow(worldIn, playerIn, f * 2.0F, 0);
 
             if (f == 1.0F)
             {
@@ -109,13 +109,13 @@ public class ItemSoulBow extends ItemBow
 
         if (i >= 18)
         {
-            return new ModelResourceLocation("bloodmagic:ItemSoulBow_pulling_2", "inventory");
+            return new ModelResourceLocation("bloodmagic:ItemSentientBow_pulling_2", "inventory");
         } else if (i > 13)
         {
-            return new ModelResourceLocation("bloodmagic:ItemSoulBow_pulling_1", "inventory");
+            return new ModelResourceLocation("bloodmagic:ItemSentientBow_pulling_1", "inventory");
         } else if (i > 0)
         {
-            return new ModelResourceLocation("bloodmagic:ItemSoulBow_pulling_0", "inventory");
+            return new ModelResourceLocation("bloodmagic:ItemSentientBow_pulling_0", "inventory");
         }
 
         return null;

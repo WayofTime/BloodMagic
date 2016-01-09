@@ -47,10 +47,10 @@ import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
 import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
-import WayofTime.bloodmagic.item.soul.ItemSoulBow;
+import WayofTime.bloodmagic.item.soul.ItemSentientBow;
+import WayofTime.bloodmagic.item.soul.ItemSentientSword;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
-import WayofTime.bloodmagic.item.soul.ItemSoulSword;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModItems
@@ -117,8 +117,8 @@ public class ModItems
     public static Item soulGem;
     public static Item soulSnare;
 
-    public static Item soulSword;
-    public static Item soulBow;
+    public static Item sentientSword;
+    public static Item sentientBow;
 
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 0, 7, 8, 50);
@@ -195,8 +195,8 @@ public class ModItems
         soulGem = registerItem(new ItemSoulGem());
         soulSnare = registerItem(new ItemSoulSnare());
 
-        soulSword = registerItem(new ItemSoulSword());
-        soulBow = registerItem(new ItemSoulBow());
+        sentientSword = registerItem(new ItemSentientSword());
+        sentientBow = registerItem(new ItemSentientBow());
     }
 
     public static void initRenders()
@@ -303,12 +303,12 @@ public class ModItems
         renderHelper.itemRender(soulGem, 4);
         renderHelper.itemRender(soulSnare);
 
-        renderHelper.itemRender(soulSword, 0);
-        renderHelper.itemRender(soulSword, 1);
-        renderHelper.itemRender(soulBow, 0, "ItemSoulBow");
-        renderHelper.itemRender(soulBow, 1, "ItemSoulBow_pulling_0");
-        renderHelper.itemRender(soulBow, 2, "ItemSoulBow_pulling_1");
-        renderHelper.itemRender(soulBow, 3, "ItemSoulBow_pulling_2");
+        renderHelper.itemRender(sentientSword, 0);
+        renderHelper.itemRender(sentientSword, 1);
+        renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
+        renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
+        renderHelper.itemRender(sentientBow, 2, "ItemSentientBow_pulling_1");
+        renderHelper.itemRender(sentientBow, 3, "ItemSentientBow_pulling_2");
 
     }
 

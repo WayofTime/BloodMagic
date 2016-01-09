@@ -13,19 +13,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.bloodmagic.entity.projectile.EntitySoulArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 
 @SideOnly(Side.CLIENT)
-public class RenderEntitySoulArrow extends Render<EntitySoulArrow>
+public class RenderEntitySentientArrow extends Render<EntitySentientArrow>
 {
     private static final ResourceLocation arrowTextures = new ResourceLocation("bloodmagic:textures/entities/soulArrow.png");
 
-    public RenderEntitySoulArrow(RenderManager renderManagerIn)
+    public RenderEntitySentientArrow(RenderManager renderManagerIn)
     {
         super(renderManagerIn);
     }
 
-    public void doRender(EntitySoulArrow entity, double x, double y, double z, float entityYaw, float partialTicks)
+    public void doRender(EntitySentientArrow entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         this.bindEntityTexture(entity);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -93,7 +93,7 @@ public class RenderEntitySoulArrow extends Render<EntitySoulArrow>
      * Returns the location of an entity's texture. Doesn't seem to be called
      * unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(EntitySoulArrow entity)
+    protected ResourceLocation getEntityTexture(EntitySentientArrow entity)
     {
         return arrowTextures;
     }

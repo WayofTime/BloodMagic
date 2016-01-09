@@ -12,7 +12,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class SoulForgeRecipe
+public class TartaricForgeRecipe
 {
     protected ItemStack output = null;
     protected ArrayList<Object> input = new ArrayList<Object>();
@@ -21,17 +21,17 @@ public class SoulForgeRecipe
     @Getter
     protected double soulsDrained;
 
-    public SoulForgeRecipe(Block result, double minSouls, double drain, Object... recipe)
+    public TartaricForgeRecipe(Block result, double minSouls, double drain, Object... recipe)
     {
         this(new ItemStack(result), minSouls, drain, recipe);
     }
 
-    public SoulForgeRecipe(Item result, double minSouls, double drain, Object... recipe)
+    public TartaricForgeRecipe(Item result, double minSouls, double drain, Object... recipe)
     {
         this(new ItemStack(result), minSouls, drain, recipe);
     }
 
-    public SoulForgeRecipe(ItemStack result, double minSouls, double drain, Object... recipe)
+    public TartaricForgeRecipe(ItemStack result, double minSouls, double drain, Object... recipe)
     {
         output = result.copy();
         this.minimumSouls = minSouls;

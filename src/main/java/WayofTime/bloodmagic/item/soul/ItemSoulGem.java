@@ -11,12 +11,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.ISoul;
-import WayofTime.bloodmagic.api.soul.ISoulGem;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemSoulGem extends Item implements ISoulGem
+public class ItemSoulGem extends Item implements IDemonWillGem
 {
     public static String[] names = { "petty", "lesser", "common", "greater", "grand" };
 
@@ -49,7 +49,7 @@ public class ItemSoulGem extends Item implements ISoulGem
         for (int i = 0; i < names.length; i++)
         {
             ItemStack stack = new ItemStack(this, 1, i);
-            this.setSouls(stack, this.getMaxSouls(stack));
+            this.setWill(stack, this.getMaxWill(stack));
             list.add(stack);
         }
     }
@@ -59,26 +59,26 @@ public class ItemSoulGem extends Item implements ISoulGem
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.soulGem." + names[stack.getItemDamage()]));
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.souls", getSouls(stack)));
+        tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
-    public ItemStack fillSoulGem(ItemStack soulGemStack, ItemStack soulStack)
+    public ItemStack fillDemonWillGem(ItemStack soulGemStack, ItemStack soulStack)
     {
-        if (soulStack != null && soulStack.getItem() instanceof ISoul)
+        if (soulStack != null && soulStack.getItem() instanceof IDemonWill)
         {
-            ISoul soul = (ISoul) soulStack.getItem();
-            double soulsLeft = getSouls(soulGemStack);
+            IDemonWill soul = (IDemonWill) soulStack.getItem();
+            double soulsLeft = getWill(soulGemStack);
 
-            if (soulsLeft < getMaxSouls(soulGemStack))
+            if (soulsLeft < getMaxWill(soulGemStack))
             {
-                double newSoulsLeft = Math.min(soulsLeft + soul.getSouls(soulStack), getMaxSouls(soulGemStack));
-                soul.drainSouls(soulStack, newSoulsLeft - soulsLeft);
+                double newSoulsLeft = Math.min(soulsLeft + soul.getWill(soulStack), getMaxWill(soulGemStack));
+                soul.drainWill(soulStack, newSoulsLeft - soulsLeft);
 
-                setSouls(soulGemStack, newSoulsLeft);
-                if (soul.getSouls(soulStack) <= 0)
+                setWill(soulGemStack, newSoulsLeft);
+                if (soul.getWill(soulStack) <= 0)
                 {
                     return null;
                 }
@@ -89,7 +89,7 @@ public class ItemSoulGem extends Item implements ISoulGem
     }
 
     @Override
-    public double getSouls(ItemStack soulGemStack)
+    public double getWill(ItemStack soulGemStack)
     {
         NBTHelper.checkNBT(soulGemStack);
 
@@ -99,7 +99,7 @@ public class ItemSoulGem extends Item implements ISoulGem
     }
 
     @Override
-    public void setSouls(ItemStack soulGemStack, double souls)
+    public void setWill(ItemStack soulGemStack, double souls)
     {
         NBTHelper.checkNBT(soulGemStack);
 
@@ -109,18 +109,18 @@ public class ItemSoulGem extends Item implements ISoulGem
     }
 
     @Override
-    public double drainSouls(ItemStack soulGemStack, double drainAmount)
+    public double drainWill(ItemStack soulGemStack, double drainAmount)
     {
-        double souls = getSouls(soulGemStack);
+        double souls = getWill(soulGemStack);
 
         double soulsDrained = Math.min(drainAmount, souls);
-        setSouls(soulGemStack, souls - soulsDrained);
+        setWill(soulGemStack, souls - soulsDrained);
 
         return soulsDrained;
     }
 
     @Override
-    public int getMaxSouls(ItemStack soulGemStack)
+    public int getMaxWill(ItemStack soulGemStack)
     {
         switch (soulGemStack.getMetadata())
         {

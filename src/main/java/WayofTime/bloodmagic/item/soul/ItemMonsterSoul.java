@@ -11,11 +11,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.ISoul;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemMonsterSoul extends Item implements ISoul
+public class ItemMonsterSoul extends Item implements IDemonWill
 {
     public static String[] names = { "base" };
 
@@ -47,13 +47,13 @@ public class ItemMonsterSoul extends Item implements ISoul
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.souls", getSouls(stack)));
+        tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
-    public double getSouls(ItemStack soulStack)
+    public double getWill(ItemStack soulStack)
     {
         NBTHelper.checkNBT(soulStack);
 
@@ -63,7 +63,7 @@ public class ItemMonsterSoul extends Item implements ISoul
     }
 
     @Override
-    public void setSouls(ItemStack soulStack, double souls)
+    public void setWill(ItemStack soulStack, double souls)
     {
         NBTHelper.checkNBT(soulStack);
 
@@ -73,21 +73,21 @@ public class ItemMonsterSoul extends Item implements ISoul
     }
 
     @Override
-    public double drainSouls(ItemStack soulStack, double drainAmount)
+    public double drainWill(ItemStack soulStack, double drainAmount)
     {
-        double souls = getSouls(soulStack);
+        double souls = getWill(soulStack);
 
         double soulsDrained = Math.min(drainAmount, souls);
-        setSouls(soulStack, souls - soulsDrained);
+        setWill(soulStack, souls - soulsDrained);
 
         return soulsDrained;
     }
 
     @Override
-    public ItemStack createSoul(int meta, double number)
+    public ItemStack createWill(int meta, double number)
     {
         ItemStack soulStack = new ItemStack(this, 1, meta);
-        setSouls(soulStack, number);
+        setWill(soulStack, number);
         return soulStack;
     }
 }

@@ -7,26 +7,26 @@ import lombok.Getter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.recipe.SoulForgeRecipe;
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 
-public class SoulForgeRecipeRegistry
+public class TartaricForgeRecipeRegistry
 {
     @Getter
-    private static List<SoulForgeRecipe> recipeList = new ArrayList<SoulForgeRecipe>();
+    private static List<TartaricForgeRecipe> recipeList = new ArrayList<TartaricForgeRecipe>();
 
-    public static void registerRecipe(SoulForgeRecipe recipe)
+    public static void registerRecipe(TartaricForgeRecipe recipe)
     {
         recipeList.add(recipe);
     }
 
     public static void registerRecipe(ItemStack outputStack, double minimulSouls, double drain, Object... objects)
     {
-        registerRecipe(new SoulForgeRecipe(outputStack, minimulSouls, drain, objects));
+        registerRecipe(new TartaricForgeRecipe(outputStack, minimulSouls, drain, objects));
     }
 
-    public static SoulForgeRecipe getMatchingRecipe(List<ItemStack> itemList, World world, BlockPos pos)
+    public static TartaricForgeRecipe getMatchingRecipe(List<ItemStack> itemList, World world, BlockPos pos)
     {
-        for (SoulForgeRecipe recipe : recipeList)
+        for (TartaricForgeRecipe recipe : recipeList)
         {
             if (recipe.matches(itemList, world, pos))
             {

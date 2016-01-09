@@ -17,7 +17,7 @@ import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.api.registry.SoulForgeRecipeRegistry;
+import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
@@ -151,21 +151,21 @@ public class ModRecipes
 
     public static void addSoulForgeRecipes()
     {
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 1), 60, 20, new ItemStack(ModItems.soulGem), "gemDiamond", "blockRedstone", "blockLapis");
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 2), 240, 50, new ItemStack(ModItems.soulGem, 1, 1), "gemDiamond", "blockGold", new ItemStack(ModItems.slate, 1, 2));
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulSword), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.iron_sword));
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulBow), 70, 0, new ItemStack(Items.bow), new ItemStack(ModItems.soulGem, 1, 1), Items.string, Items.string);
-        SoulForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.arcaneAshes), 0, 0, "dustRedstone", "dyeWhite", new ItemStack(Items.gunpowder), Items.coal);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_WATER), 10, 3, "sugar", new ItemStack(Items.water_bucket), new ItemStack(Items.water_bucket));
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_LAVA), 32, 10, Items.lava_bucket, "dustRedstone", "cobblestone", "blockCoal");
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_VOID), 64, 10, Items.bucket, Items.string, Items.string, Items.gunpowder);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), 128, 20, "treeSapling", "treeSapling", Items.reeds, Items.sugar);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AIR), 128, 20, Items.ghast_tear, Items.feather, Items.feather);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), 64, 0, ModItems.sigilDivination, "blockGlass", "blockGlass", "dustGlowstone");
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER), 128, 10, Items.iron_pickaxe, Items.iron_axe, Items.iron_shovel, Items.gunpowder);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), 300, 30, ModItems.sigilWater, ModItems.sigilAir, ModItems.sigilLava, Blocks.obsidian);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), 500, 50, ModBlocks.teleposer, Items.water_bucket, Items.lava_bucket, Items.blaze_rod);
-        SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.gunpowder);
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 1), 60, 20, new ItemStack(ModItems.soulGem), "gemDiamond", "blockRedstone", "blockLapis");
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 2), 240, 50, new ItemStack(ModItems.soulGem, 1, 1), "gemDiamond", "blockGold", new ItemStack(ModItems.slate, 1, 2));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientSword), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.iron_sword));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientBow), 70, 0, new ItemStack(Items.bow), new ItemStack(ModItems.soulGem, 1, 1), Items.string, Items.string);
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.arcaneAshes), 0, 0, "dustRedstone", "dyeWhite", new ItemStack(Items.gunpowder), Items.coal);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_WATER), 10, 3, "sugar", new ItemStack(Items.water_bucket), new ItemStack(Items.water_bucket));
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_LAVA), 32, 10, Items.lava_bucket, "dustRedstone", "cobblestone", "blockCoal");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_VOID), 64, 10, Items.bucket, Items.string, Items.string, Items.gunpowder);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_GROWTH), 128, 20, "treeSapling", "treeSapling", Items.reeds, Items.sugar);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AIR), 128, 20, Items.ghast_tear, Items.feather, Items.feather);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SIGHT), 64, 0, ModItems.sigilDivination, "blockGlass", "blockGlass", "dustGlowstone");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_FASTMINER), 128, 10, Items.iron_pickaxe, Items.iron_axe, Items.iron_shovel, Items.gunpowder);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), 300, 30, ModItems.sigilWater, ModItems.sigilAir, ModItems.sigilLava, Blocks.obsidian);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), 500, 50, ModBlocks.teleposer, Items.water_bucket, Items.lava_bucket, Items.blaze_rod);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.gunpowder);
     }
 }

@@ -10,9 +10,9 @@ import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
-import WayofTime.bloodmagic.compat.jei.forge.SoulForgeRecipeCategory;
-import WayofTime.bloodmagic.compat.jei.forge.SoulForgeRecipeHandler;
-import WayofTime.bloodmagic.compat.jei.forge.SoulForgeRecipeMaker;
+import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
+import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
+import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
@@ -26,24 +26,14 @@ public class BloodMagicPlugin implements IModPlugin
     @Override
     public void register(IModRegistry registry)
     {
-        registry.addRecipeCategories(
-                new AltarRecipeCategory(),
-                new BindingRecipeCategory(),
-                new AlchemyArrayCraftingCategory(),
-                new SoulForgeRecipeCategory()
-        );
+        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory(), new TartaricForgeRecipeCategory());
 
-        registry.addRecipeHandlers(
-                new AltarRecipeHandler(),
-                new BindingRecipeHandler(),
-                new AlchemyArrayCraftingRecipeHandler(),
-                new SoulForgeRecipeHandler()
-        );
+        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler());
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
         registry.addRecipes(AlchemyArrayCraftingRecipeMaker.getRecipes());
-        registry.addRecipes(SoulForgeRecipeMaker.getRecipes());
+        registry.addRecipes(TartaricForgeRecipeMaker.getRecipes());
 
         registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
 

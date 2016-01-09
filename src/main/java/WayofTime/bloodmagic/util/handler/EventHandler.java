@@ -36,12 +36,12 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.soul.ISoul;
-import WayofTime.bloodmagic.api.soul.ISoulWeapon;
-import WayofTime.bloodmagic.api.soul.PlayerSoulHandler;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.entity.projectile.EntitySoulArrow;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -272,10 +272,10 @@ public class EventHandler
             }
         }
 
-        if (sourceEntity instanceof EntitySoulArrow)
+        if (sourceEntity instanceof EntitySentientArrow)
         {
             // Soul Weapon handling
-            ((EntitySoulArrow) sourceEntity).reimbursePlayer();
+            ((EntitySentientArrow) sourceEntity).reimbursePlayer();
         }
 
         if (sourceEntity instanceof EntityPlayer)
@@ -414,7 +414,7 @@ public class EventHandler
             int lvl = eff.getAmplifier();
 
             double amountOfSouls = random.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
-            ItemStack soulStack = ((ISoul) ModItems.monsterSoul).createSoul(0, amountOfSouls);
+            ItemStack soulStack = ((IDemonWill) ModItems.monsterSoul).createWill(0, amountOfSouls);
             event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
 
@@ -422,9 +422,9 @@ public class EventHandler
         {
             EntityLivingBase attackingEntity = (EntityLivingBase) entity;
             ItemStack heldStack = attackingEntity.getHeldItem();
-            if (heldStack != null && heldStack.getItem() instanceof ISoulWeapon)
+            if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon)
             {
-                List<ItemStack> droppedSouls = ((ISoulWeapon) heldStack.getItem()).getRandomSoulDrop(attackedEntity, attackingEntity, heldStack, event.lootingLevel);
+                List<ItemStack> droppedSouls = ((IDemonWillWeapon) heldStack.getItem()).getRandomDemonWillDrop(attackedEntity, attackingEntity, heldStack, event.lootingLevel);
                 if (!droppedSouls.isEmpty())
                 {
                     for (ItemStack soulStack : droppedSouls)
@@ -440,13 +440,13 @@ public class EventHandler
     public void onItemPickup(EntityItemPickupEvent event)
     {
         ItemStack stack = event.item.getEntityItem();
-        if (stack != null && stack.getItem() instanceof ISoul)
+        if (stack != null && stack.getItem() instanceof IDemonWill)
         {
             EntityPlayer player = event.entityPlayer;
 
-            ItemStack remainder = PlayerSoulHandler.addSouls(player, stack);
+            ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-            if (remainder == null || ((ISoul) stack.getItem()).getSouls(stack) < 0.0001)
+            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001)
             {
                 stack.stackSize = 0;
                 event.setResult(Result.ALLOW);

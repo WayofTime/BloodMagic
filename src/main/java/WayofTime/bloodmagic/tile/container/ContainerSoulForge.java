@@ -6,8 +6,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.api.soul.ISoul;
-import WayofTime.bloodmagic.api.soul.ISoulGem;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.tile.TileSoulForge;
 
 public class ContainerSoulForge extends Container
@@ -59,7 +59,7 @@ public class ContainerSoulForge extends Container
                 slot.onSlotChange(itemstack1, itemstack);
             } else if (index > 5)
             {
-                if (itemstack1.getItem() instanceof ISoul || itemstack1.getItem() instanceof ISoulGem)
+                if (itemstack1.getItem() instanceof IDemonWill || itemstack1.getItem() instanceof IDemonWillGem)
                 {
                     if (!this.mergeItemStack(itemstack1, 4, 5, false))
                     {
@@ -109,7 +109,7 @@ public class ContainerSoulForge extends Container
         @Override
         public boolean isItemValid(ItemStack itemStack)
         {
-            return itemStack.getItem() instanceof ISoulGem || itemStack.getItem() instanceof ISoul;
+            return itemStack.getItem() instanceof IDemonWillGem || itemStack.getItem() instanceof IDemonWill;
         }
     }
 

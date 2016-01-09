@@ -76,7 +76,7 @@ item.BloodMagic.baseComponent.reagentSight.name=Sight Reagent
 item.BloodMagic.baseComponent.reagentBinding.name=Binding Reagent
 item.BloodMagic.baseComponent.reagentSuppression.name=Suppression Reagent
 
-item.BloodMagic.monsterSoul.base.name=Monster Soul
+item.BloodMagic.monsterSoul.base.name=Demonic Will
 
 item.BloodMagic.sigil.air.name=Air Sigil
 item.BloodMagic.sigil.bloodLight.name=Sigil of the Blood Lamp
@@ -109,14 +109,14 @@ item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
 
 item.BloodMagic.arcaneAshes.name=Arcane Ashes
 
-item.BloodMagic.soul.sword.name=Soul Sword
-item.BloodMagic.soulGem.petty.name=Petty Soul Gem
-item.BloodMagic.soulGem.lesser.name=Lesser Soul Gem
-item.BloodMagic.soulGem.common.name=Common Soul Gem
-item.BloodMagic.soulGem.greater.name=Greater Soul Gem
-item.BloodMagic.soulGem.grand.name=Grand Soul Gem
-item.BloodMagic.soulSnare.base.name=Rudimentary Soul Snare
-item.BloodMagic.soulBow.name=Soul Bow
+item.BloodMagic.sentientSword.name=Sentient Sword
+item.BloodMagic.soulGem.petty.name=Petty Tartaric Gem
+item.BloodMagic.soulGem.lesser.name=Lesser Tartaric Gem
+item.BloodMagic.soulGem.common.name=Common Tartaric Gem
+item.BloodMagic.soulGem.greater.name=Greater Tartaric Gem
+item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
+item.BloodMagic.soulSnare.base.name=Rudimentary Snare
+item.BloodMagic.sentientBow.name=Sentient Bow
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -155,7 +155,7 @@ tile.BloodMagic.spectralBlock.name=Spectral Block
 tile.BloodMagic.phantomBlock.name=Phantom Block
 
 tile.BloodMagic.teleposer.name=Teleposer
-tile.BloodMagic.soulForge.name=Soul Forge
+tile.BloodMagic.soulForge.name=Hellfire Forge
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
@@ -243,15 +243,15 @@ tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
 tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
 tooltip.BloodMagic.livingArmour.upgrade.level=(Level %d)
 
-tooltip.BloodMagic.souls=Soul Quality: %1$,.2f
-tooltip.BloodMagic.soul.sword.desc=Uses souls to unleash its full potential.
+tooltip.BloodMagic.will=Will Quality: %1$,.2f
+tooltip.BloodMagic.sentientSword.desc=Uses souls to unleash its full potential.
 tooltip.BloodMagic.soulGem.petty=A gem used to contain a few souls
 tooltip.BloodMagic.soulGem.lesser=A gem used to contain more souls
 tooltip.BloodMagic.soulGem.common=A gem used to contain many souls
 tooltip.BloodMagic.soulGem.greater=A gem used to contain a great amount of souls
 tooltip.BloodMagic.soulGem.grand=A gem that can hold a LOT of souls
 tooltip.BloodMagic.soulSnare.desc1=Throw at a monster and then
-tooltip.BloodMagic.soulSnare.desc2=kill them to get a monster soul
+tooltip.BloodMagic.soulSnare.desc2=kill them to obtain their demonic will
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
