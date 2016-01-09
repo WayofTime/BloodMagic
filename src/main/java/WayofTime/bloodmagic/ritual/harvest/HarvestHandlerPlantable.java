@@ -3,7 +3,7 @@ package WayofTime.bloodmagic.ritual.harvest;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
-import net.minecraft.block.BlockCrops;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -55,7 +55,8 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
         if (foundSeed)
         {
-            world.setBlockState(pos, blockStack.getState().withProperty(BlockCrops.AGE, 0));
+            world.setBlockState(pos, blockStack.getBlock().getDefaultState());
+            world.playAuxSFX(2001, pos, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
             for (ItemStack stack : drops)
             {
                 if (!world.isRemote)
