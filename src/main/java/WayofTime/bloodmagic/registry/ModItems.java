@@ -47,6 +47,7 @@ import WayofTime.bloodmagic.item.sigil.ItemSigilVoid;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWater;
 import WayofTime.bloodmagic.item.sigil.ItemSigilWhirlwind;
 import WayofTime.bloodmagic.item.soul.ItemMonsterSoul;
+import WayofTime.bloodmagic.item.soul.ItemSoulBow;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
 import WayofTime.bloodmagic.item.soul.ItemSoulSword;
@@ -117,6 +118,7 @@ public class ModItems
     public static Item soulSnare;
 
     public static Item soulSword;
+    public static Item soulBow;
 
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 0, 7, 8, 50);
@@ -194,6 +196,7 @@ public class ModItems
         soulSnare = registerItem(new ItemSoulSnare());
 
         soulSword = registerItem(new ItemSoulSword());
+        soulBow = registerItem(new ItemSoulBow());
     }
 
     public static void initRenders()
@@ -302,6 +305,11 @@ public class ModItems
 
         renderHelper.itemRender(soulSword, 0);
         renderHelper.itemRender(soulSword, 1);
+        renderHelper.itemRender(soulBow, 0, "ItemSoulBow");
+        renderHelper.itemRender(soulBow, 1, "ItemSoulBow_pulling_0");
+        renderHelper.itemRender(soulBow, 2, "ItemSoulBow_pulling_1");
+        renderHelper.itemRender(soulBow, 3, "ItemSoulBow_pulling_2");
+
     }
 
     private static Item registerItem(Item item, String name)

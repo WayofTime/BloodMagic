@@ -166,8 +166,5 @@ public class ModRecipes
         SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), 300, 30, ModItems.sigilWater, ModItems.sigilAir, ModItems.sigilLava, Blocks.obsidian);
         SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), 500, 50, ModBlocks.teleposer, Items.water_bucket, Items.lava_bucket, Items.blaze_rod);
         SoulForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.gunpowder);
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), "wtl", "wrl", "wol", 't', new ItemStack(ModBlocks.teleposer), 'w', new ItemStack(Items.water_bucket), 'l', new ItemStack(Items.lava_bucket), 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
-
     }
 }

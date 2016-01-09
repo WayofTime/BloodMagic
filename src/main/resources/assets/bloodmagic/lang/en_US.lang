@@ -116,6 +116,7 @@ item.BloodMagic.soulGem.common.name=Common Soul Gem
 item.BloodMagic.soulGem.greater.name=Greater Soul Gem
 item.BloodMagic.soulGem.grand.name=Grand Soul Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Soul Snare
+item.BloodMagic.soulBow.name=Soul Bow
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
