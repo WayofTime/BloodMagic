@@ -13,6 +13,13 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 
+/**
+ * Harvest handler for standard plantable crops such as
+ * Wheat, Potatoes, and Netherwart.
+ * <br>
+ * Register a new crop for this handler with
+ * {@link HarvestRegistry#registerStandardCrop(Block, int)}
+ */
 public class HarvestHandlerPlantable implements IHarvestHandler
 {
     public HarvestHandlerPlantable()
@@ -26,10 +33,10 @@ public class HarvestHandlerPlantable implements IHarvestHandler
     @Override
     public boolean harvestAndPlant(World world, BlockPos pos, BlockStack blockStack)
     {
-        if (!HarvestRegistry.getValidBlocks().containsKey(blockStack.getBlock()))
+        if (!HarvestRegistry.getStandardCrops().containsKey(blockStack.getBlock()))
             return false;
 
-        int matureMeta = HarvestRegistry.getValidBlocks().get(blockStack.getBlock());
+        int matureMeta = HarvestRegistry.getStandardCrops().get(blockStack.getBlock());
 
         if(blockStack.getMeta() < matureMeta)
             return false;

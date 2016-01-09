@@ -2,17 +2,23 @@ package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
+import lombok.Getter;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HarvestRegistry
 {
+    @Getter
     private static List<IHarvestHandler> handlerList = new ArrayList<IHarvestHandler>();
-    private static Map<Block, Integer> validBlocks = new HashMap<Block, Integer>();
+    @Getter
+    private static Map<Block, Integer> standardCrops = new HashMap<Block, Integer>();
+    @Getter
+    private static Set<BlockStack> tallCrops = new HashSet<BlockStack>();
+    @Getter
+    private static Map<BlockStack, BlockStack> stemCrops = new HashMap<BlockStack, BlockStack>();
+    @Getter
     private static Map<BlockStack, Integer> amplifierMap = new HashMap<BlockStack, Integer>();
 
     /**
@@ -40,8 +46,43 @@ public class HarvestRegistry
      */
     public static void registerStandardCrop(Block crop, int matureMeta)
     {
-        if (!validBlocks.containsKey(crop))
-            validBlocks.put(crop, matureMeta);
+        if (!standardCrops.containsKey(crop))
+            standardCrops.put(crop, matureMeta);
+    }
+
+    /**
+     * Registers a tall crop (Sugar Cane and Cactus) for the
+     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall} handler
+     * to handle.
+     *
+     * @param crop
+     *          - The crop block to handle.
+     */
+    public static void registerTallCrop(BlockStack crop)
+    {
+        if (!tallCrops.contains(crop))
+            tallCrops.add(crop);
+    }
+
+    /**
+     * Registers a stem crop (Melon and Pumpkin) for the
+     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem} handler
+     * to handle.
+     *
+     * Use {@link net.minecraftforge.oredict.OreDictionary#WILDCARD_VALUE} to accept
+     * any meta for the crop block.
+     *
+     * The Stem must be instanceof {@link BlockStem}
+     *
+     * @param crop
+     *          - The crop block to handle.
+     * @param stem
+     *          - The stem of the crop
+     */
+    public static void registerStemCrop(BlockStack crop, BlockStack stem)
+    {
+        if (!stemCrops.containsKey(crop) && stem.getBlock() instanceof BlockStem)
+            stemCrops.put(stem, crop);
     }
 
     /**
@@ -56,17 +97,5 @@ public class HarvestRegistry
     {
         if (!amplifierMap.containsKey(blockStack))
             amplifierMap.put(blockStack, range);
-    }
-
-    public static List<IHarvestHandler> getHandlerList() {
-        return handlerList;
-    }
-
-    public static Map<Block, Integer> getValidBlocks() {
-        return validBlocks;
-    }
-
-    public static Map<BlockStack, Integer> getAmplifierMap() {
-        return amplifierMap;
     }
 }

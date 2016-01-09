@@ -7,12 +7,23 @@ import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
+/**
+ * This ritual uses registered {@link IHarvestHandler}'s to
+ * harvest blocks.
+ *
+ * To register a new Handler for this ritual use
+ * {@link HarvestRegistry#registerHandler(IHarvestHandler)}
+ *
+ * This ritual includes a way to change the range based on what block
+ * is above the MasterRitualStone. You can use
+ * {@link HarvestRegistry#registerRangeAmplifier(BlockStack, int)}
+ * to register a new amplifier.
+ */
 public class RitualHarvest extends Ritual
 {
     public static final String HARVEST_RANGE = "harvestRange";
@@ -20,10 +31,6 @@ public class RitualHarvest extends Ritual
     public RitualHarvest()
     {
         super("ritualHarvest", 0, 20000, "ritual." + Constants.Mod.MODID + ".harvestRitual");
-
-        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.diamond_block), 15);
-        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.gold_block), 10);
-        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.iron_block), 6);
     }
 
     @Override

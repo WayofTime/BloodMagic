@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
@@ -7,7 +8,10 @@ import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
+import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
+import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall;
 import WayofTime.bloodmagic.ritual.imperfect.*;
+import net.minecraft.init.Blocks;
 
 public class ModRituals
 {
@@ -63,6 +67,12 @@ public class ModRituals
 
     public static void initHarvestHandlers()
     {
+        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.diamond_block), 15);
+        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.gold_block), 10);
+        HarvestRegistry.registerRangeAmplifier(new BlockStack(Blocks.iron_block), 6);
+
         HarvestRegistry.registerHandler(new HarvestHandlerPlantable());
+        HarvestRegistry.registerHandler(new HarvestHandlerTall());
+        HarvestRegistry.registerHandler(new HarvestHandlerStem());
     }
 }
