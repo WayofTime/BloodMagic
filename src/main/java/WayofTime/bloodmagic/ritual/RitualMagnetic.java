@@ -42,11 +42,14 @@ public class RitualMagnetic extends Ritual
 
     public static boolean isBlockOre(Block block, int meta)
     {
-        if (block == null || Item.getItemFromBlock(block) == null)
+        if (block == null)
             return false;
 
         if (block instanceof BlockOre || block instanceof BlockRedstoneOre)
             return true;
+
+        if (Item.getItemFromBlock(block) == null)
+            return false;
 
         BlockStack type = new BlockStack(block, meta);
         Boolean result = oreBlockCache.get(type);
