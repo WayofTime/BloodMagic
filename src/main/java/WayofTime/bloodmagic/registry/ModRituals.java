@@ -25,6 +25,7 @@ public class ModRituals
     public static Ritual animalGrowthRitual;
     public static Ritual harvestRitual;
     public static Ritual magneticRitual;
+    public static Ritual crushingRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -54,6 +55,8 @@ public class ModRituals
         initHarvestHandlers();
         magneticRitual = new RitualMagnetic();
         RitualRegistry.registerRitual(magneticRitual, magneticRitual.getName());
+        crushingRitual = new RitualCrushing();
+        RitualRegistry.registerRitual(crushingRitual, crushingRitual.getName());
     }
 
     public static void initImperfectRituals()

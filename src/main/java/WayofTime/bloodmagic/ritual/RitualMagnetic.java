@@ -36,7 +36,7 @@ public class RitualMagnetic extends Ritual
 
     public RitualMagnetic()
     {
-        super("ritualMagnetic", 0, 10000, "ritual." + Constants.Mod.MODID + ".magneticRitual");
+        super("ritualMagnetic", 0, 5000, "ritual." + Constants.Mod.MODID + ".magneticRitual");
         addBlockRange(PLACEMENT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 1, -1), 3));
     }
 
@@ -189,7 +189,7 @@ public class RitualMagnetic extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 25;
+        return 50;
     }
 
     @Override
