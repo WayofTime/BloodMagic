@@ -19,6 +19,7 @@ public class Constants
         public static final String ORB_TIER = "orbTier";
         public static final String CURRENT_ESSENCE = "currentEssence";
         public static final String CURRENT_RITUAL = "currentRitual";
+        public static final String CURRENT_RITUAL_TAG = "currentRitualTag";
         public static final String IS_RUNNING = "isRunning";
         public static final String RUNTIME = "runtime";
         public static final String DIRECTION = "direction";

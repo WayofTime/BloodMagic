@@ -62,6 +62,14 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         super.readFromNBT(tag);
         owner = tag.getString(Constants.NBT.OWNER_UUID);
         currentRitual = RitualRegistry.getRitualForId(tag.getString(Constants.NBT.CURRENT_RITUAL));
+        if (currentRitual != null)
+        {
+            NBTTagCompound ritualTag = tag.getCompoundTag(Constants.NBT.CURRENT_RITUAL_TAG);
+            if (ritualTag != null)
+            {
+                currentRitual.readFromNBT(ritualTag);
+            }
+        }
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
@@ -74,6 +82,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         String ritualId = RitualRegistry.getIdForRitual(getCurrentRitual());
         tag.setString(Constants.NBT.OWNER_UUID, Strings.isNullOrEmpty(getOwner()) ? "" : getOwner());
         tag.setString(Constants.NBT.CURRENT_RITUAL, Strings.isNullOrEmpty(ritualId) ? "" : ritualId);
+        if (currentRitual != null)
+        {
+            NBTTagCompound ritualTag = new NBTTagCompound();
+            currentRitual.writeToNBT(ritualTag);
+            tag.setTag(Constants.NBT.CURRENT_RITUAL_TAG, ritualTag);
+        }
         tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());

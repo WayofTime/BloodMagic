@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
@@ -43,6 +44,16 @@ public abstract class Ritual
     public Ritual(String name, int crystalLevel, int activationCost, String unlocalizedName)
     {
         this(name, crystalLevel, activationCost, null, unlocalizedName);
+    }
+
+    public void readFromNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    public void writeToNBT(NBTTagCompound tag)
+    {
+
     }
 
     /**
