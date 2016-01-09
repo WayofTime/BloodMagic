@@ -11,15 +11,16 @@ Version 2.0.0-4
 	- Harvest ritual
 	- Magnetism ritual
 	- Crushing ritual
+	- Full Stomach ritual
 	
-- Added parts for the new Soul System
-	- Added the Monster Soul
-	- Added the Soul Sword, which will be powered by consuming souls
-	- Added a Lesser Soul Gem in order to hold onto more souls
+- Added parts for the new Demon Will System
+	- Added the Demon Will item
+	- Added the Sentient Sword, which will be powered by consuming demon will
+	- Added a Lesser Tartaric Gem in order to hold onto more will
 	- SSSSSSSSoooooooouuuuuuulllllllllsssssss
-	- Added Soul Forge block
-	- Added soul snare and recipe - has 10% chance for monster to drop its soul
-	- Added bow
+	- Added Hellfire Forge block
+	- Added rudimentary snare and recipe - has 25% chance for monster to drop its soul
+	- Added Sentient Bow
 	- Added Sentient Armour
 	
 - Fixed binding of togglable sigils

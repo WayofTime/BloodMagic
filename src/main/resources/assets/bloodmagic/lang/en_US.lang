@@ -264,6 +264,8 @@ ritual.BloodMagic.featheredKnifeRitual=Ritual of the Feathered Knife
 ritual.BloodMagic.regenerationRitual=Ritual of Regeneration
 ritual.BloodMagic.harvestRitual=Reap of the Harvest Moon
 ritual.BloodMagic.magneticRitual=Ritual of Magnetism
+ritual.BloodMagic.crushingRitual=Ritual of the Crusher
+ritual.BloodMagic.fullStomachRitual=Ritual of the Satiated Stomach
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
