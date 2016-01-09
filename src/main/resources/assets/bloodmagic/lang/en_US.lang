@@ -257,13 +257,16 @@ ritual.BloodMagic.jumpRitual=Ritual of the High Jump
 ritual.BloodMagic.wellOfSufferingRitual=Well of Suffering
 ritual.BloodMagic.featheredKnifeRitual=Ritual of the Feathered Knife
 ritual.BloodMagic.regenerationRitual=Ritual of Regeneration
+ritual.BloodMagic.harvestRitual=Reap of the Harvest Moon
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
 chat.BloodMagic.altarMaker.building=Building a Tier %d Altar
 chat.BloodMagic.altarMaker.destroy=Destroyed a Tier %d Altar
 chat.BloodMagic.altarMaker.creativeOnly=This is a creative only item.
+
 chat.BloodMagic.damageSource=%s's soul became too weak
+
 chat.BloodMagic.ritual.weak=You feel a push, but are too weak to perform this ritual.
 chat.BloodMagic.ritual.prevent=The ritual is actively resisting you!
 chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
@@ -277,6 +280,8 @@ jei.BloodMagic.recipe.binding=Binding Ritual
 jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
+jei.BloodMagic.recipe.minimumSouls=Minimum: %d Souls
+jei.BloodMagic.recipe.soulsDrained=Drained: %d Souls
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
 

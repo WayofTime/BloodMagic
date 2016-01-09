@@ -10,6 +10,9 @@ import WayofTime.bloodmagic.compat.jei.altar.AltarRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
+import WayofTime.bloodmagic.compat.jei.forge.SoulForgeRecipeCategory;
+import WayofTime.bloodmagic.compat.jei.forge.SoulForgeRecipeHandler;
+import WayofTime.bloodmagic.compat.jei.forge.SoulForgeRecipeMaker;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
@@ -23,27 +26,39 @@ public class BloodMagicPlugin implements IModPlugin
     @Override
     public void register(IModRegistry registry)
     {
-        registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory());
+        registry.addRecipeCategories(
+                new AltarRecipeCategory(),
+                new BindingRecipeCategory(),
+                new AlchemyArrayCraftingCategory(),
+                new SoulForgeRecipeCategory()
+        );
 
-        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler());
+        registry.addRecipeHandlers(
+                new AltarRecipeHandler(),
+                new BindingRecipeHandler(),
+                new AlchemyArrayCraftingRecipeHandler(),
+                new SoulForgeRecipeHandler()
+        );
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
         registry.addRecipes(AlchemyArrayCraftingRecipeMaker.getRecipes());
+        registry.addRecipes(SoulForgeRecipeMaker.getRecipes());
 
         registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
+
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
+
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.SOULS);
     }
 
     @Override
     public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers)
     {
         jeiHelper = jeiHelpers;
-
-        jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
-        jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
-        jeiHelpers.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
-
-        jeiHelpers.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
     }
 
     @Override
