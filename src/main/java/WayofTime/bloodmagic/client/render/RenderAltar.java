@@ -105,7 +105,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
             GlStateManager.pushAttrib();
             RenderHelper.enableStandardItemLighting();
-            itemRenderer.func_181564_a(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+            itemRenderer.renderItem(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
             RenderHelper.disableStandardItemLighting();
             GlStateManager.popAttrib();
 

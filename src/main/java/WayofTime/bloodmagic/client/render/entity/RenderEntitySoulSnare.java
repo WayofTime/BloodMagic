@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.client.render.entity;
 
+import WayofTime.bloodmagic.registry.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
@@ -13,14 +15,11 @@ import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 
 public class RenderEntitySoulSnare extends Render<EntitySoulSnare>
 {
-    protected final Item field_177084_a;
-    private final RenderItem field_177083_e;
+    private final RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 
-    public RenderEntitySoulSnare(RenderManager renderManagerIn, Item p_i46137_2_, RenderItem p_i46137_3_)
+    public RenderEntitySoulSnare(RenderManager renderManagerIn)
     {
         super(renderManagerIn);
-        this.field_177084_a = p_i46137_2_;
-        this.field_177083_e = p_i46137_3_;
     }
 
     public void doRender(EntitySoulSnare entity, double x, double y, double z, float entityYaw, float partialTicks)
@@ -32,15 +31,10 @@ public class RenderEntitySoulSnare extends Render<EntitySoulSnare>
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         this.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_177083_e.func_181564_a(this.func_177082_d(entity), ItemCameraTransforms.TransformType.GROUND);
+        this.renderItem.renderItem(new ItemStack(ModItems.soulSnare), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
-    }
-
-    public ItemStack func_177082_d(EntitySoulSnare entityIn)
-    {
-        return new ItemStack(this.field_177084_a, 1, 0);
     }
 
     protected ResourceLocation getEntityTexture(EntitySoulSnare entity)
