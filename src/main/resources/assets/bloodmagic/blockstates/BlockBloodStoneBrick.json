@@ -7,14 +7,14 @@
   },
   "variants": {
     "type": {
-      "normal": {
-        "textures": {
-          "all": "bloodmagic:blocks/BloodStoneBrick"
-        }
-      },
       "large": {
         "textures": {
           "all": "bloodmagic:blocks/LargeBloodStoneBrick"
+        }
+      },
+      "normal": {
+        "textures": {
+          "all": "bloodmagic:blocks/BloodStoneBrick"
         }
       }
     }
