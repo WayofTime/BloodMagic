@@ -10,9 +10,12 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Set;
 
 public class SoulForgeRecipeCategory implements IRecipeCategory
 {
@@ -65,6 +68,7 @@ public class SoulForgeRecipeCategory implements IRecipeCategory
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
@@ -81,9 +85,9 @@ public class SoulForgeRecipeCategory implements IRecipeCategory
 
         if (recipeWrapper instanceof SoulForgeRecipeJEI) {
             SoulForgeRecipeJEI recipe = (SoulForgeRecipeJEI) recipeWrapper;
-            guiItemStacks.set(GEM_SLOT, recipe.getValidGems());
+            guiItemStacks.set(GEM_SLOT, (Set<ItemStack>) recipe.getInputs().get(1));
             craftingGridHelper.setOutput(guiItemStacks, recipe.getOutputs());
-            craftingGridHelper.setInput(guiItemStacks, recipe.getInputs(), 2, 3);
+            craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 2, 3);
         }
     }
 }

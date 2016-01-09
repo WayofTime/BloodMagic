@@ -31,9 +31,12 @@ public class SoulForgeRecipeJEI extends BlankRecipeWrapper
 
     @Override
     @Nonnull
-    public List getInputs()
+    public List<Collection> getInputs()
     {
-        return recipe.getInput();
+        ArrayList<Collection> ret = new ArrayList<Collection>();
+        ret.add(recipe.getInput());
+        ret.add(validGems);
+        return ret;
     }
 
     @Override

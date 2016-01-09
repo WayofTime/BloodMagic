@@ -32,6 +32,6 @@ public class SoulForgeRecipeHandler implements IRecipeHandler<SoulForgeRecipeJEI
     @Override
     public boolean isRecipeValid(@Nonnull SoulForgeRecipeJEI recipe)
     {
-        return recipe.getInputs().size() > 0 && recipe.getOutputs().size() > 0;
+        return recipe.getInputs().get(0).size() > 0 && recipe.getOutputs().size() > 0;
     }
 }
