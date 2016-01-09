@@ -34,7 +34,7 @@ public class EntitySoulSnare extends EntityThrowable
     {
         if (mop.entityHit != null)
         {
-            if (mop.entityHit instanceof EntityLivingBase && mop.entityHit.worldObj.rand.nextDouble() < 0.1)
+            if (mop.entityHit instanceof EntityLivingBase && mop.entityHit.worldObj.rand.nextDouble() < 0.25)
             {
                 ((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(ModPotions.soulSnare.id, 300, 0));
             }
