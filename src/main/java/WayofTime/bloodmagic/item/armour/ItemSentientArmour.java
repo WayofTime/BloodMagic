@@ -15,6 +15,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
@@ -78,6 +80,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
             if (helmet.getItem() instanceof ItemSentientArmour && leggings.getItem() instanceof ItemSentientArmour && boots.getItem() instanceof ItemSentientArmour)
             {
                 double remainder = 1; // Multiply this number by the armour upgrades for protection
+                remainder *= (1 - this.getArmourModifier(stack));
 
                 armourReduction = armourReduction + (1 - remainder) * (1 - armourReduction);
                 damageAmount *= (armourReduction);
@@ -131,14 +134,27 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot)
     {
-        return; // Armour shouldn't get damaged... for now
+        if (entity instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) entity;
+
+            double willRequired = this.getCostModifier(stack) * damage;
+            double willLeft = PlayerDemonWillHandler.getTotalDemonWill(player);
+            if (willLeft >= willRequired)
+            {
+                PlayerDemonWillHandler.consumeDemonWill(player, willRequired);
+            } else
+            {
+                this.revertArmour(player, stack);
+            }
+        }
+        return;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-
         super.addInformation(stack, player, tooltip, advanced);
     }
 
@@ -168,8 +184,38 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         {
             return;
         }
+    }
 
-        //TODO: Consume will - if the will drops to 0, return the contained item
+    public double getCostModifier(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+
+        return tag.getDouble("costModifier");
+    }
+
+    public void setCostModifier(ItemStack stack, double modifier)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("costModifier", modifier);
+    }
+
+    public double getArmourModifier(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+
+        return tag.getDouble("armourModifier");
+    }
+
+    public void setArmourModifier(ItemStack stack, double modifier)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("armourModifier", modifier);
     }
 
     @Override
@@ -230,7 +276,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         return armourStack;
     }
 
-    public static boolean convertPlayerArmour(EntityPlayer player)
+    public static boolean convertPlayerArmour(EntityPlayer player, double recurringCost, double protection)
     {
         ItemStack[] armours = player.inventory.armorInventory;
 
@@ -240,10 +286,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         ItemStack bootsStack = armours[0];
 
         {
-            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getSubstituteStack(helmetStack);
-            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.sentientArmourChest).getSubstituteStack(chestStack);
-            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.sentientArmourLegs).getSubstituteStack(leggingsStack);
-            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.sentientArmourBoots).getSubstituteStack(bootsStack);
+            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getSubstituteStack(helmetStack, recurringCost, protection);
+            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.sentientArmourChest).getSubstituteStack(chestStack, recurringCost, protection);
+            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.sentientArmourLegs).getSubstituteStack(leggingsStack, recurringCost, protection);
+            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.sentientArmourBoots).getSubstituteStack(bootsStack, recurringCost, protection);
 
             armours[3] = omegaHelmetStack;
             armours[2] = omegaChestStack;
@@ -254,11 +300,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         }
     }
 
-    public ItemStack getSubstituteStack(ItemStack previousArmour)
+    public ItemStack getSubstituteStack(ItemStack previousArmour, double recurringCost, double protection)
     {
         ItemStack newArmour = new ItemStack(this);
 
         this.setContainedArmourStack(newArmour, previousArmour);
+        this.setCostModifier(newArmour, recurringCost);
+        this.setArmourModifier(newArmour, protection);
 
         return newArmour;
     }

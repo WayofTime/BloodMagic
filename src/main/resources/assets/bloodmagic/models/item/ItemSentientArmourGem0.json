@@ -1,0 +1,11 @@
+{
+  "parent":"bloodmagic:item/ItemModelBase",
+  "textures": {
+    "layer0":"bloodmagic:items/SentientArmourGem_deactivated"
+  }
+}
+
+
+
+
+
