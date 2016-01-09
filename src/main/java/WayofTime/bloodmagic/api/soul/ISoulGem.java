@@ -24,6 +24,8 @@ public interface ISoulGem
      */
     public double getSouls(ItemStack soulGemStack);
 
+    public void setSouls(ItemStack soulGemStack, double amount);
+
     public int getMaxSouls(ItemStack soulGemStack);
 
     public double drainSouls(ItemStack stack, double drainAmount);

@@ -98,6 +98,7 @@ public class ItemSoulGem extends Item implements ISoulGem
         return tag.getDouble(Constants.NBT.SOULS);
     }
 
+    @Override
     public void setSouls(ItemStack soulGemStack, double souls)
     {
         NBTHelper.checkNBT(soulGemStack);

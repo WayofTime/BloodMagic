@@ -10,7 +10,9 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
+import WayofTime.bloodmagic.client.render.entity.SoulArrowRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -52,6 +54,7 @@ public class ClientProxy extends CommonProxy
     public void registerRenderers()
     {
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySoulArrow.class, new SoulArrowRenderFactory());
     }
 
     @Override

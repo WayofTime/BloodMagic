@@ -112,4 +112,32 @@ public class PlayerSoulHandler
 
         return soulStack;
     }
+
+    public static double addSouls(EntityPlayer player, double amount)
+    {
+        ItemStack[] inventory = player.inventory.mainInventory;
+        double remaining = amount;
+
+        for (int i = 0; i < inventory.length; i++)
+        {
+            ItemStack stack = inventory[i];
+            if (stack != null)
+            {
+                if (stack.getItem() instanceof ISoulGem)
+                {
+                    double souls = ((ISoulGem) stack.getItem()).getSouls(stack);
+                    double fill = Math.min(((ISoulGem) stack.getItem()).getMaxSouls(stack) - souls, remaining);
+                    ((ISoulGem) stack.getItem()).setSouls(stack, fill + souls);
+                    remaining -= fill;
+
+                    if (remaining <= 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return amount - remaining;
+    }
 }

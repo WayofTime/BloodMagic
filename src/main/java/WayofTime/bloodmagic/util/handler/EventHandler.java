@@ -41,6 +41,7 @@ import WayofTime.bloodmagic.api.soul.ISoulWeapon;
 import WayofTime.bloodmagic.api.soul.PlayerSoulHandler;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.entity.projectile.EntitySoulArrow;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -241,6 +242,8 @@ public class EventHandler
         {
             EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
 
+            // Living Armour handling
+
             boolean hasFullSet = true;
             for (int i = 0; i < 4; i++)
             {
@@ -269,9 +272,17 @@ public class EventHandler
             }
         }
 
+        if (sourceEntity instanceof EntitySoulArrow)
+        {
+            // Soul Weapon handling
+            ((EntitySoulArrow) sourceEntity).reimbursePlayer();
+        }
+
         if (sourceEntity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) sourceEntity;
+
+            // Living Armour handling
 
             boolean hasFullSet = true;
             for (int i = 0; i < 4; i++)
