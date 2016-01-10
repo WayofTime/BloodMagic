@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
@@ -221,12 +222,12 @@ public class ModItems
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
 
         renderHelper.itemRenderAll(bloodOrb);
-        OrbRegistry.registerOrbTexture(orbWeak, Constants.Mod.DOMAIN + "ItemBloodOrbWeak");
-        OrbRegistry.registerOrbTexture(orbApprentice, Constants.Mod.DOMAIN + "ItemBloodOrbApprentice");
-        OrbRegistry.registerOrbTexture(orbMagician, Constants.Mod.DOMAIN + "ItemBloodOrbMagician");
-        OrbRegistry.registerOrbTexture(orbMaster, Constants.Mod.DOMAIN + "ItemBloodOrbMaster");
-        OrbRegistry.registerOrbTexture(orbArchmage, Constants.Mod.DOMAIN + "ItemBloodOrbArchmage");
-        OrbRegistry.registerOrbTexture(orbTranscendent, Constants.Mod.DOMAIN + "ItemBloodOrbTranscendent");
+        OrbRegistry.registerOrbTexture(orbWeak, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbWeak"));
+        OrbRegistry.registerOrbTexture(orbApprentice, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbApprentice"));
+        OrbRegistry.registerOrbTexture(orbMagician, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbMagician"));
+        OrbRegistry.registerOrbTexture(orbMaster, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbMaster"));
+        OrbRegistry.registerOrbTexture(orbArchmage, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbArchmage"));
+        OrbRegistry.registerOrbTexture(orbTranscendent, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbTranscendent"));
 
         renderHelper.itemRender(bucketEssence);
 

@@ -10,6 +10,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 
 /**
@@ -49,9 +50,9 @@ public class InventoryRenderHelper
      */
     public void itemRender(Item item, int meta, String name)
     {
-        String resName = domain + name;
+        ResourceLocation resName = new ResourceLocation(domain + name);
 
-        ModelBakery.addVariantName(item, resName);
+        ModelBakery.registerItemVariants(item, resName);
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(resName, "inventory"));
     }
 
@@ -105,18 +106,12 @@ public class InventoryRenderHelper
         });
     }
 
-    public void itemRenderToggle(Item item, String name)
-    {
-        itemRender(item, 0, name + "_deactivated");
-        itemRender(item, 1, name + "_activated");
-    }
-
     public void fluidRender(Block block)
     {
 
         final Block toRender = block;
 
-        ModelBakery.addVariantName(InventoryRenderHelper.getItemFromBlock(block));
+        ModelBakery.registerItemVariants(InventoryRenderHelper.getItemFromBlock(block));
         ModelLoader.setCustomMeshDefinition(InventoryRenderHelper.getItemFromBlock(block), new ItemMeshDefinition()
         {
             @Override

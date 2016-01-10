@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,11 +32,11 @@ public class OrbRegistry
     }
 
     @SideOnly(Side.CLIENT)
-    public static void registerOrbTexture(BloodOrb orb, String resourceLocation)
+    public static void registerOrbTexture(BloodOrb orb, ResourceLocation resourceLocation)
     {
         int meta = getIndexOf(orb);
 
-        ModelBakery.addVariantName(BloodMagicAPI.getItem(BloodMagicAPI.ORB), resourceLocation);
+        ModelBakery.registerItemVariants(BloodMagicAPI.getItem(BloodMagicAPI.ORB), resourceLocation);
         ModelLoader.setCustomModelResourceLocation(BloodMagicAPI.getItem(BloodMagicAPI.ORB), meta, new ModelResourceLocation(resourceLocation, "inventory"));
     }
 
