@@ -48,7 +48,7 @@ public class HarvestHandlerStem implements IHarvestHandler
                 BlockStack probableCrop = BlockStack.getStackFromPos(world, cropPos);
                 BlockStack regCrop = HarvestRegistry.getStemCrops().get(blockStack);
 
-                if ((regCrop.getMeta() == OreDictionary.WILDCARD_VALUE && regCrop.getBlock() == probableCrop.getBlock()) || regCrop == probableCrop)
+                if ((regCrop.getMeta() == OreDictionary.WILDCARD_VALUE && regCrop.getBlock() == probableCrop.getBlock()) || regCrop.equals(probableCrop))
                 {
                     drops = probableCrop.getBlock().getDrops(world, cropPos, probableCrop.getState(), 0);
                     world.destroyBlock(cropPos, false);
