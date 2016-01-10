@@ -2,12 +2,14 @@ package WayofTime.bloodmagic.compat.jei.forge;
 
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import lombok.Getter;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.List;
 
@@ -46,12 +48,17 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         return Collections.singletonList(recipe.getRecipeOutput());
     }
 
+    @Nullable
     @Override
-    public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight)
+    public List<String> getTooltipStrings(int mouseX, int mouseY)
     {
-//        String minimum = TextHelper.localize("jei.BloodMagic.recipe.minimumSouls", recipe.getMinimumSouls());
-//        String drained = TextHelper.localize("jei.BloodMagic.recipe.soulsDrained", recipe.getSoulsDrained());
-//        minecraft.fontRendererObj.drawString(minimum, 90 - minecraft.fontRendererObj.getStringWidth(minimum) / 2, 0, Color.gray.getRGB());
-//        minecraft.fontRendererObj.drawString(drained, 90 - minecraft.fontRendererObj.getStringWidth(drained) / 2, 10, Color.gray.getRGB());
+        ArrayList<String> ret = new ArrayList<String>();
+        if (mouseX >= 40 && mouseX <= 60 && mouseY >= 21 && mouseY <= 34)
+        {
+            ret.add(TextHelper.localize("jei.BloodMagic.recipe.minimumSouls", recipe.getMinimumSouls()));
+            ret.add(TextHelper.localize("jei.BloodMagic.recipe.soulsDrained", recipe.getSoulsDrained()));
+            return ret;
+        }
+        return null;
     }
 }
