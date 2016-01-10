@@ -27,8 +27,10 @@ public class ItemSigilBloodLight extends ItemSigilBase
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+
         if (world.isRemote)
             return false;
 

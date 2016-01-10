@@ -50,15 +50,17 @@ public class ItemSigilToggleable extends ItemSigilBase
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+
         if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
-            return onSigilUseFirst(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+            return onSigilUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
 
         return false;
     }
 
-    public boolean onSigilUseFirst(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         return false;
     }

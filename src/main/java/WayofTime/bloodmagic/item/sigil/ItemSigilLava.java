@@ -10,6 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -30,7 +31,7 @@ public class ItemSigilLava extends ItemSigilBase
 
             if (movingobjectposition != null)
             {
-                ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+                ItemStack ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
                 if (ret != null)
                     return ret;
 
@@ -67,8 +68,10 @@ public class ItemSigilLava extends ItemSigilBase
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+
         if (world.isRemote || !BindableHelper.checkAndSetItemOwner(stack, player) || player.isSneaking() || isUnusable(stack))
         {
             return false;

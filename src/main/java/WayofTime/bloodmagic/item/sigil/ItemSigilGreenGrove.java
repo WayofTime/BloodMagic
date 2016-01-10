@@ -18,7 +18,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleable
     }
 
     @Override
-    public boolean onSigilUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onSigilUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (applyBonemeal(stack, world, blockPos))
         {

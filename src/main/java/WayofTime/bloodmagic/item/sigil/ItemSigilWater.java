@@ -68,8 +68,10 @@ public class ItemSigilWater extends ItemSigilBase
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+
         if (world.isRemote || !BindableHelper.checkAndSetItemOwner(stack, player) || player.isSneaking() || isUnusable(stack))
         {
             return false;
