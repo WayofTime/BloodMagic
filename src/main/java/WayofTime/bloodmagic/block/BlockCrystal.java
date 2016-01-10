@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 
 public class BlockCrystal extends BlockString
 {
-    public static final String[] names = { "normal", "brick" };
+    public static final String[] names = { "large", "brick" };
 
     public BlockCrystal()
     {

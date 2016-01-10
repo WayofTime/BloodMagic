@@ -133,9 +133,9 @@ tile.BloodMagic.ritualStone.air.name=Luftritualstein
 tile.BloodMagic.ritualStone.dusk.name=Morgendämmerungsritualstein
 tile.BloodMagic.ritualStone.dawn.name=Abenddämmerungsritualstein
 
-tile.BloodMagic.bloodstonebrick.normal.name=Blutsteinziegel
 tile.BloodMagic.bloodstonebrick.large.name=Großer Blutsteinziegel
-tile.BloodMagic.crystal.normal.name=Kristallklumpen
+tile.BloodMagic.bloodstonebrick.brick.name=Blutsteinziegel
+tile.BloodMagic.crystal.large.name=Kristallklumpen
 tile.BloodMagic.crystal.brick.name=Kristallklumpenziegel
 tile.BloodMagic.bloodLight.name=Blutlampe
 tile.BloodMagic.spectralBlock.name=Spektralblock

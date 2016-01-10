@@ -7,7 +7,7 @@ import net.minecraft.block.material.Material;
 
 public class BlockBloodStoneBrick extends BlockString
 {
-    public static final String[] names = { "large", "normal" };
+    public static final String[] names = { "large", "brick" };
 
     public BlockBloodStoneBrick()
     {

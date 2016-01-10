@@ -12,7 +12,7 @@
           "all": "bloodmagic:blocks/LargeBloodStoneBrick"
         }
       },
-      "normal": {
+      "brick": {
         "textures": {
           "all": "bloodmagic:blocks/BloodStoneBrick"
         }

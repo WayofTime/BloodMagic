@@ -7,7 +7,7 @@
   },
   "variants": {
     "type": {
-      "normal": {
+      "large": {
         "textures": {
           "all": "bloodmagic:blocks/ShardCluster"
         }

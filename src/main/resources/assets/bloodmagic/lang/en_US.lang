@@ -148,9 +148,9 @@ tile.BloodMagic.ritualStone.air.name=Ritual Stone of Air
 tile.BloodMagic.ritualStone.dusk.name=Ritual Stone of Dusk
 tile.BloodMagic.ritualStone.dawn.name=Ritual Stone of Dawn
 
-tile.BloodMagic.bloodstonebrick.normal.name=Bloodstone Brick
 tile.BloodMagic.bloodstonebrick.large.name=Large Bloodstone Brick
-tile.BloodMagic.crystal.normal.name=Crystal Cluster
+tile.BloodMagic.bloodstonebrick.brick.name=Bloodstone Brick
+tile.BloodMagic.crystal.large.name=Crystal Cluster
 tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
 tile.BloodMagic.bloodLight.name=Blood Light
 tile.BloodMagic.spectralBlock.name=Spectral Block
