@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.soul;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -64,8 +65,7 @@ public class ItemSoulSnare extends Item
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.soulSnare.desc1"));
-        tooltip.add(TextHelper.localize("tooltip.BloodMagic.soulSnare.desc2"));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.soulSnare.desc"))));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

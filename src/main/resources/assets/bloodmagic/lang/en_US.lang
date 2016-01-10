@@ -252,8 +252,7 @@ tooltip.BloodMagic.soulGem.lesser=A gem used to contain some will
 tooltip.BloodMagic.soulGem.common=A gem used to contain more will
 tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of will
 tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
-tooltip.BloodMagic.soulSnare.desc1=Throw at a monster and then
-tooltip.BloodMagic.soulSnare.desc2=kill them to obtain their demonic will
+tooltip.BloodMagic.soulSnare.desc=Throw at a monster and then kill them to obtain their demonic will
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
