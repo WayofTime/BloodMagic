@@ -14,9 +14,7 @@ public class CommonProxy
 
     public void preInit()
     {
-        Object obj = new EventHandler();
-        MinecraftForge.EVENT_BUS.register(obj);
-        FMLCommonHandler.instance().bus().register(obj);
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
         registerRenderers();
     }
 

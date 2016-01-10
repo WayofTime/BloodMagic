@@ -78,6 +78,7 @@ public class ModBlocks
             renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), i);
         }
 
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(altar));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 0);
