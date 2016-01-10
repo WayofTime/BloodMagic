@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,9 @@ public class ConfigHandler
     // Item/Block Disabling
     public static List itemBlacklist;
     public static List blockBlacklist;
+
+    // Well of Suffering Blacklist
+    public static List<String> wellOfSufferingBlacklist;
 
     // Potion ID's
     public static int customPotionDrowningID;
@@ -111,6 +115,10 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "Block blacklisting");
         teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildTeleposerBlacklist();
+
+        category = "Well of Suffering Blacklist";
+        config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
+        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] {}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
 
         category = "Potions";
         config.addCustomCategoryComment(category, "Potion settings");

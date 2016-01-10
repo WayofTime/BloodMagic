@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -87,17 +88,20 @@ public class RitualWellOfSuffering extends Ritual
 
             for (EntityLivingBase entity : entities)
             {
-                if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
+                if (!ConfigHandler.wellOfSufferingBlacklist.contains(entity.getClass().getSimpleName()))
                 {
-                    if (entity.attackEntityFrom(DamageSource.outOfWorld, 1))
+                    if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
                     {
-                        tileAltar.sacrificialDaggerCall(SACRIFICE_AMOUNT, true);
-
-                        totalEffects++;
-
-                        if (totalEffects >= maxEffects)
+                        if (entity.attackEntityFrom(DamageSource.outOfWorld, 1))
                         {
-                            break;
+                            tileAltar.sacrificialDaggerCall(SACRIFICE_AMOUNT, true);
+
+                            totalEffects++;
+
+                            if (totalEffects >= maxEffects)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
