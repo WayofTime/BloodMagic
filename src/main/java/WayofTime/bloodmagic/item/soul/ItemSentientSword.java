@@ -29,9 +29,11 @@ import com.google.common.collect.Multimap;
 
 public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 {
-    public int[] soulBracket = new int[] { 16 };
-    public double[] damageAdded = new double[] { 1 };
-    public double[] soulDrainPerSwing = new double[] { 0.1 };
+    public int[] soulBracket = new int[] { 16, 60, 200, 400 };
+    public double[] damageAdded = new double[] { 1, 1.5, 2, 2.5 };
+    public double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4 };
+    public double[] soulDrop = new double[] { 2, 4, 8, 12 };
+    public double[] staticDrop = new double[] { 1, 1, 2, 3 };
 
     public ItemSentientSword()
     {
@@ -59,6 +61,8 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 
             setDrainOfActivatedSword(stack, drain);
             setDamageOfActivatedSword(stack, 7 + extraDamage);
+            setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
+            setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
         }
 
         return stack;
@@ -148,7 +152,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 
             for (int i = 0; i <= looting; i++)
             {
-                ItemStack soulStack = soul.createWill(0, (getDamageOfActivatedSword(stack) - 7) / 2 * attackingEntity.worldObj.rand.nextDouble() + 0.5);
+                ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
                 soulList.add(soulStack);
             }
         }
@@ -188,6 +192,40 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_ACTIVE_DRAIN, drain);
+    }
+
+    public double getStaticDropOfActivatedSword(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP);
+    }
+
+    public void setStaticDropOfActivatedSword(ItemStack stack, double drop)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_STATIC_DROP, drop);
+    }
+
+    public double getDropOfActivatedSword(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_DROP);
+    }
+
+    public void setDropOfActivatedSword(ItemStack stack, double drop)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
     }
 
     @Override
