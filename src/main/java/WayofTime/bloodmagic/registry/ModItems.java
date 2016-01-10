@@ -132,7 +132,7 @@ public class ModItems
     public static Item sentientArmourGem;
 
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
-    public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 0, 7, 8, 50);
+    public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
 
     public static void init()
     {
@@ -327,8 +327,8 @@ public class ModItems
         renderHelper.itemRender(soulGem, 4);
         renderHelper.itemRender(soulSnare);
 
-        renderHelper.itemRender(sentientSword, 0);
-        renderHelper.itemRender(sentientSword, 1);
+        renderHelper.customItemRender(sentientSword, 0);
+        renderHelper.customItemRender(sentientSword, 1);
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
         renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
         renderHelper.itemRender(sentientBow, 2, "ItemSentientBow_pulling_1");

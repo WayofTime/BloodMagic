@@ -1,10 +1,12 @@
 package WayofTime.bloodmagic.proxy;
 
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.client.mesh.ItemSentientSwordMeshDefinition;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
@@ -43,6 +45,8 @@ public class ClientProxy extends CommonProxy
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyArray.class, new RenderAlchemyArray());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAltar.class, new RenderAltar());
+
+        ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new ItemSentientSwordMeshDefinition());
     }
 
     @Override

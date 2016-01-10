@@ -57,6 +57,25 @@ public class InventoryRenderHelper
     }
 
     /**
+     * Registers a Model for the given Item and meta. This does not call
+     * setCustomModelResourceLocation, to allow the implementation of
+     * ItemMeshDefinition.
+     * 
+     * @param item
+     *        - Item to register Model for
+     * @param meta
+     *        - Meta of Item
+     * @param name
+     *        - Name of the model JSON
+     */
+    public void customItemRender(Item item, int meta, String name)
+    {
+        ResourceLocation resName = new ResourceLocation(domain + name);
+
+        ModelBakery.registerItemVariants(item, resName);
+    }
+
+    /**
      * Shorthand of {@code itemRender(Item, int, String)}
      * 
      * @param item
@@ -67,6 +86,11 @@ public class InventoryRenderHelper
     public void itemRender(Item item, int meta)
     {
         itemRender(item, meta, getClassName(item) + meta);
+    }
+
+    public void customItemRender(Item item, int meta)
+    {
+        customItemRender(item, meta, getClassName(item) + meta);
     }
 
     public void itemRender(Item item, String name)

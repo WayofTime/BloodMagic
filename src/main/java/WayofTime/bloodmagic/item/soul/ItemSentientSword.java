@@ -40,8 +40,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
         super(ModItems.soulToolMaterial);
 
         setUnlocalizedName(Constants.Mod.MODID + ".sentientSword");
-        setHasSubtypes(true);
-        setNoRepair();
+
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
@@ -129,14 +128,19 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
         return true;
     }
 
-    private boolean getActivated(ItemStack stack)
+    public boolean getActivated(ItemStack stack)
     {
-        return stack.getItemDamage() > 0;
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+
+        return tag.getBoolean("activated");
     }
 
-    private ItemStack setActivated(ItemStack stack, boolean activated)
+    public ItemStack setActivated(ItemStack stack, boolean activated)
     {
-        stack.setItemDamage(activated ? 1 : 0);
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+        tag.setBoolean("activated", activated);
 
         return stack;
     }
