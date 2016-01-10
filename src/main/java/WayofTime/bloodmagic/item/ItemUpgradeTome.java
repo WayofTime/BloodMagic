@@ -130,7 +130,7 @@ public class ItemUpgradeTome extends Item
         LivingArmourUpgrade upgrade = this.getUpgrade(stack);
         if (upgrade != null)
         {
-            tooltip.add(TextHelper.localize(upgrade.getUnlocalizedName()) + " " + TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", (upgrade.getUpgradeLevel() + 1)));
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));
         }
     }
 }
