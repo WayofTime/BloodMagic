@@ -1,5 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=Blood Magic
+itemGroup.BloodMagic.creativeTabTome=Blood Magic Upgrade Tomes
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Weak Activation Crystal
@@ -108,6 +109,7 @@ item.BloodMagic.ritualDivinerdusk.name=Ritual Diviner [Dusk]
 item.BloodMagic.ritualDivinerdawn.name=Ritual Diviner [Dawn]
 
 item.BloodMagic.arcaneAshes.name=Arcane Ashes
+item.BloodMagic.upgradeTome.name=Living Armour Upgrade Tome
 
 item.BloodMagic.sentientSword.name=Sentient Sword
 item.BloodMagic.soulGem.petty.name=Petty Tartaric Gem
@@ -281,6 +283,7 @@ chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
 chat.BloodMagic.ritual.notValid=You feel that these runes are not configured correctly...
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
+chat.BloodMagic.livingArmour.newUpgrade=Upgrade acquired!
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar

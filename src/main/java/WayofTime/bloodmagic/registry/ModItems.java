@@ -26,6 +26,7 @@ import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.item.ItemSacrificialDagger;
 import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -118,6 +119,7 @@ public class ModItems
     public static Item sentientArmourBoots;
 
     public static Item altarMaker;
+    public static Item upgradeTome;
 
     public static Item arcaneAshes;
     public static Item monsterSoul;
@@ -202,6 +204,7 @@ public class ModItems
         sentientArmourBoots = registerItem(new ItemSentientArmour(3), "ItemSentientArmourBoots");
 
         altarMaker = registerItem(new ItemAltarMaker());
+        upgradeTome = registerItem(new ItemUpgradeTome());
 
         arcaneAshes = registerItem(new ItemArcaneAshes());
         monsterSoul = registerItem(new ItemMonsterSoul());
@@ -312,6 +315,7 @@ public class ModItems
         renderHelper.itemRender(sentientArmourBoots, "ItemSentientArmour3");
 
         renderHelper.itemRender(altarMaker);
+        renderHelper.itemRender(upgradeTome);
 
         renderHelper.itemRender(arcaneAshes);
         renderHelper.itemRender(monsterSoul, 0);

@@ -44,6 +44,15 @@ public class BloodMagic
         }
     };
 
+    public static CreativeTabs tabUpgradeTome = new CreativeTabs(Constants.Mod.MODID + ".creativeTabTome")
+    {
+        @Override
+        public Item getTabIconItem()
+        {
+            return ModItems.upgradeTome;
+        }
+    };
+
     private LogHelper logger = new LogHelper(Constants.Mod.MODID);
     private File configDir;
 
