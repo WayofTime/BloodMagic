@@ -6,9 +6,10 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class CompatibilityWaila implements ICompatibility
 {
     @Override
-    public void loadCompatibility()
+    public void loadCompatibility(InitializationPhase phase)
     {
-        FMLInterModComms.sendMessage(getModId(), "register", "WayofTime.bloodmagic.compat.waila.WailaCallbackHandler.callbackRegister");
+        if (phase == InitializationPhase.INIT)
+            FMLInterModComms.sendMessage(getModId(), "register", "WayofTime.bloodmagic.compat.waila.WailaCallbackHandler.callbackRegister");
     }
 
     @Override

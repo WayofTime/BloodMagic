@@ -2,6 +2,7 @@ package WayofTime.bloodmagic;
 
 import java.io.File;
 
+import WayofTime.bloodmagic.compat.ICompatibility;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -66,6 +67,8 @@ public class BloodMagic
         ModItems.init();
         ModPotions.init();
         ModEntities.init();
+        ModCompatibility.registerModCompat();
+        ModCompatibility.loadCompat(ICompatibility.InitializationPhase.PRE_INIT);
 
         proxy.preInit();
     }
@@ -78,8 +81,8 @@ public class BloodMagic
         ModRecipes.init();
         ModRituals.initRituals();
         ModRituals.initImperfectRituals();
-        ModCompatibility.registerModCompat();
         ModArmourTrackers.init();
+        ModCompatibility.loadCompat(ICompatibility.InitializationPhase.INIT);
         ConfigHandler.checkRituals();
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
 
@@ -90,6 +93,7 @@ public class BloodMagic
     public void postInit(FMLPostInitializationEvent event)
     {
         ModRecipes.addCompressionHandlers();
+        ModCompatibility.loadCompat(ICompatibility.InitializationPhase.POST_INIT);
 
         proxy.postInit();
     }

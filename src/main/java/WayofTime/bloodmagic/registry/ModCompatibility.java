@@ -15,11 +15,12 @@ public class ModCompatibility
     {
         compatibilities.add(new CompatibilityJustEnoughItems());
         compatibilities.add(new CompatibilityWaila());
+    }
 
-        for (ICompatibility compat : compatibilities)
-        {
-            if (compat.enableCompat() && Loader.isModLoaded(compat.getModId()))
-                compat.loadCompatibility();
-        }
+    public static void loadCompat(ICompatibility.InitializationPhase phase)
+    {
+        for (ICompatibility compatibility : compatibilities)
+            if (Loader.isModLoaded(compatibility.getModId()) && compatibility.enableCompat())
+                compatibility.loadCompatibility(phase);
     }
 }

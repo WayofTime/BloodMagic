@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.compat.ICompatibility;
 public class CompatibilityJustEnoughItems implements ICompatibility
 {
     @Override
-    public void loadCompatibility()
+    public void loadCompatibility(InitializationPhase phase)
     {
 
     }
