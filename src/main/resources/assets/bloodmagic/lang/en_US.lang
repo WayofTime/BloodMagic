@@ -246,12 +246,12 @@ tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 
 tooltip.BloodMagic.will=Will Quality: %1$,.2f
-tooltip.BloodMagic.sentientSword.desc=Uses souls to unleash its full potential.
-tooltip.BloodMagic.soulGem.petty=A gem used to contain a few souls
-tooltip.BloodMagic.soulGem.lesser=A gem used to contain more souls
-tooltip.BloodMagic.soulGem.common=A gem used to contain many souls
-tooltip.BloodMagic.soulGem.greater=A gem used to contain a great amount of souls
-tooltip.BloodMagic.soulGem.grand=A gem that can hold a LOT of souls
+tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.
+tooltip.BloodMagic.soulGem.petty=A gem used to contain a little will
+tooltip.BloodMagic.soulGem.lesser=A gem used to contain some will
+tooltip.BloodMagic.soulGem.common=A gem used to contain more will
+tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of will
+tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
 tooltip.BloodMagic.soulSnare.desc1=Throw at a monster and then
 tooltip.BloodMagic.soulSnare.desc2=kill them to obtain their demonic will
 
@@ -292,8 +292,8 @@ jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.soulForge=Hellfire Forge
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
-jei.BloodMagic.recipe.minimumSouls=Minimum: %d Souls
-jei.BloodMagic.recipe.soulsDrained=Drained: %d Souls
+jei.BloodMagic.recipe.minimumSouls=Minimum: %d Will
+jei.BloodMagic.recipe.soulsDrained=Drained: %d Will
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
 
