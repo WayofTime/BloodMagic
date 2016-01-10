@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.List;
 import java.util.Set;
 
+import WayofTime.bloodmagic.api.BlockStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -44,9 +45,7 @@ public class ItemBoundPickaxe extends ItemBoundTool
     protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge)
     {
         if (world.isRemote)
-        {
             return;
-        }
 
         boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(player);
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(player);
@@ -63,20 +62,19 @@ public class ItemBoundPickaxe extends ItemBoundTool
                 for (int k = -range; k <= range; k++)
                 {
                     BlockPos blockPos = playerPos.add(i, j, k);
-                    Block block = world.getBlockState(blockPos).getBlock();
-                    int blockMeta = block.getMetaFromState(world.getBlockState(blockPos));
+                    BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
 
-                    if (block != null && block.getBlockHardness(world, blockPos) != -1)
+                    if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(world, blockPos) != -1)
                     {
-                        float strengthVsBlock = getStrVsBlock(stack, block);
+                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getBlock());
 
                         if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos))
                         {
-                            if (silkTouch && block.canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
-                                drops.add(new ItemStackWrapper(block, 1, blockMeta));
+                            if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
+                                drops.add(new ItemStackWrapper(blockStack));
                             else
                             {
-                                List<ItemStack> itemDrops = block.getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
+                                List<ItemStack> itemDrops = blockStack.getBlock().getDrops(world, blockPos, world.getBlockState(blockPos), fortuneLvl);
 
                                 if (itemDrops != null)
                                     for (ItemStack stacks : itemDrops)
