@@ -20,6 +20,7 @@ public class ItemArcaneAshes extends Item
     public ItemArcaneAshes()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".arcaneAshes");
+        setMaxStackSize(1);
         setMaxDamage(19); //Allows for 20 uses
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
@@ -32,19 +33,21 @@ public class ItemArcaneAshes extends Item
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
-            return false;
-
         BlockPos newPos = blockPos.offset(side);
 
         if (world.isAirBlock(newPos))
         {
-            world.setBlockState(newPos, ModBlocks.alchemyArray.getDefaultState());
-            stack.damageItem(1, player);
+            if (!world.isRemote)
+            {
+                world.setBlockState(newPos, ModBlocks.alchemyArray.getDefaultState());
+                stack.damageItem(1, player);
+            }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
