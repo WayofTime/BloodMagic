@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.compat.jei;
 
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeMaker;
@@ -13,10 +14,13 @@ import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
+import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
+
+import java.util.Map;
 
 @JEIPlugin
 public class BloodMagicPlugin implements IModPlugin
@@ -40,6 +44,19 @@ public class BloodMagicPlugin implements IModPlugin
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
+
+        for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
+        {
+            String key = entry.getKey();
+            int maxLevel = entry.getValue();
+            for (int i = 0; i < maxLevel - 1; i++)
+            {
+                ItemStack stack = new ItemStack(ModItems.upgradeTome);
+                ((ItemUpgradeTome)ModItems.upgradeTome).setKey(stack, key);
+                ((ItemUpgradeTome)ModItems.upgradeTome).setLevel(stack, i);
+                jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
+            }
+        }
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.SOULS);
