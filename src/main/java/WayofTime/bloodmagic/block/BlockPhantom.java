@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TilePhantomBlock;
 import net.minecraft.block.Block;
@@ -24,6 +25,7 @@ public class BlockPhantom extends BlockContainer
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".phantom");
+        setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
     @Override
@@ -43,6 +45,12 @@ public class BlockPhantom extends BlockContainer
     public boolean isTranslucent()
     {
         return true;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return 3;
     }
 
     @Override
@@ -76,6 +84,6 @@ public class BlockPhantom extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TilePhantomBlock();
+        return new TilePhantomBlock(100);
     }
 }
