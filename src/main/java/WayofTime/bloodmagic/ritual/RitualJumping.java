@@ -61,8 +61,6 @@ public class RitualJumping extends Ritual
                     ((EntityPlayerMP) entity).fallDistance = 0;
                     if (entity.isSneaking())
                         continue;
-                    // TODO Packet handlers if needed
-                    // BloodMagicPacketHandler.INSTANCE.sendTo();
                     ((EntityPlayerMP) entity).motionY = motionY;
                     totalEffects++;
                 } else

@@ -28,8 +28,8 @@ public abstract class AreaDescriptor
         private BlockPos minimumOffset;
         private BlockPos maximumOffset; // Non-inclusive maximum offset.
 
-        private ArrayList<BlockPos> blockPosCache = new ArrayList<BlockPos>();
-        private BlockPos cachedPosition = new BlockPos(0, 0, 0);
+        private ArrayList<BlockPos> blockPosCache;
+        private BlockPos cachedPosition;
 
         private boolean cache = true;
 
@@ -120,6 +120,94 @@ public abstract class AreaDescriptor
             int z = pos.getZ();
 
             return x >= minimumOffset.getX() && x < maximumOffset.getX() && y >= minimumOffset.getY() && y < maximumOffset.getY() && z >= minimumOffset.getZ() && z < maximumOffset.getZ();
+        }
+    }
+
+    public static class HemiSphere extends AreaDescriptor
+    {
+        private BlockPos minimumOffset;
+        private int radius;
+
+        private ArrayList<BlockPos> blockPosCache;
+        private BlockPos cachedPosition;
+
+        private boolean cache = true;
+
+        public HemiSphere(BlockPos minimumOffset, int radius)
+        {
+            setRadius(minimumOffset, radius);
+        }
+
+        public void setRadius(BlockPos minimumOffset, int radius)
+        {
+            this.minimumOffset = new BlockPos(Math.min(minimumOffset.getX(), minimumOffset.getX()), Math.min(minimumOffset.getY(), minimumOffset.getY()), Math.min(minimumOffset.getZ(), minimumOffset.getZ()));
+            this.radius = radius;
+            blockPosCache = new ArrayList<BlockPos>();
+        }
+
+        @Override
+        public List<BlockPos> getContainedPositions(BlockPos pos)
+        {
+            if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty())
+            {
+                ArrayList<BlockPos> posList = new ArrayList<BlockPos>();
+
+                int i = -radius;
+                int j = minimumOffset.getY();
+                int k = -radius;
+
+                //TODO For some reason the bottom of the hemisphere is not going up with the minOffset
+
+                while (i <= radius)
+                {
+                    while (j <= radius)
+                    {
+                        while (k <= radius)
+                        {
+                            if (i * i + j * j + k * k >= (radius + 0.5F) * (radius + 0.5F))
+                            {
+                                k++;
+                                continue;
+                            }
+
+                            posList.add(pos.add(i, j, k));
+                            k++;
+                        }
+
+                        k = -radius;
+                        j++;
+                    }
+
+                    j = minimumOffset.getY();
+                    i++;
+                }
+
+                blockPosCache = posList;
+                cachedPosition = pos;
+            }
+
+            return Collections.unmodifiableList(blockPosCache);
+        }
+
+        /**
+         * Since you can't make a box using a sphere, this returns null
+         */
+        @Override
+        public AxisAlignedBB getAABB(BlockPos pos)
+        {
+            return null;
+        }
+
+        @Override
+        public void resetCache()
+        {
+            this.blockPosCache = new ArrayList<BlockPos>();
+        }
+
+        @Override
+        public boolean isWithinArea(BlockPos pos)
+        {
+            return blockPosCache.contains(pos);
         }
     }
 }

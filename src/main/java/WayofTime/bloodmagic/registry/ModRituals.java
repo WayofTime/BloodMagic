@@ -27,6 +27,12 @@ public class ModRituals
     public static Ritual magneticRitual;
     public static Ritual crushingRitual;
     public static Ritual stomachRitual;
+    public static Ritual interdictionRitual;
+    public static Ritual containmentRitual;
+    public static Ritual speedRitual;
+    public static Ritual suppressionRitual;
+    public static Ritual expulsionRitual;
+    public static Ritual zephyrRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -60,6 +66,18 @@ public class ModRituals
         RitualRegistry.registerRitual(crushingRitual, crushingRitual.getName());
         stomachRitual = new RitualFullStomach();
         RitualRegistry.registerRitual(stomachRitual, stomachRitual.getName());
+        interdictionRitual = new RitualInterdiction();
+        RitualRegistry.registerRitual(interdictionRitual, interdictionRitual.getName());
+        containmentRitual = new RitualContainment();
+        RitualRegistry.registerRitual(containmentRitual, containmentRitual.getName());
+        speedRitual = new RitualSpeed();
+        RitualRegistry.registerRitual(speedRitual, speedRitual.getName());
+        suppressionRitual = new RitualSuppression();
+        RitualRegistry.registerRitual(suppressionRitual, suppressionRitual.getName());
+        zephyrRitual = new RitualZephyr();
+        RitualRegistry.registerRitual(zephyrRitual, zephyrRitual.getName());
+        expulsionRitual = new RitualExpulsion();
+        RitualRegistry.registerRitual(expulsionRitual, expulsionRitual.getName());
     }
 
     public static void initImperfectRituals()

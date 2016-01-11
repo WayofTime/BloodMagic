@@ -71,6 +71,10 @@ public class ItemBoundTool extends ItemBindable
             EntityPlayer player = (EntityPlayer) entityIn;
             setHeldDownCount(stack, Math.min(player.getItemInUseDuration(), chargeTime));
         }
+//        else if (!isSelected)
+//        {
+//            //TODO Make it so that if you scroll of while charging, does not show the charge bar
+//        }
     }
 
     protected int getHeldDownCount(ItemStack stack)
@@ -200,7 +204,6 @@ public class ItemBoundTool extends ItemBindable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-
         if (StatCollector.canTranslate(tooltipBase + "desc"))
             tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
 
