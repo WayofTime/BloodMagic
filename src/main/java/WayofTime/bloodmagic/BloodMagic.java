@@ -26,7 +26,7 @@ import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
 
-@Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, acceptedMinecraftVersions = "[1.8.8,1.8.9]", guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
+@Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 @Getter
 public class BloodMagic
 {
