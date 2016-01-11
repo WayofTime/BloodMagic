@@ -194,7 +194,6 @@ curseforge {
         changelog = getChangelogText()
         releaseType = 'beta'
 
-        addGameVersion '1.8.8'
         addGameVersion '1.8.9'
 
         relations curseRelations
