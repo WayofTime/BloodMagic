@@ -42,15 +42,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem
     {
         for (int i = 0; i < names.length; i++)
         {
-            ItemStack stack = new ItemStack(this, 1, i);
-            list.add(stack);
-        }
-
-        for (int i = 0; i < names.length; i++)
-        {
-            ItemStack stack = new ItemStack(this, 1, i);
-            this.setWill(stack, this.getMaxWill(stack));
-            list.add(stack);
+            ItemStack emptyStack = new ItemStack(this, 1, i);
+            ItemStack fullStack = new ItemStack(this, 1, i);
+            setWill(fullStack, getMaxWill(fullStack));
+            list.add(emptyStack);
+            list.add(fullStack);
         }
     }
 
@@ -62,6 +58,18 @@ public class ItemSoulGem extends Item implements IDemonWillGem
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack)
+    {
+        return true;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        return 1.0 - (getWill(stack) / (double) getMaxWill(stack));
     }
 
     @Override
