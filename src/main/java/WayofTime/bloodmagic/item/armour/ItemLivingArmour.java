@@ -176,7 +176,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
                 LivingArmourUpgrade upgrade = entry.getValue();
                 if (upgrade != null)
                 {
-                    tooltip.add(TextHelper.localize(upgrade.getUnlocalizedName()) + " " + TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", (upgrade.getUpgradeLevel() + 1)));
+                    tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), (upgrade.getUpgradeLevel() + 1)));
                 }
             }
         }
