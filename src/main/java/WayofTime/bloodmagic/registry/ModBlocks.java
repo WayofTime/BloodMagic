@@ -1,16 +1,45 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.*;
-import WayofTime.bloodmagic.item.block.*;
-import WayofTime.bloodmagic.tile.*;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.BlockAlchemyArray;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.block.BlockBloodLight;
+import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
+import WayofTime.bloodmagic.block.BlockCrystal;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
+import WayofTime.bloodmagic.block.BlockPedestal;
+import WayofTime.bloodmagic.block.BlockPhantom;
+import WayofTime.bloodmagic.block.BlockRitualController;
+import WayofTime.bloodmagic.block.BlockRitualStone;
+import WayofTime.bloodmagic.block.BlockSoulForge;
+import WayofTime.bloodmagic.block.BlockSpectral;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.block.BlockTestSpellBlock;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
+import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
+import WayofTime.bloodmagic.routing.TileMasterRoutingNode;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import WayofTime.bloodmagic.tile.TilePhantomBlock;
+import WayofTime.bloodmagic.tile.TilePlinth;
+import WayofTime.bloodmagic.tile.TileSoulForge;
+import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import WayofTime.bloodmagic.tile.TileTeleposer;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class ModBlocks
 {
@@ -32,6 +61,8 @@ public class ModBlocks
     public static Block crystal;
     public static Block bloodStoneBrick;
 
+    public static Block masterRoutingNode;
+
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
@@ -51,6 +82,7 @@ public class ModBlocks
         soulForge = registerBlock(new BlockSoulForge());
         crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
+        masterRoutingNode = registerBlock(new BlockMasterRoutingNode());
 
         initTiles();
     }
@@ -66,6 +98,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TilePhantomBlock.class, Constants.Mod.MODID + ":" + TilePhantomBlock.class.getSimpleName());
         GameRegistry.registerTileEntity(TileTeleposer.class, Constants.Mod.MODID + ":" + TileTeleposer.class.getSimpleName());
         GameRegistry.registerTileEntity(TileSoulForge.class, Constants.Mod.MODID + ":" + TileSoulForge.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileMasterRoutingNode.class, Constants.Mod.MODID + ":" + TileMasterRoutingNode.class.getSimpleName());
     }
 
     public static void initRenders()
