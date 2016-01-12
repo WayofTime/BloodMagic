@@ -75,6 +75,9 @@ public class StatTrackerMovement extends StatTracker
             return true;
         }
 
+        lastPosX.put(player, player.posX);
+        lastPosZ.put(player, player.posZ);
+
         return false;
     }
 
