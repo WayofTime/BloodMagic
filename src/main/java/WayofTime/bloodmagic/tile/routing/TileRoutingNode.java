@@ -3,9 +3,12 @@ package WayofTime.bloodmagic.tile.routing;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 
@@ -15,8 +18,66 @@ public class TileRoutingNode extends TileEntity implements IRoutingNode
     private List<BlockPos> connectionList = new LinkedList<BlockPos>();
 
     @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+        super.writeToNBT(tag);
+        NBTTagCompound masterTag = new NBTTagCompound();
+        masterTag.setInteger(Constants.NBT.X_COORD, masterPos.getX());
+        masterTag.setInteger(Constants.NBT.Y_COORD, masterPos.getY());
+        masterTag.setInteger(Constants.NBT.Z_COORD, masterPos.getZ());
+        tag.setTag(Constants.NBT.ROUTING_MASTER, masterTag);
+
+        NBTTagList tags = new NBTTagList();
+        for (BlockPos pos : connectionList)
+        {
+            NBTTagCompound posTag = new NBTTagCompound();
+            posTag.setInteger(Constants.NBT.X_COORD, pos.getX());
+            posTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
+            posTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+            tags.appendTag(posTag);
+        }
+        tag.setTag(Constants.NBT.ROUTING_CONNECTION, tags);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        super.readFromNBT(tag);
+        NBTTagCompound masterTag = tag.getCompoundTag(Constants.NBT.ROUTING_MASTER);
+        masterPos = new BlockPos(masterTag.getInteger(Constants.NBT.X_COORD), masterTag.getInteger(Constants.NBT.Y_COORD), masterTag.getInteger(Constants.NBT.Z_COORD));
+
+        NBTTagList tags = tag.getTagList(Constants.NBT.ROUTING_CONNECTION, 10);
+        for (int i = 0; i < tags.tagCount(); i++)
+        {
+            NBTTagCompound blockTag = tags.getCompoundTagAt(i);
+            BlockPos newPos = new BlockPos(blockTag.getInteger(Constants.NBT.X_COORD), blockTag.getInteger(Constants.NBT.Y_COORD), blockTag.getInteger(Constants.NBT.Z_COORD));
+            connectionList.add(newPos);
+        }
+    }
+
+    @Override
+    public void removeAllConnections()
+    {
+        TileEntity testTile = worldObj.getTileEntity(getMasterPos());
+        if (testTile instanceof IMasterRoutingNode)
+        {
+            ((IMasterRoutingNode) testTile).removeConnection(pos); // Remove this node from the master
+        }
+        for (BlockPos testPos : connectionList)
+        {
+            this.removeConnection(testPos);
+            TileEntity tile = worldObj.getTileEntity(testPos);
+            if (tile instanceof IRoutingNode)
+            {
+                ((IRoutingNode) tile).removeConnection(pos);
+            }
+        }
+    }
+
+    @Override
     public void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master)
     {
+        this.masterPos = master.getBlockPos();
         List<BlockPos> connectedList = this.getConnected();
         for (BlockPos testPos : connectedList)
         {
@@ -60,8 +121,38 @@ public class TileRoutingNode extends TileEntity implements IRoutingNode
     }
 
     @Override
+    public boolean isMaster(IMasterRoutingNode master)
+    {
+        BlockPos checkPos = master.getBlockPos();
+        if (checkPos.equals(getMasterPos()))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean isConnectionEnabled(BlockPos testPos)
     {
         return true;
+    }
+
+    @Override
+    public void addConnection(BlockPos pos1)
+    {
+        if (!connectionList.contains(pos1))
+        {
+            connectionList.add(pos1);
+        }
+    }
+
+    @Override
+    public void removeConnection(BlockPos pos1)
+    {
+        if (connectionList.contains(pos1))
+        {
+            connectionList.remove(pos1);
+        }
     }
 }

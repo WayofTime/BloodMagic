@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "bloodmagic:blocks/MasterRoutingNode"
+  }
+}
+
+

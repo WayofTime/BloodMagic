@@ -16,4 +16,12 @@ public interface IRoutingNode
     public BlockPos getMasterPos();
 
     public boolean isConnectionEnabled(BlockPos testPos);
+
+    public boolean isMaster(IMasterRoutingNode master);
+
+    public void addConnection(BlockPos pos1);
+
+    public void removeConnection(BlockPos pos1);
+
+    public void removeAllConnections();
 }

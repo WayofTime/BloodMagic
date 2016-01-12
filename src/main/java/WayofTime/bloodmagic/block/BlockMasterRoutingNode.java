@@ -22,6 +22,12 @@ public class BlockMasterRoutingNode extends BlockContainer
     }
 
     @Override
+    public int getRenderType()
+    {
+        return 3;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileMasterRoutingNode();

@@ -84,6 +84,12 @@ public class Constants
 
         public static final String SOUL_FORGE_BURN = "burnTime";
         public static final String SOUL_FORGE_CONSUMED = "consumedSouls";
+
+        public static final String ROUTING_MASTER = "master";
+        public static final String ROUTING_CONNECTION = "connections";
+        public static final String ROUTING_MASTER_GENERAL = "generalList";
+        public static final String ROUTING_MASTER_INPUT = "inputList";
+        public static final String ROUTING_MASTER_OUTPUT = "outputList";
     }
 
     public static class Mod

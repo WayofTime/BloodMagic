@@ -32,6 +32,7 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
+import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
 import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
 import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
 import WayofTime.bloodmagic.item.sigil.ItemSigilCompression;
@@ -131,6 +132,8 @@ public class ModItems
     public static Item sentientBow;
     public static Item sentientArmourGem;
 
+    public static Item nodeRouter;
+
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
 
@@ -215,6 +218,8 @@ public class ModItems
         sentientSword = registerItem(new ItemSentientSword());
         sentientBow = registerItem(new ItemSentientBow());
         sentientArmourGem = registerItem(new ItemSentientArmourGem());
+
+        nodeRouter = registerItem(new ItemNodeRouter());
     }
 
     public static void initRenders()
