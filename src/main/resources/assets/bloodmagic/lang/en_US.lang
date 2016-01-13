@@ -295,6 +295,7 @@ jei.BloodMagic.recipe.minimumSouls=Minimum: %d Will
 jei.BloodMagic.recipe.soulsDrained=Drained: %d Will
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
+jei.BloodMagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.
 
 # WAILA
 waila.BloodMagic.sneak=&oSneak for Information

@@ -40,6 +40,7 @@ public class BloodMagicPlugin implements IModPlugin
         registry.addRecipes(TartaricForgeRecipeMaker.getRecipes());
 
         registry.addDescription(new ItemStack(ModItems.altarMaker), "jei.BloodMagic.desc.altarBuilder");
+        registry.addDescription(new ItemStack(ModItems.monsterSoul), "jei.BloodMagic.desc.demonicWill");
 
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
