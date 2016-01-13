@@ -7,12 +7,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 
-public class TileRoutingNode extends TileEntity implements IRoutingNode
+public class TileRoutingNode extends TileEntity implements IRoutingNode, IItemRoutingNode
 {
     private BlockPos masterPos = BlockPos.ORIGIN;
     private List<BlockPos> connectionList = new LinkedList<BlockPos>();
@@ -154,5 +157,18 @@ public class TileRoutingNode extends TileEntity implements IRoutingNode
         {
             connectionList.remove(pos1);
         }
+    }
+
+    @Override
+    public boolean isInventoryConnectedToSide(EnumFacing side)
+    {
+        //TODO: Implement connections for side
+        return true;
+    }
+
+    @Override
+    public IItemFilter generateFilterForSide(EnumFacing side)
+    {
+        return null;
     }
 }

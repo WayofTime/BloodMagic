@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
@@ -22,10 +24,39 @@ public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingN
     private List<BlockPos> outputNodeList = new LinkedList<BlockPos>();
     private List<BlockPos> inputNodeList = new LinkedList<BlockPos>();
 
+    public static final int tickRate = 20;
+
     @Override
     public void update()
     {
+        if (worldObj.isRemote || worldObj.getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
+        {
+            return;
+        }
 
+        for (BlockPos outputPos : outputNodeList)
+        {
+            TileEntity outputTile = worldObj.getTileEntity(outputPos);
+            if (outputTile instanceof TileOutputRoutingNode && this.isConnected(new LinkedList<BlockPos>(), outputPos))
+            {
+                TileOutputRoutingNode outputNode = (TileOutputRoutingNode) outputTile;
+
+                for (EnumFacing facing : EnumFacing.VALUES)
+                {
+                    if (!outputNode.isInventoryConnectedToSide(facing))
+                    {
+                        continue;
+                    }
+
+                    TileEntity tile = worldObj.getTileEntity(outputPos.offset(facing));
+                    if (!(tile instanceof IInventory))
+                    {
+                        continue;
+                    }
+
+                }
+            }
+        }
     }
 
     @Override
