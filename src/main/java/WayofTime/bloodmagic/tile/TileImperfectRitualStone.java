@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import lombok.NoArgsConstructor;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,8 +20,7 @@ public class TileImperfectRitualStone extends TileEntity implements IImperfectRi
     @Override
     public boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player)
     {
-
-        if (imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual))
+        if (!PlayerHelper.isFakePlayer(player) && imperfectRitual != null && ImperfectRitualRegistry.ritualEnabled(imperfectRitual))
         {
             NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, imperfectRitual.getActivationCost());
             if (imperfectRitual.onActivate(this, player))

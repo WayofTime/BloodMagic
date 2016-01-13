@@ -123,7 +123,7 @@ public class ItemSacrificialDagger extends Item
         for (int l = 0; l < 8; ++l)
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
 
-        if (!world.isRemote && PlayerHelper.isFakePlayer(player))
+        if (!world.isRemote)
             return stack;
 
         // TODO - Check if SoulFray is active

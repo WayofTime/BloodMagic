@@ -68,7 +68,7 @@ public class PlayerHelper
 
     public static boolean isFakePlayer(EntityPlayer player)
     {
-        return player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(getUsernameFromPlayer(player)).matches();
+        return player != null && player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(getUsernameFromPlayer(player)).matches();
     }
 
     public static void causeNauseaToPlayer(ItemStack stack)
