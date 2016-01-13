@@ -15,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
+import net.minecraftforge.fluids.IFluidBlock;
 
 public class Utils
 {
@@ -470,5 +471,10 @@ public class Utils
         }
 
         return stack;
+    }
+
+    public static boolean isBlockLiquid(Block block)
+    {
+        return (block instanceof IFluidBlock || block.getMaterial().isLiquid());
     }
 }

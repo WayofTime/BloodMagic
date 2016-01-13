@@ -143,32 +143,37 @@ public abstract class Ritual
      */
     public abstract ArrayList<RitualComponent> getComponents();
 
-    public void addOffsetRunes(ArrayList<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune)
+    public void addRune(ArrayList<RitualComponent> components, int offset1, int y, int offset2, EnumRuneType rune)
     {
         components.add(new RitualComponent(new BlockPos(offset1, y, offset2), rune));
-        components.add(new RitualComponent(new BlockPos(offset2, y, offset1), rune));
-        components.add(new RitualComponent(new BlockPos(offset1, y, -offset2), rune));
-        components.add(new RitualComponent(new BlockPos(-offset2, y, offset1), rune));
-        components.add(new RitualComponent(new BlockPos(-offset1, y, offset2), rune));
-        components.add(new RitualComponent(new BlockPos(offset2, y, -offset1), rune));
-        components.add(new RitualComponent(new BlockPos(-offset1, y, -offset2), rune));
-        components.add(new RitualComponent(new BlockPos(-offset2, y, -offset1), rune));
+    }
+
+    public void addOffsetRunes(ArrayList<RitualComponent> components, int offset1, int offset2, int y, EnumRuneType rune)
+    {
+        addRune(components, offset1, y, offset2, rune);
+        addRune(components, offset2, y, offset1, rune);
+        addRune(components, offset1, y, -offset2, rune);
+        addRune(components, -offset2, y, offset1, rune);
+        addRune(components, -offset1, y, offset2, rune);
+        addRune(components, offset2, y, -offset1, rune);
+        addRune(components, -offset1, y, -offset2, rune);
+        addRune(components, -offset2, y, -offset1, rune);
     }
 
     public void addCornerRunes(ArrayList<RitualComponent> components, int offset, int y, EnumRuneType rune)
     {
-        components.add(new RitualComponent(new BlockPos(offset, y, offset), rune));
-        components.add(new RitualComponent(new BlockPos(offset, y, -offset), rune));
-        components.add(new RitualComponent(new BlockPos(-offset, y, -offset), rune));
-        components.add(new RitualComponent(new BlockPos(-offset, y, offset), rune));
+        addRune(components, offset, y, offset, rune);
+        addRune(components, offset, y, -offset, rune);
+        addRune(components, -offset, y, -offset, rune);
+        addRune(components, -offset, y, offset, rune);
     }
 
     public void addParallelRunes(ArrayList<RitualComponent> components, int offset, int y, EnumRuneType rune)
     {
-        components.add(new RitualComponent(new BlockPos(offset, y, 0), rune));
-        components.add(new RitualComponent(new BlockPos(-offset, y, 0), rune));
-        components.add(new RitualComponent(new BlockPos(0, y, -offset), rune));
-        components.add(new RitualComponent(new BlockPos(0, y, offset), rune));
+        addRune(components, offset, y, 0, rune);
+        addRune(components, -offset, y, 0, rune);
+        addRune(components, 0, y, -offset, rune);
+        addRune(components, 0, y, offset, rune);
     }
 
     public enum BreakType

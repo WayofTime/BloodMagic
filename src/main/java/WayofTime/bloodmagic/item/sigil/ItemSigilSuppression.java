@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidBlock;
 
 public class ItemSigilSuppression extends ItemSigilToggleable
 {
@@ -39,7 +39,7 @@ public class ItemSigilSuppression extends ItemSigilToggleable
                     BlockPos blockPos = new BlockPos(x + i, y + j, z + k);
                     Block block = world.getBlockState(blockPos).getBlock();
 
-                    if (isBlockLiquid(block) && world.getTileEntity(blockPos) == null)
+                    if (Utils.isBlockLiquid(block) && world.getTileEntity(blockPos) == null)
                         TileSpectralBlock.createSpectralBlock(world, blockPos, refresh);
                     else
                     {
@@ -52,8 +52,5 @@ public class ItemSigilSuppression extends ItemSigilToggleable
         }
     }
 
-    private boolean isBlockLiquid(Block block)
-    {
-        return (block instanceof IFluidBlock || block.getMaterial().isLiquid());
-    }
+
 }

@@ -267,6 +267,12 @@ ritual.BloodMagic.harvestRitual=Reap of the Harvest Moon
 ritual.BloodMagic.magneticRitual=Ritual of Magnetism
 ritual.BloodMagic.crushingRitual=Ritual of the Crusher
 ritual.BloodMagic.fullStomachRitual=Ritual of the Satiated Stomach
+ritual.BloodMagic.interdictionRitual=Ritual of Interdiction
+ritual.BloodMagic.containmentRitual=Ritual of Containment
+ritual.BloodMagic.speedRitual=Ritual of Speed
+ritual.BloodMagic.suppressionRitual=Ritual of Suppression
+ritual.BloodMagic.expulsionRitual=Aura of Expulsion
+ritual.BloodMagic.zephyrRitual=Call of the Zephyr
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
