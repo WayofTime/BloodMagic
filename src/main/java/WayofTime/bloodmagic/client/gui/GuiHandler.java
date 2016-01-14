@@ -8,8 +8,10 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.TileTeleposer;
+import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
 import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
 import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
+import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -24,6 +26,8 @@ public class GuiHandler implements IGuiHandler
             return new ContainerTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
         case Constants.Gui.SOUL_FORGE_GUI:
             return new ContainerSoulForge(player.inventory, (TileSoulForge) world.getTileEntity(pos));
+        case Constants.Gui.ROUTING_NODE_GUI:
+            return new ContainerItemRoutingNode(player.inventory, (TileOutputRoutingNode) world.getTileEntity(pos));
         }
 
         return null;
@@ -42,6 +46,8 @@ public class GuiHandler implements IGuiHandler
                 return new GuiTeleposer(player.inventory, (TileTeleposer) world.getTileEntity(pos));
             case Constants.Gui.SOUL_FORGE_GUI:
                 return new GuiSoulForge(player.inventory, (TileSoulForge) world.getTileEntity(pos));
+            case Constants.Gui.ROUTING_NODE_GUI:
+                return new GuiItemRoutingNode(player.inventory, (TileOutputRoutingNode) world.getTileEntity(pos));
             }
         }
 

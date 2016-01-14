@@ -14,9 +14,15 @@ import WayofTime.bloodmagic.routing.IItemFilter;
 import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
+import WayofTime.bloodmagic.tile.TileInventory;
 
-public class TileRoutingNode extends TileEntity implements IRoutingNode, IItemRoutingNode
+public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode
 {
+    public TileRoutingNode(int size, String name)
+    {
+        super(size, name);
+    }
+
     private BlockPos masterPos = BlockPos.ORIGIN;
     private List<BlockPos> connectionList = new LinkedList<BlockPos>();
 

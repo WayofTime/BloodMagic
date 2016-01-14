@@ -91,6 +91,8 @@ public class Constants
         public static final String ROUTING_MASTER_GENERAL = "generalList";
         public static final String ROUTING_MASTER_INPUT = "inputList";
         public static final String ROUTING_MASTER_OUTPUT = "outputList";
+
+        public static final String GHOST_STACK_SIZE = "stackSize";
     }
 
     public static class Mod
@@ -106,6 +108,7 @@ public class Constants
     {
         public static final int TELEPOSER_GUI = 0;
         public static final int SOUL_FORGE_GUI = 1;
+        public static final int ROUTING_NODE_GUI = 2;
     }
 
     public static class Compat
