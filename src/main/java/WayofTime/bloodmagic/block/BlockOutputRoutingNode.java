@@ -10,7 +10,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 
 public class BlockOutputRoutingNode extends BlockContainer
@@ -43,9 +42,10 @@ public class BlockOutputRoutingNode extends BlockContainer
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof IRoutingNode)
+        if (tile instanceof TileOutputRoutingNode)
         {
-            ((IRoutingNode) tile).removeAllConnections();
+            ((TileOutputRoutingNode) tile).removeAllConnections();
+            ((TileOutputRoutingNode) tile).dropItems();
         }
         super.breakBlock(world, pos, state);
     }
@@ -59,31 +59,5 @@ public class BlockOutputRoutingNode extends BlockContainer
         }
 
         return true;
-
-//        if (world.isRemote)
-//        {
-//            return false;
-//        }
-//
-//        TileEntity tile = world.getTileEntity(pos);
-//        IRoutingNode node = (IRoutingNode) tile;
-//        ChatUtil.sendChat(player, "Master: " + node.getMasterPos().toString());
-//        for (BlockPos connPos : node.getConnected())
-//        {
-//            ChatUtil.sendChat(player, "Connected to: " + connPos.toString());
-//        }
-//
-//        BlockPos masterPos = node.getMasterPos();
-//        TileEntity testTile = world.getTileEntity(masterPos);
-//        if (testTile instanceof IMasterRoutingNode)
-//        {
-//            IMasterRoutingNode master = (IMasterRoutingNode) testTile;
-//            if (master.isConnected(new LinkedList<BlockPos>(), pos))
-//            {
-//                ChatUtil.sendChat(player, "Can find the path to the master");
-//            }
-//        }
-//
-//        return false;
     }
 }

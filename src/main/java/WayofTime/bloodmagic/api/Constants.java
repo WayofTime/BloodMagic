@@ -93,6 +93,8 @@ public class Constants
         public static final String ROUTING_MASTER_OUTPUT = "outputList";
 
         public static final String GHOST_STACK_SIZE = "stackSize";
+
+        public static final String ITEM_INVENTORY = "itemInventory";
     }
 
     public static class Mod

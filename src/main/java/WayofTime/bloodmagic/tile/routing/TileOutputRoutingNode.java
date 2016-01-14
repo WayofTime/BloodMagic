@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.tile.routing;
 
-public class TileOutputRoutingNode extends TileRoutingNode
+public class TileOutputRoutingNode extends TileFilteredRoutingNode
 {
     public TileOutputRoutingNode()
     {
-        super(1, "outputNode");
+        super(7, "outputNode");
     }
 }

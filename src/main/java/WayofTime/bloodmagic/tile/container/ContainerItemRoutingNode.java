@@ -1,28 +1,37 @@
 package WayofTime.bloodmagic.tile.container;
 
-import WayofTime.bloodmagic.util.GhostItemHelper;
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.item.inventory.ItemInventory;
+import WayofTime.bloodmagic.util.GhostItemHelper;
+import WayofTime.bloodmagic.util.Utils;
 
 public class ContainerItemRoutingNode extends Container
 {
     private final IInventory tileItemRoutingNode;
+    private final ItemInventory itemInventory;
     private int slotsOccupied;
 
     public ContainerItemRoutingNode(InventoryPlayer inventoryPlayer, IInventory tileItemRoutingNode)
     {
         this.tileItemRoutingNode = tileItemRoutingNode;
-//        this.addSlotToContainer(new Slot(tileItemRoutingNode, 0, 8, 15));
-//        this.addSlotToContainer(new Slot(tileItemRoutingNode, 1, 80, 15));
-//        this.addSlotToContainer(new Slot(tileItemRoutingNode, 2, 80, 87));
-//        this.addSlotToContainer(new Slot(tileItemRoutingNode, 3, 8, 87));
-        this.addSlotToContainer(new SlotGhostItem(tileItemRoutingNode, 0, 8, 33));
-        slotsOccupied = 1;
+
+        this.addSlotToContainer(new SlotItemFilter(this, tileItemRoutingNode, 0, 8, 33));
+        ItemStack masterStack = tileItemRoutingNode.getStackInSlot(0);
+        itemInventory = new ItemInventory(masterStack, 9, "");
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                addSlotToContainer(new SlotGhostItem(itemInventory, j + i * 3, 26 + j * 18, 15 + i * 18));
+            }
+        }
+        slotsOccupied = 10;
 //        this.addSlotToContainer(new SlotOutput(tileItemRoutingNode, TileSoulForge.outputSlot, 44, 51));
 
         for (int i = 0; i < 3; i++)
@@ -39,6 +48,11 @@ public class ContainerItemRoutingNode extends Container
         }
     }
 
+    public void resetItemInventory(ItemStack masterStack)
+    {
+        itemInventory.initializeInventory(masterStack);
+    }
+
     /**
      * Overridden in order to handle ghost item slots.
      */
@@ -46,7 +60,7 @@ public class ContainerItemRoutingNode extends Container
     public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer player)
     {
         InventoryPlayer inventoryPlayer = player.inventory;
-        if (!player.worldObj.isRemote)
+//        if (!player.worldObj.isRemote)
         {
             if (slotId >= 0)
             {
@@ -56,8 +70,6 @@ public class ContainerItemRoutingNode extends Container
                 {
                     if ((mode == 0 || mode == 1) && (clickedButton == 0 || clickedButton == 1))
                     {
-                        System.out.println("Clicked button: " + clickedButton + ", mode: " + mode);
-
                         ItemStack slotStack = slot.getStack();
                         ItemStack heldStack = inventoryPlayer.getItemStack();
 
@@ -71,6 +83,10 @@ public class ContainerItemRoutingNode extends Container
                                     slot.putStack(slotStack);
                                 } else if (heldStack != null)
                                 {
+                                    if (!((SlotGhostItem) slot).canBeAccessed())
+                                    {
+                                        return super.slotClick(slotId, clickedButton, mode, player);
+                                    }
                                     if (slotStack != null && Utils.canCombine(slotStack, heldStack))
                                     {
                                         GhostItemHelper.incrementGhostAmout(slotStack, heldStack.stackSize);
@@ -192,9 +208,12 @@ public class ContainerItemRoutingNode extends Container
 
     private class SlotItemFilter extends Slot
     {
-        public SlotItemFilter(IInventory inventory, int slotIndex, int x, int y)
+        public ContainerItemRoutingNode container;
+
+        public SlotItemFilter(ContainerItemRoutingNode container, IInventory inventory, int slotIndex, int x, int y)
         {
             super(inventory, slotIndex, x, y);
+            this.container = container;
         }
 
         @Override
@@ -202,13 +221,28 @@ public class ContainerItemRoutingNode extends Container
         {
             return true; //TODO: Create a new Item that holds the filter.
         }
+
+        @Override
+        public void onSlotChanged()
+        {
+            super.onSlotChanged();
+            container.resetItemInventory(getStack());
+            for (int i = 1; i <= 9; i++)
+            {
+                Slot slot = container.getSlot(i);
+                slot.onSlotChanged();
+            }
+        }
     }
 
     private class SlotGhostItem extends Slot
     {
-        public SlotGhostItem(IInventory inventory, int slotIndex, int x, int y)
+        private ItemInventory itemInv;
+
+        public SlotGhostItem(ItemInventory inventory, int slotIndex, int x, int y)
         {
             super(inventory, slotIndex, x, y);
+            itemInv = inventory;
         }
 
         @Override
@@ -221,6 +255,17 @@ public class ContainerItemRoutingNode extends Container
         public boolean canTakeStack(EntityPlayer playerIn)
         {
             return false;
+        }
+
+//        @Override
+//        public boolean isHere(IInventory inv, int slotIn)
+//        {
+//            return itemInv.canInventoryBeManipulated() && super.isHere(inv, slotIn);
+//        }
+
+        public boolean canBeAccessed()
+        {
+            return itemInv.canInventoryBeManipulated();
         }
     }
 }

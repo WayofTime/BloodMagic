@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.LinkedList;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,10 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.routing.IMasterRoutingNode;
-import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
-import WayofTime.bloodmagic.util.ChatUtil;
 
 public class BlockInputRoutingNode extends BlockContainer
 {
@@ -43,12 +38,14 @@ public class BlockInputRoutingNode extends BlockContainer
     }
 
     @Override
+    //TODO: Combine BlockOutputRoutingNode and BlockInputRoutingNode so they have the same superclass
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof IRoutingNode)
+        if (tile instanceof TileInputRoutingNode)
         {
-            ((IRoutingNode) tile).removeAllConnections();
+            ((TileInputRoutingNode) tile).removeAllConnections();
+            ((TileInputRoutingNode) tile).dropItems();
         }
         super.breakBlock(world, pos, state);
     }
@@ -56,30 +53,11 @@ public class BlockInputRoutingNode extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
+        if (world.getTileEntity(pos) instanceof TileInputRoutingNode)
         {
-            return false;
+            player.openGui(BloodMagic.instance, Constants.Gui.ROUTING_NODE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }
 
-        TileEntity tile = world.getTileEntity(pos);
-        IRoutingNode node = (IRoutingNode) tile;
-        ChatUtil.sendChat(player, "Master: " + node.getMasterPos().toString());
-        for (BlockPos connPos : node.getConnected())
-        {
-            ChatUtil.sendChat(player, "Connected to: " + connPos.toString());
-        }
-
-        BlockPos masterPos = node.getMasterPos();
-        TileEntity testTile = world.getTileEntity(masterPos);
-        if (testTile instanceof IMasterRoutingNode)
-        {
-            IMasterRoutingNode master = (IMasterRoutingNode) testTile;
-            if (master.isConnected(new LinkedList<BlockPos>(), pos))
-            {
-                ChatUtil.sendChat(player, "Can find the path to the master");
-            }
-        }
-
-        return false;
+        return true;
     }
 }
