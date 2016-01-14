@@ -14,6 +14,18 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
         super(size, name);
     }
 
+    public ItemStack getFilterStack(EnumFacing side)
+    {
+        int index = side.getIndex();
+        if (currentActiveSlot == index)
+        {
+            return getStackInSlot(0);
+        } else
+        {
+            return getStackInSlot(index + 1);
+        }
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {

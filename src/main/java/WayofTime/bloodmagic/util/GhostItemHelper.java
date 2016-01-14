@@ -41,10 +41,22 @@ public class GhostItemHelper
         setItemGhostAmount(stack, amount);
     }
 
-    public static void decrementGhostAmout(ItemStack stack, int value)
+    public static void decrementGhostAmount(ItemStack stack, int value)
     {
         int amount = getItemGhostAmount(stack);
         amount -= value;
         setItemGhostAmount(stack, amount);
+    }
+
+    public static ItemStack getStackFromGhost(ItemStack ghostStack)
+    {
+        ItemStack newStack = ghostStack.copy();
+        NBTHelper.checkNBT(newStack);
+        NBTTagCompound tag = newStack.getTagCompound();
+        int amount = getItemGhostAmount(ghostStack);
+        tag.removeTag(Constants.NBT.GHOST_STACK_SIZE);
+        newStack.stackSize = amount;
+
+        return newStack;
     }
 }

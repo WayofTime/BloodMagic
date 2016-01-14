@@ -3,16 +3,17 @@ package WayofTime.bloodmagic.routing;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 
 public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingNode, ITickable
 {
@@ -27,36 +28,94 @@ public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingN
     @Override
     public void update()
     {
-//        if (worldObj.isRemote || worldObj.getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
-//        {
-//            return;
-//        }
-//
-//        Map<Integer, List<IItemFilter>> outputMap = new HashMap<Integer, List<IItemFilter>>();
-//
-//        for (BlockPos outputPos : outputNodeList)
-//        {
-//            TileEntity outputTile = worldObj.getTileEntity(outputPos);
-//            if (outputTile instanceof TileOutputRoutingNode && this.isConnected(new LinkedList<BlockPos>(), outputPos))
-//            {
-//                TileOutputRoutingNode outputNode = (TileOutputRoutingNode) outputTile;
-//
-//                for (EnumFacing facing : EnumFacing.VALUES)
-//                {
-//                    if (!outputNode.isInventoryConnectedToSide(facing))
-//                    {
-//                        continue;
-//                    }
-//
-//                    TileEntity tile = worldObj.getTileEntity(outputPos.offset(facing));
-//                    if (!(tile instanceof IInventory))
-//                    {
-//                        continue;
-//                    }
-//
-//                }
-//            }
-//        }
+        if (worldObj.isRemote || worldObj.getTotalWorldTime() % tickRate != 0) //Temporary tick rate solver
+        {
+            return;
+        }
+
+        Map<Integer, List<IItemFilter>> outputMap = new HashMap<Integer, List<IItemFilter>>();
+
+        for (BlockPos outputPos : outputNodeList)
+        {
+            TileEntity outputTile = worldObj.getTileEntity(outputPos);
+            if (outputTile instanceof IOutputItemRoutingNode && this.isConnected(new LinkedList<BlockPos>(), outputPos))
+            {
+                IOutputItemRoutingNode outputNode = (IOutputItemRoutingNode) outputTile;
+
+                for (EnumFacing facing : EnumFacing.VALUES)
+                {
+                    if (!outputNode.isInventoryConnectedToSide(facing) || !outputNode.isOutput(facing))
+                    {
+                        continue;
+                    }
+
+                    IItemFilter filter = outputNode.getOutputFilterForSide(facing);
+                    if (filter != null)
+                    {
+                        int priority = outputNode.getPriority(facing);
+                        if (outputMap.containsKey(priority))
+                        {
+                            outputMap.get(priority).add(filter);
+                        } else
+                        {
+                            List<IItemFilter> filterList = new LinkedList<IItemFilter>();
+                            filterList.add(filter);
+                            outputMap.put(priority, filterList);
+                        }
+                    }
+                }
+            }
+        }
+
+        Map<Integer, List<IItemFilter>> inputMap = new HashMap<Integer, List<IItemFilter>>();
+
+        for (BlockPos inputPos : inputNodeList)
+        {
+            TileEntity inputTile = worldObj.getTileEntity(inputPos);
+            if (inputTile instanceof IInputItemRoutingNode && this.isConnected(new LinkedList<BlockPos>(), inputPos))
+            {
+                IInputItemRoutingNode inputNode = (IInputItemRoutingNode) inputTile;
+
+                for (EnumFacing facing : EnumFacing.VALUES)
+                {
+                    if (!inputNode.isInventoryConnectedToSide(facing) || !inputNode.isInput(facing))
+                    {
+                        continue;
+                    }
+
+                    IItemFilter filter = inputNode.getInputFilterForSide(facing);
+                    if (filter != null)
+                    {
+                        int priority = inputNode.getPriority(facing);
+                        if (inputMap.containsKey(priority))
+                        {
+                            inputMap.get(priority).add(filter);
+                        } else
+                        {
+                            List<IItemFilter> filterList = new LinkedList<IItemFilter>();
+                            filterList.add(filter);
+                            inputMap.put(priority, filterList);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
+        {
+            List<IItemFilter> outputList = outputEntry.getValue();
+            for (IItemFilter outputFilter : outputList)
+            {
+                for (Entry<Integer, List<IItemFilter>> inputEntry : inputMap.entrySet())
+                {
+                    List<IItemFilter> inputList = inputEntry.getValue();
+                    for (IItemFilter inputFilter : inputList)
+                    {
+                        inputFilter.transferThroughInputFilter(outputFilter);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -187,11 +246,11 @@ public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingN
         {
             generalNodeList.add(newPos);
         }
-        if (node instanceof TileInputRoutingNode && !inputNodeList.contains(newPos))
+        if (node instanceof IInputItemRoutingNode && !inputNodeList.contains(newPos))
         {
             inputNodeList.add(newPos);
         }
-        if (node instanceof TileOutputRoutingNode && !outputNodeList.contains(newPos))
+        if (node instanceof IOutputItemRoutingNode && !outputNodeList.contains(newPos))
         {
             outputNodeList.add(newPos);
         }

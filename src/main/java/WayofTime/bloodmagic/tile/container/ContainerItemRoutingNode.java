@@ -119,7 +119,7 @@ public class ContainerItemRoutingNode extends Container
                             {
                                 if (slotStack != null)
                                 {
-                                    GhostItemHelper.decrementGhostAmout(slotStack, 1);
+                                    GhostItemHelper.decrementGhostAmount(slotStack, 1);
                                     if (GhostItemHelper.getItemGhostAmount(slotStack) < 0)
                                     {
                                         slot.putStack(null);

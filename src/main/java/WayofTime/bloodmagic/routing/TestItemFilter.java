@@ -205,7 +205,7 @@ public class TestItemFilter implements IItemFilter
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
-    public void transferThroughInputFilter(TestItemFilter outputFilter)
+    public void transferThroughInputFilter(IItemFilter outputFilter)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
         if (accessedInventory instanceof ISidedInventory)

@@ -10,7 +10,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.routing.IItemFilter;
 import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
@@ -168,13 +167,12 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     @Override
     public boolean isInventoryConnectedToSide(EnumFacing side)
     {
-        //TODO: Implement connections for side
-        return true;
+        return false;
     }
 
     @Override
-    public IItemFilter generateFilterForSide(EnumFacing side)
+    public int getPriority(EnumFacing side)
     {
-        return null;
+        return 0;
     }
 }
