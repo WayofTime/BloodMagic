@@ -4,6 +4,7 @@ Version 2.0.0-5
 - Tweaked Sentient Sword's will drop rate
 - No longer 1.8.8 compatible
 - Cleaned some clutter from JEI
+- Added a potential fix to some server mod issues.
 
 
 ------------------------------------------------------

@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.ItemBindEvent;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import com.google.common.base.Strings;
+import java.util.UUID;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-
-import java.util.UUID;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.ItemBindEvent;
+import WayofTime.bloodmagic.api.iface.IBindable;
 
 public class BindableHelper
 {
@@ -26,7 +25,7 @@ public class BindableHelper
      */
     public static boolean checkAndSetItemOwner(ItemStack stack, EntityPlayer player)
     {
-        return !PlayerHelper.isFakePlayer(player) && checkAndSetItemOwner(stack, PlayerHelper.getUUIDFromPlayer(player));
+        return !PlayerHelper.isFakePlayer(player) && checkAndSetItemOwner(stack, PlayerHelper.getUUIDFromPlayer(player), player.getName());
     }
 
     /**
@@ -41,22 +40,30 @@ public class BindableHelper
      *        - The ItemStack to bind
      * @param uuid
      *        - The username to bind the ItemStack to
+     * @param currentUsername
+     *        - The current name of the player.
      * 
      * @return - Whether the binding was successful
      */
-    public static boolean checkAndSetItemOwner(ItemStack stack, String uuid)
+    public static boolean checkAndSetItemOwner(ItemStack stack, String uuid, String currentUsername)
     {
         stack = NBTHelper.checkNBT(stack);
 
         if (!(stack.getItem() instanceof IBindable))
             return false;
 
-        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+        String currentOwner = stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
+
+        if (currentOwner == "") //The player has not been set yet, so set everything.
         {
             MinecraftForge.EVENT_BUS.post(new ItemBindEvent(PlayerHelper.getPlayerFromUUID(uuid), uuid, stack));
             ((IBindable) stack.getItem()).onBind(PlayerHelper.getPlayerFromUUID(uuid), stack);
             stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, uuid);
+            stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, currentUsername);
             return true;
+        } else if (currentOwner.equals(uuid)) //The player has been set, so this will simply update the display name
+        {
+            stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, currentUsername);
         }
 
         return true;
@@ -69,10 +76,12 @@ public class BindableHelper
      *        - ItemStack to check
      * @param uuid
      *        - UUID of the Player
+     * @param currentUsername
+     *        - The current name of the player.
      */
-    public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid)
+    public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid, String currentUsername)
     {
-        return checkAndSetItemOwner(stack, uuid.toString());
+        return checkAndSetItemOwner(stack, uuid.toString(), currentUsername);
     }
 
     /**

@@ -25,10 +25,6 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-
-        if (PlayerHelper.isFakePlayer(player))
-            return stack;
-
         super.onItemRightClick(stack, world, player);
 
         if (!world.isRemote)

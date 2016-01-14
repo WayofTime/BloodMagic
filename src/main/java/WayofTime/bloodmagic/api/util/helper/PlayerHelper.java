@@ -23,7 +23,7 @@ public class PlayerHelper
 
     public static String getUsernameFromPlayer(EntityPlayer player)
     {
-        return UsernameCache.getLastKnownUsername(getUUIDFromPlayer(player));
+        return player.worldObj.isRemote ? "" : UsernameCache.getLastKnownUsername(getUUIDFromPlayer(player));
     }
 
     public static EntityPlayer getPlayerFromUsername(String username)
@@ -63,16 +63,19 @@ public class PlayerHelper
     {
         stack = NBTHelper.checkNBT(stack);
 
-        return PlayerHelper.getUsernameFromUUID(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID));
+        return stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
     }
 
     public static boolean isFakePlayer(EntityPlayer player)
     {
-        return player != null && player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(getUsernameFromPlayer(player)).matches();
+        return player != null && (player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(getUsernameFromPlayer(player)).matches());
     }
 
     public static void causeNauseaToPlayer(ItemStack stack)
     {
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+            return;
+
         stack = NBTHelper.checkNBT(stack);
 
         if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
