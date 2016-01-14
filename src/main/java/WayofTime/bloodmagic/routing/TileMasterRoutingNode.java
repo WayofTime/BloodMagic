@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.routing;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,6 +34,8 @@ public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingN
         {
             return;
         }
+
+        Map<Integer, List<IItemFilter>> outputMap = new HashMap<Integer, List<IItemFilter>>();
 
         for (BlockPos outputPos : outputNodeList)
         {
