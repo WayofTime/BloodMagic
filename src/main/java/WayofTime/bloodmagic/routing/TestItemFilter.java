@@ -182,9 +182,12 @@ public class TestItemFilter implements IItemFilter
 
         ItemStack testStack = inputStack.copy();
         testStack.stackSize = allowedAmount;
-        ItemStack remainderStack = Utils.insertStackIntoInventory(testStack, accessedInventory, accessedSide, allowedAmount);
+        ItemStack remainderStack = Utils.insertStackIntoInventory(testStack, accessedInventory, accessedSide);
+//        System.out.println("Remaining stack size: " + (remainderStack != null ? remainderStack.stackSize : 0) + ", allowed amount: " + allowedAmount);
 
-        int changeAmount = inputStack.stackSize - (remainderStack == null ? 0 : remainderStack.stackSize);
+        int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
+        testStack = inputStack.copy();
+        testStack.stackSize -= changeAmount;
 
         for (ItemStack filterStack : requestList)
         {
@@ -198,7 +201,7 @@ public class TestItemFilter implements IItemFilter
             }
         }
 
-        return remainderStack;
+        return testStack;
     }
 
     /**
@@ -254,6 +257,8 @@ public class TestItemFilter implements IItemFilter
             ItemStack testStack = inputStack.copy();
             testStack.stackSize = allowedAmount;
             ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
+            int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
+//            System.out.println("Change amount: " + changeAmount);
 
             if (remainderStack != null && remainderStack.stackSize == allowedAmount)
             {
@@ -261,9 +266,9 @@ public class TestItemFilter implements IItemFilter
                 continue;
             }
 
-            accessedInventory.setInventorySlotContents(slot, remainderStack); //Sets the slot in the inventory
+            inputStack.stackSize -= changeAmount;
 
-            int changeAmount = inputStack.stackSize - (remainderStack == null ? 0 : remainderStack.stackSize);
+            accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
 
             for (ItemStack filterStack : requestList)
             {

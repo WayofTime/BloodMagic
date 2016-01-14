@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.routing.TileMasterRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
 public class BlockMasterRoutingNode extends BlockContainer
 {

@@ -31,7 +31,6 @@ import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
-import WayofTime.bloodmagic.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
@@ -42,6 +41,7 @@ import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 

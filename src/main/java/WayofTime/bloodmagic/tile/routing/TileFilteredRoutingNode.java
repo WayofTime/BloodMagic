@@ -27,6 +27,12 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     }
 
     @Override
+    public boolean isInventoryConnectedToSide(EnumFacing side)
+    {
+        return true;
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound tag)
     {
         super.readFromNBT(tag);

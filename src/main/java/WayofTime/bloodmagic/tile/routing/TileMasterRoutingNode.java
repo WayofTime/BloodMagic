@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.routing;
+package WayofTime.bloodmagic.tile.routing;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,6 +14,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
+import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.routing.IMasterRoutingNode;
+import WayofTime.bloodmagic.routing.IOutputItemRoutingNode;
+import WayofTime.bloodmagic.routing.IRoutingNode;
+import WayofTime.bloodmagic.routing.NodeHelper;
 
 public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingNode, ITickable
 {
@@ -46,6 +52,7 @@ public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingN
                 {
                     if (!outputNode.isInventoryConnectedToSide(facing) || !outputNode.isOutput(facing))
                     {
+                        System.out.println("Hello");
                         continue;
                     }
 
