@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.tile.routing;
 import java.util.LinkedList;
 import java.util.List;
 
-import scala.Int;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -54,7 +53,7 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
                 ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
                 if (ghostStack.stackSize == 0)
                 {
-                    ghostStack.stackSize = Int.MaxValue();
+                    ghostStack.stackSize = Integer.MAX_VALUE;
                 }
 
                 filteredList.add(ghostStack);
