@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.util;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
@@ -15,6 +18,8 @@ import net.minecraft.util.EnumFacing;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
+import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.fluids.IFluidBlock;
 
 public class Utils
@@ -126,7 +131,7 @@ public class Utils
             if (amount <= 0)
                 return 0;
 
-            amount = net.minecraftforge.common.ISpecialArmor.ArmorProperties.applyArmor(attackedEntity, attackedEntity.getInventory(), source, amount);
+            amount = applyArmor(attackedEntity, attackedEntity.getInventory(), source, amount);
             if (amount <= 0)
                 return 0;
             amount = applyPotionDamageCalculations(attackedEntity, source, amount);
@@ -135,6 +140,55 @@ public class Utils
         }
 
         return 0;
+    }
+
+    public static float applyArmor(EntityLivingBase entity, ItemStack[] inventory, DamageSource source, double damage)
+    {
+        damage *= 25;
+        ArrayList<ArmorProperties> dmgVals = new ArrayList<ArmorProperties>();
+        for (int x = 0; x < inventory.length; x++)
+        {
+            ItemStack stack = inventory[x];
+            if (stack == null)
+            {
+                continue;
+            }
+            ArmorProperties prop = null;
+            if (stack.getItem() instanceof ISpecialArmor)
+            {
+                ISpecialArmor armor = (ISpecialArmor) stack.getItem();
+                prop = armor.getProperties(entity, stack, source, damage / 25D, x).copy();
+            } else if (stack.getItem() instanceof ItemArmor && !source.isUnblockable())
+            {
+                ItemArmor armor = (ItemArmor) stack.getItem();
+                prop = new ArmorProperties(0, armor.damageReduceAmount / 25D, Integer.MAX_VALUE);
+            }
+            if (prop != null)
+            {
+                prop.Slot = x;
+                dmgVals.add(prop);
+            }
+        }
+        if (dmgVals.size() > 0)
+        {
+            ArmorProperties[] props = dmgVals.toArray(new ArmorProperties[dmgVals.size()]);
+            int level = props[0].Priority;
+            double ratio = 0;
+            for (ArmorProperties prop : props)
+            {
+                if (level != prop.Priority)
+                {
+                    damage -= (damage * ratio);
+                    ratio = 0;
+                    level = prop.Priority;
+                }
+                ratio += prop.AbsorbRatio;
+
+            }
+            damage -= (damage * ratio);
+        }
+
+        return (float) (damage / 25.0F);
     }
 
     public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage)

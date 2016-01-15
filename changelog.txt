@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.0-6
+------------------------------------------------------
+- Fixed the LivingArmourTracker for defense so that it no longer ate up armour (om nom nom nom)
+
+------------------------------------------------------
 Version 2.0.0-5
 ------------------------------------------------------
 - Tweaked Sentient Sword's will drop rate

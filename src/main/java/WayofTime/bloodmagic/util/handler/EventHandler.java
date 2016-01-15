@@ -255,10 +255,9 @@ public class EventHandler
                 }
             }
 
-            float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.source, event.ammount), attackedPlayer.getHealth());
-
             if (hasFullSet)
             {
+                float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.source, event.ammount), attackedPlayer.getHealth());
                 ItemStack chestStack = attackedPlayer.getCurrentArmor(2);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
@@ -295,10 +294,9 @@ public class EventHandler
                 }
             }
 
-            float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.source, event.ammount), attackedEntity.getHealth());
-
             if (hasFullSet)
             {
+                float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.source, event.ammount), attackedEntity.getHealth());
                 ItemStack chestStack = player.getCurrentArmor(2);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)

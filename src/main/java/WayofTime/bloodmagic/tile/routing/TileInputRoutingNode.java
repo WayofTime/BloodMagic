@@ -50,10 +50,16 @@ public class TileInputRoutingNode extends TileFilteredRoutingNode implements IIn
                     continue;
                 }
 
-                filteredList.add(GhostItemHelper.getStackFromGhost(stack));
+                ItemStack ghostResult = GhostItemHelper.getStackFromGhost(stack);
+//                if (ghostResult.stackSize == 0)
+//                {
+//                    ghostResult.stackSize = Int.MaxValue();
+//                }
+
+                filteredList.add(ghostResult);
             }
 
-            testFilter.initializeFilter(filteredList, (IInventory) tile, side, false);
+            testFilter.initializeFilter(filteredList, (IInventory) tile, side.getOpposite(), false);
 
             return testFilter;
         }

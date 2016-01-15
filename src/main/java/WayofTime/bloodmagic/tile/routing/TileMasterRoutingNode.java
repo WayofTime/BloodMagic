@@ -52,7 +52,6 @@ public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingN
                 {
                     if (!outputNode.isInventoryConnectedToSide(facing) || !outputNode.isOutput(facing))
                     {
-                        System.out.println("Hello");
                         continue;
                     }
 
