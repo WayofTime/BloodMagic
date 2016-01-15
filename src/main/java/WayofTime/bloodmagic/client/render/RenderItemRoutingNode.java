@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.client.render;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -39,21 +40,19 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
             float rotYaw = -((float) (Math.atan2(zd, xd) * 180.0D / Math.PI));
             float rotPitch = ((float) (Math.atan2(yd, subLength) * 180.0D / Math.PI));
 
-            GL11.glPushMatrix();
+            GlStateManager.pushMatrix();
             float f1 = 1.0f;
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer wr = tessellator.getWorldRenderer();
             this.bindTexture(field_110629_a);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
             GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_CULL_FACE);
+            GlStateManager.disableLighting();
+            GlStateManager.disableCull();
             float f2 = 0;
             float f3 = -f2 * 0.2F - (float) MathHelper.floor_float(-f2 * 0.1F);
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-            GL11.glDepthMask(false);
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
             double width = 0.1;
 
@@ -73,15 +72,13 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
             double d29 = (double) (f3) + test;
             double d30 = (double) (distance * f1) + d29;
 
-            GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
+            GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 
-            GL11.glRotatef(rotYaw, 0.0F, 1, 0);
-            GL11.glRotatef(rotPitch, 0, 0.0F, 1);
+            GlStateManager.rotate(rotYaw, 0, 1, 0);
+            GlStateManager.rotate(rotPitch, 0, 0, 1);
 
 //        tessellator.setBrightness(240);
 //        float s = 1F / 16F;
-//        GL11.glTranslatef(0F, s, s);
-//        GL11.glScalef(1F, s * 14F, s * 14F);
             wr.begin(7, DefaultVertexFormats.POSITION_TEX);
 //        tessellator.setColorRGBA(255, 255, 255, 100);
             wr.pos(d26, d18, d19).tex(d28, d30).endVertex();
@@ -105,12 +102,9 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
             tessellator.draw();
             ShaderHelper.releaseShader();
 
-            GL11.glDepthMask(true);
-
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            GL11.glPopMatrix();
+            GlStateManager.enableLighting();
+            GlStateManager.enableTexture2D();
+            GlStateManager.popMatrix();
         }
     }
 }
