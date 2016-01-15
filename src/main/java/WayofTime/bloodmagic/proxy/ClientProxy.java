@@ -6,9 +6,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.client.mesh.ItemSentientSwordMeshDefinition;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
+import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
@@ -17,6 +19,7 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.handler.ClientEventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
@@ -45,6 +48,7 @@ public class ClientProxy extends CommonProxy
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyArray.class, new RenderAlchemyArray());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAltar.class, new RenderAltar());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileRoutingNode.class, new RenderItemRoutingNode());
 
         ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new ItemSentientSwordMeshDefinition());
     }
@@ -54,6 +58,7 @@ public class ClientProxy extends CommonProxy
     {
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
+        ShaderHelper.initShaders();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.proxy;
 
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import WayofTime.bloodmagic.util.handler.EventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
@@ -31,5 +31,11 @@ public class CommonProxy
     public void registerRenderers()
     {
 
+    }
+
+    public Object beamCont(World worldObj, double xi, double yi, double zi, double tx, double ty, double tz, int type, int color, boolean reverse, float endmod, Object input, int impact)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

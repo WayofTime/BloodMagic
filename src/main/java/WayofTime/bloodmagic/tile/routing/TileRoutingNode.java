@@ -9,6 +9,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
@@ -151,6 +153,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     {
         if (!connectionList.contains(pos1))
         {
+            worldObj.markBlockForUpdate(this.pos);
             connectionList.add(pos1);
         }
     }
@@ -160,6 +163,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     {
         if (connectionList.contains(pos1))
         {
+            worldObj.markBlockForUpdate(this.pos);
             connectionList.remove(pos1);
         }
     }
@@ -174,5 +178,12 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     public int getPriority(EnumFacing side)
     {
         return 0;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public double getMaxRenderDistanceSquared()
+    {
+        return 10000;
     }
 }
