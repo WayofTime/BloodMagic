@@ -1,0 +1,14 @@
+{
+  "parent": "bloodmagic:block/routing/OutputRoutingNodeCore",
+  "textures": {
+			"core": "blocks/gold_block",
+			"attachment": "minecraft:blocks/stone"
+		},
+  "display": {
+    "thirdperson": {
+      "rotation": [ 10, -45, 170 ],
+      "translation": [ 0, 1.5, -2.75 ],
+      "scale": [ 0.375, 0.375, 0.375 ]
+    }
+  }
+}

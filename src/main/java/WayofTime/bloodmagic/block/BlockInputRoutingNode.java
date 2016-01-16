@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,19 +8,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 
-public class BlockInputRoutingNode extends BlockContainer
+public class BlockInputRoutingNode extends BlockRoutingNode
 {
     public BlockInputRoutingNode()
     {
-        super(Material.rock);
+        super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".inputRouting");
-        setCreativeTab(BloodMagic.tabBloodMagic);
-        setHardness(2.0F);
-        setResistance(5.0F);
-        setHarvestLevel("pickaxe", 2);
     }
 
     @Override
@@ -34,7 +28,7 @@ public class BlockInputRoutingNode extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new TileInputRoutingNode();
+        return new TileOutputRoutingNode();
     }
 
     @Override
@@ -42,10 +36,10 @@ public class BlockInputRoutingNode extends BlockContainer
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileInputRoutingNode)
+        if (tile instanceof TileOutputRoutingNode)
         {
-            ((TileInputRoutingNode) tile).removeAllConnections();
-            ((TileInputRoutingNode) tile).dropItems();
+            ((TileOutputRoutingNode) tile).removeAllConnections();
+            ((TileOutputRoutingNode) tile).dropItems();
         }
         super.breakBlock(world, pos, state);
     }
@@ -53,7 +47,7 @@ public class BlockInputRoutingNode extends BlockContainer
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.getTileEntity(pos) instanceof TileInputRoutingNode)
+        if (world.getTileEntity(pos) instanceof TileOutputRoutingNode)
         {
             player.openGui(BloodMagic.instance, Constants.Gui.ROUTING_NODE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }

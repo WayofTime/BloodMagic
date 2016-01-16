@@ -11,7 +11,7 @@
 			}
 		],
 		"textures": {
-			"core": "blocks/gold_block",
+			"core": "blocks/cobblestone",
 			"attachment": "minecraft:blocks/stone"
 		},
 		"uvlock": true	// This and all other properties of "defaults" will be inherited by simple submodels. They will NOT be inherited by named submodels.

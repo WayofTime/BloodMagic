@@ -14,6 +14,7 @@ import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.block.BlockCrystal;
 import WayofTime.bloodmagic.block.BlockInputRoutingNode;
+import WayofTime.bloodmagic.block.BlockItemRoutingNode;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
 import WayofTime.bloodmagic.block.BlockOutputRoutingNode;
@@ -41,6 +42,7 @@ import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
@@ -68,6 +70,7 @@ public class ModBlocks
     public static Block masterRoutingNode;
     public static Block inputRoutingNode;
     public static Block outputRoutingNode;
+    public static Block itemRoutingNode;
 
     public static void init()
     {
@@ -91,6 +94,7 @@ public class ModBlocks
         masterRoutingNode = registerBlock(new BlockMasterRoutingNode());
         inputRoutingNode = registerBlock(new BlockInputRoutingNode());
         outputRoutingNode = registerBlock(new BlockOutputRoutingNode());
+        itemRoutingNode = registerBlock(new BlockItemRoutingNode());
 
         initTiles();
     }
@@ -109,6 +113,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileMasterRoutingNode.class, Constants.Mod.MODID + ":" + TileMasterRoutingNode.class.getSimpleName());
         GameRegistry.registerTileEntity(TileInputRoutingNode.class, Constants.Mod.MODID + ":" + TileInputRoutingNode.class.getSimpleName());
         GameRegistry.registerTileEntity(TileOutputRoutingNode.class, Constants.Mod.MODID + ":" + TileOutputRoutingNode.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileItemRoutingNode.class, Constants.Mod.MODID + ":" + TileItemRoutingNode.class.getSimpleName());
     }
 
     public static void initRenders()
@@ -144,6 +149,8 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(phantomBlock));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(soulForge));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(outputRoutingNode));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
