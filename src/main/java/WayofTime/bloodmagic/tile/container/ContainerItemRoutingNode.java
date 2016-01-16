@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
+import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -169,7 +170,7 @@ public class ContainerItemRoutingNode extends Container
             } else if (index > 0)
             {
 //                return null;
-                if (true) // Change to check item is a filter
+                if (itemstack1.getItem() instanceof IItemFilterProvider) // Change to check item is a filter
                 {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
@@ -219,7 +220,7 @@ public class ContainerItemRoutingNode extends Container
         @Override
         public boolean isItemValid(ItemStack itemStack)
         {
-            return true; //TODO: Create a new Item that holds the filter.
+            return itemStack.getItem() instanceof IItemFilterProvider; //TODO: Create a new Item that holds the filter.
         }
 
         @Override

@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
 
 public class BlockInputRoutingNode extends BlockRoutingNode
 {
@@ -28,18 +28,18 @@ public class BlockInputRoutingNode extends BlockRoutingNode
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
-        return new TileOutputRoutingNode();
+        return new TileInputRoutingNode();
     }
 
     @Override
-    //TODO: Combine BlockOutputRoutingNode and BlockInputRoutingNode so they have the same superclass
+    //TODO: Combine BlockInputRoutingNode and BlockInputRoutingNode so they have the same superclass
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileOutputRoutingNode)
+        if (tile instanceof TileInputRoutingNode)
         {
-            ((TileOutputRoutingNode) tile).removeAllConnections();
-            ((TileOutputRoutingNode) tile).dropItems();
+            ((TileInputRoutingNode) tile).removeAllConnections();
+            ((TileInputRoutingNode) tile).dropItems();
         }
         super.breakBlock(world, pos, state);
     }
@@ -47,7 +47,7 @@ public class BlockInputRoutingNode extends BlockRoutingNode
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (world.getTileEntity(pos) instanceof TileOutputRoutingNode)
+        if (world.getTileEntity(pos) instanceof TileInputRoutingNode)
         {
             player.openGui(BloodMagic.instance, Constants.Gui.ROUTING_NODE_GUI, world, pos.getX(), pos.getY(), pos.getZ());
         }

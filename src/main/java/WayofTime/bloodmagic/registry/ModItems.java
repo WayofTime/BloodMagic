@@ -33,6 +33,7 @@ import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.item.gear.ItemPackSelfSacrifice;
 import WayofTime.bloodmagic.item.routing.ItemNodeRouter;
+import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.ItemSigilAir;
 import WayofTime.bloodmagic.item.sigil.ItemSigilBloodLight;
 import WayofTime.bloodmagic.item.sigil.ItemSigilCompression;
@@ -133,6 +134,7 @@ public class ModItems
     public static Item sentientArmourGem;
 
     public static Item nodeRouter;
+    public static Item baseItemFilter;
 
     public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
@@ -220,6 +222,7 @@ public class ModItems
         sentientArmourGem = registerItem(new ItemSentientArmourGem());
 
         nodeRouter = registerItem(new ItemNodeRouter());
+        baseItemFilter = registerItem(new ItemRouterFilter());
     }
 
     public static void initRenders()
@@ -306,6 +309,8 @@ public class ModItems
             renderHelper.itemRender(itemComponent, i);
         for (int i = 0; i < ItemTelepositionFocus.names.length; i++)
             renderHelper.itemRender(telepositionFocus, i);
+        for (int i = 0; i < ItemRouterFilter.names.length; i++)
+            renderHelper.itemRender(baseItemFilter, i);
 
         renderHelper.itemRender(bloodShard, 0);
         renderHelper.itemRender(bloodShard, 1);
@@ -341,6 +346,8 @@ public class ModItems
 
         renderHelper.itemRender(sentientArmourGem, 0, "ItemSentientArmourGem0");
         renderHelper.itemRender(sentientArmourGem, 1, "ItemSentientArmourGem1");
+
+        renderHelper.itemRender(nodeRouter);
     }
 
     private static Item registerItem(Item item, String name)

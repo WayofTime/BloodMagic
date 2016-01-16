@@ -120,6 +120,9 @@ item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Snare
 item.BloodMagic.sentientBow.name=Sentient Bow
 
+item.BloodMagic.nodeRouter.name=Node Router
+item.BloodMagic.itemFilter.exact.name=Precise Item Filter
+
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
 
@@ -158,6 +161,11 @@ tile.BloodMagic.phantomBlock.name=Phantom Block
 
 tile.BloodMagic.teleposer.name=Teleposer
 tile.BloodMagic.soulForge.name=Hellfire Forge
+
+tile.BloodMagic.masterRouting.name=Master Routing Node
+tile.BloodMagic.outputRouting.name=Output Routing Node
+tile.BloodMagic.inputRouting.name=Input Routing Node
+tile.BloodMagic.itemRouting.name=Routing Node
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
@@ -253,6 +261,8 @@ tooltip.BloodMagic.soulGem.common=A gem used to contain more will
 tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of will
 tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
 tooltip.BloodMagic.soulSnare.desc=Throw at a monster and then kill them to obtain their demonic will
+
+tooltip.BloodMagic.itemFilter.exact=Will make sure the items match precisely.
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
