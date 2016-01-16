@@ -143,6 +143,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(spectralBlock));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(phantomBlock));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(soulForge));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(outputRoutingNode));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)

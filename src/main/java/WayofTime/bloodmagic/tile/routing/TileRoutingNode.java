@@ -53,6 +53,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     public void readFromNBT(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
+        connectionList.clear();
         NBTTagCompound masterTag = tag.getCompoundTag(Constants.NBT.ROUTING_MASTER);
         masterPos = new BlockPos(masterTag.getInteger(Constants.NBT.X_COORD), masterTag.getInteger(Constants.NBT.Y_COORD), masterTag.getInteger(Constants.NBT.Z_COORD));
 
@@ -75,13 +76,15 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
         }
         for (BlockPos testPos : connectionList)
         {
-            this.removeConnection(testPos);
             TileEntity tile = worldObj.getTileEntity(testPos);
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);
+                worldObj.markBlockForUpdate(testPos);
             }
         }
+
+        connectionList.clear();
     }
 
     @Override
@@ -163,8 +166,9 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     {
         if (connectionList.contains(pos1))
         {
-            worldObj.markBlockForUpdate(this.pos);
             connectionList.remove(pos1);
+            System.out.println("Position: " + pos + ", remaining: " + connectionList.size());
+            worldObj.markBlockForUpdate(pos);
         }
     }
 

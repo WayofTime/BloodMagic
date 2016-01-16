@@ -1,6 +1,45 @@
 {
-    "variants": {
-        "normal": { "model": "bloodmagic:BlockOutputRoutingNode" }
-    }
+	"forge_marker": 1,
+	"defaults": {
+		"model": "bloodmagic:routing/OutputRoutingNodeCore",
+		"rotation": [
+			{ 
+				"y": 45 
+			}, 
+			{ 
+				"x": 45
+			}
+		],
+		"textures": {
+			"core": "blocks/iron_block",
+			"attachment": "minecraft:blocks/stone"
+		},
+		"uvlock": true	// This and all other properties of "defaults" will be inherited by simple submodels. They will NOT be inherited by named submodels.
+	},
+	"variants": {
+		"north": {
+			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase"},	// Simple submodel declaration. You can also specify multiple submodels for a variant.
+			"false": {}
+		},
+		"south": {
+			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "y": 180},
+			"false": {}
+		},
+		"east": {
+			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "y": 90},	// Submodel will be rotated.
+			"false": {}
+		},
+		"west": {
+			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "y": 270},
+			"false": {}
+		},
+		"down": {
+			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "x": 90}, 
+			"false": {}
+		},
+		"up": {
+			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "x": -90}, 
+			"false": {}
+		}	// Must have this in here or the blockstates loader will not know of all the properties and values, and it will create the wrong vanilla state strings.
+	}
 }
-
