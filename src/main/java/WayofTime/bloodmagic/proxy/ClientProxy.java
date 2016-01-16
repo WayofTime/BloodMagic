@@ -58,7 +58,7 @@ public class ClientProxy extends CommonProxy
     {
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
-        ShaderHelper.initShaders();
+        ShaderHelper.init();
     }
 
     @Override

@@ -98,7 +98,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
             wr.pos(0, d18, d19).tex(d27, d29).endVertex();
             wr.pos(d26, d18, d19).tex(d27, d30).endVertex();
 
-            ShaderHelper.useShaderWithProps(ShaderHelper.beam, "time", (int) tileNode.getWorld().getTotalWorldTime());
+            ShaderHelper.useShader(ShaderHelper.psiBar, (int) tileNode.getWorld().getTotalWorldTime());
             tessellator.draw();
             ShaderHelper.releaseShader();
 

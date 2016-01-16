@@ -3,9 +3,8 @@
  * part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
  * 
- * Botania is Open Source and distributed under a
- * Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License
- * (http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB)
+ * Botania is Open Source and distributed under the
+ * Botania License: http://botaniamod.net/license.php
  * 
  * File Created @ [Apr 9, 2014, 11:20:26 PM (GMT)]
  */
@@ -14,9 +13,12 @@ package WayofTime.bloodmagic.client.helper;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.function.Consumer;
 
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.common.FMLLog;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.ARBFragmentShader;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
@@ -25,57 +27,63 @@ import org.lwjgl.opengl.GL11;
 public final class ShaderHelper
 {
 
-    private static final int VERT = ARBVertexShader.GL_VERTEX_SHADER_ARB;
-    private static final int FRAG = ARBFragmentShader.GL_FRAGMENT_SHADER_ARB;
+    private static final int VERT_ST = ARBVertexShader.GL_VERTEX_SHADER_ARB;
+    private static final int FRAG_ST = ARBFragmentShader.GL_FRAGMENT_SHADER_ARB;
 
-    public static int beam = 0;
+    private static final int VERT = 1;
+    private static final int FRAG = 2;
 
-    public static void initShaders()
+    private static final String VERT_EXTENSION = ".vsh";
+    private static final String FRAG_EXTENSION = ".frag";
+
+    public static int psiBar;
+
+    public static void init()
     {
-//      if(!useShaders())
-//          return;
+        if (!useShaders())
+            return;
 
-        beam = createProgram(null, "/assets/bloodmagic/shaders/beam.frag");
+        psiBar = createProgram("/assets/bloodmagic/shaders/beam", FRAG);
     }
 
-    public static void useShaderWithProps(int shader, Object... props)
+    public static void useShader(int shader, Consumer<Integer> callback, int ticks)
     {
-//      if(!useShaders())
-//      return;
+        if (!useShaders())
+            return;
 
         ARBShaderObjects.glUseProgramObjectARB(shader);
 
-        if (shader != 0 && props.length % 2 == 0)
+        if (shader != 0)
         {
-            int propCount = props.length / 2;
-            for (int i = 0; i < propCount; i++)
-            {
-                String propName = (String) props[i * 2];
-                Object propVal = props[i * 2 + 1];
+            int time = ARBShaderObjects.glGetUniformLocationARB(shader, "time");
+            ARBShaderObjects.glUniform1iARB(time, ticks);
 
-                int uniform = ARBShaderObjects.glGetUniformLocationARB(shader, propName);
-                if (propVal instanceof Integer)
-                    ARBShaderObjects.glUniform1iARB(uniform, (Integer) propVal);
-                if (propVal instanceof Float)
-                    ARBShaderObjects.glUniform1fARB(uniform, (Float) propVal);
-                // Possible Vector2, Vector3 and Vector4, no need yet.
-            }
+            if (callback != null)
+                callback.accept(shader);
         }
     }
 
-    public static void useShader(int shader)
+    public static void useShader(int shader, int ticks)
     {
-        useShaderWithProps(shader);
+        useShader(shader, null, ticks);
     }
 
     public static void releaseShader()
     {
-        useShader(0);
+        useShader(0, 0);
     }
 
     public static boolean useShaders()
     {
-        return true;//ConfigHandler.useShaders && OpenGlHelper.shadersSupported;
+        return OpenGlHelper.shadersSupported;
+    }
+
+    private static int createProgram(String s, int sides)
+    {
+        boolean vert = (sides & VERT) != 0;
+        boolean frag = (sides & FRAG) != 0;
+
+        return createProgram(vert ? (s + VERT_EXTENSION) : null, frag ? (s + FRAG_EXTENSION) : null);
     }
 
     // Most of the code taken from the LWJGL wiki
@@ -85,9 +93,9 @@ public final class ShaderHelper
     {
         int vertId = 0, fragId = 0, program = 0;
         if (vert != null)
-            vertId = createShader(vert, VERT);
+            vertId = createShader(vert, VERT_ST);
         if (frag != null)
-            fragId = createShader(frag, FRAG);
+            fragId = createShader(frag, FRAG_ST);
 
         program = ARBShaderObjects.glCreateProgramObjectARB();
         if (program == 0)
@@ -101,14 +109,14 @@ public final class ShaderHelper
         ARBShaderObjects.glLinkProgramARB(program);
         if (ARBShaderObjects.glGetObjectParameteriARB(program, ARBShaderObjects.GL_OBJECT_LINK_STATUS_ARB) == GL11.GL_FALSE)
         {
-            FMLLog.warning(getLogInfo(program));
+            FMLLog.log(Level.ERROR, getLogInfo(program));
             return 0;
         }
 
         ARBShaderObjects.glValidateProgramARB(program);
         if (ARBShaderObjects.glGetObjectParameteriARB(program, ARBShaderObjects.GL_OBJECT_VALIDATE_STATUS_ARB) == GL11.GL_FALSE)
         {
-            FMLLog.warning(getLogInfo(program));
+            FMLLog.log(Level.ERROR, getLogInfo(program));
             return 0;
         }
 
@@ -206,4 +214,5 @@ public final class ShaderHelper
 
         return source.toString();
     }
+
 }
