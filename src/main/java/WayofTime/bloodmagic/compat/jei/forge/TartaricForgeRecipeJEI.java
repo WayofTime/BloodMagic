@@ -18,17 +18,15 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
     @Getter
     private TartaricForgeRecipe recipe;
     @Getter
-    private Set<ItemStack> validGems = new HashSet<ItemStack>();
+    private ArrayList<ItemStack> validGems = new ArrayList<ItemStack>();
 
     public TartaricForgeRecipeJEI(TartaricForgeRecipe recipe)
     {
         this.recipe = recipe;
 
-        this.validGems.add(new ItemStack(ModItems.soulGem, 1, 0));
-        this.validGems.add(new ItemStack(ModItems.soulGem, 1, 1));
-        this.validGems.add(new ItemStack(ModItems.soulGem, 1, 2));
-        this.validGems.add(new ItemStack(ModItems.soulGem, 1, 3));
-        this.validGems.add(new ItemStack(ModItems.monsterSoul));
+        for (DefaultWill will : DefaultWill.values())
+            if (will.minSouls >= recipe.getMinimumSouls())
+                this.validGems.add(will.willStack);
     }
 
     @Override
@@ -60,5 +58,22 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
             return ret;
         }
         return null;
+    }
+
+    public enum DefaultWill {
+        SOUL(new ItemStack(ModItems.monsterSoul, 1, 0), 64),
+        PETTY(new ItemStack(ModItems.soulGem, 1, 0), 64),
+        LESSER(new ItemStack(ModItems.soulGem, 1, 1), 256),
+        COMMON(new ItemStack(ModItems.soulGem, 1, 2), 1024),
+        GREATER(new ItemStack(ModItems.soulGem, 1, 3), 4096),
+        GRAND(new ItemStack(ModItems.soulGem, 1, 4), 16384);
+
+        public final ItemStack willStack;
+        public final double minSouls;
+
+        DefaultWill(ItemStack willStack, double minSouls) {
+            this.willStack = willStack;
+            this.minSouls = minSouls;
+        }
     }
 }

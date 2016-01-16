@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -90,7 +91,7 @@ public class TartaricForgeRecipeCategory implements IRecipeCategory
         if (recipeWrapper instanceof TartaricForgeRecipeJEI)
         {
             TartaricForgeRecipeJEI recipe = (TartaricForgeRecipeJEI) recipeWrapper;
-            guiItemStacks.set(GEM_SLOT, (Set<ItemStack>) recipe.getInputs().get(1));
+            guiItemStacks.set(GEM_SLOT, (ArrayList<ItemStack>) recipe.getInputs().get(1));
             craftingGridHelper.setOutput(guiItemStacks, recipe.getOutputs());
             craftingGridHelper.setInput(guiItemStacks, (List) recipe.getInputs().get(0), 2, 3);
         }
