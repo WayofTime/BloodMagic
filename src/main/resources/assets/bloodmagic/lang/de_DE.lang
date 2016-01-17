@@ -1,5 +1,6 @@
 #Creative Tab
 itemGroup.BloodMagic.creativeTab=Blood Magic
+itemGroup.BloodMagic.creativeTabTome=Blood Magic Upgradeschwarte
 
 #Items
 item.BloodMagic.activationCrystal.weak.name=Schwacher Aktivierungskristall
@@ -76,6 +77,8 @@ item.BloodMagic.baseComponent.reagentSight.name=Sichtreagenz
 item.BloodMagic.baseComponent.reagentBinding.name=Bindendes Reagenz
 item.BloodMagic.baseComponent.reagentSuppression.name=Unterdrückendes Reagenz
 
+item.BloodMagic.monsterSoul.base.name=Dämonischer Wille
+
 item.BloodMagic.sigil.air.name=Luftsiegel
 item.BloodMagic.sigil.bloodLight.name=Siegel der Blutlampe
 item.BloodMagic.sigil.compression.name=Siegel der Kompression
@@ -106,6 +109,16 @@ item.BloodMagic.ritualDivinerdusk.name=Ritualrute [Morgendämmerung]
 item.BloodMagic.ritualDivinerdawn.name=Ritualrute [Abenddämmerung]
 
 item.BloodMagic.arcaneAshes.name=Arkane Asche
+item.BloodMagic.upgradeTome.name=Upgradeschwarte der Lebended Rüstung
+
+item.BloodMagic.sentientSword.name=Empfindendes Schwert
+item.BloodMagic.soulGem.petty.name=Unbedeutendes Weinsteinjuwel
+item.BloodMagic.soulGem.lesser.name=Niederes Weinsteinjuwel
+item.BloodMagic.soulGem.common.name=Gewöhnliches Weinsteinjuwel
+item.BloodMagic.soulGem.greater.name=Größeres Weinsteinjuwel
+item.BloodMagic.soulGem.grand.name=Großartiges Weinsteinjuwel
+item.BloodMagic.soulSnare.base.name=Rudimentäre Falle
+item.BloodMagic.sentientBow.name=Empfindender Bogen
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Lebensessenz
@@ -124,6 +137,7 @@ tile.BloodMagic.rune.capacity.name=Kapazitätsrune
 tile.BloodMagic.rune.augCapacity.name=Rune der erweiterten Kapazität
 tile.BloodMagic.rune.orb.name=Orbrune
 tile.BloodMagic.rune.acceleration.name=Beschleunigungsrune
+tile.BloodMagic.rune.charging.name=Laderune
 
 tile.BloodMagic.ritualStone.blank.name=Ritualstein
 tile.BloodMagic.ritualStone.water.name=Wasserritualstein
@@ -142,6 +156,7 @@ tile.BloodMagic.spectralBlock.name=Spektralblock
 tile.BloodMagic.phantomBlock.name=Phantomblock
 
 tile.BloodMagic.teleposer.name=Teleposer
+tile.BloodMagic.soulForge.name=Höllenfeuerschmiede
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Speichert Lebensessenz
@@ -218,35 +233,74 @@ tooltip.BloodMagic.telepositionFocus.enhanced=Benutzt, um Blöcke zu verschieben
 tooltip.BloodMagic.telepositionFocus.reinforced=Benutzt, um Blöcke zu verschieben
 tooltip.BloodMagic.telepositionFocus.demonic=Benutzt, um Blöcke zu teleportieren
 
+tooltip.BloodMagic.livingArmour.upgrade.speed=Schnelle Füße
+tooltip.BloodMagic.livingArmour.upgrade.digging=Zergenhafte Stärke
+tooltip.BloodMagic.livingArmour.upgrade.poisonResist=Giftungsresistenz
+tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=Zähe Handballen
+tooltip.BloodMagic.livingArmour.upgrade.knockback=Body Builder
+tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Zähe Haut
+tooltip.BloodMagic.livingArmour.upgrade.health=Gesund
+tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Heftiger Schlag
+tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trickschuss
+tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
+
+tooltip.BloodMagic.will=Willensqualität: %1$,.2f
+tooltip.BloodMagic.sentientSword.desc=Benutzt Dämonenwille um volles Potential freizusetzen
+tooltip.BloodMagic.soulGem.petty=Ein Juwel, das eine winzige Menge an Willen aufnehmen kann
+tooltip.BloodMagic.soulGem.lesser=Ein Juwel, das ein wenig Willen festhalten kann
+tooltip.BloodMagic.soulGem.common=Ein Juwel, das eine ordentliche Menge an Willen aufnehmen kann
+tooltip.BloodMagic.soulGem.greater=Ein Juwel, das eine größere Menge an Willen aufnehmen kann
+tooltip.BloodMagic.soulGem.grand=Ein Juwel, das eine große Menge an Willen aufnehmen kann
+tooltip.BloodMagic.soulSnare.desc=Werfe nach einem Monster und töte es anschließend, um seinen Dämonischen Willen zu erhalten
+
 # Ritual
 ritual.BloodMagic.testRitual=Testritual
-ritual.BloodMagic.waterRitual=Ritual des vollen Frühlings
+ritual.BloodMagic.waterRitual=Ritual der vollen Quelle
 ritual.BloodMagic.lavaRitual=Serenade des Nethers
 ritual.BloodMagic.greenGroveRitual=Ritual des grünen Hains
 ritual.BloodMagic.jumpRitual=Ritual des hohen Sprungs
 ritual.BloodMagic.wellOfSufferingRitual=Quelle des Leidens
 ritual.BloodMagic.featheredKnifeRitual=Ritual der gefederten Klinge
 ritual.BloodMagic.regenerationRitual=Ritual der Regeneration
+ritual.BloodMagic.harvestRitual=Ritual der Mondernte
+ritual.BloodMagic.magneticRitual=Ritual des Magnetismus
+ritual.BloodMagic.crushingRitual=Ritual des Brechers
+ritual.BloodMagic.fullStomachRitual=Ritual des gefüllten Bauches
+ritual.BloodMagic.interdictionRitual=Ritual der Verbietung
+ritual.BloodMagic.containmentRitual=Ritual des Einschlusses
+ritual.BloodMagic.speedRitual=Ritual der Geschwindigkeit
+ritual.BloodMagic.suppressionRitual=Ritual der Unterdrückung
+ritual.BloodMagic.expulsionRitual=Aura der Vertreibung
+ritual.BloodMagic.zephyrRitual=Ruf des Zephir
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Setze Ausbaustufe auf: %d
 chat.BloodMagic.altarMaker.building=Baue Stufe %d-Altar
 chat.BloodMagic.altarMaker.destroy=Stufe %d-Altar zerstört
 chat.BloodMagic.altarMaker.creativeOnly=Diese Item ist nur im Kreativmodus erhältlich.
+
 chat.BloodMagic.damageSource=%ss Seele ist zu schwach geworden.
+
 chat.BloodMagic.ritual.weak=Du spürst einen Drang, bist aber zu schwach für ein Ritual.
 chat.BloodMagic.ritual.prevent=Das Ritual versucht, dir zu widerstehen.
 chat.BloodMagic.ritual.activate=Ein Energiestrom fließt durch das Ritual.
 chat.BloodMagic.ritual.notValid=Du fühlst, dass die Runen nicht richtig eingerichtet sind...
 
+chat.BloodMagic.livingArmour.upgrade.poisonRemove=Du fühlst dich schon wieder besser.
+chat.BloodMagic.livingArmour.newUpgrade=Upgrade erworben!
+
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blutaltar
 jei.BloodMagic.recipe.binding=Bindungsritual
 jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemische Anordnung
+jei.BloodMagic.recipe.soulForge=Höllenfeuerschmiede
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Ausbaustufe: %d
+jei.BloodMagic.recipe.minimumSouls=Minimum: %d Wille
+jei.BloodMagic.recipe.soulsDrained=Entzogen: %d Wille
 
 jei.BloodMagic.desc.altarBuilder=Ein Item zum Testen. Nur im Kreativmodus erhältlich.\n\nShift+Rechtsklick um die Ausbaustufe zu ändern. Rechtsklicke auf einen Altar, um den Bau zu starten.\n\nZerstöre einen Altar mit ihm in der Hand, um alles abzubauen.
+jei.BloodMagic.desc.demonicWill=Prägung eines dämonischen Wesens gebunden an eine Kreatur.\n\nKann durch das Töten eines Monsters mit einer empfindsamen Waffe, oder das Werfen einer Falle und Umbringen während as weiße Partikel aussendet, gesammelt werden.
 
 # WAILA
 waila.BloodMagic.sneak=&oSchleiche für Info
