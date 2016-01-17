@@ -144,13 +144,13 @@ public class TestItemFilter implements IItemFilter
             }
         }
 
-        for (ItemStack filterStack : requestList)
-        {
-            if (filterStack.stackSize <= 0)
-            {
-                requestList.remove(filterStack);
-            }
-        }
+//        for (ItemStack filterStack : requestList)
+//        {
+//            if (filterStack.stackSize <= 0)
+//            {
+//                requestList.remove(filterStack);
+//            }
+//        }
     }
 
     /**
