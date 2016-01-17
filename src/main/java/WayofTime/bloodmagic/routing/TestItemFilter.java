@@ -1,12 +1,13 @@
 package WayofTime.bloodmagic.routing;
 
+import java.util.Iterator;
 import java.util.List;
 
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import WayofTime.bloodmagic.util.Utils;
 
 /**
  * This particular implementation of IItemFilter checks to make sure that a) as
@@ -144,13 +145,15 @@ public class TestItemFilter implements IItemFilter
             }
         }
 
-//        for (ItemStack filterStack : requestList)
-//        {
-//            if (filterStack.stackSize <= 0)
-//            {
-//                requestList.remove(filterStack);
-//            }
-//        }
+        Iterator<ItemStack> iterator = requestList.iterator();
+        while (iterator.hasNext())
+        {
+            ItemStack filterStack = iterator.next();
+            if (filterStack.stackSize <= 0)
+            {
+                iterator.remove();
+            }
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.routing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,7 +13,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.item.inventory.ItemInventory;
 import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.routing.TestItemFilter;
+import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemRouterFilter extends Item implements IItemFilterProvider
@@ -54,57 +58,55 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider
     @Override
     public IItemFilter getInputItemFilter(ItemStack filterStack, IInventory inventory, EnumFacing syphonDirection)
     {
-//        IItemFilter testFilter = new TestItemFilter();
-//        List<ItemStack> filteredList = new LinkedList<ItemStack>();
-//        ItemInventory inv = new ItemInventory(filterStack, 9, "");
-//        for (int i = 0; i < inv.getSizeInventory(); i++)
-//        {
-//            ItemStack stack = inv.getStackInSlot(i);
-//            if (stack == null)
-//            {
-//                continue;
-//            }
-//
-//            ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-//            if (ghostStack.stackSize == 0)
-//            {
-//                ghostStack.stackSize = Integer.MAX_VALUE;
-//            }
-//
-//            filteredList.add(ghostStack);
-//        }
-//
-//        testFilter.initializeFilter(filteredList, inventory, syphonDirection, false);
-//        return testFilter;
-        return null;
+        IItemFilter testFilter = new TestItemFilter();
+        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        ItemInventory inv = new ItemInventory(filterStack, 9, "");
+        for (int i = 0; i < inv.getSizeInventory(); i++)
+        {
+            ItemStack stack = inv.getStackInSlot(i);
+            if (stack == null)
+            {
+                continue;
+            }
+
+            ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
+            if (ghostStack.stackSize == 0)
+            {
+                ghostStack.stackSize = Integer.MAX_VALUE;
+            }
+
+            filteredList.add(ghostStack);
+        }
+
+        testFilter.initializeFilter(filteredList, inventory, syphonDirection, false);
+        return testFilter;
     }
 
     @Override
     public IItemFilter getOutputItemFilter(ItemStack filterStack, IInventory inventory, EnumFacing syphonDirection)
     {
-//        IItemFilter testFilter = new TestItemFilter();
-//        List<ItemStack> filteredList = new LinkedList<ItemStack>();
-//        ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
-//        for (int i = 0; i < inv.getSizeInventory(); i++)
-//        {
-//            ItemStack stack = inv.getStackInSlot(i);
-//            if (stack == null)
-//            {
-//                continue;
-//            }
-//
-//            ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-//            if (ghostStack.stackSize == 0)
-//            {
-//                ghostStack.stackSize = Integer.MAX_VALUE;
-//            }
-//
-//            filteredList.add(ghostStack);
-//        }
-//
-//        testFilter.initializeFilter(filteredList, inventory, syphonDirection, true);
-//        return testFilter;
-        return null;
+        IItemFilter testFilter = new TestItemFilter();
+        List<ItemStack> filteredList = new ArrayList<ItemStack>();
+        ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
+        for (int i = 0; i < inv.getSizeInventory(); i++)
+        {
+            ItemStack stack = inv.getStackInSlot(i);
+            if (stack == null)
+            {
+                continue;
+            }
+
+            ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
+            if (ghostStack.stackSize == 0)
+            {
+                ghostStack.stackSize = Integer.MAX_VALUE;
+            }
+
+            filteredList.add(ghostStack);
+        }
+
+        testFilter.initializeFilter(filteredList, inventory, syphonDirection, true);
+        return testFilter;
     }
 
 }
