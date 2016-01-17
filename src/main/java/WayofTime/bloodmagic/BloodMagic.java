@@ -83,7 +83,6 @@ public class BloodMagic
         ModRituals.initImperfectRituals();
         ModArmourTrackers.init();
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.INIT);
-        ConfigHandler.checkRituals();
         NetworkRegistry.INSTANCE.registerGuiHandler(BloodMagic.instance, new GuiHandler());
 
         proxy.init();
