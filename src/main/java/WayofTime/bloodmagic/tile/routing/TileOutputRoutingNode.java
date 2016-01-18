@@ -1,10 +1,6 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import WayofTime.bloodmagic.item.routing.IItemFilterProvider;
 import WayofTime.bloodmagic.routing.IItemFilter;
 import WayofTime.bloodmagic.routing.IOutputItemRoutingNode;
 
@@ -24,20 +20,20 @@ public class TileOutputRoutingNode extends TileFilteredRoutingNode implements IO
     @Override
     public IItemFilter getOutputFilterForSide(EnumFacing side)
     {
-        ItemStack filterStack = this.getFilterStack(side);
-
-        if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
-        {
-            return null;
-        }
-
-        IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
-
-        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
-        if (tile instanceof IInventory)
-        {
-            return filter.getOutputItemFilter(filterStack, (IInventory) tile, side.getOpposite());
-        }
+//        ItemStack filterStack = this.getFilterStack(side);
+//
+//        if (filterStack == null || !(filterStack.getItem() instanceof IItemFilterProvider))
+//        {
+//            return null;
+//        }
+//
+//        IItemFilterProvider filter = (IItemFilterProvider) filterStack.getItem();
+//
+//        TileEntity tile = worldObj.getTileEntity(pos.offset(side));
+//        if (tile instanceof IInventory)
+//        {
+//            return filter.getOutputItemFilter(filterStack, (IInventory) tile, side.getOpposite());
+//        }
 
         return null;
     }
