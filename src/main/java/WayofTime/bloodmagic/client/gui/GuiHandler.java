@@ -9,9 +9,11 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
+import WayofTime.bloodmagic.tile.container.ContainerMasterRoutingNode;
 import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
 import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
 public class GuiHandler implements IGuiHandler
 {
@@ -28,6 +30,8 @@ public class GuiHandler implements IGuiHandler
             return new ContainerSoulForge(player.inventory, (TileSoulForge) world.getTileEntity(pos));
         case Constants.Gui.ROUTING_NODE_GUI:
             return new ContainerItemRoutingNode(player.inventory, (TileFilteredRoutingNode) world.getTileEntity(pos));
+        case Constants.Gui.MASTER_ROUTING_NODE_GUI:
+            return new ContainerMasterRoutingNode(player.inventory, (TileMasterRoutingNode) world.getTileEntity(pos));
         }
 
         return null;
@@ -48,6 +52,8 @@ public class GuiHandler implements IGuiHandler
                 return new GuiSoulForge(player.inventory, (TileSoulForge) world.getTileEntity(pos));
             case Constants.Gui.ROUTING_NODE_GUI:
                 return new GuiItemRoutingNode(player.inventory, (TileFilteredRoutingNode) world.getTileEntity(pos));
+            case Constants.Gui.MASTER_ROUTING_NODE_GUI:
+                return new GuiMasterRoutingNode(player.inventory, (TileMasterRoutingNode) world.getTileEntity(pos));
             }
         }
 

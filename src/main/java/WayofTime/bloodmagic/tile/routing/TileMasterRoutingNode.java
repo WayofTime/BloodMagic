@@ -20,9 +20,16 @@ import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IOutputItemRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.routing.NodeHelper;
+import WayofTime.bloodmagic.tile.TileInventory;
 
-public class TileMasterRoutingNode extends TileEntity implements IMasterRoutingNode, ITickable
+public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickable
 {
+    public TileMasterRoutingNode()
+    {
+        super(0, "masterRoutingNode");
+        // TODO Auto-generated constructor stub
+    }
+
     // A list of connections
     private HashMap<BlockPos, List<BlockPos>> connectionMap = new HashMap<BlockPos, List<BlockPos>>();
     private List<BlockPos> generalNodeList = new LinkedList<BlockPos>();
