@@ -27,8 +27,10 @@ public class AltarRecipeMaker
                 ItemStack output = itemStackAltarRecipeEntry.getValue().getOutput();
                 int requiredTier = itemStackAltarRecipeEntry.getValue().getMinTier().toInt();
                 int requiredLP = itemStackAltarRecipeEntry.getValue().getSyphon();
+                int consumptionRate = itemStackAltarRecipeEntry.getValue().getConsumeRate();
+                int drainRate = itemStackAltarRecipeEntry.getValue().getDrainRate();
 
-                AltarRecipeJEI recipe = new AltarRecipeJEI(input, output, requiredTier, requiredLP);
+                AltarRecipeJEI recipe = new AltarRecipeJEI(input, output, requiredTier, requiredLP, consumptionRate, drainRate);
                 recipes.add(recipe);
             }
         }

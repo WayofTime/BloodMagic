@@ -307,6 +307,8 @@ jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.soulForge=Hellfire Forge
 jei.BloodMagic.recipe.requiredLP=LP: %d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
+jei.BloodMagic.recipe.consumptionRate=Consumption: %d LP/t
+jei.BloodMagic.recipe.drainRate=Drain: %d LP/t
 jei.BloodMagic.recipe.minimumSouls=Minimum: %d Will
 jei.BloodMagic.recipe.soulsDrained=Drained: %d Will
 
