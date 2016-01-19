@@ -43,6 +43,7 @@ public class ItemRitualDiviner extends Item
     public ItemRitualDiviner()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".ritualDiviner");
+        setRegistryName(Constants.BloodMagicItem.RITUAL_DIVINER.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHasSubtypes(true);
         setMaxStackSize(1);

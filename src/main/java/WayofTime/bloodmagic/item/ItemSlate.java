@@ -23,6 +23,7 @@ public class ItemSlate extends Item
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".slate.");
+        setRegistryName(Constants.BloodMagicItem.SLATE.getRegName());
         setHasSubtypes(true);
     }
 

@@ -40,7 +40,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
         super(ModItems.soulToolMaterial);
 
         setUnlocalizedName(Constants.Mod.MODID + ".sentientSword");
-
+        setRegistryName(Constants.BloodMagicItem.SENTIENT_SWORD.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 

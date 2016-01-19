@@ -20,6 +20,7 @@ public class ItemArcaneAshes extends Item
     public ItemArcaneAshes()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".arcaneAshes");
+        setRegistryName(Constants.BloodMagicItem.ARCANE_ASHES.getRegName());
         setMaxStackSize(1);
         setMaxDamage(19); //Allows for 20 uses
         setCreativeTab(BloodMagic.tabBloodMagic);

@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,6 +29,7 @@ public class ItemTelepositionFocus extends ItemBindable
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".focus.");
+        setRegistryName(Constants.BloodMagicItem.TELEPOSITION_FOCUS.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setMaxStackSize(1);
         setHasSubtypes(true);

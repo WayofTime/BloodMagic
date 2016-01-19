@@ -25,6 +25,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".soulGem.");
+        setRegistryName(Constants.BloodMagicItem.SOUL_GEM.getRegName());
         setHasSubtypes(true);
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.tabBloodMagic);

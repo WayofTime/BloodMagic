@@ -34,6 +34,7 @@ public class ItemComponent extends Item
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".baseComponent.");
+        setRegistryName(Constants.BloodMagicItem.COMPONENT.getRegName());
         setHasSubtypes(true);
         setCreativeTab(BloodMagic.tabBloodMagic);
 

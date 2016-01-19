@@ -1,5 +1,8 @@
 package WayofTime.bloodmagic.api;
 
+import lombok.Getter;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 
 import java.util.Locale;
@@ -130,5 +133,106 @@ public class Constants
     public static class Misc
     {
         public static final int POTION_ARRAY_SIZE = Potion.potionTypes.length;
+    }
+
+    public enum BloodMagicItem
+    {
+        ACTIVATION_CRYSTAL("ItemActivationCrystal"),
+        ALTAR_MAKER("ItemAltarMaker"),
+        ARCANE_ASHES("ItemArcaneAshes"),
+        BLOOD_ORB("ItemBloodOrb"),
+        BOUND_AXE("ItemBoundAxe"),
+        BLOOD_SHARD("ItemBloodShard"),
+        BOUND_PICKAXE("ItemBoundPickaxe"),
+        BOUND_SHOVEL("ItemBoundShovel"),
+        BOUND_SWORD("ItemBoundSword"),
+        BUCKET_ESSENCE("ItemBucketEssence"),
+        COMPONENT("ItemComponent"),
+        DAGGER_OF_SACRIFICE("ItemDaggerOfSacrifice"),
+        INSCRIPTION_TOOL("ItemInscriptionTool"),
+        LAVA_CRYSTAL("ItemLavaCrystal"),
+        LIVING_ARMOR_HELMET("ItemLivingArmourHelmet"),
+        LIVING_ARMOR_CHEST("ItemLivingArmourChest"),
+        LIVING_ARMOR_LEGS("ItemLivingArmourLegs"),
+        LIVING_ARMOR_BOOTS("ItemLivingArmourBoots"),
+        MONSTER_SOUL("ItemMonsterSoul"),
+        NODE_ROUTER("ItemNodeRouter"),
+        RITUAL_DIVINER("ItemRitualDiviner"),
+        ROUTER_FILTER("ItemRouterFilter"),
+        SACRIFICIAL_DAGGER("ItemSacrificialDagger"),
+        SACRIFICE_PACK("ItemPackSacrifice"),
+        SELF_SACRIFICE_PACK("ItemPackSelfSacrifice"),
+        SENTIENT_ARMOR_HELMET("ItemSentientArmourHelmet"),
+        SENTIENT_ARMOR_CHEST("ItemSentientArmourChest"),
+        SENTIENT_ARMOR_LEGS("ItemSentientArmourLegs"),
+        SENTIENT_ARMOR_BOOTS("ItemSentientArmourBoots"),
+        SENTIENT_ARMOR_GEM("ItemSentientArmourGem"),
+        SENTIENT_BOW("ItemSentientBow"),
+        SENTIENT_SWORD("ItemSentientSword"),
+        SOUL_GEM("ItemSoulGem"),
+        SOUL_SNARE("ItemSoulSnare"),
+        SIGIL_AIR("ItemSigilAir"),
+        SIGIL_BLOOD_LIGHT("ItemSigilBloodLight"),
+        SIGIL_COMPRESSION("ItemSigilCompression"),
+        SIGIL_DIVINATION("ItemSigilDivination"),
+        SIGIL_ELEMENTAL_AFFINITY("ItemSigilElementalAffinity"),
+        SIGIL_ENDER_SEVERANCE("ItemSigilEnderSeverance"),
+        SIGIL_FAST_MINER("ItemSigilFastMiner"),
+        SIGIL_GREEN_GROVE("ItemSigilGreenGrove"),
+        SIGIL_HASTE("ItemSigilHaste"),
+        SIGIL_LAVA("ItemSigilLava"),
+        SIGIL_MAGNETISM("ItemSigilMagnetism"),
+        SIGIL_PHANTOM_BRIDGE("ItemSigilPhantomBridge"),
+        SIGIL_SEER("ItemSigilSeer"),
+        SIGIL_SUPPRESION("ItemSigilSuppression"),
+        SIGIL_VOID("ItemSigilVoid"),
+        SIGIL_WATER("ItemSigilWater"),
+        SIGIL_WHIRLWIND("ItemSigilWhirlwind"),
+        SLATE("ItemSlate"),
+        TELEPOSITION_FOCUS("ItemTelepositionFocus"),
+        UPGRADE_TOME("ItemUpgradeTome");
+
+        @Getter
+        private final String regName;
+
+        BloodMagicItem(String regName) {
+            this.regName = regName;
+        }
+
+        public Item getItem() {
+            return BloodMagicAPI.getItem(getRegName());
+        }
+    }
+
+    public enum BloodMagicBlock {
+        ALCHEMY_ARRAY("BlockAlchemyArray"),
+        ALTAR("BlockAltar"),
+        BLOOD_LIGHT("BlockBloodLight"),
+        BLOOD_RUNE("BlockBloodRune"),
+        BLOOD_STONE("BlockBloodStoneBrick"),
+        CRYSTAL("BlockCrystal"),
+        INPUT_ROUTING_NODE("BlockInputRoutingNode"),
+        ITEM_ROUTING_NODE("BlockItemRoutingNode"),
+        LIFE_ESSENCE("BlockLifeEssence"),
+        MASTER_ROUTING_NODE("BlockMasterRoutingNode"),
+        OUTPUT_ROUTING_NODE("BlockOutputRoutingNode"),
+        PEDESTAL("BlockPedestal"),
+        PHANTOM("BlockPhantom"),
+        RITUAL_CONTROLLER("BlockRitualController"),
+        RITUAL_STONE("BlockRitualStone"),
+        SOUL_FORGE("BlockSoulForge"),
+        SPECTRAL("BlockSpectral"),
+        TELEPOSER("BlockTeleposer");
+
+        @Getter
+        private final String regName;
+
+        BloodMagicBlock(String regName) {
+            this.regName = regName;
+        }
+
+        public Block getBlock() {
+            return BloodMagicAPI.getBlock(getRegName());
+        }
     }
 }

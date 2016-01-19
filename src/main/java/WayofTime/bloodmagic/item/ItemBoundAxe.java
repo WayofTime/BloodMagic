@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
@@ -27,6 +28,7 @@ public class ItemBoundAxe extends ItemBoundTool
     public ItemBoundAxe()
     {
         super("axe", 5, EFFECTIVE_ON);
+        setRegistryName(Constants.BloodMagicItem.BOUND_AXE.getRegName());
     }
 
     @Override

@@ -33,6 +33,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
         super(ArmorMaterial.CHAIN, 0, 1);
 
         setUnlocalizedName(Constants.Mod.MODID + ".pack.selfSacrifice");
+        setRegistryName(Constants.BloodMagicItem.SELF_SACRIFICE_PACK.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 

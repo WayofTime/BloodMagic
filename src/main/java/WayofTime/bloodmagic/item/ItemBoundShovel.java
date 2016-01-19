@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
 
 import com.google.common.collect.HashMultiset;
@@ -27,6 +28,7 @@ public class ItemBoundShovel extends ItemBoundTool
     public ItemBoundShovel()
     {
         super("shovel", 5, EFFECTIVE_ON);
+        setRegistryName(Constants.BloodMagicItem.BOUND_SHOVEL.getRegName());
     }
 
     @Override

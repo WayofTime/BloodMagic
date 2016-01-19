@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -11,6 +12,7 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleable
     public ItemSigilElementalAffinity()
     {
         super("elementalAffinity", 200);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_ELEMENTAL_AFFINITY.getRegName());
     }
 
     @Override

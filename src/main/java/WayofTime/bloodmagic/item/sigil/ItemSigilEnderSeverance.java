@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -16,6 +17,7 @@ public class ItemSigilEnderSeverance extends ItemSigilToggleable
     public ItemSigilEnderSeverance()
     {
         super("enderSeverance", 200);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_ENDER_SEVERANCE.getRegName());
     }
 
     @Override

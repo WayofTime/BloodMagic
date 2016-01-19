@@ -22,6 +22,7 @@ public class BlockSoulForge extends BlockContainer
         super(Material.iron);
 
         setUnlocalizedName(Constants.Mod.MODID + ".soulForge");
+        setRegistryName(Constants.BloodMagicBlock.SOUL_FORGE.getRegName());
         setHardness(2.0F);
         setResistance(5.0F);
         setStepSound(soundTypeMetal);

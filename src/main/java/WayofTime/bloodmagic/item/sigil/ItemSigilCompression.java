@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +12,7 @@ public class ItemSigilCompression extends ItemSigilToggleable
     public ItemSigilCompression()
     {
         super("compression", 200);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_COMPRESSION.getRegName());
     }
 
     // TODO REWRITE all compression stuff if someone has time

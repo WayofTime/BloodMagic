@@ -37,6 +37,7 @@ public class ItemBoundSword extends ItemSword
         super(ModItems.boundToolMaterial);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
+        setRegistryName(Constants.BloodMagicItem.BOUND_SWORD.getRegName());
         setHasSubtypes(true);
         setNoRepair();
         setCreativeTab(BloodMagic.tabBloodMagic);

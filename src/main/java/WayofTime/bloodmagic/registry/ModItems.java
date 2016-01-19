@@ -360,6 +360,14 @@ public class ModItems
 
     private static Item registerItem(Item item)
     {
-        return registerItem(item, item.getClass().getSimpleName());
+        if (item.getRegistryName() == null) {
+            BloodMagic.instance.getLogger().error("Attempted to register Item {} without setting a registry name. Item will not be registered. Please report this.", item.getClass().getCanonicalName());
+            return item;
+        }
+
+        if (!ConfigHandler.itemBlacklist.contains(item.getRegistryName().split(":")[1]))
+            GameRegistry.registerItem(item);
+
+        return item;
     }
 }

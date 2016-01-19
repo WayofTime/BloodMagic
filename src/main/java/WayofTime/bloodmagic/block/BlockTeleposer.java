@@ -24,6 +24,7 @@ public class BlockTeleposer extends BlockContainer
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".teleposer");
+        setRegistryName(Constants.BloodMagicBlock.TELEPOSER.getRegName());
         setHardness(2.0F);
         setResistance(5.0F);
     }

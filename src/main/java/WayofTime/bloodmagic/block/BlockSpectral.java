@@ -25,6 +25,7 @@ public class BlockSpectral extends BlockContainer
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".spectral");
+        setRegistryName(Constants.BloodMagicBlock.SPECTRAL.getRegName());
         setBlockBounds(0, 0, 0, 0, 0, 0);
     }
 

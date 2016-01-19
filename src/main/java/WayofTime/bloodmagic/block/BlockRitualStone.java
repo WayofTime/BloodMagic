@@ -18,6 +18,7 @@ public class BlockRitualStone extends BlockString implements IRitualStone
         super(Material.iron, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".ritualStone.");
+        setRegistryName(Constants.BloodMagicBlock.RITUAL_STONE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setStepSound(soundTypeStone);
         setHardness(2.0F);

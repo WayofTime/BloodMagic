@@ -14,6 +14,7 @@ public class BlockCrystal extends BlockString
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".crystal.");
+        setRegistryName(Constants.BloodMagicBlock.CRYSTAL.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setStepSound(soundTypeStone);
         setHardness(2.0F);

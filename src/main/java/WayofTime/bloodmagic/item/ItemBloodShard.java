@@ -20,6 +20,7 @@ public class ItemBloodShard extends Item
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".bloodShard.");
+        setRegistryName(Constants.BloodMagicItem.BLOOD_SHARD.getRegName());
         setHasSubtypes(true);
     }
 

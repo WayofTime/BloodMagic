@@ -23,7 +23,8 @@ public class ItemSentientBow extends ItemBow
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".sentientBow");
-        this.setCreativeTab(BloodMagic.tabBloodMagic);
+        setRegistryName(Constants.BloodMagicItem.SENTIENT_BOW.getRegName());
+        setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
     @Override

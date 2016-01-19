@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +15,7 @@ public class ItemSigilMagnetism extends ItemSigilToggleable
     public ItemSigilMagnetism()
     {
         super("magnetism", 50);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_MAGNETISM.getRegName());
     }
 
     @Override

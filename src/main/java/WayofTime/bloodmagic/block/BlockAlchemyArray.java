@@ -27,6 +27,7 @@ public class BlockAlchemyArray extends BlockContainer
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
+        setRegistryName(Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         this.setHardness(0.1f);
         this.setBlockBounds(0, 0, 0, 1, 0.1f, 1);

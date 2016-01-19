@@ -20,6 +20,7 @@ public class ItemActivationCrystal extends ItemBindable
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".activationCrystal.");
+        setRegistryName(Constants.BloodMagicItem.ACTIVATION_CRYSTAL.getRegName());
         setHasSubtypes(true);
         setLPUsed(100);
     }

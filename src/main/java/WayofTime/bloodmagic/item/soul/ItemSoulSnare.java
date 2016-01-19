@@ -24,6 +24,7 @@ public class ItemSoulSnare extends Item
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".soulSnare.");
+        setRegistryName(Constants.BloodMagicItem.SOUL_SNARE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHasSubtypes(true);
         setMaxStackSize(16);

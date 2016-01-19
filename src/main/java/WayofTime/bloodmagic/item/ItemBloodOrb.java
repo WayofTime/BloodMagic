@@ -13,7 +13,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,6 +24,7 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
     public ItemBloodOrb()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".orb.");
+        setRegistryName(Constants.BloodMagicItem.BLOOD_ORB.getRegName());
         setHasSubtypes(true);
     }
 

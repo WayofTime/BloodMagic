@@ -24,6 +24,7 @@ public class ItemDaggerOfSacrifice extends Item
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".daggerOfSacrifice");
+        setRegistryName(Constants.BloodMagicItem.DAGGER_OF_SACRIFICE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setMaxStackSize(1);
         setFull3D();

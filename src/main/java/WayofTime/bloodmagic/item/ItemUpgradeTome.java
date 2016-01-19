@@ -28,6 +28,7 @@ public class ItemUpgradeTome extends Item
 
         setCreativeTab(BloodMagic.tabUpgradeTome);
         setUnlocalizedName(Constants.Mod.MODID + ".upgradeTome");
+        setRegistryName(Constants.BloodMagicItem.UPGRADE_TOME.getRegName());
         setHasSubtypes(true);
         setMaxStackSize(1);
     }

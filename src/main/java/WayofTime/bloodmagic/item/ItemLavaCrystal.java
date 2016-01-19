@@ -19,6 +19,7 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".lavaCrystal");
+        setRegistryName(Constants.BloodMagicItem.LAVA_CRYSTAL.getRegName());
         setLPUsed(25);
     }
 

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ public class ItemSigilSuppression extends ItemSigilToggleable
     public ItemSigilSuppression()
     {
         super("suppression", 400);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_SUPPRESION.getRegName());
     }
 
     @Override

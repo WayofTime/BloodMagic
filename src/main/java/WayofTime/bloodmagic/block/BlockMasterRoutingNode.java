@@ -19,6 +19,7 @@ public class BlockMasterRoutingNode extends BlockContainer
         super(Material.rock);
 
         setUnlocalizedName(Constants.Mod.MODID + ".masterRouting");
+        setRegistryName(Constants.BloodMagicBlock.MASTER_ROUTING_NODE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

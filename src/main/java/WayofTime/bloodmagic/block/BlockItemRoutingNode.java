@@ -15,6 +15,7 @@ public class BlockItemRoutingNode extends BlockRoutingNode
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".itemRouting");
+        setRegistryName(Constants.BloodMagicBlock.ITEM_ROUTING_NODE.getRegName());
     }
 
     @Override

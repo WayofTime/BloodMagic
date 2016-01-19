@@ -35,8 +35,9 @@ public class BloodMagicAPI
     private static Fluid lifeEssence;
 
     /**
-     * Used to obtain Items from BloodMagic. Use the constants above for common
-     * items in case internal names change.
+     * Used to obtain Items from BloodMagic. Use
+     * {@link WayofTime.bloodmagic.api.Constants.BloodMagicItem} to get
+     * the registered name.
      * 
      * @param name
      *        - The registered name of the item. Usually the same as the class
@@ -46,6 +47,43 @@ public class BloodMagicAPI
     public static Item getItem(String name)
     {
         return GameRegistry.findItem(Constants.Mod.MODID, name);
+    }
+
+    /**
+     * @see #getItem(String)
+     *
+     * @param bloodMagicItem
+     *        - The {@link WayofTime.bloodmagic.api.Constants.BloodMagicItem} to get.
+     * @return - The requested Item
+     */
+    public static Item getItem(Constants.BloodMagicItem bloodMagicItem) {
+        return getItem(bloodMagicItem.getRegName());
+    }
+
+    /**
+     * Used to obtain Blocks from BloodMagic. Use
+     * {@link WayofTime.bloodmagic.api.Constants.BloodMagicBlock} to get
+     * the registered name.
+     *
+     * @param name
+     *        - The registered name of the block. Usually the same as the class
+     *        name.
+     * @return - The requested Block
+     */
+    public static Block getBlock(String name)
+    {
+        return GameRegistry.findBlock(Constants.Mod.MODID, name);
+    }
+
+    /**
+     * @see #getBlock(String)
+     *
+     * @param bloodMagicBlock
+     *        - The {@link WayofTime.bloodmagic.api.Constants.BloodMagicBlock} to get.
+     * @return - The requested Block
+     */
+    public static Block getBlock(Constants.BloodMagicBlock bloodMagicBlock) {
+        return getBlock(bloodMagicBlock.getRegName());
     }
 
     /**

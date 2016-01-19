@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ public class ItemSigilHaste extends ItemSigilToggleable
     public ItemSigilHaste()
     {
         super("haste", 250);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_HASTE.getRegName());
     }
 
     @Override

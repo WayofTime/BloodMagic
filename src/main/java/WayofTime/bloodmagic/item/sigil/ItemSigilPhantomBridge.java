@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleable
     public ItemSigilPhantomBridge()
     {
         super("phantomBridge", 100);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_PHANTOM_BRIDGE.getRegName());
     }
 
     @Override

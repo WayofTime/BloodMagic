@@ -17,6 +17,7 @@ public class BlockOutputRoutingNode extends BlockRoutingNode
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".outputRouting");
+        setRegistryName(Constants.BloodMagicBlock.OUTPUT_ROUTING_NODE.getRegName());
     }
 
     @Override

@@ -14,6 +14,7 @@ public class BlockBloodRune extends BlockString
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".rune.");
+        setRegistryName(Constants.BloodMagicBlock.BLOOD_RUNE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setStepSound(soundTypeStone);
         setHardness(2.0F);

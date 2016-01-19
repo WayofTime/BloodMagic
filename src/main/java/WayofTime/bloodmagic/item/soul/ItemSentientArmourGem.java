@@ -22,9 +22,10 @@ public class ItemSentientArmourGem extends Item
     {
         super();
 
-        this.setCreativeTab(BloodMagic.tabBloodMagic);
+        setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".sentientArmourGem");
-        this.setMaxStackSize(1);
+        setRegistryName(Constants.BloodMagicItem.SENTIENT_ARMOR_GEM.getRegName());
+        setMaxStackSize(1);
     }
 
     @Override

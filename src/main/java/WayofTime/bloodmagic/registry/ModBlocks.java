@@ -163,7 +163,15 @@ public class ModBlocks
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock)
     {
-        return registerBlock(block, itemBlock, block.getClass().getSimpleName());
+        if (block.getRegistryName() == null) {
+            BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
+            return block;
+        }
+
+        if (!ConfigHandler.blockBlacklist.contains(block.getRegistryName().split(":")[1]))
+            GameRegistry.registerBlock(block, itemBlock);
+
+        return block;
     }
 
     private static Block registerBlock(Block block, String name)
@@ -176,6 +184,14 @@ public class ModBlocks
 
     private static Block registerBlock(Block block)
     {
-        return registerBlock(block, block.getClass().getSimpleName());
+        if (block.getRegistryName() == null) {
+            BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
+            return null;
+        }
+
+        if (!ConfigHandler.blockBlacklist.contains(block.getRegistryName().split(":")[1]))
+            GameRegistry.registerBlock(block);
+
+        return block;
     }
 }

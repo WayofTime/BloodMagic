@@ -25,9 +25,10 @@ public class ItemInscriptionTool extends ItemBindable
     {
         super();
 
-        setLPUsed(100);
         setUnlocalizedName(Constants.Mod.MODID + ".scribe.");
+        setRegistryName(Constants.BloodMagicItem.INSCRIPTION_TOOL.getRegName());
         setHasSubtypes(true);
+        setLPUsed(100);
     }
 
     @Override

@@ -26,6 +26,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
         super(ArmorMaterial.CHAIN, 0, 1);
 
         setUnlocalizedName(Constants.Mod.MODID + ".pack.sacrifice");
+        setRegistryName(Constants.BloodMagicItem.SACRIFICE_PACK.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 

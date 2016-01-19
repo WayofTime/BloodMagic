@@ -26,7 +26,7 @@ public class BlockLifeEssence extends BlockFluidClassic
         super(lifeEssence, Material.water);
 
         setUnlocalizedName(Constants.Mod.MODID + ".fluid.lifeEssence");
-
+        setRegistryName(Constants.BloodMagicBlock.LIFE_ESSENCE.getRegName());
         lifeEssence.setBlock(this);
         BloodMagicAPI.setLifeEssence(lifeEssence);
     }

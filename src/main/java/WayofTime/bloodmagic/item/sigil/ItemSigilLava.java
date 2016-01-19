@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,7 @@ public class ItemSigilLava extends ItemSigilBase
     public ItemSigilLava()
     {
         super("lava", 1000);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_LAVA.getRegName());
     }
 
     @Override

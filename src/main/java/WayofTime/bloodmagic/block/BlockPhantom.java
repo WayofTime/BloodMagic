@@ -25,6 +25,7 @@ public class BlockPhantom extends BlockContainer
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".phantom");
+        setRegistryName(Constants.BloodMagicBlock.PHANTOM.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 

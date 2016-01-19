@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -27,6 +28,7 @@ public class ItemBoundPickaxe extends ItemBoundTool
     public ItemBoundPickaxe()
     {
         super("pickaxe", 5, EFFECTIVE_ON);
+        setRegistryName(Constants.BloodMagicItem.BOUND_PICKAXE.getRegName());
     }
 
     @Override

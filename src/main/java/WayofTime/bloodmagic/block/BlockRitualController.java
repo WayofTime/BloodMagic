@@ -30,6 +30,7 @@ public class BlockRitualController extends BlockStringContainer
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
+        setRegistryName(Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setStepSound(soundTypeStone);
         setHardness(2.0F);

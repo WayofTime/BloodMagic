@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,7 @@ public class ItemSigilGreenGrove extends ItemSigilToggleable
     public ItemSigilGreenGrove()
     {
         super("greenGrove", 150);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_GREEN_GROVE.getRegName());
     }
 
     @Override

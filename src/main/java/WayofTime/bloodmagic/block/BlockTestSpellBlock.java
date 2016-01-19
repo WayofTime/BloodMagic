@@ -24,6 +24,7 @@ public class BlockTestSpellBlock extends Block
         setResistance(5.0F);
 
         setUnlocalizedName(Constants.Mod.MODID + ".testSpellBlock");
+        setRegistryName("BlockTestSpellBlock");
         setCreativeTab(BloodMagic.tabBloodMagic);
         this.setDefaultState(this.blockState.getBaseState().withProperty(INPUT, EnumFacing.DOWN).withProperty(OUTPUT, EnumFacing.UP));
     }

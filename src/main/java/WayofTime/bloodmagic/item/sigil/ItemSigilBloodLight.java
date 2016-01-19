@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.item.ItemBindable;
@@ -15,6 +16,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
     public ItemSigilBloodLight()
     {
         super("bloodLight", 10);
+        setRegistryName(Constants.BloodMagicItem.SIGIL_BLOOD_LIGHT.getRegName());
     }
 
     @Override

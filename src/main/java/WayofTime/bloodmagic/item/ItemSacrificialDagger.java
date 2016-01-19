@@ -35,6 +35,7 @@ public class ItemSacrificialDagger extends Item
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".sacrificialDagger.");
+        setRegistryName(Constants.BloodMagicItem.SACRIFICIAL_DAGGER.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHasSubtypes(true);
         setMaxStackSize(1);
