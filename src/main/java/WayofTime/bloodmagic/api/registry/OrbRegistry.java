@@ -1,10 +1,12 @@
 package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import lombok.Getter;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
@@ -23,6 +25,8 @@ public class OrbRegistry
     @Getter
     private static List<BloodOrb> orbs = new ArrayList<BloodOrb>();
 
+    private static Item orbItem = Constants.BloodMagicItem.BLOOD_ORB.getItem();
+
     public static void registerOrb(BloodOrb orb)
     {
         if (!orbs.contains(orb))
@@ -36,8 +40,8 @@ public class OrbRegistry
     {
         int meta = getIndexOf(orb);
 
-        ModelBakery.registerItemVariants(BloodMagicAPI.getItem(BloodMagicAPI.ORB), resourceLocation);
-        ModelLoader.setCustomModelResourceLocation(BloodMagicAPI.getItem(BloodMagicAPI.ORB), meta, new ModelResourceLocation(resourceLocation, "inventory"));
+        ModelBakery.registerItemVariants(orbItem, resourceLocation);
+        ModelLoader.setCustomModelResourceLocation(orbItem, meta, new ModelResourceLocation(resourceLocation, "inventory"));
     }
 
     public static BloodOrb getOrb(int index)
@@ -62,6 +66,6 @@ public class OrbRegistry
 
     public static ItemStack getOrbStack(BloodOrb orb)
     {
-        return new ItemStack(BloodMagicAPI.getItem(BloodMagicAPI.ORB), 1, getIndexOf(orb));
+        return new ItemStack(orbItem, 1, getIndexOf(orb));
     }
 }

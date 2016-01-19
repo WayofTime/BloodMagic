@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.0-7
+------------------------------------------------------
+- [API] Method to easily get instances of Items and Blocks
+- JEI now displays more information for Altar recipes. Hover over the Altar image to view it.
+
+------------------------------------------------------
 Version 2.0.0-6
 ------------------------------------------------------
 - Fixed the LivingArmourTracker for defense so that it no longer ate up armour (om nom nom nom)

@@ -14,9 +14,6 @@ import java.util.List;
 
 public class BloodMagicAPI
 {
-    public static final String ORB = "ItemBloodOrb";
-    public static final String SCRIBE = "ItemInscriptionTool";
-
     @Getter
     private static final List<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
 

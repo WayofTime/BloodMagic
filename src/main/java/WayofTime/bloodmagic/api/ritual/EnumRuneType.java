@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 
@@ -26,7 +26,7 @@ public enum EnumRuneType implements IStringSerializable
 
     public ItemStack getScribeStack()
     {
-        return new ItemStack(BloodMagicAPI.getItem(BloodMagicAPI.SCRIBE), 1, ordinal());
+        return new ItemStack(Constants.BloodMagicItem.INSCRIPTION_TOOL.getItem(), 1, ordinal());
     }
 
     @Override
