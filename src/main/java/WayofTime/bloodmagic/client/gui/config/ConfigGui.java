@@ -32,6 +32,7 @@ public class ConfigGui extends GuiConfig
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Item/Block Blacklisting".toLowerCase())));
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("General".toLowerCase())));
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Rituals".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Blood Altar Sacrificial Values".toLowerCase())));
 
         return list;
     }
