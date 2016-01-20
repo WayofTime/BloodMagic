@@ -3,6 +3,7 @@ Version 2.0.0-7
 ------------------------------------------------------
 - [API] Method to easily get instances of Items and Blocks
 - JEI now displays more information for Altar recipes. Hover over the Altar image to view it.
+- Added particles to the Blood Altar on the server-side.
 
 ------------------------------------------------------
 Version 2.0.0-6

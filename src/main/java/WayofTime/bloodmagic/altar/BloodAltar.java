@@ -9,6 +9,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import WayofTime.bloodmagic.api.BlockStack;
@@ -392,11 +393,6 @@ public class BloodAltar
         if (world.isRemote)
             return;
 
-        float f = 1.0F;
-        float f1 = f * 0.6F + 0.4F;
-        float f2 = f * f * 0.7F - 0.5F;
-        float f3 = f * f * 0.6F - 0.7F;
-
         if (!canBeFilled)
         {
             boolean hasOperated = false;
@@ -423,15 +419,21 @@ public class BloodAltar
 
                 hasOperated = true;
 
-                if (internalCounter % 4 == 0)
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
+                if (internalCounter % 4 == 0 && world instanceof WorldServer)
+                {
+                    WorldServer server = (WorldServer) world;
+                    server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.2, 0, 0.2, 0, new int[0]);
+                }
 
             } else if (!hasOperated && progress > 0)
             {
                 progress -= (int) (efficiencyMultiplier * drainRate);
 
-                if (internalCounter % 2 == 0)
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
+                if (internalCounter % 2 == 0 && world instanceof WorldServer)
+                {
+                    WorldServer server = (WorldServer) world;
+                    server.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0.1, 0, 0.1, 0, new int[0]);
+                }
             }
 
             if (hasOperated)
@@ -446,9 +448,13 @@ public class BloodAltar
                     tileAltar.setInventorySlotContents(0, result);
                     progress = 0;
 
-                    for (int i = 0; i < 8; i++)
-                        world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
+                    if (world instanceof WorldServer)
+                    {
+                        WorldServer server = (WorldServer) world;
+                        server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0, new int[0]);
+                    }
 
+                    this.cooldownAfterCrafting = 100;
                     this.isActive = false;
                 }
             }
@@ -478,8 +484,11 @@ public class BloodAltar
 
                 fluid.amount = fluid.amount - drain;
 
-                if (internalCounter % 4 == 0)
-                    world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + Math.random() - Math.random(), pos.getY() + Math.random() - Math.random(), pos.getZ() + Math.random() - Math.random(), f1, f2, f3);
+                if (drain > 0 && internalCounter % 4 == 0 && world instanceof WorldServer)
+                {
+                    WorldServer server = (WorldServer) world;
+                    server.spawnParticle(EnumParticleTypes.SPELL_WITCH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1, 0, 0, 0, 0.001, new int[] {});
+                }
             }
         }
 
