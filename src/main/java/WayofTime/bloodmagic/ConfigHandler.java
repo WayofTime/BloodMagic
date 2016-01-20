@@ -15,9 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ConfigHandler
 {
@@ -35,6 +33,10 @@ public class ConfigHandler
 
     // Well of Suffering Blacklist
     public static List<String> wellOfSufferingBlacklist;
+
+    // Blood Altar Sacrificial Values
+    public static String[] entitySacrificeValuesList;
+    public static Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
 
     // Potion ID's
     public static int customPotionDrowningID;
@@ -119,6 +121,11 @@ public class ConfigHandler
         category = "Well of Suffering Blacklist";
         config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
         wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] {}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
+
+        category = "Blood Altar Sacrificial Values";
+        config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] {"EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250"}, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
+        buildEntitySacrificeValues();
 
         category = "Potions";
         config.addCustomCategoryComment(category, "Potion settings");
@@ -221,6 +228,23 @@ public class ConfigHandler
             }
 
             teleposerBlacklist.add(new BlockStack(block, meta));
+        }
+    }
+
+    private static void buildEntitySacrificeValues()
+    {
+        entitySacrificeValues.clear();
+
+        for (String entityData : entitySacrificeValuesList)
+        {
+            String[] split = entityData.split(";");
+
+            int amount = 500;
+            if (Utils.isInteger(split[1]))
+                amount = Integer.parseInt(split[1]);
+
+            if (!entitySacrificeValues.containsKey(split[0]))
+                entitySacrificeValues.put(split[0], amount);
         }
     }
 

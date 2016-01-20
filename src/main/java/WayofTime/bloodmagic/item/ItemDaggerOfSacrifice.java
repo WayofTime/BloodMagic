@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
@@ -42,16 +44,14 @@ public class ItemDaggerOfSacrifice extends Item
         if (target.isDead || target.getHealth() < 0.5F)
             return false;
 
-        // TODO Make these configurable
+        String entityName = target.getClass().getSimpleName();
         int lifeEssence = 500;
-        if (target instanceof EntityVillager)
-            lifeEssence = 2000;
-        else if (target instanceof EntitySlime)
-            lifeEssence = 150;
-        else if (target instanceof EntityEnderman)
-            lifeEssence = 200;
-        else if (target instanceof EntityAnimal)
-            lifeEssence = 250;
+
+        if (ConfigHandler.entitySacrificeValues.containsKey(entityName))
+            lifeEssence = ConfigHandler.entitySacrificeValues.get(entityName);
+
+        if (BloodMagicAPI.getEntitySacrificeValues().containsKey(entityName))
+            lifeEssence = BloodMagicAPI.getEntitySacrificeValues().get(entityName);
 
         if (findAndFillAltar(attacker.worldObj, target, lifeEssence))
         {

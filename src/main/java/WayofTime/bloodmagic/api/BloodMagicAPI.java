@@ -4,18 +4,25 @@ import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BloodMagicAPI
 {
     @Getter
     private static final List<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
+
+    @Getter
+    private static final Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
 
     @Getter
     @Setter
@@ -118,5 +125,38 @@ public class BloodMagicAPI
     public static void addToTeleposerBlacklist(Block block)
     {
         addToTeleposerBlacklist(block, 0);
+    }
+
+    /**
+     * Used to set the sacrifice value of an Entity. The value provided is how much
+     * LP will be gained when the entity is sacrificed at a Blood Altar.
+     *
+     * Setting a sacrificeValue of 0 will effectively blacklist the entity.
+     *
+     * The default value for any unset Entity is 500 LP per sacrifice.
+     *
+     * @param entityClass
+     *        - The class of the entity to blacklist.
+     * @param sacrificeValue
+     *        - The Amount of LP to provide per each entity sacrificed.
+     */
+    public static void setEntitySacrificeValue(Class<? extends EntityLivingBase> entityClass, int sacrificeValue)
+    {
+        if (!entitySacrificeValues.containsKey(entityClass.getSimpleName()))
+            entitySacrificeValues.put(entityClass.getSimpleName(), sacrificeValue);
+    }
+
+    /**
+     * @see #setEntitySacrificeValue(Class, int)
+     *
+     * @param entityClassName
+     *        - The name of the class of the entity to blacklist.
+     * @param sacrificeValue
+     *        - The Amount of LP to provide per each entity sacrificed.
+     */
+    public static void setEntitySacrificeValue(String entityClassName, int sacrificeValue)
+    {
+        if (!entitySacrificeValues.containsKey(entityClassName))
+            entitySacrificeValues.put(entityClassName, sacrificeValue);
     }
 }
