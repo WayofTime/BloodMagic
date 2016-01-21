@@ -81,7 +81,7 @@ public class EventHandler
 
                 boolean shouldSyphon = pack.getStoredLP(player.getCurrentArmor(chestIndex)) < pack.CAPACITY;
                 float damageDone = event.entityLiving.getHealth() < event.ammount ? event.ammount - event.entityLiving.getHealth() : event.ammount;
-                int totalLP = Math.round(damageDone * pack.CONVERSION);
+                int totalLP = Math.round(damageDone * ConfigHandler.sacrificialPackConversion);
 
                 if (shouldSyphon)
                     pack.addLP(player.getCurrentArmor(chestIndex), totalLP);

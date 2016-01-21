@@ -94,6 +94,8 @@ public class ConfigHandler
     public static boolean vanillaPotionHealthBoostEnabled;
     public static boolean vanillaPotionAbsorptionEnabled;
 
+    public static int sacrificialPackConversion;
+
     // Compat
     public static int wailaAltarDisplayMode;
 
@@ -191,6 +193,7 @@ public class ConfigHandler
         category = "General";
         config.addCustomCategoryComment(category, "General settings");
         BloodMagicAPI.setLoggingEnabled(config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this"));
+        sacrificialPackConversion = config.getInt("sacrificialPackConversion", category, 20, 0, 100, "Base multiplier for the Coat of Arms. DamageDealt * sacrificialPackConversion");
 
         category = "Compatibility";
         config.addCustomCategoryComment(category, "Compatibility settings");
