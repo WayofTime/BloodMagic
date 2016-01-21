@@ -14,14 +14,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.inventory.ItemInventory;
+import WayofTime.bloodmagic.routing.DefaultItemFilter;
 import WayofTime.bloodmagic.routing.IItemFilter;
+import WayofTime.bloodmagic.routing.IgnoreNBTItemFilter;
+import WayofTime.bloodmagic.routing.ModIdItemFilter;
+import WayofTime.bloodmagic.routing.OreDictItemFilter;
 import WayofTime.bloodmagic.routing.TestItemFilter;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemRouterFilter extends Item implements IItemFilterProvider
 {
-    public static String[] names = { "exact" };
+    public static String[] names = { "exact", "ignoreNBT", "modItems", "oreDict" };
 
     public ItemRouterFilter()
     {
@@ -60,6 +64,26 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider
     public IItemFilter getInputItemFilter(ItemStack filterStack, IInventory inventory, EnumFacing syphonDirection)
     {
         IItemFilter testFilter = new TestItemFilter();
+
+        switch (filterStack.getMetadata())
+        {
+        case 0:
+            testFilter = new TestItemFilter();
+            break;
+        case 1:
+            testFilter = new IgnoreNBTItemFilter();
+            break;
+        case 2:
+            testFilter = new ModIdItemFilter();
+            break;
+        case 3:
+            testFilter = new OreDictItemFilter();
+            break;
+
+        default:
+            testFilter = new DefaultItemFilter();
+        }
+
         List<ItemStack> filteredList = new ArrayList<ItemStack>();
         ItemInventory inv = new ItemInventory(filterStack, 9, "");
         for (int i = 0; i < inv.getSizeInventory(); i++)
@@ -83,6 +107,26 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider
     public IItemFilter getOutputItemFilter(ItemStack filterStack, IInventory inventory, EnumFacing syphonDirection)
     {
         IItemFilter testFilter = new TestItemFilter();
+
+        switch (filterStack.getMetadata())
+        {
+        case 0:
+            testFilter = new TestItemFilter();
+            break;
+        case 1:
+            testFilter = new IgnoreNBTItemFilter();
+            break;
+        case 2:
+            testFilter = new ModIdItemFilter();
+            break;
+        case 3:
+            testFilter = new OreDictItemFilter();
+            break;
+
+        default:
+            testFilter = new DefaultItemFilter();
+        }
+
         List<ItemStack> filteredList = new ArrayList<ItemStack>();
         ItemInventory inv = new ItemInventory(filterStack, 9, ""); //TODO: Change to grab the filter from the Item later.
         for (int i = 0; i < inv.getSizeInventory(); i++)

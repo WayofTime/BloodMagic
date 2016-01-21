@@ -37,6 +37,7 @@ public class DefaultItemFilter implements IItemFilter
      *        initialized as an output filter. If false, it should be
      *        initialized as an input filter.
      */
+    @Override
     public void initializeFilter(List<ItemStack> filteredList, IInventory inventory, EnumFacing side, boolean isFilterOutput)
     {
         accessedInventory = inventory;
@@ -53,6 +54,7 @@ public class DefaultItemFilter implements IItemFilter
      * @return - The remainder of the stack after it has been absorbed into the
      *         inventory.
      */
+    @Override
     public ItemStack transferStackThroughOutputFilter(ItemStack inputStack)
     {
         int allowedAmount = inputStack.stackSize; //This is done to make the migration to a maximum amount transfered a lot easier
@@ -77,6 +79,7 @@ public class DefaultItemFilter implements IItemFilter
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
+    @Override
     public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];

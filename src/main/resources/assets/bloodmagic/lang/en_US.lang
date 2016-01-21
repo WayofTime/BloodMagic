@@ -76,6 +76,7 @@ item.BloodMagic.baseComponent.reagentAffinity.name=Elemental Affinity Reagent
 item.BloodMagic.baseComponent.reagentSight.name=Sight Reagent
 item.BloodMagic.baseComponent.reagentBinding.name=Binding Reagent
 item.BloodMagic.baseComponent.reagentSuppression.name=Suppression Reagent
+item.BloodMagic.baseComponent.frameParts.name=Frame Parts
 
 item.BloodMagic.monsterSoul.base.name=Demonic Will
 
@@ -122,6 +123,9 @@ item.BloodMagic.sentientBow.name=Sentient Bow
 
 item.BloodMagic.nodeRouter.name=Node Router
 item.BloodMagic.itemFilter.exact.name=Precise Item Filter
+item.BloodMagic.itemFilter.ignoreNBT.name=NBT Item Filter
+item.BloodMagic.itemFilter.modItems.name=Mod Item Filter
+item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
 
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
@@ -262,7 +266,10 @@ tooltip.BloodMagic.soulGem.greater=A gem used to contain a greater amount of wil
 tooltip.BloodMagic.soulGem.grand=A gem used to contain a large amount of will
 tooltip.BloodMagic.soulSnare.desc=Throw at a monster and then kill them to obtain their demonic will
 
-tooltip.BloodMagic.itemFilter.exact=Will make sure the items match precisely.
+tooltip.BloodMagic.itemFilter.exact=Will make sure the items match precisely
+tooltip.BloodMagic.itemFilter.ignoreNBT=Ignores the NBT of the filter
+tooltip.BloodMagic.itemFilter.modItems=Matches all items from the same mod
+tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual

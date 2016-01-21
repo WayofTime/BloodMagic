@@ -25,9 +25,9 @@ public class TestItemFilter implements IItemFilter
      * inserted in the inventory to finish its request. For the case of an input
      * filter, it keeps track of how many can be removed.
      */
-    private List<ItemStack> requestList;
-    private IInventory accessedInventory;
-    private EnumFacing accessedSide;
+    protected List<ItemStack> requestList;
+    protected IInventory accessedInventory;
+    protected EnumFacing accessedSide;
 
     /**
      * Initializes the filter so that it knows what it wants to fulfill.
@@ -45,6 +45,7 @@ public class TestItemFilter implements IItemFilter
      *        initialized as an output filter. If false, it should be
      *        initialized as an input filter.
      */
+    @Override
     public void initializeFilter(List<ItemStack> filteredList, IInventory inventory, EnumFacing side, boolean isFilterOutput)
     {
         this.accessedInventory = inventory;
@@ -166,6 +167,7 @@ public class TestItemFilter implements IItemFilter
      * @return - The remainder of the stack after it has been absorbed into the
      *         inventory.
      */
+    @Override
     public ItemStack transferStackThroughOutputFilter(ItemStack inputStack)
     {
         int allowedAmount = 0;
@@ -212,6 +214,7 @@ public class TestItemFilter implements IItemFilter
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
+    @Override
     public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
@@ -290,6 +293,7 @@ public class TestItemFilter implements IItemFilter
         }
     }
 
+    @Override
     public boolean doesStackMatchFilter(ItemStack testStack)
     {
         for (ItemStack filterStack : requestList)
@@ -303,6 +307,7 @@ public class TestItemFilter implements IItemFilter
         return false;
     }
 
+    @Override
     public boolean doStacksMatch(ItemStack filterStack, ItemStack testStack)
     {
         return Utils.canCombine(filterStack, testStack);

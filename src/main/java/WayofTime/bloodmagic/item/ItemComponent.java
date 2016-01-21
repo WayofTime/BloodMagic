@@ -28,6 +28,7 @@ public class ItemComponent extends Item
     public static final String REAGENT_SIGHT = "reagentSight";
     public static final String REAGENT_BINDING = "reagentBinding";
     public static final String REAGENT_SUPPRESSION = "reagentSuppression";
+    public static final String COMPONENT_FRAME_PART = "frameParts";
 
     public ItemComponent()
     {
@@ -53,6 +54,7 @@ public class ItemComponent extends Item
         names.add(7, REAGENT_SIGHT);
         names.add(8, REAGENT_BINDING);
         names.add(9, REAGENT_SUPPRESSION);
+        names.add(10, COMPONENT_FRAME_PART);
     }
 
     @Override
