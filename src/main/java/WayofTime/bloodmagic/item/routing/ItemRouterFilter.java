@@ -71,10 +71,6 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider
             }
 
             ItemStack ghostStack = GhostItemHelper.getStackFromGhost(stack);
-            if (ghostStack.stackSize == 0)
-            {
-                ghostStack.stackSize = Integer.MAX_VALUE;
-            }
 
             filteredList.add(ghostStack);
         }

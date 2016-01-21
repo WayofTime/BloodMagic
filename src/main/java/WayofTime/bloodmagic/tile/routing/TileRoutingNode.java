@@ -167,7 +167,6 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
         if (connectionList.contains(pos1))
         {
             connectionList.remove(pos1);
-            System.out.println("Position: " + pos + ", remaining: " + connectionList.size());
             worldObj.markBlockForUpdate(pos);
         }
     }

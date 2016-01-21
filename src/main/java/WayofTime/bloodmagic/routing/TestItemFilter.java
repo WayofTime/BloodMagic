@@ -192,14 +192,16 @@ public class TestItemFilter implements IItemFilter
         testStack = inputStack.copy();
         testStack.stackSize -= changeAmount;
 
-        for (ItemStack filterStack : requestList)
+        Iterator<ItemStack> itr = requestList.iterator();
+        while (itr.hasNext())
         {
+            ItemStack filterStack = itr.next();
             if (doStacksMatch(filterStack, inputStack))
             {
                 filterStack.stackSize -= changeAmount;
                 if (filterStack.stackSize <= 0)
                 {
-                    requestList.remove(filterStack);
+                    itr.remove();
                 }
             }
         }
@@ -273,14 +275,16 @@ public class TestItemFilter implements IItemFilter
 
             accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
 
-            for (ItemStack filterStack : requestList)
+            Iterator<ItemStack> itr = requestList.iterator();
+            while (itr.hasNext())
             {
+                ItemStack filterStack = itr.next();
                 if (doStacksMatch(filterStack, inputStack))
                 {
                     filterStack.stackSize -= changeAmount;
                     if (filterStack.stackSize <= 0)
                     {
-                        requestList.remove(filterStack);
+                        itr.remove();
                     }
                 }
             }

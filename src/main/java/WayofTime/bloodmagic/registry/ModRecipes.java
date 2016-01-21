@@ -168,7 +168,7 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), 500, 50, ModBlocks.teleposer, Items.water_bucket, Items.lava_bucket, Items.blaze_rod);
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.gunpowder);
 
-        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.baseItemFilter), 400, 10, new ItemStack(Blocks.glass), new ItemStack(Blocks.cobblestone), new ItemStack(ModItems.slate));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.baseItemFilter), 400, 10, new ItemStack(Blocks.glass), new ItemStack(Blocks.cobblestone), new ItemStack(ModItems.slate), Items.stick);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.nodeRouter), 400, 5, Items.stick, new ItemStack(ModItems.slate, 1, 1), "gemLapis", "gemLapis");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.itemRoutingNode), 400, 5, "dustGlowstone", "dustRedstone", "blockGlass", "stone");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.outputRoutingNode), 400, 25, "dustGlowstone", "dustRedstone", "ingotIron", new ItemStack(ModBlocks.itemRoutingNode));

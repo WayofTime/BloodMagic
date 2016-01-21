@@ -1,6 +1,6 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     }
 
     // A list of connections
-    private HashMap<BlockPos, List<BlockPos>> connectionMap = new HashMap<BlockPos, List<BlockPos>>();
+    private TreeMap<BlockPos, List<BlockPos>> connectionMap = new TreeMap<BlockPos, List<BlockPos>>();
     private List<BlockPos> generalNodeList = new LinkedList<BlockPos>();
     private List<BlockPos> outputNodeList = new LinkedList<BlockPos>();
     private List<BlockPos> inputNodeList = new LinkedList<BlockPos>();
@@ -46,7 +46,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             return;
         }
 
-        Map<Integer, List<IItemFilter>> outputMap = new HashMap<Integer, List<IItemFilter>>();
+        Map<Integer, List<IItemFilter>> outputMap = new TreeMap<Integer, List<IItemFilter>>();
 
         for (BlockPos outputPos : outputNodeList)
         {
@@ -80,7 +80,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             }
         }
 
-        Map<Integer, List<IItemFilter>> inputMap = new HashMap<Integer, List<IItemFilter>>();
+        Map<Integer, List<IItemFilter>> inputMap = new TreeMap<Integer, List<IItemFilter>>();
 
         for (BlockPos inputPos : inputNodeList)
         {
