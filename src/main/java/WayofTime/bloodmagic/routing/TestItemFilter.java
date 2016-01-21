@@ -186,7 +186,6 @@ public class TestItemFilter implements IItemFilter
         ItemStack testStack = inputStack.copy();
         testStack.stackSize = allowedAmount;
         ItemStack remainderStack = Utils.insertStackIntoInventory(testStack, accessedInventory, accessedSide);
-//        System.out.println("Remaining stack size: " + (remainderStack != null ? remainderStack.stackSize : 0) + ", allowed amount: " + allowedAmount);
 
         int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
         testStack = inputStack.copy();
@@ -213,7 +212,7 @@ public class TestItemFilter implements IItemFilter
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
-    public void transferThroughInputFilter(IItemFilter outputFilter)
+    public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
         if (accessedInventory instanceof ISidedInventory)
@@ -249,7 +248,7 @@ public class TestItemFilter implements IItemFilter
             {
                 if (doStacksMatch(filterStack, inputStack))
                 {
-                    allowedAmount = Math.min(filterStack.stackSize, inputStack.stackSize);
+                    allowedAmount = Math.min(maxTransfer, Math.min(filterStack.stackSize, inputStack.stackSize));
                     break;
                 }
             }
@@ -263,7 +262,6 @@ public class TestItemFilter implements IItemFilter
             testStack.stackSize = allowedAmount;
             ItemStack remainderStack = outputFilter.transferStackThroughOutputFilter(testStack);
             int changeAmount = allowedAmount - (remainderStack == null ? 0 : remainderStack.stackSize);
-//            System.out.println("Change amount: " + changeAmount);
 
             if (remainderStack != null && remainderStack.stackSize == allowedAmount)
             {
@@ -272,6 +270,7 @@ public class TestItemFilter implements IItemFilter
             }
 
             inputStack.stackSize -= changeAmount;
+            maxTransfer -= changeAmount;
 
             accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
 

@@ -77,7 +77,7 @@ public class DefaultItemFilter implements IItemFilter
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
-    public void transferThroughInputFilter(IItemFilter outputFilter)
+    public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
         if (accessedInventory instanceof ISidedInventory)
@@ -108,7 +108,7 @@ public class DefaultItemFilter implements IItemFilter
                 continue;
             }
 
-            int allowedAmount = inputStack.stackSize;
+            int allowedAmount = Math.min(inputStack.stackSize, maxTransfer);
 
             ItemStack testStack = inputStack.copy();
             testStack.stackSize = allowedAmount;
@@ -122,6 +122,7 @@ public class DefaultItemFilter implements IItemFilter
             }
 
             inputStack.stackSize -= changeAmount;
+            maxTransfer -= changeAmount;
 
             accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
         }

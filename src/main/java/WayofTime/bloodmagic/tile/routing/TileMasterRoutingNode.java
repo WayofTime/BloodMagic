@@ -124,7 +124,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                     List<IItemFilter> inputList = inputEntry.getValue();
                     for (IItemFilter inputFilter : inputList)
                     {
-                        inputFilter.transferThroughInputFilter(outputFilter);
+                        inputFilter.transferThroughInputFilter(outputFilter, 1);
                     }
                 }
             }
