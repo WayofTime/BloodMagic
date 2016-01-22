@@ -90,6 +90,9 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
             NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 1.0F);
             addLP(stack, CONVERSION);
         }
+
+        if (getStoredLP(stack) > CAPACITY)
+            setStoredLP(stack, CAPACITY);
     }
 
     @Override
@@ -116,7 +119,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
         if (toAdd > CAPACITY)
             toAdd = CAPACITY;
 
-        setStoredLP(stack, getStoredLP(stack) + toAdd);
+        setStoredLP(stack, Math.min(getStoredLP(stack) + toAdd, CAPACITY));
     }
 
     public void setStoredLP(ItemStack stack, int lp)

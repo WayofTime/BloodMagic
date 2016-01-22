@@ -70,6 +70,13 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
     }
 
     @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
+    {
+        if (getStoredLP(stack) > CAPACITY)
+            setStoredLP(stack, CAPACITY);
+    }
+
+    @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
     {
         return Constants.Mod.DOMAIN + "models/armor/bloodPack_layer_1.png";
@@ -93,7 +100,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
         if (toAdd > CAPACITY)
             toAdd = CAPACITY;
 
-        setStoredLP(stack, getStoredLP(stack) + toAdd);
+        setStoredLP(stack, Math.min(getStoredLP(stack) + toAdd, CAPACITY));
     }
 
     public void setStoredLP(ItemStack stack, int lp)
