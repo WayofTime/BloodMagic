@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.api.Constants;
 
 import com.google.common.base.Strings;
 
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -14,12 +15,18 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.util.ArrayList;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class PlayerHelper
 {
-    private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
+    /**
+     * A list of all known fake players that do not extend FakePlayer.
+     *
+     * Will be added to as needed.
+     */
+    private static final ArrayList<String> knownFakePlayers = Lists.newArrayList(
+    );
 
     public static String getUsernameFromPlayer(EntityPlayer player)
     {
@@ -68,7 +75,7 @@ public class PlayerHelper
 
     public static boolean isFakePlayer(EntityPlayer player)
     {
-        return player != null && (player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(getUsernameFromPlayer(player)).matches());
+        return player != null && (player instanceof FakePlayer || knownFakePlayers.contains(player.getClass().getCanonicalName()));
     }
 
     public static void causeNauseaToPlayer(ItemStack stack)
