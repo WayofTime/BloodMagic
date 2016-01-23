@@ -25,6 +25,7 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
+import WayofTime.bloodmagic.registry.ModTranquilityHandlers;
 
 @Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 @Getter
@@ -69,6 +70,7 @@ public class BloodMagic
         ModEntities.init();
         ModCompatibility.registerModCompat();
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.PRE_INIT);
+        ModTranquilityHandlers.init();
 
         proxy.preInit();
     }
