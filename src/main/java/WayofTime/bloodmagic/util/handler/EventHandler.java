@@ -67,9 +67,12 @@ public class EventHandler
     Random random = new Random();
 
     @SubscribeEvent
-    public void onEntityDeath(LivingHurtEvent event)
+    public void onEntityHurt(LivingHurtEvent event)
     {
         int chestIndex = 2;
+
+        if (event.entity.worldObj.isRemote)
+            return;
 
         if (event.source.getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.source.getEntity()))
         {
