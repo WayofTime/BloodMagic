@@ -20,9 +20,10 @@ public class BloodMagicAPI
 {
     @Getter
     private static final List<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
-
     @Getter
     private static final Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
+    @Getter
+    private static final ArrayList<Block> greenGroveBlacklist = new ArrayList<Block>();
 
     @Getter
     @Setter
@@ -158,5 +159,15 @@ public class BloodMagicAPI
     {
         if (!entitySacrificeValues.containsKey(entityClassName))
             entitySacrificeValues.put(entityClassName, sacrificeValue);
+    }
+
+    /**
+     * Blacklists a block from the Green Grove Ritual and Sigil.
+     *
+     * @param block - Block to blacklist
+     */
+    public static void blacklistFromGreenGrove(Block block) {
+        if (!greenGroveBlacklist.contains(block))
+            greenGroveBlacklist.add(block);
     }
 }

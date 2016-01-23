@@ -6,6 +6,7 @@ Version 2.0.0-7
 - Allow configuration of entity sacrificial values
 - [API] Allow setting of entity sacrificial values via API. Takes precedence over config values.
 - [API] Method to easily get instances of Items and Blocks
+- [API] Allow mods to blacklist their blocks from the Green Grove ritual/sigil
 
 ------------------------------------------------------
 Version 2.0.0-6

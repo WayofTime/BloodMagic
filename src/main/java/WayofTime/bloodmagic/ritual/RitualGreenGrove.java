@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.Random;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -50,10 +51,14 @@ public class RitualGreenGrove extends Ritual
         {
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
-            if (block instanceof IPlantable || block instanceof IGrowable)
+
+            if (BloodMagicAPI.getGreenGroveBlacklist().contains(block))
             {
-                block.updateTick(world, newPos, state, new Random());
-                totalGrowths++;
+                if (block instanceof IPlantable || block instanceof IGrowable)
+                {
+                    block.updateTick(world, newPos, state, new Random());
+                    totalGrowths++;
+                }
             }
 
             if (totalGrowths >= maxGrowths)

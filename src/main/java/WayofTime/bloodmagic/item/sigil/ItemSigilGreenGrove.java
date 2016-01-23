@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
@@ -49,15 +50,18 @@ public class ItemSigilGreenGrove extends ItemSigilToggleable
                     BlockPos blockPos = new BlockPos(ix, iy, iz);
                     Block block = worldIn.getBlockState(blockPos).getBlock();
 
-                    if (block instanceof IPlantable || block instanceof IGrowable)
+                    if (!BloodMagicAPI.getGreenGroveBlacklist().contains(block))
                     {
-                        if (worldIn.rand.nextInt(50) == 0)
+                        if (block instanceof IPlantable || block instanceof IGrowable)
                         {
-                            IBlockState preBlockState = worldIn.getBlockState(blockPos);
-                            block.updateTick(worldIn, blockPos, worldIn.getBlockState(blockPos), worldIn.rand);
+                            if (worldIn.rand.nextInt(50) == 0)
+                            {
+                                IBlockState preBlockState = worldIn.getBlockState(blockPos);
+                                block.updateTick(worldIn, blockPos, worldIn.getBlockState(blockPos), worldIn.rand);
 
-                            if (!worldIn.getBlockState(blockPos).equals(preBlockState))
-                                worldIn.playAuxSFX(2005, blockPos, 0);
+                                if (!worldIn.getBlockState(blockPos).equals(preBlockState))
+                                    worldIn.playAuxSFX(2005, blockPos, 0);
+                            }
                         }
                     }
                 }
