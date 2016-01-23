@@ -10,7 +10,7 @@
       "pedestal": {
         "model": "bloodmagic:BlockPedestal0",
         "textures": {
-          "all": "bloodmagic:models/Pedestal"
+          "all": "bloodmagic:models/Plinth"
         }
       },
       "plinth": {
