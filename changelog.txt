@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.0-8
+------------------------------------------------------
+- Fixed crash when activating rituals while operating on servers
+- Added the majority of stuff for the item routing system.
+
+------------------------------------------------------
 Version 2.0.0-7
 ------------------------------------------------------
 - JEI now displays more information for Altar recipes. Hover over the Altar image to view it.

@@ -8,7 +8,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
@@ -31,6 +33,11 @@ public class NetworkHelper
      */
     public static SoulNetwork getSoulNetwork(String name)
     {
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+        {
+            return new SoulNetwork(name);
+        }
+
         World world = DimensionManager.getWorld(0);
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 
