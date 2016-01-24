@@ -162,6 +162,7 @@ tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
 tile.BloodMagic.bloodLight.name=Blood Light
 tile.BloodMagic.spectralBlock.name=Spectral Block
 tile.BloodMagic.phantomBlock.name=Phantom Block
+tile.BloodMagic.incenseAltar.name=Incense Altar
 
 tile.BloodMagic.teleposer.name=Teleposer
 tile.BloodMagic.soulForge.name=Hellfire Forge

@@ -24,6 +24,9 @@ public class TileIncenseAltar extends TileInventory implements ITickable
     public static int maxCheckRange = 5;
     public Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
 
+    public double incenseAddition = 0; //Self-sacrifice is multiplied by 1 plus this value.
+    public int roadDistance = 0; //Number of road blocks laid down
+
     public TileIncenseAltar()
     {
         super(1, "incenseAltar");
@@ -110,6 +113,10 @@ public class TileIncenseAltar extends TileInventory implements ITickable
                         }
                     }
                 }
+            } else
+            {
+                roadDistance = currentDistance - 2;
+                break;
             }
         }
 
@@ -126,5 +133,10 @@ public class TileIncenseAltar extends TileInventory implements ITickable
             return;
         }
 
+        double appliedTranquility = 0;
+        for (Entry<EnumTranquilityType, Double> entry : tranquilityMap.entrySet())
+        {
+            appliedTranquility += Math.pow(entry.getValue(), 0.9);
+        }
     }
 }

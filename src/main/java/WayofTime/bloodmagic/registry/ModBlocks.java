@@ -13,6 +13,7 @@ import WayofTime.bloodmagic.block.BlockBloodLight;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.block.BlockCrystal;
+import WayofTime.bloodmagic.block.BlockIncenseAltar;
 import WayofTime.bloodmagic.block.BlockInputRoutingNode;
 import WayofTime.bloodmagic.block.BlockItemRoutingNode;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
@@ -35,6 +36,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
+import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.tile.TilePhantomBlock;
 import WayofTime.bloodmagic.tile.TilePlinth;
@@ -61,6 +63,7 @@ public class ModBlocks
     public static Block spectralBlock;
     public static Block phantomBlock;
     public static Block soulForge;
+    public static Block incenseAltar;
 
     public static Block lifeEssence;
 
@@ -95,6 +98,7 @@ public class ModBlocks
         inputRoutingNode = registerBlock(new BlockInputRoutingNode());
         outputRoutingNode = registerBlock(new BlockOutputRoutingNode());
         itemRoutingNode = registerBlock(new BlockItemRoutingNode());
+        incenseAltar = registerBlock(new BlockIncenseAltar());
 
         initTiles();
     }
@@ -114,6 +118,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileInputRoutingNode.class, Constants.Mod.MODID + ":" + TileInputRoutingNode.class.getSimpleName());
         GameRegistry.registerTileEntity(TileOutputRoutingNode.class, Constants.Mod.MODID + ":" + TileOutputRoutingNode.class.getSimpleName());
         GameRegistry.registerTileEntity(TileItemRoutingNode.class, Constants.Mod.MODID + ":" + TileItemRoutingNode.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileIncenseAltar.class, Constants.Mod.MODID + ":" + TileIncenseAltar.class.getSimpleName());
     }
 
     public static void initRenders()
@@ -151,6 +156,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(outputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(incenseAltar));
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
@@ -163,7 +169,8 @@ public class ModBlocks
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock)
     {
-        if (block.getRegistryName() == null) {
+        if (block.getRegistryName() == null)
+        {
             BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
             return block;
         }
@@ -184,7 +191,8 @@ public class ModBlocks
 
     private static Block registerBlock(Block block)
     {
-        if (block.getRegistryName() == null) {
+        if (block.getRegistryName() == null)
+        {
             BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
             return null;
         }

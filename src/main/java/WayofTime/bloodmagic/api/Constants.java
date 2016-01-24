@@ -195,16 +195,19 @@ public class Constants
         @Getter
         private final String regName;
 
-        BloodMagicItem(String regName) {
+        BloodMagicItem(String regName)
+        {
             this.regName = regName;
         }
 
-        public Item getItem() {
+        public Item getItem()
+        {
             return BloodMagicAPI.getItem(getRegName());
         }
     }
 
-    public enum BloodMagicBlock {
+    public enum BloodMagicBlock
+    {
         ALCHEMY_ARRAY("BlockAlchemyArray"),
         ALTAR("BlockAltar"),
         BLOOD_LIGHT("BlockBloodLight"),
@@ -222,16 +225,19 @@ public class Constants
         RITUAL_STONE("BlockRitualStone"),
         SOUL_FORGE("BlockSoulForge"),
         SPECTRAL("BlockSpectral"),
-        TELEPOSER("BlockTeleposer");
+        TELEPOSER("BlockTeleposer"),
+        INCENSE_ALTAR("BlockIncenseAltar");
 
         @Getter
         private final String regName;
 
-        BloodMagicBlock(String regName) {
+        BloodMagicBlock(String regName)
+        {
             this.regName = regName;
         }
 
-        public Block getBlock() {
+        public Block getBlock()
+        {
             return BloodMagicAPI.getBlock(getRegName());
         }
     }
