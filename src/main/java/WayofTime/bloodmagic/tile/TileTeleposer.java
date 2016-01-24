@@ -215,9 +215,9 @@ public class TileTeleposer extends TileInventory implements ITickable
 
         //Finally, we get to do something! (CLEARING TILES)
         if (finalStack.getBlock() != null)
-            finalWorld.setTileEntity(finalPos, finalStack.getBlock().createTileEntity(finalWorld, finalWorld.getBlockState(finalPos)));
+            finalWorld.removeTileEntity(finalPos);
         if (initialStack.getBlock() != null)
-            initialWorld.setTileEntity(initialPos, initialStack.getBlock().createTileEntity(initialWorld, initialWorld.getBlockState(initialPos)));
+            initialWorld.removeTileEntity(initialPos);
 
         //TILES CLEARED
         IBlockState initialBlockState = initialWorld.getBlockState(initialPos);
