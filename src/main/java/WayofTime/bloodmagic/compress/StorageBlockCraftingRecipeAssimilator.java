@@ -129,7 +129,6 @@ public class StorageBlockCraftingRecipeAssimilator
                     if (recipeUnpack.matches(inventoryUnpack, world))
                     {
                         ret.add(recipePack.recipe);
-                        BloodMagic.instance.getLogger().info("Adding the following recipe to the Compression Handler: " + packOutput);
                         it.remove();
                     }
                 }
