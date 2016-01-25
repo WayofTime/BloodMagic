@@ -72,6 +72,11 @@ public class ImperfectRitualRegistry
     {
         try
         {
+            if (!enabledRituals.containsKey(imperfectRitual))
+            {
+                return true;
+            }
+
             return enabledRituals.get(imperfectRitual);
         } catch (NullPointerException e)
         {
