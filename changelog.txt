@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.0-9
+------------------------------------------------------
+- Fixed the rituals so that they no longer caused nausea no matter what.
+
+------------------------------------------------------
 Version 2.0.0-8
 ------------------------------------------------------
 - Fixed crash when activating rituals while operating on servers
