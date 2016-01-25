@@ -33,11 +33,6 @@ public class NetworkHelper
      */
     public static SoulNetwork getSoulNetwork(String name)
     {
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            return new SoulNetwork(name);
-        }
-
         World world = DimensionManager.getWorld(0);
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 

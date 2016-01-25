@@ -109,41 +109,46 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 int crystalLevel = ((ItemActivationCrystal) activationCrystal.getItem()).getCrystalLevel(activationCrystal);
                 if (RitualHelper.canCrystalActivate(ritual, crystalLevel))
                 {
-                    SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
-
-                    if (network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
+                    if (!getWorld().isRemote)
                     {
-                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
-                        return false;
-                    }
+                        SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
 
-                    if (currentRitual != null)
-                        currentRitual.stopRitual(this, Ritual.BreakType.ACTIVATE);
-
-                    RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
-
-                    if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                    {
-                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
-                        return false;
-                    }
-
-                    if (ritual.activateRitual(this, activator))
-                    {
-                        if (!activator.capabilities.isCreativeMode)
+                        if (network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
                         {
-                            network.syphon(ritual.getActivationCost());
+                            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
+                            return false;
                         }
 
-                        ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
-                        this.active = true;
-                        // Set the owner of the ritual to the crystal's owner
-                        this.owner = crystalOwner;
+                        if (currentRitual != null)
+                            currentRitual.stopRitual(this, Ritual.BreakType.ACTIVATE);
 
-                        this.currentRitual = ritual;
+                        RitualEvent.RitualActivatedEvent event = new RitualEvent.RitualActivatedEvent(this, crystalOwner, ritual, activator, activationCrystal, crystalLevel);
 
-                        return true;
+                        if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                        {
+                            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.prevent");
+                            return false;
+                        }
+
+                        if (ritual.activateRitual(this, activator))
+                        {
+                            if (!activator.capabilities.isCreativeMode)
+                            {
+                                network.syphon(ritual.getActivationCost());
+                            }
+
+                            ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
+                            this.active = true;
+                            // Set the owner of the ritual to the crystal's owner
+                            this.owner = crystalOwner;
+
+                            this.currentRitual = ritual;
+
+                            return true;
+                        }
                     }
+
+                    return true;
                 }
             }
         } else
@@ -157,7 +162,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void performRitual(World world, BlockPos pos)
     {
-        if (getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection()))
+        if (!world.isRemote && getCurrentRitual() != null && RitualRegistry.ritualEnabled(getCurrentRitual()) && RitualHelper.checkValidRitual(getWorld(), getPos(), RitualRegistry.getIdForRitual(currentRitual), getDirection()))
         {
             RitualEvent.RitualRunEvent event = new RitualEvent.RitualRunEvent(this, getOwner(), getCurrentRitual());
 
@@ -171,7 +176,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void stopRitual(Ritual.BreakType breakType)
     {
-        if (getCurrentRitual() != null)
+        if (!getWorld().isRemote && getCurrentRitual() != null)
         {
             RitualEvent.RitualStopEvent event = new RitualEvent.RitualStopEvent(this, getOwner(), getCurrentRitual(), breakType);
 
