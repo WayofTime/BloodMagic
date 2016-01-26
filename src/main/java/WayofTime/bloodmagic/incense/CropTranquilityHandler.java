@@ -8,21 +8,15 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.api.incense.TranquilityHandler;
 import WayofTime.bloodmagic.api.incense.TranquilityStack;
-import WayofTime.bloodmagic.registry.ModBlocks;
 
-public class WaterTranquilityHandler extends TranquilityHandler
+public class CropTranquilityHandler extends TranquilityHandler
 {
     @Override
     public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
     {
-        if (block == Blocks.water || block == Blocks.flowing_water)
+        if (block == Blocks.potatoes || block == Blocks.carrots || block == Blocks.wheat || block == Blocks.nether_wart)
         {
-            return new TranquilityStack(EnumTranquilityType.WATER, 1);
-        }
-
-        if (block == ModBlocks.lifeEssence)
-        {
-            return new TranquilityStack(EnumTranquilityType.WATER, 1.5);
+            return new TranquilityStack(EnumTranquilityType.CROP, 1);
         }
 
         return null;

@@ -136,7 +136,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
         double appliedTranquility = 0;
         for (Entry<EnumTranquilityType, Double> entry : tranquilityMap.entrySet())
         {
-            appliedTranquility += Math.pow(entry.getValue(), 0.9);
+            appliedTranquility += Math.sqrt(entry.getValue());
         }
     }
 }

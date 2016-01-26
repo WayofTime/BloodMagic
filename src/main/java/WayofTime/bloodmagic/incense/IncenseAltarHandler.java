@@ -15,7 +15,8 @@ public class IncenseAltarHandler
 {
     public static Map<Integer, List<IncenseAltarComponent>> incenseComponentMap = new TreeMap<Integer, List<IncenseAltarComponent>>();
     //Incense bonus maximum applied for the tier of blocks.
-    public static double[] incenseBonuses = new double[] { 0.2 };
+    public static double[] incenseBonuses = new double[] { 0.2, 0.6, 1.2, 2, 3, 4.5 };
+    public static double[] tranquilityRequired = new double[] { 0, 6, 14.14, 28, 44.09, 83.14 };
 
     public static void registerIncenseComponent(int altarLevel, IncenseAltarComponent component)
     {
@@ -35,7 +36,7 @@ public class IncenseAltarHandler
         registerIncenseComponent(altarLevel, new IncenseAltarComponent(offsetPos, block, state));
     }
 
-    public static double getIncenseBonusFromComponents(World world, BlockPos pos)
+    public static double getMaxIncenseBonusFromComponents(World world, BlockPos pos)
     {
         double accumulatedBonus = 0;
         for (int i = 0; i < incenseBonuses.length; i++)
@@ -70,5 +71,25 @@ public class IncenseAltarHandler
         }
 
         return accumulatedBonus;
+    }
+
+    public static double getIncenseBonusFromComponents(World world, BlockPos pos, double tranquility)
+    {
+        double maxBonus = getMaxIncenseBonusFromComponents(world, pos);
+        double possibleBonus = 0;
+
+        for (int i = 0; i < incenseBonuses.length; i++)
+        {
+            if (tranquility >= tranquilityRequired[i])
+            {
+                possibleBonus = incenseBonuses[i];
+            } else if (i >= 1)
+            {
+                possibleBonus += (incenseBonuses[i] - possibleBonus) * (tranquility - tranquilityRequired[i - 1]) / (tranquilityRequired[i] - tranquilityRequired[i - 1]);
+                break;
+            }
+        }
+
+        return Math.min(maxBonus, possibleBonus);
     }
 }
