@@ -7,12 +7,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -35,6 +37,17 @@ public class ItemSoulGem extends Item implements IDemonWillGem
     public String getUnlocalizedName(ItemStack stack)
     {
         return super.getUnlocalizedName(stack) + names[stack.getItemDamage()];
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    {
+        double drain = Math.min(this.getWill(stack), this.getMaxWill(stack) / 10);
+
+        double filled = PlayerDemonWillHandler.addDemonWill(player, drain, stack);
+        this.drainWill(stack, filled);
+
+        return stack;
     }
 
     @Override

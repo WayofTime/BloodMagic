@@ -189,12 +189,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
     {
         if (this == ModItems.livingArmourChest || this == ModItems.livingArmourHelmet || this == ModItems.livingArmourBoots)
         {
-            return "bloodmagic:models/armor/boundArmour_layer_1.png";
+            return "bloodmagic:models/armor/livingArmour_layer_1.png";
         }
 
         if (this == ModItems.livingArmourLegs)
         {
-            return "bloodmagic:models/armor/boundArmour_layer_2.png";
+            return "bloodmagic:models/armor/livingArmour_layer_2.png";
         } else
         {
             return null;

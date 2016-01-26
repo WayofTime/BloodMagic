@@ -102,6 +102,10 @@ item.BloodMagic.livingArmour.helmet.name=Living Helmet
 item.BloodMagic.livingArmour.chest.name=Living Chestplate
 item.BloodMagic.livingArmour.legs.name=Living Leggings
 item.BloodMagic.livingArmour.boots.name=Living Boots
+item.BloodMagic.sentientArmour.helmet.name=Sentient Helmet
+item.BloodMagic.sentientArmour.chest.name=Sentient Chestplate
+item.BloodMagic.sentientArmour.legs.name=Sentient Leggings
+item.BloodMagic.sentientArmour.boots.name=Sentient Boots
 
 item.BloodMagic.altarMaker.name=Altar Maker
 
@@ -120,6 +124,7 @@ item.BloodMagic.soulGem.greater.name=Greater Tartaric Gem
 item.BloodMagic.soulGem.grand.name=Grand Tartaric Gem
 item.BloodMagic.soulSnare.base.name=Rudimentary Snare
 item.BloodMagic.sentientBow.name=Sentient Bow
+item.BloodMagic.sentientArmourGem.name=Sentient Armour Gem
 
 item.BloodMagic.nodeRouter.name=Node Router
 item.BloodMagic.itemFilter.exact.name=Precise Item Filter

@@ -14,9 +14,9 @@ import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 
 public class ItemSentientArmourGem extends Item
 {
-    public static double[] willBracket = new double[] { 30, 200, 600, 1500, 4000, 6000, 8000 };
-    public static double[] consumptionPerHit = new double[] { 0.1, 0.12, 0.15, 0.2, 0.3, 0.35, 0.4 };
-    public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85 };
+    public static double[] willBracket = new double[] { 30, 200, 600, 1500, 4000, 6000, 8000, 16000 };
+    public static double[] consumptionPerHit = new double[] { 0.1, 0.12, 0.15, 0.2, 0.3, 0.35, 0.4, 0.5 };
+    public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9 };
 
     public ItemSentientArmourGem()
     {
@@ -52,7 +52,7 @@ public class ItemSentientArmourGem extends Item
 
             if (bracket >= 0)
             {
-                PlayerDemonWillHandler.consumeDemonWill(player, willBracket[bracket]);
+//                PlayerDemonWillHandler.consumeDemonWill(player, willBracket[bracket]);
                 ItemSentientArmour.convertPlayerArmour(player, consumptionPerHit[bracket], extraProtectionLevel[bracket]);
             }
         }

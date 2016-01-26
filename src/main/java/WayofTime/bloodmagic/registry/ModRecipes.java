@@ -160,6 +160,8 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 1), 60, 20, new ItemStack(ModItems.soulGem), "gemDiamond", "blockRedstone", "blockLapis");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 2), 240, 50, new ItemStack(ModItems.soulGem, 1, 1), "gemDiamond", "blockGold", new ItemStack(ModItems.slate, 1, 2));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 3), 1000, 100, new ItemStack(ModItems.soulGem, 1, 2), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.bloodShard), Items.blaze_rod);
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 4), 4000, 500, new ItemStack(ModItems.soulGem, 1, 3), Items.nether_star);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientSword), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.iron_sword));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientBow), 70, 0, new ItemStack(Items.bow), new ItemStack(ModItems.soulGem, 1, 1), Items.string, Items.string);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.arcaneAshes), 0, 0, "dustRedstone", "dyeWhite", new ItemStack(Items.gunpowder), Items.coal);
@@ -173,6 +175,7 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_AFFINITY), 300, 30, ModItems.sigilWater, ModItems.sigilAir, ModItems.sigilLava, Blocks.obsidian);
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), 500, 50, ModBlocks.teleposer, Items.water_bucket, Items.lava_bucket, Items.blaze_rod);
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.gunpowder);
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientArmourGem), 240, 150, Items.diamond_chestplate, new ItemStack(ModItems.soulGem, 1, 1), Blocks.iron_block, Blocks.obsidian);
 
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 400, 10, "blockGlass", "stone", new ItemStack(ModItems.slate));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.nodeRouter), 400, 5, Items.stick, new ItemStack(ModItems.slate, 1, 1), "gemLapis", "gemLapis");

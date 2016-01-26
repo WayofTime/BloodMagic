@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.item.armour;
 
 import java.util.List;
+import java.util.Map;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -260,6 +262,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         }
 
         omegaTag.setTag("armour", tag);
+        Map<Integer, Integer> enchantmentMap = EnchantmentHelper.getEnchantments(previousArmour);
+        EnchantmentHelper.setEnchantments(enchantmentMap, newArmour);
     }
 
     public ItemStack getContainedArmourStack(ItemStack newArmour)

@@ -140,4 +140,32 @@ public class PlayerDemonWillHandler
 
         return amount - remaining;
     }
+
+    public static double addDemonWill(EntityPlayer player, double amount, ItemStack ignored)
+    {
+        ItemStack[] inventory = player.inventory.mainInventory;
+        double remaining = amount;
+
+        for (int i = 0; i < inventory.length; i++)
+        {
+            ItemStack stack = inventory[i];
+            if (stack != null && !stack.equals(ignored))
+            {
+                if (stack.getItem() instanceof IDemonWillGem)
+                {
+                    double souls = ((IDemonWillGem) stack.getItem()).getWill(stack);
+                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(stack) - souls, remaining);
+                    ((IDemonWillGem) stack.getItem()).setWill(stack, fill + souls);
+                    remaining -= fill;
+
+                    if (remaining <= 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return amount - remaining;
+    }
 }

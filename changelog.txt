@@ -1,4 +1,12 @@
 ------------------------------------------------------
+Version 2.0.0-10
+------------------------------------------------------
+- Added recipe for Sentient Armour - craft a Sentient Armour Gem and right click with it to toggle the armour.
+- Added recipes for the Greater and Grand Tartaric gems. These are temporary recipes.
+- Updated textures.
+- Added ability to fill gems from other gems. Right click with a gem to fill other gems in your inventory.
+
+------------------------------------------------------
 Version 2.0.0-9
 ------------------------------------------------------
 - Fixed the rituals so that they no longer caused nausea no matter what.
