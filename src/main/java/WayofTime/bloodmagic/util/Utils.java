@@ -12,6 +12,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +25,20 @@ import net.minecraftforge.fluids.IFluidBlock;
 
 public class Utils
 {
+    public static NBTTagCompound getPersistentDataTag(EntityPlayer player)
+    {
+        NBTTagCompound forgeData = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+        NBTTagCompound beaconData = forgeData.getCompoundTag("BloodMagic");
+
+        //Creates/sets the tags if they don't exist 
+        if (!forgeData.hasKey("BloodMagic"))
+            forgeData.setTag("BloodMagic", beaconData);
+        if (!player.getEntityData().hasKey(EntityPlayer.PERSISTED_NBT_TAG))
+            player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData);
+
+        return beaconData;
+    }
+
     public static boolean isInteger(String integer)
     {
         try

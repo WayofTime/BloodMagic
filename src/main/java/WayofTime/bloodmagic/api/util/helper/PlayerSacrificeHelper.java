@@ -10,29 +10,29 @@ import net.minecraft.world.World;
 
 public class PlayerSacrificeHelper
 {
-    public static float scalingOfSacrifice = 0.001f;
+    public static float scalingOfSacrifice = 1f;
     public static int soulFrayDuration = 400;
     public static Potion soulFrayId;
 
-    public static float getPlayerIncense(EntityPlayer player)
+    public static double getPlayerIncense(EntityPlayer player)
     {
         return IncenseHelper.getCurrentIncense(player);
     }
 
-    public static void setPlayerIncense(EntityPlayer player, float amount)
+    public static void setPlayerIncense(EntityPlayer player, double amount)
     {
         IncenseHelper.setCurrentIncense(player, amount);
     }
 
-    public static boolean incrementIncense(EntityPlayer player, float min, float max, float increment)
+    public static boolean incrementIncense(EntityPlayer player, double min, double incenseAddition, double increment)
     {
-        float amount = getPlayerIncense(player);
-        if (amount < min || amount >= max)
+        double amount = getPlayerIncense(player);
+        if (amount < min || amount >= incenseAddition)
         {
             return false;
         }
 
-        amount = amount + Math.min(increment, max - amount);
+        amount = amount + Math.min(increment, incenseAddition - amount);
         setPlayerIncense(player, amount);
 
         // System.out.println("Amount of incense: " + amount + ", Increment: " +
@@ -48,7 +48,7 @@ public class PlayerSacrificeHelper
             return false;
         }
 
-        float amount = getPlayerIncense(player);
+        double amount = getPlayerIncense(player);
 
         if (amount >= 0)
         {
@@ -73,7 +73,7 @@ public class PlayerSacrificeHelper
         return false;
     }
 
-    public static float getModifier(float amount)
+    public static double getModifier(double amount)
     {
         return 1 + amount * scalingOfSacrifice;
     }

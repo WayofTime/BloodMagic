@@ -17,6 +17,8 @@ import WayofTime.bloodmagic.api.incense.IIncensePath;
 import WayofTime.bloodmagic.api.incense.IncenseTranquilityRegistry;
 import WayofTime.bloodmagic.api.incense.TranquilityStack;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
+import WayofTime.bloodmagic.incense.IncenseAltarHandler;
 
 public class TileIncenseAltar extends TileInventory implements ITickable
 {
@@ -42,12 +44,21 @@ public class TileIncenseAltar extends TileInventory implements ITickable
             return;
         }
 
+        if (worldObj.getTotalWorldTime() % 100 == 0)
+        {
+            recheckConstruction();
+        }
+
+        for (EntityPlayer player : playerList)
+        {
+            PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100); //TODO: Figure out what the hell you are doing. 
+        }
     }
 
     public void recheckConstruction()
     {
         //TODO: Check the physical construction of the incense altar to determine the maximum length.
-        int maxLength = 3; //Max length of the path. The path starts two blocks away from the center block.
+        int maxLength = 11; //Max length of the path. The path starts two blocks away from the center block.
         int yOffset = 0;
 
         Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
@@ -56,12 +67,12 @@ public class TileIncenseAltar extends TileInventory implements ITickable
         {
             boolean canFormRoad = false;
 
-            level: for (int i = -maxCheckRange + yOffset; i <= maxCheckRange + yOffset; i++)
+            for (int i = -maxCheckRange + yOffset; i <= maxCheckRange + yOffset; i++)
             {
                 BlockPos verticalPos = pos.add(0, i, 0);
 
                 canFormRoad = true;
-                for (EnumFacing horizontalFacing : EnumFacing.HORIZONTALS)
+                level: for (EnumFacing horizontalFacing : EnumFacing.HORIZONTALS)
                 {
                     BlockPos facingOffsetPos = verticalPos.offset(horizontalFacing, currentDistance);
                     for (int j = -1; j <= 1; j++)
@@ -80,6 +91,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
                 if (canFormRoad)
                 {
                     yOffset = i;
+                    break;
                 }
             }
 
@@ -94,7 +106,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
                             break; //TODO: Can make this just set j to currentDistance to speed it up.
                         }
 
-                        for (int y = -1 + yOffset; y <= 1 + yOffset; y++)
+                        for (int y = 0 + yOffset; y <= 2 + yOffset; y++)
                         {
                             BlockPos offsetPos = pos.add(i, yOffset, j);
                             IBlockState state = worldObj.getBlockState(offsetPos);
@@ -138,5 +150,11 @@ public class TileIncenseAltar extends TileInventory implements ITickable
         {
             appliedTranquility += Math.sqrt(entry.getValue());
         }
+
+//        System.out.println("Tranquility: " + appliedTranquility);
+
+        double bonus = IncenseAltarHandler.getIncenseBonusFromComponents(worldObj, pos, appliedTranquility);
+//        System.out.println("Incense bonus: " + bonus);
+        incenseAddition = bonus;
     }
 }

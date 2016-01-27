@@ -19,6 +19,7 @@ import WayofTime.bloodmagic.block.BlockItemRoutingNode;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
 import WayofTime.bloodmagic.block.BlockOutputRoutingNode;
+import WayofTime.bloodmagic.block.BlockPath;
 import WayofTime.bloodmagic.block.BlockPedestal;
 import WayofTime.bloodmagic.block.BlockPhantom;
 import WayofTime.bloodmagic.block.BlockRitualController;
@@ -30,6 +31,7 @@ import WayofTime.bloodmagic.block.BlockTestSpellBlock;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockPath;
 import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
@@ -69,6 +71,7 @@ public class ModBlocks
 
     public static Block crystal;
     public static Block bloodStoneBrick;
+    public static Block pathBlock;
 
     public static Block masterRoutingNode;
     public static Block inputRoutingNode;
@@ -99,6 +102,7 @@ public class ModBlocks
         outputRoutingNode = registerBlock(new BlockOutputRoutingNode());
         itemRoutingNode = registerBlock(new BlockItemRoutingNode());
         incenseAltar = registerBlock(new BlockIncenseAltar());
+        pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
 
         initTiles();
     }
@@ -157,6 +161,9 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(incenseAltar));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 0);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 1);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 2);
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)

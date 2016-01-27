@@ -1,0 +1,28 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "type": {
+      "wood": {
+        "textures": {
+          "all": "bloodmagic:blocks/LargeBloodStoneBrick"
+        }
+      },
+      "stone": {
+        "textures": {
+          "all": "bloodmagic:blocks/BloodStoneBrick"
+        }
+      },
+      "wornStone": {
+        "textures": {
+          "all": "bloodmagic:blocks/BloodStoneBrick"
+        }
+      }
+    }
+  }
+}
+

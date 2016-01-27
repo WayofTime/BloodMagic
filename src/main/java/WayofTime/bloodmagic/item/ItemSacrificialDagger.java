@@ -116,13 +116,9 @@ public class ItemSacrificialDagger extends Item
         double posY = player.posY;
         double posZ = player.posZ;
         world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-        float f = 1.0F;
-        float f1 = f * 0.6F + 0.4F;
-        float f2 = f * f * 0.7F - 0.5F;
-        float f3 = f * f * 0.6F - 0.7F;
 
         for (int l = 0; l < 8; ++l)
-            world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
+            world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
         if (!world.isRemote && PlayerHelper.isFakePlayer(player))
             return stack;

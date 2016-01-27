@@ -226,7 +226,8 @@ public class Constants
         SOUL_FORGE("BlockSoulForge"),
         SPECTRAL("BlockSpectral"),
         TELEPOSER("BlockTeleposer"),
-        INCENSE_ALTAR("BlockIncenseAltar");
+        INCENSE_ALTAR("BlockIncenseAltar"),
+        PATH("BlockPath");
 
         @Getter
         private final String regName;
