@@ -11,6 +11,7 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.ChatUtil;
 import com.google.common.base.Strings;
 import lombok.Getter;
@@ -34,10 +35,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 @NoArgsConstructor
 public class TileMasterRitualStone extends TileEntity implements IMasterRitualStone, ITickable
 {
-    public static final int UPDATE_TIME = 20;
-
     private String owner;
     private boolean active;
+    private boolean redstoned;
     private int activeTime;
     private int cooldown;
     private Ritual currentRitual;
@@ -47,6 +47,26 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void update()
     {
+        if (worldObj.isRemote)
+            return;
+
+        if (getWorld().isBlockPowered(getPos()) && isActive())
+        {
+            active = false;
+            redstoned = true;
+            stopRitual(Ritual.BreakType.REDSTONE);
+            return;
+        }
+
+        if (!isActive() && !getWorld().isBlockPowered(getPos()) && isRedstoned() && getCurrentRitual() != null)
+        {
+            active = true;
+            redstoned = false;
+            ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.activationCrystal, 1, getCurrentRitual().getCrystalLevel()));
+            crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
+            activateRitual(crystalStack, PlayerHelper.getPlayerFromUUID(getOwner()), getCurrentRitual());
+        }
+
         if (getCurrentRitual() != null && isActive())
         {
             if (activeTime % getCurrentRitual().getRefreshTime() == 0)
@@ -184,9 +204,12 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                 return;
 
             getCurrentRitual().stopRitual(this, breakType);
-            this.currentRitual = null;
-            this.active = false;
-            this.activeTime = 0;
+            if (breakType != Ritual.BreakType.REDSTONE)
+            {
+                this.currentRitual = null;
+                this.active = false;
+                this.activeTime = 0;
+            }
         }
     }
 
