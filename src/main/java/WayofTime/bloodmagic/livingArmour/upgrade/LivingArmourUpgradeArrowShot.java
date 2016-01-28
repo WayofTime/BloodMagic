@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.livingArmour;
+package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

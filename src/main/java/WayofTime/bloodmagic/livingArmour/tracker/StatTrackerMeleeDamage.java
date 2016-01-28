@@ -1,9 +1,11 @@
-package WayofTime.bloodmagic.livingArmour;
+package WayofTime.bloodmagic.livingArmour.tracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeMeleeDamage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;

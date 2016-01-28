@@ -1,9 +1,11 @@
-package WayofTime.bloodmagic.livingArmour;
+package WayofTime.bloodmagic.livingArmour.tracker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -11,40 +13,41 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 
-public class StatTrackerHealthboost extends StatTracker
+public class StatTrackerSelfSacrifice extends StatTracker
 {
-    public double totalHealthGenned = 0;
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static int[] sacrificesRequired = new int[] { 30, 200, 400, 700, 1100, 1500, 2000, 2800, 3600, 5000 }; //testing
 
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
-    public static int[] healthedRequired = new int[] { 80, 200, 340, 540, 800, 1600, 2800, 5000, 7600, 10000 };
+    public int totalSacrifices = 0;
 
-    public static void incrementCounter(LivingArmour armour, double health)
+    public static void incrementCounter(LivingArmour armour)
     {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + health : health);
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.health";
+        return Constants.Mod.MODID + ".tracker.selfSacrifice";
     }
 
     @Override
     public void resetTracker()
     {
-        this.totalHealthGenned = 0;
+        this.totalSacrifices = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalHealthGenned = tag.getDouble(Constants.Mod.MODID + ".tracker.health");
+        totalSacrifices = tag.getInteger(Constants.Mod.MODID + ".tracker.selfSacrifice");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setDouble(Constants.Mod.MODID + ".tracker.health", totalHealthGenned);
+        tag.setInteger(Constants.Mod.MODID + ".tracker.selfSacrifice", totalSacrifices);
+
     }
 
     @Override
@@ -52,12 +55,12 @@ public class StatTrackerHealthboost extends StatTracker
     {
         if (changeMap.containsKey(livingArmour))
         {
-            double change = Math.abs(changeMap.get(livingArmour));
+            int change = Math.abs(changeMap.get(livingArmour));
             if (change > 0)
             {
-                totalHealthGenned += Math.abs(changeMap.get(livingArmour));
+                totalSacrifices += Math.abs(changeMap.get(livingArmour));
 
-                changeMap.put(livingArmour, 0d);
+                changeMap.put(livingArmour, 0);
 
                 this.markDirty();
 
@@ -71,14 +74,13 @@ public class StatTrackerHealthboost extends StatTracker
     @Override
     public List<LivingArmourUpgrade> getUpgrades()
     {
-        // TODO Auto-generated method stub
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
         for (int i = 0; i < 10; i++)
         {
-            if (totalHealthGenned >= healthedRequired[i])
+            if (totalSacrifices >= sacrificesRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradeHealthboost(i));
+                upgradeList.add(new LivingArmourUpgradeSelfSacrifice(i));
             }
         }
 

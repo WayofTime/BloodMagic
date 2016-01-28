@@ -1,7 +1,8 @@
-package WayofTime.bloodmagic.livingArmour;
+package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import java.util.HashMap;
 
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;

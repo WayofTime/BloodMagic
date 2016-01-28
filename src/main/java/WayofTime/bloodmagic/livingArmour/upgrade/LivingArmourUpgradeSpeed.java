@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.livingArmour;
+package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import java.util.UUID;
 

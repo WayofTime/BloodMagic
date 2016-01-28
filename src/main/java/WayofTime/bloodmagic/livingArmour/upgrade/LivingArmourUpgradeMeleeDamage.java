@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.livingArmour;
+package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import java.util.UUID;
 
@@ -14,12 +14,12 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade
+public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { 5, 12, 20, 35, 49, 78, 110, 160, 215, 320 };
-    public static final int[] healthModifier = new int[] { 4, 8, 12, 16, 20, 26, 32, 38, 44, 50 };
+    public static final double[] meleeDamage = new double[] { 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7 };
 
-    public LivingArmourUpgradeHealthboost(int level)
+    public LivingArmourUpgradeMeleeDamage(int level)
     {
         super(level);
     }
@@ -35,7 +35,7 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(9423688, 1), "Health modifier" + 1, healthModifier[this.level], 0));
+        modifierMap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(9423688, 1), "damage modifier" + 1, meleeDamage[this.level], 0));
 
         return modifierMap;
     }
@@ -43,7 +43,7 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.health";
+        return Constants.Mod.MODID + ".upgrade.meleeDamage";
     }
 
     @Override
@@ -73,6 +73,6 @@ public class LivingArmourUpgradeHealthboost extends LivingArmourUpgrade
     @Override
     public String getUnlocalizedName()
     {
-        return tooltipBase + "health";
+        return tooltipBase + "meleeDamage";
     }
 }

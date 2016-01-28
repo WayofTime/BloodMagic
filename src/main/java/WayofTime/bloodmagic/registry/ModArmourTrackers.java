@@ -1,23 +1,8 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeArrowShot;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeDigging;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeHealthboost;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeKnockbackResist;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeMeleeDamage;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradePhysicalProtect;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradePoisonResist;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSelfSacrifice;
-import WayofTime.bloodmagic.livingArmour.LivingArmourUpgradeSpeed;
-import WayofTime.bloodmagic.livingArmour.StatTrackerDigging;
-import WayofTime.bloodmagic.livingArmour.StatTrackerFood;
-import WayofTime.bloodmagic.livingArmour.StatTrackerHealthboost;
-import WayofTime.bloodmagic.livingArmour.StatTrackerMeleeDamage;
-import WayofTime.bloodmagic.livingArmour.StatTrackerMovement;
-import WayofTime.bloodmagic.livingArmour.StatTrackerPhysicalProtect;
-import WayofTime.bloodmagic.livingArmour.StatTrackerPoison;
-import WayofTime.bloodmagic.livingArmour.StatTrackerSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.*;
+import WayofTime.bloodmagic.livingArmour.tracker.*;
 
 public class ModArmourTrackers
 {
