@@ -6,6 +6,7 @@ Version 2.0.0-10
 - Updated textures.
 - Added ability to fill gems from other gems. Right click with a gem to fill other gems in your inventory.
 - Un-nerfed the Ritual Stone recipe to provide 4 again
+- Rituals can now be toggled with Redstone. Provide a redstone signal to the Master Ritual Stone to turn it off.
 
 ------------------------------------------------------
 Version 2.0.0-9
