@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -237,5 +238,14 @@ public class LivingArmour implements ILivingArmour
     public void writeToNBT(NBTTagCompound tag)
     {
         writeToNBT(tag, true);
+    }
+
+    public static boolean hasFullSet(EntityPlayer player) {
+        for (int slot = 0; slot < player.inventory.armorInventory.length; slot++) {
+            if (!(player.inventory.armorItemInSlot(slot).getItem() instanceof ItemLivingArmour))
+                return false;
+        }
+
+        return true;
     }
 }

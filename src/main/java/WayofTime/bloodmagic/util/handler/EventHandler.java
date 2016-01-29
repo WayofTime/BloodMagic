@@ -148,24 +148,18 @@ public class EventHandler
         EntityPlayer player = event.getPlayer();
         if (player != null)
         {
-            for (int i = 0; i < 4; i++)
+            if (LivingArmour.hasFullSet(player))
             {
-                ItemStack stack = player.getCurrentArmor(i);
-                if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+                ItemStack chestStack = player.getCurrentArmor(2);
+                if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
                 {
-                    return;
-                }
-            }
+                    LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
 
-            ItemStack chestStack = player.getCurrentArmor(2);
-            if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
-            {
-                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
-
-                if (armour != null)
-                {
-                    StatTrackerDigging.incrementCounter(armour);
-                    LivingArmourUpgradeDigging.hasDug(armour);
+                    if (armour != null)
+                    {
+                        StatTrackerDigging.incrementCounter(armour);
+                        LivingArmourUpgradeDigging.hasDug(armour);
+                    }
                 }
             }
         }
@@ -176,27 +170,21 @@ public class EventHandler
     {
         EntityPlayer player = event.player;
 
-        for (int i = 0; i < 4; i++)
+        if (LivingArmour.hasFullSet(player))
         {
-            ItemStack stack = player.getCurrentArmor(i);
-            if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
+            ItemStack chestStack = player.getCurrentArmor(2);
+            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            if (armour != null)
             {
-                return;
-            }
-        }
+                StatTrackerSelfSacrifice.incrementCounter(armour);
+                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
 
-        ItemStack chestStack = player.getCurrentArmor(2);
-        LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
-        if (armour != null)
-        {
-            StatTrackerSelfSacrifice.incrementCounter(armour);
-            LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.selfSacrifice", chestStack);
+                if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
+                {
+                    double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
 
-            if (upgrade instanceof LivingArmourUpgradeSelfSacrifice)
-            {
-                double modifier = ((LivingArmourUpgradeSelfSacrifice) upgrade).getSacrificeModifier();
-
-                event.lpAdded = (int) (event.lpAdded * (1 + modifier));
+                    event.lpAdded = (int) (event.lpAdded * (1 + modifier));
+                }
             }
         }
     }
@@ -212,20 +200,12 @@ public class EventHandler
 
         EntityPlayer player = (EntityPlayer) healedEntity;
 
-        for (int i = 0; i < 4; i++)
+        if (LivingArmour.hasFullSet(player))
         {
-            ItemStack stack = player.getCurrentArmor(i);
-            if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
-            {
-                return;
-            }
-        }
-
-        ItemStack chestStack = player.getCurrentArmor(2);
-        LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
-        if (armour != null)
-        {
-            StatTrackerHealthboost.incrementCounter(armour, event.amount);
+            ItemStack chestStack = player.getCurrentArmor(2);
+            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            if (armour != null)
+                StatTrackerHealthboost.incrementCounter(armour, event.amount);
         }
     }
 
@@ -245,20 +225,8 @@ public class EventHandler
         {
             EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
 
-            // Living Armour handling
-
-            boolean hasFullSet = true;
-            for (int i = 0; i < 4; i++)
-            {
-                ItemStack stack = attackedPlayer.getCurrentArmor(i);
-                if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
-                {
-                    hasFullSet = false;
-                    break;
-                }
-            }
-
-            if (hasFullSet)
+            // Living Armor Handling
+            if (LivingArmour.hasFullSet(attackedPlayer))
             {
                 float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.source, event.ammount), attackedPlayer.getHealth());
                 ItemStack chestStack = attackedPlayer.getCurrentArmor(2);
@@ -284,27 +252,15 @@ public class EventHandler
         {
             EntityPlayer player = (EntityPlayer) sourceEntity;
 
-            // Living Armour handling
-
-            boolean hasFullSet = true;
-            for (int i = 0; i < 4; i++)
-            {
-                ItemStack stack = player.getCurrentArmor(i);
-                if (stack == null || !(stack.getItem() instanceof ItemLivingArmour))
-                {
-                    hasFullSet = false;
-                    break;
-                }
-            }
-
-            if (hasFullSet)
+            // Living Armor Handling
+            if (LivingArmour.hasFullSet(player))
             {
                 float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.source, event.ammount), attackedEntity.getHealth());
                 ItemStack chestStack = player.getCurrentArmor(2);
                 LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
                 if (armour != null)
                 {
-                    if (sourceEntity != null && !source.isProjectile())
+                    if (!source.isProjectile())
                     {
                         StatTrackerMeleeDamage.incrementCounter(armour, amount);
                     }
@@ -320,18 +276,7 @@ public class EventHandler
         ItemStack stack = event.bow;
         EntityPlayer player = event.entityPlayer;
 
-        boolean hasFullSet = true;
-        for (int i = 0; i < 4; i++)
-        {
-            ItemStack armourStack = player.getCurrentArmor(i);
-            if (armourStack == null || !(armourStack.getItem() instanceof ItemLivingArmour))
-            {
-                hasFullSet = false;
-                break;
-            }
-        }
-
-        if (hasFullSet)
+        if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getCurrentArmor(2);
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);

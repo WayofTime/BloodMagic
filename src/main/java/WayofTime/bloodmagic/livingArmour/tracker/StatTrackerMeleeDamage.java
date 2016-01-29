@@ -73,7 +73,6 @@ public class StatTrackerMeleeDamage extends StatTracker
     @Override
     public List<LivingArmourUpgrade> getUpgrades()
     {
-        // TODO Auto-generated method stub
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
         for (int i = 0; i < 10; i++)
