@@ -7,6 +7,9 @@ Version 2.0.0-10
 - Added ability to fill gems from other gems. Right click with a gem to fill other gems in your inventory.
 - Un-nerfed the Ritual Stone recipe to provide 4 again
 - Rituals can now be toggled with Redstone. Provide a redstone signal to the Master Ritual Stone to turn it off.
+- Made the Sentient sword able to block. 
+- Fixed the Sentient Sword so that even when not activated it will still do damage - just at a reduced amount.
+- Made it so that Demon Will will be voided if all of the player's tartaric gems are filled.
 
 ------------------------------------------------------
 Version 2.0.0-9
