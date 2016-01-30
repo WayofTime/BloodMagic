@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
@@ -242,7 +243,8 @@ public class LivingArmour implements ILivingArmour
 
     public static boolean hasFullSet(EntityPlayer player) {
         for (int slot = 0; slot < player.inventory.armorInventory.length; slot++) {
-            if (!(player.inventory.armorItemInSlot(slot).getItem() instanceof ItemLivingArmour))
+            ItemStack slotStack = player.inventory.armorItemInSlot(slot);
+            if (slotStack != null && !(slotStack.getItem() instanceof ItemLivingArmour))
                 return false;
         }
 

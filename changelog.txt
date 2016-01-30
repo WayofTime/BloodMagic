@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.0-11
+------------------------------------------------------
+- Fix NPE when checking if a player has a full Living Armor set
+
+------------------------------------------------------
 Version 2.0.0-10
 ------------------------------------------------------
 - Added recipe for Sentient Armour - craft a Sentient Armour Gem and right click with it to toggle the armour.
