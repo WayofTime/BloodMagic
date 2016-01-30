@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.0-12
+------------------------------------------------------
+- Added recipes and temp textures for path blocks. More path blocks to come.
+
+------------------------------------------------------
 Version 2.0.0-11
 ------------------------------------------------------
 - Fix NPE when checking if a player has a full Living Armor set

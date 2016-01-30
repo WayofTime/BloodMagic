@@ -177,6 +177,10 @@ tile.BloodMagic.outputRouting.name=Output Routing Node
 tile.BloodMagic.inputRouting.name=Input Routing Node
 tile.BloodMagic.itemRouting.name=Routing Node
 
+tile.BloodMagic.path.wood.name=Wooden Path
+tile.BloodMagic.path.stone.name=Stone Tile Path
+tile.BloodMagic.path.wornstone.name=Stone Brick Path
+
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s

@@ -9,17 +9,17 @@
     "type": {
       "wood": {
         "textures": {
-          "all": "bloodmagic:blocks/LargeBloodStoneBrick"
+          "all": "bloodmagic:blocks/WoodPath"
         }
       },
       "stone": {
         "textures": {
-          "all": "bloodmagic:blocks/BloodStoneBrick"
+          "all": "bloodmagic:blocks/StoneTilePath"
         }
       },
-      "wornStone": {
+      "wornstone": {
         "textures": {
-          "all": "bloodmagic:blocks/BloodStoneBrick"
+          "all": "bloodmagic:blocks/StoneBrickPath"
         }
       }
     }

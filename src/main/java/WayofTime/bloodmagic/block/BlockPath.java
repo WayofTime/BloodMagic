@@ -11,7 +11,7 @@ import WayofTime.bloodmagic.block.base.BlockString;
 
 public class BlockPath extends BlockString implements IIncensePath
 {
-    public static final String[] names = { "wood", "stone", "wornStone" };
+    public static final String[] names = { "wood", "stone", "wornstone" };
 
     public BlockPath()
     {
