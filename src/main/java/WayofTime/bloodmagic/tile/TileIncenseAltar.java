@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -27,6 +28,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
     public Map<EnumTranquilityType, Double> tranquilityMap = new HashMap<EnumTranquilityType, Double>();
 
     public double incenseAddition = 0; //Self-sacrifice is multiplied by 1 plus this value.
+    public double tranquility = 0;
     public int roadDistance = 0; //Number of road blocks laid down
 
     public TileIncenseAltar()
@@ -53,6 +55,22 @@ public class TileIncenseAltar extends TileInventory implements ITickable
         {
             PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100); //TODO: Figure out what the hell you are doing. 
         }
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        super.readFromNBT(tag);
+        tranquility = tag.getDouble("tranquility");
+        incenseAddition = tag.getDouble("incenseAddition");
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+        super.writeToNBT(tag);
+        tag.setDouble("tranquility", tranquility);
+        tag.setDouble("incenseAddition", incenseAddition);
     }
 
     public void recheckConstruction()
@@ -151,10 +169,8 @@ public class TileIncenseAltar extends TileInventory implements ITickable
             appliedTranquility += Math.sqrt(entry.getValue());
         }
 
-//        System.out.println("Tranquility: " + appliedTranquility);
-
         double bonus = IncenseAltarHandler.getIncenseBonusFromComponents(worldObj, pos, appliedTranquility, roadDistance);
-//        System.out.println("Incense bonus: " + bonus);
         incenseAddition = bonus;
+        this.tranquility = appliedTranquility;
     }
 }

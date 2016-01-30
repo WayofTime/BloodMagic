@@ -58,11 +58,7 @@ public class BlockBloodLight extends Block
         if (world.getBlockState(pos).getBlock() == this)
         {
             Random random = new Random();
-            float f = 1.0F;
-            float f1 = f * 0.6F + 0.4F;
-            float f2 = f * f * 0.7F - 0.5F;
-            float f3 = f * f * 0.6F - 0.7F;
-            effectRenderer.spawnEffectParticle(EnumParticleTypes.REDSTONE.getParticleID(), pos.getX() + 0.5D + random.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + random.nextGaussian() / 8, f1, f2, f3);
+            effectRenderer.spawnEffectParticle(EnumParticleTypes.REDSTONE.getParticleID(), pos.getX() + 0.5D + random.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + random.nextGaussian() / 8, 0, 0, 0);
         }
         return true;
     }
@@ -73,11 +69,7 @@ public class BlockBloodLight extends Block
     {
         if (rand.nextInt(3) != 0)
         {
-            float f = 1.0F;
-            float f1 = f * 0.6F + 0.4F;
-            float f2 = f * f * 0.7F - 0.5F;
-            float f3 = f * f * 0.6F - 0.7F;
-            worldIn.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, f1, f2, f3, 0);
+            worldIn.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
         }
     }
 
