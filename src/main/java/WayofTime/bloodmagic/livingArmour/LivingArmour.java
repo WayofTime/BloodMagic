@@ -244,7 +244,7 @@ public class LivingArmour implements ILivingArmour
     public static boolean hasFullSet(EntityPlayer player) {
         for (int slot = 0; slot < player.inventory.armorInventory.length; slot++) {
             ItemStack slotStack = player.inventory.armorItemInSlot(slot);
-            if (slotStack != null && !(slotStack.getItem() instanceof ItemLivingArmour))
+            if (slotStack == null || !(slotStack.getItem() instanceof ItemLivingArmour))
                 return false;
         }
 
