@@ -153,7 +153,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
 
 //        System.out.println("Tranquility: " + appliedTranquility);
 
-        double bonus = IncenseAltarHandler.getIncenseBonusFromComponents(worldObj, pos, appliedTranquility);
+        double bonus = IncenseAltarHandler.getIncenseBonusFromComponents(worldObj, pos, appliedTranquility, roadDistance);
 //        System.out.println("Incense bonus: " + bonus);
         incenseAddition = bonus;
     }

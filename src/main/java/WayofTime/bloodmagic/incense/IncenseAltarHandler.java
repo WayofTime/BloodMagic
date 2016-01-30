@@ -17,6 +17,7 @@ public class IncenseAltarHandler
     //Incense bonus maximum applied for the tier of blocks.
     public static double[] incenseBonuses = new double[] { 0.2, 0.6, 1.2, 2, 3, 4.5 };
     public static double[] tranquilityRequired = new double[] { 0, 6, 14.14, 28, 44.09, 83.14 };
+    public static int[] roadsRequired = new int[] { 0, 1, 3, 5, 7, 9, 11 }; //TODO: Change for when the roads are fully implemented
 
     public static void registerIncenseComponent(int altarLevel, IncenseAltarComponent component)
     {
@@ -73,9 +74,26 @@ public class IncenseAltarHandler
         return accumulatedBonus;
     }
 
-    public static double getIncenseBonusFromComponents(World world, BlockPos pos, double tranquility)
+    public static double getMaxIncenseBonusFromRoads(int roads)
     {
-        double maxBonus = getMaxIncenseBonusFromComponents(world, pos);
+        double previousBonus = 0;
+        for (int i = 0; i < incenseBonuses.length; i++)
+        {
+            if (roads >= roadsRequired[i])
+            {
+                previousBonus = incenseBonuses[i];
+            } else
+            {
+                return previousBonus;
+            }
+        }
+
+        return previousBonus;
+    }
+
+    public static double getIncenseBonusFromComponents(World world, BlockPos pos, double tranquility, int roads)
+    {
+        double maxBonus = Math.min(getMaxIncenseBonusFromComponents(world, pos), getMaxIncenseBonusFromRoads(roads));
         double possibleBonus = 0;
 
         for (int i = 0; i < incenseBonuses.length; i++)
