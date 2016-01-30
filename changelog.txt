@@ -1,11 +1,24 @@
 ------------------------------------------------------
-Version 2.0.0-12
+Version 2.0.0-14
+------------------------------------------------------
+- [API] Added support for some IMC methods:
+    - FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", ItemStack)
+    - FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")
+    - FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")
+
+------------------------------------------------------
+Version 2.0.0-13
 ------------------------------------------------------
 - Added recipes and temp textures for path blocks. More path blocks to come.
 - Tweaked the Incense altar and added its recipe.
 - Fixed Blood Light sigil not providing the right coloured particles
 - Added the ability for the divination sigil to look up information about the incense altar.
 - Fix another NPE when checking of a player has a full set of Living Armor
+
+------------------------------------------------------
+Version 2.0.0-12
+------------------------------------------------------
+- This build doesn't exist. Shhh
 
 ------------------------------------------------------
 Version 2.0.0-11
