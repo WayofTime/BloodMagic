@@ -47,7 +47,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (player.isSneaking()) //TODO: change its state depending on soul consumption
+        if (player.isSneaking())
             setActivated(stack, !getActivated(stack));
 
         if (getActivated(stack))
@@ -64,6 +64,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
             setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
         }
 
+        player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
         return stack;
     }
 
@@ -121,11 +122,9 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
                     PlayerDemonWillHandler.consumeDemonWill(player, drain);
                 }
             }
-
-            return super.onLeftClickEntity(stack, player, entity);
         }
 
-        return true;
+        return super.onLeftClickEntity(stack, player, entity);
     }
 
     public boolean getActivated(ItemStack stack)
@@ -156,8 +155,11 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 
             for (int i = 0; i <= looting; i++)
             {
-                ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
-                soulList.add(soulStack);
+                if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.3)
+                {
+                    ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
+                    soulList.add(soulStack);
+                }
             }
         }
 
