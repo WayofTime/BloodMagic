@@ -38,6 +38,33 @@ public class PlayerDemonWillHandler
     }
 
     /**
+     * Checks if the player's Tartaric gems are completely full. If so, it will
+     * return true.
+     * 
+     */
+    public static boolean isDemonWillFull(EntityPlayer player)
+    {
+        ItemStack[] inventory = player.inventory.mainInventory;
+
+        for (int i = 0; i < inventory.length; i++)
+        {
+            ItemStack stack = inventory[i];
+            if (stack != null)
+            {
+                if (stack.getItem() instanceof IDemonWillGem)
+                {
+                    if (((IDemonWillGem) stack.getItem()).getWill(stack) < ((IDemonWillGem) stack.getItem()).getMaxWill(stack))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * 
      * @param player
      * @param amount

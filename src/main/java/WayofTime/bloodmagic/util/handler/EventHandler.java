@@ -392,7 +392,7 @@ public class EventHandler
 
             ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001)
+            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(player))
             {
                 stack.stackSize = 0;
                 event.setResult(Result.ALLOW);

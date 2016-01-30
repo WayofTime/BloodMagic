@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.item.soul;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
@@ -94,7 +95,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
     {
         NBTHelper.checkNBT(stack);
 
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.sentientSword.desc"));
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sentientSword.desc"))));
 
         if (getActivated(stack))
             tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
@@ -155,7 +156,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 
             for (int i = 0; i <= looting; i++)
             {
-                if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.3)
+                if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
                 {
                     ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
                     soulList.add(soulStack);
