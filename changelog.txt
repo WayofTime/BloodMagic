@@ -2,6 +2,9 @@
 Version 2.0.0-12
 ------------------------------------------------------
 - Added recipes and temp textures for path blocks. More path blocks to come.
+- Tweaked the Incense altar and added its recipe.
+- Fixed Blood Light sigil not providing the right coloured particles
+- Added the ability for the divination sigil to look up information about the incense altar.
 
 ------------------------------------------------------
 Version 2.0.0-11

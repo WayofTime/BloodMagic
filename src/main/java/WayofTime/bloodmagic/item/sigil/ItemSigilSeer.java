@@ -12,6 +12,7 @@ import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -65,6 +66,11 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                                 ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity), TextHelper.localize(tooltipBase + "currentCharge", charge));
                             }
                         }
+                    } else if (tile != null && tile instanceof TileIncenseAltar)
+                    {
+                        TileIncenseAltar altar = (TileIncenseAltar) tile;
+                        double tranquility = altar.tranquility;
+                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentTranquility", ((int) (100 * tranquility)) / 100d), TextHelper.localize(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
                     } else
                     {
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
