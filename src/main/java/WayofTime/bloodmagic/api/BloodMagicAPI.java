@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.api.util.helper.LogHelper;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
@@ -16,6 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The primary API class. Includes helper methods and blacklists.
+ *
+ * Some API methods can be used via IMC instead. The supported methods are:
+ *
+ * <ul>
+ *     <li>{@link #addToTeleposerBlacklist(BlockStack)}</li>
+ *     <li>{@link #blacklistFromGreenGrove(Block)}</li>
+ *     <li>{@link #setEntitySacrificeValue(Class, int)}</li>
+ * </ul>
+ */
 public class BloodMagicAPI
 {
     @Getter
@@ -94,6 +104,9 @@ public class BloodMagicAPI
     /**
      * Used to add a {@link BlockStack} to the Teleposer blacklist that cannot
      * be changed via Configuration files.
+     *
+     * IMC: {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", ItemStack)}
+     * Example: {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", new ItemStack(Blocks.bedrock))}
      * 
      * @param blockStack
      *        - The BlockStack to blacklist.
@@ -136,6 +149,9 @@ public class BloodMagicAPI
      *
      * The default value for any unset Entity is 500 LP per sacrifice.
      *
+     * IMC: {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")}
+     * Example: {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "EntityVillager;2000")}
+     *
      * @param entityClass
      *        - The class of the entity to blacklist.
      * @param sacrificeValue
@@ -163,6 +179,9 @@ public class BloodMagicAPI
 
     /**
      * Blacklists a block from the Green Grove Ritual and Sigil.
+     *
+     * IMC: {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")}
+     * Example: {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "minecraft:wheat")}
      *
      * @param block - Block to blacklist
      */
