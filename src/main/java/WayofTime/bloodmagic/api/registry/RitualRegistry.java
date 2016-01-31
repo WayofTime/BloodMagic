@@ -67,13 +67,7 @@ public class RitualRegistry
     {
         try
         {
-            //TODO: Fix the Enabled Rituals map so that the config loads properly.
-            if (!enabledRituals.containsKey(ritual))
-            {
-                return true;
-            }
-
-            return enabledRituals.get(ritual);
+            return true;
         } catch (NullPointerException e)
         {
             BloodMagicAPI.getLogger().error("Invalid Ritual was called");

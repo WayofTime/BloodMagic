@@ -72,12 +72,7 @@ public class ImperfectRitualRegistry
     {
         try
         {
-            if (!enabledRituals.containsKey(imperfectRitual))
-            {
-                return true;
-            }
-
-            return enabledRituals.get(imperfectRitual);
+            return true;
         } catch (NullPointerException e)
         {
             BloodMagicAPI.getLogger().error("Invalid Imperfect Ritual was called");
