@@ -2,6 +2,7 @@
 Version 2.0.0-15
 ------------------------------------------------------
 - Added blood lamp sigil array texture and reagent. Made it so the blood lamp sigil will place the light when right clicking on a block.
+- Added magnetism sigil array texture and reagent.
 
 ------------------------------------------------------
 Version 2.0.0-14

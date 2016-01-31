@@ -78,6 +78,7 @@ item.BloodMagic.baseComponent.reagentBinding.name=Binding Reagent
 item.BloodMagic.baseComponent.reagentSuppression.name=Suppression Reagent
 item.BloodMagic.baseComponent.frameParts.name=Frame Parts
 item.BloodMagic.baseComponent.reagentBloodLight.name=Blood Lamp Reagent
+item.BloodMagic.baseComponent.reagentMagnetism.name=Magnetism Reagent
 
 item.BloodMagic.monsterSoul.base.name=Demonic Will
 
@@ -217,6 +218,8 @@ tooltip.BloodMagic.sigil.seer.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.seer.currentEssence=Current Essence: %d LP
 tooltip.BloodMagic.sigil.seer.currentAltarCapacity=Current Capacity: %d LP
 tooltip.BloodMagic.sigil.seer.currentCharge=Current Charge: %d
+tooltip.BloodMagic.sigil.seer.currentTranquility=Current Tranquility: %d
+tooltip.BloodMagic.sigil.seer.currentBonus=Current Bonus: +%d%%
 tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
 tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!

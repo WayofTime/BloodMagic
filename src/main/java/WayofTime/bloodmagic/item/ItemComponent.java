@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.registry.ModItems;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -12,6 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemComponent extends Item
 {
@@ -30,6 +30,7 @@ public class ItemComponent extends Item
     public static final String REAGENT_SUPPRESSION = "reagentSuppression";
     public static final String COMPONENT_FRAME_PART = "frameParts";
     public static final String REAGENT_BLOODLIGHT = "reagentBloodLight";
+    public static final String REAGENT_MAGNETISM = "reagentMagnetism";
 
     public ItemComponent()
     {
@@ -57,6 +58,7 @@ public class ItemComponent extends Item
         names.add(9, REAGENT_SUPPRESSION);
         names.add(10, COMPONENT_FRAME_PART);
         names.add(11, REAGENT_BLOODLIGHT);
+        names.add(12, REAGENT_MAGNETISM);
     }
 
     @Override
