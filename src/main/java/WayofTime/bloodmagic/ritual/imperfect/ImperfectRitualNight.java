@@ -18,8 +18,8 @@ public class ImperfectRitualNight extends ImperfectRitual
     public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player)
     {
 
-        if (!imperfectRitualStone.getWorld().isRemote)
-            imperfectRitualStone.getWorld().setWorldTime((imperfectRitualStone.getWorld().getWorldTime() / 24000) * 24000 + 13800);
+        if (!imperfectRitualStone.getRitualWorld().isRemote)
+            imperfectRitualStone.getRitualWorld().setWorldTime((imperfectRitualStone.getRitualWorld().getWorldTime() / 24000) * 24000 + 13800);
 
         return true;
     }

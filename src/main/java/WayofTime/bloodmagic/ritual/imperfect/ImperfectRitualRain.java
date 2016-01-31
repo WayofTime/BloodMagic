@@ -17,15 +17,15 @@ public class ImperfectRitualRain extends ImperfectRitual
     @Override
     public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player)
     {
-        if (!imperfectRitualStone.getWorld().isRemote)
+        if (!imperfectRitualStone.getRitualWorld().isRemote)
         {
-            imperfectRitualStone.getWorld().getWorldInfo().setRaining(true);
+            imperfectRitualStone.getRitualWorld().getWorldInfo().setRaining(true);
         }
 
-        if (imperfectRitualStone.getWorld().isRemote)
+        if (imperfectRitualStone.getRitualWorld().isRemote)
         {
-            imperfectRitualStone.getWorld().setRainStrength(1.0F);
-            imperfectRitualStone.getWorld().setThunderStrength(1.0F);
+            imperfectRitualStone.getRitualWorld().setRainStrength(1.0F);
+            imperfectRitualStone.getRitualWorld().setThunderStrength(1.0F);
         }
 
         return true;

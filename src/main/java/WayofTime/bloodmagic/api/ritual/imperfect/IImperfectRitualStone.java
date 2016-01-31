@@ -14,7 +14,7 @@ public interface IImperfectRitualStone
 
     boolean performRitual(World world, BlockPos pos, ImperfectRitual imperfectRitual, EntityPlayer player);
 
-    World getWorld();
+    World getRitualWorld();
 
-    BlockPos getPos();
+    BlockPos getRitualPos();
 }

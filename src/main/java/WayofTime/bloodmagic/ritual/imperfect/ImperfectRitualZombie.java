@@ -20,14 +20,14 @@ public class ImperfectRitualZombie extends ImperfectRitual
     @Override
     public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player)
     {
-        EntityZombie zombie = new EntityZombie(imperfectRitualStone.getWorld());
-        zombie.setPosition(imperfectRitualStone.getPos().getX() + 0.5, imperfectRitualStone.getPos().getY() + 2.1, imperfectRitualStone.getPos().getZ() + 0.5);
+        EntityZombie zombie = new EntityZombie(imperfectRitualStone.getRitualWorld());
+        zombie.setPosition(imperfectRitualStone.getRitualPos().getX() + 0.5, imperfectRitualStone.getRitualPos().getY() + 2.1, imperfectRitualStone.getRitualPos().getZ() + 0.5);
         zombie.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(), 2000));
         zombie.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 20000, 7));
         zombie.addPotionEffect(new PotionEffect(Potion.resistance.getId(), 20000, 3));
 
-        if (!imperfectRitualStone.getWorld().isRemote)
-            imperfectRitualStone.getWorld().spawnEntityInWorld(zombie);
+        if (!imperfectRitualStone.getRitualWorld().isRemote)
+            imperfectRitualStone.getRitualWorld().spawnEntityInWorld(zombie);
 
         return true;
     }

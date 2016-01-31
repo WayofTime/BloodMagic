@@ -35,14 +35,14 @@ public class TileImperfectRitualStone extends TileEntity implements IImperfectRi
     }
 
     @Override
-    public World getWorld()
+    public World getRitualWorld()
     {
-        return super.getWorld();
+        return getWorld();
     }
 
     @Override
-    public BlockPos getPos()
+    public BlockPos getRitualPos()
     {
-        return super.getPos();
+        return getPos();
     }
 }
