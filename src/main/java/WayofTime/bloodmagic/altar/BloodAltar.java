@@ -10,8 +10,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -32,7 +35,7 @@ import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Enums;
 import com.google.common.base.Strings;
 
-public class BloodAltar
+public class BloodAltar implements IFluidHandler
 {
     private TileAltar tileAltar;
     private int internalCounter = 0;
@@ -716,5 +719,107 @@ public class BloodAltar
     public int getChargingFrequency()
     {
         return chargingFrequency == 0 ? 1 : chargingFrequency;
+    }
+
+    @Override
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
+    {
+        if (resource == null || resource.getFluid() != BlockLifeEssence.getLifeEssence())
+        {
+            return 0;
+        }
+
+        if (!doFill)
+        {
+            if (fluidInput == null)
+            {
+                return Math.min(bufferCapacity, resource.amount);
+            }
+
+            if (!fluidInput.isFluidEqual(resource))
+            {
+                return 0;
+            }
+
+            return Math.min(bufferCapacity - fluidInput.amount, resource.amount);
+        }
+
+        if (fluidInput == null)
+        {
+            fluidInput = new FluidStack(resource, Math.min(bufferCapacity, resource.amount));
+
+            return fluidInput.amount;
+        }
+
+        if (!fluidInput.isFluidEqual(resource))
+        {
+            return 0;
+        }
+        int filled = bufferCapacity - fluidInput.amount;
+
+        if (resource.amount < filled)
+        {
+            fluidInput.amount += resource.amount;
+            filled = resource.amount;
+        } else
+        {
+            fluidInput.amount = bufferCapacity;
+        }
+
+        return filled;
+    }
+
+    @Override
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
+    {
+        if (resource == null || !resource.isFluidEqual(fluidOutput))
+        {
+            return null;
+        }
+        return drain(from, resource.amount, doDrain);
+    }
+
+    @Override
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
+    {
+        if (fluidOutput == null)
+        {
+            return null;
+        }
+
+        int drained = maxDrain;
+        if (fluidOutput.amount < drained)
+        {
+            drained = fluidOutput.amount;
+        }
+
+        FluidStack stack = new FluidStack(fluidOutput, drained);
+        if (doDrain)
+        {
+            fluidOutput.amount -= drained;
+            if (fluidOutput.amount <= 0)
+            {
+                fluidOutput = null;
+            }
+        }
+        return stack;
+    }
+
+    @Override
+    public boolean canFill(EnumFacing from, Fluid fluid)
+    {
+        return fluid == BlockLifeEssence.getLifeEssence();
+    }
+
+    @Override
+    public boolean canDrain(EnumFacing from, Fluid fluid)
+    {
+        return fluid == BlockLifeEssence.getLifeEssence();
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(EnumFacing from)
+    {
+        return new FluidTankInfo[] {};
     }
 }

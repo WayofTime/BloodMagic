@@ -8,12 +8,11 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.fluids.IFluidTank;
 import WayofTime.bloodmagic.altar.BloodAltar;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
-public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidTank, IFluidHandler
+public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidHandler
 {
     private BloodAltar bloodAltar;
 
@@ -62,74 +61,41 @@ public class TileAltar extends TileInventory implements IBloodAltar, ITickable, 
         return slot == 0;
     }
 
-    // IFluidHandler
-
-    @Override
-    public FluidTankInfo[] getTankInfo(EnumFacing from)
-    {
-        return new FluidTankInfo[0];
-    }
-
+    /* IFluidHandler */
     @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill)
     {
-        return 0;
+        return bloodAltar.fill(from, resource, doFill);
     }
 
     @Override
     public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
     {
-        return null;
+        return bloodAltar.drain(from, resource, doDrain);
     }
 
     @Override
     public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
     {
-        return null;
+        return bloodAltar.drain(from, maxDrain, doDrain);
     }
 
     @Override
     public boolean canFill(EnumFacing from, Fluid fluid)
     {
-        return false;
+        return bloodAltar.canFill(from, fluid);
     }
 
     @Override
     public boolean canDrain(EnumFacing from, Fluid fluid)
     {
-        return false;
-    }
-
-    // IFluidTank
-
-    @Override
-    public FluidStack getFluid()
-    {
-        return bloodAltar.getFluid();
+        return bloodAltar.canDrain(from, fluid);
     }
 
     @Override
-    public int getFluidAmount()
+    public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
-        return bloodAltar.getFluidAmount();
-    }
-
-    @Override
-    public FluidTankInfo getInfo()
-    {
-        return new FluidTankInfo(this);
-    }
-
-    @Override
-    public int fill(FluidStack resource, boolean doFill)
-    {
-        return 0;
-    }
-
-    @Override
-    public FluidStack drain(int maxDrain, boolean doDrain)
-    {
-        return null;
+        return bloodAltar.getTankInfo(from);
     }
 
     @Override
