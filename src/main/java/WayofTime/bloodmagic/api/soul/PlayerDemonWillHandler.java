@@ -46,6 +46,7 @@ public class PlayerDemonWillHandler
     {
         ItemStack[] inventory = player.inventory.mainInventory;
 
+        boolean hasGem = false;
         for (int i = 0; i < inventory.length; i++)
         {
             ItemStack stack = inventory[i];
@@ -53,6 +54,7 @@ public class PlayerDemonWillHandler
             {
                 if (stack.getItem() instanceof IDemonWillGem)
                 {
+                    hasGem = true;
                     if (((IDemonWillGem) stack.getItem()).getWill(stack) < ((IDemonWillGem) stack.getItem()).getMaxWill(stack))
                     {
                         return false;
@@ -61,7 +63,7 @@ public class PlayerDemonWillHandler
             }
         }
 
-        return true;
+        return hasGem;
     }
 
     /**

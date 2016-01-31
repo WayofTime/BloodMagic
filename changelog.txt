@@ -6,6 +6,7 @@ Version 2.0.0-14
     - FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")
     - FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")
 - Fixed the bound sword so that it now drops weak blood shards.
+- Fixed the demon will so that you can actually pick it up!
 
 ------------------------------------------------------
 Version 2.0.0-13
