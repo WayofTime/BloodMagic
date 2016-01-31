@@ -9,6 +9,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -46,15 +47,15 @@ import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.registry.ModPotions;
@@ -376,6 +377,17 @@ public class EventHandler
                     for (ItemStack soulStack : droppedSouls)
                     {
                         event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+                    }
+                }
+            }
+
+            if (heldStack != null && heldStack.getItem() == ModItems.boundSword && !(attackedEntity instanceof EntityAnimal))
+            {
+                for (int i = 0; i <= EnchantmentHelper.getLootingModifier(attackingEntity); i++)
+                {
+                    if (this.random.nextDouble() < 0.2)
+                    {
+                        event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.bloodShard, 1, 0)));
                     }
                 }
             }

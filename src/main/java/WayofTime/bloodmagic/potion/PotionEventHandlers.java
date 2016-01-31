@@ -1,22 +1,20 @@
 package WayofTime.bloodmagic.potion;
 
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.registry.ModPotions;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.List;
+import WayofTime.bloodmagic.registry.ModPotions;
 
 public class PotionEventHandlers
 {
@@ -112,25 +110,6 @@ public class PotionEventHandlers
                 projectile.motionX = newVel * delX;
                 projectile.motionY = newVel * delY;
                 projectile.motionZ = newVel * delZ;
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onEntityDrop(LivingDropsEvent event)
-    {
-        if (event.source.getDamageType().equals("player"))
-        {
-            double rand = Math.random();
-
-            if (!(event.entityLiving instanceof EntityAnimal))
-            {
-                PotionEffect effect = event.entityLiving.getActivePotionEffect(Potion.weakness);
-
-                if (effect != null)
-                    if (effect.getAmplifier() >= 2)
-                        if (rand < 0.2)
-                            event.entityLiving.dropItem(ModItems.bloodShard, 1);
             }
         }
     }
