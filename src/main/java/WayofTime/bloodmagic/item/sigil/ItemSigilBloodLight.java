@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class ItemSigilBloodLight extends ItemSigilBase
@@ -23,7 +24,22 @@ public class ItemSigilBloodLight extends ItemSigilBase
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
         if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed() * 5) && !world.isRemote)
-            world.spawnEntityInWorld(new EntityBloodLight(world, player));
+        {
+            MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, false);
+
+            if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            {
+                BlockPos blockPos = mop.getBlockPos().offset(mop.sideHit);
+
+                if (world.isAirBlock(blockPos))
+                {
+                    world.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
+                }
+            } else
+            {
+                world.spawnEntityInWorld(new EntityBloodLight(world, player));
+            }
+        }
 
         return stack;
     }

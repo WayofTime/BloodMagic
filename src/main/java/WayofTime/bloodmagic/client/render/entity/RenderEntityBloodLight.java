@@ -1,50 +1,41 @@
 package WayofTime.bloodmagic.client.render.entity;
 
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.item.ItemComponent;
 
 public class RenderEntityBloodLight extends Render<EntityBloodLight>
 {
-    public RenderEntityBloodLight(RenderManager renderManager)
+    private final RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+
+    public RenderEntityBloodLight(RenderManager renderManagerIn)
     {
-        super(renderManager);
-        this.shadowSize = 0.0F;
+        super(renderManagerIn);
     }
 
-    public void renderEntityAt(EntityBloodLight entity, double x, double y, double z, float fq, float pticks)
+    public void doRender(EntityBloodLight entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         GlStateManager.pushMatrix();
-        GlStateManager.translate(x, y, z);
+        GlStateManager.translate((float) x, (float) y, (float) z);
         GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(0.1F, 0.1F, 0.1F);
-        this.bindTexture(this.getEntityTexture(entity));
-        Tessellator tessellator = Tessellator.getInstance();
-        GlStateManager.rotate(180.0F - renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        tessellator.getWorldRenderer().begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
-        tessellator.getWorldRenderer().pos(-0.5D, -0.25D, 0.0D).tex(0D, 1D).normal(0F, 1F, 0F).endVertex();
-        tessellator.getWorldRenderer().pos(0.5D, -0.25D, 0.0D).tex(1D, 1D).normal(0F, 1F, 0F).endVertex();
-        tessellator.getWorldRenderer().pos(0.5D, 0.75D, 0.0D).tex(1D, 0D).normal(0F, 1F, 0F).endVertex();
-        tessellator.getWorldRenderer().pos(-0.5D, 0.75D, 0.0D).tex(0D, 1D).normal(0F, 1F, 0F).endVertex();
-        tessellator.draw();
+        GlStateManager.scale(0.5F, 0.5F, 0.5F);
+        GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        this.bindTexture(TextureMap.locationBlocksTexture);
+        this.renderItem.renderItem(ItemComponent.getStack(ItemComponent.REAGENT_BLOODLIGHT), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
-    @Override
-    public void doRender(EntityBloodLight entityBloodLight, double d, double d1, double d2, float f, float f1)
-    {
-        renderEntityAt(entityBloodLight, d, d1, d2, f, f1);
-    }
-
-    @Override
-    protected ResourceLocation getEntityTexture(EntityBloodLight entityBloodLight)
+    protected ResourceLocation getEntityTexture(EntityBloodLight entity)
     {
         return TextureMap.locationBlocksTexture;
     }

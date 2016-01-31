@@ -77,6 +77,7 @@ item.BloodMagic.baseComponent.reagentSight.name=Sight Reagent
 item.BloodMagic.baseComponent.reagentBinding.name=Binding Reagent
 item.BloodMagic.baseComponent.reagentSuppression.name=Suppression Reagent
 item.BloodMagic.baseComponent.frameParts.name=Frame Parts
+item.BloodMagic.baseComponent.reagentBloodLight.name=Blood Lamp Reagent
 
 item.BloodMagic.monsterSoul.base.name=Demonic Will
 
