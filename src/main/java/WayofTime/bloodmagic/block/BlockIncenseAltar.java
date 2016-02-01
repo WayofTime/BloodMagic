@@ -22,6 +22,26 @@ public class BlockIncenseAltar extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
+
+        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isVisuallyOpaque()
+    {
+        return false;
     }
 
     @Override

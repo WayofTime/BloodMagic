@@ -1,20 +1,21 @@
 {
 	"forge_marker": 1,
 	"defaults": {
-		"textures": {
-			"base": "minecraft:blocks/iron_block",
-			"base_bottom": "minecraft:blocks/gold_block",
-			"glass": "minecraft:blocks/glass",
-			"attachment": "minecraft:blocks/stone"
-		},
-		"uvlock": true
+		"textures": { },
+		"model": "bloodmagic:BlockHellfireForge.obj",
+		"custom": { "flip-v": true },
+		"transform": {
+			"translation": [ 0.5, 0, 0.5 ]
+		}
 	},
 	"variants": {
-		"normal": {
-			"model": "bloodmagic:sub/BlockSoulForge",
-			"submodel": {
-				
+		"normal": [{
+
+		}],
+		"inventory": [{
+			"transform": {
+				"translation": [0.5, 0, 0.5]
 			}
-		}
+		}]
 	}
 }
