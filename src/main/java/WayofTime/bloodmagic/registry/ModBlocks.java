@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -103,6 +104,10 @@ public class ModBlocks
         itemRoutingNode = registerBlock(new BlockItemRoutingNode());
         incenseAltar = registerBlock(new BlockIncenseAltar());
         pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
+
+        BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
+        BloodMagicAPI.addToTeleposerBlacklist(outputRoutingNode);
+        BloodMagicAPI.addToTeleposerBlacklist(itemRoutingNode);
 
         initTiles();
     }
