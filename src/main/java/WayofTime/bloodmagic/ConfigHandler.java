@@ -20,7 +20,6 @@ import java.util.*;
 public class ConfigHandler
 {
     @Getter
-    @Setter
     private static Configuration config;
 
     // Teleposer
@@ -37,6 +36,32 @@ public class ConfigHandler
     // Blood Altar Sacrificial Values
     public static String[] entitySacrificeValuesList;
     public static Map<String, Integer> entitySacrificeValues = new HashMap<String, Integer>();
+
+    // Rituals
+    public static boolean ritualAnimalGrowth;
+    public static boolean ritualContainment;
+    public static boolean ritualCrushing;
+    public static boolean ritualExpulsion;
+    public static boolean ritualFeatheredKnife;
+    public static boolean ritualFullStomach;
+    public static boolean ritualGreenGrove;
+    public static boolean ritualHarvest;
+    public static boolean ritualInterdiction;
+    public static boolean ritualJumping;
+    public static boolean ritualLava;
+    public static boolean ritualMagnetic;
+    public static boolean ritualRegeneration;
+    public static boolean ritualSpeed;
+    public static boolean ritualSuppression;
+    public static boolean ritualWater;
+    public static boolean ritualWellOfSuffering;
+    public static boolean ritualZephyr;
+
+    // Imperfect Rituals
+    public static boolean imperfectRitualNight;
+    public static boolean imperfectRitualRain;
+    public static boolean imperfectRitualResistance;
+    public static boolean imperfectRitualZombie;
 
     // Potion ID's
     public static int customPotionDrowningID;
@@ -189,6 +214,31 @@ public class ConfigHandler
 
         category = "Rituals";
         config.addCustomCategoryComment(category, "Ritual toggling");
+        config.setCategoryRequiresMcRestart(category, true);
+        ritualAnimalGrowth = config.get(category, "ritualAnimalGrowth", true).getBoolean();
+        ritualContainment = config.get(category, "ritualContainment", true).getBoolean();
+        ritualCrushing = config.get(category, "ritualCrushing", true).getBoolean();
+        ritualExpulsion = config.get(category, "ritualExpulsion", true).getBoolean();
+        ritualFeatheredKnife = config.get(category, "ritualFeatheredKnife", true).getBoolean();
+        ritualFullStomach = config.get(category, "ritualFullStomach", true).getBoolean();
+        ritualGreenGrove = config.get(category, "ritualGreenGrove", true).getBoolean();
+        ritualHarvest = config.get(category, "ritualHarvest", true).getBoolean();
+        ritualInterdiction = config.get(category, "ritualInterdiction", true).getBoolean();
+        ritualJumping = config.get(category, "ritualJumping", true).getBoolean();
+        ritualLava = config.get(category, "ritualLava", true).getBoolean();
+        ritualMagnetic = config.get(category, "ritualMagnetic", true).getBoolean();
+        ritualRegeneration = config.get(category, "ritualRegeneration", true).getBoolean();
+        ritualSpeed = config.get(category, "ritualSpeed", true).getBoolean();
+        ritualSuppression = config.get(category, "ritualSuppression", true).getBoolean();
+        ritualWater = config.get(category, "ritualWater", true).getBoolean();
+        ritualWellOfSuffering = config.get(category, "ritualWellOfSuffering", true).getBoolean();
+        ritualZephyr = config.get(category, "ritualZephyr", true).getBoolean();
+
+        category = "Rituals.Imperfect";
+        imperfectRitualNight = config.get(category, "imperfectRitualNight", true).getBoolean();
+        imperfectRitualRain = config.get(category, "imperfectRitualRain", true).getBoolean();
+        imperfectRitualResistance = config.get(category, "imperfectRitualResistance", true).getBoolean();
+        imperfectRitualZombie = config.get(category, "imperfectRitualZombie", true).getBoolean();
 
         category = "General";
         config.addCustomCategoryComment(category, "General settings");
@@ -249,12 +299,5 @@ public class ConfigHandler
             if (!entitySacrificeValues.containsKey(split[0]))
                 entitySacrificeValues.put(split[0], amount);
         }
-    }
-
-    public static void checkRituals()
-    {
-        RitualHelper.checkRituals(config, "WayofTime.bloodmagic.ritual", "Rituals");
-        RitualHelper.checkImperfectRituals(config, "WayofTime.bloodmagic.ritual.imperfect", "Rituals.imperfect");
-        config.save();
     }
 }

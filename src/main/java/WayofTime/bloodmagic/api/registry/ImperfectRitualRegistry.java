@@ -23,15 +23,28 @@ public class ImperfectRitualRegistry
      * @param id
      *        - The ID for the imperfect ritual. Cannot be duplicated.
      */
-    public static void registerRitual(ImperfectRitual imperfectRitual, String id)
+    public static void registerRitual(ImperfectRitual imperfectRitual, String id, boolean enabled)
     {
         if (imperfectRitual != null)
         {
             if (registry.containsKey(id))
                 BloodMagicAPI.getLogger().error("Duplicate imperfect ritual id: %s", id);
             else
+            {
                 registry.put(id, imperfectRitual);
+                enabledRituals.put(imperfectRitual, enabled);
+            }
         }
+    }
+
+    public static void registerRitual(ImperfectRitual imperfectRitual, String id)
+    {
+        registerRitual(imperfectRitual, id, true);
+    }
+
+    public static void registerRitual(ImperfectRitual imperfectRitual, boolean enabled)
+    {
+        registerRitual(imperfectRitual, imperfectRitual.getName(), enabled);
     }
 
     public static void registerRitual(ImperfectRitual imperfectRitual)
@@ -72,12 +85,16 @@ public class ImperfectRitualRegistry
     {
         try
         {
-            return true;
+            return enabledRituals.get(imperfectRitual);
         } catch (NullPointerException e)
         {
             BloodMagicAPI.getLogger().error("Invalid Imperfect Ritual was called");
             return false;
         }
+    }
+
+    public static boolean ritualEnabled(String id) {
+        return ritualEnabled(getRitualForId(id));
     }
 
     public static BiMap<String, ImperfectRitual> getRegistry()

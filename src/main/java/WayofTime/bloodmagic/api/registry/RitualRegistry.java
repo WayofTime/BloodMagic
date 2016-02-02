@@ -28,7 +28,7 @@ public class RitualRegistry
      * @param id
      *        - The ID for the ritual. Cannot be duplicated.
      */
-    public static void registerRitual(Ritual ritual, String id)
+    public static void registerRitual(Ritual ritual, String id, boolean enabled)
     {
         if (ritual != null)
         {
@@ -37,9 +37,25 @@ public class RitualRegistry
             else
             {
                 registry.put(id, ritual);
+                enabledRituals.put(ritual, enabled);
                 orderedIdList.add(id);
             }
         }
+    }
+
+    public static void registerRitual(Ritual ritual, boolean enabled)
+    {
+        registerRitual(ritual, ritual.getName(), enabled);
+    }
+
+    public static void registerRitual(Ritual ritual, String id)
+    {
+        registerRitual(ritual, id, true);
+    }
+
+    public static void registerRitual(Ritual ritual)
+    {
+        registerRitual(ritual, ritual.getName());
     }
 
     public static Ritual getRitualForId(String id)
@@ -67,12 +83,16 @@ public class RitualRegistry
     {
         try
         {
-            return true;
+            return enabledRituals.get(ritual);
         } catch (NullPointerException e)
         {
             BloodMagicAPI.getLogger().error("Invalid Ritual was called");
             return false;
         }
+    }
+
+    public static boolean ritualEnabled(String id) {
+        return ritualEnabled(getRitualForId(id));
     }
 
     public static BiMap<String, Ritual> getRegistry()

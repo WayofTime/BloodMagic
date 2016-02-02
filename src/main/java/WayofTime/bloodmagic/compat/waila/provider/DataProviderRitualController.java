@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.compat.waila.provider;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockRitualController;
@@ -55,6 +56,8 @@ public class DataProviderRitualController implements IWailaDataProvider
                     {
                         currenttip.add(TextHelper.localizeEffect(mrs.getCurrentRitual().getUnlocalizedName()));
                         currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromUUID(mrs.getOwner())));
+                        if (!RitualRegistry.ritualEnabled(mrs.getCurrentRitual()))
+                            currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.config.disabled"));
                     } else
                     {
                         currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.deactivated"));
@@ -71,7 +74,11 @@ public class DataProviderRitualController implements IWailaDataProvider
                         ImperfectRitual ritual = ImperfectRitualRegistry.getRitualForBlock(blockStack);
 
                         if (ritual != null)
+                        {
                             currenttip.add(TextHelper.localizeEffect(ritual.getUnlocalizedName()));
+                            if (!ImperfectRitualRegistry.ritualEnabled(ritual))
+                                currenttip.add(TextHelper.localizeEffect("tooltip.BloodMagic.config.disabled"));
+                        }
                     }
                 }
             }
