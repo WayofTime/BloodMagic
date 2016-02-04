@@ -37,7 +37,6 @@ public class ItemSigilToggleable extends ItemSigilBase
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        BindableHelper.checkAndSetItemOwner(stack, player);
         if (!world.isRemote && !isUnusable(stack))
         {
             if (player.isSneaking())
@@ -52,12 +51,7 @@ public class ItemSigilToggleable extends ItemSigilBase
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
-
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
-            return onSigilUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
-
-        return false;
+        return ItemBindable.syphonNetwork(stack, player, getLPUsed()) && onSigilUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)

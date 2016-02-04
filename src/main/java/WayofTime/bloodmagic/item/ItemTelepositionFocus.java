@@ -52,16 +52,13 @@ public class ItemTelepositionFocus extends ItemBindable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (BindableHelper.checkAndSetItemOwner(stack, player))
+        if (player.isSneaking())
         {
-            if (player.isSneaking())
-            {
-                MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
+            MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
 
-                if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-                {
-                    setBlockPos(stack, world, mop.getBlockPos());
-                }
+            if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            {
+                setBlockPos(stack, world, mop.getBlockPos());
             }
         }
 

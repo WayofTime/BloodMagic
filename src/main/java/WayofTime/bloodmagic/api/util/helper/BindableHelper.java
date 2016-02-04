@@ -8,43 +8,107 @@ import net.minecraftforge.common.MinecraftForge;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public class BindableHelper
 {
     /**
-     * Bind an item to a player. Handles checking if the player was an
-     * instanceof {@link net.minecraftforge.common.util.FakePlayer} or other
-     * type of Fake Player.
-     * 
+     * Sets the Owner Name of the item without checking if it is already bound. Also
+     * bypasses {@link ItemBindEvent}.
+     *
+     * @param stack
+     *        - The ItemStack to bind
+     * @param ownerName
+     *        - The username to bind the ItemStack to
+     */
+    public static void setItemOwnerName(ItemStack stack, String ownerName)
+    {
+        stack = NBTHelper.checkNBT(stack);
+
+        stack.getTagCompound().setString(Constants.NBT.OWNER_NAME, ownerName);
+    }
+
+    /**
+     * Sets the Owner UUID of the item without checking if it is already bound. Also
+     * bypasses {@link ItemBindEvent}.
+     *
+     * @param stack
+     *        - The ItemStack to bind
+     * @param ownerUUID
+     *        - The UUID to bind the ItemStack to
+     */
+    public static void setItemOwnerUUID(ItemStack stack, String ownerUUID)
+    {
+        stack = NBTHelper.checkNBT(stack);
+
+        stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, ownerUUID);
+    }
+
+    /**
+     * Used to safely obtain the username of the ItemStack's owner
+     *
+     * @param stack
+     *        - The ItemStack to check the owner of
+     *
+     * @return - The username of the ItemStack's owner
+     */
+    public static String getOwnerName(ItemStack stack)
+    {
+        stack = NBTHelper.checkNBT(stack);
+
+        return PlayerHelper.getUsernameFromStack(stack);
+    }
+
+    /**
+     * Used to safely obtain the UUID of the ItemStack's owner
+     *
+     * @param stack
+     *        - The ItemStack to check the owner of
+     *
+     * @return - The UUID of the ItemStack's owner
+     */
+    public static String getOwnerUUID(ItemStack stack)
+    {
+        stack = NBTHelper.checkNBT(stack);
+
+        return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
+    }
+
+    // Everything below is to be removed.
+
+    /**
+     * Deprecated.
+     *
+     * Now handled automatically with {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     *
      * @param stack
      *        - The ItemStack to bind
      * @param player
      *        - The Player to bind the ItemStack to
-     * 
+     *
      * @return - Whether binding was successful
      */
+    @Deprecated
     public static boolean checkAndSetItemOwner(ItemStack stack, EntityPlayer player)
     {
         return !PlayerHelper.isFakePlayer(player) && checkAndSetItemOwner(stack, PlayerHelper.getUUIDFromPlayer(player), player.getName());
     }
 
     /**
-     * Bind an item to a username.
-     * 
-     * Requires the Item contained in the ItemStack to be an instanceof
-     * {@link IBindable}
-     * 
-     * Fires {@link ItemBindEvent}.
-     * 
+     * Deprecated.
+     *
+     * Now handled automatically with {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     *
      * @param stack
      *        - The ItemStack to bind
      * @param uuid
      *        - The username to bind the ItemStack to
      * @param currentUsername
      *        - The current name of the player.
-     * 
+     *
      * @return - Whether the binding was successful
      */
+    @Deprecated
     public static boolean checkAndSetItemOwner(ItemStack stack, String uuid, String currentUsername)
     {
         stack = NBTHelper.checkNBT(stack);
@@ -70,8 +134,10 @@ public class BindableHelper
     }
 
     /**
-     * @see BindableHelper#checkAndSetItemOwner(ItemStack, String)
-     * 
+     * Deprecated.
+     *
+     * Now handled automatically with {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     *
      * @param stack
      *        - ItemStack to check
      * @param uuid
@@ -79,54 +145,25 @@ public class BindableHelper
      * @param currentUsername
      *        - The current name of the player.
      */
+    @Deprecated
     public static boolean checkAndSetItemOwner(ItemStack stack, UUID uuid, String currentUsername)
     {
         return checkAndSetItemOwner(stack, uuid.toString(), currentUsername);
     }
 
     /**
-     * Sets the Owner of the item without checking if it is already bound. Also
-     * bypasses {@link ItemBindEvent}.
-     * 
+     * Deprecated.
+     *
+     * @see #setItemOwnerName(ItemStack, String)
+     *
      * @param stack
      *        - The ItemStack to bind
      * @param ownerName
      *        - The username to bind the ItemStack to
      */
+    @Deprecated
     public static void setItemOwner(ItemStack stack, String ownerName)
     {
-        stack = NBTHelper.checkNBT(stack);
-
-        stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, ownerName);
-    }
-
-    /**
-     * Used to safely obtain the username of the ItemStack's owner
-     * 
-     * @param stack
-     *        - The ItemStack to check the owner of
-     * 
-     * @return - The username of the ItemStack's owner
-     */
-    public static String getOwnerName(ItemStack stack)
-    {
-        stack = NBTHelper.checkNBT(stack);
-
-        return PlayerHelper.getUsernameFromStack(stack);
-    }
-
-    /**
-     * Used to safely obtain the UUID of the ItemStack's owner
-     * 
-     * @param stack
-     *        - The ItemStack to check the owner of
-     * 
-     * @return - The UUID of the ItemStack's owner
-     */
-    public static String getOwnerUUID(ItemStack stack)
-    {
-        stack = NBTHelper.checkNBT(stack);
-
-        return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
+        setItemOwnerName(stack, ownerName);
     }
 }

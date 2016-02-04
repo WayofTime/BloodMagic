@@ -154,52 +154,6 @@ public class ItemBindable extends Item implements IBindable
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
-    {
-        BindableHelper.checkAndSetItemOwner(stack, player);
-
-        return stack;
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        BindableHelper.checkAndSetItemOwner(stack, player);
-
-        return false;
-    }
-
-    protected void damagePlayer(World world, EntityPlayer player, int damage)
-    {
-        if (world != null)
-        {
-            double posX = player.posX;
-            double posY = player.posY;
-            double posZ = player.posZ;
-            world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-            float f = 1.0F;
-            float f1 = f * 0.6F + 0.4F;
-            float f2 = f * f * 0.7F - 0.5F;
-            float f3 = f * f * 0.6F - 0.7F;
-            for (int l = 0; l < 8; ++l)
-                world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), f1, f2, f3);
-        }
-        for (int i = 0; i < damage; i++)
-        {
-            player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0F); // Emulate
-            // an
-            // attack
-            player.setHealth(player.getHealth() - 1);
-
-            if (player.getHealth() <= 0.0005)
-            {
-                player.inventory.dropAllItems();
-                break;
-            }
-        }
-    }
-
     public int getLPUsed()
     {
         return this.lpUsed;

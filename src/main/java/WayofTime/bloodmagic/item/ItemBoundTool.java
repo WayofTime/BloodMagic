@@ -110,8 +110,6 @@ public class ItemBoundTool extends ItemBindable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        BindableHelper.checkAndSetItemOwner(stack, player);
-
         // if (!world.isRemote)
         {
             if (player.isSneaking())
@@ -134,15 +132,6 @@ public class ItemBoundTool extends ItemBindable
         }
 
         return stack;
-    }
-
-    @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
-            return false;
-
-        return false;
     }
 
     @Override

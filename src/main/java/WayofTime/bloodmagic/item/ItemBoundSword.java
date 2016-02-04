@@ -37,8 +37,6 @@ public class ItemBoundSword extends ItemSword implements IBindable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        BindableHelper.checkAndSetItemOwner(stack, player);
-
         if (!player.isSneaking() && getActivated(stack))
             player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
 

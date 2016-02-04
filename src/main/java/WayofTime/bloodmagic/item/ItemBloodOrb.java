@@ -45,8 +45,6 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        super.onItemRightClick(stack, world, player);
-
         if (world == null)
             return stack;
 

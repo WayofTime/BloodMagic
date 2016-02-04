@@ -3,8 +3,13 @@ package WayofTime.bloodmagic.util.handler;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.api.event.ItemBindEvent;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import com.google.common.base.Strings;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -19,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -178,6 +184,42 @@ public class EventHandler
                         LivingArmourUpgradeDigging.hasDug(armour);
                     }
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void interactEvent(PlayerInteractEvent event)
+    {
+        if (event.world.isRemote)
+            return;
+
+        EntityPlayer player = event.entityPlayer;
+
+        if (PlayerHelper.isFakePlayer(player))
+            return;
+
+        if (event.useBlock == Result.DENY && event.useItem != Result.DENY)
+        {
+            ItemStack held = player.getHeldItem();
+            if (held != null && held.getItem() instanceof IBindable)
+            {
+                held = NBTHelper.checkNBT(held);
+                if (Strings.isNullOrEmpty(BindableHelper.getOwnerUUID(held)))
+                {
+                    IBindable bindable = (IBindable) held.getItem();
+                    if (bindable.onBind(player, held))
+                    {
+                        String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
+                        ItemBindEvent toPost = new ItemBindEvent(player, uuid, held);
+                        if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
+                            return;
+
+                        BindableHelper.setItemOwnerUUID(held, uuid);
+                        BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
+                    }
+                } else if (BindableHelper.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !BindableHelper.getOwnerName(held).equals(player.getDisplayNameString()))
+                    BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
             }
         }
     }

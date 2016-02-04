@@ -41,13 +41,9 @@ public class BlockTeleposer extends BlockContainer
         ItemStack playerItem = player.getCurrentEquippedItem();
 
         if (playerItem != null && playerItem.getItem() instanceof ItemTelepositionFocus)
-        {
-            BindableHelper.checkAndSetItemOwner(playerItem, player);
             ((ItemTelepositionFocus) playerItem.getItem()).setBlockPos(playerItem, world, pos);
-        } else if (world.getTileEntity(pos) instanceof TileTeleposer)
-        {
+        else if (world.getTileEntity(pos) instanceof TileTeleposer)
             player.openGui(BloodMagic.instance, Constants.Gui.TELEPOSER_GUI, world, pos.getX(), pos.getY(), pos.getZ());
-        }
 
         return true;
     }

@@ -76,7 +76,7 @@ public class ItemSigilVoid extends ItemSigilBase
     {
         super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
 
-        if (world.isRemote || !BindableHelper.checkAndSetItemOwner(stack, player) || player.isSneaking() || isUnusable(stack))
+        if (world.isRemote || player.isSneaking() || isUnusable(stack))
         {
             return false;
         }

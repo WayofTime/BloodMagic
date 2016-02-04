@@ -49,14 +49,6 @@ public class ItemSigilBase extends ItemBindable implements ISigil
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        super.onItemRightClick(stack, world, player);
-
-        return false;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {

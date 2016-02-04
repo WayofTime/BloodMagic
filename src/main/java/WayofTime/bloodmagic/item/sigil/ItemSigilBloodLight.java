@@ -23,22 +23,17 @@ public class ItemSigilBloodLight extends ItemSigilBase
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed() * 5) && !world.isRemote)
+        MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, false);
+
+        if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, false);
+            BlockPos blockPos = mop.getBlockPos().offset(mop.sideHit);
 
-            if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-            {
-                BlockPos blockPos = mop.getBlockPos().offset(mop.sideHit);
-
-                if (world.isAirBlock(blockPos))
-                {
-                    world.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
-                }
-            } else
-            {
-                world.spawnEntityInWorld(new EntityBloodLight(world, player));
-            }
+            if (world.isAirBlock(blockPos))
+                world.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
+        } else
+        {
+            world.spawnEntityInWorld(new EntityBloodLight(world, player));
         }
 
         return stack;
@@ -52,15 +47,10 @@ public class ItemSigilBloodLight extends ItemSigilBase
         if (world.isRemote)
             return false;
 
-        if (BindableHelper.checkAndSetItemOwner(stack, player) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
-        {
-            BlockPos newPos = blockPos.offset(side);
+        BlockPos newPos = blockPos.offset(side);
 
-            if (world.isAirBlock(newPos))
-            {
-                world.setBlockState(newPos, ModBlocks.bloodLight.getDefaultState());
-            }
-        }
+        if (world.isAirBlock(newPos))
+            world.setBlockState(newPos, ModBlocks.bloodLight.getDefaultState());
 
         return true;
     }
