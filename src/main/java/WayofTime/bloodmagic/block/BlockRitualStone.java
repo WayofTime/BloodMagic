@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.block.base.BlockString;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
@@ -24,6 +25,12 @@ public class BlockRitualStone extends BlockString implements IRitualStone
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
+    }
+
+    @Override
+    public int damageDropped(IBlockState state)
+    {
+        return 0;
     }
 
     @Override
