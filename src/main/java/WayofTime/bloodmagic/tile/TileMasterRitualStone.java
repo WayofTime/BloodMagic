@@ -61,10 +61,10 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         if (!isActive() && !getWorld().isBlockPowered(getPos()) && isRedstoned() && getCurrentRitual() != null)
         {
             active = true;
-            redstoned = false;
             ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.activationCrystal, 1, getCurrentRitual().getCrystalLevel()));
             crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
             activateRitual(crystalStack, PlayerHelper.getPlayerFromUUID(getOwner()), getCurrentRitual());
+            redstoned = false;
         }
 
         if (getCurrentRitual() != null && isActive())
@@ -133,7 +133,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(crystalOwner);
 
-                        if (network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
+                        if (!isRedstoned() && network.getCurrentEssence() < ritual.getActivationCost() && !activator.capabilities.isCreativeMode)
                         {
                             ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.weak");
                             return false;
@@ -152,16 +152,13 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
                         if (ritual.activateRitual(this, activator))
                         {
-                            if (!activator.capabilities.isCreativeMode)
-                            {
+                            if (!isRedstoned() && !activator.capabilities.isCreativeMode)
                                 network.syphon(ritual.getActivationCost());
-                            }
 
                             ChatUtil.sendNoSpamUnloc(activator, "chat.BloodMagic.ritual.activate");
-                            this.active = true;
-                            // Set the owner of the ritual to the crystal's owner
-                            this.owner = crystalOwner;
 
+                            this.active = true;
+                            this.owner = crystalOwner;
                             this.currentRitual = ritual;
 
                             return true;
