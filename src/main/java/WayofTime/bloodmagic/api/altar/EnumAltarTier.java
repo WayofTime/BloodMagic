@@ -29,7 +29,6 @@ public enum EnumAltarTier
         @Override
         public void buildComponents()
         {
-            altarComponents.addAll(TWO.getAltarComponents());
             altarComponents.add(new AltarComponent(new BlockPos(-1, -1, -1), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
             altarComponents.add(new AltarComponent(new BlockPos(0, -1, -1), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
             altarComponents.add(new AltarComponent(new BlockPos(1, -1, -1), EnumAltarComponent.BLOODRUNE).setUpgradeSlot());
