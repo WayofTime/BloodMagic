@@ -31,7 +31,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
         if (!world.isRemote)
         {
             MovingObjectPosition position = getMovingObjectPositionFromPlayer(world, player, false);
-            int currentEssence = NetworkHelper.getSoulNetwork(BindableHelper.getOwnerUUID(stack)).getCurrentEssence();
+            int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
 
             if (position == null)
             {

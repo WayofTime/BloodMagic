@@ -205,9 +205,9 @@ public class EventHandler
             if (held != null && held.getItem() instanceof IBindable)
             {
                 held = NBTHelper.checkNBT(held);
-                if (Strings.isNullOrEmpty(BindableHelper.getOwnerUUID(held)))
+                IBindable bindable = (IBindable) held.getItem();
+                if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held)))
                 {
-                    IBindable bindable = (IBindable) held.getItem();
                     if (bindable.onBind(player, held))
                     {
                         String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
@@ -218,7 +218,7 @@ public class EventHandler
                         BindableHelper.setItemOwnerUUID(held, uuid);
                         BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
                     }
-                } else if (BindableHelper.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !BindableHelper.getOwnerName(held).equals(player.getDisplayNameString()))
+                } else if (bindable.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(held).equals(player.getDisplayNameString()))
                     BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
             }
         }

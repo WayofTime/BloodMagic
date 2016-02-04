@@ -44,14 +44,19 @@ public class BindableHelper
         stack.getTagCompound().setString(Constants.NBT.OWNER_UUID, ownerUUID);
     }
 
+    // Everything below is to be removed.
+
     /**
-     * Used to safely obtain the username of the ItemStack's owner
+     * Deprecated.
+     *
+     * Built into {@link IBindable} now.
      *
      * @param stack
      *        - The ItemStack to check the owner of
      *
      * @return - The username of the ItemStack's owner
      */
+    @Deprecated
     public static String getOwnerName(ItemStack stack)
     {
         stack = NBTHelper.checkNBT(stack);
@@ -60,21 +65,22 @@ public class BindableHelper
     }
 
     /**
-     * Used to safely obtain the UUID of the ItemStack's owner
+     * Deprecated.
+     *
+     * Built into {@link IBindable} now.
      *
      * @param stack
      *        - The ItemStack to check the owner of
      *
      * @return - The UUID of the ItemStack's owner
      */
+    @Deprecated
     public static String getOwnerUUID(ItemStack stack)
     {
         stack = NBTHelper.checkNBT(stack);
 
         return stack.getTagCompound().getString(Constants.NBT.OWNER_UUID);
     }
-
-    // Everything below is to be removed.
 
     /**
      * Deprecated.

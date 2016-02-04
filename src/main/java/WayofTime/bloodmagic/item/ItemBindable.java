@@ -178,4 +178,16 @@ public class ItemBindable extends Item implements IBindable
     {
         return true;
     }
+
+    @Override
+    public String getOwnerName(ItemStack stack)
+    {
+        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
+    }
+
+    @Override
+    public String getOwnerUUID(ItemStack stack)
+    {
+        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
+    }
 }
