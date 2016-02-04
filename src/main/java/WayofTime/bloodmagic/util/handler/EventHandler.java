@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.util.handler;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,14 +19,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -90,6 +89,20 @@ public class EventHandler
                 if (shouldSyphon)
                     pack.addLP(player.getCurrentArmor(chestIndex), totalLP);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onAnvil(AnvilUpdateEvent event)
+    {
+        if (event.left.getItem() == ModItems.livingArmourHelmet && event.right.getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.right.isItemDamaged())
+        {
+            ItemStack output = event.left.copy();
+            output = NBTHelper.checkNBT(output);
+            output.getTagCompound().setBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES, true);
+            event.cost = 1;
+
+            event.output = output;
         }
     }
 

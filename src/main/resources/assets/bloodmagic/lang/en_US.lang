@@ -273,6 +273,7 @@ tooltip.BloodMagic.livingArmour.upgrade.health=Healthy
 tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
 tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
+tooltip.BloodMagic.livingArmour.hasGoggles=&oContains Goggles of Revealing
 
 tooltip.BloodMagic.will=Will Quality: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.

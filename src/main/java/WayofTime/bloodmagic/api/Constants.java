@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Locale;
 
@@ -128,6 +129,9 @@ public class Constants
         public static final String WAILA_CONFIG_ALTAR = Mod.MODID + ".bloodAltar";
         public static final String WAILA_CONFIG_TELEPOSER = Mod.MODID + ".teleposer";
         public static final String WAILA_CONFIG_RITUAL = Mod.MODID + ".ritualController";
+
+        public static final String THAUMCRAFT_HAS_GOGGLES = "hasGoggles";
+        public static final Item THAUMCRAFT_GOGGLES = GameRegistry.findItem("Thaumcraft", "goggles");
     }
 
     public static class Misc

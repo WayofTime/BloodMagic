@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
@@ -25,8 +27,14 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.Multimap;
+import thaumcraft.api.items.IGoggles;
+import thaumcraft.api.items.IRevealer;
 
-public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
+@Optional.InterfaceList({
+        @Optional.Interface(iface = "thaumcraft.api.items.IRevealer", modid = "Thaumcraft"),
+        @Optional.Interface(iface = "thaumcraft.api.items.IGoggles", modid = "Thaumcraft")
+})
+public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
@@ -168,6 +176,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
+        stack = NBTHelper.checkNBT(stack);
+
         if (this == ModItems.livingArmourChest)
         {
             LivingArmour armour = getLivingArmour(stack);
@@ -179,6 +189,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
                     tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), (upgrade.getUpgradeLevel() + 1)));
                 }
             }
+        }
+
+        if (this == ModItems.livingArmourHelmet)
+        {
+            if (stack.getTagCompound().getBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES))
+                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.hasGoggles"));
         }
 
         super.addInformation(stack, player, tooltip, advanced);
@@ -310,5 +326,19 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
         }
 
         return null;
+    }
+
+    @Override
+    public boolean showIngamePopups(ItemStack stack, EntityLivingBase entityLivingBase)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        return stack != null && stack.getItem() == ModItems.livingArmourHelmet && stack.getTagCompound().getBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES);
+    }
+
+    @Override
+    public boolean showNodes(ItemStack stack, EntityLivingBase entityLivingBase)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        return stack != null && stack.getItem() == ModItems.livingArmourHelmet && stack.getTagCompound().getBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES);
     }
 }
