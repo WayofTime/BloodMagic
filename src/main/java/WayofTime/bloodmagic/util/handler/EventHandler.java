@@ -95,14 +95,17 @@ public class EventHandler
     @SubscribeEvent
     public void onAnvil(AnvilUpdateEvent event)
     {
-        if (event.left.getItem() == ModItems.livingArmourHelmet && event.right.getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.right.isItemDamaged())
+        if (ConfigHandler.thaumcraftGogglesUpgrade)
         {
-            ItemStack output = event.left.copy();
-            output = NBTHelper.checkNBT(output);
-            output.getTagCompound().setBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES, true);
-            event.cost = 1;
+            if (event.left.getItem() == ModItems.livingArmourHelmet && event.right.getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.right.isItemDamaged())
+            {
+                ItemStack output = event.left.copy();
+                output = NBTHelper.checkNBT(output);
+                output.getTagCompound().setBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES, true);
+                event.cost = 1;
 
-            event.output = output;
+                event.output = output;
+            }
         }
     }
 
