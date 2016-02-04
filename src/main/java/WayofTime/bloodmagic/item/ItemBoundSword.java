@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -11,9 +11,16 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,17 +28,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemBoundSword extends ItemSword implements IBindable
+public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 {
+    private float attackDamage;
+
     public ItemBoundSword()
     {
         super(ModItems.boundToolMaterial);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
         setRegistryName(Constants.BloodMagicItem.BOUND_SWORD.getRegName());
-        setHasSubtypes(true);
-        setNoRepair();
         setCreativeTab(BloodMagic.tabBloodMagic);
+
+        this.attackDamage = 4.0F + ModItems.boundToolMaterial.getDamageVsEntity();
     }
 
     @Override
@@ -41,9 +50,27 @@ public class ItemBoundSword extends ItemSword implements IBindable
             player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
 
         if (player.isSneaking())
-            setActivated(stack, !getActivated(stack));
+            setActivatedState(stack, !getActivated(stack));
 
         return stack;
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+        return oldStack.getItem() != newStack.getItem();
     }
 
     @Override
@@ -63,12 +90,14 @@ public class ItemBoundSword extends ItemSword implements IBindable
 
     public boolean getActivated(ItemStack stack)
     {
-        return stack.getItemDamage() > 0;
+        NBTHelper.checkNBT(stack);
+        return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
-    private ItemStack setActivated(ItemStack stack, boolean activated)
+    public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
-        stack.setItemDamage(activated ? 1 : 0);
+        NBTHelper.checkNBT(stack);
+        stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
 
         return stack;
     }

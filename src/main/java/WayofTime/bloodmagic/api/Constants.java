@@ -15,6 +15,7 @@ public class Constants
         public static final String OWNER_UUID = "ownerUUID";
         public static final String OWNER_NAME = "ownerNAME";
         public static final String USES = "uses";
+        public static final String ACTIVATED = "activated";
         public static final String UNUSABLE = "unusable";
         public static final String SACRIFICE = "sacrifice";
         public static final String DIMENSION_ID = "dimensionId";

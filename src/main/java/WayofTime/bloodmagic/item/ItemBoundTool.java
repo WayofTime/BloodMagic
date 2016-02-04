@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -12,6 +14,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
@@ -28,7 +31,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.Multiset;
 
 @Getter
-public class ItemBoundTool extends ItemBindable
+public class ItemBoundTool extends ItemBindable implements IActivatable
 {
     private Set<Block> effectiveBlocks;
     protected final String tooltipBase;
@@ -43,9 +46,7 @@ public class ItemBoundTool extends ItemBindable
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
-        setHasSubtypes(true);
         setLPUsed(lpUsed);
-        setFull3D();
 
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.bound." + name + ".";
@@ -61,6 +62,12 @@ public class ItemBoundTool extends ItemBindable
     public float getStrVsBlock(ItemStack stack, Block block)
     {
         return this.effectiveBlocks.contains(block) ? 8.0F : 1.0F;
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+        return oldStack.getItem() != newStack.getItem();
     }
 
     @Override
@@ -113,7 +120,7 @@ public class ItemBoundTool extends ItemBindable
         // if (!world.isRemote)
         {
             if (player.isSneaking())
-                setActivated(stack, !getActivated(stack));
+                setActivatedState(stack, !getActivated(stack));
             // if (getActivated(stack) && ItemBindable.syphonBatteries(stack,
             // player, getLPUsed()))
             // return stack;
@@ -233,12 +240,14 @@ public class ItemBoundTool extends ItemBindable
 
     public boolean getActivated(ItemStack stack)
     {
-        return stack.getItemDamage() > 0;
+        NBTHelper.checkNBT(stack);
+        return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
-    public ItemStack setActivated(ItemStack stack, boolean activated)
+    public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
-        stack.setItemDamage(activated ? 1 : 0);
+        NBTHelper.checkNBT(stack);
+        stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
 
         return stack;
     }

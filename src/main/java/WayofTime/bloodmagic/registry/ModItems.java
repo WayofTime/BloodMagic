@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
@@ -136,7 +138,7 @@ public class ModItems
     public static Item nodeRouter;
     public static Item baseItemFilter;
 
-    public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 0, 10, 8, 50);
+    public static Item.ToolMaterial boundToolMaterial = EnumHelper.addToolMaterial("BoundToolMaterial", 4, 1, 10, 8, 50);
     public static Item.ToolMaterial soulToolMaterial = EnumHelper.addToolMaterial("SoulToolMaterial", 4, 520, 7, 8, 50);
 
     public static void init()
@@ -268,14 +270,18 @@ public class ModItems
 
         renderHelper.itemRender(lavaCrystal);
 
-        renderHelper.itemRender(boundSword, 0);
-        renderHelper.itemRender(boundSword, 1);
-        renderHelper.itemRender(boundPickaxe, 0);
-        renderHelper.itemRender(boundPickaxe, 1);
-        renderHelper.itemRender(boundAxe, 0);
-        renderHelper.itemRender(boundAxe, 1);
-        renderHelper.itemRender(boundShovel, 0);
-        renderHelper.itemRender(boundShovel, 1);
+        renderHelper.customItemRender(boundSword, 0);
+        renderHelper.customItemRender(boundSword, 1);
+        ModelLoader.setCustomMeshDefinition(ModItems.boundSword, new CustomMeshDefinitionActivatable("ItemBoundSword"));
+        renderHelper.customItemRender(boundPickaxe, 0);
+        renderHelper.customItemRender(boundPickaxe, 1);
+        ModelLoader.setCustomMeshDefinition(ModItems.boundPickaxe, new CustomMeshDefinitionActivatable("ItemBoundPickaxe"));
+        renderHelper.customItemRender(boundAxe, 0);
+        renderHelper.customItemRender(boundAxe, 1);
+        ModelLoader.setCustomMeshDefinition(ModItems.boundAxe, new CustomMeshDefinitionActivatable("ItemBoundAxe"));
+        renderHelper.customItemRender(boundShovel, 0);
+        renderHelper.customItemRender(boundShovel, 1);
+        ModelLoader.setCustomMeshDefinition(ModItems.boundShovel, new CustomMeshDefinitionActivatable("ItemBoundShovel"));
 
         renderHelper.itemRender(sigilDivination);
         renderHelper.itemRender(sigilAir);
@@ -339,6 +345,7 @@ public class ModItems
 
         renderHelper.customItemRender(sentientSword, 0);
         renderHelper.customItemRender(sentientSword, 1);
+        ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new CustomMeshDefinitionActivatable("ItemSentientSword"));
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
         renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
         renderHelper.itemRender(sentientBow, 2, "ItemSentientBow_pulling_1");

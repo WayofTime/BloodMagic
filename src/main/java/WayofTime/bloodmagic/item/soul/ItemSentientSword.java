@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.iface.IActivatable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -28,7 +29,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
+public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IActivatable
 {
     public int[] soulBracket = new int[] { 16, 60, 200, 400 };
     public double[] damageAdded = new double[] { 1, 1.5, 2, 2.5 };
@@ -49,7 +50,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
         if (player.isSneaking())
-            setActivated(stack, !getActivated(stack));
+            setActivatedState(stack, !getActivated(stack));
 
         if (getActivated(stack))
         {
@@ -67,6 +68,12 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 
         player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
         return stack;
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+        return oldStack.getItem() != newStack.getItem();
     }
 
     private int getLevel(ItemStack stack, double soulsRemaining)
@@ -116,7 +123,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
 
                 if (drain > soulsRemaining)
                 {
-                    setActivated(stack, false);
+                    setActivatedState(stack, false);
                     return false;
                 } else
                 {
@@ -131,16 +138,13 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon
     public boolean getActivated(ItemStack stack)
     {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
-
-        return tag.getBoolean("activated");
+        return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
-    public ItemStack setActivated(ItemStack stack, boolean activated)
+    public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
         NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
-        tag.setBoolean("activated", activated);
+        stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
 
         return stack;
     }
