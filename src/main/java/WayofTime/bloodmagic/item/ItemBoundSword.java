@@ -88,6 +88,20 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
+    @Override
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers()
+    {
+        return HashMultimap.create();
+    }
+
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack) {
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
+        double damage = getActivated(stack) ? this.attackDamage : 1.0D;
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", damage, 0));
+        return multimap;
+    }
+
     public boolean getActivated(ItemStack stack)
     {
         NBTHelper.checkNBT(stack);

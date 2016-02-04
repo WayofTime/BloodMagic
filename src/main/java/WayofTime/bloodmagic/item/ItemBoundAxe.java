@@ -27,7 +27,7 @@ public class ItemBoundAxe extends ItemBoundTool
 
     public ItemBoundAxe()
     {
-        super("axe", 5, EFFECTIVE_ON);
+        super("axe", 7, 5, EFFECTIVE_ON);
         setRegistryName(Constants.BloodMagicItem.BOUND_AXE.getRegName());
     }
 

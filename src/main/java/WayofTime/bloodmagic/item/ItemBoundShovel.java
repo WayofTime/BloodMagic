@@ -27,7 +27,7 @@ public class ItemBoundShovel extends ItemBoundTool
 
     public ItemBoundShovel()
     {
-        super("shovel", 5, EFFECTIVE_ON);
+        super("shovel", 1, 5, EFFECTIVE_ON);
         setRegistryName(Constants.BloodMagicItem.BOUND_SHOVEL.getRegName());
     }
 

@@ -27,7 +27,7 @@ public class ItemBoundPickaxe extends ItemBoundTool
 
     public ItemBoundPickaxe()
     {
-        super("pickaxe", 5, EFFECTIVE_ON);
+        super("pickaxe", 5, 5, EFFECTIVE_ON);
         setRegistryName(Constants.BloodMagicItem.BOUND_PICKAXE.getRegName());
     }
 

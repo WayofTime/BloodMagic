@@ -7,9 +7,12 @@ import java.util.Set;
 
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import com.google.common.collect.Multimap;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -36,13 +39,14 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
     private Set<Block> effectiveBlocks;
     protected final String tooltipBase;
     private final String name;
+    private final int damage;
 
     public Map<ItemStack, Boolean> heldDownMap = new HashMap<ItemStack, Boolean>();
     public Map<ItemStack, Integer> heldDownCountMap = new HashMap<ItemStack, Integer>();
 
     public final int chargeTime = 30;
 
-    public ItemBoundTool(String name, int lpUsed, Set<Block> effectiveBlocks)
+    public ItemBoundTool(String name, int damage, int lpUsed, Set<Block> effectiveBlocks)
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
@@ -51,11 +55,12 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.bound." + name + ".";
         this.effectiveBlocks = effectiveBlocks;
+        this.damage = damage;
     }
 
-    public ItemBoundTool(String name, int lpUsed)
+    public ItemBoundTool(String name, int damage, int lpUsed)
     {
-        this(name, lpUsed, null);
+        this(name, damage, lpUsed, null);
     }
 
     @Override
@@ -169,6 +174,14 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
     protected void onBoundRelease(ItemStack stack, World world, EntityPlayer player, int charge)
     {
 
+    }
+
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack) {
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
+        double damage = getActivated(stack) ? this.damage : 1.0D;
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", damage, 0));
+        return multimap;
     }
 
     @Override
