@@ -141,6 +141,8 @@ tile.BloodMagic.stone.ritual.master.name=Master Ritual Stone
 tile.BloodMagic.stone.ritual.imperfect.name=Imperfect Ritual Stone
 
 tile.BloodMagic.altar.name=Blood Altar
+tile.BloodMagic.alchemyArray.name=&r&fAlchemy Array
+
 tile.BloodMagic.rune.blank.name=Blank Rune
 tile.BloodMagic.rune.speed.name=Speed Rune
 tile.BloodMagic.rune.efficiency.name=Efficiency Rune
@@ -342,6 +344,8 @@ jei.BloodMagic.desc.demonicWill=An imprint of a demonic entity attached to a cre
 
 # WAILA
 waila.BloodMagic.sneak=&oSneak for Information
+waila.BloodMagic.array.reagent=Reagent: %s
+waila.BloodMagic.array.catalyst=Catalyst: %s
 option.BloodMagic.bypassSneak=Bypass Sneak
 option.BloodMagic.bloodAltar=Blood Altar
 option.BloodMagic.ritualController=Ritual Stones
