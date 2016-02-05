@@ -59,7 +59,7 @@ public class ModBlocks
     public static Block ritualController;
     public static Block ritualStone;
     public static Block bloodLight;
-    public static Block testSpellBlock;
+//    public static Block testSpellBlock;
     public static Block pedestal;
     public static Block teleposer;
     public static Block alchemyArray;
@@ -89,7 +89,6 @@ public class ModBlocks
         ritualController = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
         ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
         bloodLight = registerBlock(new BlockBloodLight());
-        testSpellBlock = registerBlock(new BlockTestSpellBlock());
         pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
         teleposer = registerBlock(new BlockTeleposer());
         alchemyArray = registerBlock(new BlockAlchemyArray());
@@ -104,6 +103,8 @@ public class ModBlocks
         itemRoutingNode = registerBlock(new BlockItemRoutingNode());
         incenseAltar = registerBlock(new BlockIncenseAltar());
         pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
+
+//        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(outputRoutingNode);

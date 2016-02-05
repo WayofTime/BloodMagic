@@ -15,7 +15,7 @@ item.BloodMagic.daggerOfSacrifice.name=Dagger of Sacrifice
 
 item.BloodMagic.lavaCrystal.name=Lava Crystal
 
-item.BloodMagic.bound.sword.name=Bound Sword
+item.BloodMagic.bound.sword.name=Bound Blade
 item.BloodMagic.bound.pickaxe.name=Bound Pickaxe
 item.BloodMagic.bound.axe.name=Bound Axe
 item.BloodMagic.bound.shovel.name=Bound Shovel
@@ -350,3 +350,4 @@ option.BloodMagic.bypassSneak=Bypass Sneak
 option.BloodMagic.bloodAltar=Blood Altar
 option.BloodMagic.ritualController=Ritual Stones
 option.BloodMagic.teleposer=Teleposer
+option.BloodMagic.array=Alchemy Array

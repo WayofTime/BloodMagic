@@ -1,5 +1,5 @@
 {
-  "parent":"bloodmagic:item/ItemModelBase",
+  "parent":"bloodmagic:item/ItemToolBase",
   "textures": {
     "layer0":"bloodmagic:items/Item_deactivated"
   }
