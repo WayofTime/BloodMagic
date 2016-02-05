@@ -1,13 +1,16 @@
 package WayofTime.bloodmagic.block;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -28,9 +31,14 @@ public class BlockAlchemyArray extends BlockContainer
 
         setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
         setRegistryName(Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
-        setCreativeTab(BloodMagic.tabBloodMagic);
-        this.setHardness(0.1f);
-        this.setBlockBounds(0, 0, 0, 1, 0.1f, 1);
+        setHardness(0.1f);
+        setBlockBounds(0, 0, 0, 1, 0.1f, 1);
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
+    {
+        // No-op
     }
 
     @Override
