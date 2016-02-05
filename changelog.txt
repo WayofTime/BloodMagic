@@ -4,6 +4,15 @@ Version 2.0.0-15
 - Added blood lamp sigil array texture and reagent. Made it so the blood lamp sigil will place the light when right clicking on a block.
 - Added magnetism sigil array texture and reagent.
 - Added the ability for the blood altar to have its buffer tanks accessed (Untested)
+- Improved readability for large numbers
+- Fixed break particle for Alchemy Array
+- Waila handling for Alchemy Array
+- Fixed Ritual eating LP when reactivated via a Redstone signal
+- Ritual Stones now always drop blank stones
+- Bound Blade is now enchant-able
+- Goggles of Revealing upgrade for Living Helmet. Combine a Living Helmet and Goggles of Revealing in an Anvil
+- Fixed config for disabling rituals
+- [API] Lots of changes to the binding system. It's now handled automatically for all items that implement IBindable.
 
 ------------------------------------------------------
 Version 2.0.0-14
