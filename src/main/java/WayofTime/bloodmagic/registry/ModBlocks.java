@@ -164,6 +164,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(soulForge));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(outputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(masterRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(incenseAltar));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 0);
