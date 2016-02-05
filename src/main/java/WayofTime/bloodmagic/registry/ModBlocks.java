@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockAlchemyArray;
 import WayofTime.bloodmagic.block.BlockAltar;
@@ -28,7 +28,6 @@ import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.block.BlockSoulForge;
 import WayofTime.bloodmagic.block.BlockSpectral;
 import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.block.BlockTestSpellBlock;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockCrystal;

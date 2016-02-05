@@ -12,7 +12,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.WorldServer;
 import WayofTime.bloodmagic.api.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.api.incense.IIncensePath;
 import WayofTime.bloodmagic.api.incense.IncenseTranquilityRegistry;
@@ -51,9 +53,23 @@ public class TileIncenseAltar extends TileInventory implements ITickable
             recheckConstruction();
         }
 
+        boolean hasPerformed = false;
+
         for (EntityPlayer player : playerList)
         {
-            PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100); //TODO: Figure out what the hell you are doing. 
+            if (PlayerSacrificeHelper.incrementIncense(player, 0, incenseAddition, incenseAddition / 100))
+            {
+                hasPerformed = true;
+            }
+        }
+
+        if (hasPerformed)
+        {
+            if (worldObj.rand.nextInt(4) == 0 && worldObj instanceof WorldServer)
+            {
+                WorldServer server = (WorldServer) worldObj;
+                server.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 1, 0.02, 0.03, 0.02, 0, new int[0]);
+            }
         }
     }
 
