@@ -3,7 +3,7 @@
     "normal": {
       "model": "bloodmagic:BlockAlchemyArray",
       "textures": {
-        "all": "bloodmagic:blocks/BlockBloodLight"
+        "all": "bloodmagic:models/AlchemyArrays/AirSigil"
       }
     }
   }
