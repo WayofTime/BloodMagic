@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
@@ -14,6 +16,9 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
@@ -35,7 +40,11 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 
             if (position == null)
             {
-                ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
+                List<IChatComponent> toSend = new ArrayList<IChatComponent>();
+                if (!getOwnerName(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
+                    toSend.add(new ChatComponentText(TextHelper.localize(tooltipBase + "otherNetwork", getOwnerName(stack))));
+                toSend.add(new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
+                ChatUtil.sendNoSpam(player, toSend.toArray(new IChatComponent[toSend.size()]));
                 return stack;
             } else
             {

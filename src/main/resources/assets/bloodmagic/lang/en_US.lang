@@ -199,6 +199,7 @@ tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
 tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
 tooltip.BloodMagic.sigil.compression.desc=&oHands of diamonds
 tooltip.BloodMagic.sigil.divination.desc=&oPeer into the soul
+tooltip.BloodMagic.sigil.divination.otherNetwork=Peering into the soul of %s
 tooltip.BloodMagic.sigil.divination.currentAltarTier=Current Tier: %d
 tooltip.BloodMagic.sigil.divination.currentEssence=Current Essence: %,d LP
 tooltip.BloodMagic.sigil.divination.currentAltarCapacity=Current Capacity: %,d LP
