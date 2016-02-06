@@ -345,7 +345,6 @@ public class ModItems
 
         renderHelper.customItemRender(sentientSword, 0);
         renderHelper.customItemRender(sentientSword, 1);
-        ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new CustomMeshDefinitionActivatable("ItemSentientSword"));
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
         renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
         renderHelper.itemRender(sentientBow, 2, "ItemSentientBow_pulling_1");
@@ -367,7 +366,8 @@ public class ModItems
 
     private static Item registerItem(Item item)
     {
-        if (item.getRegistryName() == null) {
+        if (item.getRegistryName() == null)
+        {
             BloodMagic.instance.getLogger().error("Attempted to register Item {} without setting a registry name. Item will not be registered. Please report this.", item.getClass().getCanonicalName());
             return item;
         }

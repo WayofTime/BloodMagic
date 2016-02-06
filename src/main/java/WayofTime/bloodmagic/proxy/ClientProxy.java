@@ -1,11 +1,13 @@
 package WayofTime.bloodmagic.proxy;
 
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
 import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
@@ -57,6 +59,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new BloodLightRenderFactory());
+        ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new CustomMeshDefinitionActivatable("ItemSentientSword"));
         ShaderHelper.init();
     }
 
