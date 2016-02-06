@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
