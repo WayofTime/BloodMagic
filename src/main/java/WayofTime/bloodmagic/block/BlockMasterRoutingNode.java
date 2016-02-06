@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.block;
 
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -12,11 +10,11 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 
-public class BlockMasterRoutingNode extends BlockContainer
+public class BlockMasterRoutingNode extends BlockRoutingNode
 {
     public BlockMasterRoutingNode()
     {
-        super(Material.rock);
+        super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".masterRouting");
         setRegistryName(Constants.BloodMagicBlock.MASTER_ROUTING_NODE.getRegName());

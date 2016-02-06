@@ -1,45 +1,72 @@
 {
 	"forge_marker": 1,
 	"defaults": {
-		"model": "bloodmagic:routing/OutputRoutingNodeCore",
-		"rotation": [
-			{ 
-				"y": 45 
-			}, 
-			{ 
-				"x": 45
-			}
-		],
-		"textures": {
-			"core": "blocks/gold_block",
-			"attachment": "minecraft:blocks/stone"
-		},
-		"uvlock": true	// This and all other properties of "defaults" will be inherited by simple submodels. They will NOT be inherited by named submodels.
+		"model": "bloodmagic:routing/ModelInputRoutingNodeCore.obj",
+		"transform": {
+            		"translation": [ 0.5, 0, 0.5 ]
+        		},
+		"custom": { "flip-v": true },
+		"uvlock": true
 	},
 	"variants": {
 		"north": {
-			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase"},	// Simple submodel declaration. You can also specify multiple submodels for a variant.
+			"true": {
+				"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj", 
+				"transform": {
+					"translation": [ 0, -0.5, -0.5 ],
+            		"rotation": {"x": 90}
+        		}
+        	},
 			"false": {}
 		},
 		"south": {
-			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "y": 180},
+			"true": {
+				"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj", 
+				"transform": {
+					"translation": [ 0, 0.5, -0.5 ],
+            		"rotation": {"x": -90}
+        		}
+        	},
 			"false": {}
 		},
 		"east": {
-			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "y": 90},	// Submodel will be rotated.
+			"true": {
+				"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj", 
+				"transform": {
+					"translation": [ -0.5, 0.5, 0 ],
+            		"rotation": {"z": 90}
+        		}
+        	},
 			"false": {}
 		},
 		"west": {
-			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "y": 270},
+			"true": {
+				"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj", 
+				"transform": {
+					"translation": [ -0.5, -0.5, 0 ],
+            		"rotation": {"z": -90}
+        		}
+        	},
 			"false": {}
 		},
 		"down": {
-			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "x": 90}, 
+			"true": {
+				"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj"
+        	}, 
 			"false": {}
 		},
 		"up": {
-			"true": {"submodel": "bloodmagic:routing/RoutingNodeBase", "x": -90}, 
+			"true": {
+				"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj", 
+				"transform": {
+					"translation": [ -1, 0, 0 ],
+            		"rotation": {"z": -180}
+        		}
+			}, 
 			"false": {}
-		}	// Must have this in here or the blockstates loader will not know of all the properties and values, and it will create the wrong vanilla state strings.
+		},
+		"inventory": [{
+			"submodel": "bloodmagic:routing/ModelInputRoutingNodeBase.obj"
+        }]
 	}
 }
