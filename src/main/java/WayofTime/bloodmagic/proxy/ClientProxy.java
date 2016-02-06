@@ -60,6 +60,11 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new BloodLightRenderFactory());
         ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new CustomMeshDefinitionActivatable("ItemSentientSword"));
+        ModelLoader.setCustomMeshDefinition(ModItems.boundShovel, new CustomMeshDefinitionActivatable("ItemBoundShovel"));
+        ModelLoader.setCustomMeshDefinition(ModItems.boundAxe, new CustomMeshDefinitionActivatable("ItemBoundAxe"));
+        ModelLoader.setCustomMeshDefinition(ModItems.boundPickaxe, new CustomMeshDefinitionActivatable("ItemBoundPickaxe"));
+        ModelLoader.setCustomMeshDefinition(ModItems.boundSword, new CustomMeshDefinitionActivatable("ItemBoundSword"));
+
         ShaderHelper.init();
     }
 

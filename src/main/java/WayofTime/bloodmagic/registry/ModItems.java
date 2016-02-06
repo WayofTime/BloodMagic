@@ -272,16 +272,12 @@ public class ModItems
 
         renderHelper.customItemRender(boundSword, 0);
         renderHelper.customItemRender(boundSword, 1);
-        ModelLoader.setCustomMeshDefinition(ModItems.boundSword, new CustomMeshDefinitionActivatable("ItemBoundSword"));
         renderHelper.customItemRender(boundPickaxe, 0);
         renderHelper.customItemRender(boundPickaxe, 1);
-        ModelLoader.setCustomMeshDefinition(ModItems.boundPickaxe, new CustomMeshDefinitionActivatable("ItemBoundPickaxe"));
         renderHelper.customItemRender(boundAxe, 0);
         renderHelper.customItemRender(boundAxe, 1);
-        ModelLoader.setCustomMeshDefinition(ModItems.boundAxe, new CustomMeshDefinitionActivatable("ItemBoundAxe"));
         renderHelper.customItemRender(boundShovel, 0);
         renderHelper.customItemRender(boundShovel, 1);
-        ModelLoader.setCustomMeshDefinition(ModItems.boundShovel, new CustomMeshDefinitionActivatable("ItemBoundShovel"));
 
         renderHelper.itemRender(sigilDivination);
         renderHelper.itemRender(sigilAir);
