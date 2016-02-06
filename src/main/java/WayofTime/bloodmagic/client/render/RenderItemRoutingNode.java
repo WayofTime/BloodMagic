@@ -54,7 +54,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-            double width = 0.1;
+            double width = 0.06;
 
             float test = (tileNode.getWorld().getTotalWorldTime() + partialTicks) / 5f;
 
