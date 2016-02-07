@@ -239,7 +239,7 @@ tooltip.BloodMagic.inscriber.desc=The writing is on the wall...
 
 tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
 tooltip.BloodMagic.pack.sacrifice.desc=Description
-tooltip.BloodMagic.pack.stored=Stored: %,d% LP
+tooltip.BloodMagic.pack.stored=Stored: %,d LP
 
 tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
 tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
