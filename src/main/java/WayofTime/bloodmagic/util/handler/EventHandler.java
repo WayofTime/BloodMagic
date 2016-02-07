@@ -3,13 +3,7 @@ package WayofTime.bloodmagic.util.handler;
 import java.util.List;
 import java.util.Random;
 
-import WayofTime.bloodmagic.api.event.ItemBindEvent;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import com.google.common.base.Strings;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -30,7 +24,11 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -39,12 +37,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
@@ -67,6 +69,8 @@ import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
+import com.google.common.base.Strings;
 
 public class EventHandler
 {
@@ -289,7 +293,7 @@ public class EventHandler
             {
                 float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.source, event.ammount), attackedPlayer.getHealth());
                 ItemStack chestStack = attackedPlayer.getCurrentArmor(2);
-                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
                 {
                     if (sourceEntity != null && !source.isMagicDamage())
@@ -316,7 +320,7 @@ public class EventHandler
             {
                 float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.source, event.ammount), attackedEntity.getHealth());
                 ItemStack chestStack = player.getCurrentArmor(2);
-                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
                 {
                     if (!source.isProjectile())
@@ -338,7 +342,7 @@ public class EventHandler
         if (LivingArmour.hasFullSet(player))
         {
             ItemStack chestStack = player.getCurrentArmor(2);
-            LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
             if (armour != null)
             {
                 StatTrackerArrowShot.incrementCounter(armour);

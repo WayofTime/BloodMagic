@@ -241,8 +241,10 @@ public class LivingArmour implements ILivingArmour
         writeToNBT(tag, true);
     }
 
-    public static boolean hasFullSet(EntityPlayer player) {
-        for (int slot = 0; slot < player.inventory.armorInventory.length; slot++) {
+    public static boolean hasFullSet(EntityPlayer player)
+    {
+        for (int slot = 0; slot < player.inventory.armorInventory.length; slot++)
+        {
             ItemStack slotStack = player.inventory.armorItemInSlot(slot);
             if (slotStack == null || !(slotStack.getItem() instanceof ItemLivingArmour))
                 return false;

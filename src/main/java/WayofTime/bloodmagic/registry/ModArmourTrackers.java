@@ -16,6 +16,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerPhysicalProtect.class);
         LivingArmourHandler.registerStatTracker(StatTrackerHealthboost.class);
         LivingArmourHandler.registerStatTracker(StatTrackerMeleeDamage.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerArrowShot.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));

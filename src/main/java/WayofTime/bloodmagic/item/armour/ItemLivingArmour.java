@@ -30,10 +30,7 @@ import com.google.common.collect.Multimap;
 import thaumcraft.api.items.IGoggles;
 import thaumcraft.api.items.IRevealer;
 
-@Optional.InterfaceList({
-        @Optional.Interface(iface = "thaumcraft.api.items.IRevealer", modid = "Thaumcraft"),
-        @Optional.Interface(iface = "thaumcraft.api.items.IGoggles", modid = "Thaumcraft")
-})
+@Optional.InterfaceList({ @Optional.Interface(iface = "thaumcraft.api.items.IRevealer", modid = "Thaumcraft"), @Optional.Interface(iface = "thaumcraft.api.items.IGoggles", modid = "Thaumcraft") })
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
