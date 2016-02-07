@@ -797,10 +797,6 @@ public class BloodAltar implements IFluidHandler
         if (doDrain)
         {
             fluidOutput.amount -= drained;
-            if (fluidOutput.amount <= 0)
-            {
-                fluidOutput = null;
-            }
         }
         return stack;
     }

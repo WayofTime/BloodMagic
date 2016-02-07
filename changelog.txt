@@ -3,7 +3,7 @@ Version 2.0.0-15
 ------------------------------------------------------
 - Added blood lamp sigil array texture and reagent. Made it so the blood lamp sigil will place the light when right clicking on a block.
 - Added magnetism sigil array texture and reagent.
-- Added the ability for the blood altar to have its buffer tanks accessed (Untested)
+- Added the ability for the blood altar to have its buffer tanks accessed (Semi-tested)
 - Improved readability for large numbers
 - Fixed break particle for Alchemy Array
 - Waila handling for Alchemy Array
@@ -13,6 +13,8 @@ Version 2.0.0-15
 - Goggles of Revealing upgrade for Living Helmet. Combine a Living Helmet and Goggles of Revealing in an Anvil
 - Fixed config for disabling rituals
 - [API] Lots of changes to the binding system. It's now handled automatically for all items that implement IBindable.
+- Added Incense Altar system.
+- Added models for the routing nodes, incense altar, and the hellfire forge.
 
 ------------------------------------------------------
 Version 2.0.0-14
