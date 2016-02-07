@@ -58,6 +58,11 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
         if (PlayerHelper.isFakePlayer(player))
             return stack;
 
+        if (!stack.hasTagCompound())
+        {
+            return stack;
+        }
+
         if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
             return stack;
 
