@@ -4,8 +4,13 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.iface.IAltarReader;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Utils;
+import com.google.common.base.Strings;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,6 +33,52 @@ public class BlockAltar extends BlockContainer
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride()
+    {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(World world, BlockPos pos)
+    {
+        if (world.isRemote)
+            return 0;
+
+        TileEntity tile = world.getTileEntity(pos);
+
+        if (tile != null && tile instanceof TileAltar)
+        {
+            TileAltar altar = (TileAltar) tile;
+            ItemStack orbStack = altar.getStackInSlot(0);
+
+            if (world.getBlockState(pos.down()).getBlock() instanceof BlockBloodStoneBrick)
+            {
+                if (orbStack != null && orbStack.getItem() instanceof IBloodOrb && orbStack.getItem() instanceof IBindable)
+                {
+                    IBloodOrb bloodOrb = (IBloodOrb) orbStack.getItem();
+                    IBindable bindable = (IBindable) orbStack.getItem();
+                    if (!Strings.isNullOrEmpty(bindable.getOwnerUUID(orbStack)))
+                    {
+                        SoulNetwork soulNetwork = NetworkHelper.getSoulNetwork(bindable.getOwnerUUID(orbStack));
+
+                        int maxEssence = bloodOrb.getMaxEssence(orbStack.getItemDamage());
+                        int currentEssence = soulNetwork.getCurrentEssence();
+                        int level = currentEssence * 15 / maxEssence;
+                        return Math.min(15, level) % 16;
+                    }
+                }
+            } else {
+                int maxEssence = altar.getCapacity();
+                int currentEssence = altar.getCurrentBlood();
+                int level = currentEssence * 15 / maxEssence;
+                return Math.min(15, level) % 16;
+            }
+        }
+
+        return 0;
     }
 
     @Override
