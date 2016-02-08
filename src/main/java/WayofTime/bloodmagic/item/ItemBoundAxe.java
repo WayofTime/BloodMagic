@@ -17,6 +17,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.util.List;
 import java.util.Set;
@@ -59,6 +62,13 @@ public class ItemBoundAxe extends ItemBoundTool
                 {
                     BlockPos blockPos = playerPos.add(i, j, k);
                     BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
+
+                    if (blockStack.getBlock().isAir(world, blockPos))
+                        break;
+
+                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
+                    if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                        break;
 
                     if (blockStack.getBlock().getBlockHardness(world, blockPos) != -1)
                     {

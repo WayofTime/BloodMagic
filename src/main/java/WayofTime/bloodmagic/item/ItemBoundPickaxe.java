@@ -20,6 +20,9 @@ import WayofTime.bloodmagic.api.ItemStackWrapper;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class ItemBoundPickaxe extends ItemBoundTool
 {
@@ -65,6 +68,13 @@ public class ItemBoundPickaxe extends ItemBoundTool
                 {
                     BlockPos blockPos = playerPos.add(i, j, k);
                     BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
+
+                    if (blockStack.getBlock().isAir(world, blockPos))
+                        break;
+
+                    BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
+                    if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
+                        break;
 
                     if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(world, blockPos) != -1)
                     {
