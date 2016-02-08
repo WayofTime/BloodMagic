@@ -9,8 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 
 public abstract class BlockRoutingNode extends BlockContainer
@@ -42,10 +40,10 @@ public abstract class BlockRoutingNode extends BlockContainer
         return false;
     }
 
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    @Override
+    public boolean canRenderInLayer(EnumWorldBlockLayer layer)
     {
-        return EnumWorldBlockLayer.TRANSLUCENT;
+        return layer == EnumWorldBlockLayer.CUTOUT_MIPPED || layer == EnumWorldBlockLayer.TRANSLUCENT;
     }
 
     @Override
