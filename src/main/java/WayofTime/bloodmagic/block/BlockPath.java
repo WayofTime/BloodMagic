@@ -11,7 +11,7 @@ import WayofTime.bloodmagic.block.base.BlockString;
 
 public class BlockPath extends BlockString implements IIncensePath
 {
-    public static final String[] names = { "wood", "stone", "wornstone" };
+    public static final String[] names = { "wood", "woodTile", "stone", "stoneTile", "wornstone", "wornstoneTile", "obsidian", "obsidianTile" };
 
     public BlockPath()
     {
@@ -23,7 +23,15 @@ public class BlockPath extends BlockString implements IIncensePath
         setHardness(2.0F);
         setResistance(5.0F);
         setStepSound(soundTypeStone);
-        setHarvestLevel("pickaxe", 0);
+
+        setHarvestLevel("axe", 0, getStateFromMeta(0));
+        setHarvestLevel("axe", 0, getStateFromMeta(1));
+        setHarvestLevel("pickaxe", 0, getStateFromMeta(2));
+        setHarvestLevel("pickaxe", 0, getStateFromMeta(3));
+        setHarvestLevel("pickaxe", 0, getStateFromMeta(4));
+        setHarvestLevel("pickaxe", 0, getStateFromMeta(5));
+        setHarvestLevel("pickaxe", 3, getStateFromMeta(6));
+        setHarvestLevel("pickaxe", 3, getStateFromMeta(7));
     }
 
     @Override
@@ -33,9 +41,9 @@ public class BlockPath extends BlockString implements IIncensePath
         {
         case 0:
             return 2;
-        case 1:
-            return 4;
         case 2:
+            return 4;
+        case 4:
             return 6;
         default:
             return 0;

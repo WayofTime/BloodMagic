@@ -170,6 +170,11 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 2);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 3);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 4);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 5);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 6);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 7);
     }
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
