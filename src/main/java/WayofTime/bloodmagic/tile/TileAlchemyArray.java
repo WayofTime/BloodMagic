@@ -35,6 +35,12 @@ public class TileAlchemyArray extends TileInventory implements ITickable
     }
 
     @Override
+    public int getInventoryStackLimit()
+    {
+        return 1;
+    }
+
+    @Override
     public void update()
     {
         if (isActive && attemptCraft())
