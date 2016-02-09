@@ -81,4 +81,9 @@ public class BloodMagicPlugin implements IModPlugin
     {
 
     }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+
+    }
 }
