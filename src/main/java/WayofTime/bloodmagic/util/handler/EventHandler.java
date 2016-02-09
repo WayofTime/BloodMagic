@@ -22,6 +22,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
@@ -32,6 +33,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.ConfigHandler;
@@ -75,6 +77,22 @@ import com.google.common.base.Strings;
 public class EventHandler
 {
     Random random = new Random();
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+    {
+        if (event.entityLiving instanceof EntityPlayer)
+        {
+            EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
+            if (event.entityLiving.isPotionActive(ModPotions.boost))
+            {
+                entityPlayer.stepHeight = 1.0f;
+            } else
+            {
+                entityPlayer.stepHeight = 0.5f;
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event)

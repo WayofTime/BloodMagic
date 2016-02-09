@@ -40,7 +40,6 @@ public class PotionEventHandlers
     @SubscribeEvent
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-
         if (event.entityLiving.isPotionActive(ModPotions.boost))
         {
             int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
@@ -50,7 +49,6 @@ public class PotionEventHandlers
                 if (event.entityLiving instanceof EntityPlayer)
                 {
                     EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
-                    entityPlayer.stepHeight = 1.0f;
 
                     if ((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
                         entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);

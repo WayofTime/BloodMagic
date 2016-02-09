@@ -174,7 +174,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
             totalTranquility += entry.getValue();
         }
 
-        if (totalTranquility <= 0)
+        if (totalTranquility < 0)
         {
             return;
         }
