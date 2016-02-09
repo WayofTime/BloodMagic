@@ -60,12 +60,12 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
                         int capacity = altar.getCapacity();
                         altar.checkTier();
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
-
                     } else if (tile != null && tile instanceof TileIncenseAltar)
                     {
                         TileIncenseAltar altar = (TileIncenseAltar) tile;
+                        altar.recheckConstruction();
                         double tranquility = altar.tranquility;
-                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentTranquility", ((int) (100 * tranquility)) / 100d), TextHelper.localize(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
+                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), TextHelper.localize(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
                     } else
                     {
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
