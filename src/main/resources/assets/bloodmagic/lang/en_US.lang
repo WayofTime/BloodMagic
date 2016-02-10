@@ -280,6 +280,8 @@ tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Tough Skin
 tooltip.BloodMagic.livingArmour.upgrade.health=Healthy
 tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
 tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
+tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Step Assist
+tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.hasGoggles=&oContains Goggles of Revealing
 
@@ -331,7 +333,8 @@ chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
 chat.BloodMagic.ritual.notValid=You feel that these runes are not configured correctly...
 
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
-chat.BloodMagic.livingArmour.newUpgrade=Upgrade acquired!
+chat.BloodMagic.livingArmour.upgrade.grimReaper=&6A shadowy force pulls you from the brink of death!
+chat.BloodMagic.livingArmour.newUpgrade=&4Upgrade acquired!
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar

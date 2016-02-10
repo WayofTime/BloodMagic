@@ -31,6 +31,17 @@ public class LivingArmour implements ILivingArmour
     public int maxUpgradePoints = 100;
     public int totalUpgradePoints = 0;
 
+    public StatTracker getTracker(String key)
+    {
+        if (trackerMap.containsKey(key))
+        {
+            return trackerMap.get(key);
+        } else
+        {
+            return null;
+        }
+    }
+
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
@@ -86,7 +97,7 @@ public class LivingArmour implements ILivingArmour
     @Override
     public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
     {
-        ChatUtil.sendChat(user, TextHelper.localize(chatBase + "newUpgrade"));
+        ChatUtil.sendChat(user, TextHelper.localizeEffect(chatBase + "newUpgrade"));
     }
 
     /**

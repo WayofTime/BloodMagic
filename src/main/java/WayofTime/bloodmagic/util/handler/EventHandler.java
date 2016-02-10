@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -33,8 +34,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
@@ -58,13 +59,16 @@ import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.registry.ModPotions;
@@ -79,17 +83,67 @@ public class EventHandler
     Random random = new Random();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onEntityDeath(LivingDeathEvent event)
+    {
+        if (event.entityLiving instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.entityLiving;
+
+            if (LivingArmour.hasFullSet(player))
+            {
+                ItemStack chestStack = player.getCurrentArmor(2);
+                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                if (armour != null)
+                {
+                    StatTrackerGrimReaperSprint.incrementCounter(armour);
+
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.grimReaper", chestStack);
+
+                    if (upgrade instanceof LivingArmourUpgradeGrimReaperSprint && ((LivingArmourUpgradeGrimReaperSprint) upgrade).canSavePlayer(player))
+                    {
+                        ((LivingArmourUpgradeGrimReaperSprint) upgrade).applyEffectOnRebirth(player);
+                        event.setCanceled(true);
+                        event.setResult(Result.DENY);
+                    }
+
+                    armour.writeDirtyToNBT(ItemLivingArmour.getArmourTag(chestStack));
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
         if (event.entityLiving instanceof EntityPlayer)
         {
-            EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
+            EntityPlayer player = (EntityPlayer) event.entityLiving;
             if (event.entityLiving.isPotionActive(ModPotions.boost))
             {
-                entityPlayer.stepHeight = 1.0f;
+                player.stepHeight = 1.0f;
             } else
             {
-                entityPlayer.stepHeight = 0.5f;
+                boolean hasAssist = false;
+                if (LivingArmour.hasFullSet(player))
+                {
+                    ItemStack chestStack = player.getCurrentArmor(2);
+                    LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                    if (armour != null)
+                    {
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.stepAssist", chestStack);
+
+                        if (upgrade instanceof LivingArmourUpgradeStepAssist)
+                        {
+                            player.stepHeight = ((LivingArmourUpgradeStepAssist) upgrade).getStepAssist();
+                            hasAssist = true;
+                        }
+                    }
+                }
+
+                if (!hasAssist)
+                {
+                    player.stepHeight = 0.5f;
+                }
             }
         }
     }
