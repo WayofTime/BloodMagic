@@ -62,6 +62,11 @@ public class BloodMagicPlugin implements IModPlugin
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.SOULS);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.X_COORD);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.Y_COORD);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.Z_COORD);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.DIMENSION_ID);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.ITEM_INVENTORY);
     }
 
     @Override
