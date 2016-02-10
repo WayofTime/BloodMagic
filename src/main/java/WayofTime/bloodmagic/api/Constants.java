@@ -132,7 +132,6 @@ public class Constants
         public static final String WAILA_CONFIG_RITUAL = Mod.MODID + ".ritualController";
         public static final String WAILA_CONFIG_ARRAY = Mod.MODID + ".array";
 
-        public static final String THAUMCRAFT_HAS_GOGGLES = "hasGoggles";
         public static final Item THAUMCRAFT_GOGGLES = GameRegistry.findItem("Thaumcraft", "goggles");
     }
 

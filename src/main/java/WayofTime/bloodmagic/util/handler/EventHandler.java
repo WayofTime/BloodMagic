@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.util.handler;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -181,9 +183,10 @@ public class EventHandler
         {
             if (event.left.getItem() == ModItems.livingArmourHelmet && event.right.getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.right.isItemDamaged())
             {
-                ItemStack output = event.left.copy();
+                ItemStack output = new ItemStack(ModItems.upgradeTome);
                 output = NBTHelper.checkNBT(output);
-                output.getTagCompound().setBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES, true);
+                ((ItemUpgradeTome) output.getItem()).setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
+                ((ItemUpgradeTome) output.getItem()).setLevel(output, 1);
                 event.cost = 1;
 
                 event.output = output;

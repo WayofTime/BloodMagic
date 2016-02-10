@@ -188,12 +188,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
             }
         }
 
-        if (this == ModItems.livingArmourHelmet)
-        {
-            if (stack.getTagCompound().getBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES))
-                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.hasGoggles"));
-        }
-
         super.addInformation(stack, player, tooltip, advanced);
     }
 
@@ -326,16 +320,19 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
     }
 
     @Override
-    public boolean showIngamePopups(ItemStack stack, EntityLivingBase entityLivingBase)
-    {
+    public boolean showIngamePopups(ItemStack stack, EntityLivingBase entityLivingBase) {
         stack = NBTHelper.checkNBT(stack);
-        return stack != null && stack.getItem() == ModItems.livingArmourHelmet && stack.getTagCompound().getBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES);
+        LivingArmour armor = getLivingArmour(stack);
+
+        return armor.upgradeMap.containsKey(Constants.Mod.MODID + ".upgrade.revealing") && LivingArmour.hasFullSet((EntityPlayer) entityLivingBase);
     }
 
     @Override
     public boolean showNodes(ItemStack stack, EntityLivingBase entityLivingBase)
     {
         stack = NBTHelper.checkNBT(stack);
-        return stack != null && stack.getItem() == ModItems.livingArmourHelmet && stack.getTagCompound().getBoolean(Constants.Compat.THAUMCRAFT_HAS_GOGGLES);
+        LivingArmour armor = getLivingArmour(stack);
+
+        return armor.upgradeMap.containsKey(Constants.Mod.MODID + ".upgrade.revealing") && LivingArmour.hasFullSet((EntityPlayer) entityLivingBase);
     }
 }
