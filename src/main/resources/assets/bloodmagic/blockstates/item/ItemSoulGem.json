@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "petty": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemPetty"
+        }
+      },
+      "lesser": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemLesser"
+        }
+      },
+      "common": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemCommon"
+        }
+      },
+      "greater": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGreater"
+        }
+      },
+      "grand": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulGemGrand"
+        }
+      }
+    }
+  }
+}

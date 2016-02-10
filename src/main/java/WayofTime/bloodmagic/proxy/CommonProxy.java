@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.proxy;
 
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import WayofTime.bloodmagic.util.handler.EventHandler;
@@ -7,7 +8,13 @@ import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class CommonProxy
 {
+    @Deprecated
     public InventoryRenderHelper getRenderHelper()
+    {
+        return null;
+    }
+
+    public InventoryRenderHelperV2 getRenderHelperV2()
     {
         return null;
     }

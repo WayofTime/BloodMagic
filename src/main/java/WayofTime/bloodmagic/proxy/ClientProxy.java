@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.proxy;
 
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,11 +29,18 @@ import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 public class ClientProxy extends CommonProxy
 {
     private InventoryRenderHelper renderHelper;
+    private InventoryRenderHelperV2 renderHelperV2;
 
     @Override
     public InventoryRenderHelper getRenderHelper()
     {
         return renderHelper;
+    }
+
+    @Override
+    public InventoryRenderHelperV2 getRenderHelperV2()
+    {
+        return renderHelperV2;
     }
 
     @Override
@@ -42,6 +50,7 @@ public class ClientProxy extends CommonProxy
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
+        renderHelperV2 = new InventoryRenderHelperV2(Constants.Mod.DOMAIN);
 
         OBJLoader.instance.addDomain(Constants.Mod.MODID);
 

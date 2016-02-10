@@ -24,7 +24,10 @@ import net.minecraftforge.client.model.ModelLoader;
  * 
  *         If you pass a Block through here that uses the default ItemBlock, you
  *         should specify a custom name.
+ *
+ *         @deprecated in favor of {@link InventoryRenderHelperV2}
  */
+@Deprecated
 public class InventoryRenderHelper
 {
     /**

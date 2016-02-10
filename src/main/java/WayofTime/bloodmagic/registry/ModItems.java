@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
@@ -228,6 +229,7 @@ public class ModItems
     public static void initRenders()
     {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
+        InventoryRenderHelperV2 renderHelperV2 = BloodMagic.proxy.getRenderHelperV2();
 
         renderHelper.itemRenderAll(bloodOrb);
         OrbRegistry.registerOrbTexture(orbWeak, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbWeak"));
@@ -325,17 +327,17 @@ public class ModItems
         renderHelper.itemRender(sentientArmourLegs, "ItemSentientArmour2");
         renderHelper.itemRender(sentientArmourBoots, "ItemSentientArmour3");
 
-        renderHelper.itemRender(altarMaker);
-        renderHelper.itemRender(upgradeTome);
+        renderHelperV2.registerRender(altarMaker, "altarMaker");
+        renderHelperV2.registerRender(upgradeTome, "upgradeTome");
 
-        renderHelper.itemRender(arcaneAshes);
-        renderHelper.itemRender(monsterSoul, 0);
-        renderHelper.itemRender(soulGem, 0);
-        renderHelper.itemRender(soulGem, 1);
-        renderHelper.itemRender(soulGem, 2);
-        renderHelper.itemRender(soulGem, 3);
-        renderHelper.itemRender(soulGem, 4);
-        renderHelper.itemRender(soulSnare);
+        renderHelperV2.registerRender(arcaneAshes, "arcaneAshes");
+        renderHelperV2.registerRender(monsterSoul, "monsterSoul");
+        renderHelperV2.registerRender(soulGem, 0, "petty");
+        renderHelperV2.registerRender(soulGem, 1, "lesser");
+        renderHelperV2.registerRender(soulGem, 2, "common");
+        renderHelperV2.registerRender(soulGem, 3, "greater");
+        renderHelperV2.registerRender(soulGem, 4, "grand");
+        renderHelperV2.registerRender(soulSnare, "soulSnare");
 
         renderHelper.customItemRender(sentientSword, 0);
         renderHelper.customItemRender(sentientSword, 1);
