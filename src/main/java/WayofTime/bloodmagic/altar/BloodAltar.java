@@ -690,7 +690,10 @@ public class BloodAltar implements IFluidHandler
 
     public void setActive()
     {
-        isActive = false;
+        if (tileAltar.getStackInSlot(0) == null)
+        {
+            isActive = false;
+        }
     }
 
     public boolean isActive()
