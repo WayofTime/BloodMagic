@@ -4,6 +4,7 @@ Version 2.0.0-17
 - Added Living Armour Upgrades
 	- Solar Powered
 	- Grim Reaper's Sprint
+	- [Thaumcraft] Runic Shielding
 - Fixed Blood Altar's progress resetting when clicking with another item
 - Fixed Divination and Seer sigils crashing when clicking on an altar while not bound
 

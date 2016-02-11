@@ -282,7 +282,8 @@ tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
 tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
 tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Step Assist
 tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
-tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Solar Powered
+tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
+tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
 tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 

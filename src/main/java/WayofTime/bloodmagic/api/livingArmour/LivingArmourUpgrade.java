@@ -73,4 +73,9 @@ public abstract class LivingArmourUpgrade
     public abstract void writeToNBT(NBTTagCompound tag);
 
     public abstract void readFromNBT(NBTTagCompound tag);
+
+    public int getRunicShielding()
+    {
+        return 0;
+    }
 }
