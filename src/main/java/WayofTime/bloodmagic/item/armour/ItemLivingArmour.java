@@ -104,7 +104,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
                         for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
                         {
                             LivingArmourUpgrade upgrade = entry.getValue();
-                            remainder *= (1 - upgrade.getArmourProtection(source));
+                            remainder *= (1 - upgrade.getArmourProtection(player, source));
                             /*
                              * Just as a side note, if one upgrade provides
                              * upgrade.getArmourProtection(source) = 0.5, the
@@ -320,7 +320,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
     }
 
     @Override
-    public boolean showIngamePopups(ItemStack stack, EntityLivingBase entityLivingBase) {
+    public boolean showIngamePopups(ItemStack stack, EntityLivingBase entityLivingBase)
+    {
         stack = NBTHelper.checkNBT(stack);
         LivingArmour armor = getLivingArmour(stack);
 

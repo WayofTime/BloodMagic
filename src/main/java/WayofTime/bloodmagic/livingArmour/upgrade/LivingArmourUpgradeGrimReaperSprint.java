@@ -12,7 +12,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 public class LivingArmourUpgradeGrimReaperSprint extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { 20, 50, 130, 270, 450, 580, 700, 800, 900, 1000 };
-    public static final int[] rebirthDelay = new int[] { 20 * 60 * 60, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    public static final int[] rebirthDelay = new int[] { 20 * 60 * 60, 20 * 60 * 50, 20 * 60 * 45, 20 * 60 * 40, 20 * 60 * 30, 20 * 60 * 25, 20 * 60 * 15, 20 * 60 * 10, 20 * 60 * 5, 20 * 60 };
 
     public int deathTimer = 0;
 

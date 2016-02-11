@@ -18,7 +18,7 @@ public class StatTrackerGrimReaperSprint extends StatTracker
     public int totalDeaths = 0;
 
     public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
-    public static int[] deathsRequired = new int[] { 3, 5, 6, 7, 8, 9, 10, 11, 12, 13 }; //TODO: Modify
+    public static int[] deathsRequired = new int[] { 6, 10, 15, 25, 50, 70, 90, 120, 150, 200 }; //TODO: Modify
 
     public static void incrementCounter(LivingArmour armour)
     {

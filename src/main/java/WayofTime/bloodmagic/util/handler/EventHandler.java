@@ -3,8 +3,6 @@ package WayofTime.bloodmagic.util.handler;
 import java.util.List;
 import java.util.Random;
 
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -56,6 +54,7 @@ import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
@@ -66,6 +65,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
@@ -343,7 +343,13 @@ public class EventHandler
             ItemStack chestStack = player.getCurrentArmor(2);
             LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
             if (armour != null)
+            {
                 StatTrackerHealthboost.incrementCounter(armour, event.amount);
+                if (player.worldObj.canSeeSky(player.getPosition()) && player.worldObj.provider.isDaytime())
+                {
+                    StatTrackerSolarPowered.incrementCounter(armour, event.amount);
+                }
+            }
         }
     }
 

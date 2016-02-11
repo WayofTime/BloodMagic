@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,7 +40,7 @@ public abstract class LivingArmourUpgrade
      * 
      * @return 0 for no damage blocked, 1 for full damage blocked
      */
-    public double getArmourProtection(DamageSource source)
+    public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
     {
         return 0;
     }
