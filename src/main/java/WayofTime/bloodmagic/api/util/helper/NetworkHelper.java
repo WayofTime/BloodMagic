@@ -8,9 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
@@ -27,7 +25,7 @@ public class NetworkHelper
      * Gets the SoulNetwork for the player.
      * 
      * @param name
-     *        - The username of the SoulNetwork owner
+     *        - The name of the SoulNetwork owner - this is UUID.toString().
      * 
      * @return - The SoulNetwork for the given name.
      */
