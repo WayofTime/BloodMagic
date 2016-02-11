@@ -1,0 +1,26 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "weak": {
+        "textures": {
+          "layer0": "bloodmagic:items/activationCrystalWeak"
+        }
+      },
+      "demonic": {
+        "textures": {
+          "layer0": "bloodmagic:items/activationCrystalAwakened"
+        }
+      },
+      "creative": {
+        "textures": {
+          "layer0": "bloodmagic:items/activationCrystalCreative"
+        }
+      }
+    }
+  }
+}

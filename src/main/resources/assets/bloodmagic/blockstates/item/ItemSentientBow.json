@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "still": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow"
+        }
+      },
+      "pull0": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_pulling_0"
+        }
+      },
+      "pull1": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_pulling_1"
+        }
+      },
+      "pull2": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBow_pulling_2"
+        }
+      }
+    }
+  }
+}

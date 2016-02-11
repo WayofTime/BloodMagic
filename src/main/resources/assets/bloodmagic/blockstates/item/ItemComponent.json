@@ -1,0 +1,76 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "reagentwater": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentWater"
+        }
+      },
+      "reagentlava": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentLava"
+        }
+      },
+      "reagentair": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentAir"
+        }
+      },
+      "reagentfastminer": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentFastMiner"
+        }
+      },
+      "reagentvoid": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentVoid"
+        }
+      },
+      "reagentgrowth": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentGrowth"
+        }
+      },
+      "reagentaffinity": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentAffinity"
+        }
+      },
+      "reagentsight": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSight"
+        }
+      },
+      "reagentbinding": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBinding"
+        }
+      },
+      "reagentsuppression": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSuppression"
+        }
+      },
+      "frameparts": {
+        "textures": {
+          "layer0": "bloodmagic:items/ComponentFrameParts"
+        }
+      },
+      "reagentbloodlight": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBloodLight"
+        }
+      },
+      "reagentmagnetism": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentMagnetism"
+        }
+      }
+    }
+  }
+}

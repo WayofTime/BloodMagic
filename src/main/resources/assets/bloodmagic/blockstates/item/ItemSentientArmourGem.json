@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "activated": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientArmourGem_activated"
+        }
+      },
+      "deactivated": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientArmourGem_deactivated"
+        }
+      }
+    }
+  }
+}

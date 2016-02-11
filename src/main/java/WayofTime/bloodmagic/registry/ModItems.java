@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -231,6 +232,85 @@ public class ModItems
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
         InventoryRenderHelperV2 renderHelperV2 = BloodMagic.proxy.getRenderHelperV2();
 
+        renderHelperV2.registerRender(altarMaker, "altarMaker");
+        renderHelperV2.registerRender(upgradeTome, "upgradeTome");
+
+        renderHelperV2.registerRender(arcaneAshes, "arcaneAshes");
+        renderHelperV2.registerRender(monsterSoul, "monsterSoul");
+        renderHelperV2.registerRender(soulGem, 0, "petty");
+        renderHelperV2.registerRender(soulGem, 1, "lesser");
+        renderHelperV2.registerRender(soulGem, 2, "common");
+        renderHelperV2.registerRender(soulGem, 3, "greater");
+        renderHelperV2.registerRender(soulGem, 4, "grand");
+        renderHelperV2.registerRender(soulSnare, "soulSnare");
+
+        renderHelperV2.registerRender(slate, 0, "blank");
+        renderHelperV2.registerRender(slate, 1, "reinforced");
+        renderHelperV2.registerRender(slate, 2, "imbued");
+        renderHelperV2.registerRender(slate, 3, "demonic");
+        renderHelperV2.registerRender(slate, 4, "ethereal");
+
+        renderHelperV2.registerRender(inscriptionTool, 1, EnumRuneType.WATER.name());
+        renderHelperV2.registerRender(inscriptionTool, 2, EnumRuneType.FIRE.name());
+        renderHelperV2.registerRender(inscriptionTool, 3, EnumRuneType.EARTH.name());
+        renderHelperV2.registerRender(inscriptionTool, 4, EnumRuneType.AIR.name());
+        renderHelperV2.registerRender(inscriptionTool, 5, EnumRuneType.DUSK.name());
+        renderHelperV2.registerRender(inscriptionTool, 6, EnumRuneType.DAWN.name());
+
+        renderHelperV2.registerRender(activationCrystal, 0, "weak");
+        renderHelperV2.registerRender(activationCrystal, 1, "demonic");
+        renderHelperV2.registerRender(activationCrystal, 2, "creative");
+
+        renderHelperV2.registerRender(sacrificialDagger, 0, "normal");
+        renderHelperV2.registerRender(sacrificialDagger, 1, "creative");
+        renderHelperV2.registerRender(packSacrifice, "normal");
+        renderHelperV2.registerRender(packSelfSacrifice, "normal");
+        renderHelperV2.registerRender(daggerOfSacrifice, "normal");
+
+        renderHelperV2.registerRender(ritualDiviner, 0, "basic");
+        renderHelperV2.registerRender(ritualDiviner, 1, "dusk");
+        renderHelperV2.registerRender(ritualDiviner, 2, "dawn");
+
+        renderHelperV2.registerRender(lavaCrystal, "normal");
+
+        renderHelperV2.registerRender(bloodShard, 0, "weak");
+        renderHelperV2.registerRender(bloodShard, 1, "demonic");
+
+        renderHelperV2.registerRender(livingArmourHelmet, "ItemLivingArmour", "helm");
+        renderHelperV2.registerRender(livingArmourChest, "ItemLivingArmour", "chest");
+        renderHelperV2.registerRender(livingArmourLegs, "ItemLivingArmour", "legs");
+        renderHelperV2.registerRender(livingArmourBoots, "ItemLivingArmour", "boots");
+
+        renderHelperV2.registerRender(sentientArmourHelmet, "ItemSentientArmour", "helm");
+        renderHelperV2.registerRender(sentientArmourChest, "ItemSentientArmour", "chest");
+        renderHelperV2.registerRender(sentientArmourLegs, "ItemSentientArmour", "legs");
+        renderHelperV2.registerRender(sentientArmourBoots, "ItemSentientArmour", "boots");
+
+//        renderHelperV2.registerRender(sentientBow, 0, "still");
+//        renderHelperV2.registerRender(sentientBow, 1, "pull0");
+//        renderHelperV2.registerRender(sentientBow, 2, "pull1");
+//        renderHelperV2.registerRender(sentientBow, 3, "pull2");
+
+//        renderHelperV2.registerRender(sentientArmourGem, 0, "deactivated");
+//        renderHelperV2.registerRender(sentientArmourGem, 1, "activated");
+
+        for (int i = 0; i < ItemComponent.getNames().size(); i++)
+            renderHelperV2.registerRender(itemComponent, i, ItemComponent.getNames().get(i));
+
+        renderHelperV2.registerRender(telepositionFocus, 0, "weak");
+        renderHelperV2.registerRender(telepositionFocus, 1, "enhanced");
+        renderHelperV2.registerRender(telepositionFocus, 2, "reinforced");
+        renderHelperV2.registerRender(telepositionFocus, 3, "demonic");
+
+        renderHelperV2.registerRender(baseItemFilter, 0, "exact");
+        renderHelperV2.registerRender(baseItemFilter, 1, "ignorenbt");
+        renderHelperV2.registerRender(baseItemFilter, 2, "moditems");
+        renderHelperV2.registerRender(baseItemFilter, 3, "oredict");
+
+        renderHelperV2.registerRender(nodeRouter, "normal");
+
+        // TODO - Move all below to InventoryRenderHelperV2
+
         renderHelper.itemRenderAll(bloodOrb);
         OrbRegistry.registerOrbTexture(orbWeak, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbWeak"));
         OrbRegistry.registerOrbTexture(orbApprentice, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbApprentice"));
@@ -240,35 +320,6 @@ public class ModItems
         OrbRegistry.registerOrbTexture(orbTranscendent, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbTranscendent"));
 
         renderHelper.itemRender(bucketEssence);
-
-        renderHelper.itemRender(activationCrystal, 0);
-        renderHelper.itemRender(activationCrystal, 1);
-        renderHelper.itemRender(activationCrystal, 2, "ItemActivationCrystal0");
-
-        renderHelper.itemRender(slate, 0);
-        renderHelper.itemRender(slate, 1);
-        renderHelper.itemRender(slate, 2);
-        renderHelper.itemRender(slate, 3);
-        renderHelper.itemRender(slate, 4);
-
-        renderHelper.itemRender(inscriptionTool, 1);
-        renderHelper.itemRender(inscriptionTool, 2);
-        renderHelper.itemRender(inscriptionTool, 3);
-        renderHelper.itemRender(inscriptionTool, 4);
-        renderHelper.itemRender(inscriptionTool, 5);
-        renderHelper.itemRender(inscriptionTool, 6);
-
-        renderHelper.itemRender(sacrificialDagger, 0);
-        renderHelper.itemRender(sacrificialDagger, 1);
-        renderHelper.itemRender(packSacrifice);
-        renderHelper.itemRender(packSelfSacrifice);
-        renderHelper.itemRender(daggerOfSacrifice);
-
-        renderHelper.itemRender(ritualDiviner, 0);
-        renderHelper.itemRender(ritualDiviner, 1);
-        renderHelper.itemRender(ritualDiviner, 2);
-
-        renderHelper.itemRender(lavaCrystal);
 
         renderHelper.customItemRender(boundSword, 0);
         renderHelper.customItemRender(boundSword, 1);
@@ -307,38 +358,6 @@ public class ModItems
         renderHelper.itemRender(sigilEnderSeverance, 0);
         renderHelper.itemRender(sigilEnderSeverance, 1);
 
-        for (int i = 0; i < ItemComponent.getNames().size(); i++)
-            renderHelper.itemRender(itemComponent, i);
-        for (int i = 0; i < ItemTelepositionFocus.names.length; i++)
-            renderHelper.itemRender(telepositionFocus, i);
-        for (int i = 0; i < ItemRouterFilter.names.length; i++)
-            renderHelper.itemRender(baseItemFilter, i);
-
-        renderHelper.itemRender(bloodShard, 0);
-        renderHelper.itemRender(bloodShard, 1);
-
-        renderHelper.itemRender(livingArmourHelmet, "ItemLivingArmour0");
-        renderHelper.itemRender(livingArmourChest, "ItemLivingArmour1");
-        renderHelper.itemRender(livingArmourLegs, "ItemLivingArmour2");
-        renderHelper.itemRender(livingArmourBoots, "ItemLivingArmour3");
-
-        renderHelper.itemRender(sentientArmourHelmet, "ItemSentientArmour0");
-        renderHelper.itemRender(sentientArmourChest, "ItemSentientArmour1");
-        renderHelper.itemRender(sentientArmourLegs, "ItemSentientArmour2");
-        renderHelper.itemRender(sentientArmourBoots, "ItemSentientArmour3");
-
-        renderHelperV2.registerRender(altarMaker, "altarMaker");
-        renderHelperV2.registerRender(upgradeTome, "upgradeTome");
-
-        renderHelperV2.registerRender(arcaneAshes, "arcaneAshes");
-        renderHelperV2.registerRender(monsterSoul, "monsterSoul");
-        renderHelperV2.registerRender(soulGem, 0, "petty");
-        renderHelperV2.registerRender(soulGem, 1, "lesser");
-        renderHelperV2.registerRender(soulGem, 2, "common");
-        renderHelperV2.registerRender(soulGem, 3, "greater");
-        renderHelperV2.registerRender(soulGem, 4, "grand");
-        renderHelperV2.registerRender(soulSnare, "soulSnare");
-
         renderHelper.customItemRender(sentientSword, 0);
         renderHelper.customItemRender(sentientSword, 1);
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
@@ -348,8 +367,6 @@ public class ModItems
 
         renderHelper.itemRender(sentientArmourGem, 0, "ItemSentientArmourGem0");
         renderHelper.itemRender(sentientArmourGem, 1, "ItemSentientArmourGem1");
-
-        renderHelper.itemRender(nodeRouter);
     }
 
     private static Item registerItem(Item item, String name)

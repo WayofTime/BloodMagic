@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "helm": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientHelmet"
+        }
+      },
+      "chest": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientPlate"
+        }
+      },
+      "legs": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientLeggings"
+        }
+      },
+      "boots": {
+        "textures": {
+          "layer0": "bloodmagic:items/SentientBoots"
+        }
+      }
+    }
+  }
+}

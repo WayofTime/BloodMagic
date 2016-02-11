@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "exact": {
+        "textures": {
+          "layer0": "bloodmagic:items/ItemRouterFilterExact"
+        }
+      },
+      "ignorenbt": {
+        "textures": {
+          "layer0": "bloodmagic:items/ItemRouterFilterIgnoreNBT"
+        }
+      },
+      "moditems": {
+        "textures": {
+          "layer0": "bloodmagic:items/ItemRouterFilterModItems"
+        }
+      },
+      "oredict": {
+        "textures": {
+          "layer0": "bloodmagic:items/ItemRouterFilterOreDict"
+        }
+      }
+    }
+  }
+}
