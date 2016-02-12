@@ -68,8 +68,9 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                     } else if (tile != null && tile instanceof TileIncenseAltar)
                     {
                         TileIncenseAltar altar = (TileIncenseAltar) tile;
+                        altar.recheckConstruction();
                         double tranquility = altar.tranquility;
-                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentTranquility", ((int) (100 * tranquility)) / 100d), TextHelper.localize(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
+                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), TextHelper.localize(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
                     } else
                     {
                         int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
