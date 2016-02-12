@@ -98,6 +98,7 @@ public class ItemTelepositionFocus extends ItemBindable
 
     public ItemStack setBlockPos(ItemStack stack, World world, BlockPos pos)
     {
+        stack = NBTHelper.checkNBT(stack);
         NBTTagCompound itemTag = stack.getTagCompound();
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
