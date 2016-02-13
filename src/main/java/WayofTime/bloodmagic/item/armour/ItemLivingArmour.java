@@ -100,7 +100,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
                 if (armourMap.containsKey(stack))
                 {
                     LivingArmour armour = armourMap.get(stack);
-                    if (armour != null)
+                    if (armour != null && isEnabled(stack))
                     {
                         for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
                         {
@@ -227,7 +227,15 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
             }
 
             LivingArmour armour = armourMap.get(stack);
-            armour.onTick(world, player);
+            if (LivingArmour.hasFullSet(player))
+            {
+                this.setIsEnabled(stack, true);
+                armour.onTick(world, player);
+            } else
+            {
+                this.setIsEnabled(stack, false);
+            }
+
             setLivingArmour(stack, armour, false);
         }
     }
@@ -235,9 +243,9 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
     {
-        if (this == ModItems.livingArmourChest)
+        if (this == ModItems.livingArmourChest && isEnabled(stack))
         {
-            LivingArmour armour = getLivingArmour(stack);
+            LivingArmour armour = ItemLivingArmour.getLivingArmour(stack);
 
             return armour.getAttributeModifiers();
         }
@@ -348,7 +356,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
 
             int shielding = 0;
 
-            if (armour != null)
+            if (armour != null && isEnabled(stack))
             {
                 for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
                 {
@@ -361,5 +369,19 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
         }
 
         return 0;
+    }
+
+    public void setIsEnabled(ItemStack stack, boolean bool)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+        tag.setBoolean("enabled", bool);
+    }
+
+    public boolean isEnabled(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getBoolean("enabled");
     }
 }
