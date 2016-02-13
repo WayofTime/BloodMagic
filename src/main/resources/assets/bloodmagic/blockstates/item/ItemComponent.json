@@ -70,6 +70,26 @@
         "textures": {
           "layer0": "bloodmagic:items/ReagentMagnetism"
         }
+      },
+      "reagenthaste": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentHaste"
+        }
+      },
+      "reagentcompression": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentCompression"
+        }
+      },
+      "reagentbridge": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentBridge"
+        }
+      },
+      "reagentseverance": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentSeverance"
+        }
       }
     }
   }

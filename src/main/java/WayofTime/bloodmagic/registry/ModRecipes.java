@@ -154,6 +154,10 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SUPPRESSION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilSuppression), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/SuppressionSigil.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BLOODLIGHT), new ItemStack(ModItems.slate, 1, 2), new ItemStack(ModItems.sigilBloodLight), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/LightSigil.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_MAGNETISM), new ItemStack(ModItems.slate, 1, 2), new ItemStack(ModItems.sigilMagnetism), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/MagnetismSigil.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_HASTE), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilHaste), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilPhantomBridge), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilCompression), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilEnderSeverance), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
     }
 
     public static void addCompressionHandlers()
@@ -188,6 +192,11 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BINDING), 400, 10, "dustGlowstone", "dustRedstone", "nuggetGold", Items.gunpowder);
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BLOODLIGHT), 300, 10, "glowstone", Blocks.torch, "dustRedstone", "dustRedstone");
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_MAGNETISM), 600, 10, Items.string, "ingotGold", "blockIron", "ingotGold");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_HASTE), 1400, 100, Items.cookie, Items.sugar, Items.cookie, "stone");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE), 600, 50, Blocks.soul_sand, Blocks.soul_sand, "stone", Blocks.obsidian);
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE), 800, 70, Items.ender_eye, Items.ender_pearl, "ingotGold", "ingotGold");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION), 2000, 200, "blockIron", "blockGold", Blocks.obsidian, "cobblestone");
+
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientArmourGem), 240, 150, Items.diamond_chestplate, new ItemStack(ModItems.soulGem, 1, 1), Blocks.iron_block, Blocks.obsidian);
 
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 400, 10, "blockGlass", "stone", new ItemStack(ModItems.slate));

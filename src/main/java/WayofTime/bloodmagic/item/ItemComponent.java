@@ -31,6 +31,10 @@ public class ItemComponent extends Item
     public static final String COMPONENT_FRAME_PART = "frameParts";
     public static final String REAGENT_BLOODLIGHT = "reagentBloodLight";
     public static final String REAGENT_MAGNETISM = "reagentMagnetism";
+    public static final String REAGENT_HASTE = "reagentHaste";
+    public static final String REAGENT_COMPRESSION = "reagentCompression";
+    public static final String REAGENT_BRIDGE = "reagentBridge";
+    public static final String REAGENT_SEVERANCE = "reagentSeverance";
 
     public ItemComponent()
     {
@@ -59,6 +63,10 @@ public class ItemComponent extends Item
         names.add(10, COMPONENT_FRAME_PART);
         names.add(11, REAGENT_BLOODLIGHT);
         names.add(12, REAGENT_MAGNETISM);
+        names.add(13, REAGENT_HASTE);
+        names.add(14, REAGENT_COMPRESSION);
+        names.add(15, REAGENT_BRIDGE);
+        names.add(16, REAGENT_SEVERANCE);
     }
 
     @Override

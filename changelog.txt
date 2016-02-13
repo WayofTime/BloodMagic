@@ -7,6 +7,11 @@ Version 2.0.0-17
 	- [Thaumcraft] Runic Shielding
 - Fixed Blood Altar's progress resetting when clicking with another item
 - Fixed Divination and Seer sigils crashing when clicking on an altar while not bound
+- Added crafting recipes for the following sigils:
+	- Compression
+	- Phantom Bridge
+	- Ender Severance
+	- Haste
 
 ------------------------------------------------------
 Version 2.0.0-16
