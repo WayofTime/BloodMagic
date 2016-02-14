@@ -12,6 +12,7 @@ Version 2.0.0-17
 	- Phantom Bridge
 	- Ender Severance
 	- Haste
+- Dagger now bypasses checks of armour
 
 ------------------------------------------------------
 Version 2.0.0-16

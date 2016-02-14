@@ -103,7 +103,14 @@ public class ItemSacrificialDagger extends Item
             if (evt.shouldDrainHealth)
             {
                 player.hurtResistantTime = 0;
-                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
+                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 0.001F);
+                player.setHealth(Math.max(player.getHealth() - 2, 0.0001f));
+                if (player.getHealth() <= 0.001f)
+                {
+                    player.onDeath(BloodMagicAPI.getDamageSource());
+                    player.setHealth(0);
+                }
+//                player.attackEntityFrom(BloodMagicAPI.getDamageSource(), 2.0F);
             }
 
             if (!evt.shouldFillAltar)
