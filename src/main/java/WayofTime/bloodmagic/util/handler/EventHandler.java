@@ -146,7 +146,7 @@ public class EventHandler
 
                 if (!hasAssist)
                 {
-                    player.stepHeight = 0.5f;
+                    player.stepHeight = 0.6f;
                 }
             }
         }
