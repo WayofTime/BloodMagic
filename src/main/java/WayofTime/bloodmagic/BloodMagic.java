@@ -2,15 +2,11 @@ package WayofTime.bloodmagic;
 
 import java.io.File;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.compat.ICompatibility;
-import WayofTime.bloodmagic.util.Utils;
+import WayofTime.bloodmagic.util.handler.IMCHandler;
 import lombok.Getter;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -32,7 +28,6 @@ import WayofTime.bloodmagic.registry.ModPotions;
 import WayofTime.bloodmagic.registry.ModRecipes;
 import WayofTime.bloodmagic.registry.ModRituals;
 import WayofTime.bloodmagic.registry.ModTranquilityHandlers;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 @Getter
@@ -109,34 +104,6 @@ public class BloodMagic
     @Mod.EventHandler
     public void onIMCRecieved(FMLInterModComms.IMCEvent event)
     {
-        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
-            if (message.key.equals("teleposerBlacklist") && message.isItemStackMessage())
-            {
-                ItemStack stack = message.getItemStackValue();
-                if (stack.getItem() instanceof ItemBlock)
-                {
-                    Block block = Block.getBlockFromItem(stack.getItem());
-                    BloodMagicAPI.addToTeleposerBlacklist(block, stack.getItemDamage());
-                }
-            }
-
-            if (message.key.equals("sacrificeValue") && message.isStringMessage())
-            {
-                String[] splitInfo = message.getStringValue().split(";");
-                if (splitInfo.length == 2 && Utils.isInteger(splitInfo[1]))
-                    BloodMagicAPI.setEntitySacrificeValue(splitInfo[0], Integer.parseInt(splitInfo[1]));
-            }
-
-            if (message.key.equals("greenGroveBlacklist") && message.isStringMessage())
-            {
-                String[] splitInfo = message.getStringValue().split(":");
-                if (splitInfo.length == 2)
-                {
-                    Block block = GameRegistry.findBlock(splitInfo[0], splitInfo[1]);
-                    if (block != null)
-                        BloodMagicAPI.blacklistFromGreenGrove(block);
-                }
-            }
-        }
+        IMCHandler.handleIMC(event);
     }
 }
