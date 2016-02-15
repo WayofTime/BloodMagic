@@ -76,6 +76,8 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.baseItemFilter, 1, 2), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "dyeGreen", 's', Items.stick));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.baseItemFilter, 1, 3), "sgs", "gfg", "sgs", 'f', ItemComponent.getStack(ItemComponent.COMPONENT_FRAME_PART), 'g', "dyePurple", 's', Items.stick));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.upgradeTrainer), "ngn", "ioi", "ngn", 'o', OrbRegistry.getOrbStack(ModItems.orbMaster), 'i', "ingotIron", 'n', "nuggetGold", 'g', "ingotGold"));
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.incenseAltar), "s s", "shs", "coc", 'o', OrbRegistry.getOrbStack(ModItems.orbWeak), 's', "stone", 'c', "cobblestone", 'h', new ItemStack(Items.coal, 1, 1)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.pathBlock, 4, 0), "plankWood", "plankWood", "plankWood", "plankWood", OrbRegistry.getOrbStack(ModItems.orbApprentice)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.pathBlock, 4, 1), new ItemStack(ModBlocks.pathBlock, 1, 0), new ItemStack(ModBlocks.pathBlock, 1, 0), new ItemStack(ModBlocks.pathBlock, 1, 0), new ItemStack(ModBlocks.pathBlock, 1, 0)));
