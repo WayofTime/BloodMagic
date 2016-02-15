@@ -142,7 +142,7 @@ public class TileIncenseAltar extends TileInventory implements ITickable
 
                         for (int y = 0 + yOffset; y <= 2 + yOffset; y++)
                         {
-                            BlockPos offsetPos = pos.add(i, yOffset, j);
+                            BlockPos offsetPos = pos.add(i, y, j);
                             IBlockState state = worldObj.getBlockState(offsetPos);
                             Block block = state.getBlock();
                             TranquilityStack stack = IncenseTranquilityRegistry.getTranquilityOfBlock(worldObj, offsetPos, block, state);
