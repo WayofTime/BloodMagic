@@ -1,21 +1,23 @@
 package WayofTime.bloodmagic.livingArmour;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
@@ -122,6 +124,19 @@ public class LivingArmour implements ILivingArmour
             upgrade.onTick(world, player, this);
         }
 
+        List<String> allowedUpgradesList = new ArrayList<String>();
+        for (ItemStack stack : player.inventory.mainInventory)
+        {
+            if (stack != null && stack.getItem() instanceof IUpgradeTrainer)
+            {
+                List<String> keyList = ((IUpgradeTrainer) stack.getItem()).getTrainedUpgrades(stack);
+                if (!keyList.isEmpty())
+                {
+                    allowedUpgradesList.addAll(keyList);
+                }
+            }
+        }
+
         for (Entry<String, StatTracker> entry : trackerMap.entrySet())
         {
             StatTracker tracker = entry.getValue();
@@ -129,6 +144,25 @@ public class LivingArmour implements ILivingArmour
             if (tracker == null)
             {
                 continue;
+            }
+
+            if (!allowedUpgradesList.isEmpty())
+            {
+                boolean allowed = false;
+
+                for (String key : allowedUpgradesList)
+                {
+                    if (tracker.providesUpgrade(key))
+                    {
+                        allowed = true;
+                        break;
+                    }
+                }
+
+                if (!allowed)
+                {
+                    continue;
+                }
             }
 
             if (tracker.onTick(world, player, this))
@@ -140,6 +174,7 @@ public class LivingArmour implements ILivingArmour
                     upgradeArmour(player, upgrade);
                 }
             }
+
         }
     }
 

@@ -40,7 +40,7 @@ public class ItemUpgradeTome extends Item
         {
             return stack;
         }
-        LivingArmourUpgrade upgrade = this.getUpgrade(stack);
+        LivingArmourUpgrade upgrade = ItemUpgradeTome.getUpgrade(stack);
         if (upgrade == null)
         {
             return stack;
@@ -83,7 +83,7 @@ public class ItemUpgradeTome extends Item
         }
     }
 
-    public LivingArmourUpgrade getUpgrade(ItemStack stack)
+    public static LivingArmourUpgrade getUpgrade(ItemStack stack)
     {
         String key = getKey(stack);
         int level = getLevel(stack);
@@ -91,7 +91,7 @@ public class ItemUpgradeTome extends Item
         return LivingArmourHandler.generateUpgradeFromKey(key, level);
     }
 
-    public void setKey(ItemStack stack, String key)
+    public static void setKey(ItemStack stack, String key)
     {
         NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
@@ -99,7 +99,7 @@ public class ItemUpgradeTome extends Item
         tag.setString("key", key);
     }
 
-    public String getKey(ItemStack stack)
+    public static String getKey(ItemStack stack)
     {
         NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
@@ -107,7 +107,7 @@ public class ItemUpgradeTome extends Item
         return tag.getString("key");
     }
 
-    public void setLevel(ItemStack stack, int level)
+    public static void setLevel(ItemStack stack, int level)
     {
         NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
@@ -115,7 +115,7 @@ public class ItemUpgradeTome extends Item
         tag.setInteger("level", level);
     }
 
-    public int getLevel(ItemStack stack)
+    public static int getLevel(ItemStack stack)
     {
         NBTHelper.checkNBT(stack);
         NBTTagCompound tag = stack.getTagCompound();
@@ -128,7 +128,7 @@ public class ItemUpgradeTome extends Item
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
 //        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour"))));
-        LivingArmourUpgrade upgrade = this.getUpgrade(stack);
+        LivingArmourUpgrade upgrade = ItemUpgradeTome.getUpgrade(stack);
         if (upgrade != null)
         {
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), upgrade.getUpgradeLevel() + 1));

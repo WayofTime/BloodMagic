@@ -87,4 +87,10 @@ public class StatTrackerFood extends StatTracker
 
         return upgradeList;
     }
+
+    @Override
+    public boolean providesUpgrade(String key)
+    {
+        return key.equals(Constants.Mod.MODID + ".upgrade.knockback");
+    }
 }

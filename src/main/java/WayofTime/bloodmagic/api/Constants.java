@@ -195,7 +195,8 @@ public class Constants
         SIGIL_WHIRLWIND("ItemSigilWhirlwind"),
         SLATE("ItemSlate"),
         TELEPOSITION_FOCUS("ItemTelepositionFocus"),
-        UPGRADE_TOME("ItemUpgradeTome");
+        UPGRADE_TOME("ItemUpgradeTome"),
+        UPGRADE_TRAINER("ItemUpgradeTrainer");
 
         @Getter
         private final String regName;

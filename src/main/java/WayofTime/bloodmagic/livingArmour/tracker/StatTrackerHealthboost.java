@@ -85,4 +85,10 @@ public class StatTrackerHealthboost extends StatTracker
 
         return upgradeList;
     }
+
+    @Override
+    public boolean providesUpgrade(String key)
+    {
+        return key.equals(Constants.Mod.MODID + ".upgrade.health");
+    }
 }

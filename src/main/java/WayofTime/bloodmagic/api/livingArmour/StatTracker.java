@@ -53,4 +53,6 @@ public abstract class StatTracker
     {
         this.isDirty = false;
     }
+
+    public abstract boolean providesUpgrade(String key);
 }

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.util.handler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -44,6 +45,7 @@ import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.event.SacrificeKnifeUsedEvent;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
@@ -185,11 +187,54 @@ public class EventHandler
             {
                 ItemStack output = new ItemStack(ModItems.upgradeTome);
                 output = NBTHelper.checkNBT(output);
-                ((ItemUpgradeTome) output.getItem()).setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
-                ((ItemUpgradeTome) output.getItem()).setLevel(output, 1);
+                ItemUpgradeTome.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
+                ItemUpgradeTome.setLevel(output, 1);
                 event.cost = 1;
 
                 event.output = output;
+
+                return;
+            }
+        }
+
+        if (event.left.getItem() == ModItems.upgradeTome && event.right.getItem() == ModItems.upgradeTome)
+        {
+            LivingArmourUpgrade leftUpgrade = ItemUpgradeTome.getUpgrade(event.left);
+            if (leftUpgrade != null && ItemUpgradeTome.getKey(event.left).equals(ItemUpgradeTome.getKey(event.right)))
+            {
+                int leftLevel = ItemUpgradeTome.getLevel(event.left);
+                int rightLevel = ItemUpgradeTome.getLevel(event.right);
+
+                if (leftLevel == rightLevel && leftLevel < leftUpgrade.getMaxTier() - 1)
+                {
+                    ItemStack outputStack = event.left.copy();
+                    ItemUpgradeTome.setLevel(outputStack, leftLevel + 1);
+                    event.cost = leftLevel + 2;
+
+                    event.output = outputStack;
+
+                    return;
+                }
+            }
+        }
+
+        if (event.left.getItem() instanceof IUpgradeTrainer && event.right.getItem() == ModItems.upgradeTome)
+        {
+            LivingArmourUpgrade rightUpgrade = ItemUpgradeTome.getUpgrade(event.right);
+            if (rightUpgrade != null)
+            {
+                String key = ItemUpgradeTome.getKey(event.right);
+                ItemStack outputStack = event.left.copy();
+                List<String> keyList = new ArrayList<String>();
+                keyList.add(key);
+                if (((IUpgradeTrainer) event.left.getItem()).setTrainedUpgrades(outputStack, keyList))
+                {
+                    event.cost = 1;
+
+                    event.output = outputStack;
+
+                    return;
+                }
             }
         }
     }

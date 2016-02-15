@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
@@ -11,6 +9,7 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.item.ItemActivationCrystal;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemArcaneAshes;
@@ -30,6 +29,7 @@ import WayofTime.bloodmagic.item.ItemSacrificialDagger;
 import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
+import WayofTime.bloodmagic.item.ItemUpgradeTrainer;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -60,6 +60,7 @@ import WayofTime.bloodmagic.item.soul.ItemSentientSword;
 import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import WayofTime.bloodmagic.item.soul.ItemSoulSnare;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
 public class ModItems
 {
@@ -125,6 +126,7 @@ public class ModItems
 
     public static Item altarMaker;
     public static Item upgradeTome;
+    public static Item upgradeTrainer;
 
     public static Item arcaneAshes;
     public static Item monsterSoul;
@@ -213,6 +215,7 @@ public class ModItems
 
         altarMaker = registerItem(new ItemAltarMaker());
         upgradeTome = registerItem(new ItemUpgradeTome());
+        upgradeTrainer = registerItem(new ItemUpgradeTrainer());
 
         arcaneAshes = registerItem(new ItemArcaneAshes());
         monsterSoul = registerItem(new ItemMonsterSoul());
@@ -234,6 +237,7 @@ public class ModItems
 
         renderHelperV2.registerRender(altarMaker, "altarMaker");
         renderHelperV2.registerRender(upgradeTome, "upgradeTome");
+        renderHelperV2.registerRender(upgradeTrainer, "upgradeTrainer");
 
         renderHelperV2.registerRender(arcaneAshes, "arcaneAshes");
         renderHelperV2.registerRender(monsterSoul, "monsterSoul");
