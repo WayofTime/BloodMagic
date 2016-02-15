@@ -51,10 +51,10 @@ public class ItemBindable extends Item implements IBindable
 
         if (!player.worldObj.isRemote)
         {
-            if (stack != null && stack.getItem() instanceof ItemBindable)
+            if (stack != null && stack.getItem() instanceof IBindable)
             {
-                ItemBindable itemBindable = (ItemBindable) stack.getItem();
-                String owner = itemBindable.getBindableOwner(stack);
+                IBindable itemBindable = (IBindable) stack.getItem();
+                String owner = itemBindable.getOwnerUUID(stack);
                 SoulNetwork network = NetworkHelper.getSoulNetwork(owner);
                 return NetworkHelper.syphonAndDamage(network, player, lpUsed);
             }
@@ -85,10 +85,10 @@ public class ItemBindable extends Item implements IBindable
      */
     public static boolean syphonNetwork(ItemStack stack, int lpUsed)
     {
-        if (stack.getItem() instanceof ItemBindable)
+        if (stack.getItem() instanceof IBindable)
         {
-            ItemBindable itemBindable = (ItemBindable) stack.getItem();
-            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(stack)) && NetworkHelper.syphonFromContainer(stack, lpUsed);
+            IBindable bindable = (IBindable) stack.getItem();
+            return !Strings.isNullOrEmpty(bindable.getOwnerUUID(stack)) && NetworkHelper.syphonFromContainer(stack, lpUsed);
         }
 
         return false;
@@ -96,10 +96,10 @@ public class ItemBindable extends Item implements IBindable
 
     public static boolean canSyphonFromNetwork(ItemStack stack, int lpRequested)
     {
-        if (stack.getItem() instanceof ItemBindable)
+        if (stack.getItem() instanceof IBindable)
         {
-            ItemBindable itemBindable = (ItemBindable) stack.getItem();
-            return !Strings.isNullOrEmpty(itemBindable.getBindableOwner(stack)) && NetworkHelper.canSyphonFromContainer(stack, lpRequested);
+            IBindable bindable = (IBindable) stack.getItem();
+            return !Strings.isNullOrEmpty(bindable.getOwnerUUID(stack)) && NetworkHelper.canSyphonFromContainer(stack, lpRequested);
         }
 
         return false;
