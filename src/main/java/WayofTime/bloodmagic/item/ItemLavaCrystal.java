@@ -51,10 +51,12 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
 
         if (fuelItem instanceof ItemLavaCrystal)
         {
-            if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-            {
-                return 200;
-            }
+            System.out.println("Test get burn time: Side = " + FMLCommonHandler.instance().getSide());
+//
+//            if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+//            {
+//                return 200;
+//            }
 
             if (canSyphonFromNetwork(fuel, getLPUsed()))
             {

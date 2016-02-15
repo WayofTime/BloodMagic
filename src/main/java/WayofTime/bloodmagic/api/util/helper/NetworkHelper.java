@@ -32,6 +32,11 @@ public class NetworkHelper
     public static SoulNetwork getSoulNetwork(String name)
     {
         World world = DimensionManager.getWorld(0);
+        if (world == null || world.getMapStorage() == null) //Hack-ish way to fix the lava crystal. 
+        {
+            return new SoulNetwork(name);
+        }
+
         SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
 
         if (network == null)

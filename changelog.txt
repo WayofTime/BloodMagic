@@ -13,6 +13,8 @@ Version 2.0.0-17
 	- Ender Severance
 	- Haste
 - Dagger now bypasses checks of armour
+- Fixed issue with lava crystal working even their is no LP available.
+- Added upgrade trainer
 
 ------------------------------------------------------
 Version 2.0.0-16
