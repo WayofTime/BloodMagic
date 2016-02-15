@@ -181,6 +181,8 @@ public class LivingArmour implements ILivingArmour
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
+        maxUpgradePoints = Math.max(100, tag.getInteger("maxUpgradePoints"));
+
         NBTTagList upgradeTags = tag.getTagList("upgrades", 10);
         if (upgradeTags != null)
         {
@@ -227,6 +229,8 @@ public class LivingArmour implements ILivingArmour
     @Override
     public void writeToNBT(NBTTagCompound tag, boolean forceWrite)
     {
+        tag.setInteger("maxUpgradePoints", maxUpgradePoints);
+
         NBTTagList tags = new NBTTagList();
 
         for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())

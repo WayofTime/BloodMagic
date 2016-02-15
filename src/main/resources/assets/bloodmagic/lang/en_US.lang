@@ -291,6 +291,7 @@ tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
 tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
 tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
+tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
 tooltip.BloodMagic.will=Will Quality: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.
@@ -325,7 +326,8 @@ ritual.BloodMagic.speedRitual=Ritual of Speed
 ritual.BloodMagic.suppressionRitual=Ritual of Suppression
 ritual.BloodMagic.expulsionRitual=Aura of Expulsion
 ritual.BloodMagic.zephyrRitual=Call of the Zephyr
-ritual.BloodMagic.fullUpgradeRemove=Sound of the Cleansing Soul
+ritual.BloodMagic.upgradeRemoveRitual=Sound of the Cleansing Soul
+ritual.BloodMagic.armourEvolveRitual=Ritual of Living Evolution
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

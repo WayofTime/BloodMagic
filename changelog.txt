@@ -5,6 +5,8 @@ Version 2.0.0-18
 - Added upgrade trainer
 - Fixed step height issue with C&B stuff. Apparently step height is now 0.6 by default instead of 0.5.
 - Added Ritual: Song of the Cleansing Soul to remove Living Armour upgrades from the armour.
+- Added Ritual: Ritual of Living Evolution, which is used to set the living armour's max upgrade points to 300.
+- Added tooltip to living armour to show the current upgrade points of the armour.
 
 ------------------------------------------------------
 Version 2.0.0-17

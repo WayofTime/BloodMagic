@@ -57,6 +57,7 @@ public class ConfigHandler
     public static boolean ritualWellOfSuffering;
     public static boolean ritualZephyr;
     public static boolean ritualUpgradeRemove;
+    public static boolean ritualArmourEvolve;
 
     // Imperfect Rituals
     public static boolean imperfectRitualNight;
@@ -236,6 +237,7 @@ public class ConfigHandler
         ritualWellOfSuffering = config.get(category, "ritualWellOfSuffering", true).getBoolean();
         ritualZephyr = config.get(category, "ritualZephyr", true).getBoolean();
         ritualUpgradeRemove = config.get(category, "ritualRemove", true).getBoolean();
+        ritualArmourEvolve = config.get(category, "ritualArmourEvolve", true).getBoolean();
 
         category = "Rituals.Imperfect";
         imperfectRitualNight = config.get(category, "imperfectRitualNight", true).getBoolean();

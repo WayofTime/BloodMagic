@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 import WayofTime.bloodmagic.ritual.RitualAnimalGrowth;
+import WayofTime.bloodmagic.ritual.RitualArmourEvolve;
 import WayofTime.bloodmagic.ritual.RitualContainment;
 import WayofTime.bloodmagic.ritual.RitualCrushing;
 import WayofTime.bloodmagic.ritual.RitualExpulsion;
@@ -56,6 +57,7 @@ public class ModRituals
     public static Ritual expulsionRitual;
     public static Ritual zephyrRitual;
     public static Ritual upgradeRemoveRitual;
+    public static Ritual armourEvolveRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -103,6 +105,8 @@ public class ModRituals
         RitualRegistry.registerRitual(expulsionRitual, ConfigHandler.ritualExpulsion);
         upgradeRemoveRitual = new RitualUpgradeRemove();
         RitualRegistry.registerRitual(upgradeRemoveRitual, ConfigHandler.ritualUpgradeRemove);
+        armourEvolveRitual = new RitualArmourEvolve();
+        RitualRegistry.registerRitual(armourEvolveRitual, ConfigHandler.ritualArmourEvolve);
     }
 
     public static void initImperfectRituals()

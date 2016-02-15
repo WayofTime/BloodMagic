@@ -187,6 +187,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
                     tooltip.add(TextHelper.localize("tooltip.BloodMagic.livingArmour.upgrade.level", TextHelper.localize(upgrade.getUnlocalizedName()), (upgrade.getUpgradeLevel() + 1)));
                 }
             }
+
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour.upgrade.points", armour.totalUpgradePoints, armour.maxUpgradePoints));
         }
 
         super.addInformation(stack, player, tooltip, advanced);
