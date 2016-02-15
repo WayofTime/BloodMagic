@@ -1,17 +1,15 @@
 package WayofTime.bloodmagic.item;
 
-import com.google.common.base.Strings;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.IFuelHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+
+import com.google.common.base.Strings;
 
 public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
 {
@@ -51,8 +49,6 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler
 
         if (fuelItem instanceof ItemLavaCrystal)
         {
-            System.out.println("Test get burn time: Side = " + FMLCommonHandler.instance().getSide());
-//
 //            if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
 //            {
 //                return 200;

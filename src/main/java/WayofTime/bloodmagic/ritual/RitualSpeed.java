@@ -1,15 +1,19 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import java.util.ArrayList;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class RitualSpeed extends Ritual
 {
@@ -38,7 +42,8 @@ public class RitualSpeed extends Ritual
 
         for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, speedRange.getAABB(masterRitualStone.getBlockPos())))
         {
-            if (entity.isSneaking()) continue;
+            if (entity.isSneaking())
+                continue;
 
             double motionY = 1.2;
             double speed = 3;
@@ -49,21 +54,23 @@ public class RitualSpeed extends Ritual
 
             switch (direction)
             {
-                case NORTH:
-                    entity.setVelocity(0, motionY, -speed);
-                    break;
+            case NORTH:
+                entity.setVelocity(0, motionY, -speed);
+                break;
 
-                case SOUTH:
-                    entity.setVelocity(0, motionY, speed);
-                    break;
+            case SOUTH:
+                entity.setVelocity(0, motionY, speed);
+                break;
 
-                case WEST:
-                    entity.setVelocity(-speed, motionY, 0);
-                    break;
+            case WEST:
+                entity.setVelocity(-speed, motionY, 0);
+                break;
 
-                case EAST:
-                    entity.setVelocity(speed, motionY, 0);
-                    break;
+            case EAST:
+                entity.setVelocity(speed, motionY, 0);
+                break;
+            default:
+                break;
             }
 
         }

@@ -4,6 +4,8 @@ Version 2.0.0-18
 - Fixed issue with lava crystal working even their is no LP available.
 - Added upgrade trainer
 - Fixed step height issue with C&B stuff. Apparently step height is now 0.6 by default instead of 0.5.
+- Added Ritual: Song of the Cleansing Soul to remove Living Armour upgrades from the armour.
+
 ------------------------------------------------------
 Version 2.0.0-17
 ------------------------------------------------------

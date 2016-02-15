@@ -89,7 +89,7 @@ public class BlockRitualController extends BlockStringContainer
         TileEntity tile = world.getTileEntity(pos);
         IBlockState state = world.getBlockState(pos);
 
-        if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
+        if (state.getBlock() == this && getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
             ((TileMasterRitualStone) tile).stopRitual(Ritual.BreakType.EXPLOSION);
     }
 

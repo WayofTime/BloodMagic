@@ -19,6 +19,8 @@ public interface ILivingArmour
 
     public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade);
 
+    public boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
+
     public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
 
     /**

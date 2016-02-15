@@ -325,6 +325,7 @@ ritual.BloodMagic.speedRitual=Ritual of Speed
 ritual.BloodMagic.suppressionRitual=Ritual of Suppression
 ritual.BloodMagic.expulsionRitual=Aura of Expulsion
 ritual.BloodMagic.zephyrRitual=Call of the Zephyr
+ritual.BloodMagic.fullUpgradeRemove=Sound of the Cleansing Soul
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

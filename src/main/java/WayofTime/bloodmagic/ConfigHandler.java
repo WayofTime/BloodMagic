@@ -1,21 +1,21 @@
 package WayofTime.bloodmagic;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.registry.ModPotions;
-import WayofTime.bloodmagic.util.Utils;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.io.File;
-import java.lang.reflect.Array;
-import java.util.*;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.Utils;
 
 public class ConfigHandler
 {
@@ -27,8 +27,8 @@ public class ConfigHandler
     public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
 
     // Item/Block Disabling
-    public static List itemBlacklist;
-    public static List blockBlacklist;
+    public static List<String> itemBlacklist;
+    public static List<String> blockBlacklist;
 
     // Well of Suffering Blacklist
     public static List<String> wellOfSufferingBlacklist;
@@ -56,6 +56,7 @@ public class ConfigHandler
     public static boolean ritualWater;
     public static boolean ritualWellOfSuffering;
     public static boolean ritualZephyr;
+    public static boolean ritualUpgradeRemove;
 
     // Imperfect Rituals
     public static boolean imperfectRitualNight;
@@ -152,7 +153,7 @@ public class ConfigHandler
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] {"EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250"}, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] { "EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250" }, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
         buildEntitySacrificeValues();
 
         category = "Potions";
@@ -234,6 +235,7 @@ public class ConfigHandler
         ritualWater = config.get(category, "ritualWater", true).getBoolean();
         ritualWellOfSuffering = config.get(category, "ritualWellOfSuffering", true).getBoolean();
         ritualZephyr = config.get(category, "ritualZephyr", true).getBoolean();
+        ritualUpgradeRemove = config.get(category, "ritualRemove", true).getBoolean();
 
         category = "Rituals.Imperfect";
         imperfectRitualNight = config.get(category, "imperfectRitualNight", true).getBoolean();

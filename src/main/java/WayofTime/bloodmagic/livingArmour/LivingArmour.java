@@ -298,4 +298,18 @@ public class LivingArmour implements ILivingArmour
 
         return true;
     }
+
+    @Override
+    public boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade)
+    {
+        String key = upgrade.getUniqueIdentifier();
+        if (upgradeMap.containsKey(key))
+        {
+            upgradeMap.remove(key);
+
+            return true;
+        }
+
+        return false;
+    }
 }
