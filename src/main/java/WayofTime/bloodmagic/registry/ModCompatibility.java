@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import net.minecraftforge.fml.common.Loader;
 import WayofTime.bloodmagic.compat.ICompatibility;
 import WayofTime.bloodmagic.compat.jei.CompatibilityJustEnoughItems;
-import WayofTime.bloodmagic.compat.jei.CompatibilityThaumcraft;
+import WayofTime.bloodmagic.compat.thaumcraft.CompatibilityThaumcraft;
 import WayofTime.bloodmagic.compat.waila.CompatibilityWaila;
 
 public class ModCompatibility
