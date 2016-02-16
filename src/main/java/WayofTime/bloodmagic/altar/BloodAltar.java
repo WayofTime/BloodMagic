@@ -71,7 +71,7 @@ public class BloodAltar implements IFluidHandler
     private int chargingFrequency = 0;
     private int maxCharge = 0;
 
-    private int cooldownAfterCrafting = 500;
+    private int cooldownAfterCrafting = 60;
 
     private ItemStack result;
 
@@ -457,7 +457,7 @@ public class BloodAltar implements IFluidHandler
                         server.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 40, 0.3, 0, 0.3, 0, new int[0]);
                     }
 
-                    this.cooldownAfterCrafting = 100;
+                    this.cooldownAfterCrafting = 30;
                     this.isActive = false;
                 }
             }

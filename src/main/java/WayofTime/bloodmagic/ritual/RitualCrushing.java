@@ -29,7 +29,7 @@ public class RitualCrushing extends Ritual
 
     public RitualCrushing()
     {
-        super("ritualCrushing", 0, 2500, "ritual." + Constants.Mod.MODID + ".crushingRitual");
+        super("ritualCrushing", 0, 5000, "ritual." + Constants.Mod.MODID + ".crushingRitual");
         addBlockRange(CRUSHING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -3, -1), 3));
     }
 
@@ -113,6 +113,8 @@ public class RitualCrushing extends Ritual
             }
 
             world.setBlockToAir(newPos);
+
+            break;
         }
 
         network.syphon(getRefreshCost());

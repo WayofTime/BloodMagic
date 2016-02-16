@@ -23,7 +23,7 @@ public class RitualZephyr extends Ritual
     public RitualZephyr()
     {
         super("ritualZephyr", 0, 1000, "ritual." + Constants.Mod.MODID + ".zephyrRitual");
-        addBlockRange(ZEPHYR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-4, 1, -4), 10));
+        addBlockRange(ZEPHYR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11));
     }
 
     @Override

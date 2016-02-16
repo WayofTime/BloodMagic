@@ -52,7 +52,7 @@ public class RitualGreenGrove extends Ritual
             IBlockState state = world.getBlockState(newPos);
             Block block = state.getBlock();
 
-            if (BloodMagicAPI.getGreenGroveBlacklist().contains(block))
+            if (!BloodMagicAPI.getGreenGroveBlacklist().contains(block))
             {
                 if (block instanceof IPlantable || block instanceof IGrowable)
                 {
@@ -79,7 +79,7 @@ public class RitualGreenGrove extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 20;
+        return 5; //TODO: Need to find a way to balance this
     }
 
     @Override

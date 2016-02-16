@@ -8,6 +8,9 @@ Version 2.0.0-18
 - Added Ritual: Ritual of Living Evolution, which is used to set the living armour's max upgrade points to 300.
 - Added tooltip to living armour to show the current upgrade points of the armour.
 - Added recipe for the training bracelet. Combine in an anvil with an upgrade tome to set it as the upgrade to train.
+- Ammended range of Zephyr ritual
+- Fixed Green Grove ritual
+- Fixed Crusher ritual so it didn't break everything at once.
 
 ------------------------------------------------------
 Version 2.0.0-17
