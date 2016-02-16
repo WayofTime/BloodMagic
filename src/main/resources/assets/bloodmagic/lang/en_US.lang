@@ -175,7 +175,7 @@ tile.BloodMagic.crystal.large.name=Crystal Cluster
 tile.BloodMagic.crystal.brick.name=Crystal Cluster Brick
 tile.BloodMagic.bloodLight.name=Blood Light
 tile.BloodMagic.spectralBlock.name=Spectral Block
-tile.BloodMagic.phantomBlock.name=Phantom Block
+tile.BloodMagic.phantom.name=Phantom Block
 tile.BloodMagic.incenseAltar.name=Incense Altar
 
 tile.BloodMagic.teleposer.name=Teleposer
@@ -348,7 +348,7 @@ chat.BloodMagic.livingArmour.newUpgrade=&4Upgrade acquired!
 
 # JustEnoughItems
 jei.BloodMagic.recipe.altar=Blood Altar
-jei.BloodMagic.recipe.binding=Binding Ritual
+jei.BloodMagic.recipe.binding=Alchemy Array (Binding)
 jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
 jei.BloodMagic.recipe.soulForge=Hellfire Forge
 jei.BloodMagic.recipe.requiredLP=LP: %,d
@@ -370,3 +370,11 @@ option.BloodMagic.bloodAltar=Blood Altar
 option.BloodMagic.ritualController=Ritual Stones
 option.BloodMagic.teleposer=Teleposer
 option.BloodMagic.array=Alchemy Array
+
+# Thaumcraft
+tc.research_category.BLOODMAGIC=Sanguine Arcana
+
+# Thaumcraft Research
+bloodmagic.research_name.BLOODMAGIC=Blood Magic
+bloodmagic.research_text.BLOODMAGIC=Sanguine Arcana
+bloodmagic.research_page.BLOODMAGIC.1=The realm of the Blood Magics has always appeared to be a more solitary and "individual" art with blood mages being notoriously reclusive and a bit insane at times. However, the powers of self-sacrifice and life essence have uses even beyond a normal blood mage's sight, in fact, it is quite apparent that it may have some uses in thaumaturgy after all!
