@@ -1,12 +1,12 @@
-package WayofTime.bloodmagic.livingArmour.upgrade;
+package WayofTime.bloodmagic.compat.thaumcraft;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class LivingArmourUpgradeRevealing extends LivingArmourUpgrade {
+public class LivingArmourUpgradeThaumRevealing extends LivingArmourUpgrade {
 
-    public LivingArmourUpgradeRevealing(int level) {
+    public LivingArmourUpgradeThaumRevealing(int level) {
         super(level);
     }
 
