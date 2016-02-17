@@ -100,6 +100,8 @@ public class Constants
         public static final String GHOST_STACK_SIZE = "stackSize";
 
         public static final String ITEM_INVENTORY = "itemInventory";
+
+        public static final String BLOCKPOS_CONNECTION = "connections";
     }
 
     public static class Mod

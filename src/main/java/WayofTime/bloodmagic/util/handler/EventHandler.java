@@ -72,6 +72,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -148,6 +149,36 @@ public class EventHandler
                 {
                     player.stepHeight = 0.6f;
                 }
+            }
+
+            float percentIncrease = 0;
+
+            if (LivingArmour.hasFullSet(player))
+            {
+                ItemStack chestStack = player.getCurrentArmor(2);
+                LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
+                if (armour != null)
+                {
+                    LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.movement", chestStack);
+
+                    if (upgrade instanceof LivingArmourUpgradeSpeed)
+                    {
+                        percentIncrease += 0.1f * ((LivingArmourUpgradeSpeed) upgrade).getSpeedModifier();
+                    }
+                }
+            }
+
+            if (event.entityLiving.isPotionActive(ModPotions.boost))
+            {
+                int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
+                {
+                    percentIncrease += (i + 1) * 0.05f;
+                }
+            }
+
+            if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && player.moveForward > 0F)
+            {
+                player.moveFlying(0F, 1F, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
             }
         }
     }

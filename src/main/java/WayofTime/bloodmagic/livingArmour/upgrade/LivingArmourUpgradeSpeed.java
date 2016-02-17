@@ -30,6 +30,11 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
         super(level);
     }
 
+    public double getSpeedModifier()
+    {
+        return speedModifier[this.level];
+    }
+
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
@@ -52,7 +57,7 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(895132, 1), "Speed modifier" + 1, speedModifier[this.level], 1));
+//        modifierMap.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(895132, 1), "Speed modifier" + 1, speedModifier[this.level], 1));
 
         if (healthModifier[this.level] > 0)
         {

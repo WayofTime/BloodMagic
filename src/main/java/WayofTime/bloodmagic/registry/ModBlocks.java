@@ -38,6 +38,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
@@ -131,6 +132,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileOutputRoutingNode.class, Constants.Mod.MODID + ":" + TileOutputRoutingNode.class.getSimpleName());
         GameRegistry.registerTileEntity(TileItemRoutingNode.class, Constants.Mod.MODID + ":" + TileItemRoutingNode.class.getSimpleName());
         GameRegistry.registerTileEntity(TileIncenseAltar.class, Constants.Mod.MODID + ":" + TileIncenseAltar.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileDemonCrucible.class, Constants.Mod.MODID + ":" + TileDemonCrucible.class.getSimpleName());
     }
 
     public static void initRenders()

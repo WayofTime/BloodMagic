@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.AxisAlignedBB;
@@ -40,21 +39,21 @@ public class PotionEventHandlers
     @SubscribeEvent
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-        if (event.entityLiving.isPotionActive(ModPotions.boost))
-        {
-            int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
-            {
-                float percentIncrease = (i + 1) * 0.05f;
-
-                if (event.entityLiving instanceof EntityPlayer)
-                {
-                    EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
-
-                    if ((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
-                        entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
-                }
-            }
-        }
+//        if (event.entityLiving.isPotionActive(ModPotions.boost))
+//        {
+//            int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
+//            {
+//                float percentIncrease = (i + 1) * 0.05f;
+//
+//                if (event.entityLiving instanceof EntityPlayer)
+//                {
+//                    EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
+//
+//                    if ((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
+//                        entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
+//                }
+//            }
+//        }
 
         if (event.entityLiving.isPotionActive(ModPotions.whirlwind))
         {

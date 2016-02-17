@@ -11,6 +11,8 @@ Version 2.0.0-18
 - Ammended range of Zephyr ritual
 - Fixed Green Grove ritual
 - Fixed Crusher ritual so it didn't break everything at once.
+- Removed the FOV effect from the Quick Feet speed upgrade.
+- Minor work on the Demon Crucible.
 
 ------------------------------------------------------
 Version 2.0.0-17

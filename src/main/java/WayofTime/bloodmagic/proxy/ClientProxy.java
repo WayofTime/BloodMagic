@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.proxy;
 
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,6 +10,7 @@ import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
 import WayofTime.bloodmagic.client.render.RenderAltar;
+import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
 import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
@@ -22,9 +22,11 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.handler.ClientEventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
 public class ClientProxy extends CommonProxy
 {
@@ -60,6 +62,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileAlchemyArray.class, new RenderAlchemyArray());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAltar.class, new RenderAltar());
         ClientRegistry.bindTileEntitySpecialRenderer(TileRoutingNode.class, new RenderItemRoutingNode());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileDemonCrucible.class, new RenderDemonCrucible());
     }
 
     @Override

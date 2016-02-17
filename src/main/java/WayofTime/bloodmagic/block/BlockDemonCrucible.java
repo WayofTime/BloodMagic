@@ -3,12 +3,18 @@ package WayofTime.bloodmagic.block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.tile.TileDemonCrucible;
+import WayofTime.bloodmagic.util.Utils;
 
 public class BlockDemonCrucible extends BlockContainer
 {
@@ -53,15 +59,39 @@ public class BlockDemonCrucible extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new TileIncenseAltar();
+        return new TileDemonCrucible();
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        TileDemonCrucible crucible = (TileDemonCrucible) world.getTileEntity(pos);
+
+        if (crucible == null || player.isSneaking())
+            return false;
+
+        ItemStack playerItem = player.getCurrentEquippedItem();
+
+        if (playerItem != null)
+        {
+            if (!(playerItem.getItem() instanceof IDemonWill) && !(playerItem.getItem() instanceof IDemonWillGem))
+            {
+                return false;
+            }
+        }
+
+        Utils.insertItemToTile(crucible, player);
+
+        world.markBlockForUpdate(pos);
+        return true;
     }
 
     @Override
     public void breakBlock(World world, BlockPos blockPos, IBlockState blockState)
     {
-        TileIncenseAltar TileIncenseAltar = (TileIncenseAltar) world.getTileEntity(blockPos);
-        if (TileIncenseAltar != null)
-            TileIncenseAltar.dropItems();
+        TileDemonCrucible tile = (TileDemonCrucible) world.getTileEntity(blockPos);
+        if (tile != null)
+            tile.dropItems();
 
         super.breakBlock(world, blockPos, blockState);
     }
