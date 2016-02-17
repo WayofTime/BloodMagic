@@ -40,13 +40,23 @@ public class ShapelessBloodOrbRecipe implements IRecipe
         output = result.copy();
         for (Object in : recipe)
         {
-            if (in instanceof ItemStack)
+            if (in instanceof IBloodOrb || (in instanceof ItemStack && ((ItemStack) in).getItem() instanceof IBloodOrb))
             {
-                if (((ItemStack) in).getItem() instanceof IBloodOrb)
+                // If the item is an instanceof IBloodOrb then save the level of
+                // the orb.
+                if (in instanceof ItemStack)
                 {
-                    input.add(((IBloodOrb) ((ItemStack) in).getItem()).getOrbLevel(((ItemStack) in).getItemDamage()));
+                    ItemStack inStack = (ItemStack) in;
+                    tier = ((IBloodOrb) inStack.getItem()).getOrbLevel(inStack.getItemDamage());
+                    input.add(tier);
                 } else
-                    input.add(((ItemStack) in).copy());
+                {
+                    tier = ((IBloodOrb) in).getOrbLevel(0);
+                    input.add(tier);
+                }
+            }else if (in instanceof ItemStack)
+            {
+                input.add(((ItemStack) in).copy());
             } else if (in instanceof Item)
             {
                 input.add(new ItemStack((Item) in));
@@ -134,7 +144,6 @@ public class ShapelessBloodOrbRecipe implements IRecipe
                         if (slot.getItem() instanceof IBloodOrb)
                         {
                             IBloodOrb orb = (IBloodOrb) slot.getItem();
-                            tier = (Integer) next;
                             if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) next)
                             {
                                 return false;

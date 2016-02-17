@@ -105,9 +105,15 @@ public class ShapedBloodOrbRecipe implements IRecipe
                 // If the item is an instanceof IBloodOrb then save the level of
                 // the orb.
                 if (in instanceof ItemStack)
-                    itemMap.put(chr, ((IBloodOrb) ((ItemStack) in).getItem()).getOrbLevel(((ItemStack) in).getItemDamage()));
-                else
-                    itemMap.put(chr, ((IBloodOrb) in).getOrbLevel(((ItemStack) in).getItemDamage()));
+                {
+                    ItemStack inStack = (ItemStack) in;
+                    tier = ((IBloodOrb) inStack.getItem()).getOrbLevel(inStack.getItemDamage());
+                    itemMap.put(chr, tier);
+                } else
+                {
+                    tier = ((IBloodOrb) in).getOrbLevel(0);
+                    itemMap.put(chr, tier);
+                }
             } else if (in instanceof ItemStack)
             {
                 itemMap.put(chr, ((ItemStack) in).copy());
@@ -238,7 +244,6 @@ public class ShapedBloodOrbRecipe implements IRecipe
                     if (slot != null && slot.getItem() instanceof IBloodOrb)
                     {
                         IBloodOrb orb = (IBloodOrb) slot.getItem();
-                        tier = (Integer) target;
                         if (orb.getOrbLevel(slot.getItemDamage()) < (Integer) target)
                         {
                             return false;

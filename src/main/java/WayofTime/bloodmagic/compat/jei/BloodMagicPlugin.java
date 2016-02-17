@@ -14,6 +14,8 @@ import WayofTime.bloodmagic.compat.jei.binding.BindingRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeCategory;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
+import WayofTime.bloodmagic.compat.jei.orb.ShapedOrbRecipeHandler;
+import WayofTime.bloodmagic.compat.jei.orb.ShapelessOrbRecipeHandler;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -32,7 +34,7 @@ public class BloodMagicPlugin implements IModPlugin
     {
         registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory(), new TartaricForgeRecipeCategory());
 
-        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler());
+        registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler(), new ShapedOrbRecipeHandler(), new ShapelessOrbRecipeHandler());
 
         registry.addRecipes(AltarRecipeMaker.getRecipes());
         registry.addRecipes(BindingRecipeMaker.getRecipes());
@@ -53,8 +55,8 @@ public class BloodMagicPlugin implements IModPlugin
             for (int i = 0; i < maxLevel - 1; i++)
             {
                 ItemStack stack = new ItemStack(ModItems.upgradeTome);
-                ((ItemUpgradeTome)ModItems.upgradeTome).setKey(stack, key);
-                ((ItemUpgradeTome)ModItems.upgradeTome).setLevel(stack, i);
+                ItemUpgradeTome.setKey(stack, key);
+                ItemUpgradeTome.setLevel(stack, i);
                 jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
             }
         }

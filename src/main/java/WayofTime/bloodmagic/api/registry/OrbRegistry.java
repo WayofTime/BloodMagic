@@ -2,7 +2,10 @@ package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import com.google.common.collect.ArrayListMultimap;
 import lombok.Getter;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -14,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,15 +28,26 @@ public class OrbRegistry
 {
     @Getter
     private static List<BloodOrb> orbs = new ArrayList<BloodOrb>();
+    @Getter
+    private static ArrayListMultimap<Integer, ItemStack> tierMap = ArrayListMultimap.create();
 
     private static Item orbItem = Constants.BloodMagicItem.BLOOD_ORB.getItem();
 
     public static void registerOrb(BloodOrb orb)
     {
         if (!orbs.contains(orb))
+        {
             orbs.add(orb);
+            registerOrbForTier(orb.getTier(), getOrbStack(orb));
+        }
         else
             BloodMagicAPI.getLogger().error("Error adding orb %s. Orb already exists!", orb.toString());
+    }
+
+    public static void registerOrbForTier(int tier, ItemStack stack)
+    {
+        if (stack.getItem() instanceof IBloodOrb)
+            tierMap.put(tier, stack);
     }
 
     @SideOnly(Side.CLIENT)
@@ -62,6 +77,34 @@ public class OrbRegistry
     public static int getSize()
     {
         return orbs.size();
+    }
+
+    public static List<ItemStack> getOrbsForTier(int tier)
+    {
+        if (getTierMap().containsKey(tier))
+            return getTierMap().get(tier);
+
+        return Collections.emptyList();
+    }
+
+    public static List<ItemStack> getOrbsUpToTier(int tier)
+    {
+        List<ItemStack> ret = new ArrayList<ItemStack>();
+
+        for (int i = 1; i <= tier; i++)
+            ret.addAll(getOrbsForTier(i));
+
+        return ret;
+    }
+
+    public static List<ItemStack> getOrbsDownToTier(int tier)
+    {
+        List<ItemStack> ret = new ArrayList<ItemStack>();
+
+        for (int i = EnumAltarTier.MAXTIERS; i >= tier; i--)
+            ret.addAll(getOrbsForTier(i));
+
+        return ret;
     }
 
     public static ItemStack getOrbStack(BloodOrb orb)
