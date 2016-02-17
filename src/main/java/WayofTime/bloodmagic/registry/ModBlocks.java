@@ -14,6 +14,7 @@ import WayofTime.bloodmagic.block.BlockBloodLight;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.block.BlockCrystal;
+import WayofTime.bloodmagic.block.BlockDemonCrucible;
 import WayofTime.bloodmagic.block.BlockIncenseAltar;
 import WayofTime.bloodmagic.block.BlockInputRoutingNode;
 import WayofTime.bloodmagic.block.BlockItemRoutingNode;
@@ -66,6 +67,7 @@ public class ModBlocks
     public static Block phantomBlock;
     public static Block soulForge;
     public static Block incenseAltar;
+    public static Block demonCrucible;
 
     public static Block lifeEssence;
 
@@ -102,6 +104,7 @@ public class ModBlocks
         itemRoutingNode = registerBlock(new BlockItemRoutingNode());
         incenseAltar = registerBlock(new BlockIncenseAltar());
         pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
+        demonCrucible = registerBlock(new BlockDemonCrucible());
 
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
@@ -167,6 +170,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(masterRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(incenseAltar));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrucible));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 2);

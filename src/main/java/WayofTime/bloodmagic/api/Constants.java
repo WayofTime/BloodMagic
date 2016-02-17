@@ -233,7 +233,8 @@ public class Constants
         SPECTRAL("BlockSpectral"),
         TELEPOSER("BlockTeleposer"),
         INCENSE_ALTAR("BlockIncenseAltar"),
-        PATH("BlockPath");
+        PATH("BlockPath"),
+        DEMON_CRUCIBLE("BlockDemonCrucible");
 
         @Getter
         private final String regName;
