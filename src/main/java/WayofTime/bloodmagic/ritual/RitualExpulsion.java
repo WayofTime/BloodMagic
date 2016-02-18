@@ -1,9 +1,13 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,18 +20,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RitualExpulsion extends Ritual
 {
@@ -144,7 +140,8 @@ public class RitualExpulsion extends Ritual
                 if (block != null && block.getMaterial().blocksMovement())
                 {
                     flag1 = true;
-                } else
+                }
+                else
                 {
                     --entityLiving.posY;
                     --j;
@@ -166,7 +163,8 @@ public class RitualExpulsion extends Ritual
         {
             moveEntityViaTeleport(entityLiving, lastX, lastY, lastZ);
             return false;
-        } else
+        }
+        else
         {
             for (l = 0; l < 128; ++l)
             {
@@ -206,7 +204,8 @@ public class RitualExpulsion extends Ritual
                     }
                 }
             }
-        } else if (entityLiving != null)
+        }
+        else if (entityLiving != null)
         {
             entityLiving.setPosition(x, y, z);
         }

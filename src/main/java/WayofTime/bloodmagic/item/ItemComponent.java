@@ -1,17 +1,17 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModItems;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModItems;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemComponent extends Item
 {
@@ -35,6 +35,8 @@ public class ItemComponent extends Item
     public static final String REAGENT_COMPRESSION = "reagentCompression";
     public static final String REAGENT_BRIDGE = "reagentBridge";
     public static final String REAGENT_SEVERANCE = "reagentSeverance";
+    public static final String REAGENT_TELEPOSITION = "reagentTeleposition";
+    public static final String REAGENT_TRANSPOSITION = "reagentTransposition";
 
     public ItemComponent()
     {
@@ -67,6 +69,8 @@ public class ItemComponent extends Item
         names.add(14, REAGENT_COMPRESSION);
         names.add(15, REAGENT_BRIDGE);
         names.add(16, REAGENT_SEVERANCE);
+        names.add(17, REAGENT_TELEPOSITION);
+        names.add(18, REAGENT_TRANSPOSITION);
     }
 
     @Override

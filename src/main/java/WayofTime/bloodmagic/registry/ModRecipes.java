@@ -160,6 +160,10 @@ public class ModRecipes
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilPhantomBridge), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilCompression), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
         AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilEnderSeverance), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilTeleposition), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+        AlchemyArrayRecipeRegistry.registerCraftingRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.sigilTransposition), new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/WIPArray.png"));
+
     }
 
     public static void addCompressionHandlers()

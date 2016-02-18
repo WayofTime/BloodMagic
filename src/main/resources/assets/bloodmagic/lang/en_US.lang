@@ -84,6 +84,9 @@ item.BloodMagic.baseComponent.reagentBridge.name=Phantom Bridge Reagent
 item.BloodMagic.baseComponent.reagentCompression.name=Compression Reagent
 item.BloodMagic.baseComponent.reagentSeverance.name=Severance Reagent
 
+item.BloodMagic.baseComponent.reagentTeleposition.name=Teleposition Reagent
+item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent
+
 item.BloodMagic.monsterSoul.base.name=Demonic Will
 
 item.BloodMagic.sigil.air.name=Air Sigil
@@ -103,6 +106,9 @@ item.BloodMagic.sigil.seer.name=Seer's Sigil
 item.BloodMagic.sigil.phantomBridge.name=Sigil of the Phantom Bridge
 item.BloodMagic.sigil.whirlwind.name=Sigil of the Whirlwind
 item.BloodMagic.sigil.enderSeverance.name=Sigil of Ender Severance
+
+item.BloodMagic.sigil.teleposition.name=Teleposition Sigil
+item.BloodMagic.sigil.transposition.name=Transposition Sigil
 
 item.BloodMagic.livingArmour.helmet.name=Living Helmet
 item.BloodMagic.livingArmour.chest.name=Living Chestplate
@@ -196,6 +202,9 @@ tile.BloodMagic.path.wornstoneTile.name=Tiled Worn Stone Path
 tile.BloodMagic.path.obsidian.name=Obsidian Brick Path
 tile.BloodMagic.path.obsidianTile.name=Tiled Obsidian Path
 
+tile.BloodMagic.dimensionalPortal.name=Dimensional Portal
+tile.BloodMagic.bloodTank.name=Blood Tank
+
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s
@@ -238,6 +247,9 @@ tooltip.BloodMagic.sigil.seer.currentBonus=Current Bonus: +%,d%%
 tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
 tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
+
+tooltip.BloodMagic.sigil.teleposition.desc=I am very close to being moved by this.
+tooltip.BloodMagic.sigil.transposition.desc=Feel the power of the Force, my young apprentice.
 
 tooltip.BloodMagic.bound.sword.desc=&oCulling the weak
 tooltip.BloodMagic.bound.pickaxe.desc=&oDestroying stone without mercy
@@ -308,6 +320,10 @@ tooltip.BloodMagic.itemFilter.ignoreNBT=Ignores the NBT of the filter
 tooltip.BloodMagic.itemFilter.modItems=Matches all items from the same mod
 tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 
+tooltip.BloodMagic.fluid.type=Fluid Contained
+tooltip.BloodMagic.fluid.amount=Amount
+tooltip.BloodMagic.fluid.capacity=Capacity
+
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
@@ -329,6 +345,13 @@ ritual.BloodMagic.expulsionRitual=Aura of Expulsion
 ritual.BloodMagic.zephyrRitual=Call of the Zephyr
 ritual.BloodMagic.upgradeRemoveRitual=Sound of the Cleansing Soul
 ritual.BloodMagic.armourEvolveRitual=Ritual of Living Evolution
+
+ritual.BloodMagic.cobblestoneRitual=Le Vulcanos Frigius
+ritual.BloodMagic.placerRitual=The Filler
+ritual.BloodMagic.fellingRitual=The Timberman
+ritual.BloodMagic.pumpRitual=Hymn of Siphoning
+ritual.BloodMagic.altarBuilderRitual=The Assembly of the High Altar
+ritual.BloodMagic.portalRitual=The Gate of the Fold
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d

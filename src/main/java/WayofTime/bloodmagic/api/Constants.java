@@ -22,6 +22,7 @@ public class Constants
         public static final String X_COORD = "xCoord";
         public static final String Y_COORD = "yCoord";
         public static final String Z_COORD = "zCoord";
+        public static final String PORTAL_LOCATION ="portalLocation";
         public static final String ORB_TIER = "orbTier";
         public static final String CURRENT_ESSENCE = "currentEssence";
         public static final String CURRENT_RITUAL = "currentRitual";
@@ -72,6 +73,7 @@ public class Constants
         public static final String TICKS_REMAINING = "ticksRemaining";
         public static final String CONTAINED_BLOCK_NAME = "containedBlockName";
         public static final String CONTAINED_BLOCK_META = "containedBlockMeta";
+        public static final String CONTAINED_TILE_ENTITY = "containedTileEntity";
 
         public static final String PREVIOUS_INPUT = "previousInput";
 
@@ -198,7 +200,9 @@ public class Constants
         SLATE("ItemSlate"),
         TELEPOSITION_FOCUS("ItemTelepositionFocus"),
         UPGRADE_TOME("ItemUpgradeTome"),
-        UPGRADE_TRAINER("ItemUpgradeTrainer");
+        UPGRADE_TRAINER("ItemUpgradeTrainer"),
+        SIGIL_TELEPOSITION("ItemSigilTeleposition"),
+        SIGIL_TRANSPOSITION("ItemSigilTransposition");
 
         @Getter
         private final String regName;
@@ -236,7 +240,9 @@ public class Constants
         TELEPOSER("BlockTeleposer"),
         INCENSE_ALTAR("BlockIncenseAltar"),
         PATH("BlockPath"),
-        DEMON_CRUCIBLE("BlockDemonCrucible");
+        DEMON_CRUCIBLE("BlockDemonCrucible"),
+        DIMENSIONAL_PORTAL("BlockDimensionalPortal"),
+        BLOOD_TANK("BlockBloodTank");
 
         @Getter
         private final String regName;

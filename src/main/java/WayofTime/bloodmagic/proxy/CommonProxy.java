@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.proxy;
 
+import WayofTime.bloodmagic.api.teleport.TeleportQueue;
+import WayofTime.bloodmagic.util.handler.EventHandler;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import WayofTime.bloodmagic.util.handler.EventHandler;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 
 public class CommonProxy
 {
@@ -22,6 +23,7 @@ public class CommonProxy
     public void preInit()
     {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(TeleportQueue.getInstance());
         registerRenderers();
     }
 
