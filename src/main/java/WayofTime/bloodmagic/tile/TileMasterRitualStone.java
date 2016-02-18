@@ -63,7 +63,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
             active = true;
             ItemStack crystalStack = NBTHelper.checkNBT(new ItemStack(ModItems.activationCrystal, 1, getCurrentRitual().getCrystalLevel()));
             crystalStack.getTagCompound().setString(Constants.NBT.OWNER_UUID, getOwner());
-            activateRitual(crystalStack, PlayerHelper.getPlayerFromUUID(getOwner()), getCurrentRitual());
+            activateRitual(crystalStack, null, getCurrentRitual());
             redstoned = false;
         }
 
@@ -150,7 +150,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
                             return false;
                         }
 
-                        if (ritual.activateRitual(this, activator))
+                        if (ritual.activateRitual(this, activator, crystalOwner))
                         {
                             if (!isRedstoned() && !activator.capabilities.isCreativeMode)
                                 network.syphon(ritual.getActivationCost());

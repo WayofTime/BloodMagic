@@ -13,6 +13,7 @@ Version 2.0.0-18
 - Fixed Crusher ritual so it didn't break everything at once.
 - Removed the FOV effect from the Quick Feet speed upgrade.
 - Minor work on the Demon Crucible.
+- Crucibles now fill the tartaric gems of close-by hellfire forges
 
 ------------------------------------------------------
 Version 2.0.0-17

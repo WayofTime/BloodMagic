@@ -65,9 +65,12 @@ public abstract class Ritual
      *        - The {@link IMasterRitualStone} that the ritual is bound to
      * @param player
      *        - The activating player
+     * @param owner
+     *        - Owner of the crystal activating this ritual, or the current
+     *        owner of the ritual if being reactivated.
      * @return - Whether activation was successful
      */
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player)
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, String owner)
     {
         return true;
     }

@@ -41,13 +41,6 @@ public class Teleports
                 {
                     if (entity instanceof EntityPlayer)
                     {
-                        EntityPlayerMP player = (EntityPlayerMP) entity;
-
-                        player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
-                        player.worldObj.updateEntityWithOptionalForce(player, false);
-                        player.playerNetServerHandler.sendPacket(new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
-                        player.timeUntilPortal = 150;
-
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < getTeleportCost())
                         {
@@ -55,21 +48,28 @@ public class Teleports
                         }
                         network.syphon(getTeleportCost());
 
+                        EntityPlayerMP player = (EntityPlayerMP) entity;
+
+                        player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
+                        player.worldObj.updateEntityWithOptionalForce(player, false);
+                        player.playerNetServerHandler.sendPacket(new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                        player.timeUntilPortal = 150;
+
                         player.worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
                     } else
                     {
-                        WorldServer world = (WorldServer) entity.worldObj;
-
-                        entity.setPosition(x + 0.5, y + 0.5, z + 0.5);
-                        entity.timeUntilPortal = 150;
-                        world.resetUpdateEntityTick();
-
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
                         if (network.getCurrentEssence() < (getTeleportCost() / 10))
                         {
                             return;
                         }
                         network.syphon(getTeleportCost() / 10);
+
+                        WorldServer world = (WorldServer) entity.worldObj;
+
+                        entity.setPosition(x + 0.5, y + 0.5, z + 0.5);
+                        entity.timeUntilPortal = 150;
+                        world.resetUpdateEntityTick();
 
                         entity.worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
                     }
@@ -122,20 +122,28 @@ public class Teleports
 
                         if (!player.worldObj.isRemote)
                         {
+                            SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
+                            if (network.getCurrentEssence() < getTeleportCost())
+                            {
+                                return;
+                            }
+                            network.syphon(getTeleportCost());
+
                             server.getConfigurationManager().transferPlayerToDimension(player, newWorldID, new TeleporterBloodMagic(newWorldServer));
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.worldObj.updateEntityWithOptionalForce(player, false);
                             player.playerNetServerHandler.sendPacket(new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                         }
 
+                    } else if (!entity.worldObj.isRemote)
+                    {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
-                        if (network.getCurrentEssence() < getTeleportCost())
+                        if (network.getCurrentEssence() < (getTeleportCost() / 10))
                         {
                             return;
                         }
-                        network.syphon(getTeleportCost());
-                    } else if (!entity.worldObj.isRemote)
-                    {
+                        network.syphon(getTeleportCost() / 10);
+
                         NBTTagCompound tag = new NBTTagCompound();
 
                         entity.writeToNBTOptional(tag);
@@ -154,13 +162,6 @@ public class Teleports
 
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
-
-                        SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
-                        if (network.getCurrentEssence() < (getTeleportCost() / 10))
-                        {
-                            return;
-                        }
-                        network.syphon(getTeleportCost() / 10);
                     }
                     entity.timeUntilPortal = 150;
 

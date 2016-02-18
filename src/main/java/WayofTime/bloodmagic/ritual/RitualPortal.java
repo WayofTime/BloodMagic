@@ -1,15 +1,7 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.teleport.PortalLocation;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
-import WayofTime.bloodmagic.tile.TileDimensionalPortal;
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +9,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.teleport.PortalLocation;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
+import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 
 public class RitualPortal extends Ritual
 {
@@ -35,9 +34,8 @@ public class RitualPortal extends Ritual
     }
 
     @Override
-    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player)
+    public boolean activateRitual(IMasterRitualStone masterRitualStone, EntityPlayer player, String owner)
     {
-        String owner = PlayerHelper.getUUIDFromPlayer(player).toString();
         World world = masterRitualStone.getWorldObj();
         int x = masterRitualStone.getBlockPos().getX();
         int y = masterRitualStone.getBlockPos().getY();
@@ -127,6 +125,11 @@ public class RitualPortal extends Ritual
     public void performRitual(IMasterRitualStone masterRitualStone)
     {
         World world = masterRitualStone.getWorldObj();
+        if (world.isRemote)
+        {
+            return;
+        }
+
         int x = masterRitualStone.getBlockPos().getX();
         int y = masterRitualStone.getBlockPos().getY();
         int z = masterRitualStone.getBlockPos().getZ();
@@ -236,7 +239,7 @@ public class RitualPortal extends Ritual
         addRune(components, 1, 0, 0, EnumRuneType.AIR);
         addRune(components, 2, 0, 0, EnumRuneType.WATER);
         addRune(components, -1, 0, 0, EnumRuneType.FIRE);
-        addRune(components, -2, 0, 0 , EnumRuneType.EARTH);
+        addRune(components, -2, 0, 0, EnumRuneType.EARTH);
         addRune(components, 2, 1, 0, EnumRuneType.DUSK);
 
         addRune(components, 2, 2, 0, EnumRuneType.AIR);

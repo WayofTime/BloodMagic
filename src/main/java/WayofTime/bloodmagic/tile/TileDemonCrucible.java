@@ -27,7 +27,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     public HashMap<EnumDemonWillType, Double> willMap = new HashMap<EnumDemonWillType, Double>();
     public final int maxWill = 100;
     public final double maxTransferPerTick = 1;
-    public final double thresholdFill = 0.0;
+    public final double thresholdFill = 0.01;
     public final double gemDrainRate = 10;
 
     public int internalCounter = 0;
@@ -192,9 +192,13 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
                             transfer = conduit.fillDemonWill(type, transfer, false);
                             if (transfer > 0)
                             {
+                                worldObj.markBlockForUpdate(((TileEntity) conduit).getPos());
                                 conduit.fillDemonWill(type, transfer, true);
                                 currentAmount -= transfer;
                                 transfered += transfer;
+                            } else
+                            {
+                                conduitIterator.remove();
                             }
                         }
 
