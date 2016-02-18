@@ -90,6 +90,16 @@
         "textures": {
           "layer0": "bloodmagic:items/ReagentSeverance"
         }
+      },
+      "reagentteleposition": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentTeleposition"
+        }
+      },
+      "reagenttransposition": {
+        "textures": {
+          "layer0": "bloodmagic:items/ReagentTransposition"
+        }
       }
     }
   }

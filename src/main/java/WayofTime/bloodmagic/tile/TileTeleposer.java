@@ -1,42 +1,31 @@
 package WayofTime.bloodmagic.tile;
 
-import java.util.Iterator;
-import java.util.List;
-
 import WayofTime.bloodmagic.api.BlockStack;
-import net.minecraft.block.Block;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.teleport.TeleportQueue;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.ritual.portal.Teleports;
+import com.google.common.base.Strings;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S07PacketRespawn;
-import net.minecraft.network.play.server.S1DPacketEntityEffect;
-import net.minecraft.network.play.server.S1FPacketSetExperience;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 
-import com.google.common.base.Strings;
+import java.util.List;
 
 public class TileTeleposer extends TileInventory implements ITickable
 {
@@ -85,7 +74,8 @@ public class TileTeleposer extends TileInventory implements ITickable
         if (!worldObj.isRemote && worldObj.getTileEntity(pos) != null && worldObj.getTileEntity(pos) instanceof TileTeleposer && canInitiateTeleport((TileTeleposer) worldObj.getTileEntity(pos)) && worldObj.getBlockState(pos).getBlock() instanceof BlockTeleposer)
         {
             TileTeleposer teleposer = (TileTeleposer) worldObj.getTileEntity(pos);
-            ItemTelepositionFocus focus = (ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem();
+            ItemStack focusStack = NBTHelper.checkNBT(teleposer.getStackInSlot(0));
+            ItemTelepositionFocus focus = (ItemTelepositionFocus) focusStack.getItem();
             BlockPos focusPos = focus.getBlockPos(teleposer.getStackInSlot(0));
             World focusWorld = focus.getWorld(teleposer.getStackInSlot(0));
 
@@ -93,31 +83,10 @@ public class TileTeleposer extends TileInventory implements ITickable
             {
                 final int focusLevel = (teleposer.getStackInSlot(0).getItemDamage() + 1);
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
-                int entityCount = 0;
 
                 //TODO MAKE THIS SYPHON LP BETTER
-                if (ItemBindable.syphonNetwork(teleposer.getStackInSlot(0), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) + lpToBeDrained * entityCount))
+                if (ItemBindable.syphonNetwork(teleposer.getStackInSlot(0), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1)))
                 {
-                    List<EntityLivingBase> entityList1 = null;
-                    List<EntityLivingBase> entityList2 = null;
-
-                    if (focusWorld.equals(worldObj))
-                    {
-                        {
-                            AxisAlignedBB area51 = AxisAlignedBB.fromBounds(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
-                            entityList1 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, area51);
-                            for (EntityLivingBase entity : entityList1)
-                                entityCount++;
-                        }
-
-                        {
-                            AxisAlignedBB area52 = AxisAlignedBB.fromBounds(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
-                            entityList2 = focusWorld.getEntitiesWithinAABB(EntityLivingBase.class, area52);
-                            for (EntityLivingBase entity : entityList2)
-                                entityCount++;
-                        }
-                    }
-
                     int blocksTransported = 0;
 
                     for (int i = -(focusLevel - 1); i <= (focusLevel - 1); i++)
@@ -134,44 +103,47 @@ public class TileTeleposer extends TileInventory implements ITickable
                         }
                     }
 
-                    NetworkHelper.syphonFromContainer(teleposer.getStackInSlot(0), lpToBeDrained * blocksTransported + lpToBeDrained * entityCount);
+                    NetworkHelper.syphonFromContainer(focusStack, lpToBeDrained * blocksTransported);
+
+                    List<Entity> originalWorldEntities;
+                    List<Entity> focusWorldEntities;
+                    AxisAlignedBB originalArea = AxisAlignedBB.fromBounds(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
+                    originalWorldEntities = worldObj.getEntitiesWithinAABB(Entity.class, originalArea);
+                    AxisAlignedBB focusArea = AxisAlignedBB.fromBounds(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
+                    focusWorldEntities = focusWorld.getEntitiesWithinAABB(Entity.class, focusArea);
 
                     if (focusWorld.equals(worldObj))
                     {
-                        if (entityList1 != null && !entityList1.isEmpty())
+                        if (originalWorldEntities != null && !originalWorldEntities.isEmpty())
                         {
-                            for (EntityLivingBase entity : entityList1)
+                            for (Entity entity : originalWorldEntities)
                             {
-                                entity.worldObj = focusWorld;
-                                entity.setPositionAndUpdate(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ());
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID)));
                             }
                         }
 
-                        if (entityList2 != null && !entityList2.isEmpty())
+                        if (focusWorldEntities != null && !focusWorldEntities.isEmpty())
                         {
-                            for (EntityLivingBase entity : entityList2)
+                            for (Entity entity : focusWorldEntities)
                             {
-                                entity.worldObj = focusWorld;
-                                entity.setPositionAndUpdate(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ());
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID)));
                             }
                         }
                     } else
                     {
-                        if (entityList1 != null && !entityList1.isEmpty())
+                        if (originalWorldEntities != null && !originalWorldEntities.isEmpty())
                         {
-                            for (EntityLivingBase entity : entityList1)
+                            for (Entity entity : originalWorldEntities)
                             {
-                                entity.worldObj = focusWorld;
-                                teleportEntityToDim(worldObj, focusWorld.provider.getDimensionId(), entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ(), entity);
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimensionId()));
                             }
                         }
 
-                        if (entityList2 != null && !entityList2.isEmpty())
+                        if (focusWorldEntities != null && !focusWorldEntities.isEmpty())
                         {
-                            for (EntityLivingBase entity : entityList2)
+                            for (Entity entity : focusWorldEntities)
                             {
-                                entity.worldObj = focusWorld;
-                                teleportEntityToDim(focusWorld, worldObj.provider.getDimensionId(), entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ(), entity);
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimensionId()));
                             }
                         }
                     }
@@ -250,75 +222,5 @@ public class TileTeleposer extends TileInventory implements ITickable
         finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock());
 
         return true;
-    }
-
-    public static Entity teleportEntityToDim(World prevWorld, int newWorldID, double d, double e, double f, Entity entity)
-    {
-        if (entity != null)
-        {
-            if (entity.timeUntilPortal <= 0)
-            {
-                WorldServer oldWorldServer = MinecraftServer.getServer().worldServerForDimension(entity.dimension);
-                WorldServer newWorldServer = MinecraftServer.getServer().worldServerForDimension(newWorldID);
-                if (entity instanceof EntityPlayer)
-                {
-                    EntityPlayerMP player = (EntityPlayerMP) entity;
-                    if (!player.worldObj.isRemote)
-                    {
-                        player.worldObj.theProfiler.startSection("portal");
-                        player.worldObj.theProfiler.startSection("changeDimension");
-                        ServerConfigurationManager config = player.mcServer.getConfigurationManager();
-                        prevWorld.playSoundEffect(player.posX, player.posY, player.posZ, "mob.endermen.portal", 1.0F, 1.0F);
-                        player.closeScreen();
-                        player.dimension = newWorldServer.provider.getDimensionId();
-                        player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.getDifficulty(), newWorldServer.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
-                        oldWorldServer.removeEntity(player);
-                        player.isDead = false;
-                        player.setLocationAndAngles(d, e, f, player.rotationYaw, player.rotationPitch);
-                        newWorldServer.spawnEntityInWorld(player);
-                        player.setWorld(newWorldServer);
-                        config.preparePlayer(player, oldWorldServer);
-                        player.playerNetServerHandler.setPlayerLocation(d, e, f, entity.rotationYaw, entity.rotationPitch);
-                        player.theItemInWorldManager.setWorld(newWorldServer);
-                        config.updateTimeAndWeatherForPlayer(player, newWorldServer);
-                        config.syncPlayerInventory(player);
-                        player.worldObj.theProfiler.endSection();
-                        oldWorldServer.resetUpdateEntityTick();
-                        newWorldServer.resetUpdateEntityTick();
-                        player.worldObj.theProfiler.endSection();
-                        for (Iterator<PotionEffect> potion = player.getActivePotionEffects().iterator(); potion.hasNext();)
-                        {
-                            player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), potion.next()));
-                        }
-                        player.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
-                        FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldWorldServer.provider.getDimensionId(), player.dimension);
-                        player.timeUntilPortal = 150;
-                    }
-                    player.worldObj.theProfiler.endSection();
-                    newWorldServer.playSoundEffect(d, e, f, "mob.endermen.portal", 1.0F, 1.0F);
-                    return player;
-                } else
-                {
-                    NBTTagCompound tag = new NBTTagCompound();
-                    entity.writeToNBTOptional(tag);
-                    entity.setDead();
-                    prevWorld.playSoundEffect(entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F);
-                    Entity teleportedEntity = EntityList.createEntityFromNBT(tag, newWorldServer);
-                    if (teleportedEntity != null)
-                    {
-                        teleportedEntity.setLocationAndAngles(d, e, f, entity.rotationYaw, entity.rotationPitch);
-                        teleportedEntity.forceSpawn = true;
-                        newWorldServer.spawnEntityInWorld(teleportedEntity);
-                        teleportedEntity.setWorld(newWorldServer);
-                        teleportedEntity.timeUntilPortal = 150;
-                    }
-                    oldWorldServer.resetUpdateEntityTick();
-                    newWorldServer.resetUpdateEntityTick();
-                    newWorldServer.playSoundEffect(d, e, f, "mob.endermen.portal", 1.0F, 1.0F);
-                    return teleportedEntity;
-                }
-            }
-        }
-        return null;
     }
 }

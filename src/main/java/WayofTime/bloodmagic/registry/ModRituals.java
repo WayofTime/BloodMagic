@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import net.minecraft.init.Blocks;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
@@ -8,26 +7,7 @@ import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.ritual.RitualAnimalGrowth;
-import WayofTime.bloodmagic.ritual.RitualArmourEvolve;
-import WayofTime.bloodmagic.ritual.RitualContainment;
-import WayofTime.bloodmagic.ritual.RitualCrushing;
-import WayofTime.bloodmagic.ritual.RitualExpulsion;
-import WayofTime.bloodmagic.ritual.RitualFeatheredKnife;
-import WayofTime.bloodmagic.ritual.RitualFullStomach;
-import WayofTime.bloodmagic.ritual.RitualGreenGrove;
-import WayofTime.bloodmagic.ritual.RitualHarvest;
-import WayofTime.bloodmagic.ritual.RitualInterdiction;
-import WayofTime.bloodmagic.ritual.RitualJumping;
-import WayofTime.bloodmagic.ritual.RitualLava;
-import WayofTime.bloodmagic.ritual.RitualMagnetic;
-import WayofTime.bloodmagic.ritual.RitualRegeneration;
-import WayofTime.bloodmagic.ritual.RitualSpeed;
-import WayofTime.bloodmagic.ritual.RitualSuppression;
-import WayofTime.bloodmagic.ritual.RitualUpgradeRemove;
-import WayofTime.bloodmagic.ritual.RitualWater;
-import WayofTime.bloodmagic.ritual.RitualWellOfSuffering;
-import WayofTime.bloodmagic.ritual.RitualZephyr;
+import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem;
 import WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall;
@@ -35,6 +15,7 @@ import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualNight;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualRain;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualResistance;
 import WayofTime.bloodmagic.ritual.imperfect.ImperfectRitualZombie;
+import net.minecraft.init.Blocks;
 
 public class ModRituals
 {
@@ -58,6 +39,13 @@ public class ModRituals
     public static Ritual zephyrRitual;
     public static Ritual upgradeRemoveRitual;
     public static Ritual armourEvolveRitual;
+    
+    public static Ritual cobblestoneRitual;
+    public static Ritual placerRitual;
+    public static Ritual fellingRitual;
+    public static Ritual pumpRitual;
+    public static Ritual altarBuilderRitual;
+    public static Ritual portalRitual;
 
     public static ImperfectRitual imperfectNight;
     public static ImperfectRitual imperfectRain;
@@ -107,6 +95,19 @@ public class ModRituals
         RitualRegistry.registerRitual(upgradeRemoveRitual, ConfigHandler.ritualUpgradeRemove);
         armourEvolveRitual = new RitualArmourEvolve();
         RitualRegistry.registerRitual(armourEvolveRitual, ConfigHandler.ritualArmourEvolve);
+        
+        cobblestoneRitual = new RitualCobblestone();
+        RitualRegistry.registerRitual(cobblestoneRitual, ConfigHandler.cobblestoneRitual);
+        placerRitual = new RitualPlacer();
+        RitualRegistry.registerRitual(placerRitual, ConfigHandler.placerRitual);
+        fellingRitual = new RitualFelling();
+        RitualRegistry.registerRitual(fellingRitual, ConfigHandler.fellingRitual);
+        pumpRitual = new RitualPump();
+        RitualRegistry.registerRitual(pumpRitual, ConfigHandler.pumpRitual);
+        altarBuilderRitual = new RitualAltarBuilder();
+        RitualRegistry.registerRitual(altarBuilderRitual, ConfigHandler.altarBuilderRitual);
+        portalRitual = new RitualPortal();
+        RitualRegistry.registerRitual(portalRitual, ConfigHandler.portalRitual);
     }
 
     public static void initImperfectRituals()

@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.util;
 
-import java.util.ArrayList;
-
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileInventory;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,18 +11,22 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.TileInventory;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.IFluidHandler;
+
+import java.util.ArrayList;
 
 public class Utils
 {
@@ -56,15 +61,11 @@ public class Utils
     }
 
     /**
-     * @see #insertItemToTile(TileInventory, EntityPlayer, int)
-     * 
-     * @param tile
-     *        - The {@link TileInventory} to input the item to
-     * @param player
-     *        - The player to take the item from.
-     * 
+     * @param tile   - The {@link TileInventory} to input the item to
+     * @param player - The player to take the item from.
      * @return {@code true} if the ItemStack is inserted, {@code false}
-     *         otherwise
+     * otherwise
+     * @see #insertItemToTile(TileInventory, EntityPlayer, int)
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player)
     {
@@ -74,18 +75,14 @@ public class Utils
     /**
      * Used for inserting an ItemStack with a stacksize of 1 to a tile's
      * inventory at slot 0
-     * 
+     * <p/>
      * EG: Block Altar
-     * 
-     * @param tile
-     *        - The {@link TileInventory} to input the item to
-     * @param player
-     *        - The player to take the item from.
-     * @param slot
-     *        - The slot to attempt to insert to
-     * 
+     *
+     * @param tile   - The {@link TileInventory} to input the item to
+     * @param player - The player to take the item from.
+     * @param slot   - The slot to attempt to insert to
      * @return {@code true} if the ItemStack is inserted, {@code false}
-     *         otherwise
+     * otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
     {
@@ -112,30 +109,28 @@ public class Utils
 
     /**
      * Gets a default block for each type of {@link EnumAltarComponent}
-     * 
-     * @param component
-     *        - The Component to provide a block for.
-     * 
+     *
+     * @param component - The Component to provide a block for.
      * @return The default Block for the EnumAltarComponent
      */
     public static Block getBlockForComponent(EnumAltarComponent component)
     {
         switch (component)
         {
-        case GLOWSTONE:
-            return Blocks.glowstone;
-        case BLOODSTONE:
-            return ModBlocks.bloodStoneBrick;
-        case BEACON:
-            return Blocks.beacon;
-        case BLOODRUNE:
-            return ModBlocks.bloodRune;
-        case CRYSTAL:
-            return ModBlocks.crystal;
-        case NOTAIR:
-            return Blocks.stonebrick;
-        default:
-            return Blocks.air;
+            case GLOWSTONE:
+                return Blocks.glowstone;
+            case BLOODSTONE:
+                return ModBlocks.bloodStoneBrick;
+            case BEACON:
+                return Blocks.beacon;
+            case BLOODRUNE:
+                return ModBlocks.bloodRune;
+            case CRYSTAL:
+                return ModBlocks.crystal;
+            case NOTAIR:
+                return Blocks.stonebrick;
+            default:
+                return Blocks.air;
         }
     }
 
@@ -248,11 +243,9 @@ public class Utils
     /**
      * Used to determine if stack1 can be placed into stack2. If stack2 is null
      * and stack1 isn't null, returns true. Ignores stack size
-     * 
-     * @param stack1
-     *        Stack that is placed into a slot
-     * @param stack2
-     *        Slot content that stack1 is placed into
+     *
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
      * @return True if they can be combined
      */
     public static boolean canCombine(ItemStack stack1, ItemStack stack2)
@@ -276,10 +269,8 @@ public class Utils
     }
 
     /**
-     * @param stack1
-     *        Stack that is placed into a slot
-     * @param stack2
-     *        Slot content that stack1 is placed into
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
     public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2, int transferMax)
@@ -309,10 +300,8 @@ public class Utils
     }
 
     /**
-     * @param stack1
-     *        Stack that is placed into a slot
-     * @param stack2
-     *        Slot content that stack1 is placed into
+     * @param stack1 Stack that is placed into a slot
+     * @param stack2 Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
     public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2)
@@ -545,5 +534,91 @@ public class Utils
     public static boolean isBlockLiquid(Block block)
     {
         return (block instanceof IFluidBlock || block.getMaterial().isLiquid());
+    }
+
+    //Shamelessly ripped off of CoFH Lib
+    public static boolean fillContainerFromHandler(World world, IFluidHandler handler, EntityPlayer player, FluidStack tankFluid)
+    {
+        ItemStack container = player.getCurrentEquippedItem();
+        if (FluidContainerRegistry.isEmptyContainer(container))
+        {
+            ItemStack returnStack = FluidContainerRegistry.fillFluidContainer(tankFluid, container);
+            FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(returnStack);
+            if (fluid == null || returnStack == null)
+            {
+                return false;
+            }
+            if (!player.capabilities.isCreativeMode)
+            {
+                if (container.stackSize == 1)
+                {
+                    container = container.copy();
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, returnStack);
+                } else if (!player.inventory.addItemStackToInventory(returnStack))
+                {
+                    return false;
+                }
+                handler.drain(EnumFacing.UP, fluid.amount, true);
+                container.stackSize--;
+                if (container.stackSize <= 0)
+                {
+                    container = null;
+                }
+            } else
+            {
+                handler.drain(EnumFacing.UP, fluid.amount, true);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    //Shamelessly ripped off of CoFH Lib
+    public static boolean fillHandlerWithContainer(World world, IFluidHandler handler, EntityPlayer player)
+    {
+        ItemStack container = player.getCurrentEquippedItem();
+        FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(container);
+        if (fluid != null)
+        {
+            if (handler.fill(EnumFacing.UP, fluid, false) == fluid.amount || player.capabilities.isCreativeMode)
+            {
+                if (world.isRemote)
+                {
+                    return true;
+                }
+                handler.fill(EnumFacing.UP, fluid, true);
+                if (!player.capabilities.isCreativeMode)
+                {
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, consumeItem(container));
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Shamelessly ripped off of CoFH Lib
+    public static ItemStack consumeItem(ItemStack stack)
+    {
+        Item item = stack.getItem();
+        boolean largerStack = stack.stackSize > 1;
+        if (largerStack)
+        {
+            stack.stackSize -= 1;
+        }
+        if (item.hasContainerItem(stack))
+        {
+            ItemStack ret = item.getContainerItem(stack);
+            if (ret == null)
+            {
+                return null;
+            }
+            if (ret.isItemStackDamageable() && ret.getItemDamage() > ret.getMaxDamage())
+            {
+                ret = null;
+            }
+            return ret;
+        }
+        return largerStack ? stack : null;
     }
 }

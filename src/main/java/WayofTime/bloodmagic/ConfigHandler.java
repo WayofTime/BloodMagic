@@ -1,21 +1,17 @@
 package WayofTime.bloodmagic;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.Utils;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.Utils;
+
+import java.io.File;
+import java.util.*;
 
 public class ConfigHandler
 {
@@ -25,6 +21,10 @@ public class ConfigHandler
     // Teleposer
     public static String[] teleposerBlacklisting;
     public static ArrayList<BlockStack> teleposerBlacklist = new ArrayList<BlockStack>();
+
+    // Transposition Sigil
+    public static String[] transpositionBlacklisting;
+    public static ArrayList<BlockStack> transpositionBlacklist = new ArrayList<BlockStack>();
 
     // Item/Block Disabling
     public static List<String> itemBlacklist;
@@ -58,6 +58,13 @@ public class ConfigHandler
     public static boolean ritualZephyr;
     public static boolean ritualUpgradeRemove;
     public static boolean ritualArmourEvolve;
+
+    public static boolean cobblestoneRitual;
+    public static boolean placerRitual;
+    public static boolean fellingRitual;
+    public static boolean pumpRitual;
+    public static boolean altarBuilderRitual;
+    public static boolean portalRitual;
 
     // Imperfect Rituals
     public static boolean imperfectRitualNight;
@@ -140,21 +147,26 @@ public class ConfigHandler
         category = "Item/Block Blacklisting";
         config.addCustomCategoryComment(category, "Allows disabling of specific Blocks/Items.\nNote that using this may result in crashes. Use is not supported.");
         config.setCategoryRequiresMcRestart(category, true);
-        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[] {}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
-        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[] {}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
+        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[]{}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
+        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[]{}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
-        buildTeleposerBlacklist();
+        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[]{"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        buildBlacklist(teleposerBlacklisting, teleposerBlacklist);
+
+        category = "Transposition Sigil Blacklist";
+        config.addCustomCategoryComment(category, "Block blacklisting");
+        transpositionBlacklisting = config.getStringList("transpositionBlacklist", category, new String[]{"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        buildBlacklist(transpositionBlacklisting, transpositionBlacklist);
 
         category = "Well of Suffering Blacklist";
         config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
-        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] {}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
+        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[]{}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] { "EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250" }, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[]{"EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250"}, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
         buildEntitySacrificeValues();
 
         category = "Potions";
@@ -239,6 +251,13 @@ public class ConfigHandler
         ritualUpgradeRemove = config.get(category, "ritualRemove", true).getBoolean();
         ritualArmourEvolve = config.get(category, "ritualArmourEvolve", true).getBoolean();
 
+        cobblestoneRitual = config.get(category, "ritualCobblestone", true).getBoolean();
+        placerRitual = config.get(category, "ritualPlacer", true).getBoolean();
+        fellingRitual = config.get(category, "ritualFelling", true).getBoolean();
+        pumpRitual = config.get(category, "ritualPump", true).getBoolean();
+        altarBuilderRitual = config.get(category, "ritualAltarBuilder", true).getBoolean();
+        portalRitual = config.get(category, "ritualPortal", true).getBoolean();
+
         category = "Rituals.Imperfect";
         imperfectRitualNight = config.get(category, "imperfectRitualNight", true).getBoolean();
         imperfectRitualRain = config.get(category, "imperfectRitualRain", true).getBoolean();
@@ -258,22 +277,17 @@ public class ConfigHandler
         config.save();
     }
 
-    private static void buildTeleposerBlacklist()
+    private static void buildBlacklist(String[] blacklisting, List<BlockStack> blockBlacklist)
     {
+        blockBlacklist.clear();
 
-        // Make sure it's empty before setting the blacklist.
-        // Otherwise, reloading the config while in-game will duplicate the
-        // list.
-        teleposerBlacklist.clear();
-
-        for (String blockSet : teleposerBlacklisting)
+        for (String blockSet : blacklisting)
         {
             String[] blockData = blockSet.split(":");
 
             Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
             int meta = 0;
 
-            // If the block follows full syntax: modid:blockname:meta
             if (blockData.length == 3)
             {
                 // Check if it's an int, if so, parse it. If not, set meta to 0
@@ -286,7 +300,7 @@ public class ConfigHandler
                     meta = 0;
             }
 
-            teleposerBlacklist.add(new BlockStack(block, meta));
+            blockBlacklist.add(new BlockStack(block, meta));
         }
     }
 

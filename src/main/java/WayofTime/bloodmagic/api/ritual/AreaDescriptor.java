@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.api.ritual;
 
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos>
 {
@@ -40,11 +40,9 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
          * This constructor takes in the minimum and maximum BlockPos. The
          * maximum offset is non-inclusive, meaning if you pass in (0,0,0) and
          * (1,1,1), calling getContainedPositions() will only give (0,0,0).
-         * 
-         * @param minimumOffset
-         *        -
-         * @param maximumOffset
-         *        -
+         *
+         * @param minimumOffset -
+         * @param maximumOffset -
          */
         public Rectangle(BlockPos minimumOffset, BlockPos maximumOffset)
         {
@@ -96,11 +94,9 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         /**
          * Sets the offsets of the AreaDescriptor in a safe way that will make
          * minimumOffset the lowest corner
-         * 
-         * @param offset1
-         *        -
-         * @param offset2
-         *        -
+         *
+         * @param offset1 -
+         * @param offset2 -
          */
         public void setOffsets(BlockPos offset1, BlockPos offset2)
         {
@@ -278,6 +274,71 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         {
             // TODO Auto-generated method stub
 
+        }
+    }
+
+    public static class Cross extends AreaDescriptor
+    {
+
+        private ArrayList<BlockPos> blockPosCache;
+        private BlockPos cachedPosition;
+
+        private BlockPos centerPos;
+        private int size;
+
+        private boolean cache = true;
+
+        public Cross(BlockPos center, int size)
+        {
+            this.centerPos = center;
+            this.size = size;
+            this.blockPosCache = new ArrayList<BlockPos>();
+        }
+
+        @Override
+        public List<BlockPos> getContainedPositions(BlockPos pos)
+        {
+            if (!cache || !pos.equals(cachedPosition) || blockPosCache.isEmpty())
+            {
+                resetCache();
+
+                blockPosCache.add(centerPos.add(pos));
+                for (int i = 1; i <= size; i++)
+                {
+                    blockPosCache.add(centerPos.add(pos).add(i, 0, 0));
+                    blockPosCache.add(centerPos.add(pos).add(0, 0, i));
+                    blockPosCache.add(centerPos.add(pos).add(-i, 0, 0));
+                    blockPosCache.add(centerPos.add(pos).add(0, 0, -i));
+                }
+            }
+
+            cachedPosition = pos;
+
+            return Collections.unmodifiableList(blockPosCache);
+        }
+
+        @Override
+        public void resetCache()
+        {
+            blockPosCache = new ArrayList<BlockPos>();
+        }
+
+        @Override
+        public boolean isWithinArea(BlockPos pos)
+        {
+            return blockPosCache.contains(pos);
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return false;
+        }
+
+        @Override
+        public BlockPos next()
+        {
+            return null;
         }
     }
 }
