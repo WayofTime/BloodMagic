@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -42,26 +43,18 @@ public class ItemSigilWater extends ItemSigilBase
                     BlockPos blockpos = movingobjectposition.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
-                    {
                         return stack;
-                    }
 
                     if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
-                    {
                         return stack;
-                    }
 
                     BlockPos blockpos1 = blockpos.offset(movingobjectposition.sideHit);
 
                     if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, stack))
-                    {
                         return stack;
-                    }
 
                     if (this.canPlaceWater(world, blockpos1) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceWater(world, blockpos1))
-                    {
                         return stack;
-                    }
                 }
             }
         }
@@ -75,14 +68,10 @@ public class ItemSigilWater extends ItemSigilBase
         super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
 
         if (world.isRemote || player.isSneaking() || isUnusable(stack))
-        {
             return false;
-        }
 
         if (!world.canMineBlockBody(player, blockPos))
-        {
             return false;
-        }
 
         TileEntity tile = world.getTileEntity(blockPos);
         if (tile instanceof IFluidHandler)
@@ -91,52 +80,36 @@ public class ItemSigilWater extends ItemSigilBase
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
             if (amount > 0 && syphonNetwork(stack, player, getLPUsed()))
-            {
                 ((IFluidHandler) tile).fill(side, fluid, true);
-            }
-
             return false;
         }
-        // else if (tile instanceof TESocket) {
-        // return false;
-        // }
+
+        if (world.getBlockState(blockPos).getBlock() == Blocks.cauldron && syphonNetwork(stack, player, getLPUsed())) {
+            world.setBlockState(blockPos, Blocks.cauldron.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
+            return true;
+        }
 
         BlockPos newPos = blockPos.offset(side);
-
-        if (!player.canPlayerEdit(newPos, side, stack))
-        {
-            return false;
-        }
-
-        if (this.canPlaceWater(world, newPos) && syphonNetwork(stack, player, getLPUsed()))
-        {
-            return this.tryPlaceWater(world, newPos);
-        }
-
-        return false;
+        return player.canPlayerEdit(newPos, side, stack) && this.canPlaceWater(world, newPos) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceWater(world, newPos);
     }
 
     public boolean canPlaceWater(World world, BlockPos blockPos)
     {
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid())
-        {
             return false;
-        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
-        {
+        else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
             return false;
-        } else
-        {
+        else
             return true;
-        }
     }
 
     public boolean tryPlaceWater(World worldIn, BlockPos pos)
     {
 
         Material material = worldIn.getBlockState(pos).getBlock().getMaterial();
-        boolean flag = !material.isSolid();
+        boolean notSolid = !material.isSolid();
 
-        if (!worldIn.isAirBlock(pos) && !flag)
+        if (!worldIn.isAirBlock(pos) && !notSolid)
         {
             return false;
         } else
@@ -149,15 +122,11 @@ public class ItemSigilWater extends ItemSigilBase
                 worldIn.playSoundEffect((double) ((float) i + 0.5F), (double) ((float) j + 0.5F), (double) ((float) k + 0.5F), "random.fizz", 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
 
                 for (int l = 0; l < 8; ++l)
-                {
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
-                }
             } else
             {
-                if (!worldIn.isRemote && flag && !material.isLiquid())
-                {
+                if (!worldIn.isRemote && notSolid && !material.isLiquid())
                     worldIn.destroyBlock(pos, true);
-                }
 
                 worldIn.setBlockState(pos, Blocks.flowing_water.getDefaultState(), 3);
             }
