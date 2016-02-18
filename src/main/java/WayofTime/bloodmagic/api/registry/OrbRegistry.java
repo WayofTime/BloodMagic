@@ -6,7 +6,6 @@ import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import com.google.common.collect.ArrayListMultimap;
-import lombok.Getter;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -26,9 +25,7 @@ import java.util.List;
  */
 public class OrbRegistry
 {
-    @Getter
     private static List<BloodOrb> orbs = new ArrayList<BloodOrb>();
-    @Getter
     private static ArrayListMultimap<Integer, ItemStack> tierMap = ArrayListMultimap.create();
 
     private static Item orbItem = Constants.BloodMagicItem.BLOOD_ORB.getItem();
@@ -110,5 +107,13 @@ public class OrbRegistry
     public static ItemStack getOrbStack(BloodOrb orb)
     {
         return new ItemStack(orbItem, 1, getIndexOf(orb));
+    }
+
+    public static List<BloodOrb> getOrbs() {
+        return new ArrayList<BloodOrb>(orbs);
+    }
+
+    public static ArrayListMultimap<Integer, ItemStack> getTierMap() {
+        return ArrayListMultimap.create(tierMap);
     }
 }

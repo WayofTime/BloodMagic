@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.api.registry;
 
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.iface.IHarvestHandler;
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
 
@@ -10,15 +9,10 @@ import java.util.*;
 
 public class HarvestRegistry
 {
-    @Getter
     private static List<IHarvestHandler> handlerList = new ArrayList<IHarvestHandler>();
-    @Getter
     private static Map<Block, Integer> standardCrops = new HashMap<Block, Integer>();
-    @Getter
     private static Set<BlockStack> tallCrops = new HashSet<BlockStack>();
-    @Getter
     private static Map<BlockStack, BlockStack> stemCrops = new HashMap<BlockStack, BlockStack>();
-    @Getter
     private static Map<BlockStack, Integer> amplifierMap = new HashMap<BlockStack, Integer>();
 
     /**
@@ -97,5 +91,25 @@ public class HarvestRegistry
     {
         if (!amplifierMap.containsKey(blockStack))
             amplifierMap.put(blockStack, range);
+    }
+
+    public static List<IHarvestHandler> getHandlerList() {
+        return new ArrayList<IHarvestHandler>(handlerList);
+    }
+
+    public static Map<Block, Integer> getStandardCrops() {
+        return new HashMap<Block, Integer>(standardCrops);
+    }
+
+    public static Set<BlockStack> getTallCrops() {
+        return new HashSet<BlockStack>(tallCrops);
+    }
+
+    public static Map<BlockStack, BlockStack> getStemCrops() {
+        return new HashMap<BlockStack, BlockStack>(stemCrops);
+    }
+
+    public static Map<BlockStack, Integer> getAmplifierMap() {
+        return new HashMap<BlockStack, Integer>(amplifierMap);
     }
 }

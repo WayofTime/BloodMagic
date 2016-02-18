@@ -13,7 +13,6 @@ import javax.annotation.Nullable;
 
 public class AltarRecipeRegistry
 {
-    @Getter
     private static BiMap<ItemStack, AltarRecipe> recipes = HashBiMap.create();
 
     public static void registerRecipe(AltarRecipe recipe)
@@ -91,5 +90,9 @@ public class AltarRecipeRegistry
             return tierCheck.ordinal() >= minTier.ordinal() && this.input.isItemEqual(comparedStack);// &&
             // (this.fillable this.areRequiredTagsEqual(comparedStack) : true);
         }
+    }
+
+    public static BiMap<ItemStack, AltarRecipe> getRecipes() {
+        return HashBiMap.create(recipes);
     }
 }
