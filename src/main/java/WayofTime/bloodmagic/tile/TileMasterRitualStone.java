@@ -93,6 +93,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         active = tag.getBoolean(Constants.NBT.IS_RUNNING);
         activeTime = tag.getInteger(Constants.NBT.RUNTIME);
         direction = EnumFacing.VALUES[tag.getInteger(Constants.NBT.DIRECTION)];
+        redstoned = tag.getBoolean(Constants.NBT.IS_REDSTONED);
     }
 
     @Override
@@ -111,6 +112,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         tag.setBoolean(Constants.NBT.IS_RUNNING, isActive());
         tag.setInteger(Constants.NBT.RUNTIME, getActiveTime());
         tag.setInteger(Constants.NBT.DIRECTION, direction.getIndex());
+        tag.setBoolean(Constants.NBT.IS_REDSTONED, redstoned);
     }
 
     @Override
