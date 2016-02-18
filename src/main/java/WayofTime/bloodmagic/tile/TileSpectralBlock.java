@@ -52,7 +52,7 @@ public class TileSpectralBlock extends TileEntity implements ITickable
 
     private void setContainedBlockInfo(IBlockState blockState)
     {
-        containedBlockName = blockState.getBlock().getUnlocalizedName().substring(5);
+        containedBlockName = Block.blockRegistry.getNameForObject(blockState.getBlock()).toString();
         containedBlockMeta = blockState.getBlock().getMetaFromState(blockState);
     }
 
