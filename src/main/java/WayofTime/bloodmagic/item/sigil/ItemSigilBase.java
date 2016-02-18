@@ -8,13 +8,12 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -53,7 +52,7 @@ public class ItemSigilBase extends ItemBindable implements ISigil
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         if (StatCollector.canTranslate(tooltipBase + "desc"))
-            tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
+            tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
