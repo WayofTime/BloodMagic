@@ -18,7 +18,6 @@ import java.util.Iterator;
 
 public class RitualPump extends Ritual
 {
-
     public static final String PUMP_RANGE = "pumpRange";
 
     private ArrayList<BlockPos> liquidsCache;

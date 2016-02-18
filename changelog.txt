@@ -6,6 +6,13 @@ Version 2.0.0-18
 - Fixed step height issue with C&B stuff. Apparently step height is now 0.6 by default instead of 0.5.
 - Added Ritual: Song of the Cleansing Soul to remove Living Armour upgrades from the armour.
 - Added Ritual: Ritual of Living Evolution, which is used to set the living armour's max upgrade points to 300.
+- Added Ritual: The Timberman to cut down trees. Requires a chest on top of the MRS in order to collect the drops from harvested trees.
+- Added Ritual: Hymn of Syphoning, which syphons up fluids around it in a 16 block radius and puts the fluid in the tank above it.
+- Added Ritual: The Assembly of the High Altar, which places runes and blocks from the inventory above it in the world in the form of a blood altar. Autobuilding altars~
+- Added Ritual: The Gate of the Fold. 
+- Added Ritual: The Filler. Places blocks from the inventory on top of it in the world.
+- Added Ritual: Le Vulcanos Frigius
+
 - Added tooltip to living armour to show the current upgrade points of the armour.
 - Added recipe for the training bracelet. Combine in an anvil with an upgrade tome to set it as the upgrade to train.
 - Ammended range of Zephyr ritual
@@ -14,6 +21,9 @@ Version 2.0.0-18
 - Removed the FOV effect from the Quick Feet speed upgrade.
 - Minor work on the Demon Crucible.
 - Crucibles now fill the tartaric gems of close-by hellfire forges
+- Fixed rituals not correctly re-activating when taking off a redstone signal after reloading the world.
+- Added Teleposition Sigil, which teleports the user to the bound Teleposer.
+- Added Transposition Sigil, which picks up the block clicked on including the NBT of the given tile.
 
 ------------------------------------------------------
 Version 2.0.0-17

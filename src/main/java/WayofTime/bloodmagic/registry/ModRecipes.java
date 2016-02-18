@@ -202,6 +202,8 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_BRIDGE), 600, 50, Blocks.soul_sand, Blocks.soul_sand, "stone", Blocks.obsidian);
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_SEVERANCE), 800, 70, Items.ender_eye, Items.ender_pearl, "ingotGold", "ingotGold");
         TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_COMPRESSION), 2000, 200, "blockIron", "blockGold", Blocks.obsidian, "cobblestone");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TELEPOSITION), 1500, 200, ModBlocks.teleposer, "glowstone", "blockRedstone", "ingotGold");
+        TartaricForgeRecipeRegistry.registerRecipe(ItemComponent.getStack(ItemComponent.REAGENT_TRANSPOSITION), 1500, 200, ModBlocks.teleposer, "gemDiamond", Items.ender_pearl, Blocks.obsidian);
 
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientArmourGem), 240, 150, Items.diamond_chestplate, new ItemStack(ModItems.soulGem, 1, 1), Blocks.iron_block, Blocks.obsidian);
 
