@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -31,6 +32,11 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         setUnlocalizedName(Constants.Mod.MODID + ".sentientArmour.");
         setMaxDamage(250);
         setCreativeTab(BloodMagic.tabBloodMagic);
+    }
+
+    public EnumDemonWillType getDemonWillTypeConsumed(ItemStack stack)
+    {
+        return EnumDemonWillType.DEFAULT;
     }
 
     @Override
@@ -140,11 +146,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         {
             EntityPlayer player = (EntityPlayer) entity;
 
+            EnumDemonWillType type = getDemonWillTypeConsumed(stack);
+
             double willRequired = this.getCostModifier(stack) * damage;
-            double willLeft = PlayerDemonWillHandler.getTotalDemonWill(player);
+            double willLeft = PlayerDemonWillHandler.getTotalDemonWill(type, player);
             if (willLeft >= willRequired)
             {
-                PlayerDemonWillHandler.consumeDemonWill(player, willRequired);
+                PlayerDemonWillHandler.consumeDemonWill(type, player, willRequired);
             } else
             {
                 this.revertArmour(player, stack);

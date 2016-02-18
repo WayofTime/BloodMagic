@@ -19,14 +19,12 @@ public interface IDemonWillGem
      * Returns the number of souls that are left in the soul gem. Returns a
      * double because souls can be fractionally drained.
      * 
-     * @param willGemStack
-     * @return
      */
-    public double getWill(ItemStack willGemStack);
+    public double getWill(EnumDemonWillType type, ItemStack willGemStack);
 
-    public void setWill(ItemStack willGemStack, double amount);
+    public void setWill(EnumDemonWillType type, ItemStack willGemStack, double amount);
 
-    public int getMaxWill(ItemStack willGemStack);
+    public int getMaxWill(EnumDemonWillType type, ItemStack willGemStack);
 
-    public double drainWill(ItemStack stack, double drainAmount);
+    public double drainWill(EnumDemonWillType type, ItemStack stack, double drainAmount);
 }

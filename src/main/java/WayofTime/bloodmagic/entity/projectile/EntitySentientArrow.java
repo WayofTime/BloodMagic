@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 
 public class EntitySentientArrow extends EntityArrow
@@ -37,7 +38,7 @@ public class EntitySentientArrow extends EntityArrow
     {
         if (this.shootingEntity instanceof EntityPlayer)
         {
-            PlayerDemonWillHandler.addDemonWill((EntityPlayer) this.shootingEntity, reimbursedAmountOnHit);
+            PlayerDemonWillHandler.addDemonWill(EnumDemonWillType.DEFAULT, (EntityPlayer) this.shootingEntity, reimbursedAmountOnHit);
         }
     }
 

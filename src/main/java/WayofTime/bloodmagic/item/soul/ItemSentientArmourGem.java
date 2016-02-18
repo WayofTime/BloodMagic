@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 
@@ -26,6 +27,11 @@ public class ItemSentientArmourGem extends Item
         setUnlocalizedName(Constants.Mod.MODID + ".sentientArmourGem");
         setRegistryName(Constants.BloodMagicItem.SENTIENT_ARMOR_GEM.getRegName());
         setMaxStackSize(1);
+    }
+
+    public EnumDemonWillType getCurrentType(ItemStack stack)
+    {
+        return EnumDemonWillType.DEFAULT;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class ItemSentientArmourGem extends Item
             ItemSentientArmour.revertAllArmour(player);
         } else
         {
-            double will = PlayerDemonWillHandler.getTotalDemonWill(player);
+            double will = PlayerDemonWillHandler.getTotalDemonWill(getCurrentType(stack), player);
 
             int bracket = getWillBracket(will);
 

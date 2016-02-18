@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
  */
 public class PlayerDemonWillHandler
 {
-    public static double getTotalDemonWill(EntityPlayer player)
+    public static double getTotalDemonWill(EnumDemonWillType type, EntityPlayer player)
     {
         ItemStack[] inventory = player.inventory.mainInventory;
         double souls = 0;
@@ -29,7 +29,7 @@ public class PlayerDemonWillHandler
                     souls += ((IDemonWill) stack.getItem()).getWill(stack);
                 } else if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    souls += ((IDemonWillGem) stack.getItem()).getWill(stack);
+                    souls += ((IDemonWillGem) stack.getItem()).getWill(type, stack);
                 }
             }
         }
@@ -42,7 +42,7 @@ public class PlayerDemonWillHandler
      * return true.
      * 
      */
-    public static boolean isDemonWillFull(EntityPlayer player)
+    public static boolean isDemonWillFull(EnumDemonWillType type, EntityPlayer player)
     {
         ItemStack[] inventory = player.inventory.mainInventory;
 
@@ -55,7 +55,7 @@ public class PlayerDemonWillHandler
                 if (stack.getItem() instanceof IDemonWillGem)
                 {
                     hasGem = true;
-                    if (((IDemonWillGem) stack.getItem()).getWill(stack) < ((IDemonWillGem) stack.getItem()).getMaxWill(stack))
+                    if (((IDemonWillGem) stack.getItem()).getWill(type, stack) < ((IDemonWillGem) stack.getItem()).getMaxWill(type, stack))
                     {
                         return false;
                     }
@@ -72,7 +72,7 @@ public class PlayerDemonWillHandler
      * @param amount
      * @return - amount consumed
      */
-    public static double consumeDemonWill(EntityPlayer player, double amount)
+    public static double consumeDemonWill(EnumDemonWillType type, EntityPlayer player, double amount)
     {
         double consumed = 0;
 
@@ -97,7 +97,7 @@ public class PlayerDemonWillHandler
                     }
                 } else if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    consumed += ((IDemonWillGem) stack.getItem()).drainWill(stack, amount - consumed);
+                    consumed += ((IDemonWillGem) stack.getItem()).drainWill(type, stack, amount - consumed);
                 }
             }
         }
@@ -142,7 +142,7 @@ public class PlayerDemonWillHandler
         return soulStack;
     }
 
-    public static double addDemonWill(EntityPlayer player, double amount)
+    public static double addDemonWill(EnumDemonWillType type, EntityPlayer player, double amount)
     {
         ItemStack[] inventory = player.inventory.mainInventory;
         double remaining = amount;
@@ -154,9 +154,9 @@ public class PlayerDemonWillHandler
             {
                 if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    double souls = ((IDemonWillGem) stack.getItem()).getWill(stack);
-                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(stack) - souls, remaining);
-                    ((IDemonWillGem) stack.getItem()).setWill(stack, fill + souls);
+                    double souls = ((IDemonWillGem) stack.getItem()).getWill(type, stack);
+                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(type, stack) - souls, remaining);
+                    ((IDemonWillGem) stack.getItem()).setWill(type, stack, fill + souls);
                     remaining -= fill;
 
                     if (remaining <= 0)
@@ -170,7 +170,7 @@ public class PlayerDemonWillHandler
         return amount - remaining;
     }
 
-    public static double addDemonWill(EntityPlayer player, double amount, ItemStack ignored)
+    public static double addDemonWill(EnumDemonWillType type, EntityPlayer player, double amount, ItemStack ignored)
     {
         ItemStack[] inventory = player.inventory.mainInventory;
         double remaining = amount;
@@ -182,9 +182,9 @@ public class PlayerDemonWillHandler
             {
                 if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    double souls = ((IDemonWillGem) stack.getItem()).getWill(stack);
-                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(stack) - souls, remaining);
-                    ((IDemonWillGem) stack.getItem()).setWill(stack, fill + souls);
+                    double souls = ((IDemonWillGem) stack.getItem()).getWill(type, stack);
+                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(type, stack) - souls, remaining);
+                    ((IDemonWillGem) stack.getItem()).setWill(type, stack, fill + souls);
                     remaining -= fill;
 
                     if (remaining <= 0)

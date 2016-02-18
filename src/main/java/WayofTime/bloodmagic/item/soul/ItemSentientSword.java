@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.iface.IActivatable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,6 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
@@ -46,6 +47,11 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
+    public EnumDemonWillType getCurrentType(ItemStack stack)
+    {
+        return EnumDemonWillType.DEFAULT;
+    }
+
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
@@ -54,7 +60,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
 
         if (getActivated(stack))
         {
-            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(player);
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(getCurrentType(stack), player);
             int level = getLevel(stack, soulsRemaining);
 
             double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
@@ -119,7 +125,8 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
             double drain = this.getDrainOfActivatedSword(stack);
             if (drain > 0)
             {
-                double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(player);
+                EnumDemonWillType type = getCurrentType(stack);
+                double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
 
                 if (drain > soulsRemaining)
                 {
@@ -127,7 +134,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
                     return false;
                 } else
                 {
-                    PlayerDemonWillHandler.consumeDemonWill(player, drain);
+                    PlayerDemonWillHandler.consumeDemonWill(type, player, drain);
                 }
             }
         }

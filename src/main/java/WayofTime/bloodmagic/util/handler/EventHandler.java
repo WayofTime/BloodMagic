@@ -47,6 +47,7 @@ import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
@@ -623,7 +624,7 @@ public class EventHandler
 
             ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 
-            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(player))
+            if (remainder == null || ((IDemonWill) stack.getItem()).getWill(stack) < 0.0001 || PlayerDemonWillHandler.isDemonWillFull(EnumDemonWillType.DEFAULT, player))
             {
                 stack.stackSize = 0;
                 event.setResult(Result.ALLOW);

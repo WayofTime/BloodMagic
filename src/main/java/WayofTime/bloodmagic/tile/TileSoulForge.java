@@ -174,7 +174,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             if (soulStack.getItem() instanceof IDemonWillGem)
             {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-                return soul.getWill(soulStack);
+                return soul.getWill(EnumDemonWillType.DEFAULT, soulStack);
             }
         }
 
@@ -201,7 +201,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             if (soulStack.getItem() instanceof IDemonWillGem)
             {
                 IDemonWillGem soul = (IDemonWillGem) soulStack.getItem();
-                return soul.drainWill(soulStack, requested);
+                return soul.drainWill(EnumDemonWillType.DEFAULT, soulStack, requested);
             }
         }
 
@@ -258,8 +258,8 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         IDemonWillGem willGem = (IDemonWillGem) stack.getItem();
 
-        double maxWill = willGem.getMaxWill(stack);
-        double current = willGem.getWill(stack);
+        double maxWill = willGem.getMaxWill(type, stack);
+        double current = willGem.getWill(type, stack);
 
         if (!doFill)
         {
@@ -270,11 +270,11 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         if (amount < filled)
         {
-            willGem.setWill(stack, current + amount);
+            willGem.setWill(type, stack, current + amount);
             filled = amount;
         } else
         {
-            willGem.setWill(stack, maxWill);
+            willGem.setWill(type, stack, maxWill);
         }
 
         return filled;
@@ -292,7 +292,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
         IDemonWillGem willGem = (IDemonWillGem) stack.getItem();
 
         double drained = amount;
-        double current = willGem.getWill(stack);
+        double current = willGem.getWill(type, stack);
         if (current < drained)
         {
             drained = current;
@@ -300,7 +300,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
 
         if (doDrain)
         {
-            drained = willGem.drainWill(stack, drained);
+            drained = willGem.drainWill(type, stack, drained);
         }
 
         return drained;
