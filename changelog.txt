@@ -7,7 +7,7 @@ Version 2.0.0-18
 - Added Ritual: Song of the Cleansing Soul to remove Living Armour upgrades from the armour.
 - Added Ritual: Ritual of Living Evolution, which is used to set the living armour's max upgrade points to 300.
 - Added Ritual: The Timberman to cut down trees. Requires a chest on top of the MRS in order to collect the drops from harvested trees.
-- Added Ritual: Hymn of Syphoning, which syphons up fluids around it in a 16 block radius and puts the fluid in the tank above it.
+- Added Ritual: Hymn of Syphoning, which syphons up fluids around it in a 16 block radius and puts the fluid in the tank above it. The tank above it must have at least one bucket of the fluid you want to syphon inside of it.
 - Added Ritual: The Assembly of the High Altar, which places runes and blocks from the inventory above it in the world in the form of a blood altar. Autobuilding altars~
 - Added Ritual: The Gate of the Fold. 
 - Added Ritual: The Filler. Places blocks from the inventory on top of it in the world.
