@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +27,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     public HashMap<EnumDemonWillType, Double> willMap = new HashMap<EnumDemonWillType, Double>();
     public final int maxWill = 100;
     public final double maxTransferPerTick = 1;
-    public final double thresholdFill = 0.01;
+    public final double thresholdFill = 0.0;
     public final double gemDrainRate = 10;
 
     public int internalCounter = 0;
@@ -120,6 +121,7 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
 
             double maxWeight = 0;
             List<IDemonWillConduit> tileList = new ArrayList<IDemonWillConduit>();
+            Collections.shuffle(tileList);
 
             Iterator<BlockPos> iterator = conduitList.iterator();
             while (iterator.hasNext())
@@ -140,38 +142,64 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
             {
                 for (EnumDemonWillType type : EnumDemonWillType.values())
                 {
+                    List<IDemonWillConduit> copyTileList = new ArrayList<IDemonWillConduit>();
+                    copyTileList.addAll(tileList);
+
                     double currentAmount = this.getCurrentWill(type);
                     if (currentAmount <= 0)
                     {
                         continue;
                     }
 
-                    for (IDemonWillConduit conduit : tileList)
+                    double transfered = 0;
+                    double newMaxWeight = 0;
+                    double transferTotalLastRound = 0;
+
+                    int pass = 0;
+                    final int maxPasses = 2;
+                    while (pass < maxPasses && transfered < maxTransferPerTick && maxWeight > 0)
                     {
-                        if (!conduit.canFill(type))
+                        pass++;
+                        newMaxWeight = 0;
+                        Iterator<IDemonWillConduit> conduitIterator = copyTileList.iterator();
+
+                        while (conduitIterator.hasNext())
                         {
-                            continue;
+                            IDemonWillConduit conduit = conduitIterator.next();
+
+                            if (!conduit.canFill(type))
+                            {
+                                conduitIterator.remove();
+                                continue;
+                            }
+
+                            newMaxWeight += conduit.getWeight();
+                            double transfer = Math.min(currentAmount, conduit.getWeight() * (maxTransferPerTick - transferTotalLastRound) / maxWeight);
+                            if (transfer <= 0)
+                            {
+                                conduitIterator.remove();
+                                continue;
+                            }
+
+                            double conduitAmount = conduit.getCurrentWill(type);
+
+                            if (currentAmount - conduitAmount <= thresholdFill) // Will only fill if this conduit's amount is greater than the conduit it is filling.
+                            {
+                                conduitIterator.remove();
+                                continue;
+                            }
+
+                            transfer = conduit.fillDemonWill(type, transfer, false);
+                            if (transfer > 0)
+                            {
+                                conduit.fillDemonWill(type, transfer, true);
+                                currentAmount -= transfer;
+                                transfered += transfer;
+                            }
                         }
 
-                        double transfer = Math.min(currentAmount, conduit.getWeight() * maxTransferPerTick / maxWeight);
-                        if (transfer <= 0)
-                        {
-                            break;
-                        }
-
-                        double conduitAmount = conduit.getCurrentWill(type);
-
-                        if (currentAmount - conduitAmount <= thresholdFill) // Will only fill if this conduit's amount is greater than the conduit it is filling.
-                        {
-                            continue;
-                        }
-
-                        transfer = conduit.fillDemonWill(type, transfer, false);
-                        if (transfer > 0)
-                        {
-                            conduit.fillDemonWill(type, transfer, true);
-                            currentAmount -= transfer;
-                        }
+                        maxWeight = newMaxWeight;
+                        transferTotalLastRound = transfered;
                     }
 
                     if (currentAmount <= 0)
