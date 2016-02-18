@@ -21,7 +21,6 @@ public class AlchemyArrayRecipeRegistry
 {
     public static final AlchemyCircleRenderer defaultRenderer = new AlchemyCircleRenderer(new ResourceLocation("bloodmagic", "textures/models/AlchemyArrays/BaseArray.png"));
 
-    @Getter
     private static BiMap<ItemStackWrapper, AlchemyArrayRecipe> recipes = HashBiMap.create();
 
     /**
@@ -222,5 +221,9 @@ public class AlchemyArrayRecipeRegistry
 
             return null;
         }
+    }
+
+    public static BiMap<ItemStackWrapper, AlchemyArrayRecipe> getRecipes() {
+        return HashBiMap.create(recipes);
     }
 }

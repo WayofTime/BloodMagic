@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.api.registry;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -11,7 +10,6 @@ import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 
 public class TartaricForgeRecipeRegistry
 {
-    @Getter
     private static List<TartaricForgeRecipe> recipeList = new ArrayList<TartaricForgeRecipe>();
 
     public static void registerRecipe(TartaricForgeRecipe recipe)
@@ -35,5 +33,9 @@ public class TartaricForgeRecipeRegistry
         }
 
         return null;
+    }
+
+    public static List<TartaricForgeRecipe> getRecipeList() {
+        return new ArrayList<TartaricForgeRecipe>(recipeList);
     }
 }
