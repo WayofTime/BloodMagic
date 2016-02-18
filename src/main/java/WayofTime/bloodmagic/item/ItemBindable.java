@@ -60,6 +60,10 @@ public class ItemBindable extends Item implements IBindable
             {
                 IBindable itemBindable = (IBindable) stack.getItem();
                 String owner = itemBindable.getOwnerUUID(stack);
+
+                if (Strings.isNullOrEmpty(owner))
+                    return false;
+
                 SoulNetwork network = NetworkHelper.getSoulNetwork(owner);
                 return NetworkHelper.syphonAndDamage(network, player, lpUsed);
             }
