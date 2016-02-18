@@ -22,16 +22,19 @@ import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 @JEIPlugin
-public class BloodMagicPlugin implements IModPlugin
+public class BloodMagicPlugin extends BlankModPlugin
 {
     public static IJeiHelpers jeiHelper;
 
     @Override
-    public void register(IModRegistry registry)
+    public void register(@Nonnull IModRegistry registry)
     {
+        jeiHelper = registry.getJeiHelpers();
+
         registry.addRecipeCategories(new AltarRecipeCategory(), new BindingRecipeCategory(), new AlchemyArrayCraftingCategory(), new TartaricForgeRecipeCategory());
 
         registry.addRecipeHandlers(new AltarRecipeHandler(), new BindingRecipeHandler(), new AlchemyArrayCraftingRecipeHandler(), new TartaricForgeRecipeHandler(), new ShapedOrbRecipeHandler(), new ShapelessOrbRecipeHandler());
@@ -69,28 +72,5 @@ public class BloodMagicPlugin implements IModPlugin
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.Z_COORD);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.DIMENSION_ID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.ITEM_INVENTORY);
-    }
-
-    @Override
-    public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers)
-    {
-        jeiHelper = jeiHelpers;
-    }
-
-    @Override
-    public void onItemRegistryAvailable(IItemRegistry itemRegistry)
-    {
-
-    }
-
-    @Override
-    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry)
-    {
-
-    }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-
     }
 }
