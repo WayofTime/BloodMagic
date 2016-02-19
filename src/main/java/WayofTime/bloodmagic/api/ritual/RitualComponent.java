@@ -31,6 +31,11 @@ public class RitualComponent
         }
     }
 
+    public int getY()
+    {
+        return this.getOffset().getY();
+    }
+
     public int getZ(EnumFacing direction)
     {
         switch (direction)
