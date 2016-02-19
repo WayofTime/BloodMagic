@@ -26,7 +26,6 @@ import org.lwjgl.opengl.GL11;
 
 public final class ShaderHelper
 {
-
     private static final int VERT_ST = ARBVertexShader.GL_VERTEX_SHADER_ARB;
     private static final int FRAG_ST = ARBFragmentShader.GL_FRAGMENT_SHADER_ARB;
 
