@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.proxy;
 
-import WayofTime.bloodmagic.client.helper.MiscIcons;
 import WayofTime.bloodmagic.client.render.*;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -54,7 +53,6 @@ public class ClientProxy extends CommonProxy
 
         OBJLoader.instance.addDomain(Constants.Mod.MODID);
 
-        MinecraftForge.EVENT_BUS.register(MiscIcons.INSTANCE);
         ModBlocks.initRenders();
         ModItems.initRenders();
 
@@ -75,8 +73,6 @@ public class ClientProxy extends CommonProxy
         ModelLoader.setCustomMeshDefinition(ModItems.boundAxe, new CustomMeshDefinitionActivatable("ItemBoundAxe"));
         ModelLoader.setCustomMeshDefinition(ModItems.boundPickaxe, new CustomMeshDefinitionActivatable("ItemBoundPickaxe"));
         ModelLoader.setCustomMeshDefinition(ModItems.boundSword, new CustomMeshDefinitionActivatable("ItemBoundSword"));
-
-        MinecraftForge.EVENT_BUS.register(new RenderRitualDiviner());
 
         ShaderHelper.init();
     }

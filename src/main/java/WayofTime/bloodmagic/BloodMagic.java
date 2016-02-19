@@ -7,6 +7,7 @@ import WayofTime.bloodmagic.util.handler.IMCHandler;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -56,6 +57,9 @@ public class BloodMagic
             return ModItems.upgradeTome;
         }
     };
+
+    @Getter
+    private static boolean isDev = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     private LogHelper logger = new LogHelper(Constants.Mod.MODID);
     private File configDir;

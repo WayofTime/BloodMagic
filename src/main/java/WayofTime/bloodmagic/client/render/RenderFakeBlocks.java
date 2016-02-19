@@ -1,4 +1,4 @@
-package WayofTime.bloodmagic.client.helper;
+package WayofTime.bloodmagic.client.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
@@ -14,9 +14,7 @@ public class RenderFakeBlocks
     public static void drawFakeBlock(TextureAtlasSprite texture, double minX, double minY, double minZ, World world)
     {
         if (texture == null)
-        {
             return;
-        }
 
         double maxX = minX + 1;
         double maxY = minY + 1;
@@ -26,7 +24,6 @@ public class RenderFakeBlocks
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
 
         wr.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-//        wr.setColorRGBA(255, 255, 255, 200);
 
         float texMinU = texture.getMinU();
         float texMinV = texture.getMinV();
