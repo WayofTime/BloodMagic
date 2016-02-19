@@ -17,19 +17,6 @@ Blood Magic is an arcane art that is practiced by mages who attempt to gather a 
 * [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J7SNY7L82PQ82)
 * [Patreon](https://www.patreon.com/BloodMagic)
 
-##Issue Reporting
-
-Please include the following:
-
-* Minecraft version
-* Blood Magic version
-* Forge version/build
-* Versions of any mods potentially related to the issue
-* Any relevant screenshots are greatly appreciated.
-* For crashes:
- * Steps to reproduce
- * ForgeModLoader-client-0.log (the FML log) from the root folder of the client 
-
 ##Development Setup
 
 1. Fork this project to your own Github repository and clone it to your desktop.
@@ -61,31 +48,6 @@ Add to your build.gradle:
     }
     
 `<BLOODMAGIC-VERSION>` can be found on CurseForge (or via the Maven itself), check the file name of the version you want.
-
-##Contributing
-
-With the 1.8 rewrite comes a need to keep the code *clean*. Pull Requests will be looked over a bit stricter from now on.
-
-When you wish to contribute, please keep these points in mind:
-
-###Do:
-* Only make 1 commit for each major change. 
-    * This helps avoid "polluting" the Git history.
-* Squash extra commits.
-    * See above.
-* Describe each and every change you make in your Pull Request.
-    * This lets everybody know exactly what is going on for easy discussion.
-* Make short yet descriptive commit titles.
-    * Feel free to give a very basic overview of the commit in the message, then use the description to go into detail.
-* Keep your formatting the same as the project. 
-    * This will be expanded upon at a later date.
-
-###Do not:
-* Make unnecessary changes to files.
-    * If you don't need to touch it, don't touch it. 
-    * This includes: *renaming args*, *renaming files*, *editing formatting*, etc.
-* Use obfuscated names for parameters. 
-    * This makes the code look messier and less "professional".
 
 ##Custom Builds
 
