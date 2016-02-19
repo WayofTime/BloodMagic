@@ -200,4 +200,26 @@ public class ItemSoulGem extends Item implements IDemonWillGem
 
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
+
+    @Override
+    public double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount)
+    {
+        if (!type.equals(getCurrentType(stack)))
+        {
+            return 0;
+        }
+
+        double current = this.getWill(type, stack);
+        double maxWill = this.getMaxWill(type, stack);
+
+        double filled = Math.min(fillAmount, maxWill - current);
+
+        if (filled > 0)
+        {
+            this.setWill(type, stack, filled + current);
+            return filled;
+        }
+
+        return 0;
+    }
 }

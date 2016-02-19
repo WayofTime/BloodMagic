@@ -154,10 +154,7 @@ public class PlayerDemonWillHandler
             {
                 if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    double souls = ((IDemonWillGem) stack.getItem()).getWill(type, stack);
-                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(type, stack) - souls, remaining);
-                    ((IDemonWillGem) stack.getItem()).setWill(type, stack, fill + souls);
-                    remaining -= fill;
+                    remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining);
 
                     if (remaining <= 0)
                     {
@@ -182,10 +179,7 @@ public class PlayerDemonWillHandler
             {
                 if (stack.getItem() instanceof IDemonWillGem)
                 {
-                    double souls = ((IDemonWillGem) stack.getItem()).getWill(type, stack);
-                    double fill = Math.min(((IDemonWillGem) stack.getItem()).getMaxWill(type, stack) - souls, remaining);
-                    ((IDemonWillGem) stack.getItem()).setWill(type, stack, fill + souls);
-                    remaining -= fill;
+                    remaining -= ((IDemonWillGem) stack.getItem()).fillWill(type, stack, remaining);
 
                     if (remaining <= 0)
                     {

@@ -266,16 +266,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             return Math.min(maxWill - current, amount);
         }
 
-        double filled = maxWill - current;
-
-        if (amount < filled)
-        {
-            willGem.setWill(type, stack, current + amount);
-            filled = amount;
-        } else
-        {
-            willGem.setWill(type, stack, maxWill);
-        }
+        double filled = willGem.fillWill(type, stack, amount);
 
         return filled;
     }

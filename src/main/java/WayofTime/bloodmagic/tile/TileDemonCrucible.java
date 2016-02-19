@@ -81,10 +81,10 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
                         if (willMap.containsKey(type))
                         {
                             double current = willMap.get(type);
-                            double fillAmount = Math.min(gemDrainRate, Math.min(current, gemItem.getMaxWill(type, stack) - gemItem.getWill(type, stack)));
+                            double fillAmount = Math.min(gemDrainRate, current);
                             if (fillAmount > 0)
                             {
-                                gemItem.setWill(type, stack, fillAmount + gemItem.getWill(type, stack));
+                                fillAmount = gemItem.fillWill(type, stack, fillAmount);
                                 if (willMap.get(type) - fillAmount <= 0)
                                 {
                                     willMap.remove(type);
