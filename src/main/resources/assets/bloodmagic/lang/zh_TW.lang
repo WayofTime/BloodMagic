@@ -9,8 +9,8 @@ item.BloodMagic.activationCrystal.creative.name=[創造模式]激活水晶
 
 item.BloodMagic.sacrificialDagger.normal.name=犧牲匕首
 item.BloodMagic.sacrificialDagger.creative.name=創造模式犧牲匕首
-item.BloodMagic.pack.selfSacrifice.name=Blood Letter's Pack
-item.BloodMagic.pack.sacrifice.name=Coat of Arms
+item.BloodMagic.pack.selfSacrifice.name=血文背包
+item.BloodMagic.pack.sacrifice.name=紋章血甲
 item.BloodMagic.daggerOfSacrifice.name=獻祭刀
 
 item.BloodMagic.lavaCrystal.name=熔岩晶體
@@ -79,6 +79,13 @@ item.BloodMagic.baseComponent.reagentSuppression.name=抑制試劑
 item.BloodMagic.baseComponent.frameParts.name=框架部件
 item.BloodMagic.baseComponent.reagentBloodLight.name=血光試劑
 item.BloodMagic.baseComponent.reagentMagnetism.name=磁引試劑
+item.BloodMagic.baseComponent.reagentHaste.name=急速試劑
+item.BloodMagic.baseComponent.reagentBridge.name=影橋試劑
+item.BloodMagic.baseComponent.reagentCompression.name=壓縮試劑
+item.BloodMagic.baseComponent.reagentSeverance.name=驅散試劑
+
+item.BloodMagic.baseComponent.reagentTeleposition.name=轉送試劑
+item.BloodMagic.baseComponent.reagentTransposition.name=移位試劑
 
 item.BloodMagic.monsterSoul.base.name=惡魔慾望
 
@@ -100,6 +107,9 @@ item.BloodMagic.sigil.phantomBridge.name=影橋印記
 item.BloodMagic.sigil.whirlwind.name=旋風印記
 item.BloodMagic.sigil.enderSeverance.name=終末印記
 
+item.BloodMagic.sigil.teleposition.name=轉送印記
+item.BloodMagic.sigil.transposition.name=移位印記
+
 item.BloodMagic.livingArmour.helmet.name=生命頭盔
 item.BloodMagic.livingArmour.chest.name=生命胸甲
 item.BloodMagic.livingArmour.legs.name=生命護腿
@@ -117,6 +127,7 @@ item.BloodMagic.ritualDivinerdawn.name=儀式占杖[黎明]
 
 item.BloodMagic.arcaneAshes.name=奧法灰燼
 item.BloodMagic.upgradeTome.name=生命護甲升級經文
+item.BloodMagic.upgradeTrainer.name=生命護甲培養環
 
 item.BloodMagic.sentientSword.name=感知劍
 item.BloodMagic.soulGem.petty.name=貧脊酒石晶
@@ -124,11 +135,11 @@ item.BloodMagic.soulGem.lesser.name=次級酒石晶
 item.BloodMagic.soulGem.common.name=普通酒石晶
 item.BloodMagic.soulGem.greater.name=上等酒石晶
 item.BloodMagic.soulGem.grand.name=稀世酒石晶
-item.BloodMagic.soulSnare.base.name=Rudimentary Snare
+item.BloodMagic.soulSnare.base.name=簡易套索
 item.BloodMagic.sentientBow.name=感知弓
 item.BloodMagic.sentientArmourGem.name=感知護甲寶石
 
-item.BloodMagic.nodeRouter.name=Node Router
+item.BloodMagic.nodeRouter.name=節點路由
 item.BloodMagic.itemFilter.exact.name=精確物品篩選器
 item.BloodMagic.itemFilter.ignoreNBT.name=NBT物品篩選器
 item.BloodMagic.itemFilter.modItems.name=模組物品篩選器
@@ -166,15 +177,16 @@ tile.BloodMagic.ritualStone.dawn.name=黎明之儀式石
 
 tile.BloodMagic.bloodstonebrick.large.name=大血石磚
 tile.BloodMagic.bloodstonebrick.brick.name=血石磚
-tile.BloodMagic.crystal.large.name=晶簇
+tile.BloodMagic.crystal.large.name=晶簇方塊
 tile.BloodMagic.crystal.brick.name=晶簇磚
 tile.BloodMagic.bloodLight.name=血光
 tile.BloodMagic.spectralBlock.name=波譜方塊
-tile.BloodMagic.phantomBlock.name=幻象方塊
+tile.BloodMagic.phantom.name=幻象方塊
 tile.BloodMagic.incenseAltar.name=香壇
 
 tile.BloodMagic.teleposer.name=轉送器
 tile.BloodMagic.soulForge.name=獄炎融爐
+tile.BloodMagic.demonCrucible.name=惡魔坩堝
 
 tile.BloodMagic.masterRouting.name=魔導師路由節點
 tile.BloodMagic.outputRouting.name=輸出路由節點
@@ -182,23 +194,26 @@ tile.BloodMagic.inputRouting.name=輸入路由節點
 tile.BloodMagic.itemRouting.name=路由節點
 
 tile.BloodMagic.path.wood.name=木材通路
-tile.BloodMagic.path.woodTile.name=平木通路
+tile.BloodMagic.path.woodTile.name=平滑木通路
 tile.BloodMagic.path.stone.name=石磚通路
-tile.BloodMagic.path.stoneTile.name=平石通路
+tile.BloodMagic.path.stoneTile.name=平滑石通路
 tile.BloodMagic.path.wornstone.name=裂石磚通路
-tile.BloodMagic.path.wornstoneTile.name=平裂石通路
+tile.BloodMagic.path.wornstoneTile.name=平滑裂石通路
 tile.BloodMagic.path.obsidian.name=黑曜石通路
-tile.BloodMagic.path.obsidianTile.name=平黑曜石通路
+tile.BloodMagic.path.obsidianTile.name=平滑黑曜石通路
 
-# Tooltips
-tooltip.BloodMagic.orb.desc=Stores raw Life Essence
+tile.BloodMagic.dimensionalPortal.name=維度傳送門
+tile.BloodMagic.bloodTank.name=血槽
+
+# 工具提示
+tooltip.BloodMagic.orb.desc=儲存生命精華
 tooltip.BloodMagic.orb.owner=Added by: %s
 tooltip.BloodMagic.currentOwner=Current owner: %s
 tooltip.BloodMagic.currentTier=Current tier: %d
 tooltip.BloodMagic.config.disabled=Currently disabled in the Config
 
-tooltip.BloodMagic.activated=Activated
-tooltip.BloodMagic.deactivated=Deactivated
+tooltip.BloodMagic.activated=啟用
+tooltip.BloodMagic.deactivated=未啟用
 
 tooltip.BloodMagic.sigil.air.desc=&oI feel lighter already...
 tooltip.BloodMagic.sigil.bloodLight.desc=&oI see a light!
@@ -233,6 +248,9 @@ tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
 tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
 
+tooltip.BloodMagic.sigil.teleposition.desc=I am very close to being moved by this.
+tooltip.BloodMagic.sigil.transposition.desc=Feel the power of the Force, my young apprentice.
+
 tooltip.BloodMagic.bound.sword.desc=&oCulling the weak
 tooltip.BloodMagic.bound.pickaxe.desc=&oDestroying stone without mercy
 tooltip.BloodMagic.bound.axe.desc=&oDemonic deforestation
@@ -242,12 +260,12 @@ tooltip.BloodMagic.sacrificialDagger.desc=Just a prick of the finger will suffic
 tooltip.BloodMagic.slate.desc=Infused stone inside of a Blood Altar
 tooltip.BloodMagic.inscriber.desc=The writing is on the wall...
 
-tooltip.BloodMagic.pack.selfSacrifice.desc=This pack really chafes...
+tooltip.BloodMagic.pack.selfSacrifice.desc=這背包戴起來好痛…
 tooltip.BloodMagic.pack.sacrifice.desc=Description
 tooltip.BloodMagic.pack.stored=Stored: %,d LP
 
-tooltip.BloodMagic.activationCrystal.weak=Activates low-level rituals
-tooltip.BloodMagic.activationCrystal.awakened=Activates more powerful rituals
+tooltip.BloodMagic.activationCrystal.weak=居動低階儀式
+tooltip.BloodMagic.activationCrystal.awakened=驅動更強大的儀式
 tooltip.BloodMagic.activationCrystal.creative=Creative Only - Activates any ritual
 
 tooltip.BloodMagic.diviner.currentRitual=Current Ritual: 
@@ -259,10 +277,10 @@ tooltip.BloodMagic.diviner.earthRune=Earth Runes: %d
 tooltip.BloodMagic.diviner.duskRune=Dusk Runes: %d
 tooltip.BloodMagic.diviner.dawnRune=Dawn Runes: %d
 tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
-tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
+tooltip.BloodMagic.diviner.extraInfo=按shift顯示額外資訊
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
 
-tooltip.BloodMagic.arcaneAshes=Ashes used to draw an alchemy circle
+tooltip.BloodMagic.arcaneAshes=灑一個圈以用於煉金術
 
 tooltip.BloodMagic.telepositionFocus.coords=Current coordinates: (%,d, %,d, %,d)
 tooltip.BloodMagic.telepositionFocus.dimension=Dimension ID: %d
@@ -280,8 +298,13 @@ tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=Tough Skin
 tooltip.BloodMagic.livingArmour.upgrade.health=Healthy
 tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=Fierce Strike
 tooltip.BloodMagic.livingArmour.upgrade.arrowShot=Trick Shot
+tooltip.BloodMagic.livingArmour.upgrade.stepAssist=Step Assist
+tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
+tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
+tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
+tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
-tooltip.BloodMagic.livingArmour.hasGoggles=&oContains Goggles of Revealing
+tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
 tooltip.BloodMagic.will=Will Quality: %1$,.2f
 tooltip.BloodMagic.sentientSword.desc=Uses demon will to unleash its full potential.
@@ -297,7 +320,11 @@ tooltip.BloodMagic.itemFilter.ignoreNBT=Ignores the NBT of the filter
 tooltip.BloodMagic.itemFilter.modItems=Matches all items from the same mod
 tooltip.BloodMagic.itemFilter.oreDict=Used to filter through the Ore Dictionary
 
-# Ritual
+tooltip.BloodMagic.fluid.type=Fluid Contained
+tooltip.BloodMagic.fluid.amount=Amount
+tooltip.BloodMagic.fluid.capacity=Capacity
+
+# 儀式
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
 ritual.BloodMagic.lavaRitual=Serenade of the Nether
@@ -316,6 +343,15 @@ ritual.BloodMagic.speedRitual=Ritual of Speed
 ritual.BloodMagic.suppressionRitual=Ritual of Suppression
 ritual.BloodMagic.expulsionRitual=Aura of Expulsion
 ritual.BloodMagic.zephyrRitual=Call of the Zephyr
+ritual.BloodMagic.upgradeRemoveRitual=Sound of the Cleansing Soul
+ritual.BloodMagic.armourEvolveRitual=Ritual of Living Evolution
+
+ritual.BloodMagic.cobblestoneRitual=Le Vulcanos Frigius
+ritual.BloodMagic.placerRitual=The Filler
+ritual.BloodMagic.fellingRitual=The Timberman
+ritual.BloodMagic.pumpRitual=Hymn of Siphoning
+ritual.BloodMagic.altarBuilderRitual=The Assembly of the High Altar
+ritual.BloodMagic.portalRitual=The Gate of the Fold
 
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
@@ -323,33 +359,34 @@ chat.BloodMagic.altarMaker.building=Building a Tier %d Altar
 chat.BloodMagic.altarMaker.destroy=Destroyed a Tier %d Altar
 chat.BloodMagic.altarMaker.creativeOnly=This is a creative only item.
 
-chat.BloodMagic.damageSource=%s's soul became too weak
+chat.BloodMagic.damageSource=%s的靈魂變得過於虛弱
 
-chat.BloodMagic.ritual.weak=You feel a push, but are too weak to perform this ritual.
-chat.BloodMagic.ritual.prevent=The ritual is actively resisting you!
-chat.BloodMagic.ritual.activate=A rush of energy flows through the ritual!
-chat.BloodMagic.ritual.notValid=You feel that these runes are not configured correctly...
+chat.BloodMagic.ritual.weak=你感到一股力量，但是過於微弱，不足以驅動儀式。
+chat.BloodMagic.ritual.prevent=你受到儀式劇烈的抗拒！
+chat.BloodMagic.ritual.activate=能量快速的在儀式中流竄！
+chat.BloodMagic.ritual.notValid=你感覺這些符文的配置似乎不大正確…
 
-chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
-chat.BloodMagic.livingArmour.newUpgrade=Upgrade acquired!
+chat.BloodMagic.livingArmour.upgrade.poisonRemove=你的狀態已好轉！
+chat.BloodMagic.livingArmour.upgrade.grimReaper=&6一股陰暗的力量將你從死亡邊緣拉回！
+chat.BloodMagic.livingArmour.newUpgrade=&4取得升級！
 
 # JustEnoughItems
-jei.BloodMagic.recipe.altar=Blood Altar
-jei.BloodMagic.recipe.binding=Binding Ritual
-jei.BloodMagic.recipe.alchemyArrayCrafting=Alchemy Array
-jei.BloodMagic.recipe.soulForge=Hellfire Forge
+jei.BloodMagic.recipe.altar=血祭壇
+jei.BloodMagic.recipe.binding=Alchemy Array (Binding)
+jei.BloodMagic.recipe.alchemyArrayCrafting=煉金矩陣
+jei.BloodMagic.recipe.soulForge=獄炎融爐
 jei.BloodMagic.recipe.requiredLP=LP: %,d
 jei.BloodMagic.recipe.requiredTier=Tier: %d
 jei.BloodMagic.recipe.consumptionRate=Consumption: %,d LP/t
 jei.BloodMagic.recipe.drainRate=Drain: %,d LP/t
-jei.BloodMagic.recipe.minimumSouls=Minimum: %1$,.2f Will 
-jei.BloodMagic.recipe.soulsDrained=Drained: %1$,.2f Will 
+jei.BloodMagic.recipe.minimumSouls=Minimum: %1$,.2f Will
+jei.BloodMagic.recipe.soulsDrained=Drained: %1$,.2f Will
 
 jei.BloodMagic.desc.altarBuilder=A creative-only item for use in debugging and testing.\n\nShift + Right click to change the tier to build. Right click an Altar to initiate the build.\n\nBreak an Altar while holding to dismantle it.
-jei.BloodMagic.desc.demonicWill=An imprint of a demonic entity attached to a creature.\n\nCan be obtained by killing a mob with a sentient weapon or by throwing a snare at a mob and killing it while it has white particles.
+jei.BloodMagic.desc.demonicWill=惡魔憑依在生物身上而產生的印記。\n\n透過持感知武器殺死敵人獲得。或以簡易套索擲向敵人，使其顯現出白光後殺死以取得。
 
 # WAILA
-waila.BloodMagic.sneak=&oSneak for Information
+waila.BloodMagic.sneak=&o潛行展開詳細資訊
 waila.BloodMagic.array.reagent=Reagent: %s
 waila.BloodMagic.array.catalyst=Catalyst: %s
 option.BloodMagic.bypassSneak=Bypass Sneak
@@ -358,3 +395,10 @@ option.BloodMagic.ritualController=儀式石
 option.BloodMagic.teleposer=轉送器
 option.BloodMagic.array=煉金矩陣
 
+# Thaumcraft
+tc.research_category.BLOODMAGIC=血儀術
+
+# Thaumcraft Research
+bloodmagic.research_name.BLOODMAGIC=血魔法
+bloodmagic.research_text.BLOODMAGIC=血儀術
+bloodmagic.research_page.BLOODMAGIC.1=血魔法的領域一直令人感到孤僻， 而血術師的"獨門"祕法更是出名的悖離人群，常使人感到瘋狂。 然而自我犧牲與生命精華的力量甚至能擁有平凡血術師所難以估計的強大力量， 顯然秘術使可以把它作為某些用途！
