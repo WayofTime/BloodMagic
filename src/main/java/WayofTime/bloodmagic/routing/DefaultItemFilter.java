@@ -5,7 +5,10 @@ import java.util.List;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.util.Utils;
 
 /**
@@ -72,6 +75,11 @@ public class DefaultItemFilter implements IItemFilter
         testStack = inputStack.copy();
         testStack.stackSize -= changeAmount;
 
+        TileEntity tile = (TileEntity) accessedInventory;
+        World world = tile.getWorld();
+        BlockPos pos = tile.getPos();
+        world.markBlockForUpdate(pos);
+
         return testStack;
     }
 
@@ -123,6 +131,11 @@ public class DefaultItemFilter implements IItemFilter
                 //Nothing has changed. Moving on!
                 continue;
             }
+
+            TileEntity tile = (TileEntity) accessedInventory;
+            World world = tile.getWorld();
+            BlockPos pos = tile.getPos();
+            world.markBlockForUpdate(pos);
 
             inputStack.stackSize -= changeAmount;
             maxTransfer -= changeAmount;

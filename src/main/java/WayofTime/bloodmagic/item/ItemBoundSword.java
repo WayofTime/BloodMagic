@@ -40,7 +40,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         setRegistryName(Constants.BloodMagicItem.BOUND_SWORD.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
 
-        this.attackDamage = 4.0F + ModItems.boundToolMaterial.getDamageVsEntity();
+        this.attackDamage = 1.0F + ModItems.boundToolMaterial.getDamageVsEntity();
     }
 
     @Override
@@ -95,7 +95,8 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
         double damage = getActivated(stack) ? this.attackDamage : 1.0D;
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", damage, 0));
