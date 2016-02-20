@@ -50,6 +50,7 @@ public class BloodMagicPlugin extends BlankModPlugin
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.bloodLight));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.alchemyArray));
 
         for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
         {
