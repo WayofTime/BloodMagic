@@ -78,6 +78,7 @@ public class LivingArmour implements ILivingArmour
                 if (upgradePointDifference >= 0 && totalUpgradePoints + upgradePointDifference <= maxUpgradePoints)
                 {
                     upgradeMap.put(key, upgrade);
+                    totalUpgradePoints += upgradePointDifference;
                     notifyPlayerOfUpgrade(user, upgrade);
                     return true;
                 }
@@ -88,6 +89,7 @@ public class LivingArmour implements ILivingArmour
             if (totalUpgradePoints + upgradePoints <= maxUpgradePoints)
             {
                 upgradeMap.put(key, upgrade);
+                totalUpgradePoints += upgradePoints;
                 notifyPlayerOfUpgrade(user, upgrade);
                 return true;
             }
