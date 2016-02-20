@@ -113,11 +113,10 @@ public class RitualCrushing extends Ritual
             }
 
             world.setBlockToAir(newPos);
+            network.syphon(getRefreshCost());
 
             break;
         }
-
-        network.syphon(getRefreshCost());
     }
 
     @Override

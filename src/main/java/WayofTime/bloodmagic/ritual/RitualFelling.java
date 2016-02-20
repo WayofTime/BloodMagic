@@ -77,7 +77,7 @@ public class RitualFelling extends Ritual
     @Override
     public int getRefreshCost()
     {
-        return 30;
+        return 10;
     }
 
     @Override
