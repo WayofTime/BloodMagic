@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 2.0.0-19
+------------------------------------------------------
+- Fixed path blocks so they are actually craftable.
+
+------------------------------------------------------
 Version 2.0.0-18
 ------------------------------------------------------
 - Fixed issue with lava crystal working even their is no LP available.

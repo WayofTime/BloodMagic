@@ -54,7 +54,7 @@ public class ShapelessBloodOrbRecipe implements IRecipe
                     tier = ((IBloodOrb) in).getOrbLevel(0);
                     input.add(tier);
                 }
-            }else if (in instanceof ItemStack)
+            } else if (in instanceof ItemStack)
             {
                 input.add(((ItemStack) in).copy());
             } else if (in instanceof Item)
@@ -154,9 +154,9 @@ public class ShapelessBloodOrbRecipe implements IRecipe
                     } else if (next instanceof ItemStack)
                     {
                         match = OreDictionary.itemMatches((ItemStack) next, slot, false);
-                    } else if (next instanceof ArrayList)
+                    } else if (next instanceof List)
                     {
-                        Iterator<ItemStack> itr = ((ArrayList<ItemStack>) next).iterator();
+                        Iterator<ItemStack> itr = ((List<ItemStack>) next).iterator();
                         while (itr.hasNext() && !match)
                         {
                             match = OreDictionary.itemMatches(itr.next(), slot, false);
