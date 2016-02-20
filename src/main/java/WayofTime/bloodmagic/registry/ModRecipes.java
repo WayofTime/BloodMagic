@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.block.BlockBloodRune;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -87,6 +88,9 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.pathBlock, 4, 5), new ItemStack(ModBlocks.pathBlock, 1, 4), new ItemStack(ModBlocks.pathBlock, 1, 4), new ItemStack(ModBlocks.pathBlock, 1, 4), new ItemStack(ModBlocks.pathBlock, 1, 4)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.pathBlock, 4, 6), Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, Blocks.obsidian, OrbRegistry.getOrbStack(ModItems.orbMagician)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.pathBlock, 4, 7), new ItemStack(ModBlocks.pathBlock, 1, 6), new ItemStack(ModBlocks.pathBlock, 1, 6), new ItemStack(ModBlocks.pathBlock, 1, 6), new ItemStack(ModBlocks.pathBlock, 1, 6)));
+
+        for (int i = 1; i < BlockBloodRune.names.length; i++)
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodRune), new ItemStack(ModBlocks.bloodRune, 1, i)));
     }
 
     public static void addAltarRecipes()
