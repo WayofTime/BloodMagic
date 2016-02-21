@@ -1,18 +1,10 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.teleport.PortalLocation;
-import WayofTime.bloodmagic.api.teleport.TeleportQueue;
-import WayofTime.bloodmagic.block.base.BlockIntegerContainer;
-import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
-import WayofTime.bloodmagic.ritual.portal.Teleports;
-import WayofTime.bloodmagic.tile.TileDimensionalPortal;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import java.util.ArrayList;
+import java.util.Random;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -23,9 +15,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.Random;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.teleport.PortalLocation;
+import WayofTime.bloodmagic.api.teleport.TeleportQueue;
+import WayofTime.bloodmagic.block.base.BlockIntegerContainer;
+import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
+import WayofTime.bloodmagic.ritual.portal.Teleports;
+import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 
 public class BlockDimensionalPortal extends BlockIntegerContainer
 {
@@ -72,7 +70,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     @Override
     public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState blockState, Entity entity)
     {
-        if (!world.isRemote && world.getTileEntity(pos) instanceof TileDimensionalPortal && !(entity instanceof EntityFX))
+        if (!world.isRemote && world.getTileEntity(pos) instanceof TileDimensionalPortal)
         {
             TileDimensionalPortal tile = (TileDimensionalPortal) world.getTileEntity(pos);
 
@@ -84,7 +82,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
                 {
                     if (world.getTileEntity(tile.getMasterStonePos()) != null && world.getTileEntity(tile.getMasterStonePos()) instanceof IMasterRitualStone)
                     {
-                        TileMasterRitualStone masterRitualStone = (TileMasterRitualStone) world.getTileEntity(tile.getMasterStonePos());
+                        IMasterRitualStone masterRitualStone = (IMasterRitualStone) world.getTileEntity(tile.getMasterStonePos());
                         if (linkedLocations.get(0).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimensionId())))
                         {
                             PortalLocation portal = linkedLocations.get(1);
@@ -95,7 +93,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
                             {
                                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), world, portal.getDimension()));
                             }
-                        } else if (linkedLocations.get(1).equals(new PortalLocation(tile.masterStoneX, tile.masterStoneY + 1, tile.masterStoneZ, world.provider.getDimensionId())))
+                        } else if (linkedLocations.get(1).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimensionId())))
                         {
                             PortalLocation portal = linkedLocations.get(0);
                             if (portal.getDimension() == world.provider.getDimensionId())
@@ -145,7 +143,6 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     {
         return EnumWorldBlockLayer.TRANSLUCENT;
     }
-
 
     @Override
     @SideOnly(Side.CLIENT)
