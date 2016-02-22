@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.util.handler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -16,8 +18,11 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -33,11 +38,15 @@ import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import thaumcraft.common.lib.aura.AuraHandler;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -47,6 +56,7 @@ import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
@@ -55,6 +65,9 @@ import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.demonAura.PosXY;
+import WayofTime.bloodmagic.demonAura.WillChunk;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
@@ -87,6 +100,7 @@ import com.google.common.base.Strings;
 public class EventHandler
 {
     Random random = new Random();
+    HashMap<Integer, Integer> serverTicks = new HashMap<Integer, Integer>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityDeath(LivingDeathEvent event)
@@ -115,6 +129,80 @@ public class EventHandler
                     armour.writeDirtyToNBT(ItemLivingArmour.getArmourTag(chestStack));
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onServerWorldTick(TickEvent.WorldTickEvent event)
+    {
+        if (event.side == Side.CLIENT)
+        {
+            return;
+        }
+        int dim = event.world.provider.getDimensionId();
+        if (event.phase == TickEvent.Phase.END)
+        {
+            if (!this.serverTicks.containsKey(Integer.valueOf(dim)))
+            {
+                this.serverTicks.put(Integer.valueOf(dim), Integer.valueOf(0));
+            }
+
+            int ticks = ((Integer) this.serverTicks.get(Integer.valueOf(dim))).intValue();
+
+            if (ticks % 20 == 0)
+            {
+                CopyOnWriteArrayList<PosXY> dirtyChunks = WorldDemonWillHandler.dirtyChunks.get(Integer.valueOf(dim));
+                if ((dirtyChunks != null) && (dirtyChunks.size() > 0))
+                {
+                    for (PosXY pos : dirtyChunks)
+                    {
+                        event.world.markChunkDirty(new BlockPos(pos.x * 16, 5, pos.y * 16), null);
+                    }
+
+                    dirtyChunks.clear();
+                }
+            }
+
+            this.serverTicks.put(Integer.valueOf(dim), Integer.valueOf(ticks + 1));
+        }
+
+    }
+
+    @SubscribeEvent
+    public void chunkSave(ChunkDataEvent.Save event)
+    {
+        int dim = event.world.provider.getDimensionId();
+        ChunkCoordIntPair loc = event.getChunk().getChunkCoordIntPair();
+
+        NBTTagCompound nbt = new NBTTagCompound();
+        event.getData().setTag("BloodMagic", nbt);
+
+        WillChunk ac = WorldDemonWillHandler.getWillChunk(dim, loc.chunkXPos, loc.chunkZPos);
+        if (ac != null)
+        {
+            nbt.setShort("base", ac.getBase());
+            ac.getCurrentWill().writeToNBT(nbt, "current");
+            if (!event.getChunk().isLoaded())
+            {
+                WorldDemonWillHandler.removeWillChunk(dim, loc.chunkXPos, loc.chunkZPos);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void chunkLoad(ChunkDataEvent.Load event)
+    {
+        int dim = event.world.provider.getDimensionId();
+        if (event.getData().getCompoundTag("BloodMagic").hasKey("base"))
+        {
+            NBTTagCompound nbt = event.getData().getCompoundTag("BloodMagic");
+            short base = nbt.getShort("base");
+            DemonWillHolder current = new DemonWillHolder();
+            current.readFromNBT(nbt, "current");
+            WorldDemonWillHandler.addWillChunk(dim, event.getChunk(), base, current);
+        } else
+        {
+            WorldDemonWillHandler.generateWill(event.getChunk());
         }
     }
 
