@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.block.base.BlockString;
+import WayofTime.bloodmagic.registry.ModBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
@@ -37,5 +38,13 @@ public class BlockRitualStone extends BlockString implements IRitualStone
     public boolean isRuneType(World world, BlockPos pos, EnumRuneType runeType)
     {
         return runeType.toString().equals(names[getMetaFromState(world.getBlockState(pos))]);
+    }
+
+    @Override
+    public void setRuneType(World world, BlockPos pos, EnumRuneType runeType)
+    {
+        int meta = runeType.ordinal();
+        IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
+        world.setBlockState(pos, newState);
     }
 }
