@@ -13,10 +13,12 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
 public class TileSoulForge extends TileInventory implements ITickable, IDemonWillConduit
 {
     public static final int ticksRequired = 100;
+    public static final double worldWillTransferRate = 1;
 
     public static final int soulSlot = 4;
     public static final int outputSlot = 5;
@@ -49,10 +51,33 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     @Override
     public void update()
     {
+        if (worldObj.isRemote)
+        {
+            return;
+        }
+
         if (!hasSoulGemOrSoul())
         {
             burnTime = 0;
             return;
+        }
+
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            double willInWorld = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+            double filled = Math.min(willInWorld, worldWillTransferRate);
+
+            if (filled > 0)
+            {
+                filled = this.fillDemonWill(type, filled, false);
+                filled = WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, false);
+
+                if (filled > 0)
+                {
+                    this.fillDemonWill(type, filled, true);
+                    WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, true);
+                }
+            }
         }
 
         double soulsInGem = getWill();
@@ -98,6 +123,7 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
                 burnTime = 0;
             }
         }
+
     }
 
     public double getProgressForGui()

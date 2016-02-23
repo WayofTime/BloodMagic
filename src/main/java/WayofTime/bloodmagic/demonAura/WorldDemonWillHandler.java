@@ -105,9 +105,33 @@ public class WorldDemonWillHandler
         return fill;
     }
 
+    public static double fillWill(World world, BlockPos pos, EnumDemonWillType type, double amount, boolean doFill)
+    {
+        WillChunk willChunk = getWillChunk(world, pos);
+
+        DemonWillHolder currentWill = willChunk.getCurrentWill();
+        if (!doFill)
+        {
+            return amount;
+        }
+
+        currentWill.addWill(type, amount);
+        markChunkAsDirty(willChunk, world.provider.getDimensionId());
+
+        return amount;
+    }
+
     public static WillChunk getWillChunk(World world, BlockPos pos)
     {
         return getWillChunk(world.provider.getDimensionId(), pos.getX() >> 4, pos.getZ() >> 4);
+    }
+
+    public static double getCurrentWill(World world, BlockPos pos, EnumDemonWillType type)
+    {
+        WillChunk willChunk = getWillChunk(world, pos);
+
+        DemonWillHolder currentWill = willChunk.getCurrentWill();
+        return currentWill.getWill(type);
     }
 
     private static void markChunkAsDirty(WillChunk chunk, int dim)

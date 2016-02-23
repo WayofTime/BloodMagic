@@ -187,6 +187,7 @@ tile.BloodMagic.incenseAltar.name=Incense Altar
 tile.BloodMagic.teleposer.name=Teleposer
 tile.BloodMagic.soulForge.name=Hellfire Forge
 tile.BloodMagic.demonCrucible.name=Demon Crucible
+tile.BloodMagic.demonPylon.name=Demon Pylon
 
 tile.BloodMagic.masterRouting.name=Master Routing Node
 tile.BloodMagic.outputRouting.name=Output Routing Node

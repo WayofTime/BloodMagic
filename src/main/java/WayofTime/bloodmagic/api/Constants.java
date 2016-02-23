@@ -244,6 +244,7 @@ public class Constants
         INCENSE_ALTAR("BlockIncenseAltar"),
         PATH("BlockPath"),
         DEMON_CRUCIBLE("BlockDemonCrucible"),
+        DEMON_PYLON("BlockDemonPylon"),
         DIMENSIONAL_PORTAL("BlockDimensionalPortal"),
         BLOOD_TANK("BlockBloodTank");
 
