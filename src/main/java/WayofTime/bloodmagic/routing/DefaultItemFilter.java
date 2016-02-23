@@ -88,7 +88,7 @@ public class DefaultItemFilter implements IItemFilter
      * the input inventory to the output inventory.
      */
     @Override
-    public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
+    public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
         if (accessedInventory instanceof ISidedInventory)
@@ -141,7 +141,11 @@ public class DefaultItemFilter implements IItemFilter
             maxTransfer -= changeAmount;
 
             accessedInventory.setInventorySlotContents(slot, inputStack.stackSize <= 0 ? null : inputStack); //Sets the slot in the inventory
+
+            return changeAmount;
         }
+
+        return 0;
     }
 
     @Override

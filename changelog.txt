@@ -2,6 +2,8 @@
 Version 2.0.0-19
 ------------------------------------------------------
 - Fixed path blocks so they are actually craftable.
+- Added gui stuff to enable priority in the item routing system: nodes with a lower value priority will be accessed first. (May be rotated in the future)
+- Grayed out the currently active side's button in the item routers.
 
 ------------------------------------------------------
 Version 2.0.0-18

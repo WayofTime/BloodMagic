@@ -26,7 +26,7 @@ public interface IItemFilter
      * This method is only called on an input filter to transfer ItemStacks from
      * the input inventory to the output inventory.
      */
-    public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer);
+    public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer);
 
     public boolean doesStackMatchFilter(ItemStack testStack);
 

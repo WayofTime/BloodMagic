@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.tile.routing;
 
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,6 +9,7 @@ import net.minecraft.util.EnumFacing;
 public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedInventory
 {
     public int currentActiveSlot = 0;
+    public int[] priorities = new int[6];
 
     public TileFilteredRoutingNode(int size, String name)
     {
@@ -37,6 +39,11 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     {
         super.readFromNBT(tag);
         currentActiveSlot = tag.getInteger("currentSlot");
+        priorities = tag.getIntArray(Constants.NBT.ROUTING_PRIORITY);
+        if (priorities.length != 6)
+        {
+            priorities = new int[6];
+        }
     }
 
     @Override
@@ -44,6 +51,7 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     {
         super.writeToNBT(tag);
         tag.setInteger("currentSlot", currentActiveSlot);
+        tag.setIntArray(Constants.NBT.ROUTING_PRIORITY, priorities);
     }
 
     public void swapFilters(int requestedSlot)
@@ -71,5 +79,21 @@ public class TileFilteredRoutingNode extends TileRoutingNode implements ISidedIn
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
     {
         return false;
+    }
+
+    @Override
+    public int getPriority(EnumFacing side)
+    {
+        return priorities[side.getIndex()];
+    }
+
+    public void incrementCurrentPriotiryToMaximum(int max)
+    {
+        priorities[currentActiveSlot] = Math.min(priorities[currentActiveSlot] + 1, max);
+    }
+
+    public void decrementCurrentPriority()
+    {
+        priorities[currentActiveSlot] = Math.max(priorities[currentActiveSlot] - 1, 0);
     }
 }

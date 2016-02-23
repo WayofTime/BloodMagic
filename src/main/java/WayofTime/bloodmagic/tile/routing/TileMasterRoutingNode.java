@@ -114,6 +114,8 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             }
         }
 
+        int maxTransfer = 8;
+
         for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
         {
             List<IItemFilter> outputList = outputEntry.getValue();
@@ -124,7 +126,11 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                     List<IItemFilter> inputList = inputEntry.getValue();
                     for (IItemFilter inputFilter : inputList)
                     {
-                        inputFilter.transferThroughInputFilter(outputFilter, 8);
+                        maxTransfer -= inputFilter.transferThroughInputFilter(outputFilter, maxTransfer);
+                        if (maxTransfer <= 0)
+                        {
+                            return;
+                        }
                     }
                 }
             }

@@ -215,7 +215,7 @@ public class TestItemFilter implements IItemFilter
      * the input inventory to the output inventory.
      */
     @Override
-    public void transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
+    public int transferThroughInputFilter(IItemFilter outputFilter, int maxTransfer)
     {
         boolean[] canAccessSlot = new boolean[accessedInventory.getSizeInventory()];
         if (accessedInventory instanceof ISidedInventory)
@@ -290,7 +290,11 @@ public class TestItemFilter implements IItemFilter
                     }
                 }
             }
+
+            return changeAmount;
         }
+
+        return 0;
     }
 
     @Override

@@ -66,7 +66,19 @@ public class ItemRouterButtonPacketProcessor implements IMessage, IMessageHandle
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileFilteredRoutingNode)
             {
-                ((TileFilteredRoutingNode) tile).swapFilters(buttonPress);
+                if (buttonPress >= 6)
+                {
+                    if (buttonPress == 6)
+                    {
+                        ((TileFilteredRoutingNode) tile).incrementCurrentPriotiryToMaximum(9);
+                    } else if (buttonPress == 7)
+                    {
+                        ((TileFilteredRoutingNode) tile).decrementCurrentPriority();
+                    }
+                } else
+                {
+                    ((TileFilteredRoutingNode) tile).swapFilters(buttonPress);
+                }
             }
         }
     }
