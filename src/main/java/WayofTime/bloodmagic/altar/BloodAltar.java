@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -73,6 +75,7 @@ public class BloodAltar implements IFluidHandler
 
     private int cooldownAfterCrafting = 60;
 
+    private AltarRecipe recipe;
     private ItemStack result;
 
     public BloodAltar(TileAltar tileAltar)
@@ -311,6 +314,7 @@ public class BloodAltar implements IFluidHandler
                 if (recipe.doesRequiredItemMatch(tileAltar.getStackInSlot(0), altarTier))
                 {
                     this.isActive = true;
+                    this.recipe = recipe;
                     this.result = recipe.getOutput() == null ? null : new ItemStack(recipe.getOutput().getItem(), 1, recipe.getOutput().getMetadata());
                     this.liquidRequired = recipe.getSyphon();
                     this.canBeFilled = recipe.isFillable();
@@ -448,6 +452,7 @@ public class BloodAltar implements IFluidHandler
                     if (result != null)
                         result.stackSize *= stackSize;
 
+                    MinecraftForge.EVENT_BUS.post(new AltarCraftedEvent(recipe, result));
                     tileAltar.setInventorySlotContents(0, result);
                     progress = 0;
 
