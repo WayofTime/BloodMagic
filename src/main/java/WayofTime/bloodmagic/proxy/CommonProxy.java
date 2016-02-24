@@ -1,11 +1,14 @@
 package WayofTime.bloodmagic.proxy;
 
+import WayofTime.bloodmagic.api.ritual.CapabilityRuneType;
+import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
 import WayofTime.bloodmagic.util.handler.EventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CommonProxy
 {
@@ -29,7 +32,7 @@ public class CommonProxy
 
     public void init()
     {
-
+        CapabilityManager.INSTANCE.register(IRitualStone.Tile.class, new CapabilityRuneType.RuneTypeStorage(),  new CapabilityRuneType.Factory());
     }
 
     public void postInit()

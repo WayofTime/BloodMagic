@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,7 +27,6 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.registry.ModBlocks;
@@ -111,18 +111,15 @@ public class ItemRitualDiviner extends Item
                     BlockPos newPos = pos.add(offset);
                     IBlockState state = world.getBlockState(newPos);
                     Block block = state.getBlock();
-                    if (block instanceof IRitualStone)
-                    { // TODO: Check tile
-                      // entity as well.
-                        if (((IRitualStone) block).isRuneType(world, newPos, component.getRuneType()))
+                    if (RitualHelper.isRune(world, newPos))
+                    {
+                        if (RitualHelper.isRuneType(world, newPos, component.getRuneType()))
                         {
                             continue;
                         } else
                         {
                             // Replace existing ritual stone
-                            int meta = component.getRuneType().ordinal();
-                            IBlockState newState = ModBlocks.ritualStone.getStateFromMeta(meta);
-                            world.setBlockState(newPos, newState);
+                            RitualHelper.setRuneType(world, newPos, component.getRuneType());
                             return true;
                         }
                     } else if (block.isAir(world, newPos))
