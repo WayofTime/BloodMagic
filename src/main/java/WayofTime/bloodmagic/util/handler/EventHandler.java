@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
+import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -46,7 +48,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import thaumcraft.common.lib.aura.AuraHandler;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
@@ -269,6 +270,15 @@ public class EventHandler
             {
                 player.moveFlying(0F, 1F, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onAltarCrafted(AltarCraftedEvent event)
+    {
+        if (event.getOutput().getItem() instanceof ItemInscriptionTool) {
+            NBTHelper.checkNBT(event.getOutput());
+            event.getOutput().getTagCompound().setInteger(Constants.NBT.USES, 10);
         }
     }
 

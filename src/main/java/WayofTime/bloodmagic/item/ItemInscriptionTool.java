@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +19,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO - NBT based damage
 public class ItemInscriptionTool extends ItemBindable
 {
     public ItemInscriptionTool()
@@ -42,22 +42,48 @@ public class ItemInscriptionTool extends ItemBindable
     public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
     {
         for (int i = 1; i < EnumRuneType.values().length; i++)
-            list.add(new ItemStack(id, 1, i));
+        {
+            ItemStack stack = NBTHelper.checkNBT(new ItemStack(id, 1, i));
+            stack.getTagCompound().setInteger(Constants.NBT.USES, 10);
+            list.add(stack);
+        }
     }
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-
         IBlockState state = world.getBlockState(pos);
 
         if (state.getBlock() instanceof BlockRitualStone && !((BlockRitualStone) state.getBlock()).isRuneType(world, pos, getType(stack)))
         {
+            stack = NBTHelper.checkNBT(stack);
+            int uses = stack.getTagCompound().getInteger(Constants.NBT.USES);
+
             world.setBlockState(pos, state.withProperty(((BlockRitualStone) state.getBlock()).getStringProp(), getType(stack).getName()));
+            if (!player.capabilities.isCreativeMode)
+            {
+                stack.getTagCompound().setInteger(Constants.NBT.USES, --uses);
+                if (uses <= 0)
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+            }
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        int uses = stack.getTagCompound().getInteger(Constants.NBT.USES);
+
+        return 1.0 - ((double) uses / (double) 10);
     }
 
     @Override
