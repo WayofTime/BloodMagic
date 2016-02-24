@@ -21,6 +21,7 @@ import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 import mezz.jei.api.*;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class BloodMagicPlugin extends BlankModPlugin
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.spectralBlock));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.phantomBlock));
         jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.alchemyArray));
+        jeiHelper.getItemBlacklist().addItemToBlacklist(new ItemStack(ModBlocks.dimensionalPortal, 1, OreDictionary.WILDCARD_VALUE));
 
         for (Map.Entry<String, Integer> entry : LivingArmourHandler.upgradeMaxLevelMap.entrySet())
         {
@@ -67,6 +69,7 @@ public class BloodMagicPlugin extends BlankModPlugin
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);
+        jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.USES);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.SOULS);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.X_COORD);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.Y_COORD);

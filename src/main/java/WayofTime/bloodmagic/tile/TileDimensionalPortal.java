@@ -1,13 +1,14 @@
 package WayofTime.bloodmagic.tile;
 
 import WayofTime.bloodmagic.ritual.RitualPortal;
+import com.google.common.base.Strings;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 
 public class TileDimensionalPortal extends TileEntity
 {
-    public String portalID;
+    public String portalID = "";
     public int masterStoneX;
     public int masterStoneY;
     public int masterStoneZ;
@@ -32,7 +33,7 @@ public class TileDimensionalPortal extends TileEntity
     {
         super.writeToNBT(tagCompound);
 
-        tagCompound.setString(RitualPortal.PORTAL_ID_TAG, portalID);
+        tagCompound.setString(RitualPortal.PORTAL_ID_TAG, Strings.isNullOrEmpty(portalID) ? "" : portalID);
 
         tagCompound.setInteger("masterStoneX", masterStoneX);
         tagCompound.setInteger("masterStoneY", masterStoneY);

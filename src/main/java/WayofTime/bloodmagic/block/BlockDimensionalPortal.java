@@ -33,7 +33,6 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
         super(Material.portal, 2);
         setUnlocalizedName(Constants.Mod.MODID + ".dimensionalPortal");
         setRegistryName(Constants.BloodMagicBlock.DIMENSIONAL_PORTAL.getRegName());
-        setCreativeTab(BloodMagic.tabBloodMagic);
         setBlockUnbreakable();
         setResistance(2000);
         setLightOpacity(0);

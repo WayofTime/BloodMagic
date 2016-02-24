@@ -62,7 +62,6 @@ public class LocationsHandler implements Serializable
             return map;
         } catch (IOException e)
         {
-            e.printStackTrace();
             return null;
         } catch (ClassNotFoundException e)
         {
