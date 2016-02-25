@@ -1,18 +1,22 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.item.ItemComponent;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
 
 public class RitualCobblestone extends Ritual
 {

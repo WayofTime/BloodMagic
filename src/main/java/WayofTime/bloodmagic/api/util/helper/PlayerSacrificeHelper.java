@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
 public class PlayerSacrificeHelper
 {

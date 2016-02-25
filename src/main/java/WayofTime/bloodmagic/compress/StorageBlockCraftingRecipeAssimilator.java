@@ -1,6 +1,12 @@
 package WayofTime.bloodmagic.compress;
 
-import WayofTime.bloodmagic.BloodMagic;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -13,8 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import java.util.*;
+import WayofTime.bloodmagic.BloodMagic;
 
 public class StorageBlockCraftingRecipeAssimilator
 {

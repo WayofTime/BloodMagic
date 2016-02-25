@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilAir extends ItemSigilBase
 {

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.compat.waila;
 
+import mcp.mobius.waila.api.IWailaRegistrar;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockAlchemyArray;
 import WayofTime.bloodmagic.block.BlockAltar;
@@ -9,7 +10,6 @@ import WayofTime.bloodmagic.compat.waila.provider.DataProviderAlchemyArray;
 import WayofTime.bloodmagic.compat.waila.provider.DataProviderBloodAltar;
 import WayofTime.bloodmagic.compat.waila.provider.DataProviderRitualController;
 import WayofTime.bloodmagic.compat.waila.provider.DataProviderTeleposer;
-import mcp.mobius.waila.api.IWailaRegistrar;
 
 public class WailaCallbackHandler
 {

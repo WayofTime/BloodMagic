@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.api.Constants;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,9 +14,7 @@ import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
+import WayofTime.bloodmagic.api.Constants;
 
 public class BlockBloodLight extends Block
 {

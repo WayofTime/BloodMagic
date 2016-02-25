@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.api.teleport;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class TeleportQueue
 {

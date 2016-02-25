@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.compress;
 
-import WayofTime.bloodmagic.api.compress.CompressionHandler;
-import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.compress.CompressionHandler;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 
 public class AdvancedCompressionHandler extends CompressionHandler
 {

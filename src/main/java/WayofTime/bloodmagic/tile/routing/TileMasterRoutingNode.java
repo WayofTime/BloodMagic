@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import java.util.TreeMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

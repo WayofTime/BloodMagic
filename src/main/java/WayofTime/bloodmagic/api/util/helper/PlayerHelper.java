@@ -1,10 +1,8 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import WayofTime.bloodmagic.api.Constants;
+import java.util.ArrayList;
+import java.util.UUID;
 
-import com.google.common.base.Strings;
-
-import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -14,9 +12,10 @@ import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import WayofTime.bloodmagic.api.Constants;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 public class PlayerHelper
 {

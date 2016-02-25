@@ -1,18 +1,7 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IActivatable;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.List;
 
-import com.google.common.base.Strings;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -25,8 +14,18 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import java.util.List;
+import com.google.common.base.Strings;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 {

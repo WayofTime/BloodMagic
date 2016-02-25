@@ -1,13 +1,7 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.BlockAltar;
-import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
-import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.List;
+
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -18,8 +12,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.item.sigil.ItemSigilDivination;
+import WayofTime.bloodmagic.item.sigil.ItemSigilSeer;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 /**
  * Integrated from WailaPlugins by <a

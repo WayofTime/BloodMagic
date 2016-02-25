@@ -1,16 +1,16 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
-import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import lombok.NoArgsConstructor;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.registry.ImperfectRitualRegistry;
+import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
 @NoArgsConstructor
 public class TileImperfectRitualStone extends TileEntity implements IImperfectRitualStone

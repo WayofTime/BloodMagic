@@ -1,6 +1,10 @@
 package WayofTime.bloodmagic.api;
 
-import WayofTime.bloodmagic.api.util.helper.LogHelper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.Block;
@@ -9,11 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import WayofTime.bloodmagic.api.util.helper.LogHelper;
 
 /**
  * The primary API class. Includes helper methods and blacklists.

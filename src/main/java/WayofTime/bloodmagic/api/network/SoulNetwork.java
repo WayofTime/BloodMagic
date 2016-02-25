@@ -1,12 +1,6 @@
 package WayofTime.bloodmagic.api.network;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
-import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-
-import com.google.common.base.Strings;
+import javax.annotation.Nullable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +13,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
+import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
-import javax.annotation.Nullable;
+import com.google.common.base.Strings;
 
 @Getter
 @Setter

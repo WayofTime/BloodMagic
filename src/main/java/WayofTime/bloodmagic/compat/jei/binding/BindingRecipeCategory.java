@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.compat.jei.binding;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import javax.annotation.Nonnull;
+
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.recipe.IRecipeCategory;
@@ -10,8 +9,9 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nonnull;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.compat.jei.BloodMagicPlugin;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class BindingRecipeCategory implements IRecipeCategory
 {

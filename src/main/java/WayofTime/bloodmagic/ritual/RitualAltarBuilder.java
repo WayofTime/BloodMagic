@@ -1,5 +1,20 @@
 package WayofTime.bloodmagic.ritual;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import net.minecraft.block.Block;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.AltarComponent;
@@ -14,21 +29,6 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class RitualAltarBuilder extends Ritual
 {

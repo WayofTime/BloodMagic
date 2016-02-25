@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block;
 
+import net.minecraft.block.material.Material;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockString;
-import net.minecraft.block.material.Material;
 
 public class BlockCrystal extends BlockString
 {

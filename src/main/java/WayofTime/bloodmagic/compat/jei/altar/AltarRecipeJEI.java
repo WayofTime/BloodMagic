@@ -1,16 +1,17 @@
 package WayofTime.bloodmagic.compat.jei.altar;
 
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import mezz.jei.api.recipe.BlankRecipeWrapper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class AltarRecipeJEI extends BlankRecipeWrapper
 {

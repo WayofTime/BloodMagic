@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.item.inventory;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -9,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 
 public class ItemInventory implements IInventory
 {

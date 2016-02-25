@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.iface.IHarvestHandler;
-import WayofTime.bloodmagic.api.registry.HarvestRegistry;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -10,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-
-import java.util.List;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.iface.IHarvestHandler;
+import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 
 /**
  * Harvest handler for standard plantable crops such as

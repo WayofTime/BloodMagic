@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.item.block;
 
 
-import WayofTime.bloodmagic.tile.TileBloodTank;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -10,8 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
-
-import java.util.List;
+import WayofTime.bloodmagic.tile.TileBloodTank;
 
 public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
 {

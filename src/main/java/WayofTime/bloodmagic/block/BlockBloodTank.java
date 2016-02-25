@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileBloodTank;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,9 +18,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileBloodTank;
+import WayofTime.bloodmagic.util.Utils;
 
 public class BlockBloodTank extends BlockContainer
 {

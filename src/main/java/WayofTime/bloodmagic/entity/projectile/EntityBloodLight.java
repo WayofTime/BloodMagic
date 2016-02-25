@@ -1,17 +1,21 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModBlocks;
 
 public class EntityBloodLight extends EntityThrowable implements IThrowableEntity, IEntityAdditionalSpawnData
 {

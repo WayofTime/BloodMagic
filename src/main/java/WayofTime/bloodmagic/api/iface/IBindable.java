@@ -3,8 +3,6 @@ package WayofTime.bloodmagic.api.iface;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nullable;
-
 /**
  * Implement this interface on any Item that can be bound to a player.
  */

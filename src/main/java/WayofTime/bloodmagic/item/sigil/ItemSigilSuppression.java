@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileSpectralBlock;
-import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import WayofTime.bloodmagic.util.Utils;
 
 public class ItemSigilSuppression extends ItemSigilToggleable
 {

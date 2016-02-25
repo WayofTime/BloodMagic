@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.world.World;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderFakeBlocks

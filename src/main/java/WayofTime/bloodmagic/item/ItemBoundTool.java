@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import WayofTime.bloodmagic.api.iface.IActivatable;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import com.google.common.collect.Multimap;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -17,7 +14,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
@@ -28,9 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.event.BoundToolEvent;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 
 @Getter

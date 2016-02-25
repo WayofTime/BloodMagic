@@ -1,16 +1,20 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import java.util.ArrayList;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
 public class RitualContainment extends Ritual
 {

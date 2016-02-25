@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.altar;
 
 import java.util.List;
 
-import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +24,7 @@ import WayofTime.bloodmagic.api.altar.AltarUpgrade;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 import WayofTime.bloodmagic.api.altar.IAltarComponent;
+import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry.AltarRecipe;

@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.compat.jei.alchemyArray;
 
-import WayofTime.bloodmagic.api.Constants;
+import javax.annotation.Nonnull;
+
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-
-import javax.annotation.Nonnull;
+import WayofTime.bloodmagic.api.Constants;
 
 public class AlchemyArrayCraftingRecipeHandler implements IRecipeHandler<AlchemyArrayCraftingRecipeJEI>
 {

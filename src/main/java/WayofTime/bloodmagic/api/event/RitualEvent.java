@@ -1,16 +1,15 @@
 package WayofTime.bloodmagic.api.event;
 
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
 
 public class RitualEvent extends Event
 {

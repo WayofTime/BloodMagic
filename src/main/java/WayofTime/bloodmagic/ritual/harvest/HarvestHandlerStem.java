@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.ritual.harvest;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.iface.IHarvestHandler;
-import WayofTime.bloodmagic.api.registry.HarvestRegistry;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.BlockStem;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -11,9 +11,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.iface.IHarvestHandler;
+import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 
 /**
  * Harvest handler for crops with stems such as Pumpkins and Melons.

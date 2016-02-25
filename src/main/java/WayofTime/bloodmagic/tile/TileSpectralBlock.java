@@ -1,8 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import com.google.common.base.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +7,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModBlocks;
+
+import com.google.common.base.Strings;
 
 public class TileSpectralBlock extends TileEntity implements ITickable
 {

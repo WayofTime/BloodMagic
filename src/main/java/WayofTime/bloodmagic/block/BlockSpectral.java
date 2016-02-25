@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,9 +15,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileSpectralBlock;
 
 public class BlockSpectral extends BlockContainer
 {

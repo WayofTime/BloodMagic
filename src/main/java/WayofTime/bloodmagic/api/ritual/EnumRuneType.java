@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
+import java.util.Locale;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-
-import java.util.Locale;
+import WayofTime.bloodmagic.api.Constants;
 
 public enum EnumRuneType implements IStringSerializable
 {

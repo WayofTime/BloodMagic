@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.compat.waila;
 
-import WayofTime.bloodmagic.compat.ICompatibility;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import WayofTime.bloodmagic.compat.ICompatibility;
 
 public class CompatibilityWaila implements ICompatibility
 {

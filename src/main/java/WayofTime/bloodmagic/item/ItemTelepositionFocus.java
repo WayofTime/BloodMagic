@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,9 +14,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemTelepositionFocus extends ItemBindable
 {

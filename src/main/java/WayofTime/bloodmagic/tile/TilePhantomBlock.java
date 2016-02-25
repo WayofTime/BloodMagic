@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -10,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 
 public class TilePhantomBlock extends TileEntity implements ITickable
 {

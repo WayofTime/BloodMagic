@@ -3,13 +3,13 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.Random;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;

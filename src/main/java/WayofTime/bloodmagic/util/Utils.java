@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.TileInventory;
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,8 +24,9 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
-
-import java.util.ArrayList;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileInventory;
 
 public class Utils
 {

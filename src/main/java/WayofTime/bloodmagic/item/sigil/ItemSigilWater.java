@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilWater extends ItemSigilBase
 {

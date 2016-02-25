@@ -1,16 +1,14 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.registry.ModBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
+import WayofTime.bloodmagic.registry.ModBlocks;
 
 public class ItemSigilBloodLight extends ItemSigilBase
 {

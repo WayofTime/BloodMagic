@@ -1,10 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
 
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -17,8 +15,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 
 public class ItemSigilTransposition extends ItemSigilBase
 {

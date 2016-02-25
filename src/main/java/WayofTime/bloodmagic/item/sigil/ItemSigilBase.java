@@ -1,10 +1,8 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.ISigil;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -12,9 +10,11 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Arrays;
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.ISigil;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 @Getter
 public class ItemSigilBase extends ItemBindable implements ISigil

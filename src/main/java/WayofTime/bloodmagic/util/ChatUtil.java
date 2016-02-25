@@ -1,7 +1,5 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
@@ -14,6 +12,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ChatUtil
 {

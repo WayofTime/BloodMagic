@@ -1,15 +1,15 @@
 package WayofTime.bloodmagic.block;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IRitualStone;
 import WayofTime.bloodmagic.block.base.BlockString;
 import WayofTime.bloodmagic.registry.ModBlocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 
 public class BlockRitualStone extends BlockString implements IRitualStone
 {

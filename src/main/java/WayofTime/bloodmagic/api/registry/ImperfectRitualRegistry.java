@@ -1,14 +1,15 @@
 package WayofTime.bloodmagic.api.registry;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 public class ImperfectRitualRegistry
 {

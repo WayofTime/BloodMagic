@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": { },
+        "model": "bloodmagic:BlockDemonCrystallizer.obj",
+        "custom": { "flip-v": true },
+        "transform": {
+            "translation": [ 0.5, 0, 0.5]
+        }
+    },
+    "variants": {
+        "normal": [{
+
+        }],
+        "inventory": [{
+            "transform": {
+                "translation": [0.44, -0.1, 0.44]
+            }
+        }]
+    }
+}

@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
+import java.util.List;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilMagnetism extends ItemSigilToggleable
 {

@@ -1,11 +1,12 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
-
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 
 public class TartaricForgeRecipeMaker
 {

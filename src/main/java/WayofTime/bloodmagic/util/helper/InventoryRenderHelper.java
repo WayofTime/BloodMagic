@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.util.helper;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -12,6 +11,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import WayofTime.bloodmagic.api.Constants;
 
 /**
  * @author <a href="https://github.com/TehNut">TehNut</a>

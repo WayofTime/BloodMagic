@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.api.teleport;
 
-import WayofTime.bloodmagic.api.Constants;
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
-
-import java.io.Serializable;
+import WayofTime.bloodmagic.api.Constants;
 
 @ToString
 public class PortalLocation implements Serializable

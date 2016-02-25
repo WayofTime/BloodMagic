@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,8 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSigilToggleable extends ItemSigilBase
 {

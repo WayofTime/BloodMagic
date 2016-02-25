@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 
 public class ItemSigilCompression extends ItemSigilToggleable
 {

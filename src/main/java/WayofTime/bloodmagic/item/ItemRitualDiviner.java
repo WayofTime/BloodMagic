@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,6 +28,7 @@ import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;

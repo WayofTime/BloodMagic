@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilElementalAffinity extends ItemSigilToggleable
 {

@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.block;
 import java.util.List;
 import java.util.Random;
 
-import WayofTime.bloodmagic.registry.ModItems;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,13 +10,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
+import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.util.Utils;
 

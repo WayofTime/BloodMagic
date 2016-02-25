@@ -1,10 +1,7 @@
 package WayofTime.bloodmagic.compat.waila.provider;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
-import WayofTime.bloodmagic.tile.TileTeleposer;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.List;
+
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -14,8 +11,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.tile.TileTeleposer;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class DataProviderTeleposer implements IWailaDataProvider
 {

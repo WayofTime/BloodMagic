@@ -1,9 +1,5 @@
 package WayofTime.bloodmagic.ritual.portal;
 
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.teleport.Teleport;
-import WayofTime.bloodmagic.api.teleport.TeleporterBloodMagic;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -15,6 +11,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.teleport.Teleport;
+import WayofTime.bloodmagic.api.teleport.TeleporterBloodMagic;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class Teleports
 {

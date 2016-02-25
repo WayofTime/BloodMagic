@@ -1,17 +1,19 @@
 package WayofTime.bloodmagic.compat.jei.forge;
 
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import lombok.Getter;
-import mezz.jei.api.recipe.BlankRecipeWrapper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
-import java.util.List;
+
+import lombok.Getter;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
+import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
 {

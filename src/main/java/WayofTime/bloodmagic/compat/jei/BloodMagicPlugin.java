@@ -1,5 +1,15 @@
 package WayofTime.bloodmagic.compat.jei;
 
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
+import mezz.jei.api.BlankModPlugin;
+import mezz.jei.api.IJeiHelpers;
+import mezz.jei.api.IModRegistry;
+import mezz.jei.api.JEIPlugin;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
@@ -19,12 +29,6 @@ import WayofTime.bloodmagic.compat.jei.orb.ShapelessOrbRecipeHandler;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
-import mezz.jei.api.*;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
-import javax.annotation.Nonnull;
-import java.util.Map;
 
 @JEIPlugin
 public class BloodMagicPlugin extends BlankModPlugin

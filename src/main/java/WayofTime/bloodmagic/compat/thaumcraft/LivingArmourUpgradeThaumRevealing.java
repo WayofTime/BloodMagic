@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.compat.thaumcraft;
 
+import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourUpgradeThaumRevealing extends LivingArmourUpgrade {
 

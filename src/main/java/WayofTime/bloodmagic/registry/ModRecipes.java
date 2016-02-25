@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.registry;
 
-import WayofTime.bloodmagic.block.BlockBloodRune;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,6 +19,7 @@ import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;

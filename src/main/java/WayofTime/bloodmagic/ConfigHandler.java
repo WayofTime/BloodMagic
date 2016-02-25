@@ -1,17 +1,21 @@
 package WayofTime.bloodmagic;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.Utils;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.io.File;
-import java.util.*;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.Utils;
 
 public class ConfigHandler
 {

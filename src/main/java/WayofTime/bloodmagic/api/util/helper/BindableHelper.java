@@ -5,10 +5,10 @@ import java.util.UUID;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.ItemBindEvent;
 import WayofTime.bloodmagic.api.iface.IBindable;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public class BindableHelper
 {

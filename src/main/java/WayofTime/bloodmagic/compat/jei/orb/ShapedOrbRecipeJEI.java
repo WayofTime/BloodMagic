@@ -1,18 +1,19 @@
 package WayofTime.bloodmagic.compat.jei.orb;
 
-import WayofTime.bloodmagic.api.registry.OrbRegistry;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ShapedOrbRecipeJEI implements IShapedCraftingRecipeWrapper
 {

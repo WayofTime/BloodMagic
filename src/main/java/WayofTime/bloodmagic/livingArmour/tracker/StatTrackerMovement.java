@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
 
 public class StatTrackerMovement extends StatTracker
 {

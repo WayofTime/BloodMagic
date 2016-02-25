@@ -3,8 +3,6 @@ package WayofTime.bloodmagic.livingArmour.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -12,6 +10,8 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
 
 public class StatTrackerPoison extends StatTracker
 {

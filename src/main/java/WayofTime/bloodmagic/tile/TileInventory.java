@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -12,8 +11,11 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class TileInventory extends TileEntity implements IInventory
 {

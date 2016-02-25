@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.compat.jei.forge;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 

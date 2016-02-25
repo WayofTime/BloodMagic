@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.util.helper;
 
-import net.minecraft.util.StatCollector;
-import org.apache.commons.lang3.text.WordUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.util.StatCollector;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 public class TextHelper
 {

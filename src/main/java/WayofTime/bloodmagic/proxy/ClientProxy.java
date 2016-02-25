@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.proxy;
 
-import WayofTime.bloodmagic.client.render.*;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -9,6 +8,10 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.helper.ShaderHelper;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import WayofTime.bloodmagic.client.render.RenderAlchemyArray;
+import WayofTime.bloodmagic.client.render.RenderAltar;
+import WayofTime.bloodmagic.client.render.RenderDemonCrucible;
+import WayofTime.bloodmagic.client.render.RenderItemRoutingNode;
 import WayofTime.bloodmagic.client.render.entity.BloodLightRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SentientArrowRenderFactory;
 import WayofTime.bloodmagic.client.render.entity.SoulSnareRenderFactory;

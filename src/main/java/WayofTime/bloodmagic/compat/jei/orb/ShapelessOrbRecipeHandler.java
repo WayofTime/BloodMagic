@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.compat.jei.orb;
 
-import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
+import javax.annotation.Nonnull;
+
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-
-import javax.annotation.Nonnull;
+import WayofTime.bloodmagic.api.recipe.ShapelessBloodOrbRecipe;
 
 public class ShapelessOrbRecipeHandler implements IRecipeHandler<ShapelessBloodOrbRecipe>
 {

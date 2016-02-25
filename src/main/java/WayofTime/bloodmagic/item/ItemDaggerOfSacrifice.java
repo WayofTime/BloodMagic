@@ -1,17 +1,7 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.IBossDisplayData;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -19,6 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
 public class ItemDaggerOfSacrifice extends Item
 {

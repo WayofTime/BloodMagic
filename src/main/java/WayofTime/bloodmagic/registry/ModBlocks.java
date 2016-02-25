@@ -16,6 +16,8 @@ import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
 import WayofTime.bloodmagic.block.BlockBloodTank;
 import WayofTime.bloodmagic.block.BlockCrystal;
 import WayofTime.bloodmagic.block.BlockDemonCrucible;
+import WayofTime.bloodmagic.block.BlockDemonCrystal;
+import WayofTime.bloodmagic.block.BlockDemonCrystallizer;
 import WayofTime.bloodmagic.block.BlockDemonPylon;
 import WayofTime.bloodmagic.block.BlockDimensionalPortal;
 import WayofTime.bloodmagic.block.BlockIncenseAltar;
@@ -44,6 +46,7 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
+import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
 import WayofTime.bloodmagic.tile.TileDemonPylon;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
@@ -77,6 +80,8 @@ public class ModBlocks
     public static Block incenseAltar;
     public static Block demonCrucible;
     public static Block demonPylon;
+    public static Block demonCrystallizer;
+    public static Block demonCrystal;
 
     public static Block lifeEssence;
 
@@ -118,6 +123,8 @@ public class ModBlocks
         pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
         demonCrucible = registerBlock(new BlockDemonCrucible());
         demonPylon = registerBlock(new BlockDemonPylon());
+        demonCrystallizer = registerBlock(new BlockDemonCrystallizer());
+        demonCrystal = registerBlock(new BlockDemonCrystal());
 
         dimensionalPortal = registerBlock(new BlockDimensionalPortal());
         bloodTank = registerBlock(new BlockBloodTank(), ItemBlockBloodTank.class);
@@ -149,6 +156,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileIncenseAltar.class, Constants.Mod.MODID + ":" + TileIncenseAltar.class.getSimpleName());
         GameRegistry.registerTileEntity(TileDemonCrucible.class, Constants.Mod.MODID + ":" + TileDemonCrucible.class.getSimpleName());
         GameRegistry.registerTileEntity(TileDemonPylon.class, Constants.Mod.MODID + ":" + TileDemonPylon.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileDemonCrystallizer.class, Constants.Mod.MODID + ":" + TileDemonCrystallizer.class.getSimpleName());
 
         GameRegistry.registerTileEntity(TileDimensionalPortal.class, Constants.Mod.MODID + ":" + TileDimensionalPortal.class.getSimpleName());
         GameRegistry.registerTileEntity(TileBloodTank.class, Constants.Mod.MODID + ":" + TileBloodTank.class.getSimpleName());
@@ -192,6 +200,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(incenseAltar));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrucible));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrystallizer));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 2);
@@ -200,6 +209,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 5);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 6);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 7);
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrystal));
 
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(dimensionalPortal));
     }

@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.api.altar;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import net.minecraft.util.BlockPos;
-
-import java.util.ArrayList;
 
 //@formatter:off
 @Getter

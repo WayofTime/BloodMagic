@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.teleport;
 
+import java.io.Serializable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.util.BlockPos;
-
-import java.io.Serializable;
 
 @ToString
 @EqualsAndHashCode

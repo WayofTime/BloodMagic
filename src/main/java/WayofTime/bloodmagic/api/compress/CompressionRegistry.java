@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.api.compress;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 /**
  * A registry aimed to help compress items in an inventory into its compressible

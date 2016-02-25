@@ -1,16 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.api.teleport.TeleportQueue;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
-import WayofTime.bloodmagic.ritual.portal.Teleports;
-import com.google.common.base.Strings;
+import java.util.List;
+
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
@@ -24,8 +15,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
+import WayofTime.bloodmagic.api.teleport.TeleportQueue;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.ritual.portal.Teleports;
 
-import java.util.List;
+import com.google.common.base.Strings;
 
 public class TileTeleposer extends TileInventory implements ITickable
 {

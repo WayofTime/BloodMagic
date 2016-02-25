@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.item.block;
 
-import WayofTime.bloodmagic.block.BlockRitualStone;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import WayofTime.bloodmagic.block.BlockRitualStone;
 
 public class ItemBlockRitualStone extends ItemBlock
 {

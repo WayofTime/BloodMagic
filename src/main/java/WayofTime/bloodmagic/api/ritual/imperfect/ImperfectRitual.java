@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.api.ritual.imperfect;
 
-import WayofTime.bloodmagic.api.BlockStack;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.BlockStack;
 
 /**
  * Abstract class for creating new imperfect rituals. ImperfectRituals need be
