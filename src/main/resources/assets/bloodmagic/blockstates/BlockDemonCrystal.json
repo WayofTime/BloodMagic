@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "textures": { "all" : "bloodmagic:models/crystal" },
+        "textures": { "#crystal" : "bloodmagic:models/crystal" },
         "model": "bloodmagic:crystal/Crystal1.obj",
         "custom": { "flip-v": true },
         "transform": {

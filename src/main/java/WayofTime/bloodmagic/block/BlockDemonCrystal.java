@@ -9,6 +9,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
@@ -52,6 +54,12 @@ public class BlockDemonCrystal extends Block
     public int getRenderType()
     {
         return 3;
+    }
+
+    @Override
+    public boolean canRenderInLayer(EnumWorldBlockLayer layer)
+    {
+        return layer == EnumWorldBlockLayer.CUTOUT_MIPPED || layer == EnumWorldBlockLayer.TRANSLUCENT;
     }
 
 //    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
@@ -119,4 +127,10 @@ public class BlockDemonCrystal extends Block
 //        }
 //        return ret;
 //    }
+
+    @Override
+    public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
+    {
+        return 0xffffff;
+    }
 }
