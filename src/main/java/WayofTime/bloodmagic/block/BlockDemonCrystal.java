@@ -1,28 +1,39 @@
 package WayofTime.bloodmagic.block;
 
-import net.minecraft.block.Block;
+import java.util.List;
+
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
-public class BlockDemonCrystal extends Block
+public class BlockDemonCrystal extends BlockContainer
 {
     public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 6);
+    public static final PropertyEnum<EnumDemonWillType> TYPE = PropertyEnum.<EnumDemonWillType>create("type", EnumDemonWillType.class);
 
     public BlockDemonCrystal()
     {
         super(Material.rock);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT));
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonCrystal");
         setRegistryName(Constants.BloodMagicBlock.DEMON_CRYSTAL.getRegName());
@@ -30,6 +41,21 @@ public class BlockDemonCrystal extends Block
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos)
+    {
+        TileDemonCrystal tile = (TileDemonCrystal) world.getTileEntity(pos);
+        return state.withProperty(AGE, tile.getCrystalCountForRender());
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs creativeTabs, List<ItemStack> list)
+    {
+        for (int i = 0; i < EnumDemonWillType.values().length; i++)
+            list.add(new ItemStack(this, 1, i));
     }
 
     @Override
@@ -67,7 +93,8 @@ public class BlockDemonCrystal extends Block
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(AGE, Integer.valueOf(meta));
+        System.out.println("Meta: " + meta + ", " + EnumDemonWillType.values()[meta]);
+        return this.getDefaultState().withProperty(TYPE, EnumDemonWillType.values()[meta]);
     }
 
     /**
@@ -76,13 +103,19 @@ public class BlockDemonCrystal extends Block
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((Integer) state.getValue(AGE)).intValue();
+        return ((EnumDemonWillType) state.getValue(TYPE)).ordinal();
     }
 
     @Override
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] { AGE });
+        return new BlockState(this, new IProperty[] { TYPE, AGE });
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
+        return new TileDemonCrystal();
     }
 
     @Override
@@ -93,9 +126,14 @@ public class BlockDemonCrystal extends Block
             return true;
         }
 
-        int meta = getMetaFromState(state);
-        int nextMeta = Math.min(meta + 1, 6);
-        world.setBlockState(pos, this.getStateFromMeta(nextMeta));
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileDemonCrystal)
+        {
+            int crystals = ((TileDemonCrystal) tile).getCrystalCount();
+            int next = Math.min(7, crystals + 1);
+            ((TileDemonCrystal) tile).setCrystalCount(next);
+            world.markBlockForUpdate(pos);
+        }
 
         return true;
     }
@@ -121,10 +159,4 @@ public class BlockDemonCrystal extends Block
 //        }
 //        return ret;
 //    }
-
-    @Override
-    public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
-    {
-        return 0xffffff;
-    }
 }

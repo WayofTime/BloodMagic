@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "textures": { "#crystal" : "bloodmagic:models/crystal" },
+        "textures": { "#crystal" : "bloodmagic:models/DefaultCrystal" },
         "model": "bloodmagic:crystal/Crystal1.obj",
         "custom": { "flip-v": true },
         "transform": {
@@ -9,9 +9,38 @@
         }
     },
     "variants": {
+    	"type": {
+    		"default": {
+	    		"textures": {
+	    			"#crystal" : "bloodmagic:models/DefaultCrystal"
+	    		}
+    		},
+    		"corrosive": {
+	    		"textures": {
+	    			"#crystal" : "bloodmagic:models/CorrosiveCrystal"
+	    		}
+    		},
+    		"destructive": {
+	    		"textures": {
+	    			"#crystal" : "bloodmagic:models/DestructiveCrystal"
+    			}
+    		},
+    		"vengeful": {
+    			"textures": {
+    				"#crystal" : "bloodmagic:models/VengefulCrystal"
+    			}
+    		},
+    		"steadfast": {
+    			"textures": {
+    				"#crystal" : "bloodmagic:models/SteadfastCrystal"
+    			}
+    		}
+    	},
         "age": {
         	"0": {
-				
+				textures": {
+    				"#crystal" : "bloodmagic:models/VengefulCrystal"
+    			}
       		},
       		"1": {
 				"submodel": "bloodmagic:crystal/Crystal2.obj"

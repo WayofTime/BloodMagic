@@ -38,6 +38,7 @@ import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
 import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
 import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
 import WayofTime.bloodmagic.item.block.ItemBlockPath;
 import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
 import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
@@ -46,6 +47,7 @@ import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileBloodTank;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
 import WayofTime.bloodmagic.tile.TileDemonPylon;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
@@ -124,7 +126,7 @@ public class ModBlocks
         demonCrucible = registerBlock(new BlockDemonCrucible());
         demonPylon = registerBlock(new BlockDemonPylon());
         demonCrystallizer = registerBlock(new BlockDemonCrystallizer());
-        demonCrystal = registerBlock(new BlockDemonCrystal());
+        demonCrystal = registerBlock(new BlockDemonCrystal(), ItemBlockDemonCrystal.class);
 
         dimensionalPortal = registerBlock(new BlockDimensionalPortal());
         bloodTank = registerBlock(new BlockBloodTank(), ItemBlockBloodTank.class);
@@ -157,6 +159,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileDemonCrucible.class, Constants.Mod.MODID + ":" + TileDemonCrucible.class.getSimpleName());
         GameRegistry.registerTileEntity(TileDemonPylon.class, Constants.Mod.MODID + ":" + TileDemonPylon.class.getSimpleName());
         GameRegistry.registerTileEntity(TileDemonCrystallizer.class, Constants.Mod.MODID + ":" + TileDemonCrystallizer.class.getSimpleName());
+        GameRegistry.registerTileEntity(TileDemonCrystal.class, Constants.Mod.MODID + ":" + TileDemonCrystal.class.getSimpleName());
 
         GameRegistry.registerTileEntity(TileDimensionalPortal.class, Constants.Mod.MODID + ":" + TileDimensionalPortal.class.getSimpleName());
         GameRegistry.registerTileEntity(TileBloodTank.class, Constants.Mod.MODID + ":" + TileBloodTank.class.getSimpleName());
