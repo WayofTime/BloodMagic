@@ -210,6 +210,7 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 6);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 7);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrystal));
+        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonPylon));
 
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(dimensionalPortal));
     }

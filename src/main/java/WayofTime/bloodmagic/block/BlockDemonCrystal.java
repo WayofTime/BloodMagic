@@ -56,12 +56,6 @@ public class BlockDemonCrystal extends Block
         return 3;
     }
 
-    @Override
-    public boolean canRenderInLayer(EnumWorldBlockLayer layer)
-    {
-        return layer == EnumWorldBlockLayer.CUTOUT_MIPPED || layer == EnumWorldBlockLayer.TRANSLUCENT;
-    }
-
 //    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
 //    {
 //        return (worldIn.getLight(pos) >= 8 || worldIn.canSeeSky(pos)) && worldIn.getBlockState(pos.down()).getBlock().canSustainPlant(worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
