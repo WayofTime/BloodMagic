@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.registry;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -64,6 +65,7 @@ import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
+import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 
 public class ModBlocks
 {
@@ -168,6 +170,7 @@ public class ModBlocks
     public static void initRenders()
     {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
+        InventoryRenderHelperV2 renderHelperV2 = BloodMagic.proxy.getRenderHelperV2();
 
         renderHelper.fluidRender(lifeEssence);
         for (int i = 0; i < BlockBloodRune.names.length; i++)
@@ -212,8 +215,12 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 5);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 6);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 7);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrystal));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonPylon));
+        renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 0, "ItemBlockDemonCrystal", "default");
+        renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 1, "ItemBlockDemonCrystal", "corrosive");
+        renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 2, "ItemBlockDemonCrystal", "destructive");
+        renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 3, "ItemBlockDemonCrystal", "vengeful");
+        renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 4, "ItemBlockDemonCrystal", "steadfast");
 
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(dimensionalPortal));
     }

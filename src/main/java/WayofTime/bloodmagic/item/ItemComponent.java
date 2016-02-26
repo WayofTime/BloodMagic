@@ -37,6 +37,11 @@ public class ItemComponent extends Item
     public static final String REAGENT_SEVERANCE = "reagentSeverance";
     public static final String REAGENT_TELEPOSITION = "reagentTeleposition";
     public static final String REAGENT_TRANSPOSITION = "reagentTransposition";
+    public static final String CRYSTAL_DEFAULT = "crystalDefault";
+    public static final String CRYSTAL_CORROSIVE = "crystalCorrosive";
+    public static final String CRYSTAL_VENGEFUL = "crystalVengeful";
+    public static final String CRYSTAL_DESTRUCTIVE = "crystalDestructive";
+    public static final String CRYSTAL_STEADFAST = "crystalSteadfast";
 
     public ItemComponent()
     {
@@ -71,6 +76,11 @@ public class ItemComponent extends Item
         names.add(16, REAGENT_SEVERANCE);
         names.add(17, REAGENT_TELEPOSITION);
         names.add(18, REAGENT_TRANSPOSITION);
+        names.add(19, CRYSTAL_DEFAULT);
+        names.add(20, CRYSTAL_CORROSIVE);
+        names.add(21, CRYSTAL_VENGEFUL);
+        names.add(22, CRYSTAL_DESTRUCTIVE);
+        names.add(23, CRYSTAL_STEADFAST);
     }
 
     @Override

@@ -3,6 +3,9 @@ package WayofTime.bloodmagic.block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
@@ -24,6 +27,12 @@ public class BlockDemonCrystallizer extends BlockContainer
 //        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
     }
 
+    @Override
+    public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side)
+    {
+        return side == EnumFacing.UP;
+    }
+    
     @Override
     public boolean isOpaqueCube()
     {

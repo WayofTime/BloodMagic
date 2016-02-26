@@ -100,6 +100,31 @@
         "textures": {
           "layer0": "bloodmagic:items/ReagentTransposition"
         }
+      },
+      "crystaldefault": {
+        "textures": {
+          "layer0": "bloodmagic:items/DefaultCrystal"
+        }
+      },
+      "crystalcorrosive": {
+        "textures": {
+          "layer0": "bloodmagic:items/CorrosiveCrystal"
+        }
+      },
+      "crystalvengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/VengefulCrystal"
+        }
+      },
+      "crystaldestructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/DestructiveCrystal"
+        }
+      },
+      "crystalsteadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SteadfastCrystal"
+        }
       }
     }
   }

@@ -9,6 +9,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -25,6 +26,9 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
     @Getter
     @Setter
     public int crystalCount = 1;
+    @Getter
+    @Setter
+    public EnumFacing placement = EnumFacing.UP; //Side that this crystal is placed on.
 
     public TileDemonCrystal()
     {
@@ -43,8 +47,6 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
         {
             crystalCount = Math.min(crystalCount + 1, 7);
             worldObj.markBlockForUpdate(pos);
-
-            System.out.println("" + crystalCount);
         }
     }
 
@@ -60,6 +62,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
 
         holder.readFromNBT(tag, "Will");
         crystalCount = tag.getInteger("crystalCount");
+        placement = EnumFacing.getFront(tag.getInteger("placement"));
     }
 
     @Override
@@ -69,6 +72,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
 
         holder.writeToNBT(tag, "Will");
         tag.setInteger("crystalCount", crystalCount);
+        tag.setInteger("placement", placement.getIndex());
     }
 
     // IDemonWillConduit
