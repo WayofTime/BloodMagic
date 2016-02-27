@@ -32,14 +32,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuideBloodMagic {
+public class GuideBloodMagic
+{
 
     @Getter
     private static Book bloodMagicGuide;
 
     public static List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
 
-    public static void initGuide() {
+    public static void initGuide()
+    {
         bloodMagicGuide = new Book();
         bloodMagicGuide.setAuthor("guide.BloodMagic.book.author");
         bloodMagicGuide.setUnlocBookTitle("guide.BloodMagic.book.title");
@@ -56,7 +58,8 @@ public class GuideBloodMagic {
             ModelLoader.setCustomModelResourceLocation(GuideAPIItems.guideBook, GuideRegistry.getIndexOf(bloodMagicGuide), new ModelResourceLocation(new ResourceLocation("guideapi", "ItemGuideBook"), "type=book"));
     }
 
-    private static void addArchitect() {
+    private static void addArchitect()
+    {
         List<EntryAbstract> entries = new ArrayList<EntryAbstract>();
 
         List<IPage> introPages = new ArrayList<IPage>();

@@ -25,7 +25,8 @@ public class PageAltarRecipe extends PageBase {
     public EnumAltarTier tier;
     public int bloodRequired;
 
-    public PageAltarRecipe(AltarRecipeRegistry.AltarRecipe recipe) {
+    public PageAltarRecipe(AltarRecipeRegistry.AltarRecipe recipe)
+    {
         this.input = recipe.getInput();
         this.output = recipe.getOutput();
         this.tier = recipe.getMinTier();
@@ -34,8 +35,8 @@ public class PageAltarRecipe extends PageBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRenderer) {
-
+    public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRenderer)
+    {
         Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("bloodmagicguide" + ":textures/gui/altar.png"));
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 87, 146, 104);
 
@@ -44,25 +45,26 @@ public class PageAltarRecipe extends PageBase {
         int inputX = (1 + 1) * 20 + (guiLeft + guiBase.xSize / 7) + 1;
         int inputY = (20) + (guiTop + guiBase.ySize / 5) - 1; //1 * 20
         GuiHelper.drawItemStack(input, inputX, inputY);
-        if (GuiHelper.isMouseBetween(mouseX, mouseY, inputX, inputY, 15, 15)) {
-            guiBase.renderToolTip(input, mouseX, mouseY);
-        }
 
-        if (output == null) {
+        if (output == null)
             output = new ItemStack(Blocks.barrier);
-        }
+
         int outputX = (5 * 20) + (guiLeft + guiBase.xSize / 7) + 1;
         int outputY = (20) + (guiTop + guiBase.xSize / 5) - 1; // 1 * 20
         GuiHelper.drawItemStack(output, outputX, outputY);
-        if (GuiHelper.isMouseBetween(mouseX, mouseY, outputX, outputY, 15, 15)) {
-            guiBase.renderToolTip(output, outputX, outputY);
+
+        if (GuiHelper.isMouseBetween(mouseX, mouseY, inputX, inputY, 15, 15))
+            guiBase.renderToolTip(input, mouseX, mouseY);
+
+        if (GuiHelper.isMouseBetween(mouseX, mouseY, outputX, outputY, 15, 15))
+            guiBase.renderToolTip(output, mouseX, mouseY);
+
+        if (output.getItem() == Item.getItemFromBlock(Blocks.barrier))
+        {
+            guiBase.drawCenteredString(fontRenderer, TextHelper.localize("text.furnace.error"), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0xED073D);
+            return;
         }
 
-        if (output.getItem() == Item.getItemFromBlock(Blocks.barrier)) {
-            guiBase.drawCenteredString(fontRenderer, TextHelper.localize("text.furnace.error"), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0xED073D);
-            guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.tier", tier.toInt()), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 15, 0);
-            guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.lp", bloodRequired), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 30, 0);
-        }
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.tier", tier.toInt()), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6, 0);
         guiBase.drawCenteredString(fontRenderer, TextHelper.localize("guide.BloodMagic.page.lp", bloodRequired), guiLeft + guiBase.xSize / 2, guiTop + 4 * guiBase.ySize / 6 + 15, 0);
     }
