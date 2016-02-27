@@ -3,15 +3,18 @@ package WayofTime.bloodmagic.tile;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
-public class TileDemonCrucible extends TileInventory implements ITickable, IDemonWillConduit
+public class TileDemonCrucible extends TileInventory implements ITickable, IDemonWillConduit, ISidedInventory
 {
     public HashMap<EnumDemonWillType, Double> willMap = new HashMap<EnumDemonWillType, Double>(); //TODO: Change to DemonWillHolder
     public final int maxWill = 100;
@@ -81,6 +84,25 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
                         if (filled > 0)
                         {
                             WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, filled, maxWill, true);
+                        }
+                    }
+                } else if (stack.getItem() instanceof IDiscreteDemonWill) //TODO: Limit the speed of this process
+                {
+                    IDiscreteDemonWill willItem = (IDiscreteDemonWill) stack.getItem();
+                    EnumDemonWillType type = willItem.getType(stack);
+                    double currentAmount = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+                    double needed = maxWill - currentAmount;
+                    double discreteAmount = willItem.getDiscretization(stack);
+                    if (needed >= discreteAmount)
+                    {
+                        double filled = willItem.drainWill(stack, discreteAmount);
+                        if (filled > 0)
+                        {
+                            WorldDemonWillHandler.fillWillToMaximum(worldObj, pos, type, filled, maxWill, true);
+                            if (stack.stackSize <= 0)
+                            {
+                                this.setInventorySlotContents(0, null);
+                            }
                         }
                     }
                 }
@@ -217,5 +239,23 @@ public class TileDemonCrucible extends TileInventory implements ITickable, IDemo
     public double getCurrentWill(EnumDemonWillType type)
     {
         return willMap.containsKey(type) ? willMap.get(type) : 0;
+    }
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing side)
+    {
+        return new int[] { 0 };
+    }
+
+    @Override
+    public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction)
+    {
+        return stack != null ? stack.getItem() instanceof IDemonWillGem || stack.getItem() instanceof IDiscreteDemonWill : false;
+    }
+
+    @Override
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
+    {
+        return true;
     }
 }

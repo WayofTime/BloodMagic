@@ -87,6 +87,12 @@ item.BloodMagic.baseComponent.reagentSeverance.name=Severance Reagent
 item.BloodMagic.baseComponent.reagentTeleposition.name=Teleposition Reagent
 item.BloodMagic.baseComponent.reagentTransposition.name=Transposition Reagent
 
+item.BloodMagic.demonCrystal.crystalDefault.name=Demon Will Crystal
+item.BloodMagic.demonCrystal.crystalCorrosive.name=Corrosive Will Crystal
+item.BloodMagic.demonCrystal.crystalDestructive.name=Destructive Will Crystal
+item.BloodMagic.demonCrystal.crystalVengeful.name=Vengeful Will Crystal
+item.BloodMagic.demonCrystal.crystalSteadfast.name=Steadfast Will Crystal
+
 item.BloodMagic.monsterSoul.base.name=Demonic Will
 
 item.BloodMagic.sigil.air.name=Air Sigil
@@ -188,6 +194,7 @@ tile.BloodMagic.teleposer.name=Teleposer
 tile.BloodMagic.soulForge.name=Hellfire Forge
 tile.BloodMagic.demonCrucible.name=Demon Crucible
 tile.BloodMagic.demonPylon.name=Demon Pylon
+tile.BloodMagic.demonCrystallizer.name=Demon Crystallizer
 
 tile.BloodMagic.masterRouting.name=Master Routing Node
 tile.BloodMagic.outputRouting.name=Output Routing Node
@@ -205,6 +212,12 @@ tile.BloodMagic.path.obsidianTile.name=Tiled Obsidian Path
 
 tile.BloodMagic.dimensionalPortal.name=Dimensional Portal
 tile.BloodMagic.bloodTank.name=Blood Tank
+
+tile.BloodMagic.demonCrystalDEFAULT.name=Demon Will Crystal Cluster
+tile.BloodMagic.demonCrystalCORROSIVE.name=Corrosive Will Crystal Cluster
+tile.BloodMagic.demonCrystalDESTRUCTIVE.name=Destructive Will Crystal Cluster
+tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
+tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
 
 # Tooltips
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence

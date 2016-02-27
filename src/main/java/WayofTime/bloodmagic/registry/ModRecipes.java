@@ -25,6 +25,7 @@ import WayofTime.bloodmagic.compress.AdvancedCompressionHandler;
 import WayofTime.bloodmagic.compress.BaseCompressionHandler;
 import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
 
 public class ModRecipes
 {
@@ -185,7 +186,7 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem), 1, 1, "dustRedstone", "ingotGold", "blockGlass", "dyeBlue");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 1), 60, 20, new ItemStack(ModItems.soulGem), "gemDiamond", "blockRedstone", "blockLapis");
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 2), 240, 50, new ItemStack(ModItems.soulGem, 1, 1), "gemDiamond", "blockGold", new ItemStack(ModItems.slate, 1, 2));
-        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 3), 1000, 100, new ItemStack(ModItems.soulGem, 1, 2), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.bloodShard), Items.blaze_rod);
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 3), 1000, 100, new ItemStack(ModItems.soulGem, 1, 2), new ItemStack(ModItems.slate, 1, 3), new ItemStack(ModItems.bloodShard), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.soulGem, 1, 4), 4000, 500, new ItemStack(ModItems.soulGem, 1, 3), Items.nether_star);
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientSword), 0, 0, new ItemStack(ModItems.soulGem), new ItemStack(Items.iron_sword));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModItems.sentientBow), 70, 0, new ItemStack(Items.bow), new ItemStack(ModItems.soulGem, 1, 1), Items.string, Items.string);
@@ -217,5 +218,11 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.outputRoutingNode), 400, 25, "dustGlowstone", "dustRedstone", "ingotIron", new ItemStack(ModBlocks.itemRoutingNode));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.inputRoutingNode), 400, 25, "dustGlowstone", "dustRedstone", "ingotGold", new ItemStack(ModBlocks.itemRoutingNode));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.masterRoutingNode), 400, 200, "blockIron", "gemDiamond", new ItemStack(ModItems.slate, 1, 2));
+
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 0), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 1), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 2), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 3), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL));
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 4), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST));
     }
 }

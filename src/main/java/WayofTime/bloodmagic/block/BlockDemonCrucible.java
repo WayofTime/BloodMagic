@@ -11,8 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.util.Utils;
 
@@ -74,7 +74,7 @@ public class BlockDemonCrucible extends BlockContainer
 
         if (playerItem != null)
         {
-            if (!(playerItem.getItem() instanceof IDemonWill) && !(playerItem.getItem() instanceof IDemonWillGem))
+            if (!(playerItem.getItem() instanceof IDiscreteDemonWill) && !(playerItem.getItem() instanceof IDemonWillGem))
             {
                 return false;
             }

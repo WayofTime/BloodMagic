@@ -22,6 +22,7 @@ import WayofTime.bloodmagic.item.ItemBoundSword;
 import WayofTime.bloodmagic.item.ItemBucketEssence;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDaggerOfSacrifice;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.item.ItemLavaCrystal;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
@@ -115,6 +116,7 @@ public class ModItems
     public static Item sigilTransposition;
 
     public static Item itemComponent;
+    public static Item itemDemonCrystal;
     public static Item telepositionFocus;
 
     public static Item bloodShard;
@@ -207,6 +209,7 @@ public class ModItems
         sigilTransposition = registerItem(new ItemSigilTransposition());
 
         itemComponent = registerItem(new ItemComponent());
+        itemDemonCrystal = registerItem(new ItemDemonCrystal());
         telepositionFocus = registerItem(new ItemTelepositionFocus());
 
         bloodShard = registerItem(new ItemBloodShard());
@@ -308,6 +311,9 @@ public class ModItems
 
         for (int i = 0; i < ItemComponent.getNames().size(); i++)
             renderHelperV2.registerRender(itemComponent, i, ItemComponent.getNames().get(i));
+
+        for (int i = 0; i < ItemDemonCrystal.getNames().size(); i++)
+            renderHelperV2.registerRender(itemDemonCrystal, i, ItemDemonCrystal.getNames().get(i));
 
         renderHelperV2.registerRender(telepositionFocus, 0, "weak");
         renderHelperV2.registerRender(telepositionFocus, 1, "enhanced");

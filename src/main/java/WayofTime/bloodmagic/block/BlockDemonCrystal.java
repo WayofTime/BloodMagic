@@ -13,7 +13,6 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +26,7 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.item.ItemComponent;
-import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
 public class BlockDemonCrystal extends BlockContainer
@@ -165,19 +164,19 @@ public class BlockDemonCrystal extends BlockContainer
         switch (type)
         {
         case CORROSIVE:
-            stack = ItemComponent.getStack(ItemComponent.CRYSTAL_CORROSIVE);
+            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE);
             break;
         case DEFAULT:
-            stack = ItemComponent.getStack(ItemComponent.CRYSTAL_DEFAULT);
+            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT);
             break;
         case DESTRUCTIVE:
-            stack = ItemComponent.getStack(ItemComponent.CRYSTAL_DESTRUCTIVE);
+            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE);
             break;
         case STEADFAST:
-            stack = ItemComponent.getStack(ItemComponent.CRYSTAL_STEADFAST);
+            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST);
             break;
         case VENGEFUL:
-            stack = ItemComponent.getStack(ItemComponent.CRYSTAL_VENGEFUL);
+            stack = ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL);
             break;
         }
 
@@ -189,26 +188,6 @@ public class BlockDemonCrystal extends BlockContainer
     public int quantityDropped(Random random)
     {
         return 0;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote)
-        {
-            return true;
-        }
-
-        TileEntity tile = world.getTileEntity(pos);
-        if (tile instanceof TileDemonCrystal)
-        {
-            int crystals = ((TileDemonCrystal) tile).getCrystalCount();
-            int next = Math.min(7, crystals + 1);
-            ((TileDemonCrystal) tile).setCrystalCount(next);
-            world.markBlockForUpdate(pos);
-        }
-
-        return true;
     }
 
 //    @Override

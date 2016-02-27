@@ -25,6 +25,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
     public final double drainRate = 1;
     public static final double sameWillConversionRate = 5;
     public static final double defaultWillConversionRate = 50;
+    public static final double timeDelayForWrongWill = 0.6;
 
     public double progressToNextCrystal = 0;
     public int internalCounter = 0;
@@ -67,7 +68,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
                     value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, EnumDemonWillType.DEFAULT);
                     if (value > 0.5)
                     {
-                        double nextProgress = getCrystalGrowthPerSecond(value);
+                        double nextProgress = getCrystalGrowthPerSecond(value) * timeDelayForWrongWill;
                         progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
                     }
                 }
@@ -97,7 +98,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
 
     public double getCrystalGrowthPerSecond(double will)
     {
-        return 1.0 / 80 * Math.sqrt(will / 200);
+        return 1.0 / 800 * Math.sqrt(will / 200);
     }
 
     public int getCrystalCountForRender()
