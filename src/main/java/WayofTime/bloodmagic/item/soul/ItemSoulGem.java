@@ -146,6 +146,11 @@ public class ItemSoulGem extends Item implements IDemonWillGem
     @Override
     public double drainWill(EnumDemonWillType type, ItemStack soulGemStack, double drainAmount)
     {
+        EnumDemonWillType currentType = this.getCurrentType(soulGemStack);
+        if (currentType != type)
+        {
+            return 0;
+        }
         double souls = getWill(type, soulGemStack);
 
         double soulsDrained = Math.min(drainAmount, souls);

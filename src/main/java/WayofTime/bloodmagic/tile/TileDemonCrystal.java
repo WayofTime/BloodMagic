@@ -16,12 +16,18 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
 public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWillConduit
 {
     public DemonWillHolder holder = new DemonWillHolder();
     public final int maxWill = 100;
     public final double drainRate = 1;
+    public static final double sameWillConversionRate = 5;
+    public static final double defaultWillConversionRate = 50;
+
+    public double progressToNextCrystal = 0;
+    public int internalCounter = 0;
 
     @Getter
     @Setter
@@ -43,11 +49,55 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
             return;
         }
 
-        if (worldObj.getWorldTime() % 200 == 0)
+        internalCounter++;
+
+        if (internalCounter % 20 == 0 && crystalCount < 7)
         {
-            crystalCount = Math.min(crystalCount + 1, 7);
-            worldObj.markBlockForUpdate(pos);
+            EnumDemonWillType type = EnumDemonWillType.values()[this.getBlockMetadata()];
+
+            double value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+            if (type != EnumDemonWillType.DEFAULT)
+            {
+                if (value >= 100)
+                {
+                    double nextProgress = getCrystalGrowthPerSecond(value);
+                    progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
+                } else
+                {
+                    value = WorldDemonWillHandler.getCurrentWill(worldObj, pos, EnumDemonWillType.DEFAULT);
+                    if (value > 0.5)
+                    {
+                        double nextProgress = getCrystalGrowthPerSecond(value);
+                        progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), EnumDemonWillType.DEFAULT, nextProgress * defaultWillConversionRate, true) / defaultWillConversionRate;
+                    }
+                }
+            } else
+            {
+                if (value > 0.5)
+                {
+                    double nextProgress = getCrystalGrowthPerSecond(value);
+                    progressToNextCrystal += WorldDemonWillHandler.drainWill(worldObj, getPos(), type, nextProgress * sameWillConversionRate, true) / sameWillConversionRate;
+                }
+            }
+
+            if (progressToNextCrystal >= 1)
+            {
+                progressToNextCrystal--;
+                crystalCount++;
+                worldObj.markBlockForUpdate(pos);
+            }
         }
+
+//        if (worldObj.getWorldTime() % 200 == 0)
+//        {
+//            crystalCount = Math.min(crystalCount + 1, 7);
+//            worldObj.markBlockForUpdate(pos);
+//        }
+    }
+
+    public double getCrystalGrowthPerSecond(double will)
+    {
+        return 1.0 / 80 * Math.sqrt(will / 200);
     }
 
     public int getCrystalCountForRender()
@@ -63,6 +113,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
         holder.readFromNBT(tag, "Will");
         crystalCount = tag.getInteger("crystalCount");
         placement = EnumFacing.getFront(tag.getInteger("placement"));
+        progressToNextCrystal = tag.getDouble("progress");
     }
 
     @Override
@@ -73,6 +124,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
         holder.writeToNBT(tag, "Will");
         tag.setInteger("crystalCount", crystalCount);
         tag.setInteger("placement", placement.getIndex());
+        tag.setDouble("progress", progressToNextCrystal);
     }
 
     // IDemonWillConduit

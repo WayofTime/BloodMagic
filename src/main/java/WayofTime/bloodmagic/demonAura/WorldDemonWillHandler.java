@@ -16,7 +16,7 @@ public class WorldDemonWillHandler
     public static ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>> dirtyChunks = new ConcurrentHashMap<Integer, CopyOnWriteArrayList<PosXY>>();
     public static ConcurrentHashMap<Integer, BlockPos> taintTrigger = new ConcurrentHashMap<Integer, BlockPos>();
 
-    public static WillWorld getAuraWorld(int dim)
+    public static WillWorld getWillWorld(int dim)
     {
         return containedWills.get(dim);
     }
@@ -69,6 +69,26 @@ public class WorldDemonWillHandler
                 markChunkAsDirty(chunk, dim);
             }
         }
+    }
+
+    public static EnumDemonWillType getHighestDemonWillType(World world, BlockPos pos)
+    {
+        double currentMax = 0;
+        EnumDemonWillType currentHighest = EnumDemonWillType.DEFAULT;
+
+        WillChunk willChunk = getWillChunk(world, pos);
+
+        DemonWillHolder currentWill = willChunk.getCurrentWill();
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            if (currentWill.getWill(type) > currentMax)
+            {
+                currentMax = currentWill.getWill(type);
+                currentHighest = type;
+            }
+        }
+
+        return currentHighest;
     }
 
     public static double drainWill(World world, BlockPos pos, EnumDemonWillType type, double amount, boolean doDrain)
