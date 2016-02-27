@@ -1,0 +1,26 @@
+# Book Information
+guide.BloodMagic.book.title=Sanguine Scientiem
+guide.BloodMagic.book.display=Sanguine Scientiem
+guide.BloodMagic.book.author=Blood Magic
+guide.BloodMagic.book.welcome=Blood Magic
+
+# Page Information
+guide.BloodMagic.page.bloodAltar=Blood Altar Recipe
+guide.BloodMagic.page.tier=Tier: %d
+guide.BloodMagic.page.lp=LP: %d
+
+# Categories
+guide.BloodMagic.category.architect.name=The Architect
+guide.BloodMagic.category.ritual.name=The Ritual Master
+guide.BloodMagic.category.demon.name=The Demon Kin
+guide.BloodMagic.category.spell.name=The Battle Mage
+guide.BloodMagic.category.alchemy.name=The Alchemist
+
+# Architect Entries
+guide.BloodMagic.entry.architect.intro=A Classic Tragic Back-story
+guide.BloodMagic.entry.architect.bloodAltar=The Blood Altar
+
+# Architect Entry Texts
+guide.BloodMagic.entry.architect.intro.1=My name is Tiberius. I was a kid when the demons came for my village during The Wars. They ransacked the houses and turned the shacks into splinters, wielding fire and water to blast the land asunder. I woke up to some travelling merchants that were passing by, equipping the warriors who were futily trying to drive off the demons that still clawed the village. I was brought to a village nearby, where a magician named Magus helped tend to my wounds. The magic that he used was something that I had never seen before - it wasn't Thaumaturgy, nor Alchemy, and it was definitely not Botany. He winked at me once he saw that my eyes were open, holding his finger to his lips. Fast-forward several years, and I have learned almost everything from Master Magus, being his third student ever to master his arts. Against his wishes, I have recorded my research and put several wards and spells on this book. So welcome, apprentice. I am known as The Architect, and I am a Blood Mage. It took several years of pestering before I managed to convince Magus to teach me. He kept on telling me that, "Magic that uses the life essence of living beings requires patience and preparation in order to master it. One false move, go a little past your natural endurance, and you may find yourself taking a nice vacation in Tartarus." The thing was, I wanted to go there - I had some unfinished business with the demons. The process that Magus originally constructed required powerful artifacts that he constructed himself, but were rather lacking where teaching was concerned. After studying a bit of alchemy and the process of "Equivalent Exchange," I managed to construct myself an altar that would transmute items inside of its basin into new powerful forms. The only issue was that it needed a worthy catalyst, and so with a prick of the finger I set the Blood Altar alight!
+guide.BloodMagic.entry.architect.bloodAltar.1=To start any form of transmutation involving blood, you would need to construct a blood altar and a sacrificial knife, as well as have a solitary diamond in your possession. After placing the blood altar down, Magus advised me to be careful as I filled it slowly with my blood, and said that I would need to be really close to the altar (about a metre) for the knife to work. With about 2 buckets of blood in the altar, which Master Magus reminds me is about 10 hearts worth, I placed the diamond inside of the altar by activating it with the diamond in hand.
+guide.BloodMagic.entry.architect.bloodAltar.2=The blood dissipated in a cloud of red swirls as I waited for the atoms of the diamond to shift and reform. There were a few moments where the particles turned gray, which meant that the altar was empty and I had to hurry to fill it. After the diamond burst in a shower of red particles, what finally sat in the altar was a Weak Blood Orb.

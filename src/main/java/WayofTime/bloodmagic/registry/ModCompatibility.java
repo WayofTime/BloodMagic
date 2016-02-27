@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.registry;
 
 import java.util.ArrayList;
 
+import WayofTime.bloodmagic.compat.guideapi.CompatibilityGuideAPI;
 import net.minecraftforge.fml.common.Loader;
 import WayofTime.bloodmagic.compat.ICompatibility;
 import WayofTime.bloodmagic.compat.jei.CompatibilityJustEnoughItems;
@@ -17,6 +18,7 @@ public class ModCompatibility
         compatibilities.add(new CompatibilityJustEnoughItems());
         compatibilities.add(new CompatibilityWaila());
         compatibilities.add(new CompatibilityThaumcraft());
+        compatibilities.add(new CompatibilityGuideAPI());
     }
 
     public static void loadCompat(ICompatibility.InitializationPhase phase)
