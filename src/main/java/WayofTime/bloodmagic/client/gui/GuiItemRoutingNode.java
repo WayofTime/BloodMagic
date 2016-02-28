@@ -20,16 +20,11 @@ import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 @SideOnly(Side.CLIENT)
 public class GuiItemRoutingNode extends GuiContainer
 {
-    private GuiButton downButton;
-    private GuiButton upButton;
-    private GuiButton northButton;
-    private GuiButton southButton;
-    private GuiButton westButton;
-    private GuiButton eastButton;
-    private GuiButton incrementButton;
-    private GuiButton decrementButton;
+    private GuiButton downButton, upButton, northButton, southButton, westButton, eastButton, incrementButton, decrementButton;
 
     private TileFilteredRoutingNode inventory;
+
+    private int left, top;
 
     public GuiItemRoutingNode(InventoryPlayer playerInventory, IInventory tileRoutingNode)
     {
@@ -54,15 +49,18 @@ public class GuiItemRoutingNode extends GuiContainer
     public void initGui()
     {
         super.initGui();
+        left = (this.width - this.xSize) / 2;
+        top = (this.height - this.ySize)/ 2;
+
         this.buttonList.clear();
-        this.buttonList.add(this.downButton = new GuiButton(0, (this.width - this.xSize) / 2 + 133, (this.height - this.ySize) / 2 + 50, 18, 18, "D"));
-        this.buttonList.add(this.upButton = new GuiButton(1, (this.width - this.xSize) / 2 + 133, (this.height - this.ySize) / 2 + 14, 18, 18, "U"));
-        this.buttonList.add(this.northButton = new GuiButton(2, (this.width - this.xSize) / 2 + 151, (this.height - this.ySize) / 2 + 14, 18, 18, "N"));
-        this.buttonList.add(this.southButton = new GuiButton(3, (this.width - this.xSize) / 2 + 151, (this.height - this.ySize) / 2 + 50, 18, 18, "S"));
-        this.buttonList.add(this.westButton = new GuiButton(4, (this.width - this.xSize) / 2 + 133, (this.height - this.ySize) / 2 + 32, 18, 18, "W"));
-        this.buttonList.add(this.eastButton = new GuiButton(5, (this.width - this.xSize) / 2 + 151, (this.height - this.ySize) / 2 + 32, 18, 18, "E"));
-        this.buttonList.add(this.incrementButton = new GuiButton(6, (this.width - this.xSize) / 2 + 97, (this.height - this.ySize) / 2 + 14, 18, 17, "^"));
-        this.buttonList.add(this.decrementButton = new GuiButton(7, (this.width - this.xSize) / 2 + 97, (this.height - this.ySize) / 2 + 50, 18, 17, "v"));
+        this.buttonList.add(this.downButton = new GuiButton(0, left + 133, top + 50, 18, 17, "D"));
+        this.buttonList.add(this.upButton = new GuiButton(1, left + 133, top + 14, 18, 18, "U"));
+        this.buttonList.add(this.northButton = new GuiButton(2, left + 150, top + 14, 18, 18, "N"));
+        this.buttonList.add(this.southButton = new GuiButton(3, left + 150, top + 50, 18, 17, "S"));
+        this.buttonList.add(this.westButton = new GuiButton(4, left + 133, top + 32, 18, 18, "W"));
+        this.buttonList.add(this.eastButton = new GuiButton(5, left + 150, top + 32, 18, 18, "E"));
+        this.buttonList.add(this.incrementButton = new GuiButton(6, left + 97, top + 14, 18, 17, "^"));
+        this.buttonList.add(this.decrementButton = new GuiButton(7, left + 97, top + 50, 18, 17, "v"));
         disableDirectionalButton(inventory.currentActiveSlot);
     }
 
@@ -109,8 +107,6 @@ public class GuiItemRoutingNode extends GuiContainer
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         ResourceLocation soulForgeGuiTextures = new ResourceLocation(Constants.Mod.MODID + ":textures/gui/routingNode.png");
         this.mc.getTextureManager().bindTexture(soulForgeGuiTextures);
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(left, top, 0, 0, this.xSize, this.ySize);
     }
 }

@@ -65,7 +65,7 @@ public class ContainerItemRoutingNode extends Container
         {
             if (slotId >= 0)
             {
-                Slot slot = (Slot) this.inventorySlots.get(slotId);
+                Slot slot = this.inventorySlots.get(slotId);
 
                 if (slot instanceof SlotGhostItem) //TODO: make the slot clicking work!
                 {
@@ -152,7 +152,7 @@ public class ContainerItemRoutingNode extends Container
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
         {
@@ -184,7 +184,7 @@ public class ContainerItemRoutingNode extends Container
 
             if (itemstack1.stackSize == 0)
             {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             } else
             {
                 slot.onSlotChanged();
