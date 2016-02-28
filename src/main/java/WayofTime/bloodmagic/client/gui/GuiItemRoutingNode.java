@@ -20,7 +20,14 @@ import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 @SideOnly(Side.CLIENT)
 public class GuiItemRoutingNode extends GuiContainer
 {
-    private GuiButton downButton, upButton, northButton, southButton, westButton, eastButton, incrementButton, decrementButton;
+    private GuiButton downButton;
+    private GuiButton upButton;
+    private GuiButton northButton;
+    private GuiButton southButton;
+    private GuiButton westButton;
+    private GuiButton eastButton;
+    private GuiButton incrementButton;
+    private GuiButton decrementButton;
 
     private TileFilteredRoutingNode inventory;
 
@@ -50,7 +57,7 @@ public class GuiItemRoutingNode extends GuiContainer
     {
         super.initGui();
         left = (this.width - this.xSize) / 2;
-        top = (this.height - this.ySize)/ 2;
+        top = (this.height - this.ySize) / 2;
 
         this.buttonList.clear();
         this.buttonList.add(this.downButton = new GuiButton(0, left + 133, top + 50, 18, 17, "D"));
