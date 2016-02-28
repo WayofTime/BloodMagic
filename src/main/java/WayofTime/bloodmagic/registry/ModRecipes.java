@@ -222,7 +222,10 @@ public class ModRecipes
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 0), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DEFAULT));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 1), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_CORROSIVE));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 2), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_DESTRUCTIVE));
-        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 3), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_VENGEFUL));
         TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystal, 1, 4), 1200, 100, ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST), ItemDemonCrystal.getStack(ItemDemonCrystal.CRYSTAL_STEADFAST));
+
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrucible), 400, 100, Items.cauldron, "stone", "gemLapis", "gemDiamond");
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonPylon), 400, 50, "blockIron", "stone", "gemLapis", ModItems.itemDemonCrystal);
+        TartaricForgeRecipeRegistry.registerRecipe(new ItemStack(ModBlocks.demonCrystallizer), 500, 100, ModBlocks.soulForge, "stone", "gemLapis", "blockGlass");
     }
 }

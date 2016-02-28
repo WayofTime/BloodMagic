@@ -3,6 +3,8 @@ package WayofTime.bloodmagic.tile;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -16,6 +18,7 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
+import WayofTime.bloodmagic.block.BlockDemonCrystal;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
 public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWillConduit
@@ -94,6 +97,24 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
 //            crystalCount = Math.min(crystalCount + 1, 7);
 //            worldObj.markBlockForUpdate(pos);
 //        }
+    }
+
+    public boolean dropSingleCrystal()
+    {
+        if (!worldObj.isRemote && crystalCount > 1)
+        {
+            IBlockState state = worldObj.getBlockState(pos);
+            EnumDemonWillType type = state.getValue(BlockDemonCrystal.TYPE);
+            ItemStack stack = BlockDemonCrystal.getItemStackDropped(type, 1);
+            if (stack != null)
+            {
+                crystalCount--;
+                worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public double getCrystalGrowthPerSecond(double will)

@@ -24,10 +24,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
+import WayofTime.bloodmagic.util.Utils;
 
 public class BlockDemonCrystal extends BlockContainer
 {
@@ -158,7 +163,7 @@ public class BlockDemonCrystal extends BlockContainer
         world.removeTileEntity(pos);
     }
 
-    private ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber)
+    public static ItemStack getItemStackDropped(EnumDemonWillType type, int crystalNumber)
     {
         ItemStack stack = null;
         switch (type)
@@ -188,6 +193,26 @@ public class BlockDemonCrystal extends BlockContainer
     public int quantityDropped(Random random)
     {
         return 0;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+        if (world.isRemote)
+        {
+            return true;
+        }
+
+        TileDemonCrystal crystal = (TileDemonCrystal) world.getTileEntity(pos);
+
+        if (PlayerDemonWillHandler.getTotalDemonWill(EnumDemonWillType.DEFAULT, player) > 1024)
+        {
+            crystal.dropSingleCrystal();
+
+            world.markBlockForUpdate(pos);
+        }
+
+        return true;
     }
 
 //    @Override

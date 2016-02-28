@@ -6,6 +6,15 @@ Version 2.0.0-19
 - Grayed out the currently active side's button in the item routers.
 - Added Demon Pylon
 - Changed behaviour of Demon Crucible
+- Fully implemented the behaviour of the crystal growing process.
+	- A Demon Crucible will be able to syphon the demon will from the tartaric gems inside of its inventory - right click with a gem to place it into the inventory.
+	- The syphoned will from the gem will go into the chunk, staying in the air - it will not move to neighbouring chunks unless forced to do so through other means
+	- The Demon Pylon draws will in the air from surrounding chunks and puts it into its own chunk - this acts as sort of like a pressure system, where it will even out the will distribution, but only goes one way.
+	- The Demon Crystallizer takes 100 will from the air (need a demon crucible for it to work) and forms a demon crystal on top of it. There is a 10% chance that this crystal will be of a special type.
+	- The Demon Crystals can be mined in order to collect their crystals. These crystals can be used for crafting more powerful stuff. If you have over 1024 will on your person when you right click the crystal, you can harvest a single crystal instead of the entire thing.
+	- You can put the harvested crystals inside of a demon crucible. Each crystal is worth 10 will, so this acts as a way to semi-automate will creation.
+	- When a hellfire forge is inside of a chunk with demon will, it will fill its contained tartaric gem with will.
+	- Changed a few recipes (like the greater tartaric gem) to match this new system.
 
 ------------------------------------------------------
 Version 2.0.0-18
