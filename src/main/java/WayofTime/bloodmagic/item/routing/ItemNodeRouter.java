@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.routing;
 import java.util.LinkedList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.iface.INodeRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,7 @@ import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemNodeRouter extends Item
+public class ItemNodeRouter extends Item implements INodeRenderer
 {
     public ItemNodeRouter()
     {

@@ -132,7 +132,11 @@ public class ConfigHandler
     public static boolean vanillaPotionHealthBoostEnabled;
     public static boolean vanillaPotionAbsorptionEnabled;
 
+    // General
     public static int sacrificialPackConversion;
+
+    // Client
+    public static boolean alwaysRenderRoutingLines;
 
     // Compat
     public static int wailaAltarDisplayMode;
@@ -272,6 +276,10 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "General settings");
         BloodMagicAPI.setLoggingEnabled(config.getBoolean("enableLogging", category, true, "Allows logging information to the console. Fatal errors will bypass this"));
         sacrificialPackConversion = config.getInt("sacrificialPackConversion", category, 20, 0, 100, "Base multiplier for the Coat of Arms. DamageDealt * sacrificialPackConversion");
+
+        category = "Client";
+        config.addCustomCategoryComment(category, "Client only settings");
+        alwaysRenderRoutingLines = config.getBoolean("alwaysRenderRoutingLines", category, false, "Always renders the beams between routing nodes. If false, only renders while a Node Router is being held.");
 
         category = "Compatibility";
         config.addCustomCategoryComment(category, "Compatibility settings");

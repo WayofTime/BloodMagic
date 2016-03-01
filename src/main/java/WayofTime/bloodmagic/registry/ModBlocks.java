@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
+import WayofTime.bloodmagic.item.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -35,15 +36,6 @@ import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.block.BlockSoulForge;
 import WayofTime.bloodmagic.block.BlockSpectral;
 import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
-import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
-import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
-import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
-import WayofTime.bloodmagic.item.block.ItemBlockPath;
-import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
-import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.tile.TileBloodTank;
@@ -119,10 +111,10 @@ public class ModBlocks
         soulForge = registerBlock(new BlockSoulForge());
         crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
         bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
-        masterRoutingNode = registerBlock(new BlockMasterRoutingNode());
-        inputRoutingNode = registerBlock(new BlockInputRoutingNode());
-        outputRoutingNode = registerBlock(new BlockOutputRoutingNode());
-        itemRoutingNode = registerBlock(new BlockItemRoutingNode());
+        masterRoutingNode = registerBlock(new BlockMasterRoutingNode(), ItemBlockRoutingNode.class);
+        inputRoutingNode = registerBlock(new BlockInputRoutingNode(), ItemBlockRoutingNode.class);
+        outputRoutingNode = registerBlock(new BlockOutputRoutingNode(), ItemBlockRoutingNode.class);
+        itemRoutingNode = registerBlock(new BlockItemRoutingNode(), ItemBlockRoutingNode.class);
         incenseAltar = registerBlock(new BlockIncenseAltar());
         pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
         demonCrucible = registerBlock(new BlockDemonCrucible());

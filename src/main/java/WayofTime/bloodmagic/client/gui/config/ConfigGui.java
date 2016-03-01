@@ -26,6 +26,7 @@ public class ConfigGui extends GuiConfig
         // adds sections declared in ConfigHandler. toLowerCase() is used
         // because the configuration class automatically does this, so must we.
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Potions".toLowerCase())));
+        list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Client".toLowerCase())));
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Compatibility".toLowerCase())));
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Teleposer Blacklist".toLowerCase())));
         list.add(new ConfigElement(ConfigHandler.getConfig().getCategory("Well of Suffering Blacklist".toLowerCase())));
