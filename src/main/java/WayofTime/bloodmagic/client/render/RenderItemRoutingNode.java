@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.client.render;
 import java.util.List;
 
 import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.INodeRenderer;
 import WayofTime.bloodmagic.registry.ModItems;
 import net.minecraft.client.Minecraft;
@@ -22,7 +23,7 @@ import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
 public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRoutingNode>
 {
-    private static final ResourceLocation beamTexture = new ResourceLocation("textures/entity/beacon_beam.png");
+    private static final ResourceLocation beamTexture = new ResourceLocation(Constants.Mod.MODID, "textures/entities/nodeBeam.png");
     private static final Minecraft mc = Minecraft.getMinecraft();
 
 //    private static final ResourceLocation test = new ResourceLocation("luminescence:textures/models/InputMirror.png");
