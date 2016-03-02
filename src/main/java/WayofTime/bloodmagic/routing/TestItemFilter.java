@@ -162,8 +162,8 @@ public class TestItemFilter implements IItemFilter
      * managing receives an ItemStack. Should only really be called by the Input
      * filter via it's transfer method.
      * 
-     * @param stack
-     *        -
+     * @param inputStack
+     *          - The stack to transfer
      * @return - The remainder of the stack after it has been absorbed into the
      *         inventory.
      */

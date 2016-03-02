@@ -9,11 +9,10 @@ import net.minecraft.util.BlockPos;
 
 @ToString
 @EqualsAndHashCode
+@Getter
 public class ChunkPairSerializable implements Serializable
 {
-    @Getter
     private int chunkXPos;
-    @Getter
     private int chunkZPos;
 
     public ChunkPairSerializable(int chunkXPos, int chunkZPos)
@@ -34,35 +33,5 @@ public class ChunkPairSerializable implements Serializable
 
     public BlockPos getChunkCenter(){
         return getChunkCenter(64);
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ChunkPairSerializable that = (ChunkPairSerializable) o;
-
-        if (chunkXPos != that.chunkXPos) return false;
-        return chunkZPos == that.chunkZPos;
-
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = chunkXPos;
-        result = 31 * result + chunkZPos;
-        return result;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "ChunkPairSerializable{" +
-                "chunkXPos=" + chunkXPos +
-                ", chunkZPos=" + chunkZPos +
-                '}';
     }
 }

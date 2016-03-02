@@ -53,9 +53,7 @@ public class AlchemyArrayRecipeRegistry
                 {
                     arrayRecipe.catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
                     if (circleRenderer != null)
-                    {
                         arrayRecipe.circleRenderer = circleRenderer;
-                    }
                     return;
                 }
             }
@@ -89,15 +87,7 @@ public class AlchemyArrayRecipeRegistry
 
     public static void registerRecipe(ItemStack inputStack, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource)
     {
-        AlchemyCircleRenderer circleRenderer = null;
-        if (arrayResource == null)
-        {
-            circleRenderer = defaultRenderer;
-        } else
-        {
-            circleRenderer = new AlchemyCircleRenderer(arrayResource);
-        }
-
+        AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
         registerRecipe(inputStack, catalystStack, arrayEffect, circleRenderer);
     }
 
@@ -109,16 +99,13 @@ public class AlchemyArrayRecipeRegistry
     public static void replaceAlchemyCircle(ItemStack inputStack, AlchemyCircleRenderer circleRenderer)
     {
         if (circleRenderer == null)
-        {
             return;
-        }
+
         for (Entry<ItemStackWrapper, AlchemyArrayRecipe> entry : recipes.entrySet())
         {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (arrayRecipe.doesInputMatchRecipe(inputStack))
-            {
                 arrayRecipe.circleRenderer = circleRenderer;
-            }
         }
     }
 
@@ -133,11 +120,7 @@ public class AlchemyArrayRecipeRegistry
         {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (ItemStackWrapper.getHolder(arrayRecipe.getInputStack()).equals(ItemStackWrapper.getHolder(inputStack)))
-            {
-                AlchemyArrayEffect effect = arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
-
-                return effect; // TODO: Decide if a copy should be returned.
-            }
+                return arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack); // TODO: Decide if a copy should be returned.
         }
 
         return null;
@@ -149,9 +132,7 @@ public class AlchemyArrayRecipeRegistry
         {
             AlchemyArrayRecipe arrayRecipe = entry.getValue();
             if (arrayRecipe.doesInputMatchRecipe(inputStack))
-            {
                 return arrayRecipe.circleRenderer;
-            }
         }
 
         return defaultRenderer;
@@ -181,14 +162,12 @@ public class AlchemyArrayRecipeRegistry
          * inputStack.
          * 
          * @param comparedStack
-         * @return - true if the ItemStack is a compatible item
+         *          - The stack to compare with
+         *
+         * @return - True if the ItemStack is a compatible item
          */
-        public boolean doesInputMatchRecipe(ItemStack comparedStack)
-        {
-            if (comparedStack == null || this.inputStack == null)
-                return false;
-
-            return this.inputStack.isItemEqual(comparedStack);
+        public boolean doesInputMatchRecipe(ItemStack comparedStack) {
+            return !(comparedStack == null || this.inputStack == null) && this.inputStack.isItemEqual(comparedStack);
         }
 
         /**
@@ -196,27 +175,23 @@ public class AlchemyArrayRecipeRegistry
          * 
          * @param comparedStack
          *        The catalyst that is being checked
-         * @return
+         *
+         * @return - The effect
          */
         public AlchemyArrayEffect getAlchemyArrayEffectForCatalyst(@Nullable ItemStack comparedStack)
         {
             for (Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet())
             {
                 ItemStack catalystStack = entry.getKey().toStack();
+
                 if (comparedStack == null && catalystStack == null)
-                {
                     return entry.getValue();
-                }
 
                 if (comparedStack == null || catalystStack == null)
-                {
                     continue;
-                }
 
                 if (catalystStack.isItemEqual(comparedStack))
-                {
                     return entry.getValue();
-                }
             }
 
             return null;

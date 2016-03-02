@@ -35,7 +35,7 @@ public abstract class LivingArmourUpgrade
     }
 
     /**
-     * Percentage of damage blocked. This stacks multiplicatively with other
+     * Percentage of damage blocked. This stacks multiplicities with other
      * upgrades.
      * 
      * @return 0 for no damage blocked, 1 for full damage blocked
@@ -54,9 +54,6 @@ public abstract class LivingArmourUpgrade
 
     public abstract String getUnlocalizedName();
 
-    /**
-     * @return
-     */
     public abstract int getMaxTier();
 
     public abstract int getCostOfUpgrade();
@@ -67,7 +64,7 @@ public abstract class LivingArmourUpgrade
 
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {
-        return HashMultimap.<String, AttributeModifier>create();
+        return HashMultimap.create();
     }
 
     public abstract void writeToNBT(NBTTagCompound tag);

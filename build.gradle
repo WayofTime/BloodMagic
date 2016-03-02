@@ -13,7 +13,7 @@ buildscript {
 plugins {
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
     id 'com.matthewprenger.cursegradle' version '1.0.7'
-	id 'net.franz-becker.gradle-lombok' version '1.5'
+	id 'io.franzbecker.gradle-lombok' version '1.6'
 }
 
 apply plugin: 'maven-publish'
@@ -110,10 +110,14 @@ lombok {
     sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
 }
 
-import net.franz_becker.gradle.lombok.task.DelombokTask
+import io.franzbecker.gradle.lombok.task.DelombokTask
 
 task delombok(type: DelombokTask) {
     args("src/main/java", "-d", "build/sources/delomboked/java")
+}
+
+task delombokHelp(type: DelombokTask) {
+    args "--help"
 }
 
 tasks.eclipse.dependsOn installLombok

@@ -86,9 +86,9 @@ public abstract class Ritual
     public abstract void performRitual(IMasterRitualStone masterRitualStone);
 
     /**
-     * Called when the ritual is stopped for a given {@link BreakType}.
+     * Called when the ritual is stopped for a given {@link Ritual.BreakType}.
      * 
-     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#stopRitual(BreakType)}
+     * {@link WayofTime.bloodmagic.tile.TileMasterRitualStone#stopRitual(Ritual.BreakType)}
      * 
      * @param masterRitualStone
      *        - The {@link IMasterRitualStone} that the ritual is bound to

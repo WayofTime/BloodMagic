@@ -4,27 +4,49 @@ import net.minecraft.item.ItemStack;
 
 public interface IDemonWill
 {
-    public double getWill(ItemStack soulStack);
+    /**
+     * Obtains the amount of Will an ItemStack contains.
+     *
+     * @param willStack
+     *          - The stack to retrieve the Will from
+     *
+     * @return - The amount of Will an ItemStack contains
+     */
+    double getWill(ItemStack willStack);
 
-    public void setWill(ItemStack willStack, double will);
+    /**
+     * Sets the amount of Will in a given ItemStack.
+     *
+     * @param willStack
+     *          - The ItemStack of the Will
+     * @param will
+     *          - The amount of will to set the stack to
+     */
+    void setWill(ItemStack willStack, double will);
 
     /**
      * Drains the demonic will from the willStack. If all of the will is
      * drained, the willStack will be removed.
      * 
      * @param willStack
+     *          - The ItemStack of the will
      * @param drainAmount
+     *          - The amount of Will to drain
+     *
      * @return The amount of will drained.
      */
-    public double drainWill(ItemStack willStack, double drainAmount);
+    double drainWill(ItemStack willStack, double drainAmount);
 
     /**
      * Creates a new ItemStack with the specified number of will. Implementation
      * should respect the number requested.
      * 
      * @param meta
+     *          - The meta of the ItemStack to create
      * @param number
-     * @return
+     *          - The amount of Will to create the Stack with.
+     *
+     * @return - An ItemStack with the set amount of Will
      */
-    public ItemStack createWill(int meta, double number);
+    ItemStack createWill(int meta, double number);
 }
