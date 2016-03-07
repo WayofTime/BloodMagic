@@ -2,6 +2,7 @@
 Version 2.0.0-20
 ------------------------------------------------------
 - Fixed Blood Altar crashing on odd occasions.
+- Fixed GUI of hellfire forge.
 
 ------------------------------------------------------
 Version 2.0.0-19

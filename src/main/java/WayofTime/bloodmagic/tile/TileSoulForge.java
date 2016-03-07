@@ -51,33 +51,31 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     @Override
     public void update()
     {
-        if (worldObj.isRemote)
+        if (!worldObj.isRemote)
         {
-            return;
+            for (EnumDemonWillType type : EnumDemonWillType.values())
+            {
+                double willInWorld = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
+                double filled = Math.min(willInWorld, worldWillTransferRate);
+
+                if (filled > 0)
+                {
+                    filled = this.fillDemonWill(type, filled, false);
+                    filled = WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, false);
+
+                    if (filled > 0)
+                    {
+                        this.fillDemonWill(type, filled, true);
+                        WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, true);
+                    }
+                }
+            }
         }
 
         if (!hasSoulGemOrSoul())
         {
             burnTime = 0;
             return;
-        }
-
-        for (EnumDemonWillType type : EnumDemonWillType.values())
-        {
-            double willInWorld = WorldDemonWillHandler.getCurrentWill(worldObj, pos, type);
-            double filled = Math.min(willInWorld, worldWillTransferRate);
-
-            if (filled > 0)
-            {
-                filled = this.fillDemonWill(type, filled, false);
-                filled = WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, false);
-
-                if (filled > 0)
-                {
-                    this.fillDemonWill(type, filled, true);
-                    WorldDemonWillHandler.drainWill(worldObj, pos, type, filled, true);
-                }
-            }
         }
 
         double soulsInGem = getWill();
@@ -106,11 +104,14 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
                         double requiredSouls = recipe.getSoulsDrained();
                         if (requiredSouls > 0)
                         {
-                            consumeSouls(requiredSouls);
+                            if (!worldObj.isRemote)
+                            {
+                                consumeSouls(requiredSouls);
+                            }
                         }
 
-                        craftItem(recipe);
-
+                        if (!worldObj.isRemote)
+                            craftItem(recipe);
                     }
 
                     burnTime = 0;
@@ -122,8 +123,10 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
             {
                 burnTime = 0;
             }
+        } else
+        {
+            burnTime = 0;
         }
-
     }
 
     public double getProgressForGui()
