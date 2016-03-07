@@ -276,7 +276,13 @@ public class EventHandler
     @SubscribeEvent
     public void onAltarCrafted(AltarCraftedEvent event)
     {
-        if (event.getOutput().getItem() instanceof ItemInscriptionTool) {
+        if (event.getOutput() == null)
+        {
+            return;
+        }
+
+        if (event.getOutput().getItem() instanceof ItemInscriptionTool)
+        {
             NBTHelper.checkNBT(event.getOutput());
             event.getOutput().getTagCompound().setInteger(Constants.NBT.USES, 10);
         }
