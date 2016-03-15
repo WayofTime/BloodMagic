@@ -2,16 +2,14 @@ package WayofTime.bloodmagic;
 
 import java.io.File;
 
+import WayofTime.bloodmagic.command.CommandBloodMagic;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.LogHelper;
@@ -103,6 +101,11 @@ public class BloodMagic
         ModCompatibility.loadCompat(ICompatibility.InitializationPhase.POST_INIT);
 
         proxy.postInit();
+    }
+
+    @Mod.EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandBloodMagic());
     }
 
     @Mod.EventHandler
