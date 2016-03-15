@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.api.network;
 import javax.annotation.Nullable;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -22,7 +21,6 @@ import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
 
 @Getter
-@Setter
 public class SoulNetwork extends WorldSavedData
 {
     @Nullable
@@ -99,7 +97,6 @@ public class SoulNetwork extends WorldSavedData
         if (getCurrentEssence() >= syphon)
         {
             setCurrentEssence(getCurrentEssence() - syphon);
-            markDirty();
             return syphon;
         }
 
@@ -182,5 +179,17 @@ public class SoulNetwork extends WorldSavedData
         {
             getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
         }
+    }
+
+    public SoulNetwork setCurrentEssence(int currentEssence) {
+        this.currentEssence = currentEssence;
+        markDirty();
+        return this;
+    }
+
+    public SoulNetwork setOrbTier(int orbTier) {
+        this.orbTier = orbTier;
+        markDirty();
+        return this;
     }
 }
