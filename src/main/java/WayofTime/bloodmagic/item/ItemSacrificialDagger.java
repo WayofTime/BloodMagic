@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
@@ -93,6 +95,15 @@ public class ItemSacrificialDagger extends Item
         }
 
         int lpAdded = 200;
+
+        MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
+        if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        {
+            TileEntity tile = world.getTileEntity(mop.getBlockPos());
+
+            if (tile != null && tile instanceof TileAltar && stack.getItemDamage() == 1)
+                lpAdded = ((TileAltar) tile).getCapacity();
+        }
 
         if (!player.capabilities.isCreativeMode)
         {
