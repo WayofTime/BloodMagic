@@ -7,6 +7,7 @@ Version 2.0.0-20
 - Fixed issue where Orb Tier was never set for a player internally
 - Added debug commands. These work exactly the same as in the 1.7.10 version
 - Creative Dagger now works correctly. Shift + Right Click on an Altar to fill it to capacity.
+- Fix step height being set to incorrect value. Your Chisels and Bits stairs should work, now!
 - [API] Fixed AddToNetworkEvent not being cancellable even though it should be
 - [API] Helper method in NetworkHelper to obtain the highest possible capacity for a given tier.
 
