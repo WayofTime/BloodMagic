@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
@@ -19,37 +21,59 @@ public class ItemSigilBloodLight extends ItemSigilBase
     }
 
     @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (getCooldownRemainder(stack) > 0)
+            reduceCooldown(stack);
+    }
+
+    @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
         MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, false);
+
+        if (getCooldownRemainder(stack) > 0)
+            return stack;
 
         if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
             BlockPos blockPos = mop.getBlockPos().offset(mop.sideHit);
 
             if (world.isAirBlock(blockPos))
+            {
                 world.setBlockState(blockPos, ModBlocks.bloodLight.getDefaultState());
+                if (!world.isRemote)
+                    NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLPUsed());
+                resetCooldown(stack);
+                player.swingItem();
+                return stack;
+            }
         } else
         {
-            world.spawnEntityInWorld(new EntityBloodLight(world, player));
+            if (!world.isRemote) {
+                world.spawnEntityInWorld(new EntityBloodLight(world, player));
+                NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLPUsed());
+            }
+            resetCooldown(stack);
         }
 
         return stack;
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
-        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+        return oldStack.getItem() != newStack.getItem();
+    }
 
-        if (world.isRemote)
-            return false;
+    public int getCooldownRemainder(ItemStack stack) {
+        return NBTHelper.checkNBT(stack).getTagCompound().getInteger(Constants.NBT.TICKS_REMAINING);
+    }
 
-        BlockPos newPos = blockPos.offset(side);
+    public void reduceCooldown(ItemStack stack) {
+        NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.TICKS_REMAINING, getCooldownRemainder(stack) - 1);
+    }
 
-        if (world.isAirBlock(newPos))
-            world.setBlockState(newPos, ModBlocks.bloodLight.getDefaultState());
-
-        return true;
+    public void resetCooldown(ItemStack stack) {
+        NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.TICKS_REMAINING, 10);
     }
 }
