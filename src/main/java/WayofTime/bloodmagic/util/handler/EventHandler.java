@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -480,6 +483,15 @@ public class EventHandler
                     }
                 } else if (bindable.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(held).equals(player.getDisplayNameString()))
                     BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
+            }
+
+            if (held != null && held.getItem() instanceof IBloodOrb) {
+                held = NBTHelper.checkNBT(held);
+                IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
+                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+
+                if (bloodOrb.getOrbLevel(held.getItemDamage()) > network.getOrbTier())
+                    network.setOrbTier(bloodOrb.getOrbLevel(held.getItemDamage()));
             }
         }
     }
