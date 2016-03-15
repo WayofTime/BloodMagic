@@ -2,6 +2,8 @@ package WayofTime.bloodmagic.api.util.helper;
 
 import java.util.UUID;
 
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -81,6 +83,19 @@ public class NetworkHelper
     public static int getCurrentMaxOrb(SoulNetwork soulNetwork)
     {
         return soulNetwork.getOrbTier();
+    }
+
+    public static int getMaximumForTier(int tier) {
+        int ret = 0;
+
+        if (tier > OrbRegistry.getTierMap().size() || tier < 0)
+            return ret;
+
+        for (ItemStack orbStack : OrbRegistry.getOrbsForTier(tier))
+            if (((IBloodOrb) orbStack.getItem()).getMaxEssence(orbStack.getItemDamage()) > ret)
+                ret = ((IBloodOrb) orbStack.getItem()).getMaxEssence(orbStack.getItemDamage());
+
+        return ret;
     }
 
     // Syphon
