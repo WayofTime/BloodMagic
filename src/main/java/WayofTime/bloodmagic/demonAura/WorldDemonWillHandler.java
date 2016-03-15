@@ -23,12 +23,12 @@ public class WorldDemonWillHandler
 
     public static WillChunk getWillChunk(int dim, int x, int y)
     {
-        if (containedWills.containsKey(dim))
+        if (!containedWills.containsKey(dim))
         {
-            return (containedWills.get(dim)).getWillChunkAt(x, y);
+            addWillWorld(dim);
         }
 
-        return null;
+        return (containedWills.get(dim)).getWillChunkAt(x, y);
     }
 
     public static void addWillWorld(int dim)
@@ -143,7 +143,16 @@ public class WorldDemonWillHandler
 
     public static WillChunk getWillChunk(World world, BlockPos pos)
     {
-        return getWillChunk(world.provider.getDimensionId(), pos.getX() >> 4, pos.getZ() >> 4);
+        WillChunk willChunk = getWillChunk(world.provider.getDimensionId(), pos.getX() >> 4, pos.getZ() >> 4);
+        if (willChunk == null)
+        {
+            Chunk chunk = world.getChunkFromBlockCoords(pos);
+            generateWill(chunk);
+
+            willChunk = getWillChunk(world.provider.getDimensionId(), pos.getX() >> 4, pos.getZ() >> 4);
+        }
+
+        return willChunk;
     }
 
     public static double getCurrentWill(World world, BlockPos pos, EnumDemonWillType type)
