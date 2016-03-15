@@ -1,10 +1,12 @@
 package WayofTime.bloodmagic.api.event;
 
+import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+@Cancelable
 public class AddToNetworkEvent extends Event
 {
-    public String ownerNetwork;
+    public final String ownerNetwork;
     public int addedAmount;
     public int maximum;
 
