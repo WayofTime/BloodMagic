@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
  */
 public interface IUpgradeTrainer
 {
-    public List<String> getTrainedUpgrades(ItemStack stack);
+    List<String> getTrainedUpgrades(ItemStack stack);
 
-    public boolean setTrainedUpgrades(ItemStack stack, List<String> keys);
+    boolean setTrainedUpgrades(ItemStack stack, List<String> keys);
 }

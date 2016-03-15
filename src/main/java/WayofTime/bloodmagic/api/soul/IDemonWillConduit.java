@@ -6,15 +6,15 @@ package WayofTime.bloodmagic.api.soul;
  */
 public interface IDemonWillConduit
 {
-    public int getWeight();
+    int getWeight();
 
-    public double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill);
+    double fillDemonWill(EnumDemonWillType type, double amount, boolean doFill);
 
-    public double drainDemonWill(EnumDemonWillType type, double amount, boolean doDrain);
+    double drainDemonWill(EnumDemonWillType type, double amount, boolean doDrain);
 
-    public boolean canFill(EnumDemonWillType type);
+    boolean canFill(EnumDemonWillType type);
 
-    public boolean canDrain(EnumDemonWillType type);
+    boolean canDrain(EnumDemonWillType type);
 
-    public double getCurrentWill(EnumDemonWillType type);
+    double getCurrentWill(EnumDemonWillType type);
 }

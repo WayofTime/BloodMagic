@@ -15,34 +15,37 @@ import com.google.common.collect.Multimap;
  */
 public interface ILivingArmour
 {
-    public Multimap<String, AttributeModifier> getAttributeModifiers();
+    Multimap<String, AttributeModifier> getAttributeModifiers();
 
-    public boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade);
+    boolean upgradeArmour(EntityPlayer user, LivingArmourUpgrade upgrade);
 
-    public boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
+    boolean removeUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
 
-    public void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
+    void notifyPlayerOfUpgrade(EntityPlayer user, LivingArmourUpgrade upgrade);
 
     /**
      * Ticks the upgrades and stat trackers, passing in the world and player as
      * well as the LivingArmour
      * 
      * @param world
+     *          - The World
      * @param player
+     *          - The player wearing the Armour
      */
-    public void onTick(World world, EntityPlayer player);
+    void onTick(World world, EntityPlayer player);
 
-    public void readFromNBT(NBTTagCompound tag);
+    void readFromNBT(NBTTagCompound tag);
 
-    public void writeToNBT(NBTTagCompound tag, boolean forceWrite);
+    void writeToNBT(NBTTagCompound tag, boolean forceWrite);
 
     /**
      * Writes the LivingArmour to the NBTTag. This will only write the trackers
      * that are dirty.
      * 
      * @param tag
+     *          - The NBT tag to write to
      */
-    public void writeDirtyToNBT(NBTTagCompound tag);
+    void writeDirtyToNBT(NBTTagCompound tag);
 
-    public void writeToNBT(NBTTagCompound tag);
+    void writeToNBT(NBTTagCompound tag);
 }

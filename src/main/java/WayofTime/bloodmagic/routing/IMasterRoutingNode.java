@@ -6,13 +6,13 @@ import net.minecraft.util.BlockPos;
 
 public interface IMasterRoutingNode extends IRoutingNode
 {
-    public boolean isConnected(List<BlockPos> path, BlockPos nodePos);
+    boolean isConnected(List<BlockPos> path, BlockPos nodePos);
 
-    public void addNodeToList(IRoutingNode node);
+    void addNodeToList(IRoutingNode node);
 
-    public void addConnections(BlockPos pos, List<BlockPos> connectionList);
+    void addConnections(BlockPos pos, List<BlockPos> connectionList);
 
-    public void addConnection(BlockPos pos1, BlockPos pos2);
+    void addConnection(BlockPos pos1, BlockPos pos2);
 
-    public void removeConnection(BlockPos pos1, BlockPos pos2);
+    void removeConnection(BlockPos pos1, BlockPos pos2);
 }

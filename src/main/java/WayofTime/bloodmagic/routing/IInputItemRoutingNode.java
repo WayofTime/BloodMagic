@@ -4,7 +4,7 @@ import net.minecraft.util.EnumFacing;
 
 public interface IInputItemRoutingNode extends IItemRoutingNode
 {
-    public boolean isInput(EnumFacing side);
+    boolean isInput(EnumFacing side);
 
-    public IItemFilter getInputFilterForSide(EnumFacing side);
+    IItemFilter getInputFilterForSide(EnumFacing side);
 }

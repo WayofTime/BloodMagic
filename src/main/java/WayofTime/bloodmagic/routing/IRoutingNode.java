@@ -7,21 +7,21 @@ import net.minecraft.world.World;
 
 public interface IRoutingNode
 {
-    public void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master);
+    void connectMasterToRemainingNode(World world, List<BlockPos> alreadyChecked, IMasterRoutingNode master);
 
-    public BlockPos getBlockPos();
+    BlockPos getBlockPos();
 
-    public List<BlockPos> getConnected();
+    List<BlockPos> getConnected();
 
-    public BlockPos getMasterPos();
+    BlockPos getMasterPos();
 
-    public boolean isConnectionEnabled(BlockPos testPos);
+    boolean isConnectionEnabled(BlockPos testPos);
 
-    public boolean isMaster(IMasterRoutingNode master);
+    boolean isMaster(IMasterRoutingNode master);
 
-    public void addConnection(BlockPos pos1);
+    void addConnection(BlockPos pos1);
 
-    public void removeConnection(BlockPos pos1);
+    void removeConnection(BlockPos pos1);
 
-    public void removeAllConnections();
+    void removeAllConnections();
 }

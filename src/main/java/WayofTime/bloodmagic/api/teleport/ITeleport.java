@@ -2,7 +2,7 @@ package WayofTime.bloodmagic.api.teleport;
 
 public interface ITeleport
 {
-    public void teleport();
+    void teleport();
 
-    public int getTeleportCost();
+    int getTeleportCost();
 }

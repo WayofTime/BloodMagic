@@ -7,5 +7,5 @@ import net.minecraft.item.ItemStack;
 
 public interface IDemonWillWeapon
 {
-    public List<ItemStack> getRandomDemonWillDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting);
+    List<ItemStack> getRandomDemonWillDrop(EntityLivingBase killedEntity, EntityLivingBase attackingEntity, ItemStack stack, int looting);
 }
