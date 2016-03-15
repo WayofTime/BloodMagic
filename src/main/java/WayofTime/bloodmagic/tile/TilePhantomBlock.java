@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
+import lombok.NoArgsConstructor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -11,9 +12,10 @@ import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 
+@NoArgsConstructor
 public class TilePhantomBlock extends TileEntity implements ITickable
 {
-    private int ticksRemaining;
+    private int ticksRemaining = 10;
 
     public TilePhantomBlock(int ticksRemaining)
     {
@@ -41,8 +43,8 @@ public class TilePhantomBlock extends TileEntity implements ITickable
 
         if (ticksRemaining <= 0)
         {
-            worldObj.removeTileEntity(getPos());
             worldObj.setBlockToAir(getPos());
+            worldObj.removeTileEntity(getPos());
         }
     }
 
