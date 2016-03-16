@@ -12,7 +12,7 @@ public class CompatibilityThaumcraft implements ICompatibility
         if (phase == InitializationPhase.POST_INIT)
         {
             BloodMagicResearch.addResearch();
-            
+
             LivingArmourHandler.registerStatTracker(StatTrackerThaumRunicShielding.class);
 
             LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeThaumRunicShielding(0));

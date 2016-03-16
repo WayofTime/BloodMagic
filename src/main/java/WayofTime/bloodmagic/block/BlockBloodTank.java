@@ -45,7 +45,8 @@ public class BlockBloodTank extends BlockContainer
     }
 
     @Override
-    public int getRenderType() {
+    public int getRenderType()
+    {
         return 3;
     }
 

@@ -144,8 +144,7 @@ public class RitualExpulsion extends Ritual
                 if (block != null && block.getMaterial().blocksMovement())
                 {
                     flag1 = true;
-                }
-                else
+                } else
                 {
                     --entityLiving.posY;
                     --j;
@@ -167,8 +166,7 @@ public class RitualExpulsion extends Ritual
         {
             moveEntityViaTeleport(entityLiving, lastX, lastY, lastZ);
             return false;
-        }
-        else
+        } else
         {
             for (l = 0; l < 128; ++l)
             {
@@ -208,8 +206,7 @@ public class RitualExpulsion extends Ritual
                     }
                 }
             }
-        }
-        else if (entityLiving != null)
+        } else if (entityLiving != null)
         {
             entityLiving.setPosition(x, y, z);
         }

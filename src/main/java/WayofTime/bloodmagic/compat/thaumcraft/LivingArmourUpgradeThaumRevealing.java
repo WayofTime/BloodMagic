@@ -4,39 +4,47 @@ import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-public class LivingArmourUpgradeThaumRevealing extends LivingArmourUpgrade {
+public class LivingArmourUpgradeThaumRevealing extends LivingArmourUpgrade
+{
 
-    public LivingArmourUpgradeThaumRevealing(int level) {
+    public LivingArmourUpgradeThaumRevealing(int level)
+    {
         super(level);
     }
 
     @Override
-    public String getUniqueIdentifier() {
+    public String getUniqueIdentifier()
+    {
         return Constants.Mod.MODID + ".upgrade.revealing";
     }
 
     @Override
-    public String getUnlocalizedName() {
+    public String getUnlocalizedName()
+    {
         return tooltipBase + "revealing";
     }
 
     @Override
-    public int getMaxTier() {
+    public int getMaxTier()
+    {
         return 1;
     }
 
     @Override
-    public int getCostOfUpgrade() {
+    public int getCostOfUpgrade()
+    {
         return 5;
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public void writeToNBT(NBTTagCompound tag)
+    {
 
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(NBTTagCompound tag)
+    {
 
     }
 }

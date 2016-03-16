@@ -18,7 +18,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PageAltarRecipe extends PageBase {
+public class PageAltarRecipe extends PageBase
+{
 
     public ItemStack input;
     public ItemStack output;

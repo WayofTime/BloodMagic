@@ -85,7 +85,8 @@ public class NetworkHelper
         return soulNetwork.getOrbTier();
     }
 
-    public static int getMaximumForTier(int tier) {
+    public static int getMaximumForTier(int tier)
+    {
         int ret = 0;
 
         if (tier > OrbRegistry.getTierMap().size() || tier < 0)

@@ -8,10 +8,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.util.Utils;
 
-public class IMCHandler {
+public class IMCHandler
+{
 
-    public static void handleIMC(FMLInterModComms.IMCEvent event) {
-        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
+    public static void handleIMC(FMLInterModComms.IMCEvent event)
+    {
+        for (FMLInterModComms.IMCMessage message : event.getMessages())
+        {
             if (message.key.equals("teleposerBlacklist") && message.isItemStackMessage())
             {
                 ItemStack stack = message.getItemStackValue();

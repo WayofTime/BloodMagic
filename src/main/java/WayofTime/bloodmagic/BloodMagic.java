@@ -104,7 +104,8 @@ public class BloodMagic
     }
 
     @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(FMLServerStartingEvent event)
+    {
         event.registerServerCommand(new CommandBloodMagic());
     }
 

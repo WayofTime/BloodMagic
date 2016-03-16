@@ -53,7 +53,8 @@ public class ItemActivationCrystal extends ItemBindable implements IVariantProvi
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
+    public List<Pair<Integer, String>> getVariants()
+    {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=weak"));
         ret.add(new ImmutablePair<Integer, String>(1, "type=demonic"));

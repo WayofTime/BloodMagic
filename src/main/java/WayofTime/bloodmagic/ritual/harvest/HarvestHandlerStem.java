@@ -17,10 +17,9 @@ import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 
 /**
  * Harvest handler for crops with stems such as Pumpkins and Melons.
- * {@link OreDictionary#WILDCARD_VALUE} is used as a wildcard to allow
- * the crop to be harvested at any metadata. Rotation based crop blocks
- * are a good reason to use this (see pumpkins).
- * <br>
+ * {@link OreDictionary#WILDCARD_VALUE} is used as a wildcard to allow the crop
+ * to be harvested at any metadata. Rotation based crop blocks are a good reason
+ * to use this (see pumpkins). <br>
  * Register a new crop for this handler with
  * {@link HarvestRegistry#registerStemCrop(BlockStack, BlockStack)}
  */

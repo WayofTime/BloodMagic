@@ -21,11 +21,10 @@ public class PlayerHelper
 {
     /**
      * A list of all known fake players that do not extend FakePlayer.
-     *
+     * 
      * Will be added to as needed.
      */
-    private static final ArrayList<String> knownFakePlayers = Lists.newArrayList(
-    );
+    private static final ArrayList<String> knownFakePlayers = Lists.newArrayList();
 
     public static String getUsernameFromPlayer(EntityPlayer player)
     {

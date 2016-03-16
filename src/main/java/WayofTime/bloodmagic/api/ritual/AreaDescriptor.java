@@ -40,9 +40,11 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
          * This constructor takes in the minimum and maximum BlockPos. The
          * maximum offset is non-inclusive, meaning if you pass in (0,0,0) and
          * (1,1,1), calling getContainedPositions() will only give (0,0,0).
-         *
-         * @param minimumOffset -
-         * @param maximumOffset -
+         * 
+         * @param minimumOffset
+         *        -
+         * @param maximumOffset
+         *        -
          */
         public Rectangle(BlockPos minimumOffset, BlockPos maximumOffset)
         {
@@ -94,9 +96,11 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         /**
          * Sets the offsets of the AreaDescriptor in a safe way that will make
          * minimumOffset the lowest corner
-         *
-         * @param offset1 -
-         * @param offset2 -
+         * 
+         * @param offset1
+         *        -
+         * @param offset2
+         *        -
          */
         public void setOffsets(BlockPos offset1, BlockPos offset2)
         {

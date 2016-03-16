@@ -54,7 +54,7 @@ public class TileBloodTank extends TileEntity implements IFluidHandler
     @Override
     public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
-        return new FluidTankInfo[]{tank.getInfo()};
+        return new FluidTankInfo[] { tank.getInfo() };
     }
 
     @Override
@@ -69,7 +69,8 @@ public class TileBloodTank extends TileEntity implements IFluidHandler
     public void writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
-        if (tank.getFluidAmount() != 0) tagCompound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
+        if (tank.getFluidAmount() != 0)
+            tagCompound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
         tagCompound.setInteger("capacity", capacity);
     }
 }

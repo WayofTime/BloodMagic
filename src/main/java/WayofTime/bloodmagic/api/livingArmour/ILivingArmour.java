@@ -28,9 +28,9 @@ public interface ILivingArmour
      * well as the LivingArmour
      * 
      * @param world
-     *          - The World
+     *        - The World
      * @param player
-     *          - The player wearing the Armour
+     *        - The player wearing the Armour
      */
     void onTick(World world, EntityPlayer player);
 
@@ -43,7 +43,7 @@ public interface ILivingArmour
      * that are dirty.
      * 
      * @param tag
-     *          - The NBT tag to write to
+     *        - The NBT tag to write to
      */
     void writeDirtyToNBT(NBTTagCompound tag);
 

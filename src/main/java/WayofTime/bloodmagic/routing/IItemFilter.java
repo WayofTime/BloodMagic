@@ -17,7 +17,7 @@ public interface IItemFilter
      * 
      * @param inputStack
      *        - The stack to filter
-     *
+     * 
      * @return - The remainder of the stack after it has been absorbed into the
      *         inventory.
      */

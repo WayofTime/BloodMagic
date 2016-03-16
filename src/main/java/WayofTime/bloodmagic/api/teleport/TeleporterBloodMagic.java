@@ -33,6 +33,6 @@ public class TeleporterBloodMagic extends Teleporter
     @Override
     public void placeInPortal(Entity entity, float rotationYaw)
     {
-        entity.setLocationAndAngles(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY) + 2,  MathHelper.floor_double(entity.posZ), entity.rotationYaw, entity.rotationPitch);
+        entity.setLocationAndAngles(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY) + 2, MathHelper.floor_double(entity.posZ), entity.rotationYaw, entity.rotationPitch);
     }
 }

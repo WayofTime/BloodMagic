@@ -31,7 +31,8 @@ public class ChunkPairSerializable implements Serializable
         return new BlockPos((chunkXPos << 4) + 8, y, (chunkZPos << 4) + 8);
     }
 
-    public BlockPos getChunkCenter(){
+    public BlockPos getChunkCenter()
+    {
         return getChunkCenter(64);
     }
 }

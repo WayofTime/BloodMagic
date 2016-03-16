@@ -163,7 +163,7 @@ public class TestItemFilter implements IItemFilter
      * filter via it's transfer method.
      * 
      * @param inputStack
-     *          - The stack to transfer
+     *        - The stack to transfer
      * @return - The remainder of the stack after it has been absorbed into the
      *         inventory.
      */

@@ -120,7 +120,7 @@ public class RitualHelper
 
         if (block instanceof IRitualStone)
             return ((IRitualStone) block).isRuneType(world, pos, type);
-        else if(tile instanceof IRitualStone.Tile)
+        else if (tile instanceof IRitualStone.Tile)
             return ((IRitualStone.Tile) tile).isRuneType(type);
         else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null))
             return tile.getCapability(RUNE_CAPABILITY, null).isRuneType(type);
@@ -137,7 +137,7 @@ public class RitualHelper
 
         if (block instanceof IRitualStone)
             return true;
-        else if(tile instanceof IRitualStone.Tile)
+        else if (tile instanceof IRitualStone.Tile)
             return true;
         else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null))
             return true;
@@ -154,7 +154,7 @@ public class RitualHelper
 
         if (block instanceof IRitualStone)
             ((IRitualStone) block).setRuneType(world, pos, type);
-        else if(tile instanceof IRitualStone.Tile)
+        else if (tile instanceof IRitualStone.Tile)
             ((IRitualStone.Tile) tile).setRuneType(type);
         else if (tile != null && tile.hasCapability(RUNE_CAPABILITY, null))
         {

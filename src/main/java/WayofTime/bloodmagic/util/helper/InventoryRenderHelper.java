@@ -24,8 +24,8 @@ import WayofTime.bloodmagic.api.Constants;
  * 
  *         If you pass a Block through here that uses the default ItemBlock, you
  *         should specify a custom name.
- *
- *         @deprecated in favor of {@link InventoryRenderHelperV2}
+ * 
+ * @deprecated in favor of {@link InventoryRenderHelperV2}
  */
 @Deprecated
 public class InventoryRenderHelper

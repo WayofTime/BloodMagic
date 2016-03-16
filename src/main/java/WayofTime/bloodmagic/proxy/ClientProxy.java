@@ -94,8 +94,10 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void tryHandleBlockModel(Block block, String name) {
-        if (block instanceof IVariantProvider) {
+    public void tryHandleBlockModel(Block block, String name)
+    {
+        if (block instanceof IVariantProvider)
+        {
             IVariantProvider variantProvider = (IVariantProvider) block;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
                 ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, name), variant.getRight()));
@@ -103,13 +105,16 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void tryHandleItemModel(Item item, String name) {
-        if (item instanceof IMeshProvider) {
+    public void tryHandleItemModel(Item item, String name)
+    {
+        if (item instanceof IMeshProvider)
+        {
             IMeshProvider meshProvider = (IMeshProvider) item;
             ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
             for (String variant : meshProvider.getVariants())
                 ModelLoader.registerItemVariants(item, new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant));
-        } else if (item instanceof IVariantProvider) {
+        } else if (item instanceof IVariantProvider)
+        {
             IVariantProvider variantProvider = (IVariantProvider) item;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
                 ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant.getRight()));

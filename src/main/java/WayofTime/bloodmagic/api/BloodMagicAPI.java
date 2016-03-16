@@ -17,13 +17,13 @@ import WayofTime.bloodmagic.api.util.helper.LogHelper;
 
 /**
  * The primary API class. Includes helper methods and blacklists.
- *
+ * 
  * Some API methods can be used via IMC instead. The supported methods are:
- *
+ * 
  * <ul>
- *     <li>{@link #addToTeleposerBlacklist(BlockStack)}</li>
- *     <li>{@link #blacklistFromGreenGrove(Block)}</li>
- *     <li>{@link #setEntitySacrificeValue(Class, int)}</li>
+ * <li>{@link #addToTeleposerBlacklist(BlockStack)}</li>
+ * <li>{@link #blacklistFromGreenGrove(Block)}</li>
+ * <li>{@link #setEntitySacrificeValue(Class, int)}</li>
  * </ul>
  */
 public class BloodMagicAPI
@@ -51,8 +51,8 @@ public class BloodMagicAPI
 
     /**
      * Used to obtain Items from BloodMagic. Use
-     * {@link WayofTime.bloodmagic.api.Constants.BloodMagicItem} to get
-     * the registered name.
+     * {@link WayofTime.bloodmagic.api.Constants.BloodMagicItem} to get the
+     * registered name.
      * 
      * @param name
      *        - The registered name of the item. Usually the same as the class
@@ -66,20 +66,22 @@ public class BloodMagicAPI
 
     /**
      * @see #getItem(String)
-     *
+     * 
      * @param bloodMagicItem
-     *        - The {@link WayofTime.bloodmagic.api.Constants.BloodMagicItem} to get.
+     *        - The {@link WayofTime.bloodmagic.api.Constants.BloodMagicItem} to
+     *        get.
      * @return - The requested Item
      */
-    public static Item getItem(Constants.BloodMagicItem bloodMagicItem) {
+    public static Item getItem(Constants.BloodMagicItem bloodMagicItem)
+    {
         return getItem(bloodMagicItem.getRegName());
     }
 
     /**
      * Used to obtain Blocks from BloodMagic. Use
-     * {@link WayofTime.bloodmagic.api.Constants.BloodMagicBlock} to get
-     * the registered name.
-     *
+     * {@link WayofTime.bloodmagic.api.Constants.BloodMagicBlock} to get the
+     * registered name.
+     * 
      * @param name
      *        - The registered name of the block. Usually the same as the class
      *        name.
@@ -92,21 +94,25 @@ public class BloodMagicAPI
 
     /**
      * @see #getBlock(String)
-     *
+     * 
      * @param bloodMagicBlock
-     *        - The {@link WayofTime.bloodmagic.api.Constants.BloodMagicBlock} to get.
+     *        - The {@link WayofTime.bloodmagic.api.Constants.BloodMagicBlock}
+     *        to get.
      * @return - The requested Block
      */
-    public static Block getBlock(Constants.BloodMagicBlock bloodMagicBlock) {
+    public static Block getBlock(Constants.BloodMagicBlock bloodMagicBlock)
+    {
         return getBlock(bloodMagicBlock.getRegName());
     }
 
     /**
      * Used to add a {@link BlockStack} to the Teleposer blacklist that cannot
      * be changed via Configuration files.
-     *
-     * IMC: {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", ItemStack)}
-     * Example: {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", new ItemStack(Blocks.bedrock))}
+     * 
+     * IMC:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", ItemStack)}
+     * Example:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "teleposerBlacklist", new ItemStack(Blocks.bedrock))}
      * 
      * @param blockStack
      *        - The BlockStack to blacklist.
@@ -142,16 +148,18 @@ public class BloodMagicAPI
     }
 
     /**
-     * Used to set the sacrifice value of an Entity. The value provided is how much
-     * LP will be gained when the entity is sacrificed at a Blood Altar.
-     *
+     * Used to set the sacrifice value of an Entity. The value provided is how
+     * much LP will be gained when the entity is sacrificed at a Blood Altar.
+     * 
      * Setting a sacrificeValue of 0 will effectively blacklist the entity.
-     *
+     * 
      * The default value for any unset Entity is 500 LP per sacrifice.
-     *
-     * IMC: {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")}
-     * Example: {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "EntityVillager;2000")}
-     *
+     * 
+     * IMC:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "ClassName;Value")}
+     * Example:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "sacrificeValue", "EntityVillager;2000")}
+     * 
      * @param entityClass
      *        - The class of the entity to blacklist.
      * @param sacrificeValue
@@ -165,7 +173,7 @@ public class BloodMagicAPI
 
     /**
      * @see #setEntitySacrificeValue(Class, int)
-     *
+     * 
      * @param entityClassName
      *        - The name of the class of the entity to blacklist.
      * @param sacrificeValue
@@ -179,13 +187,17 @@ public class BloodMagicAPI
 
     /**
      * Blacklists a block from the Green Grove Ritual and Sigil.
-     *
-     * IMC: {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")}
-     * Example: {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "minecraft:wheat")}
-     *
-     * @param block - Block to blacklist
+     * 
+     * IMC:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "domain:name")}
+     * Example:
+     * {@code FMLInterModComs.sendMessage("BloodMagic", "greenGroveBlacklist", "minecraft:wheat")}
+     * 
+     * @param block
+     *        - Block to blacklist
      */
-    public static void blacklistFromGreenGrove(Block block) {
+    public static void blacklistFromGreenGrove(Block block)
+    {
         if (!greenGroveBlacklist.contains(block))
             greenGroveBlacklist.add(block);
     }

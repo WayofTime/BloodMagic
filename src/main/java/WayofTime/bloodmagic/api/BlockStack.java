@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameData;
 
 @Getter
-@EqualsAndHashCode(exclude = {"state"})
+@EqualsAndHashCode(exclude = { "state" })
 public class BlockStack
 {
     private final Block block;

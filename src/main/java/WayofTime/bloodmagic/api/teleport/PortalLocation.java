@@ -19,7 +19,7 @@ public class PortalLocation implements Serializable
     private int z;
     @Getter
     private int dimension;
-    
+
     public PortalLocation(int x, int y, int z, int dimension)
     {
         this.x = x;
@@ -64,13 +64,17 @@ public class PortalLocation implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         PortalLocation that = (PortalLocation) o;
 
-        if (x != that.x) return false;
-        if (y != that.y) return false;
+        if (x != that.x)
+            return false;
+        if (y != that.y)
+            return false;
         return z == that.z;
 
     }

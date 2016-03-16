@@ -483,7 +483,8 @@ public class EventHandler
                     BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
             }
 
-            if (held != null && held.getItem() instanceof IBloodOrb) {
+            if (held != null && held.getItem() instanceof IBloodOrb)
+            {
                 held = NBTHelper.checkNBT(held);
                 IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
                 SoulNetwork network = NetworkHelper.getSoulNetwork(player);

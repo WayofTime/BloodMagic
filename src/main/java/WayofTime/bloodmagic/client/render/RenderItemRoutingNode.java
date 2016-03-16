@@ -34,7 +34,8 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
         if ((mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof INodeRenderer) || ConfigHandler.alwaysRenderRoutingLines)
         {
             List<BlockPos> connectionList = tileNode.getConnected();
-            for (BlockPos wantedPos : connectionList) {
+            for (BlockPos wantedPos : connectionList)
+            {
                 BlockPos offsetPos = wantedPos.subtract(tileNode.getPos());
 
                 //The beam renders towards the east by default.

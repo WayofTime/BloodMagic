@@ -62,7 +62,8 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         return null;
     }
 
-    public enum DefaultWill {
+    public enum DefaultWill
+    {
         SOUL(new ItemStack(ModItems.monsterSoul, 1, 0), 64),
         PETTY(new ItemStack(ModItems.soulGem, 1, 0), 64),
         LESSER(new ItemStack(ModItems.soulGem, 1, 1), 256),
@@ -73,7 +74,8 @@ public class TartaricForgeRecipeJEI extends BlankRecipeWrapper
         public final ItemStack willStack;
         public final double minSouls;
 
-        DefaultWill(ItemStack willStack, double minSouls) {
+        DefaultWill(ItemStack willStack, double minSouls)
+        {
             this.willStack = willStack;
             this.minSouls = minSouls;
         }

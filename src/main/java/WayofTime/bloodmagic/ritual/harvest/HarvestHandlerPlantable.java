@@ -14,9 +14,8 @@ import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 
 /**
- * Harvest handler for standard plantable crops such as
- * Wheat, Potatoes, and Netherwart.
- * <br>
+ * Harvest handler for standard plantable crops such as Wheat, Potatoes, and
+ * Netherwart. <br>
  * Register a new crop for this handler with
  * {@link HarvestRegistry#registerStandardCrop(Block, int)}
  */
@@ -38,13 +37,14 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 
         int matureMeta = HarvestRegistry.getStandardCrops().get(blockStack.getBlock());
 
-        if(blockStack.getMeta() < matureMeta)
+        if (blockStack.getMeta() < matureMeta)
             return false;
 
         List<ItemStack> drops = blockStack.getBlock().getDrops(world, pos, blockStack.getState(), 0);
         boolean foundSeed = false;
 
-        for (ItemStack stack : drops) {
+        for (ItemStack stack : drops)
+        {
             if (stack == null)
                 continue;
 
@@ -53,7 +53,7 @@ public class HarvestHandlerPlantable implements IHarvestHandler
                 if (stack.stackSize > 1)
                     stack.stackSize--;
                 else
-                drops.remove(stack);
+                    drops.remove(stack);
 
                 foundSeed = true;
                 break;

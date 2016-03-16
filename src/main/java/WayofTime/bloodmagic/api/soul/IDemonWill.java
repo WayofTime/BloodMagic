@@ -6,21 +6,21 @@ public interface IDemonWill
 {
     /**
      * Obtains the amount of Will an ItemStack contains.
-     *
+     * 
      * @param willStack
-     *          - The stack to retrieve the Will from
-     *
+     *        - The stack to retrieve the Will from
+     * 
      * @return - The amount of Will an ItemStack contains
      */
     double getWill(ItemStack willStack);
 
     /**
      * Sets the amount of Will in a given ItemStack.
-     *
+     * 
      * @param willStack
-     *          - The ItemStack of the Will
+     *        - The ItemStack of the Will
      * @param will
-     *          - The amount of will to set the stack to
+     *        - The amount of will to set the stack to
      */
     void setWill(ItemStack willStack, double will);
 
@@ -29,10 +29,10 @@ public interface IDemonWill
      * drained, the willStack will be removed.
      * 
      * @param willStack
-     *          - The ItemStack of the will
+     *        - The ItemStack of the will
      * @param drainAmount
-     *          - The amount of Will to drain
-     *
+     *        - The amount of Will to drain
+     * 
      * @return The amount of will drained.
      */
     double drainWill(ItemStack willStack, double drainAmount);
@@ -42,10 +42,10 @@ public interface IDemonWill
      * should respect the number requested.
      * 
      * @param meta
-     *          - The meta of the ItemStack to create
+     *        - The meta of the ItemStack to create
      * @param number
-     *          - The amount of Will to create the Stack with.
-     *
+     *        - The amount of Will to create the Stack with.
+     * 
      * @return - An ItemStack with the set amount of Will
      */
     ItemStack createWill(int meta, double number);

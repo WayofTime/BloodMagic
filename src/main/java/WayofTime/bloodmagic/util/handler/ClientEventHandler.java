@@ -29,20 +29,12 @@ import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 
-
 public class ClientEventHandler
 {
     public static int currentLP = 0;
     public static int capacity = 0;
 
-    public TextureAtlasSprite
-            ritualStoneBlankIcon,
-            ritualStoneWaterIcon,
-            ritualStoneFireIcon,
-            ritualStoneEarthIcon,
-            ritualStoneAirIcon,
-            ritualStoneDawnIcon,
-            ritualStoneDuskIcon;
+    public TextureAtlasSprite ritualStoneBlankIcon, ritualStoneWaterIcon, ritualStoneFireIcon, ritualStoneEarthIcon, ritualStoneAirIcon, ritualStoneDawnIcon, ritualStoneDuskIcon;
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
@@ -129,27 +121,27 @@ public class ClientEventHandler
 
                         switch (ritualComponent.getRuneType())
                         {
-                            case BLANK:
-                                texture = ritualStoneBlankIcon;
-                                break;
-                            case WATER:
-                                texture = ritualStoneWaterIcon;
-                                break;
-                            case FIRE:
-                                texture = ritualStoneFireIcon;
-                                break;
-                            case EARTH:
-                                texture = ritualStoneEarthIcon;
-                                break;
-                            case AIR:
-                                texture = ritualStoneAirIcon;
-                                break;
-                            case DAWN:
-                                texture = ritualStoneDawnIcon;
-                                break;
-                            case DUSK:
-                                texture = ritualStoneDuskIcon;
-                                break;
+                        case BLANK:
+                            texture = ritualStoneBlankIcon;
+                            break;
+                        case WATER:
+                            texture = ritualStoneWaterIcon;
+                            break;
+                        case FIRE:
+                            texture = ritualStoneFireIcon;
+                            break;
+                        case EARTH:
+                            texture = ritualStoneEarthIcon;
+                            break;
+                        case AIR:
+                            texture = ritualStoneAirIcon;
+                            break;
+                        case DAWN:
+                            texture = ritualStoneDawnIcon;
+                            break;
+                        case DUSK:
+                            texture = ritualStoneDuskIcon;
+                            break;
                         }
 
                         RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);

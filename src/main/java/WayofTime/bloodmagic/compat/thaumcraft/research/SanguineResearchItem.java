@@ -20,13 +20,15 @@ public class SanguineResearchItem extends ResearchItem
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getName() {
+    public String getName()
+    {
         return StatCollector.translateToLocal("bloodmagic.research_name." + this.key);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getText() {
+    public String getText()
+    {
         return StatCollector.translateToLocal("bloodmagic.research_text." + this.key);
     }
 }

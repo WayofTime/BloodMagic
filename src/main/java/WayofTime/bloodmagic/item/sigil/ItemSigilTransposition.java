@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.item.sigil;
 
-
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -145,6 +144,5 @@ public class ItemSigilTransposition extends ItemSigilBase
     {
         world.addWeatherEffect(new EntityLightningBolt(world, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
     }
-
 
 }

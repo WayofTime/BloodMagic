@@ -61,10 +61,12 @@ public class Utils
     }
 
     /**
-     * @param tile   - The {@link TileInventory} to input the item to
-     * @param player - The player to take the item from.
+     * @param tile
+     *        - The {@link TileInventory} to input the item to
+     * @param player
+     *        - The player to take the item from.
      * @return {@code true} if the ItemStack is inserted, {@code false}
-     * otherwise
+     *         otherwise
      * @see #insertItemToTile(TileInventory, EntityPlayer, int)
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player)
@@ -77,12 +79,15 @@ public class Utils
      * inventory at slot 0
      * <p/>
      * EG: Block Altar
-     *
-     * @param tile   - The {@link TileInventory} to input the item to
-     * @param player - The player to take the item from.
-     * @param slot   - The slot to attempt to insert to
+     * 
+     * @param tile
+     *        - The {@link TileInventory} to input the item to
+     * @param player
+     *        - The player to take the item from.
+     * @param slot
+     *        - The slot to attempt to insert to
      * @return {@code true} if the ItemStack is inserted, {@code false}
-     * otherwise
+     *         otherwise
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
     {
@@ -109,28 +114,29 @@ public class Utils
 
     /**
      * Gets a default block for each type of {@link EnumAltarComponent}
-     *
-     * @param component - The Component to provide a block for.
+     * 
+     * @param component
+     *        - The Component to provide a block for.
      * @return The default Block for the EnumAltarComponent
      */
     public static Block getBlockForComponent(EnumAltarComponent component)
     {
         switch (component)
         {
-            case GLOWSTONE:
-                return Blocks.glowstone;
-            case BLOODSTONE:
-                return ModBlocks.bloodStoneBrick;
-            case BEACON:
-                return Blocks.beacon;
-            case BLOODRUNE:
-                return ModBlocks.bloodRune;
-            case CRYSTAL:
-                return ModBlocks.crystal;
-            case NOTAIR:
-                return Blocks.stonebrick;
-            default:
-                return Blocks.air;
+        case GLOWSTONE:
+            return Blocks.glowstone;
+        case BLOODSTONE:
+            return ModBlocks.bloodStoneBrick;
+        case BEACON:
+            return Blocks.beacon;
+        case BLOODRUNE:
+            return ModBlocks.bloodRune;
+        case CRYSTAL:
+            return ModBlocks.crystal;
+        case NOTAIR:
+            return Blocks.stonebrick;
+        default:
+            return Blocks.air;
         }
     }
 
@@ -243,9 +249,11 @@ public class Utils
     /**
      * Used to determine if stack1 can be placed into stack2. If stack2 is null
      * and stack1 isn't null, returns true. Ignores stack size
-     *
-     * @param stack1 Stack that is placed into a slot
-     * @param stack2 Slot content that stack1 is placed into
+     * 
+     * @param stack1
+     *        Stack that is placed into a slot
+     * @param stack2
+     *        Slot content that stack1 is placed into
      * @return True if they can be combined
      */
     public static boolean canCombine(ItemStack stack1, ItemStack stack2)
@@ -269,8 +277,10 @@ public class Utils
     }
 
     /**
-     * @param stack1 Stack that is placed into a slot
-     * @param stack2 Slot content that stack1 is placed into
+     * @param stack1
+     *        Stack that is placed into a slot
+     * @param stack2
+     *        Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
     public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2, int transferMax)
@@ -300,8 +310,10 @@ public class Utils
     }
 
     /**
-     * @param stack1 Stack that is placed into a slot
-     * @param stack2 Slot content that stack1 is placed into
+     * @param stack1
+     *        Stack that is placed into a slot
+     * @param stack2
+     *        Slot content that stack1 is placed into
      * @return Stacks after stacking
      */
     public static ItemStack[] combineStacks(ItemStack stack1, ItemStack stack2)

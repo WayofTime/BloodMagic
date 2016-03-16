@@ -15,71 +15,86 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 
-public class SubCommandBind extends SubCommandBase {
+public class SubCommandBind extends SubCommandBase
+{
 
-    public SubCommandBind(ICommand parent) {
+    public SubCommandBind(ICommand parent)
+    {
         super(parent, "bind");
     }
 
     @Override
-    public String getArgUsage(ICommandSender commandSender) {
+    public String getArgUsage(ICommandSender commandSender)
+    {
         return TextHelper.localizeEffect("commands.bind.usage");
     }
 
     @Override
-    public String getHelpText() {
+    public String getHelpText()
+    {
         return TextHelper.localizeEffect("commands.bind.help");
     }
 
     @Override
-    public void processSubCommand(ICommandSender commandSender, String[] args) {
+    public void processSubCommand(ICommandSender commandSender, String[] args)
+    {
         super.processSubCommand(commandSender, args);
 
         if (commandSender.getEntityWorld().isRemote)
             return;
 
-        try {
+        try
+        {
             EntityPlayer player = getCommandSenderAsPlayer(commandSender);
             String playerName = player.getName();
             String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
             ItemStack held = player.getHeldItem();
             boolean bind = true;
 
-            if (held != null && held.getItem() instanceof IBindable) {
-                if (args.length > 0) {
+            if (held != null && held.getItem() instanceof IBindable)
+            {
+                if (args.length > 0)
+                {
 
                     if (args[0].equalsIgnoreCase("help"))
                         return;
 
-                    if (isBoolean(args[0])) {
+                    if (isBoolean(args[0]))
+                    {
                         bind = Boolean.parseBoolean(args[0]);
 
                         if (args.length > 2)
                             playerName = args[1];
-                    } else {
+                    } else
+                    {
                         playerName = args[0];
                         uuid = PlayerHelper.getUUIDFromPlayer(getPlayer(commandSender, playerName)).toString();
                     }
                 }
 
-                if (bind) {
+                if (bind)
+                {
                     BindableHelper.setItemOwnerName(held, playerName);
                     BindableHelper.setItemOwnerUUID(held, uuid);
                     commandSender.addChatMessage(new ChatComponentTranslation("commands.bind.success"));
-                } else {
-                    if (!Strings.isNullOrEmpty(((IBindable) held.getItem()).getOwnerUUID(held))) {
+                } else
+                {
+                    if (!Strings.isNullOrEmpty(((IBindable) held.getItem()).getOwnerUUID(held)))
+                    {
                         held.getTagCompound().removeTag(Constants.NBT.OWNER_UUID);
                         held.getTagCompound().removeTag(Constants.NBT.OWNER_NAME);
                         commandSender.addChatMessage(new ChatComponentTranslation("commands.bind.remove.success"));
                     }
                 }
             }
-        } catch (PlayerNotFoundException e) {
+        } catch (PlayerNotFoundException e)
+        {
             commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("commands.error.404")));
         }
     }
 
-    private boolean isBoolean(String string) {
+    private boolean isBoolean(String string)
+    {
         return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
     }
 }

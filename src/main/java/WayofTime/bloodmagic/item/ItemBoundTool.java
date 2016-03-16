@@ -83,8 +83,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
         {
             EntityPlayer player = (EntityPlayer) entityIn;
             setHeldDownCount(stack, Math.min(player.getItemInUseDuration(), chargeTime));
-        }
-        else if (!isSelected)
+        } else if (!isSelected)
         {
             setBeingHeldDown(stack, false);
         }
@@ -158,7 +157,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
         double damage = getActivated(stack) ? this.damage : 1.0D;
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", damage, 0));
@@ -202,7 +202,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public Set<String> getToolClasses(ItemStack stack) {
+    public Set<String> getToolClasses(ItemStack stack)
+    {
         return ImmutableSet.of(name);
     }
 
@@ -240,17 +241,20 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     // IBindable
 
     @Override
-    public String getOwnerName(ItemStack stack) {
+    public String getOwnerName(ItemStack stack)
+    {
         return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
     }
 
     @Override
-    public String getOwnerUUID(ItemStack stack) {
+    public String getOwnerUUID(ItemStack stack)
+    {
         return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
     }
 
     @Override
-    public boolean onBind(EntityPlayer player, ItemStack stack) {
+    public boolean onBind(EntityPlayer player, ItemStack stack)
+    {
         return true;
     }
 

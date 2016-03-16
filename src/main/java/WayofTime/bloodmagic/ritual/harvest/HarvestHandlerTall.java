@@ -13,9 +13,7 @@ import WayofTime.bloodmagic.api.iface.IHarvestHandler;
 import WayofTime.bloodmagic.api.registry.HarvestRegistry;
 
 /**
- * Harvest handler for crops that grow vertically such as
- * Sugar Cane and Cactus.
- * <br>
+ * Harvest handler for crops that grow vertically such as Sugar Cane and Cactus. <br>
  * Register a new crop for this handler with
  * {@link HarvestRegistry#registerTallCrop(BlockStack)}
  */

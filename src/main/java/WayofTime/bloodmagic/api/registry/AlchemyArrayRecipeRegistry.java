@@ -162,11 +162,12 @@ public class AlchemyArrayRecipeRegistry
          * inputStack.
          * 
          * @param comparedStack
-         *          - The stack to compare with
-         *
+         *        - The stack to compare with
+         * 
          * @return - True if the ItemStack is a compatible item
          */
-        public boolean doesInputMatchRecipe(ItemStack comparedStack) {
+        public boolean doesInputMatchRecipe(ItemStack comparedStack)
+        {
             return !(comparedStack == null || this.inputStack == null) && this.inputStack.isItemEqual(comparedStack);
         }
 
@@ -175,7 +176,7 @@ public class AlchemyArrayRecipeRegistry
          * 
          * @param comparedStack
          *        The catalyst that is being checked
-         *
+         * 
          * @return - The effect
          */
         public AlchemyArrayEffect getAlchemyArrayEffectForCatalyst(@Nullable ItemStack comparedStack)
@@ -198,7 +199,8 @@ public class AlchemyArrayRecipeRegistry
         }
     }
 
-    public static BiMap<ItemStackWrapper, AlchemyArrayRecipe> getRecipes() {
+    public static BiMap<ItemStackWrapper, AlchemyArrayRecipe> getRecipes()
+    {
         return HashBiMap.create(recipes);
     }
 }

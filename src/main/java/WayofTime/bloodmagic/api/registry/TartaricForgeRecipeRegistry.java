@@ -35,7 +35,8 @@ public class TartaricForgeRecipeRegistry
         return null;
     }
 
-    public static List<TartaricForgeRecipe> getRecipeList() {
+    public static List<TartaricForgeRecipe> getRecipeList()
+    {
         return new ArrayList<TartaricForgeRecipe>(recipeList);
     }
 }

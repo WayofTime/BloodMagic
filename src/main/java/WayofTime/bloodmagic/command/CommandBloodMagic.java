@@ -11,12 +11,14 @@ import net.minecraft.util.ChatComponentText;
 
 import java.util.*;
 
-public class CommandBloodMagic extends CommandBase {
+public class CommandBloodMagic extends CommandBase
+{
 
     private final List<String> aliases = new ArrayList<String>();
     private final Map<String, ISubCommand> subCommands = new HashMap<String, ISubCommand>();
 
-    public CommandBloodMagic() {
+    public CommandBloodMagic()
+    {
         aliases.add("BloodMagic");
         aliases.add("bloodmagic");
         aliases.add("bloodMagic");
@@ -29,38 +31,46 @@ public class CommandBloodMagic extends CommandBase {
     }
 
     @Override
-    public String getCommandName() {
+    public String getCommandName()
+    {
         return "/bloodmagic";
     }
 
     @Override
-    public int getRequiredPermissionLevel() {
+    public int getRequiredPermissionLevel()
+    {
         return 3;
     }
 
     @Override
-    public String getCommandUsage(ICommandSender commandSender) {
+    public String getCommandUsage(ICommandSender commandSender)
+    {
         return getCommandName() + " help";
     }
 
     @Override
-    public List<String> getCommandAliases() {
+    public List<String> getCommandAliases()
+    {
         return aliases;
     }
 
     @Override
-    public void processCommand(ICommandSender commandSender, String[] args) {
-        if (args.length > 0 && subCommands.containsKey(args[0])) {
+    public void processCommand(ICommandSender commandSender, String[] args)
+    {
+        if (args.length > 0 && subCommands.containsKey(args[0]))
+        {
 
             ISubCommand subCommand = subCommands.get(args[0]);
             String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
             subCommand.processSubCommand(commandSender, subArgs);
-        } else {
+        } else
+        {
             commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("commands.error.unknown")));
         }
     }
 
-    public Map<String, ISubCommand> getSubCommands() {
+    public Map<String, ISubCommand> getSubCommands()
+    {
         return subCommands;
     }
 }

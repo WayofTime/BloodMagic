@@ -15,32 +15,39 @@ import net.minecraft.util.StatCollector;
 
 import java.util.Locale;
 
-public class SubCommandOrb extends SubCommandBase {
+public class SubCommandOrb extends SubCommandBase
+{
 
-    public SubCommandOrb(ICommand parent) {
+    public SubCommandOrb(ICommand parent)
+    {
         super(parent, "orb");
     }
 
     @Override
-    public String getArgUsage(ICommandSender commandSender) {
+    public String getArgUsage(ICommandSender commandSender)
+    {
         return StatCollector.translateToLocal("commands.orb.usage");
     }
 
     @Override
-    public String getHelpText() {
+    public String getHelpText()
+    {
         return StatCollector.translateToLocal("commands.orb.help");
     }
 
     @Override
-    public void processSubCommand(ICommandSender commandSender, String[] args) {
+    public void processSubCommand(ICommandSender commandSender, String[] args)
+    {
         super.processSubCommand(commandSender, args);
 
-        if (args.length > 0) {
+        if (args.length > 0)
+        {
 
             if (args[0].equalsIgnoreCase("help"))
                 return;
 
-            try {
+            try
+            {
                 String givenName = commandSender.getName();
 
                 if (args.length > 1)
@@ -52,56 +59,70 @@ public class SubCommandOrb extends SubCommandBase {
 
                 boolean displayHelp = isBounded(0, 2, args.length);
 
-                try {
-                    switch (ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH))) {
-                        case SET: {
-                            if (displayHelp) {
-                                displayHelpString(commandSender, ValidCommands.SET.help);
-                                break;
-                            }
-
-                            if (args.length == 3) {
-                                if (Utils.isInteger(args[2])) {
-                                    int amount = Integer.parseInt(args[2]);
-                                    network.setOrbTier(amount);
-                                    displaySuccessString(commandSender, "commands.success");
-                                } else {
-                                    displayErrorString(commandSender, "commands.error.arg.invalid");
-                                }
-                            } else {
-                                displayErrorString(commandSender, "commands.error.arg.missing");
-                            }
-
+                try
+                {
+                    switch (ValidCommands.valueOf(args[0].toUpperCase(Locale.ENGLISH)))
+                    {
+                    case SET:
+                    {
+                        if (displayHelp)
+                        {
+                            displayHelpString(commandSender, ValidCommands.SET.help);
                             break;
                         }
-                        case GET: {
-                            if (displayHelp) {
-                                displayHelpString(commandSender, ValidCommands.GET.help);
-                                break;
+
+                        if (args.length == 3)
+                        {
+                            if (Utils.isInteger(args[2]))
+                            {
+                                int amount = Integer.parseInt(args[2]);
+                                network.setOrbTier(amount);
+                                displaySuccessString(commandSender, "commands.success");
+                            } else
+                            {
+                                displayErrorString(commandSender, "commands.error.arg.invalid");
                             }
-
-                            if (args.length > 1)
-                                commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
-
-                            break;
+                        } else
+                        {
+                            displayErrorString(commandSender, "commands.error.arg.missing");
                         }
+
+                        break;
                     }
-                } catch (IllegalArgumentException e) {
+                    case GET:
+                    {
+                        if (displayHelp)
+                        {
+                            displayHelpString(commandSender, ValidCommands.GET.help);
+                            break;
+                        }
+
+                        if (args.length > 1)
+                            commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
+
+                        break;
+                    }
+                    }
+                } catch (IllegalArgumentException e)
+                {
                     displayErrorString(commandSender, "commands.error.404");
                 }
-            } catch (PlayerNotFoundException e) {
+            } catch (PlayerNotFoundException e)
+            {
                 displayErrorString(commandSender, "commands.error.404");
             }
         }
     }
 
-    private enum ValidCommands {
+    private enum ValidCommands
+    {
         SET("commands.orb.set.help"),
         GET("commands.orb.get.help");
 
         public String help;
 
-        ValidCommands(String help) {
+        ValidCommands(String help)
+        {
             this.help = help;
         }
     }

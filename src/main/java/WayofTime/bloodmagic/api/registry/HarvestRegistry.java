@@ -22,9 +22,9 @@ public class HarvestRegistry
 
     /**
      * Registers a handler for the Harvest Ritual to call.
-     *
+     * 
      * @param handler
-     *          - The custom handler to register
+     *        - The custom handler to register
      */
     public static void registerHandler(IHarvestHandler handler)
     {
@@ -33,15 +33,16 @@ public class HarvestRegistry
     }
 
     /**
-     * Registers a standard crop (IE: Wheat, Carrots, Potatoes, Netherwart, etc) for
-     * the {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable} handler
-     * to handle.
-     *
+     * Registers a standard crop (IE: Wheat, Carrots, Potatoes, Netherwart, etc)
+     * for the
+     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerPlantable}
+     * handler to handle.
+     * 
      * @param crop
-     *          - The crop block to handle.
+     *        - The crop block to handle.
      * @param matureMeta
-     *          - The meta value at which the crop is considered mature
-     *          and ready to be harvested.
+     *        - The meta value at which the crop is considered mature and ready
+     *        to be harvested.
      */
     public static void registerStandardCrop(Block crop, int matureMeta)
     {
@@ -51,11 +52,11 @@ public class HarvestRegistry
 
     /**
      * Registers a tall crop (Sugar Cane and Cactus) for the
-     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall} handler
-     * to handle.
-     *
+     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerTall} handler to
+     * handle.
+     * 
      * @param crop
-     *          - The crop block to handle.
+     *        - The crop block to handle.
      */
     public static void registerTallCrop(BlockStack crop)
     {
@@ -65,18 +66,18 @@ public class HarvestRegistry
 
     /**
      * Registers a stem crop (Melon and Pumpkin) for the
-     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem} handler
-     * to handle.
-     *
-     * Use {@link net.minecraftforge.oredict.OreDictionary#WILDCARD_VALUE} to accept
-     * any meta for the crop block.
-     *
+     * {@link WayofTime.bloodmagic.ritual.harvest.HarvestHandlerStem} handler to
+     * handle.
+     * 
+     * Use {@link net.minecraftforge.oredict.OreDictionary#WILDCARD_VALUE} to
+     * accept any meta for the crop block.
+     * 
      * The Stem must be instanceof {@link BlockStem}
-     *
+     * 
      * @param crop
-     *          - The crop block to handle.
+     *        - The crop block to handle.
      * @param stem
-     *          - The stem of the crop
+     *        - The stem of the crop
      */
     public static void registerStemCrop(BlockStack crop, BlockStack stem)
     {
@@ -86,11 +87,11 @@ public class HarvestRegistry
 
     /**
      * Registers a range amplifier for the Harvest Ritual.
-     *
+     * 
      * @param blockStack
-     *          - The block for the amplifier.
+     *        - The block for the amplifier.
      * @param range
-     *          - The range the amplifier provides.
+     *        - The range the amplifier provides.
      */
     public static void registerRangeAmplifier(BlockStack blockStack, int range)
     {
@@ -98,23 +99,28 @@ public class HarvestRegistry
             amplifierMap.put(blockStack, range);
     }
 
-    public static List<IHarvestHandler> getHandlerList() {
+    public static List<IHarvestHandler> getHandlerList()
+    {
         return new ArrayList<IHarvestHandler>(handlerList);
     }
 
-    public static Map<Block, Integer> getStandardCrops() {
+    public static Map<Block, Integer> getStandardCrops()
+    {
         return new HashMap<Block, Integer>(standardCrops);
     }
 
-    public static Set<BlockStack> getTallCrops() {
+    public static Set<BlockStack> getTallCrops()
+    {
         return new HashSet<BlockStack>(tallCrops);
     }
 
-    public static Map<BlockStack, BlockStack> getStemCrops() {
+    public static Map<BlockStack, BlockStack> getStemCrops()
+    {
         return new HashMap<BlockStack, BlockStack>(stemCrops);
     }
 
-    public static Map<BlockStack, Integer> getAmplifierMap() {
+    public static Map<BlockStack, Integer> getAmplifierMap()
+    {
         return new HashMap<BlockStack, Integer>(amplifierMap);
     }
 }

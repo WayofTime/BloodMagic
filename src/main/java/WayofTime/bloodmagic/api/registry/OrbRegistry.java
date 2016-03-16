@@ -37,8 +37,7 @@ public class OrbRegistry
         {
             orbs.add(orb);
             registerOrbForTier(orb.getTier(), getOrbStack(orb));
-        }
-        else
+        } else
             BloodMagicAPI.getLogger().error("Error adding orb %s. Orb already exists!", orb.toString());
     }
 
@@ -110,11 +109,13 @@ public class OrbRegistry
         return new ItemStack(orbItem, 1, getIndexOf(orb));
     }
 
-    public static List<BloodOrb> getOrbs() {
+    public static List<BloodOrb> getOrbs()
+    {
         return new ArrayList<BloodOrb>(orbs);
     }
 
-    public static ArrayListMultimap<Integer, ItemStack> getTierMap() {
+    public static ArrayListMultimap<Integer, ItemStack> getTierMap()
+    {
         return ArrayListMultimap.create(tierMap);
     }
 }

@@ -42,7 +42,8 @@ public class RitualSpeed extends Ritual
 
         for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, speedRange.getAABB(masterRitualStone.getBlockPos())))
         {
-            if (entity.isSneaking()) continue;
+            if (entity.isSneaking())
+                continue;
 
             double motionY = 1.2;
             double speed = 3;
@@ -53,21 +54,21 @@ public class RitualSpeed extends Ritual
 
             switch (direction)
             {
-                case NORTH:
-                    entity.setVelocity(0, motionY, -speed);
-                    break;
+            case NORTH:
+                entity.setVelocity(0, motionY, -speed);
+                break;
 
-                case SOUTH:
-                    entity.setVelocity(0, motionY, speed);
-                    break;
+            case SOUTH:
+                entity.setVelocity(0, motionY, speed);
+                break;
 
-                case WEST:
-                    entity.setVelocity(-speed, motionY, 0);
-                    break;
+            case WEST:
+                entity.setVelocity(-speed, motionY, 0);
+                break;
 
-                case EAST:
-                    entity.setVelocity(speed, motionY, 0);
-                    break;
+            case EAST:
+                entity.setVelocity(speed, motionY, 0);
+                break;
             }
 
         }

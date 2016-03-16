@@ -13,9 +13,9 @@ import WayofTime.bloodmagic.api.iface.IBindable;
 public class BindableHelper
 {
     /**
-     * Sets the Owner Name of the item without checking if it is already bound. Also
-     * bypasses {@link ItemBindEvent}.
-     *
+     * Sets the Owner Name of the item without checking if it is already bound.
+     * Also bypasses {@link ItemBindEvent}.
+     * 
      * @param stack
      *        - The ItemStack to bind
      * @param ownerName
@@ -29,9 +29,9 @@ public class BindableHelper
     }
 
     /**
-     * Sets the Owner UUID of the item without checking if it is already bound. Also
-     * bypasses {@link ItemBindEvent}.
-     *
+     * Sets the Owner UUID of the item without checking if it is already bound.
+     * Also bypasses {@link ItemBindEvent}.
+     * 
      * @param stack
      *        - The ItemStack to bind
      * @param ownerUUID
@@ -48,12 +48,12 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     *
+     * 
      * Built into {@link IBindable} now.
-     *
+     * 
      * @param stack
      *        - The ItemStack to check the owner of
-     *
+     * 
      * @return - The username of the ItemStack's owner
      */
     @Deprecated
@@ -66,12 +66,12 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     *
+     * 
      * Built into {@link IBindable} now.
-     *
+     * 
      * @param stack
      *        - The ItemStack to check the owner of
-     *
+     * 
      * @return - The UUID of the ItemStack's owner
      */
     @Deprecated
@@ -84,14 +84,15 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     *
-     * Now handled automatically with {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
-     *
+     * 
+     * Now handled automatically with
+     * {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     * 
      * @param stack
      *        - The ItemStack to bind
      * @param player
      *        - The Player to bind the ItemStack to
-     *
+     * 
      * @return - Whether binding was successful
      */
     @Deprecated
@@ -102,16 +103,17 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     *
-     * Now handled automatically with {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
-     *
+     * 
+     * Now handled automatically with
+     * {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     * 
      * @param stack
      *        - The ItemStack to bind
      * @param uuid
      *        - The username to bind the ItemStack to
      * @param currentUsername
      *        - The current name of the player.
-     *
+     * 
      * @return - Whether the binding was successful
      */
     @Deprecated
@@ -141,9 +143,10 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     *
-     * Now handled automatically with {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
-     *
+     * 
+     * Now handled automatically with
+     * {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     * 
      * @param stack
      *        - ItemStack to check
      * @param uuid
@@ -159,9 +162,9 @@ public class BindableHelper
 
     /**
      * Deprecated.
-     *
+     * 
      * @see #setItemOwnerName(ItemStack, String)
-     *
+     * 
      * @param stack
      *        - The ItemStack to bind
      * @param ownerName

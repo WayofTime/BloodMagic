@@ -14,13 +14,13 @@ public final class CapabilityRuneType
         @Override
         public NBTBase writeNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, EnumFacing side)
         {
-            return new NBTTagByte((byte)instance.getRuneType().ordinal());
+            return new NBTTagByte((byte) instance.getRuneType().ordinal());
         }
 
         @Override
         public void readNBT(Capability<IRitualStone.Tile> capability, IRitualStone.Tile instance, EnumFacing side, NBTBase nbt)
         {
-            instance.setRuneType(EnumRuneType.byMetadata(((NBTTagByte)nbt).getByte()));
+            instance.setRuneType(EnumRuneType.byMetadata(((NBTTagByte) nbt).getByte()));
         }
     }
 

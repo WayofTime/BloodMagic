@@ -79,7 +79,7 @@ public class RitualPlacer extends Ritual
                         }
                     }
                 }
-            //Compatibility with the old system, as it still exists
+                //Compatibility with the old system, as it still exists
             } else if (tileEntity instanceof IInventory)
             {
                 iInventory = (IInventory) tileEntity;

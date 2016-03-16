@@ -185,7 +185,8 @@ public class ModBlocks
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
     {
-        if (!ConfigHandler.blockBlacklist.contains(name)) {
+        if (!ConfigHandler.blockBlacklist.contains(name))
+        {
             GameRegistry.registerBlock(block, itemBlock);
             BloodMagic.proxy.tryHandleBlockModel(block, name);
         }
@@ -202,7 +203,8 @@ public class ModBlocks
         }
 
         String blockName = block.getRegistryName().split(":")[1];
-        if (!ConfigHandler.blockBlacklist.contains(blockName)) {
+        if (!ConfigHandler.blockBlacklist.contains(blockName))
+        {
             GameRegistry.registerBlock(block, itemBlock);
             BloodMagic.proxy.tryHandleBlockModel(block, blockName);
         }
@@ -219,7 +221,8 @@ public class ModBlocks
         }
 
         String blockName = block.getRegistryName().split(":")[1];
-        if (!ConfigHandler.blockBlacklist.contains(blockName)) {
+        if (!ConfigHandler.blockBlacklist.contains(blockName))
+        {
             GameRegistry.registerBlock(block);
             BloodMagic.proxy.tryHandleBlockModel(block, blockName);
         }

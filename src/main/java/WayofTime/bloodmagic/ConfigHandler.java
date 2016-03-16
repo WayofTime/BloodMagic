@@ -155,26 +155,26 @@ public class ConfigHandler
         category = "Item/Block Blacklisting";
         config.addCustomCategoryComment(category, "Allows disabling of specific Blocks/Items.\nNote that using this may result in crashes. Use is not supported.");
         config.setCategoryRequiresMcRestart(category, true);
-        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[]{}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
-        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[]{}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
+        itemBlacklist = Arrays.asList(config.getStringList("itemBlacklist", category, new String[] {}, "Items to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
+        blockBlacklist = Arrays.asList(config.getStringList("blockBlacklist", category, new String[] {}, "Blocks to not be registered. This requires their mapping name. Usually the same as the class name. Can be found in F3+H mode."));
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[]{"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildBlacklist(teleposerBlacklisting, teleposerBlacklist);
 
         category = "Transposition Sigil Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        transpositionBlacklisting = config.getStringList("transpositionBlacklist", category, new String[]{"minecraft:bedrock"}, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        transpositionBlacklisting = config.getStringList("transpositionBlacklist", category, new String[] { "minecraft:bedrock" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildBlacklist(transpositionBlacklisting, transpositionBlacklist);
 
         category = "Well of Suffering Blacklist";
         config.addCustomCategoryComment(category, "Entity blacklisting from WoS");
-        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[]{}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
+        wellOfSufferingBlacklist = Arrays.asList(config.getStringList("wellOfSufferingBlacklist", category, new String[] {}, "Use the class name of the Entity to blacklist it from usage.\nIE: EntityWolf, EntityWitch, etc"));
 
         category = "Blood Altar Sacrificial Values";
         config.addCustomCategoryComment(category, "Entity Sacrificial Value Settings");
-        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[]{"EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250"}, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
+        entitySacrificeValuesList = config.getStringList("entitySacrificeValues", category, new String[] { "EntityVillager;2000", "EntitySlime;150", "EntityEnderman;200", "EntityCow;250", "EntityChicken;250", "EntityHorse;250", "EntitySheep;250", "EntityWolf;250", "EntityOcelot;250", "EntityPig;250", "EntityRabbit;250" }, "Used to edit the amount of LP gained per sacrifice of the given entity.\nSetting an entity to 0 effectively blacklists it.\nIf a mod modifies an entity via the API, it will take precedence over this config.\nSyntax: EntityClassName;LPPerSacrifice");
         buildEntitySacrificeValues();
 
         category = "Potions";

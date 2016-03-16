@@ -17,16 +17,15 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 /**
- * This ritual uses registered {@link IHarvestHandler}'s to
- * harvest blocks.
- *
+ * This ritual uses registered {@link IHarvestHandler}'s to harvest blocks.
+ * 
  * To register a new Handler for this ritual use
  * {@link HarvestRegistry#registerHandler(IHarvestHandler)}
- *
- * This ritual includes a way to change the range based on what block
- * is above the MasterRitualStone. You can use
- * {@link HarvestRegistry#registerRangeAmplifier(BlockStack, int)}
- * to register a new amplifier.
+ * 
+ * This ritual includes a way to change the range based on what block is above
+ * the MasterRitualStone. You can use
+ * {@link HarvestRegistry#registerRangeAmplifier(BlockStack, int)} to register a
+ * new amplifier.
  */
 public class RitualHarvest extends Ritual
 {
@@ -118,7 +117,8 @@ public class RitualHarvest extends Ritual
         return new RitualHarvest();
     }
 
-    public static boolean harvestBlock(World world, BlockPos pos) {
+    public static boolean harvestBlock(World world, BlockPos pos)
+    {
         BlockStack harvestStack = BlockStack.getStackFromPos(world, pos);
 
         for (IHarvestHandler handler : HarvestRegistry.getHandlerList())

@@ -16,7 +16,7 @@ public class BloodMagicResearch
 
         ResearchCategories.registerCategory(BLOOD_MAGIC, null, new ResourceLocation("bloodmagic", "textures/items/WeakBloodOrb.png"), new ResourceLocation("bloodmagic", "textures/gui/thaumcraft/gui_research_back.jpg"), new ResourceLocation("bloodmagic", "textures/gui/thaumcraft/gui_research_back_over.png"));
 
-        (new SanguineResearchItem("BLOODMAGIC", BLOOD_MAGIC, new AspectList(), 0, 0, 0, new ItemStack(BloodMagicAPI.getItem(Constants.BloodMagicItem.BLOOD_ORB), 1, 0))).setPages(new ResearchPage[]{new ResearchPage(researchPage("BLOODMAGIC"))}).setAutoUnlock().setStub().setRound().registerResearchItem();
+        (new SanguineResearchItem("BLOODMAGIC", BLOOD_MAGIC, new AspectList(), 0, 0, 0, new ItemStack(BloodMagicAPI.getItem(Constants.BloodMagicItem.BLOOD_ORB), 1, 0))).setPages(new ResearchPage[] { new ResearchPage(researchPage("BLOODMAGIC")) }).setAutoUnlock().setStub().setRound().registerResearchItem();
     }
 
     private static String researchPage(String researchName)

@@ -13,12 +13,12 @@ public class PlayerDemonWillHandler
 {
     /**
      * Gets the total amount of Will a player contains in their inventory
-     *
+     * 
      * @param type
-     *          - The type of Will to check for
+     *        - The type of Will to check for
      * @param player
-     *          - The player to check the will of
-     *
+     *        - The player to check the will of
+     * 
      * @return - The amount of will the player contains
      */
     public static double getTotalDemonWill(EnumDemonWillType type, EntityPlayer player)
@@ -26,11 +26,15 @@ public class PlayerDemonWillHandler
         ItemStack[] inventory = player.inventory.mainInventory;
         double souls = 0;
 
-        for (ItemStack stack : inventory) {
-            if (stack != null) {
-                if (stack.getItem() instanceof IDemonWill) {
+        for (ItemStack stack : inventory)
+        {
+            if (stack != null)
+            {
+                if (stack.getItem() instanceof IDemonWill)
+                {
                     souls += ((IDemonWill) stack.getItem()).getWill(stack);
-                } else if (stack.getItem() instanceof IDemonWillGem) {
+                } else if (stack.getItem() instanceof IDemonWillGem)
+                {
                     souls += ((IDemonWillGem) stack.getItem()).getWill(type, stack);
                 }
             }
@@ -41,12 +45,12 @@ public class PlayerDemonWillHandler
 
     /**
      * Checks if the player's Tartaric gems are completely full.
-     *
+     * 
      * @param type
-     *          - The type of Will to check for
+     *        - The type of Will to check for
      * @param player
-     *          - The player to check the Will of
-     *
+     *        - The player to check the Will of
+     * 
      * @return - True if all Will containers are full, false if not.
      */
     public static boolean isDemonWillFull(EnumDemonWillType type, EntityPlayer player)
@@ -54,8 +58,10 @@ public class PlayerDemonWillHandler
         ItemStack[] inventory = player.inventory.mainInventory;
 
         boolean hasGem = false;
-        for (ItemStack stack : inventory) {
-            if (stack != null && stack.getItem() instanceof IDemonWillGem) {
+        for (ItemStack stack : inventory)
+        {
+            if (stack != null && stack.getItem() instanceof IDemonWillGem)
+            {
                 hasGem = true;
                 if (((IDemonWillGem) stack.getItem()).getWill(type, stack) < ((IDemonWillGem) stack.getItem()).getMaxWill(type, stack))
                     return false;
@@ -67,12 +73,12 @@ public class PlayerDemonWillHandler
 
     /**
      * Consumes Will from the inventory of a given player
-     *
+     * 
      * @param player
-     *          - The player to consume the will of
+     *        - The player to consume the will of
      * @param amount
-     *          - The amount of will to consume
-     *
+     *        - The amount of will to consume
+     * 
      * @return - The amount of will consumed.
      */
     public static double consumeDemonWill(EnumDemonWillType type, EntityPlayer player, double amount)
@@ -109,10 +115,10 @@ public class PlayerDemonWillHandler
      * the player's inventory.
      * 
      * @param player
-     *          - The player to add will to
+     *        - The player to add will to
      * @param willStack
-     *          - ItemStack that contains an IDemonWill to be added
-     *
+     *        - ItemStack that contains an IDemonWill to be added
+     * 
      * @return - The modified willStack
      */
     public static ItemStack addDemonWill(EntityPlayer player, ItemStack willStack)
@@ -136,16 +142,16 @@ public class PlayerDemonWillHandler
     }
 
     /**
-     * Adds an IDiscreteDemonWill contained in an ItemStack to one of the Soul Gems in
-     * the player's inventory.
-     *
+     * Adds an IDiscreteDemonWill contained in an ItemStack to one of the Soul
+     * Gems in the player's inventory.
+     * 
      * @param type
-     *          - The type of Will to add
+     *        - The type of Will to add
      * @param player
-     *          - The player to check the Will of
+     *        - The player to check the Will of
      * @param amount
-     *          - The amount of will to add
-     *
+     *        - The amount of will to add
+     * 
      * @return - The amount of will added
      */
     public static double addDemonWill(EnumDemonWillType type, EntityPlayer player, double amount)
@@ -167,18 +173,18 @@ public class PlayerDemonWillHandler
     }
 
     /**
-     * Adds an IDiscreteDemonWill contained in an ItemStack to one of the Soul Gems in
-     * the player's inventory while ignoring a specified stack.
-     *
+     * Adds an IDiscreteDemonWill contained in an ItemStack to one of the Soul
+     * Gems in the player's inventory while ignoring a specified stack.
+     * 
      * @param type
-     *          - The type of Will to add
+     *        - The type of Will to add
      * @param player
-     *          - The player to check the Will of
+     *        - The player to check the Will of
      * @param amount
-     *          - The amount of will to add
+     *        - The amount of will to add
      * @param ignored
-     *          - A stack to ignore
-     *
+     *        - A stack to ignore
+     * 
      * @return - The amount of will added
      */
     public static double addDemonWill(EnumDemonWillType type, EntityPlayer player, double amount, ItemStack ignored)

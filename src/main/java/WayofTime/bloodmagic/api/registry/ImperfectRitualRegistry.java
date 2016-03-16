@@ -94,7 +94,8 @@ public class ImperfectRitualRegistry
         }
     }
 
-    public static boolean ritualEnabled(String id) {
+    public static boolean ritualEnabled(String id)
+    {
         return ritualEnabled(getRitualForId(id));
     }
 

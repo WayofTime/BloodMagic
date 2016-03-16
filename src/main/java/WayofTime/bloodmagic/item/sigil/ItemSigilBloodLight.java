@@ -21,7 +21,8 @@ public class ItemSigilBloodLight extends ItemSigilBase
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+    {
         if (getCooldownRemainder(stack) > 0)
             reduceCooldown(stack);
     }
@@ -49,7 +50,8 @@ public class ItemSigilBloodLight extends ItemSigilBase
             }
         } else
         {
-            if (!world.isRemote) {
+            if (!world.isRemote)
+            {
                 world.spawnEntityInWorld(new EntityBloodLight(world, player));
                 NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLPUsed());
             }
@@ -65,15 +67,18 @@ public class ItemSigilBloodLight extends ItemSigilBase
         return oldStack.getItem() != newStack.getItem();
     }
 
-    public int getCooldownRemainder(ItemStack stack) {
+    public int getCooldownRemainder(ItemStack stack)
+    {
         return NBTHelper.checkNBT(stack).getTagCompound().getInteger(Constants.NBT.TICKS_REMAINING);
     }
 
-    public void reduceCooldown(ItemStack stack) {
+    public void reduceCooldown(ItemStack stack)
+    {
         NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.TICKS_REMAINING, getCooldownRemainder(stack) - 1);
     }
 
-    public void resetCooldown(ItemStack stack) {
+    public void resetCooldown(ItemStack stack)
+    {
         NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.TICKS_REMAINING, 10);
     }
 }

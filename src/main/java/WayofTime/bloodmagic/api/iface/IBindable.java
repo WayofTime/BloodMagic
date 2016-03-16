@@ -9,26 +9,26 @@ import net.minecraft.item.ItemStack;
 public interface IBindable
 {
     /**
-     * Gets the username of the Item's owner. Usually for display,
-     * such as in the tooltip.
-     *
+     * Gets the username of the Item's owner. Usually for display, such as in
+     * the tooltip.
+     * 
      * If the item is not bound, this will be null.
-     *
+     * 
      * @param stack
      *        - The owned ItemStack
-     *
+     * 
      * @return - The username of the Item's owner
      */
     String getOwnerName(ItemStack stack);
 
     /**
      * Gets the UUID of the Item's owner.
-     *
+     * 
      * If the item is not bound, this will be null.
-     *
+     * 
      * @param stack
      *        - The owned ItemStack
-     *
+     * 
      * @return - The UUID of the Item's owner
      */
     String getOwnerUUID(ItemStack stack);

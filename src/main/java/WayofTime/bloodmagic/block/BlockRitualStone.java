@@ -55,7 +55,8 @@ public class BlockRitualStone extends BlockString implements IRitualStone, IVari
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
+    public List<Pair<Integer, String>> getVariants()
+    {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 0; i < names.length; i++)
             ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));

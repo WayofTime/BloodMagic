@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.item.block;
 
-
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -69,7 +68,8 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
     @Override
     public int fill(ItemStack stack, FluidStack resource, boolean doFill)
     {
-        if (resource == null || stack.stackSize != 1) return 0;
+        if (resource == null || stack.stackSize != 1)
+            return 0;
         int fillAmount = 0, capacity = getCapacity(stack);
         NBTTagCompound tag = stack.getTagCompound(), fluidTag = null;
         FluidStack fluid = null;

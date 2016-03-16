@@ -80,39 +80,39 @@ public class RitualAltarBuilder extends Ritual
             {
                 switch (currentComponent.getComponent())
                 {
-                    case NOTAIR:
+                case NOTAIR:
+                {
+                    BlockStack blockStack = getMundaneBlock(tileEntity);
+                    if (blockStack != null)
                     {
-                        BlockStack blockStack = getMundaneBlock(tileEntity);
-                        if (blockStack != null)
-                        {
-                            world.setBlockState(currentPos, blockStack.getState(), 3);
-                            lightning(world, currentPos);
-                            network.syphon(getRefreshCost());
-                        }
-                        break;
+                        world.setBlockState(currentPos, blockStack.getState(), 3);
+                        lightning(world, currentPos);
+                        network.syphon(getRefreshCost());
                     }
-                    case BLOODRUNE:
+                    break;
+                }
+                case BLOODRUNE:
+                {
+                    BlockStack blockStack = getBloodRune(tileEntity);
+                    if (blockStack != null)
                     {
-                        BlockStack blockStack = getBloodRune(tileEntity);
-                        if (blockStack != null)
-                        {
-                            world.setBlockState(currentPos, blockStack.getState(), 3);
-                            lightning(world, currentPos);
-                            network.syphon(getRefreshCost());
-                        }
-                        break;
+                        world.setBlockState(currentPos, blockStack.getState(), 3);
+                        lightning(world, currentPos);
+                        network.syphon(getRefreshCost());
                     }
-                    default:
+                    break;
+                }
+                default:
+                {
+                    BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(currentComponent.getComponent()), 0);
+                    if (hasItem(tileEntity, Item.getItemFromBlock(blockStack.getBlock()), blockStack.getMeta(), true))
                     {
-                        BlockStack blockStack = new BlockStack(Utils.getBlockForComponent(currentComponent.getComponent()), 0);
-                        if (hasItem(tileEntity, Item.getItemFromBlock(blockStack.getBlock()), blockStack.getMeta(), true))
-                        {
-                            world.setBlockState(currentPos, blockStack.getState(), 3);
-                            lightning(world, currentPos);
-                            network.syphon(getRefreshCost());
-                        }
-                        break;
+                        world.setBlockState(currentPos, blockStack.getState(), 3);
+                        lightning(world, currentPos);
+                        network.syphon(getRefreshCost());
                     }
+                    break;
+                }
                 }
             }
         } else
@@ -193,10 +193,9 @@ public class RitualAltarBuilder extends Ritual
     }
 
     /*
-    *
-    * These methods are utilities for this ritual.
-    * They support both the old forge inventory system, and the new one.
-    *
+     * 
+     * These methods are utilities for this ritual. They support both the old
+     * forge inventory system, and the new one.
      */
     public boolean hasItem(TileEntity tileEntity, Item item, int damage, boolean consumeItem)
     {

@@ -3,7 +3,8 @@ package WayofTime.bloodmagic.command;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
-public interface ISubCommand {
+public interface ISubCommand
+{
 
     String getSubCommandName();
 

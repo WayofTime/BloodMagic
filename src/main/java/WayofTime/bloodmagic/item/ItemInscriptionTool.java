@@ -77,7 +77,8 @@ public class ItemInscriptionTool extends ItemBindable implements IVariantProvide
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean showDurabilityBar(ItemStack stack)
+    {
         return true;
     }
 
@@ -99,7 +100,8 @@ public class ItemInscriptionTool extends ItemBindable implements IVariantProvide
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
+    public List<Pair<Integer, String>> getVariants()
+    {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         for (int i = 1; i < EnumRuneType.values().length; i++)
             ret.add(new ImmutablePair<Integer, String>(i, "type=" + EnumRuneType.values()[i].name()));

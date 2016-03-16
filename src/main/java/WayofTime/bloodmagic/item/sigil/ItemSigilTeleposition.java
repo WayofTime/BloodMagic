@@ -82,4 +82,3 @@ public class ItemSigilTeleposition extends ItemSigilBase
         return tag.getInteger(key);
     }
 }
-

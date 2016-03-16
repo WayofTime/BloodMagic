@@ -77,7 +77,8 @@ public class BlockAltar extends BlockContainer implements IVariantProvider
                         return Math.min(15, level) % 16;
                     }
                 }
-            } else {
+            } else
+            {
                 int maxEssence = altar.getCapacity();
                 int currentEssence = altar.getCurrentBlood();
                 int level = currentEssence * 15 / maxEssence;
@@ -157,7 +158,8 @@ public class BlockAltar extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants() {
+    public List<Pair<Integer, String>> getVariants()
+    {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "normal"));
         return ret;

@@ -181,13 +181,15 @@ public class SoulNetwork extends WorldSavedData
         }
     }
 
-    public SoulNetwork setCurrentEssence(int currentEssence) {
+    public SoulNetwork setCurrentEssence(int currentEssence)
+    {
         this.currentEssence = currentEssence;
         markDirty();
         return this;
     }
 
-    public SoulNetwork setOrbTier(int orbTier) {
+    public SoulNetwork setOrbTier(int orbTier)
+    {
         this.orbTier = orbTier;
         markDirty();
         return this;

@@ -10,7 +10,8 @@ import java.util.List;
  * Provides a custom {@link ItemMeshDefinition} for automatic registration of
  * renders.
  */
-public interface IMeshProvider {
+public interface IMeshProvider
+{
 
     @SideOnly(Side.CLIENT)
     ItemMeshDefinition getMeshDefinition();

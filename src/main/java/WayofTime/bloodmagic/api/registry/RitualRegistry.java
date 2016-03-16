@@ -91,7 +91,8 @@ public class RitualRegistry
         }
     }
 
-    public static boolean ritualEnabled(String id) {
+    public static boolean ritualEnabled(String id)
+    {
         return ritualEnabled(getRitualForId(id));
     }
 

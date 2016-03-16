@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 public interface IDemonWillGem
 {
     /**
-     *
+     * 
      * @param willGemStack
      *        - The ItemStack for this demon will gem.
      * @param willStack
@@ -18,7 +18,7 @@ public interface IDemonWillGem
     /**
      * Returns the number of souls that are left in the soul gem. Returns a
      * double because souls can be fractionally drained.
-     *
+     * 
      */
     double getWill(EnumDemonWillType type, ItemStack willGemStack);
 

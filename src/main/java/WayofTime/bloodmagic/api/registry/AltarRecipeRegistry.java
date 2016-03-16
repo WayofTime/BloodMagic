@@ -93,7 +93,8 @@ public class AltarRecipeRegistry
         }
     }
 
-    public static BiMap<ItemStack, AltarRecipe> getRecipes() {
+    public static BiMap<ItemStack, AltarRecipe> getRecipes()
+    {
         return HashBiMap.create(recipes);
     }
 }

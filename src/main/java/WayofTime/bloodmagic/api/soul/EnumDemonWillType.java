@@ -14,7 +14,8 @@ public enum EnumDemonWillType implements IStringSerializable
 
     public final String name;
 
-    EnumDemonWillType(String name) {
+    EnumDemonWillType(String name)
+    {
         this.name = name;
     }
 }

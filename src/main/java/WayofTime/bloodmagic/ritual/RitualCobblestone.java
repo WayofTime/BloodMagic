@@ -56,25 +56,23 @@ public class RitualCobblestone extends Ritual
             {
                 switch (alchemyArray.getStackInSlot(0).getItemDamage())
                 {
-                    case 0:
-                        block = Blocks.obsidian;
-                        alchemyArray.decrStackSize(0, 1);
-                        world.setBlockToAir(alchemyArray.getPos());
-                        break;
-                    case 1:
-                        block = Blocks.netherrack;
-                        alchemyArray.decrStackSize(0, 1);
-                        world.setBlockToAir(alchemyArray.getPos());
-                        break;
-                    /*
-                    case 4:
-                        block = Blocks.end_stone;
-                        alchemyArray.decrStackSize(0, 1);
-                        world.setBlockToAir(alchemyArray.getPos());
-                        break;
-                        */
-                    default:
-                        break;
+                case 0:
+                    block = Blocks.obsidian;
+                    alchemyArray.decrStackSize(0, 1);
+                    world.setBlockToAir(alchemyArray.getPos());
+                    break;
+                case 1:
+                    block = Blocks.netherrack;
+                    alchemyArray.decrStackSize(0, 1);
+                    world.setBlockToAir(alchemyArray.getPos());
+                    break;
+                /*
+                 * case 4: block = Blocks.end_stone;
+                 * alchemyArray.decrStackSize(0, 1);
+                 * world.setBlockToAir(alchemyArray.getPos()); break;
+                 */
+                default:
+                    break;
                 }
             }
         }

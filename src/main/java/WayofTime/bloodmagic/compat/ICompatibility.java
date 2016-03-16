@@ -6,11 +6,11 @@ package WayofTime.bloodmagic.compat;
 public interface ICompatibility
 {
     /**
-     * Called during each initialization phase after the given {@link #getModId()}
-     * has been verified as loaded.
-     *
+     * Called during each initialization phase after the given
+     * {@link #getModId()} has been verified as loaded.
+     * 
      * @param phase
-     *          - The load phase at which this method is being called.
+     *        - The load phase at which this method is being called.
      */
     void loadCompatibility(InitializationPhase phase);
 
@@ -32,17 +32,21 @@ public interface ICompatibility
     /**
      * Represents a given mod initialization state.
      */
-    enum InitializationPhase {
+    enum InitializationPhase
+    {
         /**
-         * Represents {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}
+         * Represents
+         * {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}
          */
         PRE_INIT,
         /**
-         * Represents {@link net.minecraftforge.fml.common.event.FMLInitializationEvent}
+         * Represents
+         * {@link net.minecraftforge.fml.common.event.FMLInitializationEvent}
          */
         INIT,
         /**
-         * Represents {@link net.minecraftforge.fml.common.event.FMLPostInitializationEvent}
+         * Represents
+         * {@link net.minecraftforge.fml.common.event.FMLPostInitializationEvent}
          */
         POST_INIT
     }

@@ -11,7 +11,8 @@ public class CustomMeshDefinitionActivatable implements ItemMeshDefinition
 {
     private final String name;
 
-    public CustomMeshDefinitionActivatable(String name) {
+    public CustomMeshDefinitionActivatable(String name)
+    {
         this.name = name;
     }
 

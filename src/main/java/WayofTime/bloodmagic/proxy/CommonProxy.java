@@ -34,7 +34,7 @@ public class CommonProxy
 
     public void init()
     {
-        CapabilityManager.INSTANCE.register(IRitualStone.Tile.class, new CapabilityRuneType.RuneTypeStorage(),  new CapabilityRuneType.Factory());
+        CapabilityManager.INSTANCE.register(IRitualStone.Tile.class, new CapabilityRuneType.RuneTypeStorage(), new CapabilityRuneType.Factory());
     }
 
     public void postInit()
@@ -53,11 +53,13 @@ public class CommonProxy
         return null;
     }
 
-    public void tryHandleBlockModel(Block block, String name) {
+    public void tryHandleBlockModel(Block block, String name)
+    {
         // NO-OP
     }
 
-    public void tryHandleItemModel(Item item, String name) {
+    public void tryHandleItemModel(Item item, String name)
+    {
         // NO-OP
     }
 }

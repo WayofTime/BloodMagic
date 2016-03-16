@@ -83,7 +83,8 @@ public class ItemSigilWater extends ItemSigilBase
             return false;
         }
 
-        if (world.getBlockState(blockPos).getBlock() == Blocks.cauldron && syphonNetwork(stack, player, getLPUsed())) {
+        if (world.getBlockState(blockPos).getBlock() == Blocks.cauldron && syphonNetwork(stack, player, getLPUsed()))
+        {
             world.setBlockState(blockPos, Blocks.cauldron.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
             return true;
         }
