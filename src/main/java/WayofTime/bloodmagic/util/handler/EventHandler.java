@@ -699,32 +699,31 @@ public class EventHandler
             event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
 
-        if (entity != null && entity instanceof EntityLivingBase)
+        if (entity != null && entity instanceof EntityPlayer)
         {
-            EntityLivingBase attackingEntity = (EntityLivingBase) entity;
-            ItemStack heldStack = attackingEntity.getHeldItem();
-            if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon)
+            EntityPlayer player = (EntityPlayer) entity;
+            ItemStack heldStack = player.getHeldItem();
+            if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon && !player.worldObj.isRemote)
             {
-                List<ItemStack> droppedSouls = ((IDemonWillWeapon) heldStack.getItem()).getRandomDemonWillDrop(attackedEntity, attackingEntity, heldStack, event.lootingLevel);
+                IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
+                List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.lootingLevel);
                 if (!droppedSouls.isEmpty())
                 {
-                    for (ItemStack soulStack : droppedSouls)
+                    ItemStack remainder;
+                    for (ItemStack willStack : droppedSouls)
                     {
-                        event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+                        remainder = PlayerDemonWillHandler.addDemonWill(player, willStack);
+                        if (remainder != null && ((IDemonWill) remainder.getItem()).getWill(remainder) >= 0.0001)
+                            event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
                     }
+                    player.inventoryContainer.detectAndSendChanges();
                 }
             }
 
             if (heldStack != null && heldStack.getItem() == ModItems.boundSword && !(attackedEntity instanceof EntityAnimal))
-            {
-                for (int i = 0; i <= EnchantmentHelper.getLootingModifier(attackingEntity); i++)
-                {
+                for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (this.random.nextDouble() < 0.2)
-                    {
                         event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.bloodShard, 1, 0)));
-                    }
-                }
-            }
         }
     }
 
