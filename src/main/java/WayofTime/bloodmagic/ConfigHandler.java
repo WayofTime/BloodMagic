@@ -160,7 +160,7 @@ public class ConfigHandler
 
         category = "Teleposer Blacklist";
         config.addCustomCategoryComment(category, "Block blacklisting");
-        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
+        teleposerBlacklisting = config.getStringList("teleposerBlacklist", category, new String[] { "minecraft:bedrock", "minecraft:mob_spawner" }, "Stops specified blocks from being teleposed. Put entries on new lines. Valid syntax is:\nmodid:blockname:meta");
         buildBlacklist(teleposerBlacklisting, teleposerBlacklist);
 
         category = "Transposition Sigil Blacklist";

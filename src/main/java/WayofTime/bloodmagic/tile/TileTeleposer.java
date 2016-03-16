@@ -172,9 +172,7 @@ public class TileTeleposer extends TileInventory implements ITickable
         BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
         BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
 
-        if ((initialStack.getBlock().equals(Blocks.air) && finalStack.getBlock().equals(Blocks.air)) || (initialStack.getBlock() instanceof BlockMobSpawner || finalStack.getBlock() instanceof BlockMobSpawner ||
-//                caller instanceof TEDemonPortal ? false :
-                initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal))
+        if ((initialStack.getBlock().equals(Blocks.air) && finalStack.getBlock().equals(Blocks.air)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
         {
             return false;
         }
