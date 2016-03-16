@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.ritual.portal;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -157,14 +158,13 @@ public class Teleports
                             teleportedEntity.forceSpawn = true;
                             newWorldServer.spawnEntityInWorld(teleportedEntity);
                             teleportedEntity.setWorld(newWorldServer);
-                            teleportedEntity.timeUntilPortal = 150;
+                            teleportedEntity.timeUntilPortal = teleportedEntity instanceof EntityPlayer ? 150 : 20;
                         }
 
                         oldWorldServer.resetUpdateEntityTick();
                         newWorldServer.resetUpdateEntityTick();
                     }
-                    entity.timeUntilPortal = 150;
-
+                    entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
                     newWorldServer.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
                 }
             }
