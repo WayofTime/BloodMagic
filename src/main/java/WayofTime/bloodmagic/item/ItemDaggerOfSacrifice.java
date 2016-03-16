@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,8 +16,13 @@ import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.DamageSourceBloodMagic;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemDaggerOfSacrifice extends Item
+import java.util.ArrayList;
+import java.util.List;
+
+public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
 {
     public ItemDaggerOfSacrifice()
     {
@@ -60,6 +66,13 @@ public class ItemDaggerOfSacrifice extends Item
         }
 
         return false;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        return ret;
     }
 
     public boolean findAndFillAltar(World world, EntityLivingBase sacrifice, int amount)

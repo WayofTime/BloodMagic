@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.item.soul;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,8 +16,10 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemSoulSnare extends Item
+public class ItemSoulSnare extends Item implements IVariantProvider
 {
     public static String[] names = { "base" };
 
@@ -69,5 +73,12 @@ public class ItemSoulSnare extends Item
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.soulSnare.desc"))));
 
         super.addInformation(stack, player, tooltip, advanced);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=soulsnare"));
+        return ret;
     }
 }

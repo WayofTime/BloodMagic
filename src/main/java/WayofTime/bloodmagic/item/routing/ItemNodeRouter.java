@@ -1,9 +1,11 @@
 package WayofTime.bloodmagic.item.routing;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import WayofTime.bloodmagic.api.iface.INodeRenderer;
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,8 +23,10 @@ import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemNodeRouter extends Item implements INodeRenderer
+public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvider
 {
     public ItemNodeRouter()
     {
@@ -46,6 +50,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer
         }
     }
 
+    @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote)
@@ -188,6 +193,13 @@ public class ItemNodeRouter extends Item implements INodeRenderer
         }
 
         return false;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        return ret;
     }
 
     public BlockPos getBlockPos(ItemStack stack)

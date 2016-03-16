@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.item;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -27,8 +29,10 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemSacrificialDagger extends Item
+public class ItemSacrificialDagger extends Item implements IVariantProvider
 {
     public static String[] names = { "normal", "creative" };
 
@@ -145,6 +149,14 @@ public class ItemSacrificialDagger extends Item
         findAndFillAltar(world, player, lpAdded);
 
         return stack;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        ret.add(new ImmutablePair<Integer, String>(1, "type=creative"));
+        return ret;
     }
 
     private void findAndFillAltar(World world, EntityPlayer player, int amount)

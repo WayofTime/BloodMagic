@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.routing;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,8 +23,10 @@ import WayofTime.bloodmagic.routing.OreDictItemFilter;
 import WayofTime.bloodmagic.routing.TestItemFilter;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemRouterFilter extends Item implements IItemFilterProvider
+public class ItemRouterFilter extends Item implements IItemFilterProvider, IVariantProvider
 {
     public static String[] names = { "exact", "ignoreNBT", "modItems", "oreDict" };
 
@@ -150,4 +153,13 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider
         return testFilter;
     }
 
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=exact"));
+        ret.add(new ImmutablePair<Integer, String>(1, "type=ignorenbt"));
+        ret.add(new ImmutablePair<Integer, String>(2, "type=moditems"));
+        ret.add(new ImmutablePair<Integer, String>(3, "type=oredict"));
+        return ret;
+    }
 }

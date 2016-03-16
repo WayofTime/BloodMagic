@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.item.soul;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,8 +20,10 @@ import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemSoulGem extends Item implements IDemonWillGem
+public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
 {
     public static String[] names = { "petty", "lesser", "common", "greater", "grand" };
 
@@ -181,6 +185,17 @@ public class ItemSoulGem extends Item implements IDemonWillGem
             return 16384;
         }
         return 64;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=petty"));
+        ret.add(new ImmutablePair<Integer, String>(1, "type=lesser"));
+        ret.add(new ImmutablePair<Integer, String>(2, "type=common"));
+        ret.add(new ImmutablePair<Integer, String>(3, "type=greater"));
+        ret.add(new ImmutablePair<Integer, String>(4, "type=grand"));
+        return ret;
     }
 
     public EnumDemonWillType getCurrentType(ItemStack soulGemStack)

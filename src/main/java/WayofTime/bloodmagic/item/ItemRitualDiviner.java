@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,6 +21,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 
 import WayofTime.bloodmagic.BloodMagic;
@@ -34,7 +37,7 @@ import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemRitualDiviner extends Item
+public class ItemRitualDiviner extends Item implements IVariantProvider
 {
     public static String[] names = { "normal", "dusk", "dawn" };
 
@@ -304,6 +307,15 @@ public class ItemRitualDiviner extends Item
         }
 
         return false;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=basic"));
+        ret.add(new ImmutablePair<Integer, String>(1, "type=dusk"));
+        ret.add(new ImmutablePair<Integer, String>(2, "type=dawn"));
+        return ret;
     }
 
     public void cycleDirection(ItemStack stack, EntityPlayer player)

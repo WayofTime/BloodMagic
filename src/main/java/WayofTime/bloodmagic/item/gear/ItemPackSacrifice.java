@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.item.gear;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
@@ -15,8 +17,10 @@ import WayofTime.bloodmagic.api.altar.IAltarManipulator;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
+public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, IVariantProvider
 {
     public final int CAPACITY = 10000; // Max LP storage
 
@@ -88,6 +92,13 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator
         stack = NBTHelper.checkNBT(stack);
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.sacrifice.desc"));
         list.add(TextHelper.localize("tooltip.BloodMagic.pack.stored", getStoredLP(stack)));
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        return ret;
     }
 
     public void addLP(ItemStack stack, int toAdd)

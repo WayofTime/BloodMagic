@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.item;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +20,10 @@ import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemInscriptionTool extends ItemBindable
+public class ItemInscriptionTool extends ItemBindable implements IVariantProvider
 {
     public ItemInscriptionTool()
     {
@@ -92,6 +96,14 @@ public class ItemInscriptionTool extends ItemBindable
     {
         list.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.inscriber.desc"))));
         super.addInformation(stack, player, list, advanced);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        for (int i = 1; i < EnumRuneType.values().length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + EnumRuneType.values()[i].name()));
+        return ret;
     }
 
     public EnumRuneType getType(ItemStack stack)

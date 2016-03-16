@@ -1,7 +1,9 @@
 package WayofTime.bloodmagic.item;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,8 +25,10 @@ import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class ItemAltarMaker extends Item implements IAltarManipulator
+public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantProvider
 {
     private EnumAltarTier tierToBuild = EnumAltarTier.ONE;
 
@@ -85,6 +89,13 @@ public class ItemAltarMaker extends Item implements IAltarManipulator
         }
 
         return stack;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=altarmaker"));
+        return ret;
     }
 
     public void setTierToBuild(EnumAltarTier tierToBuild)

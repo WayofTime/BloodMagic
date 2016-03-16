@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
@@ -13,6 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.item.ItemBindable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class ItemSigilToggleable extends ItemSigilBase
 {
@@ -77,5 +80,13 @@ public class ItemSigilToggleable extends ItemSigilBase
 
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "active=false"));
+        ret.add(new ImmutablePair<Integer, String>(1, "active=true"));
+        return ret;
     }
 }
