@@ -1,5 +1,11 @@
 package WayofTime.bloodmagic.proxy;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import net.minecraft.block.Block;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,6 +33,7 @@ import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import WayofTime.bloodmagic.util.handler.ClientEventHandler;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class ClientProxy extends CommonProxy
 {
@@ -71,7 +78,6 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntitySoulSnare.class, new SoulSnareRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntitySentientArrow.class, new SentientArrowRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(EntityBloodLight.class, new BloodLightRenderFactory());
-        ModelLoader.setCustomMeshDefinition(ModItems.sentientSword, new CustomMeshDefinitionActivatable("ItemSentientSword"));
         ModelLoader.setCustomMeshDefinition(ModItems.boundShovel, new CustomMeshDefinitionActivatable("ItemBoundShovel"));
         ModelLoader.setCustomMeshDefinition(ModItems.boundAxe, new CustomMeshDefinitionActivatable("ItemBoundAxe"));
         ModelLoader.setCustomMeshDefinition(ModItems.boundPickaxe, new CustomMeshDefinitionActivatable("ItemBoundPickaxe"));
@@ -90,5 +96,28 @@ public class ClientProxy extends CommonProxy
     public void postInit()
     {
 
+    }
+
+    @Override
+    public void tryHandleBlockModel(Block block, String name) {
+        if (block instanceof IVariantProvider) {
+            IVariantProvider variantProvider = (IVariantProvider) block;
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, name), variant.getRight()));
+        }
+    }
+
+    @Override
+    public void tryHandleItemModel(Item item, String name) {
+        if (item instanceof IMeshProvider) {
+            IMeshProvider meshProvider = (IMeshProvider) item;
+            ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
+            for (String variant : meshProvider.getVariants())
+                ModelLoader.registerItemVariants(item, new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant));
+        } else if (item instanceof IVariantProvider) {
+            IVariantProvider variantProvider = (IVariantProvider) item;
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
+                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant.getRight()));
+        }
     }
 }

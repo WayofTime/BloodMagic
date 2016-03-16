@@ -1,5 +1,7 @@
 package WayofTime.bloodmagic.proxy;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -49,5 +51,13 @@ public class CommonProxy
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public void tryHandleBlockModel(Block block, String name) {
+        // NO-OP
+    }
+
+    public void tryHandleItemModel(Item item, String name) {
+        // NO-OP
     }
 }

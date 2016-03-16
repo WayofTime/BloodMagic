@@ -1,6 +1,0 @@
-{
-  "parent":"bloodmagic:item/ItemToolBase",
-  "textures": {
-    "layer0":"bloodmagic:items/BoundSword_activated"
-  }
-}

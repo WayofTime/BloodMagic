@@ -2,7 +2,6 @@ package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.item.block.*;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -233,16 +232,11 @@ public class ModBlocks
             return block;
         }
 
-        if (!ConfigHandler.blockBlacklist.contains(block.getRegistryName().split(":")[1]))
+        String blockName = block.getRegistryName().split(":")[1];
+        if (!ConfigHandler.blockBlacklist.contains(blockName)) {
             GameRegistry.registerBlock(block, itemBlock);
-
-        return block;
-    }
-
-    private static Block registerBlock(Block block, String name)
-    {
-        if (!ConfigHandler.blockBlacklist.contains(name))
-            GameRegistry.registerBlock(block, name);
+            BloodMagic.proxy.tryHandleBlockModel(block, blockName);
+        }
 
         return block;
     }
@@ -255,8 +249,11 @@ public class ModBlocks
             return null;
         }
 
-        if (!ConfigHandler.blockBlacklist.contains(block.getRegistryName().split(":")[1]))
+        String blockName = block.getRegistryName().split(":")[1];
+        if (!ConfigHandler.blockBlacklist.contains(blockName)) {
             GameRegistry.registerBlock(block);
+            BloodMagic.proxy.tryHandleBlockModel(block, blockName);
+        }
 
         return block;
     }

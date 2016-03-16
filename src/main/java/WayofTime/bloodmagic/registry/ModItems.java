@@ -259,12 +259,6 @@ public class ModItems
         renderHelperV2.registerRender(soulGem, 4, "grand");
         renderHelperV2.registerRender(soulSnare, "soulSnare");
 
-        renderHelperV2.registerRender(slate, 0, "blank");
-        renderHelperV2.registerRender(slate, 1, "reinforced");
-        renderHelperV2.registerRender(slate, 2, "imbued");
-        renderHelperV2.registerRender(slate, 3, "demonic");
-        renderHelperV2.registerRender(slate, 4, "ethereal");
-
         renderHelperV2.registerRender(inscriptionTool, 1, EnumRuneType.WATER.name());
         renderHelperV2.registerRender(inscriptionTool, 2, EnumRuneType.FIRE.name());
         renderHelperV2.registerRender(inscriptionTool, 3, EnumRuneType.EARTH.name());
@@ -379,8 +373,6 @@ public class ModItems
         renderHelper.itemRender(sigilTeleposition);
         renderHelper.itemRender(sigilTransposition);
 
-        renderHelper.customItemRender(sentientSword, 0);
-        renderHelper.customItemRender(sentientSword, 1);
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
         renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
         renderHelper.itemRender(sentientBow, 2, "ItemSentientBow_pulling_1");
@@ -393,7 +385,10 @@ public class ModItems
     private static Item registerItem(Item item, String name)
     {
         if (!ConfigHandler.itemBlacklist.contains(name))
+        {
             GameRegistry.registerItem(item, name);
+            BloodMagic.proxy.tryHandleItemModel(item, name);
+        }
 
         return item;
     }
@@ -406,8 +401,12 @@ public class ModItems
             return item;
         }
 
-        if (!ConfigHandler.itemBlacklist.contains(item.getRegistryName().split(":")[1]))
+        String itemName = item.getRegistryName().split(":")[1];
+        if (!ConfigHandler.itemBlacklist.contains(itemName))
+        {
             GameRegistry.registerItem(item);
+            BloodMagic.proxy.tryHandleItemModel(item, itemName);
+        }
 
         return item;
     }

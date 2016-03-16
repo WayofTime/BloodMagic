@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -13,6 +17,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,7 +35,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IActivatable
+public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IActivatable, IMeshProvider
 {
     public int[] soulBracket = new int[] { 16, 60, 200, 400 };
     public double[] damageAdded = new double[] { 1, 1.5, 2, 2.5 };
@@ -142,12 +147,30 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         return super.onLeftClickEntity(stack, player, entity);
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new CustomMeshDefinitionActivatable("ItemSentientSword");
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        ret.add("active=true");
+        ret.add("active=false");
+        return ret;
+    }
+
+    @Override
     public boolean getActivated(ItemStack stack)
     {
         NBTHelper.checkNBT(stack);
         return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
+    @Override
     public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
         NBTHelper.checkNBT(stack);
@@ -176,6 +199,14 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         }
 
         return soulList;
+    }
+
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    {
+        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", getActivated(stack) ? getDamageOfActivatedSword(stack) : 2, 0));
+        return multimap;
     }
 
     public double getDamageOfActivatedSword(ItemStack stack)
@@ -244,13 +275,5 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
-    }
-
-    @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
-    {
-        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", getActivated(stack) ? getDamageOfActivatedSword(stack) : 2, 0));
-        return multimap;
     }
 }

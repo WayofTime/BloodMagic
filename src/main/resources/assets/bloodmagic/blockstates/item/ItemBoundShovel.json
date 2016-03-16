@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-tool"
+  },
+  "variants": {
+    "active": {
+      "true": {
+        "textures": {
+          "layer0": "bloodmagic:items/BoundShovel_activated"
+        }
+      },
+      "false": {
+        "textures": {
+          "layer0": "bloodmagic:items/Item_deactivated"
+        }
+      }
+    }
+  }
+}

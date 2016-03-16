@@ -1,10 +1,14 @@
 package WayofTime.bloodmagic.item;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -24,8 +28,10 @@ import WayofTime.bloodmagic.api.ItemStackWrapper;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBoundShovel extends ItemBoundTool
+public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
 {
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.clay, Blocks.dirt, Blocks.farmland, Blocks.grass, Blocks.gravel, Blocks.mycelium, Blocks.sand, Blocks.snow, Blocks.snow_layer, Blocks.soul_sand);
 
@@ -112,5 +118,21 @@ public class ItemBoundShovel extends ItemBoundTool
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", 1, 0));
         return multimap;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new CustomMeshDefinitionActivatable("ItemBoundShovel");
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        ret.add("active=true");
+        ret.add("active=false");
+        return ret;
     }
 }

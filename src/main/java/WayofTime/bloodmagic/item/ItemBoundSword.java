@@ -1,8 +1,12 @@
 package WayofTime.bloodmagic.item;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -27,7 +31,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
+public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider
 {
     private float attackDamage;
 
@@ -114,6 +118,22 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
 
         return stack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new CustomMeshDefinitionActivatable("ItemBoundSword");
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        ret.add("active=true");
+        ret.add("active=false");
+        return ret;
     }
 
     // IBindable
