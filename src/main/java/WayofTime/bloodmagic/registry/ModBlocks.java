@@ -129,6 +129,7 @@ public class ModBlocks
         BloodMagicAPI.addToTeleposerBlacklist(inputRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(outputRoutingNode);
         BloodMagicAPI.addToTeleposerBlacklist(itemRoutingNode);
+        BloodMagicAPI.addToTeleposerBlacklist(demonCrystal);
 
         initTiles();
     }
