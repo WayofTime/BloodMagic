@@ -72,7 +72,7 @@
     	},
         "age": {
         	"0": {
-				textures": {
+				"textures": {
     				"#crystal" : "bloodmagic:models/VengefulCrystal"
     			}
       		},
