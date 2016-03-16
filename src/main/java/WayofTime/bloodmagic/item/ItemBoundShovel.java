@@ -3,8 +3,10 @@ package WayofTime.bloodmagic.item;
 import java.util.List;
 import java.util.Set;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,14 +31,20 @@ public class ItemBoundShovel extends ItemBoundTool
 
     public ItemBoundShovel()
     {
-        super("shovel", 1, 5, EFFECTIVE_ON);
+        super("shovel", 1, EFFECTIVE_ON);
         setRegistryName(Constants.BloodMagicItem.BOUND_SHOVEL.getRegName());
     }
 
     @Override
-    public boolean canHarvestBlock(Block blockIn)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
-        return blockIn == Blocks.snow_layer || blockIn == Blocks.snow;
+        return true;
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    {
+        return true;
     }
 
     @Override
@@ -93,8 +101,7 @@ public class ItemBoundShovel extends ItemBoundTool
             }
         }
 
-        ItemBindable.syphonNetwork(stack, player, (int) (charge * charge * charge / 2.7));
-
+        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, (int) (charge * charge * charge / 2.7));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }

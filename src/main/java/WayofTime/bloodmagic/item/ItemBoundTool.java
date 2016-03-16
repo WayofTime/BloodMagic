@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.registry.ModItems;
+import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -14,6 +18,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
@@ -32,39 +37,37 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 
 @Getter
-public class ItemBoundTool extends ItemBindable implements IActivatable
+public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 {
-    private Set<Block> effectiveBlocks;
     protected final String tooltipBase;
     private final String name;
-    private final int damage;
+    private final float damage;
 
     public Map<ItemStack, Boolean> heldDownMap = new HashMap<ItemStack, Boolean>();
     public Map<ItemStack, Integer> heldDownCountMap = new HashMap<ItemStack, Integer>();
 
     public final int chargeTime = 30;
 
-    public ItemBoundTool(String name, int damage, int lpUsed, Set<Block> effectiveBlocks)
+    public ItemBoundTool(String name, float damage, Set<Block> effectiveBlocks)
     {
-        super();
+        super(damage, ModItems.boundToolMaterial, effectiveBlocks);
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
-        setLPUsed(lpUsed);
 
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.bound." + name + ".";
-        this.effectiveBlocks = effectiveBlocks;
         this.damage = damage;
-    }
-
-    public ItemBoundTool(String name, int damage, int lpUsed)
-    {
-        this(name, damage, lpUsed, null);
     }
 
     @Override
     public float getStrVsBlock(ItemStack stack, Block block)
     {
-        return this.effectiveBlocks.contains(block) ? 8.0F : 1.0F;
+        return getActivated(stack) ? getToolMaterial().getEfficiencyOnProperMaterial() : 1.0F;
+    }
+
+    @Override
+    public float getDigSpeed(ItemStack stack, IBlockState state)
+    {
+        return getActivated(stack) ? getToolMaterial().getEfficiencyOnProperMaterial() : 1.0F;
     }
 
     @Override
@@ -90,9 +93,7 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
     protected int getHeldDownCount(ItemStack stack)
     {
         if (!heldDownCountMap.containsKey(stack))
-        {
             return 0;
-        }
 
         return heldDownCountMap.get(stack);
     }
@@ -105,9 +106,7 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
     protected boolean getBeingHeldDown(ItemStack stack)
     {
         if (!heldDownMap.containsKey(stack))
-        {
             return false;
-        }
 
         return heldDownMap.get(stack);
     }
@@ -120,36 +119,20 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        // if (!world.isRemote)
+        if (player.isSneaking())
+            setActivatedState(stack, !getActivated(stack));
+
+        if (!player.isSneaking() && getActivated(stack))
         {
-            if (player.isSneaking())
-                setActivatedState(stack, !getActivated(stack));
-            // if (getActivated(stack) && ItemBindable.syphonBatteries(stack,
-            // player, getLPUsed()))
-            // return stack;
-//            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
-//                return stack;
+            BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
+            if (MinecraftForge.EVENT_BUS.post(event))
+                return event.result;
 
-            if (!player.isSneaking() && getActivated(stack))
-            {
-                BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
-                if (MinecraftForge.EVENT_BUS.post(event))
-                    return event.result;
-
-                player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-                setBeingHeldDown(stack, true);
-            }
+            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+            setBeingHeldDown(stack, true);
         }
 
         return stack;
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        this.onItemRightClick(stack, world, player);
-
-        return false;
     }
 
     @Override
@@ -219,6 +202,11 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
     }
 
     @Override
+    public Set<String> getToolClasses(ItemStack stack) {
+        return ImmutableSet.of(name);
+    }
+
+    @Override
     public boolean showDurabilityBar(ItemStack stack)
     {
         return getActivated(stack) && getBeingHeldDown(stack);
@@ -249,17 +237,35 @@ public class ItemBoundTool extends ItemBindable implements IActivatable
         }
     }
 
-    public boolean getActivated(ItemStack stack)
-    {
-        NBTHelper.checkNBT(stack);
-        return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+    // IBindable
+
+    @Override
+    public String getOwnerName(ItemStack stack) {
+        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_NAME) : null;
     }
 
+    @Override
+    public String getOwnerUUID(ItemStack stack) {
+        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
+    }
+
+    @Override
+    public boolean onBind(EntityPlayer player, ItemStack stack) {
+        return true;
+    }
+
+    // IActivatable
+
+    @Override
+    public boolean getActivated(ItemStack stack)
+    {
+        return NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+    }
+
+    @Override
     public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
-        NBTHelper.checkNBT(stack);
-        stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
-
+        NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
         return stack;
     }
 }

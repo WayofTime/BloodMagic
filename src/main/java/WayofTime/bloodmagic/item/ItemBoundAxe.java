@@ -3,10 +3,12 @@ package WayofTime.bloodmagic.item;
 import java.util.List;
 import java.util.Set;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,14 +33,20 @@ public class ItemBoundAxe extends ItemBoundTool
 
     public ItemBoundAxe()
     {
-        super("axe", 7, 5, EFFECTIVE_ON);
+        super("axe", 7, EFFECTIVE_ON);
         setRegistryName(Constants.BloodMagicItem.BOUND_AXE.getRegName());
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, Block block)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
-        return block.getMaterial() != Material.wood && block.getMaterial() != Material.plants && block.getMaterial() != Material.vine ? super.getStrVsBlock(stack, block) : 12F;
+        return true;
+    }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    {
+        return true;
     }
 
     @Override
@@ -95,8 +103,7 @@ public class ItemBoundAxe extends ItemBoundTool
             }
         }
 
-        ItemBindable.syphonNetwork(stack, player, (int) (charge * charge * charge / 2.7));
-
+        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, (int) (charge * charge * charge / 2.7));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.1F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }

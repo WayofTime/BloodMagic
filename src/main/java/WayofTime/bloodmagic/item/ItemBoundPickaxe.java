@@ -3,9 +3,11 @@ package WayofTime.bloodmagic.item;
 import java.util.List;
 import java.util.Set;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,20 +32,35 @@ public class ItemBoundPickaxe extends ItemBoundTool
 
     public ItemBoundPickaxe()
     {
-        super("pickaxe", 5, 5, EFFECTIVE_ON);
+        super("pickaxe", 5, EFFECTIVE_ON);
         setRegistryName(Constants.BloodMagicItem.BOUND_PICKAXE.getRegName());
     }
 
     @Override
-    public boolean canHarvestBlock(Block blockIn)
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
         return true;
     }
 
     @Override
+    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean canHarvestBlock(Block blockIn)
+    {
+        return blockIn == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 3 : (blockIn != Blocks.diamond_block && blockIn != Blocks.diamond_ore ? (blockIn != Blocks.emerald_ore && blockIn != Blocks.emerald_block ? (blockIn != Blocks.gold_block && blockIn != Blocks.gold_ore ? (blockIn != Blocks.iron_block && blockIn != Blocks.iron_ore ? (blockIn != Blocks.lapis_block && blockIn != Blocks.lapis_ore ? (blockIn != Blocks.redstone_ore && blockIn != Blocks.lit_redstone_ore ? (blockIn.getMaterial() == Material.rock || (blockIn.getMaterial() == Material.iron || blockIn.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
+    }
+
+    @Override
     public float getStrVsBlock(ItemStack stack, Block block)
     {
-        return block.getMaterial() != Material.iron && block.getMaterial() != Material.anvil && block.getMaterial() != Material.rock ? super.getStrVsBlock(stack, block) : 12F;
+        if (!getActivated(stack))
+            return 1.0F;
+
+        return block.getMaterial() != Material.iron && block.getMaterial() != Material.anvil && block.getMaterial() != Material.rock ? super.getStrVsBlock(stack, block) : this.efficiencyOnProperMaterial;
     }
 
     @Override
@@ -100,8 +117,7 @@ public class ItemBoundPickaxe extends ItemBoundTool
             }
         }
 
-        ItemBindable.syphonNetwork(stack, player, (int) (charge * charge * charge / 2.7));
-
+        NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, (int) (charge * charge * charge / 2.7));
         world.createExplosion(player, playerPos.getX(), playerPos.getY(), playerPos.getZ(), 0.5F, false);
         dropStacks(drops, world, playerPos.add(0, 1, 0));
     }
