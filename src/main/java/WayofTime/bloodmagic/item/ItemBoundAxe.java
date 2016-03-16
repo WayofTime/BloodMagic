@@ -65,11 +65,11 @@ public class ItemBoundAxe extends ItemBoundTool
                     BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
 
                     if (blockStack.getBlock().isAir(world, blockPos))
-                        break;
+                        continue;
 
                     BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
-                        break;
+                        continue;
 
                     if (blockStack.getBlock().getBlockHardness(world, blockPos) != -1)
                     {
