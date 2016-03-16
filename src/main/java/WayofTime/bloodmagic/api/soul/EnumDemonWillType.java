@@ -2,10 +2,8 @@ package WayofTime.bloodmagic.api.soul;
 
 import net.minecraft.util.IStringSerializable;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public enum EnumDemonWillType implements IStringSerializable
 {
     DEFAULT("Default"),
@@ -15,4 +13,8 @@ public enum EnumDemonWillType implements IStringSerializable
     STEADFAST("Steadfast");
 
     public final String name;
+
+    EnumDemonWillType(String name) {
+        this.name = name;
+    }
 }

@@ -165,49 +165,15 @@ public class ModBlocks
         InventoryRenderHelperV2 renderHelperV2 = BloodMagic.proxy.getRenderHelperV2();
 
         renderHelper.fluidRender(lifeEssence);
-        for (int i = 0; i < BlockBloodRune.names.length; i++)
-        {
-            renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodRune), i);
-        }
 
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(altar));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualController), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 2);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 3);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 4);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 5);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(ritualStone), 6);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodStoneBrick), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(crystal), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(crystal), 1);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(bloodLight));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 0);
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pedestal), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(teleposer));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(alchemyArray));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(spectralBlock));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(phantomBlock));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(soulForge));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(outputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(inputRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(masterRoutingNode));
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(itemRoutingNode));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(incenseAltar));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrucible));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonCrystallizer));
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 0);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 1);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 2);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 3);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 4);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 5);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 6);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(pathBlock), 7);
-        renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(demonPylon));
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 0, "ItemBlockDemonCrystal", "default");
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 1, "ItemBlockDemonCrystal", "corrosive");
         renderHelperV2.registerRender(InventoryRenderHelper.getItemFromBlock(demonCrystal), 2, "ItemBlockDemonCrystal", "destructive");
@@ -219,8 +185,10 @@ public class ModBlocks
 
     private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
     {
-        if (!ConfigHandler.blockBlacklist.contains(name))
-            GameRegistry.registerBlock(block, itemBlock, name);
+        if (!ConfigHandler.blockBlacklist.contains(name)) {
+            GameRegistry.registerBlock(block, itemBlock);
+            BloodMagic.proxy.tryHandleBlockModel(block, name);
+        }
 
         return block;
     }

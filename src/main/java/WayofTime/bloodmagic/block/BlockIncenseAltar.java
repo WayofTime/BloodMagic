@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -9,8 +10,13 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockIncenseAltar extends BlockContainer
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlockIncenseAltar extends BlockContainer implements IVariantProvider
 {
     public BlockIncenseAltar()
     {
@@ -64,5 +70,12 @@ public class BlockIncenseAltar extends BlockContainer
             TileIncenseAltar.dropItems();
 
         super.breakBlock(world, blockPos, blockState);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
+        return ret;
     }
 }

@@ -266,37 +266,6 @@ public class ModItems
 
         renderHelper.itemRender(bucketEssence);
 
-//        renderHelper.itemRender(sigilDivination);
-//        renderHelper.itemRender(sigilAir);
-//        renderHelper.itemRender(sigilWater);
-//        renderHelper.itemRender(sigilLava);
-//        renderHelper.itemRender(sigilVoid);
-//        renderHelper.itemRender(sigilGreenGrove, 0);
-//        renderHelper.itemRender(sigilGreenGrove, 1);
-//        renderHelper.itemRender(sigilBloodLight);
-//        renderHelper.itemRender(sigilElementalAffinity, 0);
-//        renderHelper.itemRender(sigilElementalAffinity, 1);
-//        renderHelper.itemRender(sigilMagnetism, 0);
-//        renderHelper.itemRender(sigilMagnetism, 1);
-//        renderHelper.itemRender(sigilSuppression, 0);
-//        renderHelper.itemRender(sigilSuppression, 1);
-//        renderHelper.itemRender(sigilHaste, 0);
-//        renderHelper.itemRender(sigilHaste, 1);
-//        renderHelper.itemRender(sigilFastMiner, 0);
-//        renderHelper.itemRender(sigilFastMiner, 1);
-//        renderHelper.itemRender(sigilSeer);
-//        renderHelper.itemRender(sigilPhantomBridge, 0);
-//        renderHelper.itemRender(sigilPhantomBridge, 1);
-//        renderHelper.itemRender(sigilWhirlwind, 0);
-//        renderHelper.itemRender(sigilWhirlwind, 1);
-//        renderHelper.itemRender(sigilCompression, 0);
-//        renderHelper.itemRender(sigilCompression, 1);
-//        renderHelper.itemRender(sigilEnderSeverance, 0);
-//        renderHelper.itemRender(sigilEnderSeverance, 1);
-//
-//        renderHelper.itemRender(sigilTeleposition);
-//        renderHelper.itemRender(sigilTransposition);
-
         renderHelper.itemRender(sentientBow, 0, "ItemSentientBow");
         renderHelper.itemRender(sentientBow, 1, "ItemSentientBow_pulling_0");
         renderHelper.itemRender(sentientBow, 2, "ItemSentientBow_pulling_1");

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +21,13 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockRitualController extends BlockStringContainer
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlockRitualController extends BlockStringContainer implements IVariantProvider
 {
     public static final String[] names = { "master", "imperfect" };
 
@@ -97,5 +103,13 @@ public class BlockRitualController extends BlockStringContainer
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return meta == 0 ? (new TileMasterRitualStone()) : (new TileImperfectRitualStone());
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        for (int i = 0; i < names.length; i++)
+            ret.add(new ImmutablePair<Integer, String>(i, "type=" + names[i]));
+        return ret;
     }
 }

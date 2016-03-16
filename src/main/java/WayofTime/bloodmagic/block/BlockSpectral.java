@@ -1,8 +1,10 @@
 package WayofTime.bloodmagic.block;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,8 +19,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockSpectral extends BlockContainer
+public class BlockSpectral extends BlockContainer implements IVariantProvider
 {
     public BlockSpectral()
     {
@@ -75,5 +79,12 @@ public class BlockSpectral extends BlockContainer
     public TileEntity createNewTileEntity(World world, int meta)
     {
         return new TileSpectralBlock();
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
+        return ret;
     }
 }

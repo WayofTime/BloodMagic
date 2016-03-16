@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,8 +14,13 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.tile.TileTeleposer;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockTeleposer extends BlockContainer
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlockTeleposer extends BlockContainer implements IVariantProvider
 {
     public BlockTeleposer()
     {
@@ -60,5 +66,12 @@ public class BlockTeleposer extends BlockContainer
     public TileEntity createNewTileEntity(World worldIn, int meta)
     {
         return new TileTeleposer();
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
+        return ret;
     }
 }

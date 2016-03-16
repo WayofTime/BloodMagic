@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,8 +16,13 @@ import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.util.Utils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
-public class BlockDemonCrucible extends BlockContainer
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlockDemonCrucible extends BlockContainer implements IVariantProvider
 {
     public BlockDemonCrucible()
     {
@@ -94,5 +100,12 @@ public class BlockDemonCrucible extends BlockContainer
             tile.dropItems();
 
         super.breakBlock(world, blockPos, blockState);
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "normal"));
+        return ret;
     }
 }
