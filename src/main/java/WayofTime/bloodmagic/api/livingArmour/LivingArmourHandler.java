@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourHandler
 {

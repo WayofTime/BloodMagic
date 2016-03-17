@@ -1,19 +1,13 @@
 package WayofTime.bloodmagic.ritual.portal;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import net.minecraftforge.common.DimensionManager;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.teleport.PortalLocation;
+import net.minecraftforge.common.DimensionManager;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LocationsHandler implements Serializable
 {

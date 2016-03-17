@@ -1,5 +1,10 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.block.base.BlockStringContainer;
+import WayofTime.bloodmagic.tile.TilePlinth;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,11 +13,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.base.BlockStringContainer;
-import WayofTime.bloodmagic.tile.TilePlinth;
-import WayofTime.bloodmagic.util.Utils;
 
 public class BlockPedestal extends BlockStringContainer
 {

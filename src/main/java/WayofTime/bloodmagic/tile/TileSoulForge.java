@@ -1,11 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ITickable;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 import WayofTime.bloodmagic.api.registry.TartaricForgeRecipeRegistry;
@@ -14,6 +8,12 @@ import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileSoulForge extends TileInventory implements ITickable, IDemonWillConduit
 {

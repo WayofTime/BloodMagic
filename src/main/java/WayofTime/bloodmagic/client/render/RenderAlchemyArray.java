@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.client.render;
 
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.item.ItemStack;
 import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 import WayofTime.bloodmagic.api.registry.AlchemyArrayRecipeRegistry;
 import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 
 public class RenderAlchemyArray extends TileEntitySpecialRenderer<TileAlchemyArray>
 {

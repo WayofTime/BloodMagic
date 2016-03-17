@@ -1,8 +1,14 @@
 package WayofTime.bloodmagic;
 
-import java.io.File;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.LogHelper;
+import WayofTime.bloodmagic.client.gui.GuiHandler;
 import WayofTime.bloodmagic.command.CommandBloodMagic;
+import WayofTime.bloodmagic.compat.ICompatibility;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.proxy.CommonProxy;
+import WayofTime.bloodmagic.registry.*;
+import WayofTime.bloodmagic.util.handler.IMCHandler;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -11,22 +17,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.LogHelper;
-import WayofTime.bloodmagic.client.gui.GuiHandler;
-import WayofTime.bloodmagic.compat.ICompatibility;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.proxy.CommonProxy;
-import WayofTime.bloodmagic.registry.ModArmourTrackers;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.registry.ModCompatibility;
-import WayofTime.bloodmagic.registry.ModEntities;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.registry.ModPotions;
-import WayofTime.bloodmagic.registry.ModRecipes;
-import WayofTime.bloodmagic.registry.ModRituals;
-import WayofTime.bloodmagic.registry.ModTranquilityHandlers;
-import WayofTime.bloodmagic.util.handler.IMCHandler;
+
+import java.io.File;
 
 @Mod(modid = Constants.Mod.MODID, name = Constants.Mod.NAME, version = Constants.Mod.VERSION, dependencies = Constants.Mod.DEPEND, guiFactory = "WayofTime.bloodmagic.client.gui.config.ConfigGuiFactory")
 @Getter

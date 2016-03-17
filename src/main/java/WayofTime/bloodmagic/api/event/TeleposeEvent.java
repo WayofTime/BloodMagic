@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.event;
 
+import WayofTime.bloodmagic.api.BlockStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import WayofTime.bloodmagic.api.BlockStack;
 
 /**
  * Fired when a teleposer attempts to transpose two blocks. Use this to perform

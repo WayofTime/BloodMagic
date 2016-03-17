@@ -1,29 +1,9 @@
 package WayofTime.bloodmagic.altar;
 
-import java.util.List;
-
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.AltarComponent;
-import WayofTime.bloodmagic.api.altar.AltarUpgrade;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IAltarComponent;
+import WayofTime.bloodmagic.api.altar.*;
 import WayofTime.bloodmagic.api.event.AltarCraftedEvent;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
@@ -33,9 +13,20 @@ import WayofTime.bloodmagic.block.BlockBloodRune;
 import WayofTime.bloodmagic.block.BlockLifeEssence;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.Utils;
-
 import com.google.common.base.Enums;
 import com.google.common.base.Strings;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.*;
+
+import java.util.List;
 
 public class BloodAltar implements IFluidHandler
 {
@@ -296,7 +287,7 @@ public class BloodAltar implements IFluidHandler
     public void startCycle()
     {
         if (tileAltar.getWorld() != null)
-            tileAltar.getWorld().markBlockForUpdate(tileAltar.getPos());
+            tileAltar.markDirty();
 
         checkTier();
 
@@ -364,7 +355,7 @@ public class BloodAltar implements IFluidHandler
             fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
             this.fluidOutput.amount += fluidOutputted;
             this.fluid.amount -= fluidOutputted;
-            world.markBlockForUpdate(pos);
+            tileAltar.markDirty();
         }
 
         if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
@@ -373,7 +364,7 @@ public class BloodAltar implements IFluidHandler
             chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
             totalCharge += chargeInputted;
             this.fluid.amount -= chargeInputted;
-            world.markBlockForUpdate(pos);
+            tileAltar.markDirty();
         }
 
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
@@ -500,7 +491,7 @@ public class BloodAltar implements IFluidHandler
             }
         }
 
-        world.markBlockForUpdate(pos);
+        tileAltar.markDirty();
     }
 
     public void checkTier()
@@ -555,7 +546,7 @@ public class BloodAltar implements IFluidHandler
         if (this.totalCharge > this.maxCharge)
             this.totalCharge = this.maxCharge;
 
-        tileAltar.getWorld().markBlockForUpdate(tileAltar.getPos());
+        tileAltar.markDirty();
     }
 
     public int fillMainTank(int amount)

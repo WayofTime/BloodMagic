@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.api.iface;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 /**
  * This interface is used for items intended to train specific upgrades while

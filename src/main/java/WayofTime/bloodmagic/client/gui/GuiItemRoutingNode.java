@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.client.gui;
 
-import java.io.IOException;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
+import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,11 +14,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
-import WayofTime.bloodmagic.network.ItemRouterButtonPacketProcessor;
-import WayofTime.bloodmagic.tile.container.ContainerItemRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
+
+import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public class GuiItemRoutingNode extends GuiContainer

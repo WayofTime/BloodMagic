@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.demonAura;
 
-import java.lang.ref.WeakReference;
-
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.world.chunk.Chunk;
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+
+import java.lang.ref.WeakReference;
 
 @Getter
 @Setter

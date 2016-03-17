@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
+
+import java.util.List;
 
 public abstract class StatTracker
 {

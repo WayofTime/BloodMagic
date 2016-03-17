@@ -1,29 +1,8 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFood;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMovement;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPoison;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
-import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeHealthboost;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeKnockbackResist;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeMeleeDamage;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePhysicalProtect;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSolarPowered;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
+import WayofTime.bloodmagic.livingArmour.tracker.*;
+import WayofTime.bloodmagic.livingArmour.upgrade.*;
 
 public class ModArmourTrackers
 {

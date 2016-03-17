@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourUpgradeSelfSacrifice extends LivingArmourUpgrade
 {

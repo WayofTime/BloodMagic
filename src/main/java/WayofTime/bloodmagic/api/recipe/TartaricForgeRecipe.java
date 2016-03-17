@@ -1,16 +1,16 @@
 package WayofTime.bloodmagic.api.recipe;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TartaricForgeRecipe
 {

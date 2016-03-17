@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.routing;
 
-import java.util.List;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+
+import java.util.List;
 
 public interface IItemFilter
 {

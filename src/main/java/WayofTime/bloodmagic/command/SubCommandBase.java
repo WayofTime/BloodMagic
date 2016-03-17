@@ -3,12 +3,8 @@ package WayofTime.bloodmagic.command;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
-import net.minecraft.command.PlayerSelector;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.Locale;
 
@@ -37,39 +33,14 @@ public abstract class SubCommandBase implements ISubCommand
     }
 
     @Override
-    public void processSubCommand(ICommandSender commandSender, String[] args)
+    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
     {
 
         if (args.length == 0 && !getSubCommandName().equals("help"))
-            displayErrorString(commandSender, String.format(StatCollector.translateToLocal("commands.format.error"), capitalizeFirstLetter(getSubCommandName()), getArgUsage(commandSender)));
+            displayErrorString(commandSender, String.format(TextHelper.localizeEffect("commands.format.error"), capitalizeFirstLetter(getSubCommandName()), getArgUsage(commandSender)));
 
         if (isBounded(0, 2, args.length) && args[0].equals("help"))
-            displayHelpString(commandSender, String.format(StatCollector.translateToLocal("commands.format.help"), capitalizeFirstLetter(getSubCommandName()), getHelpText()));
-    }
-
-    protected EntityPlayerMP getCommandSenderAsPlayer(ICommandSender commandSender) throws PlayerNotFoundException
-    {
-        if (commandSender instanceof EntityPlayerMP)
-            return (EntityPlayerMP) commandSender;
-        else
-            throw new PlayerNotFoundException(StatCollector.translateToLocal("commands.error.arg.player.missing"));
-    }
-
-    protected EntityPlayerMP getPlayer(ICommandSender commandSender, String playerName) throws PlayerNotFoundException
-    {
-        EntityPlayerMP entityplayermp = PlayerSelector.matchOnePlayer(commandSender, playerName);
-
-        if (entityplayermp != null)
-            return entityplayermp;
-        else
-        {
-            entityplayermp = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(playerName);
-
-            if (entityplayermp == null)
-                throw new PlayerNotFoundException();
-            else
-                return entityplayermp;
-        }
+            displayHelpString(commandSender, String.format(TextHelper.localizeEffect("commands.format.help"), capitalizeFirstLetter(getSubCommandName()), getHelpText()));
     }
 
     protected String capitalizeFirstLetter(String toCapital)
@@ -84,16 +55,16 @@ public abstract class SubCommandBase implements ISubCommand
 
     protected void displayHelpString(ICommandSender commandSender, String display, Object... info)
     {
-        commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect(display, info)));
+        commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
     protected void displayErrorString(ICommandSender commandSender, String display, Object... info)
     {
-        commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect(display, info)));
+        commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 
     protected void displaySuccessString(ICommandSender commandSender, String display, Object... info)
     {
-        commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect(display, info)));
+        commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect(display, info)));
     }
 }

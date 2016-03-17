@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.incense;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.incense.EnumTranquilityType;
 import WayofTime.bloodmagic.api.incense.TranquilityHandler;
 import WayofTime.bloodmagic.api.incense.TranquilityStack;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class LavaTranquilityHandler extends TranquilityHandler
 {

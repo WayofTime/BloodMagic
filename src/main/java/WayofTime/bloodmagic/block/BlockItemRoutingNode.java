@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.block;
 
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
-import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
 public class BlockItemRoutingNode extends BlockRoutingNode
 {

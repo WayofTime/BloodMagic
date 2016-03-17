@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.api.event;
 
+import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 import lombok.Getter;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import WayofTime.bloodmagic.api.registry.AltarRecipeRegistry;
 
 /**
  * Fired whenever a craft is completed in a BloodAltar.

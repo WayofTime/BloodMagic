@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.util.handler;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.util.Utils;
 
 public class IMCHandler
 {

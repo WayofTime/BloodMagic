@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 public class AlchemyArrayEffectCrafting extends AlchemyArrayEffect
 {

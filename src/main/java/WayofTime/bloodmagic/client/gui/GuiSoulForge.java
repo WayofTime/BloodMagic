@@ -1,5 +1,9 @@
 package WayofTime.bloodmagic.client.gui;
 
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.tile.TileSoulForge;
+import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,10 +11,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.tile.TileSoulForge;
-import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiSoulForge extends GuiContainer

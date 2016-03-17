@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-
-import com.google.common.collect.Multimap;
 
 /**
  * An interface this is used purely for internal implementation.

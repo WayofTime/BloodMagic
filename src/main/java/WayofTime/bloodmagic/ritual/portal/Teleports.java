@@ -1,21 +1,24 @@
 package WayofTime.bloodmagic.ritual.portal;
 
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.teleport.Teleport;
+import WayofTime.bloodmagic.api.teleport.TeleporterBloodMagic;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S06PacketUpdateHealth;
+import net.minecraft.network.play.server.SPacketUpdateHealth;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.teleport.Teleport;
-import WayofTime.bloodmagic.api.teleport.TeleporterBloodMagic;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class Teleports
 {
@@ -53,10 +56,10 @@ public class Teleports
 
                         player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                         player.worldObj.updateEntityWithOptionalForce(player, false);
-                        player.playerNetServerHandler.sendPacket(new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                        player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                         player.timeUntilPortal = 150;
 
-                        player.worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+                        player.worldObj.playSound(x, y, z, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                     } else
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
@@ -72,7 +75,7 @@ public class Teleports
                         entity.timeUntilPortal = 150;
                         world.resetUpdateEntityTick();
 
-                        entity.worldObj.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+                        entity.worldObj.playSound(x, y, z, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                     }
                 }
             }
@@ -113,7 +116,7 @@ public class Teleports
             {
                 if (entity.timeUntilPortal <= 0)
                 {
-                    MinecraftServer server = MinecraftServer.getServer();
+                    MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
                     WorldServer oldWorldServer = server.worldServerForDimension(entity.dimension);
                     WorldServer newWorldServer = server.worldServerForDimension(newWorldID);
 
@@ -133,7 +136,7 @@ public class Teleports
                             server.getConfigurationManager().transferPlayerToDimension(player, newWorldID, new TeleporterBloodMagic(newWorldServer));
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.worldObj.updateEntityWithOptionalForce(player, false);
-                            player.playerNetServerHandler.sendPacket(new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                            player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                         }
 
                     } else if (!entity.worldObj.isRemote)
@@ -149,7 +152,7 @@ public class Teleports
 
                         entity.writeToNBTOptional(tag);
                         entity.setDead();
-                        oldWorld.playSoundEffect(entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F);
+                        oldWorld.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
 
                         Entity teleportedEntity = EntityList.createEntityFromNBT(tag, newWorldServer);
                         if (teleportedEntity != null)
@@ -165,7 +168,7 @@ public class Teleports
                         newWorldServer.resetUpdateEntityTick();
                     }
                     entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
-                    newWorldServer.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
+                    newWorldServer.playSound(x, y, z, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                 }
             }
         }

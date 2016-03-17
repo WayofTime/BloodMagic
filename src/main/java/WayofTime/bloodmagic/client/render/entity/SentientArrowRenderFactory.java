@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.client.render.entity;
 
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 
 public class SentientArrowRenderFactory implements IRenderFactory<EntitySentientArrow>
 {

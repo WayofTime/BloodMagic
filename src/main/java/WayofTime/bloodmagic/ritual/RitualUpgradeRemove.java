@@ -1,28 +1,25 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
+import com.google.common.collect.Iterables;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class RitualUpgradeRemove extends Ritual
 {
@@ -56,7 +53,7 @@ public class RitualUpgradeRemove extends Ritual
             {
                 boolean removedUpgrade = false;
 
-                ItemStack chestStack = player.getCurrentArmor(2);
+                ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
                 {
@@ -98,7 +95,7 @@ public class RitualUpgradeRemove extends Ritual
 
                         masterRitualStone.setActive(false);
 
-                        world.spawnEntityInWorld(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ()));
+                        world.spawnEntityInWorld(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
                     }
 
                 }

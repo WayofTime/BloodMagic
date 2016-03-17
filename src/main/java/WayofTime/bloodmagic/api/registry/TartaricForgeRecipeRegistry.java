@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.api.registry;
 
+import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.recipe.TartaricForgeRecipe;
 
 public class TartaricForgeRecipeRegistry
 {

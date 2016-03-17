@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.item;
 
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemBucket;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemBucket;
 
 public class ItemBucketEssence extends ItemBucket
 {

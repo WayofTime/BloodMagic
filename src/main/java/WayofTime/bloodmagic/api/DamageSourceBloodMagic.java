@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.api;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IChatComponent;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 public class DamageSourceBloodMagic extends DamageSource
 {
@@ -17,8 +17,8 @@ public class DamageSourceBloodMagic extends DamageSource
     }
 
     @Override
-    public IChatComponent getDeathMessage(EntityLivingBase livingBase)
+    public ITextComponent getDeathMessage(EntityLivingBase livingBase)
     {
-        return new ChatComponentText(TextHelper.localizeEffect("chat.BloodMagic.damageSource", livingBase.getName()));
+        return new TextComponentString(TextHelper.localizeEffect("chat.BloodMagic.damageSource", livingBase.getName()));
     }
 }

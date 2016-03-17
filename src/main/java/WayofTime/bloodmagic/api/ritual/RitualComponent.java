@@ -2,8 +2,8 @@ package WayofTime.bloodmagic.api.ritual;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * Used to set a {@link EnumRuneType} type to a given {@link BlockPos} for usage

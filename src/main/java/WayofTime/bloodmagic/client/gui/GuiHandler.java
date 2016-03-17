@@ -1,10 +1,5 @@
 package WayofTime.bloodmagic.client.gui;
 
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSoulForge;
 import WayofTime.bloodmagic.tile.TileTeleposer;
@@ -14,6 +9,11 @@ import WayofTime.bloodmagic.tile.container.ContainerSoulForge;
 import WayofTime.bloodmagic.tile.container.ContainerTeleposer;
 import WayofTime.bloodmagic.tile.routing.TileFilteredRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler
 {

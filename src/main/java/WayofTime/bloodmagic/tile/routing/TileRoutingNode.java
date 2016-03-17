@@ -1,21 +1,21 @@
 package WayofTime.bloodmagic.tile.routing;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.routing.IItemRoutingNode;
 import WayofTime.bloodmagic.routing.IMasterRoutingNode;
 import WayofTime.bloodmagic.routing.IRoutingNode;
 import WayofTime.bloodmagic.tile.TileInventory;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class TileRoutingNode extends TileInventory implements IRoutingNode, IItemRoutingNode
 {
@@ -80,7 +80,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);
-                worldObj.markBlockForUpdate(testPos);
+                markDirty();
             }
         }
 
@@ -156,7 +156,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     {
         if (!connectionList.contains(pos1))
         {
-            worldObj.markBlockForUpdate(this.pos);
+            markDirty();
             connectionList.add(pos1);
         }
     }
@@ -167,7 +167,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
         if (connectionList.contains(pos1))
         {
             connectionList.remove(pos1);
-            worldObj.markBlockForUpdate(pos);
+            markDirty();
         }
     }
 

@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.entity.projectile;
 
+import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.PotionEffect;
@@ -7,7 +8,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.registry.ModPotions;
 
 public class EntitySoulSnare extends EntityThrowable
 {

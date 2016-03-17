@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import java.util.concurrent.Callable;
-
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+
+import java.util.concurrent.Callable;
 
 public final class CapabilityRuneType
 {

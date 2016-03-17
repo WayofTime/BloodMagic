@@ -1,11 +1,6 @@
 package WayofTime.bloodmagic.api.recipe;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -14,7 +9,12 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Shapeless Blood Orb Recipe Handler by joshie *

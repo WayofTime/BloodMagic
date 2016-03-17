@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.routing;
 
-import java.util.Iterator;
-import java.util.List;
-
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import WayofTime.bloodmagic.util.Utils;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This particular implementation of IItemFilter checks to make sure that a) as

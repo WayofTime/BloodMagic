@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
+import WayofTime.bloodmagic.api.Constants;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -12,10 +12,9 @@ import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import WayofTime.bloodmagic.api.Constants;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class PlayerHelper
 {
@@ -36,7 +35,7 @@ public class PlayerHelper
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
             return null;
 
-        return MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(username);
+        return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(username);
     }
 
     public static EntityPlayer getPlayerFromUUID(String uuid)
@@ -94,6 +93,6 @@ public class PlayerHelper
         if (player == null)
             return;
 
-        player.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+        player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("confusion"), 80));
     }
 }

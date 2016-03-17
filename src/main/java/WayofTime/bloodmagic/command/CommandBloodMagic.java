@@ -7,7 +7,8 @@ import WayofTime.bloodmagic.command.sub.SubCommandOrb;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class CommandBloodMagic extends CommandBase
     }
 
     @Override
-    public void processCommand(ICommandSender commandSender, String[] args)
+    public void execute(MinecraftServer server, ICommandSender commandSender, String[] args)
     {
         if (args.length > 0 && subCommands.containsKey(args[0]))
         {
@@ -65,7 +66,7 @@ public class CommandBloodMagic extends CommandBase
             subCommand.processSubCommand(commandSender, subArgs);
         } else
         {
-            commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("commands.error.unknown")));
+            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("commands.error.unknown")));
         }
     }
 

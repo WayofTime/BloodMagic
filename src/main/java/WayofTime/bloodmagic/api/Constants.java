@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.api;
 
-import java.util.Locale;
-
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.util.Locale;
 
 public class Constants
 {
@@ -144,7 +144,7 @@ public class Constants
 
     public static class Misc
     {
-        public static final int POTION_ARRAY_SIZE = Potion.potionTypes.length;
+        public static final int POTION_ARRAY_SIZE = 256;
     }
 
     public enum BloodMagicItem

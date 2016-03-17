@@ -10,19 +10,18 @@
  */
 package WayofTime.bloodmagic.client.helper;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.function.Consumer;
-
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.fml.common.FMLLog;
-
 import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.ARBFragmentShader;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.opengl.GL11;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.function.Consumer;
 
 public final class ShaderHelper
 {

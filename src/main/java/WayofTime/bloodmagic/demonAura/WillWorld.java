@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.demonAura;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 public class WillWorld
 {

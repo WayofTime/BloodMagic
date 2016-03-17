@@ -1,10 +1,11 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,13 +16,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.block.BlockRitualStone;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemInscriptionTool extends ItemBindable implements IVariantProvider
 {

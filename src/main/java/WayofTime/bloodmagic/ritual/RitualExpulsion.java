@@ -1,33 +1,29 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import com.google.common.base.Strings;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RitualExpulsion extends Ritual
 {
@@ -139,9 +135,9 @@ public class RitualExpulsion extends Ritual
 
             while (!flag1 && j > 0)
             {
-                Block block = entityLiving.worldObj.getBlockState(new BlockPos(i, j - 1, k)).getBlock();
+                IBlockState state = entityLiving.worldObj.getBlockState(new BlockPos(i, j - 1, k));
 
-                if (block != null && block.getMaterial().blocksMovement())
+                if (state != null && state.getMaterial().blocksMovement())
                 {
                     flag1 = true;
                 } else
@@ -155,7 +151,7 @@ public class RitualExpulsion extends Ritual
             {
                 moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (entityLiving.worldObj.getCollidingBoundingBoxes(entityLiving, entityLiving.getEntityBoundingBox()).isEmpty() && !entityLiving.worldObj.isAnyLiquid(entityLiving.getEntityBoundingBox()))
+                if (!entityLiving.isCollided && !entityLiving.worldObj.isAnyLiquid(entityLiving.getEntityBoundingBox()))
                 {
                     flag = true;
                 }
@@ -200,7 +196,7 @@ public class RitualExpulsion extends Ritual
                     {
                         if (entityLiving.isRiding())
                         {
-                            entityLiving.mountEntity(null);
+                            entityplayermp.mountEntityAndWakeUp();
                         }
                         entityLiving.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
                     }

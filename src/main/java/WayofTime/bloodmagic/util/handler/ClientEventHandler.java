@@ -1,25 +1,5 @@
 package WayofTime.bloodmagic.util.handler;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import org.lwjgl.opengl.GL11;
-
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -28,6 +8,22 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.util.GhostItemHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.opengl.GL11;
 
 public class ClientEventHandler
 {
@@ -79,7 +75,7 @@ public class ClientEventHandler
         EntityPlayerSP player = minecraft.thePlayer;
         World world = player.worldObj;
 
-        if (minecraft.objectMouseOver == null || minecraft.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK)
+        if (minecraft.objectMouseOver == null || minecraft.objectMouseOver.typeOfHit != RayTraceResult.Type.BLOCK)
         {
             return;
         }
@@ -103,19 +99,19 @@ public class ClientEventHandler
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-                Vec3 vec3 = new Vec3(minecraft.objectMouseOver.getBlockPos().getX(), minecraft.objectMouseOver.getBlockPos().getY(), minecraft.objectMouseOver.getBlockPos().getZ());
+                BlockPos vec3 = new BlockPos(minecraft.objectMouseOver.getBlockPos().getX(), minecraft.objectMouseOver.getBlockPos().getY(), minecraft.objectMouseOver.getBlockPos().getZ());
                 double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
                 double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
                 double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
 
                 for (RitualComponent ritualComponent : ritual.getComponents())
                 {
-                    Vec3 vX = vec3.add(new Vec3(ritualComponent.getX(direction), ritualComponent.getY(), ritualComponent.getZ(direction)));
-                    double minX = vX.xCoord - posX;
-                    double minY = vX.yCoord - posY;
-                    double minZ = vX.zCoord - posZ;
+                    BlockPos vX = vec3.add(new BlockPos(ritualComponent.getX(direction), ritualComponent.getY(), ritualComponent.getZ(direction)));
+                    double minX = vX.getX() - posX;
+                    double minY = vX.getY() - posY;
+                    double minZ = vX.getZ() - posZ;
 
-                    if (!world.getBlockState(new BlockPos(vX.xCoord, vX.yCoord, vX.zCoord)).getBlock().isOpaqueCube())
+                    if (!world.getBlockState(vX).isOpaqueCube())
                     {
                         TextureAtlasSprite texture = null;
 

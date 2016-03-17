@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.api.altar;
 
 import lombok.Getter;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * Used for building the altar structure.

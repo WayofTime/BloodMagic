@@ -6,8 +6,8 @@ import WayofTime.bloodmagic.command.SubCommandBase;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 
 public class SubCommandHelp extends SubCommandBase
 {
@@ -20,24 +20,24 @@ public class SubCommandHelp extends SubCommandBase
     @Override
     public String getArgUsage(ICommandSender commandSender)
     {
-        return StatCollector.translateToLocal("commands.help.usage");
+        return TextHelper.localize("commands.help.usage");
     }
 
     @Override
     public String getHelpText()
     {
-        return StatCollector.translateToLocal("commands.help.help");
+        return TextHelper.localizeEffect("commands.help.help");
     }
 
     @Override
-    public void processSubCommand(ICommandSender commandSender, String[] args)
+    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
     {
-        super.processSubCommand(commandSender, args);
+        super.processSubCommand(server, commandSender, args);
 
         if (args.length > 0)
             return;
 
         for (ISubCommand subCommand : ((CommandBloodMagic) getParentCommand()).getSubCommands().values())
-            commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("commands.format.help", capitalizeFirstLetter(subCommand.getSubCommandName()), subCommand.getArgUsage(commandSender))));
+            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("commands.format.help", capitalizeFirstLetter(subCommand.getSubCommandName()), subCommand.getArgUsage(commandSender))));
     }
 }

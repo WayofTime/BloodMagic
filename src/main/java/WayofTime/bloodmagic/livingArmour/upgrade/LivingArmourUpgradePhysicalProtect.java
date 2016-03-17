@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
 public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
 {

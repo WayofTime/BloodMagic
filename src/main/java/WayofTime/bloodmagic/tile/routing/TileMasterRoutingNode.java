@@ -1,26 +1,21 @@
 package WayofTime.bloodmagic.tile.routing;
 
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.routing.*;
+import WayofTime.bloodmagic.tile.TileInventory;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.routing.IInputItemRoutingNode;
-import WayofTime.bloodmagic.routing.IItemFilter;
-import WayofTime.bloodmagic.routing.IMasterRoutingNode;
-import WayofTime.bloodmagic.routing.IOutputItemRoutingNode;
-import WayofTime.bloodmagic.routing.IRoutingNode;
-import WayofTime.bloodmagic.routing.NodeHelper;
-import WayofTime.bloodmagic.tile.TileInventory;
 
 public class TileMasterRoutingNode extends TileInventory implements IMasterRoutingNode, ITickable
 {

@@ -1,7 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import java.awt.Color;
-
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import lombok.Getter;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
@@ -11,9 +12,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+
+import java.awt.*;
 
 public class BlockLifeEssence extends BlockFluidClassic
 {

@@ -1,7 +1,10 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import java.util.UUID;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,12 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.util.UUID;
 
 public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
 {
@@ -42,12 +41,12 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
         {
             if (sprintSpeedTime[this.level] > 0)
             {
-                player.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("moveSpeed"), sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
             }
 
-            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(Potion.regeneration))
+            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(Potion.getPotionFromResourceLocation("regeneration")))
             {
-                player.addPotionEffect(new PotionEffect(Potion.regeneration.id, sprintRegenTime[this.level], 0, false, false));
+                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("regeneration"), sprintRegenTime[this.level], 0, false, false));
             }
         }
     }
@@ -61,7 +60,7 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
 
         if (healthModifier[this.level] > 0)
         {
-            modifierMap.put(SharedMonsterAttributes.maxHealth.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(952142, 1), "Health modifier" + 1, healthModifier[this.level], 0));
+            modifierMap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(952142, 1), "Health modifier" + 1, healthModifier[this.level], 0));
         }
 
         return modifierMap;

@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.api.util.helper;
 
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import WayofTime.bloodmagic.api.Constants;
 
 public class IncenseHelper
 {

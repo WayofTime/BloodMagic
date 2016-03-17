@@ -1,20 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import java.util.List;
-
-import net.minecraft.block.BlockMobSpawner;
-import net.minecraft.block.BlockPortal;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
@@ -25,8 +10,24 @@ import WayofTime.bloodmagic.block.BlockTeleposer;
 import WayofTime.bloodmagic.item.ItemBindable;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
-
 import com.google.common.base.Strings;
+import net.minecraft.block.BlockPortal;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+
+import java.util.List;
 
 public class TileTeleposer extends TileInventory implements ITickable
 {
@@ -108,9 +109,9 @@ public class TileTeleposer extends TileInventory implements ITickable
 
                     List<Entity> originalWorldEntities;
                     List<Entity> focusWorldEntities;
-                    AxisAlignedBB originalArea = AxisAlignedBB.fromBounds(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
+                    AxisAlignedBB originalArea = new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, Math.min(focusWorld.getHeight(), pos.getY() + 2 * focusLevel), pos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                     originalWorldEntities = worldObj.getEntitiesWithinAABB(Entity.class, originalArea);
-                    AxisAlignedBB focusArea = AxisAlignedBB.fromBounds(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
+                    AxisAlignedBB focusArea = new AxisAlignedBB(focusPos.getX(), focusPos.getY() + 1, focusPos.getZ(), focusPos.getX() + 1, Math.min(focusWorld.getHeight(), focusPos.getY() + 2 * focusLevel), focusPos.getZ() + 1).expand(focusLevel - 1, 0, focusLevel - 1);
                     focusWorldEntities = focusWorld.getEntitiesWithinAABB(Entity.class, focusArea);
 
                     if (focusWorld.equals(worldObj))
@@ -136,7 +137,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (Entity entity : originalWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimensionId()));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), worldObj, focusWorld.provider.getDimension()));
                             }
                         }
 
@@ -144,7 +145,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (Entity entity : focusWorldEntities)
                             {
-                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimensionId()));
+                                TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(new BlockPos(entity.posX - pos.getX() + focusPos.getX(), entity.posY - pos.getY() + focusPos.getY(), entity.posZ - pos.getZ() + focusPos.getZ()), entity, focusStack.getTagCompound().getString(Constants.NBT.OWNER_UUID), focusWorld, worldObj.provider.getDimension()));
                             }
                         }
                     }
@@ -181,8 +182,8 @@ public class TileTeleposer extends TileInventory implements ITickable
         if (MinecraftForge.EVENT_BUS.post(event))
             return false;
 
-        initialWorld.playSoundEffect(initialPos.getX(), initialPos.getY(), initialPos.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
-        finalWorld.playSoundEffect(finalPos.getX(), finalPos.getY(), finalPos.getZ(), "mob.endermen.portal", 1.0F, 1.0F);
+        initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
 
         //Finally, we get to do something! (CLEARING TILES)
         if (finalStack.getBlock() != null)
@@ -197,7 +198,7 @@ public class TileTeleposer extends TileInventory implements ITickable
 
         if (initialTile != null)
         {
-            TileEntity newTileInitial = TileEntity.createAndLoadEntity(initialTag);
+            TileEntity newTileInitial = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), initialTag);
 
             //TODO FUTURE FMP STUFF HERE
 
@@ -209,7 +210,7 @@ public class TileTeleposer extends TileInventory implements ITickable
 
         if (finalTile != null)
         {
-            TileEntity newTileFinal = TileEntity.createAndLoadEntity(finalTag);
+            TileEntity newTileFinal = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), finalTag);
 
             //TODO FUTURE FMP STUFF HERE
 

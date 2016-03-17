@@ -1,21 +1,19 @@
 package WayofTime.bloodmagic.api.registry;
 
-import java.util.Map.Entry;
-
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffectCrafting;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyCircleRenderer;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import javax.annotation.Nullable;
+import java.util.Map.Entry;
 
 public class AlchemyArrayRecipeRegistry
 {

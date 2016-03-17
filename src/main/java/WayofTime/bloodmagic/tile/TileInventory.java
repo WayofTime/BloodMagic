@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -9,13 +10,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class TileInventory extends TileEntity implements IInventory
 {
@@ -90,11 +90,11 @@ public class TileInventory extends TileEntity implements IInventory
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(getPos(), -999, nbt);
+        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         super.onDataPacket(net, pkt);
         readFromNBT(pkt.getNbtCompound());
@@ -130,9 +130,6 @@ public class TileInventory extends TileEntity implements IInventory
     {
         if (inventory[index] != null)
         {
-            if (!worldObj.isRemote)
-                worldObj.markBlockForUpdate(this.pos);
-
             if (inventory[index].stackSize <= count)
             {
                 ItemStack itemStack = inventory[index];
@@ -171,8 +168,6 @@ public class TileInventory extends TileEntity implements IInventory
         if (stack != null && stack.stackSize > getInventoryStackLimit())
             stack.stackSize = getInventoryStackLimit();
         markDirty();
-        if (!worldObj.isRemote)
-            worldObj.markBlockForUpdate(this.pos);
     }
 
     @Override
@@ -244,8 +239,8 @@ public class TileInventory extends TileEntity implements IInventory
     }
 
     @Override
-    public IChatComponent getDisplayName()
+    public ITextComponent getDisplayName()
     {
-        return new ChatComponentText(getName());
+        return new TextComponentString(getName());
     }
 }

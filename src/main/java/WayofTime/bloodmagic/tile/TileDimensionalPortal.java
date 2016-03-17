@@ -1,11 +1,10 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.ritual.RitualPortal;
+import com.google.common.base.Strings;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import WayofTime.bloodmagic.ritual.RitualPortal;
-
-import com.google.common.base.Strings;
+import net.minecraft.util.math.BlockPos;
 
 public class TileDimensionalPortal extends TileEntity
 {

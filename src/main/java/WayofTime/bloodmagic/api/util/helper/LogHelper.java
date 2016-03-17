@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.api.util.helper;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import WayofTime.bloodmagic.api.BloodMagicAPI;
 
 public class LogHelper
 {

@@ -1,5 +1,8 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.altar.BloodAltar;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -8,9 +11,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.altar.BloodAltar;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
 
 public class TileAltar extends TileInventory implements IBloodAltar, ITickable, IFluidHandler
 {

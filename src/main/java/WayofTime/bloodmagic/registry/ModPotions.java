@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.registry;
 
-import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 
 public class ModPotions
 {

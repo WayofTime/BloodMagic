@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModPotions;
+
+import java.util.List;
 
 public class ItemSigilEnderSeverance extends ItemSigilToggleable
 {

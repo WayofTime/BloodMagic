@@ -1,13 +1,12 @@
 package WayofTime.bloodmagic.block.property;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import net.minecraft.block.properties.PropertyHelper;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-
-import net.minecraft.block.properties.PropertyHelper;
-
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 
 public class PropertyString extends PropertyHelper<String>
 {

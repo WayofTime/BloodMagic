@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.routing;
 
-import java.util.List;
+import net.minecraft.util.math.BlockPos;
 
-import net.minecraft.util.BlockPos;
+import java.util.List;
 
 public interface IMasterRoutingNode extends IRoutingNode
 {

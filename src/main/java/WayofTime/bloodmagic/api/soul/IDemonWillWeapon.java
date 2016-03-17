@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.api.soul;
 
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public interface IDemonWillWeapon
 {

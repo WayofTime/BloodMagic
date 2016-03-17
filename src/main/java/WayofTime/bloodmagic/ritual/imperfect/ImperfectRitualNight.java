@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.ritual.imperfect;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.imperfect.IImperfectRitualStone;
 import WayofTime.bloodmagic.api.ritual.imperfect.ImperfectRitual;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 
 public class ImperfectRitualNight extends ImperfectRitual
 {

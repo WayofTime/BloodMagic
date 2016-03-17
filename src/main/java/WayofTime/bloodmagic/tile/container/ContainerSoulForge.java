@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.tile.container;
 
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.tile.TileSoulForge;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.api.soul.IDemonWillGem;
-import WayofTime.bloodmagic.tile.TileSoulForge;
 
 public class ContainerSoulForge extends Container
 {

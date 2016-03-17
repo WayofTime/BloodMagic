@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.tile.container;
 
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 
 public class ContainerTeleposer extends Container
 {

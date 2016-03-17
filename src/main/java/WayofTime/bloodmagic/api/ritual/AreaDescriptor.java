@@ -1,13 +1,14 @@
 package WayofTime.bloodmagic.api.ritual;
 
+
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos>
 {

@@ -1,25 +1,22 @@
 package WayofTime.bloodmagic.client.render;
 
-import java.util.List;
-
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.INodeRenderer;
-import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.client.helper.ShaderHelper;
+import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
-import WayofTime.bloodmagic.client.helper.ShaderHelper;
-import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
+import java.util.List;
 
 public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRoutingNode>
 {
@@ -31,7 +28,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
     @Override
     public void renderTileEntityAt(TileRoutingNode tileNode, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        if ((mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() instanceof INodeRenderer) || ConfigHandler.alwaysRenderRoutingLines)
+        if ((mc.thePlayer.getHeldItemMainhand() != null && mc.thePlayer.getHeldItemMainhand().getItem() instanceof INodeRenderer) || ConfigHandler.alwaysRenderRoutingLines)
         {
             List<BlockPos> connectionList = tileNode.getConnected();
             for (BlockPos wantedPos : connectionList)
@@ -51,7 +48,7 @@ public class RenderItemRoutingNode extends TileEntitySpecialRenderer<TileRouting
                 GlStateManager.pushMatrix();
                 float f1 = 1.0f;
                 Tessellator tessellator = Tessellator.getInstance();
-                WorldRenderer wr = tessellator.getWorldRenderer();
+                VertexBuffer wr = tessellator.getBuffer();
                 this.bindTexture(beamTexture);
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
                 GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);

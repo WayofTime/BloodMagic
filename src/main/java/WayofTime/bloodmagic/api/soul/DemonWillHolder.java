@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.api.soul;
 
+import net.minecraft.nbt.NBTTagCompound;
+
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import net.minecraft.nbt.NBTTagCompound;
 
 public class DemonWillHolder
 {

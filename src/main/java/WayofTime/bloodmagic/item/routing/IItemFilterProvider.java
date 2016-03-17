@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.item.routing;
 
+import WayofTime.bloodmagic.routing.IItemFilter;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import WayofTime.bloodmagic.routing.IItemFilter;
 
 public interface IItemFilterProvider
 {

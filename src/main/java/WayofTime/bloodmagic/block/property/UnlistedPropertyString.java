@@ -1,9 +1,9 @@
 package WayofTime.bloodmagic.block.property;
 
+import net.minecraftforge.common.property.IUnlistedProperty;
+
 import java.util.Arrays;
 import java.util.List;
-
-import net.minecraftforge.common.property.IUnlistedProperty;
 
 public class UnlistedPropertyString implements IUnlistedProperty<String>
 {

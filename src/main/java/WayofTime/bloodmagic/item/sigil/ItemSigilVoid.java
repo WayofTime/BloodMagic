@@ -1,16 +1,17 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilVoid extends ItemSigilBase
 {
@@ -25,15 +26,15 @@ public class ItemSigilVoid extends ItemSigilBase
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
             if (movingobjectposition != null)
             {
-                ItemStack ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+                ItemStack ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
                 if (ret != null)
                     return ret;
 
-                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
                     BlockPos blockpos = movingobjectposition.getBlockPos();
 

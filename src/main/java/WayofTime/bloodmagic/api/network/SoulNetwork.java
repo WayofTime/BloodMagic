@@ -1,7 +1,11 @@
 package WayofTime.bloodmagic.api.network;
 
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
+import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import com.google.common.base.Strings;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,14 +15,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
-import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 
-import com.google.common.base.Strings;
+import javax.annotation.Nullable;
 
 @Getter
 public class SoulNetwork extends WorldSavedData
@@ -58,10 +58,10 @@ public class SoulNetwork extends WorldSavedData
         if (MinecraftForge.EVENT_BUS.post(event))
             return 0;
 
-        if (MinecraftServer.getServer() == null)
+        if (FMLCommonHandler.instance().getMinecraftServerInstance() == null)
             return 0;
 
-        World world = MinecraftServer.getServer().worldServers[0];
+        World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0];
         SoulNetwork data = (SoulNetwork) world.loadItemData(SoulNetwork.class, event.ownerNetwork);
 
         if (data == null)
@@ -177,7 +177,7 @@ public class SoulNetwork extends WorldSavedData
     {
         if (getPlayer() != null)
         {
-            getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
+            getPlayer().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("confusion"), 99));
         }
     }
 

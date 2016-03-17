@@ -1,23 +1,23 @@
 package WayofTime.bloodmagic.api.util.helper;
 
-import java.util.UUID;
-
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
+import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.registry.OrbRegistry;
+import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
-import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
 
-import com.google.common.base.Strings;
+import java.util.UUID;
 
 public class NetworkHelper
 {
@@ -271,10 +271,10 @@ public class NetworkHelper
     @Deprecated
     public static int syphonFromNetwork(String ownerName, int syphon)
     {
-        if (MinecraftServer.getServer() == null)
+        if (FMLCommonHandler.instance().getMinecraftServerInstance() == null)
             return 0;
 
-        World world = MinecraftServer.getServer().worldServers[0];
+        World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0];
         SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
 
         if (network == null)
@@ -308,10 +308,10 @@ public class NetworkHelper
         if (MinecraftForge.EVENT_BUS.post(event))
             return 0;
 
-        if (MinecraftServer.getServer() == null)
+        if (FMLCommonHandler.instance().getMinecraftServerInstance() == null)
             return 0;
 
-        World world = MinecraftServer.getServer().worldServers[0];
+        World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0];
         SoulNetwork data = (SoulNetwork) world.loadItemData(SoulNetwork.class, event.ownerNetwork);
 
         if (data == null)
@@ -337,10 +337,10 @@ public class NetworkHelper
     @Deprecated
     public static int getCurrentEssence(String ownerName)
     {
-        if (MinecraftServer.getServer() == null)
+        if (FMLCommonHandler.instance().getMinecraftServerInstance() == null)
             return 0;
 
-        World world = MinecraftServer.getServer().worldServers[0];
+        World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers[0];
         SoulNetwork network = (SoulNetwork) world.loadItemData(SoulNetwork.class, ownerName);
 
         if (network == null)

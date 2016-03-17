@@ -1,11 +1,14 @@
 package WayofTime.bloodmagic.item.routing;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.INodeRenderer;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.routing.IMasterRoutingNode;
+import WayofTime.bloodmagic.routing.IRoutingNode;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,15 +19,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.routing.IMasterRoutingNode;
-import WayofTime.bloodmagic.routing.IRoutingNode;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvider
 {

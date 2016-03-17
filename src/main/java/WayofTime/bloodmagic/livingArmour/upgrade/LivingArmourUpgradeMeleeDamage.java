@@ -1,18 +1,17 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
-import java.util.UUID;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.util.UUID;
 
 public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade
 {
@@ -35,7 +34,7 @@ public class LivingArmourUpgradeMeleeDamage extends LivingArmourUpgrade
     {
         Multimap<String, AttributeModifier> modifierMap = HashMultimap.<String, AttributeModifier>create();
 
-        modifierMap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(9423688, 1), "damage modifier" + 1, meleeDamage[this.level], 0));
+        modifierMap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(9423688, 1), "damage modifier" + 1, meleeDamage[this.level], 0));
 
         return modifierMap;
     }

@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.registry;
 
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.entity.projectile.EntitySoulSnare;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ModEntities
 {

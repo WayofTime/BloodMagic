@@ -1,8 +1,11 @@
 package WayofTime.bloodmagic.util;
 
-import java.util.ArrayList;
-
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileInventory;
+import com.google.common.collect.Iterables;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -17,6 +20,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
@@ -24,9 +28,8 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.TileInventory;
+
+import java.util.ArrayList;
 
 public class Utils
 {
@@ -91,14 +94,14 @@ public class Utils
      */
     public static boolean insertItemToTile(TileInventory tile, EntityPlayer player, int slot)
     {
-        if (tile.getStackInSlot(slot) == null && player.getHeldItem() != null)
+        if (tile.getStackInSlot(slot) == null && player.getHeldItemMainhand() != null)
         {
-            ItemStack input = player.getHeldItem().copy();
+            ItemStack input = player.getHeldItemMainhand().copy();
             input.stackSize = 1;
-            player.getHeldItem().stackSize--;
+            player.getHeldItemMainhand().stackSize--;
             tile.setInventorySlotContents(slot, input);
             return true;
-        } else if (tile.getStackInSlot(slot) != null && player.getHeldItem() == null)
+        } else if (tile.getStackInSlot(slot) != null && player.getHeldItemMainhand() == null)
         {
             if (!tile.getWorld().isRemote)
             {
@@ -147,7 +150,7 @@ public class Utils
             if (amount <= 0)
                 return 0;
 
-            amount = applyArmor(attackedEntity, attackedEntity.getInventory(), source, amount);
+            amount = applyArmor(attackedEntity, Iterables.toArray(attackedEntity.getEquipmentAndArmor(), ItemStack.class), source, amount);
             if (amount <= 0)
                 return 0;
             amount = applyPotionDamageCalculations(attackedEntity, source, amount);
@@ -209,14 +212,16 @@ public class Utils
 
     public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage)
     {
+        Potion resistance = Potion.getPotionFromResourceLocation("resistance");
+
         if (source.isDamageAbsolute())
         {
             return damage;
         } else
         {
-            if (attackedEntity.isPotionActive(Potion.resistance) && source != DamageSource.outOfWorld)
+            if (attackedEntity.isPotionActive(resistance) && source != DamageSource.outOfWorld)
             {
-                int i = (attackedEntity.getActivePotionEffect(Potion.resistance).getAmplifier() + 1) * 5;
+                int i = (attackedEntity.getActivePotionEffect(resistance).getAmplifier() + 1) * 5;
                 int j = 25 - i;
                 float f = damage * (float) j;
                 damage = f / 25.0F;
@@ -227,7 +232,7 @@ public class Utils
                 return 0.0F;
             } else
             {
-                int k = EnchantmentHelper.getEnchantmentModifierDamage(attackedEntity.getInventory(), source);
+                int k = EnchantmentHelper.getEnchantmentModifierDamage(attackedEntity.getArmorInventoryList(), source);
 
                 if (k > 20)
                 {
@@ -543,15 +548,15 @@ public class Utils
         return stack;
     }
 
-    public static boolean isBlockLiquid(Block block)
+    public static boolean isBlockLiquid(IBlockState state)
     {
-        return (block instanceof IFluidBlock || block.getMaterial().isLiquid());
+        return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
     }
 
     //Shamelessly ripped off of CoFH Lib
     public static boolean fillContainerFromHandler(World world, IFluidHandler handler, EntityPlayer player, FluidStack tankFluid)
     {
-        ItemStack container = player.getCurrentEquippedItem();
+        ItemStack container = player.getHeldItemMainhand();
         if (FluidContainerRegistry.isEmptyContainer(container))
         {
             ItemStack returnStack = FluidContainerRegistry.fillFluidContainer(tankFluid, container);
@@ -588,7 +593,7 @@ public class Utils
     //Shamelessly ripped off of CoFH Lib
     public static boolean fillHandlerWithContainer(World world, IFluidHandler handler, EntityPlayer player)
     {
-        ItemStack container = player.getCurrentEquippedItem();
+        ItemStack container = player.getHeldItemMainhand();
         FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(container);
         if (fluid != null)
         {

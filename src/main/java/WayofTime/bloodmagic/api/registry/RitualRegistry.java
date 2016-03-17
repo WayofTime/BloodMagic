@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.api.registry;
 
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 
 public class RitualRegistry
 {

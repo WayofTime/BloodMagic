@@ -1,14 +1,5 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRuneType;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
@@ -18,6 +9,15 @@ import WayofTime.bloodmagic.api.teleport.PortalLocation;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class RitualPortal extends Ritual
 {
@@ -111,7 +111,7 @@ public class RitualPortal extends Ritual
 
             if (LocationsHandler.getLocationsHandler() != null)
             {
-                if (LocationsHandler.getLocationsHandler().addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimensionId())))
+                if (LocationsHandler.getLocationsHandler().addLocation(name, new PortalLocation(x, y + 1, z, world.provider.getDimension())))
                 {
                     portalRitualTag.setString(PORTAL_ID_TAG, name);
                     return true;
@@ -193,7 +193,7 @@ public class RitualPortal extends Ritual
 
         if (LocationsHandler.getLocationsHandler() != null)
         {
-            LocationsHandler.getLocationsHandler().removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimensionId()));
+            LocationsHandler.getLocationsHandler().removeLocation(portalRitualTag.getString(PORTAL_ID_TAG), new PortalLocation(x, y + 1, z, world.provider.getDimension()));
         }
 
         if (direction == EnumFacing.NORTH || direction == EnumFacing.SOUTH)

@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.demonAura;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.soul.DemonWillHolder;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class WorldDemonWillHandler
 {
@@ -103,7 +103,7 @@ public class WorldDemonWillHandler
         }
 
         drain = currentWill.drainWill(type, drain);
-        markChunkAsDirty(willChunk, world.provider.getDimensionId());
+        markChunkAsDirty(willChunk, world.provider.getDimension());
 
         return drain;
     }
@@ -120,7 +120,7 @@ public class WorldDemonWillHandler
         }
 
         fill = currentWill.addWill(type, amount, max);
-        markChunkAsDirty(willChunk, world.provider.getDimensionId());
+        markChunkAsDirty(willChunk, world.provider.getDimension());
 
         return fill;
     }
@@ -136,20 +136,20 @@ public class WorldDemonWillHandler
         }
 
         currentWill.addWill(type, amount);
-        markChunkAsDirty(willChunk, world.provider.getDimensionId());
+        markChunkAsDirty(willChunk, world.provider.getDimension());
 
         return amount;
     }
 
     public static WillChunk getWillChunk(World world, BlockPos pos)
     {
-        WillChunk willChunk = getWillChunk(world.provider.getDimensionId(), pos.getX() >> 4, pos.getZ() >> 4);
+        WillChunk willChunk = getWillChunk(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
         if (willChunk == null)
         {
             Chunk chunk = world.getChunkFromBlockCoords(pos);
             generateWill(chunk);
 
-            willChunk = getWillChunk(world.provider.getDimensionId(), pos.getX() >> 4, pos.getZ() >> 4);
+            willChunk = getWillChunk(world.provider.getDimension(), pos.getX() >> 4, pos.getZ() >> 4);
         }
 
         return willChunk;
@@ -183,6 +183,6 @@ public class WorldDemonWillHandler
 
     public static void generateWill(Chunk chunk)
     {
-        addWillChunk(chunk.getWorld().provider.getDimensionId(), chunk, (short) 1, new DemonWillHolder());
+        addWillChunk(chunk.getWorld().provider.getDimension(), chunk, (short) 1, new DemonWillHolder());
     }
 }

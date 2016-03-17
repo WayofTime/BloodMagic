@@ -1,14 +1,14 @@
 package WayofTime.bloodmagic.alchemyArray;
 
+import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
+import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 import lombok.Getter;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.alchemyCrafting.AlchemyArrayEffect;
-import WayofTime.bloodmagic.client.render.alchemyArray.BindingAlchemyCircleRenderer;
 
 public class AlchemyArrayEffectBinding extends AlchemyArrayEffect
 {
@@ -61,7 +61,7 @@ public class AlchemyArrayEffectBinding extends AlchemyArrayEffect
             double dispX = distance * Math.sin(angle);
             double dispZ = -distance * Math.cos(angle);
 
-            EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ);
+            EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + dispX, pos.getY(), pos.getZ() + dispZ, true);
             world.spawnEntityInWorld(lightning);
         }
     }

@@ -1,7 +1,7 @@
 package WayofTime.bloodmagic.api.soul;
 
-import net.minecraft.util.IStringSerializable;
 import lombok.Getter;
+import net.minecraft.util.IStringSerializable;
 
 @Getter
 public enum EnumDemonWillType implements IStringSerializable

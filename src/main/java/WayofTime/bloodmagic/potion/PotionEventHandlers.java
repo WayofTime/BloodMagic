@@ -1,19 +1,19 @@
 package WayofTime.bloodmagic.potion;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import WayofTime.bloodmagic.registry.ModPotions;
+
+import java.util.List;
 
 public class PotionEventHandlers
 {
@@ -58,7 +58,7 @@ public class PotionEventHandlers
         if (event.entityLiving.isPotionActive(ModPotions.whirlwind))
         {
             int d0 = 3;
-            AxisAlignedBB axisAlignedBB = AxisAlignedBB.fromBounds(event.entityLiving.posX - 0.5, event.entityLiving.posY - 0.5, event.entityLiving.posZ - 0.5, event.entityLiving.posX + 0.5, event.entityLiving.posY + 0.5, event.entityLiving.posZ + 0.5).expand(d0, d0, d0);
+            AxisAlignedBB axisAlignedBB = new AxisAlignedBB(event.entityLiving.posX - 0.5, event.entityLiving.posY - 0.5, event.entityLiving.posZ - 0.5, event.entityLiving.posX + 0.5, event.entityLiving.posY + 0.5, event.entityLiving.posZ + 0.5).expand(d0, d0, d0);
             List entityList = event.entityLiving.worldObj.getEntitiesWithinAABB(Entity.class, axisAlignedBB);
 
             for (Object thing : entityList)

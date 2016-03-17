@@ -1,8 +1,7 @@
 package WayofTime.bloodmagic.compress;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.compress.CompressionRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -10,8 +9,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.compress.CompressionRegistry;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class StorageBlockCraftingManager
 {

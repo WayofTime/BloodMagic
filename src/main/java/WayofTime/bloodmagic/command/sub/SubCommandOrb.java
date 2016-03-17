@@ -6,12 +6,13 @@ import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.command.SubCommandBase;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.Locale;
 
@@ -26,19 +27,19 @@ public class SubCommandOrb extends SubCommandBase
     @Override
     public String getArgUsage(ICommandSender commandSender)
     {
-        return StatCollector.translateToLocal("commands.orb.usage");
+        return TextHelper.localizeEffect("commands.orb.usage");
     }
 
     @Override
     public String getHelpText()
     {
-        return StatCollector.translateToLocal("commands.orb.help");
+        return TextHelper.localizeEffect("commands.orb.help");
     }
 
     @Override
-    public void processSubCommand(ICommandSender commandSender, String[] args)
+    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
     {
-        super.processSubCommand(commandSender, args);
+        super.processSubCommand(server, commandSender, args);
 
         if (args.length > 0)
         {
@@ -53,7 +54,7 @@ public class SubCommandOrb extends SubCommandBase
                 if (args.length > 1)
                     givenName = args[1];
 
-                EntityPlayer player = getPlayer(commandSender, givenName);
+                EntityPlayer player = CommandBase.getPlayer(server, commandSender, givenName);
                 String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
                 SoulNetwork network = NetworkHelper.getSoulNetwork(uuid);
 
@@ -98,7 +99,7 @@ public class SubCommandOrb extends SubCommandBase
                         }
 
                         if (args.length > 1)
-                            commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
+                            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("message.orb.currenttier", network.getOrbTier())));
 
                         break;
                     }

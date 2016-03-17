@@ -2,16 +2,16 @@ package WayofTime.bloodmagic.command.sub;
 
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.command.SubCommandBase;
 import WayofTime.bloodmagic.util.Utils;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.Locale;
 
@@ -26,19 +26,19 @@ public class SubCommandNetwork extends SubCommandBase
     @Override
     public String getArgUsage(ICommandSender commandSender)
     {
-        return StatCollector.translateToLocal("commands.network.usage");
+        return TextHelper.localizeEffect("commands.network.usage");
     }
 
     @Override
     public String getHelpText()
     {
-        return StatCollector.translateToLocal("commands.network.help");
+        return TextHelper.localizeEffect("commands.network.help");
     }
 
     @Override
-    public void processSubCommand(ICommandSender commandSender, String[] args)
+    public void processSubCommand(MinecraftServer server, ICommandSender commandSender, String[] args)
     {
-        super.processSubCommand(commandSender, args);
+        super.processSubCommand(server, commandSender, args);
 
         if (args.length > 0)
         {
@@ -49,12 +49,12 @@ public class SubCommandNetwork extends SubCommandBase
             try
             {
                 String givenName = commandSender.getName();
-                EntityPlayer player = getPlayer(commandSender, givenName);
+                EntityPlayer player = CommandBase.getCommandSenderAsPlayer(commandSender);
 
                 if (args.length > 1)
                 {
                     givenName = args[1];
-                    player = getPlayer(commandSender, givenName);
+                    player = CommandBase.getPlayer(server, commandSender, givenName);
                 }
 
                 SoulNetwork network = NetworkHelper.getSoulNetwork(player);
@@ -151,7 +151,7 @@ public class SubCommandNetwork extends SubCommandBase
                         }
 
                         if (args.length > 1)
-                            commandSender.addChatMessage(new ChatComponentText(TextHelper.localizeEffect("message.divinationsigil.currentessence", network.getCurrentEssence())));
+                            commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("message.divinationsigil.currentessence", network.getCurrentEssence())));
 
                         break;
                     }

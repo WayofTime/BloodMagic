@@ -1,8 +1,8 @@
 package WayofTime.bloodmagic.api.iface;
 
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.BlockStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 /**
  * Used to define a HarvestHandler for the Harvest Ritual.

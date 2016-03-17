@@ -1,8 +1,11 @@
 package WayofTime.bloodmagic.block;
 
-import java.util.List;
-import java.util.Random;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -22,17 +25,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.IAltarManipulator;
-import WayofTime.bloodmagic.api.iface.IAltarReader;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.item.ItemComponent;
-import WayofTime.bloodmagic.item.ItemDemonCrystal;
-import WayofTime.bloodmagic.tile.TileAltar;
-import WayofTime.bloodmagic.tile.TileDemonCrystal;
-import WayofTime.bloodmagic.util.Utils;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockDemonCrystal extends BlockContainer
 {

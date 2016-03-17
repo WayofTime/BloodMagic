@@ -1,5 +1,10 @@
 package WayofTime.bloodmagic.tile;
 
+import WayofTime.bloodmagic.api.soul.DemonWillHolder;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
+import WayofTime.bloodmagic.block.BlockDemonCrystal;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
@@ -8,18 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.soul.DemonWillHolder;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
-import WayofTime.bloodmagic.block.BlockDemonCrystal;
-import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 
 public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWillConduit
 {
@@ -88,7 +88,7 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
             {
                 progressToNextCrystal--;
                 crystalCount++;
-                worldObj.markBlockForUpdate(pos);
+                markDirty();
             }
         }
 
@@ -225,11 +225,11 @@ public class TileDemonCrystal extends TileEntity implements ITickable, IDemonWil
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(getPos(), -999, nbt);
+        return new SPacketUpdateTileEntity(getPos(), -999, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         super.onDataPacket(net, pkt);
         readFromNBT(pkt.getNbtCompound());

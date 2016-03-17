@@ -1,10 +1,6 @@
 package WayofTime.bloodmagic.demonAura;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @EqualsAndHashCode
 @ToString

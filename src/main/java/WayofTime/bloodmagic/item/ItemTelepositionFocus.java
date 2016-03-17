@@ -1,27 +1,30 @@
 package WayofTime.bloodmagic.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ItemTelepositionFocus extends ItemBindable implements IVariantProvider
 {
@@ -53,19 +56,19 @@ public class ItemTelepositionFocus extends ItemBindable implements IVariantProvi
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (player.isSneaking())
         {
-            MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
 
-            if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
             {
                 setBlockPos(stack, world, mop.getBlockPos());
             }
         }
 
-        return stack;
+        return ActionResult.newResult(EnumActionResult.FAIL, stack);
     }
 
     @Override
@@ -117,7 +120,7 @@ public class ItemTelepositionFocus extends ItemBindable implements IVariantProvi
         itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
         itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
         itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
-        itemTag.setInteger(Constants.NBT.DIMENSION_ID, world.provider.getDimensionId());
+        itemTag.setInteger(Constants.NBT.DIMENSION_ID, world.provider.getDimension());
         return stack;
     }
 }

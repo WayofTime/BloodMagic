@@ -1,25 +1,21 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.util.Utils;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RitualFelling extends Ritual
 {
@@ -58,7 +54,7 @@ public class RitualFelling extends Ritual
             for (BlockPos blockPos : getBlockRange(FELLING_RANGE).getContainedPositions(masterRitualStone.getBlockPos()))
             {
                 if (!treePartsCache.contains(blockPos))
-                    if (!world.isAirBlock(blockPos) && (world.getBlockState(blockPos).getBlock().isWood(world, blockPos) || world.getBlockState(blockPos).getBlock().isLeaves(world, blockPos)))
+                    if (!world.isAirBlock(blockPos) && (world.getBlockState(blockPos).getBlock().isWood(world, blockPos) || world.getBlockState(blockPos).getBlock().isLeaves(world.getBlockState(blockPos), world, blockPos)))
                     {
                         treePartsCache.add(blockPos);
                     }

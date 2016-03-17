@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.block.base;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.block.property.UnlistedPropertyInteger;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,7 +21,8 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.block.property.UnlistedPropertyInteger;
+
+import java.util.List;
 
 /**
  * Creates a block that has multiple meta-based states.

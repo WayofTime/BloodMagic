@@ -3,6 +3,7 @@ buildscript {
         mavenCentral()
         maven { url "http://files.minecraftforge.net/maven" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+		maven { url "http://maven.modmuss50.me" }
     }
     dependencies {
 		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
@@ -47,7 +48,8 @@ repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven {	url "http://mobiusstrip.eu/maven" }
     maven {	url "http://tehnut.info/maven" }
-
+	maven { url "http://maven.modmuss50.me" }
+	
     ivy {
         name "Thaumcraft"
         artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[revision]-deobf.[ext]"
@@ -59,12 +61,12 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
+//    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
+//    deobfCompile "info.amerifrance.guideapi:Guide-API:${mc_version}-${guideapi_version}"
 
-    compile "mcp.mobius.waila:Waila:${waila_version}_1.8.8:dev"
-    compile name: "Thaumcraft", version: "${mc_version}-${thaumcraft_version}", ext: "jar"
-    compile name: 'Baubles', version: "${baubles_version}", ext: 'jar'
+//    compile "mcp.mobius.waila:Waila:${waila_version}_1.8.8:dev"
+//    compile name: "Thaumcraft", version: "${mc_version}-${thaumcraft_version}", ext: "jar"
+//    compile name: 'Baubles', version: "${baubles_version}", ext: 'jar'
 }
 
 minecraft {

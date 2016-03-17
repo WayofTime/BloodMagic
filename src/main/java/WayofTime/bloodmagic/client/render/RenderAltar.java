@@ -1,12 +1,10 @@
 package WayofTime.bloodmagic.client.render;
 
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.tile.TileAltar;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -17,8 +15,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import WayofTime.bloodmagic.block.BlockLifeEssence;
-import WayofTime.bloodmagic.tile.TileAltar;
 
 public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 {
@@ -51,7 +47,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
         GlStateManager.translate(0.5, minHeight + (fluidLevel) * (maxHeight - minHeight), 0.5);
 
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer wr = tessellator.getWorldRenderer();
+        VertexBuffer wr = tessellator.getBuffer();
 
         float size = 0.8f;
 

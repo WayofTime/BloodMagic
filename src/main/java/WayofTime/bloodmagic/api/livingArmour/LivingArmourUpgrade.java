@@ -1,14 +1,13 @@
 package WayofTime.bloodmagic.api.livingArmour;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
 public abstract class LivingArmourUpgrade
 {

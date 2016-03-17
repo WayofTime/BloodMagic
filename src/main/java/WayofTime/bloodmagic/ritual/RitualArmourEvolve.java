@@ -1,21 +1,18 @@
 package WayofTime.bloodmagic.ritual;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ritual.*;
+import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import com.google.common.collect.Iterables;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
-import WayofTime.bloodmagic.api.ritual.EnumRuneType;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.ritual.RitualComponent;
-import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RitualArmourEvolve extends Ritual
 {
@@ -47,7 +44,7 @@ public class RitualArmourEvolve extends Ritual
         {
             if (LivingArmour.hasFullSet(player))
             {
-                ItemStack chestStack = player.getCurrentArmor(2);
+                ItemStack chestStack = Iterables.toArray(player.getArmorInventoryList(), ItemStack.class)[2];
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
                 {
@@ -58,7 +55,7 @@ public class RitualArmourEvolve extends Ritual
 
                         masterRitualStone.setActive(false);
 
-                        world.spawnEntityInWorld(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ()));
+                        world.spawnEntityInWorld(new EntityLightningBolt(world, pos.getX(), pos.getY() - 1, pos.getZ(), true));
                     }
                 }
             }

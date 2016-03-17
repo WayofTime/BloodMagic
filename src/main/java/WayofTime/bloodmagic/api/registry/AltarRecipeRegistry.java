@@ -1,16 +1,15 @@
 package WayofTime.bloodmagic.api.registry;
 
-import javax.annotation.Nullable;
-
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import net.minecraft.item.ItemStack;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import javax.annotation.Nullable;
 
 public class AltarRecipeRegistry
 {

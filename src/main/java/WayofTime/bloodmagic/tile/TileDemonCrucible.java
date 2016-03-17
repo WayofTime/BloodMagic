@@ -1,18 +1,18 @@
 package WayofTime.bloodmagic.tile;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWillConduit;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
 import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class TileDemonCrucible extends TileInventory implements ITickable, IDemonWillConduit, ISidedInventory
 {

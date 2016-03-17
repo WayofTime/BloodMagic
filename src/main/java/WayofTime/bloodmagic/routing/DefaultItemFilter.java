@@ -1,15 +1,15 @@
 package WayofTime.bloodmagic.routing;
 
-import java.util.List;
-
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import WayofTime.bloodmagic.util.Utils;
+
+import java.util.List;
 
 /**
  * This particular implementation of IItemFilter allows any item to be drained
@@ -79,7 +79,6 @@ public class DefaultItemFilter implements IItemFilter
         TileEntity tile = (TileEntity) accessedInventory;
         World world = tile.getWorld();
         BlockPos pos = tile.getPos();
-        world.markBlockForUpdate(pos);
 
         return testStack;
     }
@@ -136,7 +135,6 @@ public class DefaultItemFilter implements IItemFilter
             TileEntity tile = (TileEntity) accessedInventory;
             World world = tile.getWorld();
             BlockPos pos = tile.getPos();
-            world.markBlockForUpdate(pos);
 
             inputStack.stackSize -= changeAmount;
             maxTransfer -= changeAmount;

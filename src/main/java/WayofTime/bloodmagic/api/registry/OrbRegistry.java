@@ -1,24 +1,23 @@
 package WayofTime.bloodmagic.api.registry;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.EnumAltarTier;
+import WayofTime.bloodmagic.api.orb.BloodOrb;
+import WayofTime.bloodmagic.api.orb.IBloodOrb;
+import com.google.common.collect.ArrayListMultimap;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.EnumAltarTier;
-import WayofTime.bloodmagic.api.orb.BloodOrb;
-import WayofTime.bloodmagic.api.orb.IBloodOrb;
 
-import com.google.common.collect.ArrayListMultimap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This is only for those who wish to add a basic {@link BloodOrb}. If you need
