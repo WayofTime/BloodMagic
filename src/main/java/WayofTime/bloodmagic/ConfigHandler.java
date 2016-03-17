@@ -142,6 +142,9 @@ public class ConfigHandler
     public static int wailaAltarDisplayMode;
     public static boolean thaumcraftGogglesUpgrade;
 
+    // IDontLikeFun
+    public static boolean antiHitler;
+
     public static void init(File file)
     {
         config = new Configuration(file);
@@ -285,6 +288,10 @@ public class ConfigHandler
         config.addCustomCategoryComment(category, "Compatibility settings");
         wailaAltarDisplayMode = config.getInt("wailaAltarDisplayMode", category + ".waila", 1, 0, 2, "The mode for the Waila display on Blood Altars.\n0 - Always display information\n1 - Only display when Divination/Seer sigil is in hand.\n2 - Only display when Divination/Seer sigil is in inventory");
         thaumcraftGogglesUpgrade = config.getBoolean("thaumcraftGogglesUpgrade", category + ".thaumcraft", true, "Allows the Living Helmet to be upgraded with Goggles of Revealing in an Anvil.");
+
+        category = "IDontLikeFun";
+        config.addCustomCategoryComment(category, "My name is Scrooge.");
+        antiHitler = config.get(category, "replaceNauseaWithWeakness", false).getBoolean();
 
         config.save();
     }

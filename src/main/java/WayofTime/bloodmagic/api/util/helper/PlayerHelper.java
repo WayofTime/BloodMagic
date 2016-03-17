@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.api.util.helper;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -94,6 +95,7 @@ public class PlayerHelper
         if (player == null)
             return;
 
-        player.addPotionEffect(new PotionEffect(Potion.confusion.id, 80));
+        PotionEffect effect = ConfigHandler.antiHitler ? new PotionEffect(Potion.weakness.getId(), 99, 127) : new PotionEffect(Potion.confusion.getId(), 99);
+        player.addPotionEffect(effect);
     }
 }

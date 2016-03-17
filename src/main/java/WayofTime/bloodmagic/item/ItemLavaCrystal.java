@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -71,7 +72,8 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler, IVari
                     EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
                     if (player != null)
                     {
-                        player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
+                        PotionEffect effect = ConfigHandler.antiHitler ? new PotionEffect(Potion.weakness.getId(), 99, 127) : new PotionEffect(Potion.confusion.getId(), 99);
+                        player.addPotionEffect(effect);
                     }
                 }
 

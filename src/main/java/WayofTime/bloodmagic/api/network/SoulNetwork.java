@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.network;
 
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.ConfigHandler;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -177,7 +178,8 @@ public class SoulNetwork extends WorldSavedData
     {
         if (getPlayer() != null)
         {
-            getPlayer().addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
+            PotionEffect effect = ConfigHandler.antiHitler ? new PotionEffect(Potion.weakness.getId(), 99, 127) : new PotionEffect(Potion.confusion.getId(), 99);
+            getPlayer().addPotionEffect(effect);
         }
     }
 
