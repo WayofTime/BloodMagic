@@ -106,8 +106,11 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack)
     {
         Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
-        double damage = getActivated(stack) ? this.attackDamage : 1.0D;
-        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage, 0));
+        if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
+        {
+            double damage = getActivated(stack) ? this.attackDamage : 1.0D;
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage, 0));
+        }
         return multimap;
     }
 
