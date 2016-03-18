@@ -18,6 +18,6 @@ public class ItemSigilWhirlwind extends ItemSigilToggleable
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
-        player.addPotionEffect(new PotionEffect(ModPotions.whirlwind.id, 2, 0, true, false));
+        player.addPotionEffect(new PotionEffect(ModPotions.whirlwind, 2, 0, true, false));
     }
 }

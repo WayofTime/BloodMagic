@@ -1,9 +1,7 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.ConfigHandler;
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -11,13 +9,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
+import WayofTime.bloodmagic.ConfigHandler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 
 public class ItemSigilTransposition extends ItemSigilBase
 {
@@ -59,16 +61,17 @@ public class ItemSigilTransposition extends ItemSigilBase
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         stack = NBTHelper.checkNBT(stack);
 
+        IBlockState state = world.getBlockState(blockPos);
         if (!world.isRemote)
         {
             BlockStack rightClickedBlock = BlockStack.getStackFromPos(world, blockPos);
             if (!ConfigHandler.transpositionBlacklist.contains(rightClickedBlock) && player.isSneaking() && (!stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) || !stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META)))
             {
-                if (rightClickedBlock.getBlock().getPlayerRelativeBlockHardness(player, world, blockPos) >= 0 && rightClickedBlock.getBlock().getBlockHardness(world, blockPos) >= 0)
+                if (rightClickedBlock.getBlock().getPlayerRelativeBlockHardness(state, player, world, blockPos) >= 0 && rightClickedBlock.getBlock().getBlockHardness(state, world, blockPos) >= 0)
                 {
                     int cost = getLPUsed();
 
@@ -97,7 +100,7 @@ public class ItemSigilTransposition extends ItemSigilBase
                     world.removeTileEntity(blockPos);
                     world.setBlockToAir(blockPos);
 
-                    return true;
+                    return EnumActionResult.SUCCESS;
                 }
             } else if (stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_NAME) && stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_BLOCK_META))
             {
@@ -115,7 +118,7 @@ public class ItemSigilTransposition extends ItemSigilBase
                     if (world.setBlockState(blockPos, blockToPlace.getState(), 3))
                     {
                         blockToPlace.getBlock().onBlockPlacedBy(world, blockPos, blockToPlace.getState(), player, blockToPlace.getItemStack());
-                        world.playSoundEffect((double) ((float) blockPos.getX() + 0.5F), (double) ((float) blockPos.getY() + 0.5F), (double) ((float) blockPos.getZ() + 0.5F), blockToPlace.getBlock().stepSound.getPlaceSound(), (blockToPlace.getBlock().stepSound.getVolume() + 1.0F) / 2.0F, blockToPlace.getBlock().stepSound.getFrequency() * 0.8F);
+//                        world.playSound((double) ((float) blockPos.getX() + 0.5F), (double) ((float) blockPos.getY() + 0.5F), (double) ((float) blockPos.getZ() + 0.5F), blockToPlace.getBlock().getStepSound().getPlaceSound(), (blockToPlace.getBlock().getStepSound().getVolume() + 1.0F) / 2.0F, blockToPlace.getBlock().getStepSound().getPitch() * 0.8F);
 
                         if (stack.getTagCompound().hasKey(Constants.NBT.CONTAINED_TILE_ENTITY) && blockToPlace.getBlock().hasTileEntity(blockToPlace.getState()))
                         {
@@ -125,24 +128,24 @@ public class ItemSigilTransposition extends ItemSigilBase
                             tag.setInteger("z", blockPos.getZ());
                             world.getTileEntity(blockPos).readFromNBT(tag);
                         }
-                        world.markBlockForUpdate(blockPos);
+                        world.notifyBlockUpdate(blockPos, state, state, 3);
 
                         stack.getTagCompound().removeTag(Constants.NBT.CONTAINED_BLOCK_NAME);
                         stack.getTagCompound().removeTag(Constants.NBT.CONTAINED_BLOCK_META);
                         stack.getTagCompound().removeTag(Constants.NBT.CONTAINED_TILE_ENTITY);
 
                         lightning(world, blockPos);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
                 }
             }
         }
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     public void lightning(World world, BlockPos blockPos)
     {
-        world.addWeatherEffect(new EntityLightningBolt(world, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+        world.addWeatherEffect(new EntityLightningBolt(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), true));
     }
 
 }

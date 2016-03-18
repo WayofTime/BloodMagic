@@ -1,21 +1,24 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
 import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
 
 public class ItemSigilTeleposition extends ItemSigilBase
 {
@@ -43,12 +46,12 @@ public class ItemSigilTeleposition extends ItemSigilBase
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (!world.isRemote && NBTHelper.checkNBT(stack) != null && stack.getTagCompound().hasKey(Constants.NBT.DIMENSION_ID) && stack.getTagCompound().hasKey(Constants.NBT.X_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Y_COORD) && stack.getTagCompound().hasKey(Constants.NBT.Z_COORD))
         {
             BlockPos blockPos = new BlockPos(getValue(stack.getTagCompound(), Constants.NBT.X_COORD), getValue(stack.getTagCompound(), Constants.NBT.Y_COORD), getValue(stack.getTagCompound(), Constants.NBT.Z_COORD)).up();
-            if (world.provider.getDimensionId() == getValue(stack.getTagCompound(), Constants.NBT.DIMENSION_ID))
+            if (world.provider.getDimension() == getValue(stack.getTagCompound(), Constants.NBT.DIMENSION_ID))
             {
                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(blockPos, player, getOwnerUUID(stack)));
             } else
@@ -56,25 +59,25 @@ public class ItemSigilTeleposition extends ItemSigilBase
                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(blockPos, player, getOwnerUUID(stack), world, getValue(stack.getTagCompound(), Constants.NBT.DIMENSION_ID)));
             }
         }
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer entityPlayer, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (!world.isRemote && entityPlayer.isSneaking() && NBTHelper.checkNBT(stack) != null)
+        if (!world.isRemote && player.isSneaking() && NBTHelper.checkNBT(stack) != null)
         {
-            if (world.getTileEntity(blockPos) != null && world.getTileEntity(blockPos) instanceof TileTeleposer)
+            if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileTeleposer)
             {
-                stack.getTagCompound().setInteger(Constants.NBT.DIMENSION_ID, world.provider.getDimensionId());
-                stack.getTagCompound().setInteger(Constants.NBT.X_COORD, blockPos.getX());
-                stack.getTagCompound().setInteger(Constants.NBT.Y_COORD, blockPos.getY());
-                stack.getTagCompound().setInteger(Constants.NBT.Z_COORD, blockPos.getZ());
+                stack.getTagCompound().setInteger(Constants.NBT.DIMENSION_ID, world.provider.getDimension());
+                stack.getTagCompound().setInteger(Constants.NBT.X_COORD, pos.getX());
+                stack.getTagCompound().setInteger(Constants.NBT.Y_COORD, pos.getY());
+                stack.getTagCompound().setInteger(Constants.NBT.Z_COORD, pos.getZ());
 
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     public int getValue(NBTTagCompound tag, String key)

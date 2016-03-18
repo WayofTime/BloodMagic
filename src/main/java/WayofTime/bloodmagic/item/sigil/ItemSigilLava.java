@@ -1,19 +1,22 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilLava extends ItemSigilBase
 {
@@ -24,62 +27,60 @@ public class ItemSigilLava extends ItemSigilBase
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
 
             if (movingobjectposition != null)
             {
-                ItemStack ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+                ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
                 if (ret != null)
                     return ret;
 
-                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
                     BlockPos blockpos = movingobjectposition.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
                     {
-                        return stack;
+                        return super.onItemRightClick(stack, world, player, hand);
                     }
 
                     if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
                     {
-                        return stack;
+                        return super.onItemRightClick(stack, world, player, hand);
                     }
 
                     BlockPos blockpos1 = blockpos.offset(movingobjectposition.sideHit);
 
                     if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, stack))
                     {
-                        return stack;
+                        return super.onItemRightClick(stack, world, player, hand);
                     }
 
                     if (this.canPlaceLava(world, blockpos1) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceLava(world, blockpos1))
                     {
-                        return stack;
+                        return super.onItemRightClick(stack, world, player, hand);
                     }
                 }
             }
         }
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        super.onItemUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
-
         if (world.isRemote || player.isSneaking() || isUnusable(stack))
         {
-            return false;
+            return EnumActionResult.FAIL;
         }
         if (!world.canMineBlockBody(player, blockPos))
         {
-            return false;
+            return EnumActionResult.FAIL;
         }
 
         TileEntity tile = world.getTileEntity(blockPos);
@@ -93,7 +94,7 @@ public class ItemSigilLava extends ItemSigilBase
                 ((IFluidHandler) tile).fill(side, fluid, true);
             }
 
-            return false;
+            return EnumActionResult.FAIL;
         }
         // else if (tile instanceof TESocket) {
         // return false;
@@ -103,20 +104,20 @@ public class ItemSigilLava extends ItemSigilBase
 
         if (!player.canPlayerEdit(newPos, side, stack))
         {
-            return false;
+            return EnumActionResult.FAIL;
         }
 
         if (this.canPlaceLava(world, newPos) && syphonNetwork(stack, player, getLPUsed()))
         {
-            return this.tryPlaceLava(world, newPos);
+            return this.tryPlaceLava(world, newPos) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
         }
 
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     public boolean canPlaceLava(World world, BlockPos blockPos)
     {
-        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial().isSolid())
+        if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid())
         {
             return false;
         } else if ((world.getBlockState(blockPos).getBlock() == Blocks.lava || world.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
@@ -129,10 +130,10 @@ public class ItemSigilLava extends ItemSigilBase
         }
     }
 
-    public boolean tryPlaceLava(World worldIn, BlockPos pos)
+    public boolean tryPlaceLava(World world, BlockPos pos)
     {
-        Material material = worldIn.getBlockState(pos).getBlock().getMaterial();
+        Material material = world.getBlockState(pos).getBlock().getMaterial(world.getBlockState(pos));
 
-        return worldIn.isAirBlock(pos) && !material.isSolid();
+        return world.isAirBlock(pos) && !material.isSolid();
     }
 }

@@ -1,11 +1,11 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilElementalAffinity extends ItemSigilToggleable
 {
@@ -20,7 +20,7 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleable
     {
         player.fallDistance = 0;
         player.extinguish();
-        player.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 2, 1, true, false));
-        player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 2, 0, true, false));
+        player.addPotionEffect(new PotionEffect(MobEffects.fireResistance, 2, 1, true, false));
+        player.addPotionEffect(new PotionEffect(MobEffects.waterBreathing, 2, 0, true, false));
     }
 }
