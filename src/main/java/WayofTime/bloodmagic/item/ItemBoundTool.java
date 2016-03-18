@@ -1,16 +1,10 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.event.BoundToolEvent;
-import WayofTime.bloodmagic.api.iface.IActivatable;
-import WayofTime.bloodmagic.api.iface.IBindable;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -22,17 +16,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.event.BoundToolEvent;
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.iface.IBindable;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
 
 @Getter
 public class ItemBoundTool extends ItemTool implements IBindable, IActivatable

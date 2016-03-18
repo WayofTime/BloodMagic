@@ -16,6 +16,7 @@ import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
@@ -170,15 +171,15 @@ public class ModItems
 
         bloodShard = registerItem(new ItemBloodShard());
 
-        livingArmourHelmet = registerItem(new ItemLivingArmour(0), "ItemLivingArmourHelmet");
-        livingArmourChest = registerItem(new ItemLivingArmour(1), "ItemLivingArmourChest");
-        livingArmourLegs = registerItem(new ItemLivingArmour(2), "ItemLivingArmourLegs");
-        livingArmourBoots = registerItem(new ItemLivingArmour(3), "ItemLivingArmourBoots");
+        livingArmourHelmet = registerItem(new ItemLivingArmour(EntityEquipmentSlot.HEAD), "ItemLivingArmourHelmet");
+        livingArmourChest = registerItem(new ItemLivingArmour(EntityEquipmentSlot.CHEST), "ItemLivingArmourChest");
+        livingArmourLegs = registerItem(new ItemLivingArmour(EntityEquipmentSlot.LEGS), "ItemLivingArmourLegs");
+        livingArmourBoots = registerItem(new ItemLivingArmour(EntityEquipmentSlot.FEET), "ItemLivingArmourBoots");
 
-        sentientArmourHelmet = registerItem(new ItemSentientArmour(0), "ItemSentientArmourHelmet");
-        sentientArmourChest = registerItem(new ItemSentientArmour(1), "ItemSentientArmourChest");
-        sentientArmourLegs = registerItem(new ItemSentientArmour(2), "ItemSentientArmourLegs");
-        sentientArmourBoots = registerItem(new ItemSentientArmour(3), "ItemSentientArmourBoots");
+        sentientArmourHelmet = registerItem(new ItemSentientArmour(EntityEquipmentSlot.HEAD), "ItemSentientArmourHelmet");
+        sentientArmourChest = registerItem(new ItemSentientArmour(EntityEquipmentSlot.CHEST), "ItemSentientArmourChest");
+        sentientArmourLegs = registerItem(new ItemSentientArmour(EntityEquipmentSlot.LEGS), "ItemSentientArmourLegs");
+        sentientArmourBoots = registerItem(new ItemSentientArmour(EntityEquipmentSlot.FEET), "ItemSentientArmourBoots");
 
         altarMaker = registerItem(new ItemAltarMaker());
         upgradeTome = registerItem(new ItemUpgradeTome());
