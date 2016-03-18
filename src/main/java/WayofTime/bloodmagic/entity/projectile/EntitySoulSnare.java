@@ -1,13 +1,13 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import WayofTime.bloodmagic.registry.ModPotions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.registry.ModPotions;
 
 public class EntitySoulSnare extends EntityThrowable
 {
@@ -30,16 +30,16 @@ public class EntitySoulSnare extends EntityThrowable
      * Called when this EntityThrowable hits a block or entity.
      */
     @Override
-    protected void onImpact(MovingObjectPosition mop)
+    protected void onImpact(RayTraceResult result)
     {
-        if (mop.entityHit != null)
+        if (result.entityHit != null)
         {
-            if (mop.entityHit instanceof EntityLivingBase && mop.entityHit.worldObj.rand.nextDouble() < 0.25)
+            if (result.entityHit instanceof EntityLivingBase && result.entityHit.worldObj.rand.nextDouble() < 0.25)
             {
-                ((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(ModPotions.soulSnare.id, 300, 0));
+                ((EntityLivingBase) result.entityHit).addPotionEffect(new PotionEffect(ModPotions.soulSnare, 300, 0));
             }
 
-            mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) 0);
+            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) 0);
         }
 
         for (int j = 0; j < 8; ++j)

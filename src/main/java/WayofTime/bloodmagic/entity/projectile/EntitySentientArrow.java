@@ -1,12 +1,14 @@
 package WayofTime.bloodmagic.entity.projectile;
 
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 
 public class EntitySentientArrow extends EntityArrow
 {
@@ -22,15 +24,9 @@ public class EntitySentientArrow extends EntityArrow
         super(worldIn, x, y, z);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EntityLivingBase p_i1755_3_, float p_i1755_4_, float p_i1755_5_)
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, double reimbursement)
     {
-        super(worldIn, shooter, p_i1755_3_, p_i1755_4_, p_i1755_5_);
-
-    }
-
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, float velocity, double reimbursement)
-    {
-        super(worldIn, shooter, velocity);
+        this(worldIn, shooter.posX, shooter.posY, shooter.posZ);
         this.reimbursedAmountOnHit = reimbursement;
     }
 
@@ -56,5 +52,11 @@ public class EntitySentientArrow extends EntityArrow
         super.readEntityFromNBT(tag);
 
         reimbursedAmountOnHit = tag.getDouble("reimbursement");
+    }
+
+    @Override
+    protected ItemStack getArrowStack()
+    {
+        return new ItemStack(Items.arrow);
     }
 }
