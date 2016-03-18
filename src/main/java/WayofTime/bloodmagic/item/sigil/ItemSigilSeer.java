@@ -1,19 +1,26 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.altar.IBloodAltar;
-import WayofTime.bloodmagic.api.iface.IAltarReader;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.tile.TileIncenseAltar;
-import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.iface.IAltarReader;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import WayofTime.bloodmagic.util.ChatUtil;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
 {
@@ -24,22 +31,24 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        super.onItemRightClick(stack, world, player);
-
         if (!world.isRemote)
         {
-            MovingObjectPosition position = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult position = getMovingObjectPositionFromPlayer(world, player, false);
 
             if (position == null)
             {
                 int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
-                ChatUtil.sendNoSpam(player, new ChatComponentText(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
-                return stack;
+
+                List<ITextComponent> toSend = new ArrayList<ITextComponent>();
+                if (!getOwnerName(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
+                    toSend.add(new TextComponentString(TextHelper.localize(tooltipBase + "otherNetwork", getOwnerName(stack))));
+                toSend.add(new TextComponentString(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
+                ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
             } else
             {
-                if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+                if (position.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
 
                     TileEntity tile = world.getTileEntity(position.getBlockPos());
@@ -76,12 +85,10 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                         int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
                         ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
                     }
-
-                    return stack;
                 }
             }
         }
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 }
