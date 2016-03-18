@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,9 @@ import WayofTime.bloodmagic.tile.TileDimensionalPortal;
 
 public class BlockDimensionalPortal extends BlockIntegerContainer
 {
+    protected static final AxisAlignedBB AABB_0 = new AxisAlignedBB(0.0D, 0.0D, 0.375D, 1.0D, 1.0D, 0.625D);
+    protected static final AxisAlignedBB AABB_1 = new AxisAlignedBB(0.375D, 0.0D, 0.0D, 0.625D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB AABB_DEFAULT = new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 1.0D, 0.625D);
 
     public BlockDimensionalPortal()
     {
@@ -80,20 +84,20 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
                     if (world.getTileEntity(tile.getMasterStonePos()) != null && world.getTileEntity(tile.getMasterStonePos()) instanceof IMasterRitualStone)
                     {
                         IMasterRitualStone masterRitualStone = (IMasterRitualStone) world.getTileEntity(tile.getMasterStonePos());
-                        if (linkedLocations.get(0).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimensionId())))
+                        if (linkedLocations.get(0).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension())))
                         {
                             PortalLocation portal = linkedLocations.get(1);
-                            if (portal.getDimension() == world.provider.getDimensionId())
+                            if (portal.getDimension() == world.provider.getDimension())
                             {
                                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner()));
                             } else
                             {
                                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportToDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner(), world, portal.getDimension()));
                             }
-                        } else if (linkedLocations.get(1).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimensionId())))
+                        } else if (linkedLocations.get(1).equals(new PortalLocation(masterRitualStone.getBlockPos().up(), world.provider.getDimension())))
                         {
                             PortalLocation portal = linkedLocations.get(0);
-                            if (portal.getDimension() == world.provider.getDimensionId())
+                            if (portal.getDimension() == world.provider.getDimension())
                             {
                                 TeleportQueue.getInstance().addITeleport(new Teleports.TeleportSameDim(portal.getX(), portal.getY(), portal.getZ(), entity, masterRitualStone.getOwner()));
                             } else
@@ -114,36 +118,38 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos blockPos)
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
     {
-        int meta = world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos));
+        int meta = state.getBlock().getMetaFromState(state);
         if (meta == 0)
         {
-            setBlockBounds(0f, 0f, 0.375f, 1f, 1f, 0.625f);
+            return AABB_0;
         } else if (meta == 1)
         {
-            setBlockBounds(0.375f, 0f, 0f, 0.625f, 1f, 1f);
+            return AABB_1;
         } else
         {
-            setBlockBounds(0f, 0f, 0f, 1f, 1, 1f);
+            return AABB_DEFAULT;
         }
     }
 
-    @Override
-    public void setBlockBoundsForItemRender()
-    {
-        setBlockBounds(0f, 0f, 0.375f, 1f, 1f, 0.625f);
-    }
-
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.TRANSLUCENT;
-    }
+//
+//    @Override
+//    public void setBlockBoundsForItemRender()
+//    {
+//        setBlockBounds(0f, 0f, 0.375f, 1f, 1f, 0.625f);
+//    }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random rand)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
     {
         this.spawnParticles(world, pos.getX(), pos.getY(), pos.getZ());
     }
@@ -157,27 +163,27 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
             double particleX = (double) ((float) x + random.nextFloat());
             double particleY = (double) ((float) y + random.nextFloat());
             double particleZ = (double) ((float) z + random.nextFloat());
-            if (i == 0 && !world.getBlockState(new BlockPos(x, y + 1, z)).getBlock().isOpaqueCube())
+            if (i == 0 && !world.getBlockState(new BlockPos(x, y + 1, z)).isOpaqueCube())
             {
                 particleY = (double) (y + 1) + d0;
             }
-            if (i == 1 && !world.getBlockState(new BlockPos(x, y - 1, z)).getBlock().isOpaqueCube())
+            if (i == 1 && !world.getBlockState(new BlockPos(x, y - 1, z)).isOpaqueCube())
             {
                 particleY = (double) y - d0;
             }
-            if (i == 2 && !world.getBlockState(new BlockPos(x, y, z + 1)).getBlock().isOpaqueCube())
+            if (i == 2 && !world.getBlockState(new BlockPos(x, y, z + 1)).isOpaqueCube())
             {
                 particleZ = (double) (z + 1) + d0;
             }
-            if (i == 3 && !world.getBlockState(new BlockPos(x, y, z - 1)).getBlock().isOpaqueCube())
+            if (i == 3 && !world.getBlockState(new BlockPos(x, y, z - 1)).isOpaqueCube())
             {
                 particleZ = (double) z - d0;
             }
-            if (i == 4 && !world.getBlockState(new BlockPos(x + 1, y, z)).getBlock().isOpaqueCube())
+            if (i == 4 && !world.getBlockState(new BlockPos(x + 1, y, z)).isOpaqueCube())
             {
                 particleX = (double) (x + 1) + d0;
             }
-            if (i == 5 && !world.getBlockState(new BlockPos(x - 1, y, z)).getBlock().isOpaqueCube())
+            if (i == 5 && !world.getBlockState(new BlockPos(x - 1, y, z)).isOpaqueCube())
             {
                 particleX = (double) x - d0;
             }

@@ -133,7 +133,8 @@ public class Teleports
                             }
                             network.syphon(getTeleportCost());
 
-                            server.getConfigurationManager().transferPlayerToDimension(player, newWorldID, new TeleporterBloodMagic(newWorldServer));
+                            player.changeDimension(newWorldID); //TODO: UNTESTED
+//                            server.getConfigurationManager().transferPlayerToDimension(player, newWorldID, new TeleporterBloodMagic(newWorldServer));
                             player.setPositionAndUpdate(x + 0.5, y + 0.5, z + 0.5);
                             player.worldObj.updateEntityWithOptionalForce(player, false);
                             player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
