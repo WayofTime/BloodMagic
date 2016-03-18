@@ -1,8 +1,11 @@
 package WayofTime.bloodmagic.block.property;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import net.minecraft.block.properties.PropertyHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,6 +22,11 @@ public class PropertyString extends PropertyHelper<String>
         HashSet<String> hashSet = Sets.newHashSet();
         hashSet.addAll(Arrays.asList(values));
         allowedValues = ImmutableSet.copyOf(hashSet);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public Optional<String> parseValue(String value) {
+        return allowedValues.contains(value) ? Optional.of(value) : Optional.<String>absent();
     }
 
     public static PropertyString create(String name, String[] values)
