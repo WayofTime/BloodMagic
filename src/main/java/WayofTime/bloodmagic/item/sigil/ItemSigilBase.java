@@ -1,24 +1,27 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import lombok.Getter;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.ISigil;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.item.ItemBindable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import lombok.Getter;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Getter
 public class ItemSigilBase extends ItemBindable implements ISigil, IVariantProvider
@@ -44,19 +47,17 @@ public class ItemSigilBase extends ItemBindable implements ISigil, IVariantProvi
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        super.onItemRightClick(stack, world, player);
-
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        if (StatCollector.canTranslate(tooltipBase + "desc"))
-            tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
+//        if (StatCollector.canTranslate(tooltipBase + "desc"))
+        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

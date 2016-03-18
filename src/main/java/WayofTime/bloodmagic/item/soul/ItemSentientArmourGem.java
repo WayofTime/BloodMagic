@@ -1,17 +1,20 @@
 package WayofTime.bloodmagic.item.soul;
 
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSentientArmourGem extends Item
 {
@@ -35,7 +38,7 @@ public class ItemSentientArmourGem extends Item
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         boolean hasSentientArmour = false;
         ItemStack[] armourInventory = player.inventory.armorInventory;
@@ -63,7 +66,7 @@ public class ItemSentientArmourGem extends Item
             }
         }
 
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
     public int getWillBracket(double will)

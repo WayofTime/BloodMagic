@@ -7,7 +7,7 @@ public class PotionBloodMagic extends Potion
 {
     public PotionBloodMagic(String name, ResourceLocation texture, boolean badEffect, int potionColor, int iconIndexX, int iconIndexY)
     {
-        super(texture, badEffect, potionColor);
+        super(badEffect, potionColor);
         this.setPotionName(name);
         this.setIconIndex(iconIndexX, iconIndexY);
     }

@@ -12,18 +12,24 @@ import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -55,7 +61,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
@@ -74,8 +80,8 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
             setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
         }
 
-        player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        return stack;
+        player.setActiveHand(hand);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
@@ -198,11 +204,13 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         return soulList;
     }
 
+    //TODO: Change attack speed.
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
     {
         Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", getActivated(stack) ? getDamageOfActivatedSword(stack) : 2, 0));
+        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? getDamageOfActivatedSword(stack) : 2, 0));
+        multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4, 0));
         return multimap;
     }
 

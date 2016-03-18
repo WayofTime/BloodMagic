@@ -14,9 +14,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -45,7 +49,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         EnumDemonWillType type = this.getCurrentType(stack);
         double drain = Math.min(this.getWill(type, stack), this.getMaxWill(type, stack) / 10);
@@ -53,7 +57,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
         double filled = PlayerDemonWillHandler.addDemonWill(type, player, drain, stack);
         this.drainWill(type, stack, filled);
 
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
     @Override

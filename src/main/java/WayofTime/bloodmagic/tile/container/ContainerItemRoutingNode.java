@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -58,7 +59,7 @@ public class ContainerItemRoutingNode extends Container
      * Overridden in order to handle ghost item slots.
      */
     @Override
-    public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer player)
+    public ItemStack func_184996_a(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
     {
         InventoryPlayer inventoryPlayer = player.inventory;
 //        if (!player.worldObj.isRemote)
@@ -69,14 +70,14 @@ public class ContainerItemRoutingNode extends Container
 
                 if (slot instanceof SlotGhostItem) //TODO: make the slot clicking work!
                 {
-                    if ((mode == 0 || mode == 1) && (clickedButton == 0 || clickedButton == 1))
+                    if ((dragType == 0 || dragType == 1) && (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.CLONE))
                     {
                         ItemStack slotStack = slot.getStack();
                         ItemStack heldStack = inventoryPlayer.getItemStack();
 
-                        if (mode == 0)
+                        if (dragType == 0)
                         {
-                            if (clickedButton == 0)
+                            if (clickTypeIn == ClickType.PICKUP)
                             {
                                 if (heldStack == null && slotStack != null)
                                 {
@@ -86,7 +87,7 @@ public class ContainerItemRoutingNode extends Container
                                 {
                                     if (!((SlotGhostItem) slot).canBeAccessed())
                                     {
-                                        return super.slotClick(slotId, clickedButton, mode, player);
+                                        return super.func_184996_a(slotId, dragType, clickTypeIn, player);
                                     }
                                     if (slotStack != null && Utils.canCombine(slotStack, heldStack))
                                     {
@@ -116,7 +117,7 @@ public class ContainerItemRoutingNode extends Container
                             }
                         } else
                         {
-                            if (clickedButton == 0)
+                            if (clickTypeIn == ClickType.PICKUP)
                             {
                                 if (slotStack != null)
                                 {
@@ -139,7 +140,7 @@ public class ContainerItemRoutingNode extends Container
             }
         }
 
-        return super.slotClick(slotId, clickedButton, mode, player);
+        return super.func_184996_a(slotId, dragType, clickTypeIn, player);
     }
 
     @Override

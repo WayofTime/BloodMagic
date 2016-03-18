@@ -1,10 +1,14 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.Constants;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSigilAir extends ItemSigilBase
 {
@@ -15,11 +19,11 @@ public class ItemSigilAir extends ItemSigilBase
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            Vec3 vec = player.getLookVec();
+            Vec3d vec = player.getLookVec();
             double wantedVelocity = 1.7;
 
             // TODO - Revisit after potions
@@ -33,13 +37,14 @@ public class ItemSigilAir extends ItemSigilBase
             player.motionY = vec.yCoord * wantedVelocity;
             player.motionZ = vec.zCoord * wantedVelocity;
             player.velocityChanged = true;
-            world.playSoundEffect((double) ((float) player.posX + 0.5F), (double) ((float) player.posY + 0.5F), (double) ((float) player.posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+
             player.fallDistance = 0;
 
             if (!player.capabilities.isCreativeMode)
                 this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
         }
 
-        return super.onItemRightClick(stack, world, player);
+        return super.onItemRightClick(stack, world, player, hand);
     }
 }

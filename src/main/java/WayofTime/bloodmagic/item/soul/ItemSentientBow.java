@@ -1,21 +1,24 @@
 package WayofTime.bloodmagic.item.soul;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
 
 public class ItemSentientBow extends ItemBow
 {
@@ -28,72 +31,87 @@ public class ItemSentientBow extends ItemBow
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
     {
-        boolean flag = playerIn.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
-
-        if (flag || playerIn.inventory.hasItem(Items.arrow))
+        if (entityLiving instanceof EntityPlayer)
         {
+            EntityPlayer entityplayer = (EntityPlayer) entityLiving;
+            boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, stack) > 0;
+            ItemStack itemstack = this.getFiredArrow(entityplayer);
+
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
-            net.minecraftforge.event.entity.player.ArrowLooseEvent event = new net.minecraftforge.event.entity.player.ArrowLooseEvent(playerIn, stack, i);
-            if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event))
+            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer) entityLiving, i, itemstack != null || flag);
+            if (i < 0)
                 return;
-            i = event.charge;
-            float f = (float) i / 20.0F;
-            f = (f * f + f * 2.0F) / 3.0F;
 
-            if ((double) f < 0.1D)
+            if (itemstack != null || flag)
             {
-                return;
-            }
+                if (itemstack == null)
+                {
+                    itemstack = new ItemStack(Items.arrow);
+                }
 
-            if (f > 1.0F)
-            {
-                f = 1.0F;
-            }
+                float f = func_185059_b(i);
 
-            EntityArrow entityarrow = new EntitySentientArrow(worldIn, playerIn, f * 2.0F, 0);
+                if ((double) f >= 0.1D)
+                {
+                    boolean flag1 = flag && itemstack.getItem() instanceof ItemArrow; //Forge: Fix consuming custom arrows.
 
-            if (f == 1.0F)
-            {
-                entityarrow.setIsCritical(true);
-            }
+                    if (!worldIn.isRemote)
+                    {
+                        //Need to do some stuffs
+                        ItemArrow itemarrow = (ItemArrow) ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
+                        EntityArrow entityarrow = itemarrow.makeTippedArrow(worldIn, itemstack, entityplayer);
+                        entityarrow.func_184547_a(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
-            int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
+                        if (f == 1.0F)
+                        {
+                            entityarrow.setIsCritical(true);
+                        }
 
-            if (j > 0)
-            {
-                entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
-            }
+                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.power, stack);
 
-            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
+                        if (j > 0)
+                        {
+                            entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
+                        }
 
-            if (k > 0)
-            {
-                entityarrow.setKnockbackStrength(k);
-            }
+                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.punch, stack);
 
-            if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack) > 0)
-            {
-                entityarrow.setFire(100);
-            }
+                        if (k > 0)
+                        {
+                            entityarrow.setKnockbackStrength(k);
+                        }
 
-            stack.damageItem(1, playerIn);
-            worldIn.playSoundAtEntity(playerIn, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.flame, stack) > 0)
+                        {
+                            entityarrow.setFire(100);
+                        }
 
-            if (flag)
-            {
-                entityarrow.canBePickedUp = 2;
-            } else
-            {
-                playerIn.inventory.consumeInventoryItem(Items.arrow);
-            }
+                        stack.damageItem(1, entityplayer);
 
-            playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
+                        if (flag1)
+                        {
+                            entityarrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
+                        }
 
-            if (!worldIn.isRemote)
-            {
-                worldIn.spawnEntityInWorld(entityarrow);
+                        worldIn.spawnEntityInWorld(entityarrow);
+                    }
+
+                    worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+
+                    if (!flag1)
+                    {
+                        --itemstack.stackSize;
+
+                        if (itemstack.stackSize == 0)
+                        {
+                            entityplayer.inventory.deleteStack(itemstack);
+                        }
+                    }
+
+                    entityplayer.addStat(StatList.func_188057_b(this));
+                }
             }
         }
     }
@@ -101,11 +119,6 @@ public class ItemSentientBow extends ItemBow
     @SideOnly(Side.CLIENT)
     public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining)
     {
-        if (player.getItemInUse() == null)
-        {
-            return null;
-        }
-
         int i = stack.getMaxItemUseDuration() - player.getItemInUseCount();
 
         if (i >= 18)
@@ -120,5 +133,29 @@ public class ItemSentientBow extends ItemBow
         }
 
         return null;
+    }
+
+    protected ItemStack getFiredArrow(EntityPlayer player)
+    {
+        if (this.func_185058_h_(player.getHeldItem(EnumHand.OFF_HAND)))
+        {
+            return player.getHeldItem(EnumHand.OFF_HAND);
+        } else if (this.func_185058_h_(player.getHeldItem(EnumHand.MAIN_HAND)))
+        {
+            return player.getHeldItem(EnumHand.MAIN_HAND);
+        } else
+        {
+            for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
+            {
+                ItemStack itemstack = player.inventory.getStackInSlot(i);
+
+                if (this.func_185058_h_(itemstack))
+                {
+                    return itemstack;
+                }
+            }
+
+            return null;
+        }
     }
 }

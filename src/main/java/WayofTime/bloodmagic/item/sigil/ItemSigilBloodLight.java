@@ -1,16 +1,18 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.entity.projectile.EntityBloodLight;
 import WayofTime.bloodmagic.registry.ModBlocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 
 public class ItemSigilBloodLight extends ItemSigilBase
 {
@@ -28,14 +30,14 @@ public class ItemSigilBloodLight extends ItemSigilBase
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult mop = this.getMovingObjectPositionFromPlayer(world, player, false);
 
         if (getCooldownRemainder(stack) > 0)
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
-        if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             BlockPos blockPos = mop.getBlockPos().offset(mop.sideHit);
 
@@ -45,8 +47,8 @@ public class ItemSigilBloodLight extends ItemSigilBase
                 if (!world.isRemote)
                     NetworkHelper.syphonAndDamage(NetworkHelper.getSoulNetwork(player), player, getLPUsed());
                 resetCooldown(stack);
-                player.swingItem();
-                return stack;
+                player.swingArm(hand);
+                return super.onItemRightClick(stack, world, player, hand);
             }
         } else
         {
@@ -58,7 +60,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
             resetCooldown(stack);
         }
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override

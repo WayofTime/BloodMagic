@@ -1,21 +1,26 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.item.ItemBindable;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSigilToggleable extends ItemSigilBase
 {
@@ -37,23 +42,23 @@ public class ItemSigilToggleable extends ItemSigilBase
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (!world.isRemote && !isUnusable(stack))
         {
             if (player.isSneaking())
                 setActivated(stack, !getActivated(stack));
             if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
-                return stack;
+                return super.onItemRightClick(stack, world, player, hand);
         }
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return ItemBindable.syphonNetwork(stack, player, getLPUsed()) && onSigilUse(stack, player, world, blockPos, side, hitX, hitY, hitZ);
+        return (ItemBindable.syphonNetwork(stack, player, getLPUsed()) && onSigilUse(stack, player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
