@@ -3,20 +3,26 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.BoundToolEvent;
 import WayofTime.bloodmagic.api.iface.IActivatable;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
@@ -27,7 +33,6 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider
@@ -46,15 +51,22 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        if (!player.isSneaking() && getActivated(stack))
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
 
-        return stack;
+        if (!player.isSneaking() && getActivated(stack))
+        {
+            BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
+            if (MinecraftForge.EVENT_BUS.post(event))
+                return new ActionResult<ItemStack>(EnumActionResult.FAIL, event.result);
+
+            player.setActiveHand(hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        }
+
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
@@ -64,7 +76,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn)
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving)
     {
         return true;
     }
@@ -81,8 +93,8 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     {
         NBTHelper.checkNBT(stack);
 
-        if (StatCollector.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
-            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.bound.sword.desc"));
+//        if (StatCollector.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.bound.sword.desc"));
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
@@ -91,17 +103,11 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers()
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack)
     {
-        return HashMultimap.create();
-    }
-
-    @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
-    {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
+        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
         double damage = getActivated(stack) ? this.attackDamage : 1.0D;
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", damage, 0));
+        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage, 0));
         return multimap;
     }
 

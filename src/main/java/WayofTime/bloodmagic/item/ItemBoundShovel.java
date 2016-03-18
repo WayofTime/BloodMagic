@@ -1,15 +1,11 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,18 +13,26 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
 {
@@ -47,7 +51,7 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving)
     {
         return true;
     }
@@ -58,8 +62,8 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
         if (world.isRemote)
             return;
 
-        boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(player);
-        int fortuneLvl = EnchantmentHelper.getFortuneModifier(player);
+        boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) > 0;
+        int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack);
         int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
@@ -75,16 +79,16 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
                     BlockPos blockPos = playerPos.add(i, j, k);
                     BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
 
-                    if (blockStack.getBlock().isAir(world, blockPos))
+                    if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
                         continue;
 
                     BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(world, blockPos) != -1)
+                    if (blockStack.getBlock() != null && blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1)
                     {
-                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getBlock());
+                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
 
                         if (strengthVsBlock > 1.1F && world.canMineBlockBody(player, blockPos))
                         {
@@ -112,10 +116,12 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
     {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", 1, 0));
+        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
+        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 1, 0));
+        multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.5, 0));
+
         return multimap;
     }
 

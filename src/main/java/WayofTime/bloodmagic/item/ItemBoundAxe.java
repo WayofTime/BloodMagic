@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +15,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -50,7 +52,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player)
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState block, BlockPos pos, EntityLivingBase entityLiving)
     {
         return true;
     }
@@ -62,7 +64,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
             return;
 
         boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) > 0;
-        int fortuneLvl = EnchantmentHelper.getFortuneModifier(player);
+        int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack);
         int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
@@ -87,7 +89,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
 
                     if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1)
                     {
-                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getBlock());
+                        float strengthVsBlock = getStrVsBlock(stack, blockStack.getState());
 
                         if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos))
                         {
@@ -115,10 +117,12 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
     {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
-        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", 7, 0));
+        Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
+        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 7, 0));
+        multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", -2.5, 0));
+
         return multimap;
     }
 

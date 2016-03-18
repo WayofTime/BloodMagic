@@ -9,13 +9,15 @@ import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,7 +33,6 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 
 @Getter
@@ -48,7 +49,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
     public ItemBoundTool(String name, float damage, Set<Block> effectiveBlocks)
     {
-        super(damage, ModItems.boundToolMaterial, effectiveBlocks);
+        super(damage, 1, ModItems.boundToolMaterial, effectiveBlocks);
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
 
         this.name = name;
@@ -57,13 +58,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, Block block)
-    {
-        return getActivated(stack) ? getToolMaterial().getEfficiencyOnProperMaterial() : 1.0F;
-    }
-
-    @Override
-    public float getDigSpeed(ItemStack stack, IBlockState state)
+    public float getStrVsBlock(ItemStack stack, IBlockState state)
     {
         return getActivated(stack) ? getToolMaterial().getEfficiencyOnProperMaterial() : 1.0F;
     }
@@ -77,10 +72,10 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
-        if (entityIn instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entityIn).getCurrentEquippedItem())
+        if (entityIn instanceof EntityPlayer && getActivated(stack) && isSelected && getBeingHeldDown(stack) && stack == ((EntityPlayer) entityIn).getActiveItemStack())
         {
             EntityPlayer player = (EntityPlayer) entityIn;
-            setHeldDownCount(stack, Math.min(player.getItemInUseDuration(), chargeTime));
+            setHeldDownCount(stack, Math.min(player.getItemInUseCount(), chargeTime));
         } else if (!isSelected)
         {
             setBeingHeldDown(stack, false);
@@ -114,7 +109,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
@@ -123,29 +118,33 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
         {
             BoundToolEvent.Charge event = new BoundToolEvent.Charge(player, stack);
             if (MinecraftForge.EVENT_BUS.post(event))
-                return event.result;
+                return new ActionResult<ItemStack>(EnumActionResult.FAIL, event.result);
 
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-            setBeingHeldDown(stack, true);
+            player.setActiveHand(hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
     {
-        if (!playerIn.isSneaking() && getActivated(stack))
+        if (entityLiving instanceof EntityPlayer)
         {
-            int i = this.getMaxItemUseDuration(stack) - timeLeft;
-            BoundToolEvent.Release event = new BoundToolEvent.Release(playerIn, stack, i);
-            if (MinecraftForge.EVENT_BUS.post(event))
-                return;
+            EntityPlayer player = (EntityPlayer) entityLiving;
+            if (!player.isSneaking() && getActivated(stack))
+            {
+                int i = this.getMaxItemUseDuration(stack) - timeLeft;
+                BoundToolEvent.Release event = new BoundToolEvent.Release(player, stack, i);
+                if (MinecraftForge.EVENT_BUS.post(event))
+                    return;
 
-            i = event.charge;
+                i = event.charge;
 
-            onBoundRelease(stack, worldIn, playerIn, Math.min(i, chargeTime));
-            setBeingHeldDown(stack, false);
+                onBoundRelease(stack, worldIn, player, Math.min(i, chargeTime));
+                setBeingHeldDown(stack, false);
+            }
         }
     }
 
@@ -155,16 +154,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
-    {
-        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
-        double damage = getActivated(stack) ? this.damage : 1.0D;
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", damage, 0));
-        return multimap;
-    }
-
-    @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving)
     {
         return stack;
     }
@@ -191,8 +181,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-        if (StatCollector.canTranslate(tooltipBase + "desc"))
-            tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
+//        if (StatCollector.canTranslate(tooltipBase + "desc"))
+        tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
