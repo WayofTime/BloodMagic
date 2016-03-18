@@ -7,12 +7,15 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,7 +29,7 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
 
     public ItemPackSacrifice()
     {
-        super(ArmorMaterial.CHAIN, 0, 1);
+        super(ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.CHEST);
 
         setUnlocalizedName(Constants.Mod.MODID + ".pack.sacrifice");
         setRegistryName(Constants.BloodMagicItem.SACRIFICE_PACK.getRegName());
@@ -34,24 +37,24 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (world.isRemote)
-            return stack;
+            return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-        MovingObjectPosition position = this.getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult position = this.getMovingObjectPositionFromPlayer(world, player, false);
 
         if (position == null)
         {
-            return super.onItemRightClick(stack, world, player);
+            return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
         } else
         {
-            if (position.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            if (position.typeOfHit == RayTraceResult.Type.BLOCK)
             {
                 TileEntity tile = world.getTileEntity(position.getBlockPos());
 
                 if (!(tile instanceof TileAltar))
-                    return super.onItemRightClick(stack, world, player);
+                    return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
 
                 TileAltar altar = (TileAltar) tile;
 
@@ -64,13 +67,13 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
                         int filledAmount = altar.fillMainTank(amount);
                         amount -= filledAmount;
                         setStoredLP(stack, amount);
-                        world.markBlockForUpdate(position.getBlockPos());
+                        world.setBlockState(position.getBlockPos(), world.getBlockState(position.getBlockPos()));
                     }
                 }
             }
         }
 
-        return stack;
+        return ActionResult.newResult(EnumActionResult.FAIL, stack);
     }
 
     @Override
@@ -78,12 +81,6 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
     {
         if (getStoredLP(stack) > CAPACITY)
             setStoredLP(stack, CAPACITY);
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
-        return Constants.Mod.DOMAIN + "models/armor/bloodPack_layer_1.png";
     }
 
     @Override

@@ -14,8 +14,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -51,11 +53,11 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
     {
         if (world.isRemote)
         {
-            return true;
+            return EnumActionResult.SUCCESS;
         }
 
         TileEntity tileHit = world.getTileEntity(pos);
@@ -68,9 +70,9 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
             {
                 this.setBlockPos(stack, BlockPos.ORIGIN);
                 ChatUtil.sendChat(player, "Removing contained location");
-                return false;
+                return EnumActionResult.FAIL;
             }
-            return false;
+            return EnumActionResult.FAIL;
         }
         IRoutingNode node = (IRoutingNode) tileHit;
         BlockPos containedPos = getBlockPos(stack);
@@ -78,7 +80,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
         {
             this.setBlockPos(stack, pos);
             ChatUtil.sendChat(player, "Setting node location");
-            return true;
+            return EnumActionResult.SUCCESS;
         } else
         {
             TileEntity pastTile = world.getTileEntity(containedPos);
@@ -99,7 +101,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             node.addConnection(containedPos);
                             ChatUtil.sendChat(player, "Linked node to master!");
                             this.setBlockPos(stack, BlockPos.ORIGIN);
-                            return true;
+                            return EnumActionResult.SUCCESS;
                         }
                     } else
                     {
@@ -107,7 +109,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         node.addConnection(containedPos);
                         ChatUtil.sendChat(player, "Linked node to master!");
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
 
                 } else if (node instanceof IMasterRoutingNode)
@@ -124,7 +126,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             master.addNodeToList(pastNode);
                             ChatUtil.sendChat(player, "Linked node to master!");
                             this.setBlockPos(stack, BlockPos.ORIGIN);
-                            return true;
+                            return EnumActionResult.SUCCESS;
                         }
                     } else
                     {
@@ -132,7 +134,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         pastNode.addConnection(pos);
                         ChatUtil.sendChat(player, "Linked node to master!");
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
                 } else
                 {
@@ -152,7 +154,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         node.addConnection(containedPos);
                         ChatUtil.sendChat(player, "Linked nodes together.");
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     } else if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //pastNode is not connected to a master, but node is
                     {
                         TileEntity tile = world.getTileEntity(node.getMasterPos());
@@ -167,7 +169,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         node.addConnection(containedPos);
                         ChatUtil.sendChat(player, "Linked nodes together.");
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     } else if (node.getMasterPos().equals(BlockPos.ORIGIN)) //node is not connected to a master, but pastNode is
                     {
                         TileEntity tile = world.getTileEntity(pastNode.getMasterPos());
@@ -182,17 +184,17 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         node.addConnection(containedPos);
                         ChatUtil.sendChat(player, "Linked nodes together.");
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     } else
                     {
                         this.setBlockPos(stack, BlockPos.ORIGIN);
-                        return true;
+                        return EnumActionResult.SUCCESS;
                     }
                 }
             }
         }
 
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     @Override

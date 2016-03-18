@@ -12,33 +12,29 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.items.IGoggles;
-import thaumcraft.api.items.IRevealer;
-import thaumcraft.api.items.IRunicArmor;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-@Optional.InterfaceList({ @Optional.Interface(iface = "thaumcraft.api.items.IRevealer", modid = "Thaumcraft"), @Optional.Interface(iface = "thaumcraft.api.items.IGoggles", modid = "Thaumcraft"), @Optional.Interface(iface = "thaumcraft.api.items.IRunicArmor", modid = "Thaumcraft") })
-public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevealer, IGoggles, IRunicArmor
+public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
     //TODO: Save/delete cache periodically.
     public static Map<ItemStack, LivingArmour> armourMap = new HashMap<ItemStack, LivingArmour>();
 
-    public ItemLivingArmour(int armorType)
+    public ItemLivingArmour(EntityEquipmentSlot armorType)
     {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
         setUnlocalizedName(Constants.Mod.MODID + ".livingArmour.");
@@ -81,9 +77,9 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
         {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
-            ItemStack helmet = player.getEquipmentInSlot(4);
-            ItemStack leggings = player.getEquipmentInSlot(2);
-            ItemStack boots = player.getEquipmentInSlot(1);
+            ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+            ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+            ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
             if (helmet == null || leggings == null || boots == null)
             {
@@ -194,23 +190,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
-        if (this == ModItems.livingArmourChest || this == ModItems.livingArmourHelmet || this == ModItems.livingArmourBoots)
-        {
-            return "bloodmagic:models/armor/livingArmour_layer_1.png";
-        }
-
-        if (this == ModItems.livingArmourLegs)
-        {
-            return "bloodmagic:models/armor/livingArmour_layer_2.png";
-        } else
-        {
-            return null;
-        }
-    }
-
-    @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
     {
         super.onArmorTick(world, player, stack);
@@ -242,7 +221,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
     {
         if (this == ModItems.livingArmourChest && isEnabled(stack))
         {
@@ -251,13 +230,13 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
             return armour.getAttributeModifiers();
         }
 
-        return super.getAttributeModifiers(stack);
+        return super.getAttributeModifiers(slot, stack);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + names[armorType];
+        return super.getUnlocalizedName(stack) + names[armorType.getIndex()];
     }
 
     public static LivingArmour getLivingArmour(ItemStack stack)
@@ -327,49 +306,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IRevea
         }
 
         return null;
-    }
-
-    @Override
-    public boolean showIngamePopups(ItemStack stack, EntityLivingBase entityLivingBase)
-    {
-        stack = NBTHelper.checkNBT(stack);
-        LivingArmour armor = getLivingArmour(stack);
-
-        return armor.upgradeMap.containsKey(Constants.Mod.MODID + ".upgrade.revealing") && LivingArmour.hasFullSet((EntityPlayer) entityLivingBase);
-    }
-
-    @Override
-    public boolean showNodes(ItemStack stack, EntityLivingBase entityLivingBase)
-    {
-        stack = NBTHelper.checkNBT(stack);
-        LivingArmour armor = getLivingArmour(stack);
-
-        return armor.upgradeMap.containsKey(Constants.Mod.MODID + ".upgrade.revealing") && LivingArmour.hasFullSet((EntityPlayer) entityLivingBase);
-    }
-
-    @Override
-    public int getRunicCharge(ItemStack stack)
-    {
-        if (this == ModItems.livingArmourChest)
-        {
-            stack = NBTHelper.checkNBT(stack);
-            LivingArmour armour = getLivingArmour(stack);
-
-            int shielding = 0;
-
-            if (armour != null && isEnabled(stack))
-            {
-                for (Entry<String, LivingArmourUpgrade> entry : armour.upgradeMap.entrySet())
-                {
-                    LivingArmourUpgrade upgrade = entry.getValue();
-                    shielding += upgrade.getRunicShielding();
-                }
-            }
-
-            return shielding;
-        }
-
-        return 0;
     }
 
     public void setIsEnabled(ItemStack stack, boolean bool)

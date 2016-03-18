@@ -6,10 +6,12 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +28,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
-    public ItemSentientArmour(int armorType)
+    public ItemSentientArmour(EntityEquipmentSlot armorType)
     {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
         setUnlocalizedName(Constants.Mod.MODID + ".sentientArmour.");
@@ -74,9 +76,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         {
             armourReduction = 0.24 / 0.64; // This values puts it at iron level
 
-            ItemStack helmet = player.getEquipmentInSlot(4);
-            ItemStack leggings = player.getEquipmentInSlot(2);
-            ItemStack boots = player.getEquipmentInSlot(1);
+            ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+            ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+            ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
             if (helmet == null || leggings == null || boots == null)
             {
@@ -158,42 +160,6 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
                 this.revertArmour(player, stack);
             }
         }
-        return;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
-    {
-        super.addInformation(stack, player, tooltip, advanced);
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
-        if (this == ModItems.sentientArmourChest || this == ModItems.sentientArmourHelmet || this == ModItems.sentientArmourBoots)
-        {
-            return "bloodmagic:models/armor/sentientArmour_layer_1.png";
-        }
-
-        if (this == ModItems.sentientArmourLegs)
-        {
-            return "bloodmagic:models/armor/sentientArmour_layer_2.png";
-        } else
-        {
-            return null;
-        }
-    }
-
-    @Override
-    public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
-    {
-        super.onArmorTick(world, player, stack);
-
-        if (world.isRemote)
-        {
-            return;
-        }
     }
 
     public double getCostModifier(ItemStack stack)
@@ -231,13 +197,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + names[armorType];
+        return super.getUnlocalizedName(stack) + names[armorType.getIndex()];
     }
 
     public void revertArmour(EntityPlayer player, ItemStack itemStack)
     {
         ItemStack stack = this.getContainedArmourStack(itemStack);
-        player.inventory.armorInventory[3 - this.armorType] = stack;
+        player.inventory.armorInventory[3 - armorType.getIndex()] = stack;
     }
 
     public static void revertAllArmour(EntityPlayer player)
@@ -270,7 +236,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         }
 
         omegaTag.setTag("armour", tag);
-        Map<Integer, Integer> enchantmentMap = EnchantmentHelper.getEnchantments(previousArmour);
+        Map<Enchantment, Integer> enchantmentMap = EnchantmentHelper.getEnchantments(previousArmour);
         EnchantmentHelper.setEnchantments(enchantmentMap, newArmour);
     }
 

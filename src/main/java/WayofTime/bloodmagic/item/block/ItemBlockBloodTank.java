@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.item.block;
 
 import WayofTime.bloodmagic.tile.TileBloodTank;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 
@@ -32,18 +32,19 @@ public class ItemBlockBloodTank extends ItemBlock implements IFluidContainerItem
         }
     }
 
+    // TODO - Correctly localize these strings
     @Override
     public void addInformation(ItemStack stack, EntityPlayer entityPlayer, List<String> tooltip, boolean advanced)
     {
-        tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.fluid.capacity") + ": " + String.valueOf(getCapacity(stack)) + "mB");
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.capacity") + ": " + String.valueOf(getCapacity(stack)) + "mB");
         if (stack.hasTagCompound())
         {
             NBTTagCompound tag = stack.getTagCompound().getCompoundTag("tank");
             if (!tag.getString("FluidName").equals(""))
             {
                 tooltip.add(" ");
-                tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.fluid.type") + ": " + tag.getString("FluidName"));
-                tooltip.add(StatCollector.translateToLocal("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + getCapacity(stack) + "mB");
+                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.type") + ": " + tag.getString("FluidName"));
+                tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.fluid.amount") + ": " + tag.getInteger("Amount") + "/" + getCapacity(stack) + "mB");
             }
         }
     }

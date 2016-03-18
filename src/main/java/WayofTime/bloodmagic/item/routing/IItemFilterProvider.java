@@ -7,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 
 public interface IItemFilterProvider
 {
-    public IItemFilter getInputItemFilter(ItemStack stack, IInventory inventory, EnumFacing syphonDirection);
+    IItemFilter getInputItemFilter(ItemStack stack, IInventory inventory, EnumFacing syphonDirection);
 
-    public IItemFilter getOutputItemFilter(ItemStack stack, IInventory inventory, EnumFacing syphonDirection);
+    IItemFilter getOutputItemFilter(ItemStack stack, IInventory inventory, EnumFacing syphonDirection);
 }
