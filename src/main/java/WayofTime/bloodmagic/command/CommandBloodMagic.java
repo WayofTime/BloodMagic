@@ -63,7 +63,7 @@ public class CommandBloodMagic extends CommandBase
 
             ISubCommand subCommand = subCommands.get(args[0]);
             String[] subArgs = Arrays.copyOfRange(args, 1, args.length);
-            subCommand.processSubCommand(commandSender, subArgs);
+            subCommand.processSubCommand(server, commandSender, subArgs);
         } else
         {
             commandSender.addChatMessage(new TextComponentString(TextHelper.localizeEffect("commands.error.unknown")));
