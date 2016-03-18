@@ -9,6 +9,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.orb.IBloodOrb;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.PacketSyncConfig;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -48,6 +50,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
@@ -208,6 +211,12 @@ public class EventHandler
         {
             WorldDemonWillHandler.generateWill(event.getChunk());
         }
+    }
+
+    @SubscribeEvent
+    public void onLoggedIn(PlayerLoggedInEvent event)
+    {
+        BloodMagicPacketHandler.sendTo(new PacketSyncConfig(), (EntityPlayerMP) event.player);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
