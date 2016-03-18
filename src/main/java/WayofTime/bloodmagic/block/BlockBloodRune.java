@@ -15,7 +15,7 @@ import java.util.List;
 
 public class BlockBloodRune extends BlockString implements IVariantProvider
 {
-    public static final String[] names = { "blank", "speed", "efficiency", "sacrifice", "selfSacrifice", "displacement", "capacity", "augCapacity", "orb", "acceleration", "charging" };
+    public static final String[] names = { "blank", "speed", "efficiency", "sacrifice", "selfsacrifice", "displacement", "capacity", "augcapacity", "orb", "acceleration", "charging" };
 
     public BlockBloodRune()
     {

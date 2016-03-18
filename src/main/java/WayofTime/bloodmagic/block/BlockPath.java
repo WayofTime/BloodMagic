@@ -20,7 +20,7 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 
 public class BlockPath extends BlockString implements IIncensePath, IVariantProvider
 {
-    public static final String[] names = { "wood", "woodTile", "stone", "stoneTile", "wornstone", "wornstoneTile", "obsidian", "obsidianTile" };
+    public static final String[] names = { "wood", "woodtile", "stone", "stonetile", "wornstone", "wornstonetile", "obsidian", "obsidiantile" };
 
     public BlockPath()
     {
