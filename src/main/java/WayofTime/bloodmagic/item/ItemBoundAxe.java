@@ -1,16 +1,11 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.ItemStackWrapper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeavesBase;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,18 +13,25 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.ItemStackWrapper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
 {
@@ -59,7 +61,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
         if (world.isRemote)
             return;
 
-        boolean silkTouch = EnchantmentHelper.getSilkTouchModifier(player);
+        boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) > 0;
         int fortuneLvl = EnchantmentHelper.getFortuneModifier(player);
         int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
@@ -76,18 +78,18 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
                     BlockPos blockPos = playerPos.add(i, j, k);
                     BlockStack blockStack = BlockStack.getStackFromPos(world, blockPos);
 
-                    if (blockStack.getBlock().isAir(world, blockPos))
+                    if (blockStack.getBlock().isAir(blockStack.getState(), world, blockPos))
                         continue;
 
                     BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, blockPos, blockStack.getState(), player);
                     if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
                         continue;
 
-                    if (blockStack.getBlock().getBlockHardness(world, blockPos) != -1)
+                    if (blockStack.getBlock().getBlockHardness(blockStack.getState(), world, blockPos) != -1)
                     {
                         float strengthVsBlock = getStrVsBlock(stack, blockStack.getBlock());
 
-                        if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeavesBase && world.canMineBlockBody(player, blockPos))
+                        if (strengthVsBlock > 1.1F || blockStack.getBlock() instanceof BlockLeaves && world.canMineBlockBody(player, blockPos))
                         {
                             if (silkTouch && blockStack.getBlock().canSilkHarvest(world, blockPos, world.getBlockState(blockPos), player))
                                 drops.add(new ItemStackWrapper(blockStack));
@@ -116,7 +118,7 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
     public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
     {
         Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(stack);
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", 7, 0));
+        multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", 7, 0));
         return multimap;
     }
 

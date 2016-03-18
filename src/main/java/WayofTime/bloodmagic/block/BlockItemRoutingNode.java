@@ -1,12 +1,12 @@
 package WayofTime.bloodmagic.block;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 
 public class BlockItemRoutingNode extends BlockRoutingNode
 {
@@ -16,12 +16,6 @@ public class BlockItemRoutingNode extends BlockRoutingNode
 
         setUnlocalizedName(Constants.Mod.MODID + ".itemRouting");
         setRegistryName(Constants.BloodMagicBlock.ITEM_ROUTING_NODE.getRegName());
-    }
-
-    @Override
-    public int getRenderType()
-    {
-        return 3;
     }
 
     @Override

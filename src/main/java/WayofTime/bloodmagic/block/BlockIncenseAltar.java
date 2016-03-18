@@ -1,23 +1,30 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.tile.TileIncenseAltar;
 
 public class BlockIncenseAltar extends BlockContainer implements IVariantProvider
 {
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
+
     public BlockIncenseAltar()
     {
         super(Material.rock);
@@ -28,18 +35,22 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 0);
-
-        setBlockBounds(0.3F, 0F, 0.3F, 0.72F, 1F, 0.72F);
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return AABB;
+    }
+
+    @Override
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
@@ -51,9 +62,9 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override

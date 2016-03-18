@@ -1,9 +1,8 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.tile.TileAlchemyArray;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,16 +10,26 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.util.Utils;
 
 public class BlockAlchemyArray extends BlockContainer
 {
+    protected static final AxisAlignedBB ARRAY_AABB = new AxisAlignedBB(0, 0, 0, 1, 0.1, 1);
+
     public BlockAlchemyArray()
     {
         super(Material.cloth);
@@ -28,43 +37,60 @@ public class BlockAlchemyArray extends BlockContainer
         setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
         setRegistryName(Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
         setHardness(0.1f);
-        setBlockBounds(0, 0, 0, 1, 0.1f, 1);
     }
 
     @Override
-    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
     {
         // No-op
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return false;
+        return ARRAY_AABB;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.CUTOUT;
+        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isVisuallyOpaque()
+    {
+        return false;
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.INVISIBLE;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileAlchemyArray array = (TileAlchemyArray) world.getTileEntity(pos);
 
         if (array == null || player.isSneaking())
             return false;
 
-        ItemStack playerItem = player.getCurrentEquippedItem();
+        ItemStack playerItem = player.getHeldItem(hand);
 
         if (playerItem != null)
         {
@@ -81,12 +107,12 @@ public class BlockAlchemyArray extends BlockContainer
             }
         }
 
-        world.markBlockForUpdate(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
         return true;
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player)
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
         return new ItemStack(ModItems.arcaneAshes);
     }
@@ -95,12 +121,6 @@ public class BlockAlchemyArray extends BlockContainer
     public int quantityDropped(Random random)
     {
         return 0;
-    }
-
-    @Override
-    public int getRenderType()
-    {
-        return -1;
     }
 
     @Override

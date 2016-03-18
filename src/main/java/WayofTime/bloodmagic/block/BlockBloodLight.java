@@ -1,26 +1,29 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.registry.ModItems;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModItems;
 
 public class BlockBloodLight extends Block
 {
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.4, 0.4, 0.4, 0.6, 0.6, 0.6);
+
     public BlockBloodLight()
     {
         super(Material.cloth);
@@ -30,26 +33,38 @@ public class BlockBloodLight extends Block
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
     {
-        return false;
+
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.CUTOUT;
+        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public int getLightValue()
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isVisuallyOpaque()
+    {
+        return false;
+    }
+
+    @Override
+    public int getLightValue(IBlockState state)
     {
         return 15;
     }
@@ -68,26 +83,26 @@ public class BlockBloodLight extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
     {
         EntityPlayerSP playerSP = Minecraft.getMinecraft().thePlayer;
 
         if (rand.nextInt(3) != 0)
         {
-            worldIn.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
-            if (playerSP.getHeldItem() != null && playerSP.getHeldItem().getItem() == ModItems.sigilBloodLight)
+            world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
+            if (playerSP.getActiveItemStack() != null && playerSP.getActiveItemStack().getItem() == ModItems.sigilBloodLight)
             {
-                worldIn.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
-                worldIn.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
-                worldIn.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
+                world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
+                world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
+                world.spawnParticle(EnumParticleTypes.REDSTONE, pos.getX() + 0.5D + rand.nextGaussian() / 8, pos.getY() + 0.5D, pos.getZ() + 0.5D + rand.nextGaussian() / 8, 0, 0, 0, 0);
             }
         }
     }
 
     @Override
-    public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List list, Entity collidingEntity)
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        this.setBlockBounds(0.35F, 0.35F, 0.35F, 0.65F, 0.65F, 0.65F);
+        return AABB;
     }
 
     @Override

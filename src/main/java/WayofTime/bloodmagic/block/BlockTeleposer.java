@@ -1,24 +1,28 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.item.ItemTelepositionFocus;
-import WayofTime.bloodmagic.tile.TileTeleposer;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.item.ItemTelepositionFocus;
+import WayofTime.bloodmagic.tile.TileTeleposer;
 
 public class BlockTeleposer extends BlockContainer implements IVariantProvider
 {
@@ -34,15 +38,15 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        ItemStack playerItem = player.getCurrentEquippedItem();
+        ItemStack playerItem = heldItem;
 
         if (playerItem != null && playerItem.getItem() instanceof ItemTelepositionFocus)
             ((ItemTelepositionFocus) playerItem.getItem()).setBlockPos(playerItem, world, pos);

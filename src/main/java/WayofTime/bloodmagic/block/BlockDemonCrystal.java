@@ -1,33 +1,35 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.item.ItemDemonCrystal;
-import WayofTime.bloodmagic.tile.TileDemonCrystal;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
 public class BlockDemonCrystal extends BlockContainer
 {
@@ -55,7 +57,7 @@ public class BlockDemonCrystal extends BlockContainer
         IBlockState offsetState = world.getBlockState(offsetPos);
         Block offsetBlock = offsetState.getBlock();
 
-        return offsetBlock.isSideSolid(world, offsetPos, side) && this.canPlaceBlockAt(world, pos);
+        return offsetBlock.isSideSolid(offsetState, world, offsetPos, side) && this.canPlaceBlockAt(world, pos);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class BlockDemonCrystal extends BlockContainer
         IBlockState offsetState = world.getBlockState(offsetPos);
         Block offsetBlock = offsetState.getBlock();
 
-        if (!offsetBlock.isSideSolid(world, offsetPos, placement))
+        if (!offsetBlock.isSideSolid(offsetState, world, offsetPos, placement))
         {
             world.setBlockToAir(pos);
         }
@@ -89,13 +91,13 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
@@ -107,9 +109,9 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
 //    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state)
@@ -136,9 +138,9 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] { TYPE, AGE, ATTACHED });
+        return new BlockStateContainer(this, new IProperty[] { TYPE, AGE, ATTACHED });
     }
 
     @Override
@@ -191,7 +193,7 @@ public class BlockDemonCrystal extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote)
         {
@@ -204,7 +206,7 @@ public class BlockDemonCrystal extends BlockContainer
         {
             crystal.dropSingleCrystal();
 
-            world.markBlockForUpdate(pos);
+            world.notifyBlockUpdate(pos, state, state, 3);
         }
 
         return true;

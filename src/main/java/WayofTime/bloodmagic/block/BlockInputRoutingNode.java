@@ -1,14 +1,16 @@
 package WayofTime.bloodmagic.block;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
 
 public class BlockInputRoutingNode extends BlockRoutingNode
 {
@@ -18,12 +20,6 @@ public class BlockInputRoutingNode extends BlockRoutingNode
 
         setUnlocalizedName(Constants.Mod.MODID + ".inputRouting");
         setRegistryName(Constants.BloodMagicBlock.INPUT_ROUTING_NODE.getRegName());
-    }
-
-    @Override
-    public int getRenderType()
-    {
-        return 3;
     }
 
     @Override
@@ -46,7 +42,7 @@ public class BlockInputRoutingNode extends BlockRoutingNode
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.getTileEntity(pos) instanceof TileInputRoutingNode)
         {

@@ -1,19 +1,19 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.awt.Color;
+
 import lombok.Getter;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.awt.*;
+import WayofTime.bloodmagic.api.BloodMagicAPI;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class BlockLifeEssence extends BlockFluidClassic
 {
@@ -33,13 +33,13 @@ public class BlockLifeEssence extends BlockFluidClassic
     @Override
     public boolean canDisplace(IBlockAccess world, BlockPos blockPos)
     {
-        return !world.getBlockState(blockPos).getBlock().getMaterial().isLiquid() && super.canDisplace(world, blockPos);
+        return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.canDisplace(world, blockPos);
     }
 
     @Override
     public boolean displaceIfPossible(World world, BlockPos blockPos)
     {
-        return !world.getBlockState(blockPos).getBlock().getMaterial().isLiquid() && super.displaceIfPossible(world, blockPos);
+        return !world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isLiquid() && super.displaceIfPossible(world, blockPos);
     }
 
     public static class FluidLifeEssence extends Fluid

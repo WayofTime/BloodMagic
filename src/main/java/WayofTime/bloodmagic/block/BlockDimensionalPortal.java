@@ -1,5 +1,19 @@
 package WayofTime.bloodmagic.block;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.teleport.PortalLocation;
@@ -8,21 +22,6 @@ import WayofTime.bloodmagic.block.base.BlockIntegerContainer;
 import WayofTime.bloodmagic.ritual.portal.LocationsHandler;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
 import WayofTime.bloodmagic.tile.TileDimensionalPortal;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class BlockDimensionalPortal extends BlockIntegerContainer
 {
@@ -44,7 +43,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
     {
         return null;
     }
@@ -60,7 +59,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
     }
 
     @Override
-    public int getLightValue(IBlockAccess world, BlockPos pos)
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return 12;
     }

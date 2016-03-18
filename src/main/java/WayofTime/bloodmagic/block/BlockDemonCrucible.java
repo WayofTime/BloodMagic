@@ -1,5 +1,24 @@
 package WayofTime.bloodmagic.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.IDemonWillGem;
@@ -7,20 +26,6 @@ import WayofTime.bloodmagic.api.soul.IDiscreteDemonWill;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrucible;
 import WayofTime.bloodmagic.util.Utils;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockDemonCrucible extends BlockContainer implements IVariantProvider
 {
@@ -39,13 +44,13 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
@@ -57,9 +62,9 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
@@ -69,18 +74,16 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileDemonCrucible crucible = (TileDemonCrucible) world.getTileEntity(pos);
 
         if (crucible == null || player.isSneaking())
             return false;
 
-        ItemStack playerItem = player.getCurrentEquippedItem();
-
-        if (playerItem != null)
+        if (heldItem != null)
         {
-            if (!(playerItem.getItem() instanceof IDiscreteDemonWill) && !(playerItem.getItem() instanceof IDemonWillGem))
+            if (!(heldItem.getItem() instanceof IDiscreteDemonWill) && !(heldItem.getItem() instanceof IDemonWillGem))
             {
                 return false;
             }
@@ -88,7 +91,7 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
 
         Utils.insertItemToTile(crucible, player);
 
-        world.markBlockForUpdate(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
         return true;
     }
 

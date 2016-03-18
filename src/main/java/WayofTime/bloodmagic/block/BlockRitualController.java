@@ -1,5 +1,23 @@
 package WayofTime.bloodmagic.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
@@ -13,19 +31,6 @@ import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
 import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.ChatUtil;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockRitualController extends BlockStringContainer implements IVariantProvider
 {
@@ -38,20 +43,20 @@ public class BlockRitualController extends BlockStringContainer implements IVari
         setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
         setRegistryName(Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setStepSound(soundTypeStone);
+        setStepSound(SoundType.STONE);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         TileEntity tile = world.getTileEntity(pos);
 
         if (getMetaFromState(state) == 0 && tile instanceof TileMasterRitualStone)
         {
-            if (player.getHeldItem() != null && player.getHeldItem().getItem() == ModItems.activationCrystal)
+            if (heldItem != null && heldItem.getItem() == ModItems.activationCrystal)
             {
                 String key = RitualHelper.getValidRitual(world, pos);
                 EnumFacing direction = RitualHelper.getDirectionOfRitual(world, pos, key);
@@ -59,7 +64,7 @@ public class BlockRitualController extends BlockStringContainer implements IVari
                 // ritual.
                 if (!key.isEmpty() && direction != null && RitualHelper.checkValidRitual(world, pos, key, direction))
                 {
-                    if (((TileMasterRitualStone) tile).activateRitual(player.getHeldItem(), player, RitualRegistry.getRitualForId(key)))
+                    if (((TileMasterRitualStone) tile).activateRitual(heldItem, player, RitualRegistry.getRitualForId(key)))
                     {
                         ((TileMasterRitualStone) tile).setDirection(direction);
                     }

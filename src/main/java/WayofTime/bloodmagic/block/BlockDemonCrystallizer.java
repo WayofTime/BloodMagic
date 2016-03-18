@@ -1,21 +1,25 @@
 package WayofTime.bloodmagic.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlockDemonCrystallizer extends BlockContainer implements IVariantProvider
 {
@@ -34,19 +38,19 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
     }
 
     @Override
-    public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side)
+    public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
     {
         return side == EnumFacing.UP;
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
@@ -58,9 +62,9 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override

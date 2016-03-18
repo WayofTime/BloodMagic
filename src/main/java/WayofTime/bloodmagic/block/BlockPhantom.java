@@ -1,27 +1,30 @@
 package WayofTime.bloodmagic.block;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.tile.TilePhantomBlock;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.tile.TilePhantomBlock;
 
 public class BlockPhantom extends BlockContainer implements IVariantProvider
 {
@@ -35,50 +38,48 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
     }
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
     }
 
     @Override
-    public boolean isFullCube()
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean isTranslucent()
+    public boolean isVisuallyOpaque()
     {
-        return true;
+        return false;
     }
 
     @Override
-    public int getRenderType()
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return 3;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.TRANSLUCENT;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+    public BlockRenderLayer getBlockLayer()
     {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        Block block = iblockstate.getBlock();
+        return BlockRenderLayer.TRANSLUCENT;
+    }
 
-        if (worldIn.getBlockState(pos.offset(side.getOpposite())) != iblockstate)
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
+    {
+        Block block = state.getBlock();
+
+        if (world.getBlockState(pos.offset(side.getOpposite())) != state)
         {
             return true;
         }
 
-        return block != this && super.shouldSideBeRendered(worldIn, pos, side);
+        return block != this && super.shouldSideBeRendered(state, world, pos, side);
     }
 
     @Override
