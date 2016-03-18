@@ -6,13 +6,20 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
@@ -70,9 +77,10 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
     {
-        PlayerSacrificeHelper.sacrificePlayerHealth(player);
+        if (entityLiving instanceof EntityPlayer)
+            PlayerSacrificeHelper.sacrificePlayerHealth((EntityPlayer) entityLiving);
     }
 
     @Override
@@ -88,21 +96,21 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (PlayerHelper.isFakePlayer(player))
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         if (this.canUseForSacrifice(stack))
         {
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-            return stack;
+            player.setActiveHand(hand);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
         int lpAdded = 200;
 
-        MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
-        if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+        RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
+        if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             TileEntity tile = world.getTileEntity(mop.getBlockPos());
 
@@ -114,7 +122,7 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
         {
             SacrificeKnifeUsedEvent evt = new SacrificeKnifeUsedEvent(player, true, true, 2, lpAdded);
             if (MinecraftForge.EVENT_BUS.post(evt))
-                return stack;
+                return super.onItemRightClick(stack, world, player, hand);
 
             if (evt.shouldDrainHealth)
             {
@@ -130,7 +138,7 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
             }
 
             if (!evt.shouldFillAltar)
-                return stack;
+                return super.onItemRightClick(stack, world, player, hand);
 
             lpAdded = evt.lpAdded;
         }
@@ -138,18 +146,18 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
         double posX = player.posX;
         double posY = player.posY;
         double posZ = player.posZ;
-        world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
         for (int l = 0; l < 8; ++l)
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);
 
         if (!world.isRemote && PlayerHelper.isFakePlayer(player))
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         // TODO - Check if SoulFray is active
         findAndFillAltar(world, player, lpAdded);
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override

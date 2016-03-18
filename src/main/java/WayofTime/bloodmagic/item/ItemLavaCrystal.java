@@ -1,20 +1,23 @@
 package WayofTime.bloodmagic.item;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.IFuelHandler;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.client.IVariantProvider;
+
+import com.google.common.base.Strings;
 
 public class ItemLavaCrystal extends ItemBindable implements IFuelHandler, IVariantProvider
 {
@@ -70,7 +73,7 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler, IVari
                     EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
                     if (player != null)
                     {
-                        player.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 99));
+                        player.addPotionEffect(new PotionEffect(MobEffects.confusion, 99));
                     }
                 }
 

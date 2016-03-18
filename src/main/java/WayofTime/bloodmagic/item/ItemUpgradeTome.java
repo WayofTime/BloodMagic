@@ -11,12 +11,16 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -38,25 +42,25 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (world.isRemote)
         {
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
         }
         LivingArmourUpgrade upgrade = ItemUpgradeTome.getUpgrade(stack);
         if (upgrade == null)
         {
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
         }
 
-        ItemStack chestStack = player.getCurrentArmor(2);
+        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
         if (chestStack != null && chestStack.getItem() instanceof ItemLivingArmour)
         {
             LivingArmour armour = ItemLivingArmour.getLivingArmour(chestStack);
             if (armour == null)
             {
-                return stack;
+                return super.onItemRightClick(stack, world, player, hand);
             }
 
             if (armour.upgradeArmour(player, upgrade))
@@ -66,7 +70,7 @@ public class ItemUpgradeTome extends Item implements IVariantProvider
                 stack.stackSize--;
             }
         }
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override

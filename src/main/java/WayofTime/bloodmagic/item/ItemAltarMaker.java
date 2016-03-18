@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -52,15 +56,15 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (world.isRemote)
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         if (!player.capabilities.isCreativeMode)
         {
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.creativeOnly"));
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
         }
 
         stack = NBTHelper.checkNBT(stack);
@@ -74,22 +78,23 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
 
             setTierToBuild(EnumAltarTier.values()[stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER)]);
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.setTier", stack.getTagCompound().getInteger(Constants.NBT.ALTARMAKER_CURRENT_TIER) + 1));
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
         }
 
-        MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
-        if (mop == null || mop.typeOfHit == MovingObjectPosition.MovingObjectType.MISS || mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
-            return stack;
+        RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
+        if (mop == null || mop.typeOfHit == RayTraceResult.Type.MISS || mop.typeOfHit == RayTraceResult.Type.ENTITY)
+            return super.onItemRightClick(stack, world, player, hand);
 
-        if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar)
+        if (mop.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar)
         {
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.building", tierToBuild));
             buildAltar(world, mop.getBlockPos());
+            IBlockState state = world.getBlockState(mop.getBlockPos());
 
-            world.markBlockForUpdate(mop.getBlockPos());
+            world.notifyBlockUpdate(mop.getBlockPos(), state, state, 3);
         }
 
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
@@ -130,8 +135,9 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         if (world.isRemote)
             return "";
 
-        MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
         BlockPos pos = mop.getBlockPos();
+        IBlockState state = world.getBlockState(pos);
         EnumAltarTier altarTier = BloodAltar.getAltarTier(world, pos);
 
         if (altarTier.equals(EnumAltarTier.ONE))
@@ -141,13 +147,14 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
             for (AltarComponent altarComponent : altarTier.getAltarComponents())
             {
                 BlockPos componentPos = pos.add(altarComponent.getOffset());
+                IBlockState componentState = world.getBlockState(pos);
 
                 world.setBlockToAir(componentPos);
-                world.markBlockForUpdate(componentPos);
+                world.notifyBlockUpdate(componentPos, componentState, componentState, 3);
             }
         }
 
-        world.markBlockForUpdate(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
         return String.valueOf(altarTier.toInt());
     }
 }

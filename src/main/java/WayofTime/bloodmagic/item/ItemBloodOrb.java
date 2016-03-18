@@ -1,5 +1,18 @@
 package WayofTime.bloodmagic.item;
 
+import java.util.List;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IBindable;
 import WayofTime.bloodmagic.api.orb.BloodOrb;
@@ -8,16 +21,8 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
-import com.google.common.base.Strings;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
+import com.google.common.base.Strings;
 
 public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
 {
@@ -43,38 +48,38 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (world == null)
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         double posX = player.posX;
         double posY = player.posY;
         double posZ = player.posZ;
-        world.playSoundEffect((double) ((float) posX + 0.5F), (double) ((float) posY + 0.5F), (double) ((float) posZ + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,
         // 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 
         if (PlayerHelper.isFakePlayer(player))
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         if (!stack.hasTagCompound())
         {
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
         }
 
         if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         if (world.isRemote)
-            return stack;
+            return super.onItemRightClick(stack, world, player, hand);
 
         if (stack.getTagCompound().getString(Constants.NBT.OWNER_UUID).equals(PlayerHelper.getUsernameFromPlayer(player)))
             NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)), getOrbLevel(stack.getItemDamage()));
 
         NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
         hurtPlayer(player, 200);
-        return stack;
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
