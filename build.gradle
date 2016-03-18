@@ -3,7 +3,6 @@ buildscript {
         mavenCentral()
         maven { url "http://files.minecraftforge.net/maven" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-		maven { url "http://maven.modmuss50.me" }
     }
     dependencies {
 		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
@@ -48,7 +47,6 @@ repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven {	url "http://mobiusstrip.eu/maven" }
     maven {	url "http://tehnut.info/maven" }
-	maven { url "http://maven.modmuss50.me" }
 	
     ivy {
         name "Thaumcraft"
