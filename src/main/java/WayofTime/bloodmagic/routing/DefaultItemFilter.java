@@ -79,6 +79,7 @@ public class DefaultItemFilter implements IItemFilter
         TileEntity tile = (TileEntity) accessedInventory;
         World world = tile.getWorld();
         BlockPos pos = tile.getPos();
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
         return testStack;
     }
@@ -135,6 +136,7 @@ public class DefaultItemFilter implements IItemFilter
             TileEntity tile = (TileEntity) accessedInventory;
             World world = tile.getWorld();
             BlockPos pos = tile.getPos();
+            world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
             inputStack.stackSize -= changeAmount;
             maxTransfer -= changeAmount;

@@ -75,7 +75,7 @@ public class TileSpectralBlock extends TileEntity implements ITickable
             block = Block.getBlockFromName(containedBlockName);
 
         if (block != null && worldObj.setBlockState(pos, block.getStateFromMeta(containedBlockMeta)))
-            markDirty();
+            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
     }
 
     public static void createSpectralBlock(World world, BlockPos blockPos, int duration)

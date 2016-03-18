@@ -80,7 +80,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);
-                markDirty();
+                getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
             }
         }
 
@@ -156,7 +156,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
     {
         if (!connectionList.contains(pos1))
         {
-            markDirty();
+            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
             connectionList.add(pos1);
         }
     }
@@ -167,7 +167,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
         if (connectionList.contains(pos1))
         {
             connectionList.remove(pos1);
-            markDirty();
+            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
         }
     }
 

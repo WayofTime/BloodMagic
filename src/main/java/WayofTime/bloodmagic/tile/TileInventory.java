@@ -130,6 +130,9 @@ public class TileInventory extends TileEntity implements IInventory
     {
         if (inventory[index] != null)
         {
+            if (!getWorld().isRemote)
+                getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+
             if (inventory[index].stackSize <= count)
             {
                 ItemStack itemStack = inventory[index];
@@ -168,6 +171,8 @@ public class TileInventory extends TileEntity implements IInventory
         if (stack != null && stack.stackSize > getInventoryStackLimit())
             stack.stackSize = getInventoryStackLimit();
         markDirty();
+        if (!getWorld().isRemote)
+            getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
     }
 
     @Override

@@ -75,7 +75,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
                         int filledAmount = altar.fillMainTank(amount);
                         amount -= filledAmount;
                         setStoredLP(stack, amount);
-                        world.setBlockState(position.getBlockPos(), world.getBlockState(position.getBlockPos()));
+                        world.notifyBlockUpdate(position.getBlockPos(), world.getBlockState(position.getBlockPos()), world.getBlockState(position.getBlockPos()), 3);
                     }
                 }
             }

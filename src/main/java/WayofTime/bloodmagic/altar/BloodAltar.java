@@ -287,7 +287,7 @@ public class BloodAltar implements IFluidHandler
     public void startCycle()
     {
         if (tileAltar.getWorld() != null)
-            tileAltar.markDirty();
+            tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
 
         checkTier();
 
@@ -355,7 +355,7 @@ public class BloodAltar implements IFluidHandler
             fluidOutputted = Math.min(this.fluid.amount, fluidOutputted);
             this.fluidOutput.amount += fluidOutputted;
             this.fluid.amount -= fluidOutputted;
-            tileAltar.markDirty();
+            tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
         }
 
         if (internalCounter % this.getChargingFrequency() == 0 && !this.isActive)
@@ -364,7 +364,7 @@ public class BloodAltar implements IFluidHandler
             chargeInputted = Math.min(chargeInputted, maxCharge - totalCharge);
             totalCharge += chargeInputted;
             this.fluid.amount -= chargeInputted;
-            tileAltar.markDirty();
+            tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
         }
 
         if (internalCounter % 100 == 0 && (this.isActive || this.cooldownAfterCrafting <= 0))
@@ -491,7 +491,7 @@ public class BloodAltar implements IFluidHandler
             }
         }
 
-        tileAltar.markDirty();
+        tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
     }
 
     public void checkTier()
@@ -546,7 +546,7 @@ public class BloodAltar implements IFluidHandler
         if (this.totalCharge > this.maxCharge)
             this.totalCharge = this.maxCharge;
 
-        tileAltar.markDirty();
+        tileAltar.getWorld().notifyBlockUpdate(tileAltar.getPos(), tileAltar.getWorld().getBlockState(tileAltar.getPos()), tileAltar.getWorld().getBlockState(tileAltar.getPos()), 3);
     }
 
     public int fillMainTank(int amount)
