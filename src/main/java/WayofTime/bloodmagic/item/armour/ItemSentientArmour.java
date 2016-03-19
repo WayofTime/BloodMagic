@@ -1,14 +1,9 @@
 package WayofTime.bloodmagic.item.armour;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.registry.ModItems;
+import java.util.Map;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -16,13 +11,13 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Map;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
 {
@@ -203,7 +198,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
     public void revertArmour(EntityPlayer player, ItemStack itemStack)
     {
         ItemStack stack = this.getContainedArmourStack(itemStack);
-        player.inventory.armorInventory[3 - armorType.getIndex()] = stack;
+        player.setItemStackToSlot(armorType, stack);
+//        player.inventory.armorInventory[3 - armorType.getIndex()] = stack;
     }
 
     public static void revertAllArmour(EntityPlayer player)
@@ -256,12 +252,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
 
     public static boolean convertPlayerArmour(EntityPlayer player, double recurringCost, double protection)
     {
-        ItemStack[] armours = player.inventory.armorInventory;
-
-        ItemStack helmetStack = armours[3];
-        ItemStack chestStack = armours[2];
-        ItemStack leggingsStack = armours[1];
-        ItemStack bootsStack = armours[0];
+        ItemStack helmetStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        ItemStack leggingsStack = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+        ItemStack bootsStack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
         {
             ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getSubstituteStack(helmetStack, recurringCost, protection);
@@ -269,10 +263,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
             ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.sentientArmourLegs).getSubstituteStack(leggingsStack, recurringCost, protection);
             ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.sentientArmourBoots).getSubstituteStack(bootsStack, recurringCost, protection);
 
-            armours[3] = omegaHelmetStack;
-            armours[2] = omegaChestStack;
-            armours[1] = omegaLeggingsStack;
-            armours[0] = omegaBootsStack;
+            player.setItemStackToSlot(EntityEquipmentSlot.HEAD, omegaHelmetStack);
+            player.setItemStackToSlot(EntityEquipmentSlot.CHEST, omegaChestStack);
+            player.setItemStackToSlot(EntityEquipmentSlot.LEGS, omegaLeggingsStack);
+            player.setItemStackToSlot(EntityEquipmentSlot.FEET, omegaBootsStack);
 
             return true;
         }
