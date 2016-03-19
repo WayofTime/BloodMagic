@@ -707,7 +707,7 @@ public class EventHandler
         if (entity != null && entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entity;
-            ItemStack heldStack = player.getActiveItemStack();
+            ItemStack heldStack = player.getHeldItemMainhand();
             if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon && !player.worldObj.isRemote)
             {
                 IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
