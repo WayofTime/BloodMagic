@@ -7,7 +7,9 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
 import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -40,6 +42,23 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
         setUnlocalizedName(Constants.Mod.MODID + ".livingArmour.");
         setMaxDamage(250);
         setCreativeTab(BloodMagic.tabBloodMagic);
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
+    {
+        if (this == ModItems.livingArmourChest || this == ModItems.livingArmourHelmet || this == ModItems.livingArmourBoots)
+        {
+            return "bloodmagic:models/armor/livingArmour_layer_1.png";
+        }
+
+        if (this == ModItems.livingArmourLegs)
+        {
+            return "bloodmagic:models/armor/livingArmour_layer_2.png";
+        } else
+        {
+            return null;
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -34,6 +35,23 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
     public EnumDemonWillType getDemonWillTypeConsumed(ItemStack stack)
     {
         return EnumDemonWillType.DEFAULT;
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
+    {
+        if (this == ModItems.sentientArmourChest || this == ModItems.sentientArmourHelmet || this == ModItems.sentientArmourBoots)
+        {
+            return "bloodmagic:models/armor/sentientArmour_layer_1.png";
+        }
+
+        if (this == ModItems.sentientArmourLegs)
+        {
+            return "bloodmagic:models/armor/sentientArmour_layer_2.png";
+        } else
+        {
+            return null;
+        }
     }
 
     @Override
