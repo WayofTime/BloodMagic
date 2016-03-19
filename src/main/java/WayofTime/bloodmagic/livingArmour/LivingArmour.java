@@ -8,10 +8,13 @@ import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -294,9 +297,13 @@ public class LivingArmour implements ILivingArmour
 
     public static boolean hasFullSet(EntityPlayer player)
     {
-        for (int slot = 0; slot < player.inventory.armorInventory.length; slot++)
+        for (EntityEquipmentSlot slot : EntityEquipmentSlot.values())
         {
-            ItemStack slotStack = player.inventory.armorItemInSlot(slot);
+            if (slot.getSlotType() != EntityEquipmentSlot.Type.ARMOR)
+            {
+                continue;
+            }
+            ItemStack slotStack = player.getItemStackFromSlot(slot);
             if (slotStack == null || !(slotStack.getItem() instanceof ItemLivingArmour))
                 return false;
         }
