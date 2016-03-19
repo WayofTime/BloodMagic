@@ -7,12 +7,12 @@ public class ModTranquilityHandlers
 {
     public static void init()
     {
-        IncenseTranquilityRegistry.registerTranquilityHandler(new PlantTranquilityHandler());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new CropTranquilityHandler());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new WaterTranquilityHandler());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new EarthTranquilityHandler());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new FireTranquilityHandler());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new LavaTranquilityHandler());
-        IncenseTranquilityRegistry.registerTranquilityHandler(new TreeTranquilityHandler());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Plant());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Crop());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Water());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Earth());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Fire());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Lava());
+        IncenseTranquilityRegistry.registerTranquilityHandler(new TranquilityHandlers.Tree());
     }
 }

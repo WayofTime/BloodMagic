@@ -10,16 +10,16 @@ import java.util.List;
 
 public class IncenseTranquilityRegistry
 {
-    public static List<TranquilityHandler> handlerList = new ArrayList<TranquilityHandler>();
+    public static List<ITranquilityHandler> handlerList = new ArrayList<ITranquilityHandler>();
 
-    public static void registerTranquilityHandler(TranquilityHandler handler)
+    public static void registerTranquilityHandler(ITranquilityHandler handler)
     {
         handlerList.add(handler);
     }
 
     public static TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
     {
-        for (TranquilityHandler handler : handlerList)
+        for (ITranquilityHandler handler : handlerList)
         {
             TranquilityStack tranq = handler.getTranquilityOfBlock(world, pos, block, state);
             if (tranq != null)
