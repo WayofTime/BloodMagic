@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.item.soul;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,17 +7,20 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemSentientBow extends ItemBow
 {
@@ -28,6 +30,29 @@ public class ItemSentientBow extends ItemBow
         setUnlocalizedName(Constants.Mod.MODID + ".sentientBow");
         setRegistryName(Constants.BloodMagicItem.SENTIENT_BOW.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
+        this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
+            {
+                if (entityIn == null)
+                {
+                    return 0.0F;
+                } else
+                {
+                    ItemStack itemstack = entityIn.getActiveItemStack();
+                    return itemstack != null && itemstack.getItem() == ModItems.sentientBow ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
+                }
+            }
+        });
+        this.addPropertyOverride(new ResourceLocation("pulling"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
+            {
+                return entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F;
+            }
+        });
     }
 
     @Override
@@ -114,25 +139,6 @@ public class ItemSentientBow extends ItemBow
                 }
             }
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining)
-    {
-        int i = stack.getMaxItemUseDuration() - player.getItemInUseCount();
-
-        if (i >= 18)
-        {
-            return new ModelResourceLocation("bloodmagic:ItemSentientBow_pulling_2", "inventory");
-        } else if (i > 13)
-        {
-            return new ModelResourceLocation("bloodmagic:ItemSentientBow_pulling_1", "inventory");
-        } else if (i > 0)
-        {
-            return new ModelResourceLocation("bloodmagic:ItemSentientBow_pulling_0", "inventory");
-        }
-
-        return null;
     }
 
     protected ItemStack getFiredArrow(EntityPlayer player)
