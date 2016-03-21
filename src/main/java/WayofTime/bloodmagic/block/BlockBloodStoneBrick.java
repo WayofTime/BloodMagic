@@ -26,7 +26,7 @@ public class BlockBloodStoneBrick extends BlockString implements IVariantProvide
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);
-        setStepSound(SoundType.STONE);
+        setSoundType(SoundType.STONE);
         setHarvestLevel("pickaxe", 2);
     }
 

@@ -76,20 +76,20 @@ public class ItemSentientBow extends ItemBow
                     itemstack = new ItemStack(Items.arrow);
                 }
 
-                float f = func_185059_b(i);
+                float arrowVelocity = getArrowVelocity(i);
 
-                if ((double) f >= 0.1D)
+                if ((double) arrowVelocity >= 0.1D)
                 {
                     boolean flag1 = flag && itemstack.getItem() instanceof ItemArrow; //Forge: Fix consuming custom arrows.
 
                     if (!worldIn.isRemote)
                     {
                         //Need to do some stuffs
-                        ItemArrow itemarrow = (ItemArrow) ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
-                        EntityArrow entityarrow = itemarrow.makeTippedArrow(worldIn, itemstack, entityplayer);
-                        entityarrow.func_184547_a(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
+                        EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
+                        entityarrow.func_184547_a(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, arrowVelocity * 3.0F, 1.0F);
 
-                        if (f == 1.0F)
+                        if (arrowVelocity == 1.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }
@@ -123,7 +123,7 @@ public class ItemSentientBow extends ItemBow
                         worldIn.spawnEntityInWorld(entityarrow);
                     }
 
-                    worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
 
                     if (!flag1)
                     {
@@ -135,7 +135,7 @@ public class ItemSentientBow extends ItemBow
                         }
                     }
 
-                    entityplayer.addStat(StatList.func_188057_b(this));
+                    entityplayer.addStat(StatList.getObjectUseStats(this));
                 }
             }
         }
@@ -143,10 +143,10 @@ public class ItemSentientBow extends ItemBow
 
     protected ItemStack getFiredArrow(EntityPlayer player)
     {
-        if (this.func_185058_h_(player.getHeldItem(EnumHand.OFF_HAND)))
+        if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
         {
             return player.getHeldItem(EnumHand.OFF_HAND);
-        } else if (this.func_185058_h_(player.getHeldItem(EnumHand.MAIN_HAND)))
+        } else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND)))
         {
             return player.getHeldItem(EnumHand.MAIN_HAND);
         } else
@@ -155,7 +155,7 @@ public class ItemSentientBow extends ItemBow
             {
                 ItemStack itemstack = player.inventory.getStackInSlot(i);
 
-                if (this.func_185058_h_(itemstack))
+                if (this.isArrow(itemstack))
                 {
                     return itemstack;
                 }

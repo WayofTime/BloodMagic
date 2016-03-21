@@ -60,7 +60,7 @@ public class ClientProxy extends CommonProxy
         renderHelper = new InventoryRenderHelper(Constants.Mod.DOMAIN);
         renderHelperV2 = new InventoryRenderHelperV2(Constants.Mod.DOMAIN);
 
-        OBJLoader.instance.addDomain(Constants.Mod.MODID);
+        OBJLoader.INSTANCE.addDomain(Constants.Mod.MODID);
 
         ModBlocks.initRenders();
         ModItems.initRenders();

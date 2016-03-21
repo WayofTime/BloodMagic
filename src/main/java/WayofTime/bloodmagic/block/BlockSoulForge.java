@@ -38,7 +38,7 @@ public class BlockSoulForge extends BlockContainer implements IVariantProvider
         setRegistryName(Constants.BloodMagicBlock.SOUL_FORGE.getRegName());
         setHardness(2.0F);
         setResistance(5.0F);
-        setStepSound(SoundType.METAL);
+        setSoundType(SoundType.METAL);
         setHarvestLevel("pickaxe", 1);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }

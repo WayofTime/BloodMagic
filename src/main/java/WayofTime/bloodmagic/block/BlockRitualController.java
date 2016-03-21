@@ -43,7 +43,7 @@ public class BlockRitualController extends BlockStringContainer implements IVari
         setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
         setRegistryName(Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setStepSound(SoundType.STONE);
+        setSoundType(SoundType.STONE);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);

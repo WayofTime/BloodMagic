@@ -59,7 +59,7 @@ public class ContainerItemRoutingNode extends Container
      * Overridden in order to handle ghost item slots.
      */
     @Override
-    public ItemStack func_184996_a(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
     {
         InventoryPlayer inventoryPlayer = player.inventory;
 //        if (!player.worldObj.isRemote)
@@ -87,7 +87,7 @@ public class ContainerItemRoutingNode extends Container
                                 {
                                     if (!((SlotGhostItem) slot).canBeAccessed())
                                     {
-                                        return super.func_184996_a(slotId, dragType, clickTypeIn, player);
+                                        return super.slotClick(slotId, dragType, clickTypeIn, player);
                                     }
                                     if (slotStack != null && Utils.canCombine(slotStack, heldStack))
                                     {
@@ -140,7 +140,7 @@ public class ContainerItemRoutingNode extends Container
             }
         }
 
-        return super.func_184996_a(slotId, dragType, clickTypeIn, player);
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
     }
 
     @Override

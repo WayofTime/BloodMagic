@@ -31,7 +31,7 @@ public class BlockPath extends BlockString implements IIncensePath, IVariantProv
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);
-        setStepSound(SoundType.STONE);
+        setSoundType(SoundType.STONE);
 
         setHarvestLevel("axe", 0, getStateFromMeta(0));
         setHarvestLevel("axe", 0, getStateFromMeta(1));

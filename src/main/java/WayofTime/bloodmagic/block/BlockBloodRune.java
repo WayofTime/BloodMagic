@@ -24,7 +24,7 @@ public class BlockBloodRune extends BlockString implements IVariantProvider
         setUnlocalizedName(Constants.Mod.MODID + ".rune.");
         setRegistryName(Constants.BloodMagicBlock.BLOOD_RUNE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setStepSound(SoundType.STONE);
+        setSoundType(SoundType.STONE);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);

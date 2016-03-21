@@ -24,7 +24,7 @@ public class BlockCrystal extends BlockString implements IVariantProvider
         setUnlocalizedName(Constants.Mod.MODID + ".crystal.");
         setRegistryName(Constants.BloodMagicBlock.CRYSTAL.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
-        setStepSound(SoundType.STONE);
+        setSoundType(SoundType.STONE);
         setHardness(2.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", 2);

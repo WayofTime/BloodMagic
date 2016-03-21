@@ -644,7 +644,7 @@ public class EventHandler
                     for (int n = 0; n < numberExtra; n++)
                     {
                         ItemArrow itemarrow = (ItemArrow) Items.arrow;
-                        EntityArrow entityarrow = itemarrow.makeTippedArrow(world, new ItemStack(Items.arrow), player);
+                        EntityArrow entityarrow = itemarrow.createArrow(world, new ItemStack(Items.arrow), player);
 
                         double velocityModifier = 0.6 * f;
                         entityarrow.motionX += (random.nextDouble() - 0.5) * velocityModifier;

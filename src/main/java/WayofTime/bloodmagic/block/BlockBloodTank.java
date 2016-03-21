@@ -36,7 +36,7 @@ public class BlockBloodTank extends BlockContainer
         setRegistryName(Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
         setHardness(2.0F);
         setResistance(5.0F);
-        setStepSound(SoundType.GLASS);
+        setSoundType(SoundType.GLASS);
         setHarvestLevel("pickaxe", 1);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
