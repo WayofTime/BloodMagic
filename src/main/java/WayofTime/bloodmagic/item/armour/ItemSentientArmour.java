@@ -1,7 +1,12 @@
 package WayofTime.bloodmagic.item.armour;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -12,6 +17,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ISpecialArmor;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
@@ -19,8 +25,10 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
+public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
@@ -218,6 +226,45 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor
         ItemStack stack = this.getContainedArmourStack(itemStack);
         player.setItemStackToSlot(armorType, stack);
 //        player.inventory.armorInventory[3 - armorType.getIndex()] = stack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new ItemMeshDefinition()
+        {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
+                assert getCustomLocation() != null;
+                if (stack.getItem() == ModItems.sentientArmourHelmet)
+                    return new ModelResourceLocation(getCustomLocation(), "armour=head");
+                else if (stack.getItem() == ModItems.sentientArmourChest)
+                    return new ModelResourceLocation(getCustomLocation(), "armour=body");
+                else if (stack.getItem() == ModItems.sentientArmourLegs)
+                    return new ModelResourceLocation(getCustomLocation(), "armour=leg");
+                else
+                    return new ModelResourceLocation(getCustomLocation(), "armour=feet");
+            }
+        };
+    }
+
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return new ResourceLocation(Constants.Mod.MODID, "item/ItemSentientArmour");
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        ret.add("armour=head");
+        ret.add("armour=body");
+        ret.add("armour=leg");
+        ret.add("armour=feet");
+        return ret;
     }
 
     public static void revertAllArmour(EntityPlayer player)

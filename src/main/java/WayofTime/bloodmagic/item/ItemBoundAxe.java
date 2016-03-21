@@ -17,6 +17,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,6 +35,8 @@ import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+
+import javax.annotation.Nullable;
 
 public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
 {
@@ -133,6 +136,13 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
     public ItemMeshDefinition getMeshDefinition()
     {
         return new CustomMeshDefinitionActivatable("ItemBoundAxe");
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return null;
     }
 
     @Override

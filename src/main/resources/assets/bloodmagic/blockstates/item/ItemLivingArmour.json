@@ -5,23 +5,23 @@
     "transform": "forge:default-item"
   },
   "variants": {
-    "type": {
-      "helm": {
+    "armour": {
+      "head": {
         "textures": {
           "layer0": "bloodmagic:items/LivingHelmet"
         }
       },
-      "chest": {
+      "body": {
         "textures": {
           "layer0": "bloodmagic:items/LivingPlate"
         }
       },
-      "legs": {
+      "leg": {
         "textures": {
           "layer0": "bloodmagic:items/LivingLeggings"
         }
       },
-      "boots": {
+      "feet": {
         "textures": {
           "layer0": "bloodmagic:items/LivingBoots"
         }

@@ -111,8 +111,11 @@ public class ClientProxy extends CommonProxy
         {
             IMeshProvider meshProvider = (IMeshProvider) item;
             ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
+            ResourceLocation resourceLocation = meshProvider.getCustomLocation();
+            if (resourceLocation == null)
+                resourceLocation = new ResourceLocation(Constants.Mod.MODID, "item/" + name);
             for (String variant : meshProvider.getVariants())
-                ModelLoader.registerItemVariants(item, new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/" + name), variant));
+                ModelLoader.registerItemVariants(item, new ModelResourceLocation(resourceLocation, variant));
         } else if (item instanceof IVariantProvider)
         {
             IVariantProvider variantProvider = (IVariantProvider) item;

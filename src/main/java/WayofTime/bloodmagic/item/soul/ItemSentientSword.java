@@ -30,10 +30,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -155,6 +157,13 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
     public ItemMeshDefinition getMeshDefinition()
     {
         return new CustomMeshDefinitionActivatable("ItemSentientSword");
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return null;
     }
 
     @Override

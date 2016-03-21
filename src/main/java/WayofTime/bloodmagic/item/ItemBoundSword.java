@@ -15,6 +15,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,6 +36,8 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
+import javax.annotation.Nullable;
 
 public class ItemBoundSword extends ItemSword implements IBindable, IActivatable, IMeshProvider
 {
@@ -134,6 +137,13 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     public ItemMeshDefinition getMeshDefinition()
     {
         return new CustomMeshDefinitionActivatable("ItemBoundSword");
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return null;
     }
 
     @Override

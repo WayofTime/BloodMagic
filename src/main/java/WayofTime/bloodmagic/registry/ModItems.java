@@ -15,7 +15,6 @@ import WayofTime.bloodmagic.item.routing.ItemRouterFilter;
 import WayofTime.bloodmagic.item.sigil.*;
 import WayofTime.bloodmagic.item.soul.*;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
-import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -201,17 +200,6 @@ public class ModItems
     public static void initRenders()
     {
         InventoryRenderHelper renderHelper = BloodMagic.proxy.getRenderHelper();
-        InventoryRenderHelperV2 renderHelperV2 = BloodMagic.proxy.getRenderHelperV2();
-
-        renderHelperV2.registerRender(livingArmourHelmet, "ItemLivingArmour", "helm");
-        renderHelperV2.registerRender(livingArmourChest, "ItemLivingArmour", "chest");
-        renderHelperV2.registerRender(livingArmourLegs, "ItemLivingArmour", "legs");
-        renderHelperV2.registerRender(livingArmourBoots, "ItemLivingArmour", "boots");
-
-        renderHelperV2.registerRender(sentientArmourHelmet, "ItemSentientArmour", "helm");
-        renderHelperV2.registerRender(sentientArmourChest, "ItemSentientArmour", "chest");
-        renderHelperV2.registerRender(sentientArmourLegs, "ItemSentientArmour", "legs");
-        renderHelperV2.registerRender(sentientArmourBoots, "ItemSentientArmour", "boots");
 
         renderHelper.itemRenderAll(bloodOrb);
         OrbRegistry.registerOrbTexture(orbWeak, new ResourceLocation(Constants.Mod.DOMAIN + "ItemBloodOrbWeak"));

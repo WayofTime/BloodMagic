@@ -5,23 +5,23 @@
     "transform": "forge:default-item"
   },
   "variants": {
-    "type": {
-      "helm": {
+    "armour": {
+      "head": {
         "textures": {
           "layer0": "bloodmagic:items/SentientHelmet"
         }
       },
-      "chest": {
+      "body": {
         "textures": {
           "layer0": "bloodmagic:items/SentientPlate"
         }
       },
-      "legs": {
+      "leg": {
         "textures": {
           "layer0": "bloodmagic:items/SentientLeggings"
         }
       },
-      "boots": {
+      "feet": {
         "textures": {
           "layer0": "bloodmagic:items/SentientBoots"
         }

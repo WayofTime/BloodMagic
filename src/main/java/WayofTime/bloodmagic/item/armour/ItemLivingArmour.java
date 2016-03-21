@@ -4,12 +4,15 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.Multimap;
 
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -19,17 +22,19 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
+public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
@@ -256,6 +261,45 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor
     public String getUnlocalizedName(ItemStack stack)
     {
         return super.getUnlocalizedName(stack) + names[armorType.getIndex()];
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new ItemMeshDefinition()
+        {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack)
+            {
+                assert getCustomLocation() != null;
+                if (stack.getItem() == ModItems.livingArmourHelmet)
+                    return new ModelResourceLocation(getCustomLocation(), "armour=head");
+                else if (stack.getItem() == ModItems.livingArmourChest)
+                    return new ModelResourceLocation(getCustomLocation(), "armour=body");
+                else if (stack.getItem() == ModItems.livingArmourLegs)
+                    return new ModelResourceLocation(getCustomLocation(), "armour=leg");
+                else
+                    return new ModelResourceLocation(getCustomLocation(), "armour=feet");
+            }
+        };
+    }
+
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return new ResourceLocation(Constants.Mod.MODID, "item/ItemLivingArmour");
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        ret.add("armour=head");
+        ret.add("armour=body");
+        ret.add("armour=leg");
+        ret.add("armour=feet");
+        return ret;
     }
 
     public static LivingArmour getLivingArmour(ItemStack stack)
