@@ -181,7 +181,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
-//        if (StatCollector.canTranslate(tooltipBase + "desc"))
+        if (TextHelper.canTranslate(tooltipBase + "desc"))
         tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));

@@ -94,7 +94,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     {
         NBTHelper.checkNBT(stack);
 
-//        if (StatCollector.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
+        if (TextHelper.canTranslate("tooltip.BloodMagic.bound.sword.desc"))
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.bound.sword.desc"));
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
