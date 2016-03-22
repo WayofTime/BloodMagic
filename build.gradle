@@ -213,9 +213,7 @@ curseforge {
     project {
         id = "${curse_id}"
         changelog = getChangelogText()
-        releaseType = 'beta'
-
-        addGameVersion '1.8.9'
+        releaseType = 'alpha'
 
         relations curseRelations
 
