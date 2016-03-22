@@ -1,10 +1,9 @@
 {
 	"forge_marker": 1,
 	"defaults": {
+		"textures": { "#node" : "bloodmagic:models/modelroutingnode" },
 		"model": "bloodmagic:routing/ModelRoutingNodeCore.obj",
-		"transform": {
-            		"translation": [ 0.5, 0, 0.5 ]
-        		},
+		"transform" : "forge:default-block",
 		"custom": { "flip-v": true },
 		"uvlock": true
 	},
@@ -13,7 +12,6 @@
 			"true": {
 				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ 0, -0.5, -0.5 ],
             		"rotation": {"x": 90}
         		}
         	},
@@ -23,7 +21,6 @@
 			"true": {
 				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ 0, 0.5, -0.5 ],
             		"rotation": {"x": -90}
         		}
         	},
@@ -33,7 +30,6 @@
 			"true": {
 				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ -0.5, 0.5, 0 ],
             		"rotation": {"z": 90}
         		}
         	},
@@ -43,7 +39,6 @@
 			"true": {
 				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ -0.5, -0.5, 0 ],
             		"rotation": {"z": -90}
         		}
         	},
@@ -59,7 +54,6 @@
 			"true": {
 				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ -1, 0, 0 ],
             		"rotation": {"z": -180}
         		}
 			}, 

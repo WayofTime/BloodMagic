@@ -8,6 +8,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -96,7 +97,7 @@ public abstract class BlockRoutingNode extends BlockContainer
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
-        return state.withProperty(UP, this.shouldConnect(state, worldIn, pos.up())).withProperty(DOWN, this.shouldConnect(state, worldIn, pos.down())).withProperty(NORTH, this.shouldConnect(state, worldIn, pos.north())).withProperty(EAST, this.shouldConnect(state, worldIn, pos.east())).withProperty(SOUTH, this.shouldConnect(state, worldIn, pos.south())).withProperty(WEST, this.shouldConnect(state, worldIn, pos.west()));
+        return state.withProperty(UP, this.shouldConnect(state, worldIn, pos.up(), EnumFacing.DOWN)).withProperty(DOWN, this.shouldConnect(state, worldIn, pos.down(), EnumFacing.UP)).withProperty(NORTH, this.shouldConnect(state, worldIn, pos.north(), EnumFacing.SOUTH)).withProperty(EAST, this.shouldConnect(state, worldIn, pos.east(), EnumFacing.WEST)).withProperty(SOUTH, this.shouldConnect(state, worldIn, pos.south(), EnumFacing.NORTH)).withProperty(WEST, this.shouldConnect(state, worldIn, pos.west(), EnumFacing.EAST));
     }
 
     @Override
@@ -105,9 +106,10 @@ public abstract class BlockRoutingNode extends BlockContainer
         return new BlockStateContainer(this, UP, DOWN, NORTH, EAST, WEST, SOUTH);
     }
 
-    public boolean shouldConnect(IBlockState state, IBlockAccess world, BlockPos pos)
+    public boolean shouldConnect(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing attachedSide)
     {
-        Block block = world.getBlockState(pos).getBlock();
-        return block.isFullBlock(state) && block.isFullCube(state);
+        IBlockState blockState = world.getBlockState(pos);
+        Block block = blockState.getBlock();
+        return block.getMaterial(blockState).isOpaque() && blockState.isFullCube();
     }
 }

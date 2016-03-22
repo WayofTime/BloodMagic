@@ -2,6 +2,8 @@
 Version 2.0.0-23
 ------------------------------------------------------
 - Fixed "see through world" syndrome for most blocks
+- Fixed .obj models so that they will properly render while in-hand
+- Fixed routing node attaching logic
 
 ------------------------------------------------------
 Version 2.0.0-22

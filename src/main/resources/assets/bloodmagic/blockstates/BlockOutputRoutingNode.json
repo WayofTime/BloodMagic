@@ -1,19 +1,17 @@
 {
 	"forge_marker": 1,
 	"defaults": {
-		"model": "bloodmagic:routing/ModelOutputRoutingNodeCore.obj",
-		"transform": {
-            		"translation": [ 0.5, 0, 0.5 ]
-        		},
+		"textures": { "#node" : "bloodmagic:models/ModelOutputRoutingNode" },
+		"model": "bloodmagic:routing/ModelRoutingNodeCore.obj",
+		"transform" : "forge:default-block",
 		"custom": { "flip-v": true },
 		"uvlock": true
 	},
 	"variants": {
 		"north": {
 			"true": {
-				"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj", 
+				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ 0, -0.5, -0.5 ],
             		"rotation": {"x": 90}
         		}
         	},
@@ -21,9 +19,8 @@
 		},
 		"south": {
 			"true": {
-				"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj", 
+				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ 0, 0.5, -0.5 ],
             		"rotation": {"x": -90}
         		}
         	},
@@ -31,9 +28,8 @@
 		},
 		"east": {
 			"true": {
-				"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj", 
+				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ -0.5, 0.5, 0 ],
             		"rotation": {"z": 90}
         		}
         	},
@@ -41,9 +37,8 @@
 		},
 		"west": {
 			"true": {
-				"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj", 
+				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ -0.5, -0.5, 0 ],
             		"rotation": {"z": -90}
         		}
         	},
@@ -51,22 +46,21 @@
 		},
 		"down": {
 			"true": {
-				"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj"
+				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj"
         	}, 
 			"false": {}
 		},
 		"up": {
 			"true": {
-				"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj", 
+				"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj", 
 				"transform": {
-					"translation": [ -1, 0, 0 ],
             		"rotation": {"z": -180}
         		}
 			}, 
 			"false": {}
 		},
 		"inventory": [{
-			"submodel": "bloodmagic:routing/ModelOutputRoutingNodeBase.obj"
+			"submodel": "bloodmagic:routing/ModelRoutingNodeBase.obj"
         }]
 	}
 }

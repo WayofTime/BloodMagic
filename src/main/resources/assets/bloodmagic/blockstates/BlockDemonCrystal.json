@@ -4,15 +4,12 @@
         "textures": { "#crystal" : "bloodmagic:models/DefaultCrystal" },
         "model": "bloodmagic:crystal/Crystal1.obj",
         "custom": { "flip-v": true },
-        "transform": {
-            "translation": [ 0, 0, 1]
-        }
+        "transform" : "forge:default-block"
     },
     "variants": {
     	"attached": {
     		"down": {
     			"transform": {
-					"translation": [ 0, 0, -1 ],
             		"rotation": {"x": 180}
         		}
     		},
@@ -20,25 +17,21 @@
     		},
     		"north": {
     			"transform": {
-					"translation": [ 0, 1, 0 ],
             		"rotation": {"x": -90}
         		}
     		},
     		"south": {
     			"transform": {
-					"translation": [ 0, -1, 0 ],
             		"rotation": {"x": 90}
         		}
     		},
     		"east": {
     			"transform": {
-					"translation": [ 0, 0, 1 ],
             		"rotation": {"z": -90}
         		}
     		},
     		"west": {
     			"transform": {
-					"translation": [ 0, 0, 1 ],
             		"rotation": {"z": 90}
         		}
     		}
@@ -72,9 +65,7 @@
     	},
         "age": {
         	"0": {
-				"textures": {
-    				"#crystal" : "bloodmagic:models/VengefulCrystal"
-    			}
+
       		},
       		"1": {
 				"submodel": "bloodmagic:crystal/Crystal2.obj"
@@ -121,9 +112,6 @@
       		}
         },
         "inventory": [{
-            "transform": {
-                "translation": [0.44, -0.1, 0.44]
-            },
             "variants": {
 	            "type": {
 		    		"default": {
@@ -149,9 +137,9 @@
 		    		"steadfast": {
 		    			"textures": {
 		    				"#crystal" : "bloodmagic:models/SteadfastCrystal"
+	    				}
 	    			}
-	    		}
-    	}
+				}	
             }
         }]
     }
