@@ -77,6 +77,12 @@ public class BlockAlchemyArray extends BlockContainer
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.INVISIBLE;

@@ -43,6 +43,12 @@ public abstract class BlockRoutingNode extends BlockContainer
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;

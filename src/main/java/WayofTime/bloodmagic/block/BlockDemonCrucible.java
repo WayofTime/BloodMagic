@@ -50,7 +50,7 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }

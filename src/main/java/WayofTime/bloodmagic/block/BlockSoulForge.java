@@ -44,6 +44,12 @@ public class BlockSoulForge extends BlockContainer implements IVariantProvider
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return AABB;

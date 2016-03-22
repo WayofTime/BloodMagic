@@ -44,6 +44,12 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return false;
