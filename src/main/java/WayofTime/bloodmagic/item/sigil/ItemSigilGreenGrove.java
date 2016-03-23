@@ -12,7 +12,7 @@ import net.minecraftforge.common.IPlantable;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 
-public class ItemSigilGreenGrove extends ItemSigilToggleable
+public class ItemSigilGreenGrove extends ItemSigilToggleableBase
 {
     public ItemSigilGreenGrove()
     {

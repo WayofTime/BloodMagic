@@ -7,7 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 
-public class ItemSigilElementalAffinity extends ItemSigilToggleable
+public class ItemSigilElementalAffinity extends ItemSigilToggleableBase
 {
     public ItemSigilElementalAffinity()
     {

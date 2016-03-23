@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -56,7 +57,7 @@ public class ItemSigilVoid extends ItemSigilBase
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && syphonNetwork(stack, player, getLPUsed()))
+                    if (world.getBlockState(blockpos).getBlock().getMaterial(world.getBlockState(blockpos)).isLiquid() && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
                     {
                         world.setBlockToAir(blockpos);
                         return super.onItemRightClick(stack, world, player, hand);
@@ -68,7 +69,7 @@ public class ItemSigilVoid extends ItemSigilBase
             }
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
+                this.setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()));
         }
 
         return super.onItemRightClick(stack, world, player, hand);
@@ -92,7 +93,7 @@ public class ItemSigilVoid extends ItemSigilBase
         {
             FluidStack amount = ((IFluidHandler) tile).drain(side, 1000, false);
 
-            if (amount != null && amount.amount > 0 && syphonNetwork(stack, player, getLPUsed()))
+            if (amount != null && amount.amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
             {
                 ((IFluidHandler) tile).drain(side, 1000, true);
                 return EnumActionResult.SUCCESS;
@@ -108,7 +109,7 @@ public class ItemSigilVoid extends ItemSigilBase
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && syphonNetwork(stack, player, getLPUsed()))
+        if (world.getBlockState(newPos).getBlock() instanceof IFluidBlock && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
         {
             world.setBlockToAir(newPos);
             return EnumActionResult.SUCCESS;

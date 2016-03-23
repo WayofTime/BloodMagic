@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -37,12 +38,12 @@ public class ItemSigilAir extends ItemSigilBase
             player.motionY = vec.yCoord * wantedVelocity;
             player.motionZ = vec.zCoord * wantedVelocity;
             player.velocityChanged = true;
-            world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
             player.fallDistance = 0;
 
             if (!player.capabilities.isCreativeMode)
-                this.setUnusable(stack, !syphonNetwork(stack, player, getLPUsed()));
+                this.setUnusable(stack, !NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()));
         }
 
         return super.onItemRightClick(stack, world, player, hand);

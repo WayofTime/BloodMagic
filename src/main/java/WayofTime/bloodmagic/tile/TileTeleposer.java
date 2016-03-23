@@ -6,8 +6,8 @@ import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockTeleposer;
-import WayofTime.bloodmagic.item.ItemBindable;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
 import com.google.common.base.Strings;
@@ -86,8 +86,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                 final int focusLevel = (teleposer.getStackInSlot(0).getItemDamage() + 1);
                 final int lpToBeDrained = (int) (0.5F * Math.sqrt((pos.getX() - focusPos.getX()) * (pos.getX() - focusPos.getX()) + (pos.getY() - focusPos.getY() + 1) * (pos.getY() - focusPos.getY() + 1) + (pos.getZ() - focusPos.getZ()) * (pos.getZ() - focusPos.getZ())));
 
-                //TODO MAKE THIS SYPHON LP BETTER
-                if (ItemBindable.syphonNetwork(teleposer.getStackInSlot(0), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1)))
+                if (NetworkHelper.getSoulNetwork(focus.getOwnerUUID(focusStack)).syphonAndDamage(PlayerHelper.getPlayerFromUUID(focus.getOwnerUUID(focusStack)), lpToBeDrained * (focusLevel * 2 - 1) * (focusLevel * 2 - 1) * (focusLevel * 2 - 1)))
                 {
                     int blocksTransported = 0;
 
@@ -156,7 +155,7 @@ public class TileTeleposer extends TileInventory implements ITickable
 
     private boolean canInitiateTeleport(TileTeleposer teleposer)
     {
-        return teleposer.getStackInSlot(0) != null && teleposer.getStackInSlot(0).getItem() instanceof ItemTelepositionFocus && !Strings.isNullOrEmpty(((ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem()).getBindableOwner(teleposer.getStackInSlot(0)));
+        return teleposer.getStackInSlot(0) != null && teleposer.getStackInSlot(0).getItem() instanceof ItemTelepositionFocus && !Strings.isNullOrEmpty(((ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem()).getOwnerName(teleposer.getStackInSlot(0)));
     }
 
     public static boolean teleportBlocks(Object caller, World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)

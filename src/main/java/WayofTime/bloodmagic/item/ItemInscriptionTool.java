@@ -27,7 +27,7 @@ import WayofTime.bloodmagic.block.BlockRitualStone;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemInscriptionTool extends ItemBindable implements IVariantProvider
+public class ItemInscriptionTool extends ItemBindableBase implements IVariantProvider
 {
     public ItemInscriptionTool()
     {
@@ -36,7 +36,6 @@ public class ItemInscriptionTool extends ItemBindable implements IVariantProvide
         setUnlocalizedName(Constants.Mod.MODID + ".scribe.");
         setRegistryName(Constants.BloodMagicItem.INSCRIPTION_TOOL.getRegName());
         setHasSubtypes(true);
-        setLPUsed(100);
     }
 
     @Override

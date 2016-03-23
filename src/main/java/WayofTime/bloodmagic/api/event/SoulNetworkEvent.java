@@ -5,21 +5,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+/**
+ * Base event class for Soul Network related events.
+ *
+ * {@link #ownerUUID} contains the owner's UUID
+ * {@link #syphon} contains the amount of LP to be drained
+ */
 public class SoulNetworkEvent extends Event
 {
-    public final String ownerName;
+    public final String ownerUUID;
     public int syphon;
 
-    public SoulNetworkEvent(String ownerName, int syphon)
+    public SoulNetworkEvent(String ownerUUID, int syphon)
     {
-        this.ownerName = ownerName;
+        this.ownerUUID = ownerUUID;
         this.syphon = syphon;
     }
 
+    /**
+     * This event is called when an {@link WayofTime.bloodmagic.api.impl.ItemBindable}
+     * is being drained inside of a {@link net.minecraft.tileentity.TileEntity}.
+     *
+     * If canceled, the drain will not be executed.
+     */
     @Cancelable
     public static class ItemDrainInContainerEvent extends SoulNetworkEvent
     {
-
         public ItemStack stack;
 
         public ItemDrainInContainerEvent(ItemStack stack, String ownerName, int syphon)
@@ -29,10 +40,15 @@ public class SoulNetworkEvent extends Event
         }
     }
 
+    /**
+     * This event is called when a {@link EntityPlayer}
+     * drains the Soul Network
+     *
+     * If canceled, the drain will not be executed.
+     */
     @Cancelable
     public static class PlayerDrainNetworkEvent extends SoulNetworkEvent
     {
-
         public final EntityPlayer player;
         // If true, will damage regardless of if the network had enough inside it
         public boolean shouldDamage;
@@ -48,7 +64,6 @@ public class SoulNetworkEvent extends Event
     @Cancelable
     public static class ItemDrainNetworkEvent extends PlayerDrainNetworkEvent
     {
-
         public final ItemStack itemStack;
         /**
          * Amount of damage that would incur if the network could not drain

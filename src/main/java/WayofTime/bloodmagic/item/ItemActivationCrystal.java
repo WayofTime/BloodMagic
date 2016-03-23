@@ -15,7 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemActivationCrystal extends ItemBindable implements IVariantProvider
+public class ItemActivationCrystal extends ItemBindableBase implements IVariantProvider
 {
     public static String[] names = { "weak", "awakened", "creative" };
 
@@ -26,7 +26,6 @@ public class ItemActivationCrystal extends ItemBindable implements IVariantProvi
         setUnlocalizedName(Constants.Mod.MODID + ".activationCrystal.");
         setRegistryName(Constants.BloodMagicItem.ACTIVATION_CRYSTAL.getRegName());
         setHasSubtypes(true);
-        setLPUsed(100);
     }
 
     @Override

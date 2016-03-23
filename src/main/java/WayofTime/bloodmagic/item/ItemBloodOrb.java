@@ -24,7 +24,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.base.Strings;
 
-public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
+public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindable
 {
     public ItemBloodOrb()
     {
@@ -51,12 +51,9 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
         if (world == null)
-            return super.onItemRightClick(stack, world, player, hand);
+            return super.onItemRightClick(stack, null, player, hand);
 
-        double posX = player.posX;
-        double posY = player.posY;
-        double posZ = player.posZ;
-        world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,
         // 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 
@@ -78,7 +75,7 @@ public class ItemBloodOrb extends ItemBindable implements IBloodOrb, IBindable
             NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)), getOrbLevel(stack.getItemDamage()));
 
         NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
-        hurtPlayer(player, 200);
+        NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 200);
         return super.onItemRightClick(stack, world, player, hand);
     }
 

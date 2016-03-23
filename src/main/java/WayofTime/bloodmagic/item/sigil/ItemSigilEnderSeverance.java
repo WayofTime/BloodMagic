@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModPotions;
 
-public class ItemSigilEnderSeverance extends ItemSigilToggleable
+public class ItemSigilEnderSeverance extends ItemSigilToggleableBase
 {
     public ItemSigilEnderSeverance()
     {

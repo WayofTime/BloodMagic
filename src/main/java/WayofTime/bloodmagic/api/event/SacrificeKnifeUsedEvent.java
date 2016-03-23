@@ -1,6 +1,7 @@
 package WayofTime.bloodmagic.api.event;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -13,6 +14,23 @@ public class SacrificeKnifeUsedEvent extends Event
     public boolean shouldDrainHealth;
     public boolean shouldFillAltar;
 
+    /**
+     * This event is called whenever a player attempts to use a {@link WayofTime.bloodmagic.item.ItemSacrificialDagger}
+     * to self-sacrifice near an altar.
+     *
+     * @param player
+     *        The player doing the sacrificing
+     * @param shouldDrainHealth
+     *        Determines whether or not health is lost
+     * @param shouldFillAltar
+     *        Determines whether or not an altar should be filled
+     * @param hp
+     *        Amount of health lost
+     * @param lpAdded
+     *        Amount of LP added to the altar
+     *
+     * This event is {@link Cancelable}.<br>
+     */
     public SacrificeKnifeUsedEvent(EntityPlayer player, boolean shouldDrainHealth, boolean shouldFillAltar, int hp, int lpAdded)
     {
         this.player = player;

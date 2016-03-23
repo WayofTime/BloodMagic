@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemSigilWhirlwind extends ItemSigilToggleable
+public class ItemSigilWhirlwind extends ItemSigilToggleableBase
 {
     public ItemSigilWhirlwind()
     {

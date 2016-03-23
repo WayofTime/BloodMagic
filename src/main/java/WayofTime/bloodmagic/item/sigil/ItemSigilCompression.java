@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemSigilCompression extends ItemSigilToggleable
+public class ItemSigilCompression extends ItemSigilToggleableBase
 {
     public ItemSigilCompression()
     {

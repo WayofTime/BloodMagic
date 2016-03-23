@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.registry.ModBlocks;
 
-public class ItemSigilPhantomBridge extends ItemSigilToggleable
+public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
 {
     public ItemSigilPhantomBridge()
     {

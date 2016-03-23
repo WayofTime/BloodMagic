@@ -146,7 +146,7 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
         double posX = player.posX;
         double posY = player.posY;
         double posZ = player.posZ;
-        world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        world.playSound(null, posX, posY, posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
         for (int l = 0; l < 8; ++l)
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);

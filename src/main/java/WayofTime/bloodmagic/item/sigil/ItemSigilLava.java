@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -60,7 +61,7 @@ public class ItemSigilLava extends ItemSigilBase
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    if (this.canPlaceLava(world, blockpos1) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceLava(world, blockpos1))
+                    if (this.canPlaceLava(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceLava(world, blockpos1))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
@@ -89,7 +90,7 @@ public class ItemSigilLava extends ItemSigilBase
             FluidStack fluid = new FluidStack(FluidRegistry.LAVA, 1000);
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
-            if (amount > 0 && syphonNetwork(stack, player, getLPUsed()))
+            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
             {
                 ((IFluidHandler) tile).fill(side, fluid, true);
             }
@@ -107,7 +108,7 @@ public class ItemSigilLava extends ItemSigilBase
             return EnumActionResult.FAIL;
         }
 
-        if (this.canPlaceLava(world, newPos) && syphonNetwork(stack, player, getLPUsed()))
+        if (this.canPlaceLava(world, newPos) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
         {
             return this.tryPlaceLava(world, newPos) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
         }
