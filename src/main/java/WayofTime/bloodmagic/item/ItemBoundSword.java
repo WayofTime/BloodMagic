@@ -42,8 +42,6 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
         setUnlocalizedName(Constants.Mod.MODID + ".bound.sword");
         setRegistryName(Constants.BloodMagicItem.BOUND_SWORD.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
-
-        this.attackDamage = 1.0F + ModItems.boundToolMaterial.getDamageVsEntity();
     }
 
     @Override
