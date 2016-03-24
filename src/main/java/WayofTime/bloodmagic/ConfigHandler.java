@@ -58,6 +58,7 @@ public class ConfigHandler
     public static boolean ritualZephyr;
     public static boolean ritualUpgradeRemove;
     public static boolean ritualArmourEvolve;
+    public static boolean ritualForsakenSoul;
 
     public static boolean cobblestoneRitual;
     public static boolean placerRitual;
@@ -254,6 +255,7 @@ public class ConfigHandler
         ritualZephyr = config.get(category, "ritualZephyr", true).getBoolean();
         ritualUpgradeRemove = config.get(category, "ritualRemove", true).getBoolean();
         ritualArmourEvolve = config.get(category, "ritualArmourEvolve", true).getBoolean();
+        ritualForsakenSoul = config.get(category, "ritualForsakenSoul", true).getBoolean();
 
         cobblestoneRitual = config.get(category, "ritualCobblestone", true).getBoolean();
         placerRitual = config.get(category, "ritualPlacer", true).getBoolean();

@@ -3,7 +3,9 @@ package WayofTime.bloodmagic.util;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
+
 import com.google.common.collect.Iterables;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -212,7 +215,7 @@ public class Utils
 
     public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage)
     {
-        Potion resistance = Potion.getPotionFromResourceLocation("resistance");
+        Potion resistance = MobEffects.resistance;
 
         if (source.isDamageAbsolute())
         {

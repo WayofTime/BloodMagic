@@ -3,11 +3,14 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -41,12 +44,12 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
         {
             if (sprintSpeedTime[this.level] > 0)
             {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("moveSpeed"), sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.moveSpeed, sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
             }
 
-            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(Potion.getPotionFromResourceLocation("regeneration")))
+            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(MobEffects.regeneration))
             {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("regeneration"), sprintRegenTime[this.level], 0, false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.regeneration, sprintRegenTime[this.level], 0, false, false));
             }
         }
     }

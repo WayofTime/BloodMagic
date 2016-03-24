@@ -5,9 +5,12 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.AddToNetworkEvent;
 import WayofTime.bloodmagic.api.event.SoulNetworkEvent;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+
 import com.google.common.base.Strings;
+
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -177,7 +180,7 @@ public class SoulNetwork extends WorldSavedData
     {
         if (getPlayer() != null)
         {
-            getPlayer().addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("confusion"), 99));
+            getPlayer().addPotionEffect(new PotionEffect(MobEffects.confusion, 99));
         }
     }
 

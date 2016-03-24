@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -27,12 +28,12 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
-        if (player.isPotionActive(Potion.getPotionFromResourceLocation("poison")) && poisonCooldown <= 0)
+        if (player.isPotionActive(MobEffects.poison) && poisonCooldown <= 0)
         {
-            PotionEffect eff = player.getActivePotionEffect(Potion.getPotionFromResourceLocation("poison"));
+            PotionEffect eff = player.getActivePotionEffect(MobEffects.poison);
             if (eff.getAmplifier() <= poisonMaxCure[this.level])
             {
-                player.removePotionEffect(Potion.getPotionFromResourceLocation("poison"));
+                player.removePotionEffect(MobEffects.poison);
                 poisonCooldown = poisonCooldownTime[this.level];
 
                 ChatUtil.sendNoSpam(player, TextHelper.localize(chatBase + "poisonRemove"));

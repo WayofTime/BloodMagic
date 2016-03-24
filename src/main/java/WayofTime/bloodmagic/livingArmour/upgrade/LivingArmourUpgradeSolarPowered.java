@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -50,7 +51,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade
 
             if (fireResistTime[this.level] != 0 && counter % fireResistCooldown[this.level] == 0)
             {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("fireResistance"), fireResistTime[this.level], 0, false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.fireResistance, fireResistTime[this.level], 0, false, false));
             }
         }
     }

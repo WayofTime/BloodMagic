@@ -4,6 +4,10 @@ Version 2.0.0-23
 - Fixed "see through world" syndrome for most blocks
 - Fixed .obj models so that they will properly render while in-hand
 - Fixed routing node attaching logic
+- Changed the growth behavior of the crystals
+- Fixed Potion getting for various methods
+- Started work on crystal automation ritual
+- Finished first iteration of the iterator of AreaDescriptor (hehe)
 
 ------------------------------------------------------
 Version 2.0.0-22

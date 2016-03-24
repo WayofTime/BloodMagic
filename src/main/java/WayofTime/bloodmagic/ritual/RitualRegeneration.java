@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -55,7 +56,7 @@ public class RitualRegeneration extends Ritual
             float health = player.getHealth();
             if (health <= player.getMaxHealth() - 1)
             {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("regeneration"), 50, 0, false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.regeneration, 50, 0, false, false));
 
                 totalEffects++;
 

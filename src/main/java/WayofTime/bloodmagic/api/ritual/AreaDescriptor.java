@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.api.ritual;
 
-
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
@@ -25,6 +24,8 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
     public abstract void resetCache();
 
     public abstract boolean isWithinArea(BlockPos pos);
+
+    public abstract void resetIterator();
 
     public static class Rectangle extends AreaDescriptor
     {
@@ -138,8 +139,7 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         @Override
         public boolean hasNext()
         {
-            // TODO Auto-generated method stub
-            return false;
+            return currentPosition == null || !(currentPosition.getX() + 1 == maximumOffset.getX() && currentPosition.getY() + 1 == maximumOffset.getY() && currentPosition.getZ() + 1 == maximumOffset.getZ());
         }
 
         @Override
@@ -148,21 +148,27 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             if (currentPosition != null)
             {
                 int nextX = currentPosition.getX() + 1 >= maximumOffset.getX() ? minimumOffset.getX() : currentPosition.getX() + 1;
-                int nextZ = nextX == minimumOffset.getX() ? currentPosition.getZ() : (currentPosition.getZ() + 1 >= maximumOffset.getZ() ? minimumOffset.getZ() : currentPosition.getZ() + 1);
-                int nextY = nextZ == minimumOffset.getZ() ? currentPosition.getY() : currentPosition.getY() + 1;
+                int nextZ = nextX != minimumOffset.getX() ? currentPosition.getZ() : (currentPosition.getZ() + 1 >= maximumOffset.getZ() ? minimumOffset.getZ() : currentPosition.getZ() + 1);
+                int nextY = (nextZ != minimumOffset.getZ() || nextX != minimumOffset.getX()) ? currentPosition.getY() : (currentPosition.getY() + 1);
                 currentPosition = new BlockPos(nextX, nextY, nextZ);
             } else
             {
                 currentPosition = minimumOffset;
             }
 
-            return cachedPosition.add(currentPosition);
+            return currentPosition;
         }
 
         @Override
         public void remove()
         {
 
+        }
+
+        @Override
+        public void resetIterator()
+        {
+            currentPosition = null;
         }
     }
 
@@ -280,6 +286,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             // TODO Auto-generated method stub
 
         }
+
+        @Override
+        public void resetIterator()
+        {
+            // TODO Auto-generated method stub
+
+        }
     }
 
     public static class Cross extends AreaDescriptor
@@ -344,6 +357,27 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         public BlockPos next()
         {
             return null;
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super BlockPos> arg0)
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void remove()
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void resetIterator()
+        {
+            // TODO Auto-generated method stub
+
         }
     }
 }

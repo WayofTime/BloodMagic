@@ -5,6 +5,7 @@ import WayofTime.bloodmagic.api.livingArmour.ILivingArmour;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -39,10 +40,10 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
         {
             changeMap.put(livingArmour, false);
 
-            player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("digSpeed"), digHasteTime[this.level], digHasteLevel[this.level], false, false));
+            player.addPotionEffect(new PotionEffect(MobEffects.digSpeed, digHasteTime[this.level], digHasteLevel[this.level], false, false));
             if (digSpeedTime[this.level] > 0)
             {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("moveSpeed"), digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.moveSpeed, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
             }
         }
     }

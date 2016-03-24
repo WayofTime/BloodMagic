@@ -13,7 +13,10 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -66,7 +69,8 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             list.add(new ItemStack(id, 1, i));
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         if (addRuneToRitual(stack, world, pos, player))
         {
@@ -74,10 +78,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
             {
                 spawnParticles(world, pos.up(), 15);
             }
+
+            return EnumActionResult.SUCCESS;
             // TODO: Have the diviner automagically build the ritual
         }
 
-        return false;
+        return EnumActionResult.PASS;
     }
 
     /**
@@ -183,6 +189,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
@@ -276,15 +283,17 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         }
     }
 
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-
         if (player.isSneaking() && !world.isRemote)
         {
             cycleRitual(stack, player);
+
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
-        return stack;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
     }
 
     @Override

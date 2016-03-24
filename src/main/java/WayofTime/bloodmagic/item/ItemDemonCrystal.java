@@ -96,7 +96,7 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
     @Override
     public double getDiscretization(ItemStack willStack)
     {
-        return 10;
+        return 50;
     }
 
     @Override

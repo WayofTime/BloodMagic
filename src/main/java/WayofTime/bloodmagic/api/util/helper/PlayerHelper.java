@@ -1,9 +1,12 @@
 package WayofTime.bloodmagic.api.util.helper;
 
 import WayofTime.bloodmagic.api.Constants;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -93,6 +96,6 @@ public class PlayerHelper
         if (player == null)
             return;
 
-        player.addPotionEffect(new PotionEffect(Potion.getPotionFromResourceLocation("confusion"), 80));
+        player.addPotionEffect(new PotionEffect(MobEffects.confusion, 80));
     }
 }

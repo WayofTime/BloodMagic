@@ -6,6 +6,7 @@ import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
@@ -46,7 +47,7 @@ public class StatTrackerPoison extends StatTracker
     @Override
     public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour)
     {
-        if (player.isPotionActive(Potion.getPotionFromResourceLocation("poison")))
+        if (player.isPotionActive(MobEffects.poison))
         {
             totalPoisonTicks++;
             this.markDirty();
