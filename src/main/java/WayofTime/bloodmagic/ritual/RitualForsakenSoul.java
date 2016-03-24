@@ -3,9 +3,15 @@ package WayofTime.bloodmagic.ritual;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
@@ -20,12 +26,54 @@ public class RitualForsakenSoul extends Ritual
 {
     public static final String CRYSTAL_RANGE = "altar";
     public static final String DAMAGE_RANGE = "damage";
+    public static final int MAX_UNIQUENESS = 10;
+
+    public static final int HEALTH_THRESHOLD = 20;
+
+    public double willBuffer = 0;
+    public double crystalBuffer = 0;
+
+    public List<Integer> keyList = new ArrayList<Integer>();
 
     public RitualForsakenSoul()
     {
         super("ritualForsakenSoul", 0, 40000, "ritual." + Constants.Mod.MODID + ".forsakenSoulRitual");
         addBlockRange(CRYSTAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -1, -1), 3));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag)
+    {
+        super.readFromNBT(tag);
+
+        willBuffer = tag.getDouble("willBuffer");
+        crystalBuffer = tag.getDouble("crystalBuffer");
+
+        keyList.clear();
+        for (int i = 0; i < MAX_UNIQUENESS; i++)
+        {
+            String key = "uniq" + i;
+            if (tag.hasKey(key))
+            {
+                keyList.add(tag.getInteger(key));
+            }
+        }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound tag)
+    {
+        super.writeToNBT(tag);
+
+        tag.setDouble("willBuffer", willBuffer);
+        tag.setDouble("crystalBuffer", crystalBuffer);
+
+        for (int i = 0; i < Math.min(MAX_UNIQUENESS, keyList.size()); i++)
+        {
+            String key = "uniq" + i;
+            tag.setInteger(key, keyList.get(i));
+        }
     }
 
     @Override
@@ -60,43 +108,81 @@ public class RitualForsakenSoul extends Ritual
             }
         }
 
-        if (crystalList.size() > 0)
+        AreaDescriptor damageRange = getBlockRange(DAMAGE_RANGE);
+        AxisAlignedBB range = damageRange.getAABB(pos);
+
+        List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+
+        for (EntityLivingBase entity : entities)
         {
-            TileDemonCrystal chosenCrystal = crystalList.get(world.rand.nextInt(crystalList.size()));
-            chosenCrystal.growCrystalWithWillAmount(40, 1);
+            if (!ConfigHandler.wellOfSufferingBlacklist.contains(entity.getClass().getSimpleName()))
+            {
+                if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
+                {
+                    if (entity.attackEntityFrom(DamageSource.outOfWorld, 1))
+                    {
+                        if (!entity.isEntityAlive())
+                        {
+                            int uniqueness = calculateUniqueness(entity);
+                            willBuffer += getWillForUniqueness(uniqueness) / HEALTH_THRESHOLD * entity.getMaxHealth();
+                            crystalBuffer += entity.getMaxHealth() / HEALTH_THRESHOLD;
+
+                            totalEffects++;
+                            if (totalEffects >= maxEffects)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
-//        if (tile instanceof TileAltar)
-//        {
-//            TileAltar tileAltar = (TileAltar) tile;
-//
-//            AreaDescriptor damageRange = getBlockRange(DAMAGE_RANGE);
-//            AxisAlignedBB range = damageRange.getAABB(pos);
-//
-//            List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-//
-//            for (EntityLivingBase entity : entities)
-//            {
-//                if (!ConfigHandler.wellOfSufferingBlacklist.contains(entity.getClass().getSimpleName()))
-//                {
-//                    if (entity.isEntityAlive() && !(entity instanceof EntityPlayer))
-//                    {
-//                        if (entity.attackEntityFrom(DamageSource.outOfWorld, 1))
-//                        {
-//                            tileAltar.sacrificialDaggerCall(SACRIFICE_AMOUNT, true);
-//
-//                            totalEffects++;
-//
-//                            if (totalEffects >= maxEffects)
-//                            {
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
+        if (crystalList.size() > 0 && crystalBuffer > 0)
+        {
+            double growth = Math.min(crystalBuffer, 1);
+            double willSyphonAmount = growth * willBuffer / crystalBuffer;
+            TileDemonCrystal chosenCrystal = crystalList.get(world.rand.nextInt(crystalList.size()));
+            double percentageGrowth = chosenCrystal.growCrystalWithWillAmount(growth * willBuffer / crystalBuffer, growth);
+            if (percentageGrowth > 0)
+            {
+                crystalBuffer -= percentageGrowth;
+                willBuffer -= percentageGrowth * willSyphonAmount;
+            }
+        }
 
         network.syphon(getRefreshCost() * totalEffects);
+    }
+
+    /**
+     * 
+     * @param mob
+     * @return The amount of uniqueness to the last 10 mobs killed
+     */
+    public int calculateUniqueness(EntityLivingBase mob)
+    {
+        int key = mob.getClass().hashCode();
+        keyList.add(key);
+        if (keyList.size() > MAX_UNIQUENESS)
+        {
+            keyList.remove(0);
+        }
+
+        List<Integer> uniquenessList = new ArrayList<Integer>();
+        for (int value : keyList)
+        {
+            if (!uniquenessList.contains(value))
+            {
+                uniquenessList.add(value);
+            }
+        }
+
+        return Math.min(uniquenessList.size(), MAX_UNIQUENESS);
+    }
+
+    public double getWillForUniqueness(int uniqueness)
+    {
+        return Math.max(50 - 15 * Math.sqrt(uniqueness), 0);
     }
 
     @Override
