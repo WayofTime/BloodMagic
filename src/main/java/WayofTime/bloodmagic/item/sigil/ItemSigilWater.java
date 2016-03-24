@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.item.sigil;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,7 +58,7 @@ public class ItemSigilWater extends ItemSigilBase
                     if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, stack))
                         return super.onItemRightClick(stack, world, player, hand);
 
-                    if (this.canPlaceWater(world, blockpos1) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceWater(world, blockpos1))
+                    if (this.canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, blockpos1))
                         return super.onItemRightClick(stack, world, player, hand);
                 }
             }
@@ -81,19 +82,19 @@ public class ItemSigilWater extends ItemSigilBase
             FluidStack fluid = new FluidStack(FluidRegistry.WATER, 1000);
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
-            if (amount > 0 && syphonNetwork(stack, player, getLPUsed()))
+            if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
                 ((IFluidHandler) tile).fill(side, fluid, true);
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(blockPos).getBlock() == Blocks.cauldron && syphonNetwork(stack, player, getLPUsed()))
+        if (world.getBlockState(blockPos).getBlock() == Blocks.cauldron && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
         {
             world.setBlockState(blockPos, Blocks.cauldron.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
             return EnumActionResult.SUCCESS;
         }
 
         BlockPos newPos = blockPos.offset(side);
-        return (player.canPlayerEdit(newPos, side, stack) && this.canPlaceWater(world, newPos) && syphonNetwork(stack, player, getLPUsed()) && this.tryPlaceWater(world, newPos)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return (player.canPlayerEdit(newPos, side, stack) && this.canPlaceWater(world, newPos) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, newPos)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean canPlaceWater(World world, BlockPos blockPos)

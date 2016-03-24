@@ -7,7 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 
-public class ItemSigilFastMiner extends ItemSigilToggleable
+public class ItemSigilFastMiner extends ItemSigilToggleableBase
 {
     public ItemSigilFastMiner()
     {

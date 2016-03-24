@@ -10,7 +10,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.tile.TileSpectralBlock;
 import WayofTime.bloodmagic.util.Utils;
 
-public class ItemSigilSuppression extends ItemSigilToggleable
+public class ItemSigilSuppression extends ItemSigilToggleableBase
 {
     public ItemSigilSuppression()
     {

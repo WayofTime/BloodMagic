@@ -10,7 +10,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 
-public class ItemSigilMagnetism extends ItemSigilToggleable
+public class ItemSigilMagnetism extends ItemSigilToggleableBase
 {
     public ItemSigilMagnetism()
     {

@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface IVariantProvider
 {
-
     List<Pair<Integer, String>> getVariants();
 }

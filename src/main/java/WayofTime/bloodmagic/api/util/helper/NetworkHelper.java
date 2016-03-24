@@ -10,7 +10,6 @@ import WayofTime.bloodmagic.api.registry.OrbRegistry;
 import com.google.common.base.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -223,7 +222,7 @@ public class NetworkHelper
             if (MinecraftForge.EVENT_BUS.post(event))
                 return false;
 
-            int drainAmount = syphonFromNetwork(event.ownerName, event.syphon);
+            int drainAmount = syphonFromNetwork(event.ownerUUID, event.syphon);
 
             if (drainAmount == 0 || event.shouldDamage)
                 hurtPlayer(player, event.syphon);
@@ -254,7 +253,7 @@ public class NetworkHelper
         if (MinecraftForge.EVENT_BUS.post(event) || event.getResult() == Event.Result.DENY)
             return false;
 
-        return syphonFromNetwork(event.ownerName, event.syphon) >= syphon;
+        return syphonFromNetwork(event.ownerUUID, event.syphon) >= syphon;
     }
 
     @Deprecated

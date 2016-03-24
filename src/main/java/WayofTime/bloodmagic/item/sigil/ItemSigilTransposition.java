@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item.sigil;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -73,7 +74,7 @@ public class ItemSigilTransposition extends ItemSigilBase
             {
                 if (rightClickedBlock.getBlock().getPlayerRelativeBlockHardness(state, player, world, blockPos) >= 0 && rightClickedBlock.getBlock().getBlockHardness(state, world, blockPos) >= 0)
                 {
-                    int cost = getLPUsed();
+                    int cost = getLpUsed();
 
                     NBTTagCompound tileNBTTag = new NBTTagCompound();
                     String blockName = rightClickedBlock.getBlock().getRegistryName();
@@ -94,7 +95,7 @@ public class ItemSigilTransposition extends ItemSigilBase
                     stack.getTagCompound().setByte(Constants.NBT.CONTAINED_BLOCK_META, metadata);
                     stack.getTagCompound().setTag(Constants.NBT.CONTAINED_TILE_ENTITY, tileNBTTag);
 
-                    syphonNetwork(stack, player, cost);
+                    NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, cost);
                     lightning(world, blockPos);
 
                     world.removeTileEntity(blockPos);

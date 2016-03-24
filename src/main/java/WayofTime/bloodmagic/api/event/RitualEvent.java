@@ -55,7 +55,6 @@ public class RitualEvent extends Event
     @Cancelable
     public static class RitualRunEvent extends RitualEvent
     {
-
         public RitualRunEvent(IMasterRitualStone mrs, String owner, Ritual ritual)
         {
             super(mrs, owner, ritual);

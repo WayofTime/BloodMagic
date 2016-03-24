@@ -14,10 +14,16 @@ public class BoundToolEvent extends Event
         this.player = player;
     }
 
+    /**
+     * This event is called when a {@link WayofTime.bloodmagic.item.ItemBoundTool}
+     * is being charged.
+     *
+     * If canceled, will result in the charging being canceled.
+     */
+
     @Cancelable
     public static class Charge extends BoundToolEvent
     {
-
         public ItemStack result;
 
         public Charge(EntityPlayer player, ItemStack result)
@@ -27,10 +33,16 @@ public class BoundToolEvent extends Event
         }
     }
 
+    /**
+     * This event is called when a {@link WayofTime.bloodmagic.item.ItemBoundTool}'s
+     * charge is released.
+     *
+     * If canceled, will result in the charge not being released.
+     */
+
     @Cancelable
     public static class Release extends BoundToolEvent
     {
-
         public final ItemStack boundTool;
         public int charge;
 

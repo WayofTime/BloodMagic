@@ -1,8 +1,7 @@
-package WayofTime.bloodmagic.item.sigil;
+package WayofTime.bloodmagic.api.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,32 +12,36 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import WayofTime.bloodmagic.item.ItemBindable;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-
-public class ItemSigilToggleable extends ItemSigilBase
+/**
+ * Base class for all toggleable sigils.
+ */
+public class ItemSigilToggleable extends ItemSigil implements IActivatable
 {
-    public ItemSigilToggleable(String name, int lpUsed)
+    private boolean toggleable;
+
+    public ItemSigilToggleable(int lpUsed)
     {
-        super(name, lpUsed);
+        super(lpUsed);
         setToggleable();
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void setToggleable()
     {
-        super.addInformation(stack, player, tooltip, advanced);
-        if (getActivated(stack))
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
-        else
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
+        this.toggleable = true;
+    }
+
+    public boolean getActivated(ItemStack stack)
+    {
+        return stack.getItemDamage() > 0;
+    }
+
+    public ItemStack setActivatedState(ItemStack stack, boolean activated)
+    {
+        if (this.toggleable)
+            stack.setItemDamage(activated ? 1 : 0);
+
+        return stack;
     }
 
     @Override
@@ -47,8 +50,8 @@ public class ItemSigilToggleable extends ItemSigilBase
         if (!world.isRemote && !isUnusable(stack))
         {
             if (player.isSneaking())
-                setActivated(stack, !getActivated(stack));
-            if (getActivated(stack) && ItemBindable.syphonNetwork(stack, player, getLPUsed()))
+                setActivatedState(stack, !getActivated(stack));
+            if (getActivated(stack) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
                 return super.onItemRightClick(stack, world, player, hand);
         }
 
@@ -58,7 +61,7 @@ public class ItemSigilToggleable extends ItemSigilBase
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return (ItemBindable.syphonNetwork(stack, player, getLPUsed()) && onSigilUse(stack, player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return (NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && onSigilUse(stack, player, world, pos, side, hitX, hitY, hitZ)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
 
     public boolean onSigilUse(ItemStack itemStack, EntityPlayer player, World world, BlockPos blockPos, EnumFacing side, float hitX, float hitY, float hitZ)
@@ -73,9 +76,9 @@ public class ItemSigilToggleable extends ItemSigilBase
         {
             if (worldIn.getWorldTime() % 100 == 0)
             {
-                if (!ItemBindable.syphonNetwork(stack, (EntityPlayer) entityIn, getLPUsed()))
+                if (!NetworkHelper.getSoulNetwork((EntityPlayerMP) entityIn).syphonAndDamage((EntityPlayer) entityIn, getLpUsed()))
                 {
-                    setActivated(stack, false);
+                    setActivatedState(stack, false);
                 }
             }
 
@@ -85,14 +88,5 @@ public class ItemSigilToggleable extends ItemSigilBase
 
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "active=false"));
-        ret.add(new ImmutablePair<Integer, String>(1, "active=true"));
-        return ret;
     }
 }

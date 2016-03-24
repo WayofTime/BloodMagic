@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
@@ -19,20 +20,19 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 
 import com.google.common.base.Strings;
 
-public class ItemLavaCrystal extends ItemBindable implements IFuelHandler, IVariantProvider
+public class ItemLavaCrystal extends ItemBindableBase implements IFuelHandler, IVariantProvider
 {
     public ItemLavaCrystal()
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".lavaCrystal");
         setRegistryName(Constants.BloodMagicItem.LAVA_CRYSTAL.getRegName());
-        setLPUsed(25);
     }
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack)
     {
-        syphonNetwork(itemStack, getLPUsed());
+        NetworkHelper.getSoulNetwork(this.getOwnerName(itemStack)).syphon(25);
         ItemStack copiedStack = itemStack.copy();
         copiedStack.setItemDamage(copiedStack.getItemDamage());
         copiedStack.stackSize = 1;
@@ -63,14 +63,14 @@ public class ItemLavaCrystal extends ItemBindable implements IFuelHandler, IVari
 //                return 200;
 //            }
 
-            if (canSyphonFromNetwork(fuel, getLPUsed()))
+            if (NetworkHelper.canSyphonFromContainer(fuel, 25))
             {
                 return 200;
             } else
             {
-                if (!Strings.isNullOrEmpty(getBindableOwner(fuel)))
+                if (!Strings.isNullOrEmpty(this.getOwnerUUID(fuel)))
                 {
-                    EntityPlayer player = PlayerHelper.getPlayerFromUUID(getBindableOwner(fuel));
+                    EntityPlayer player = PlayerHelper.getPlayerFromUUID(this.getOwnerUUID(fuel));
                     if (player != null)
                     {
                         player.addPotionEffect(new PotionEffect(MobEffects.confusion, 99));

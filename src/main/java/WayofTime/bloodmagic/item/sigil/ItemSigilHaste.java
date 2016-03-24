@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemSigilHaste extends ItemSigilToggleable
+public class ItemSigilHaste extends ItemSigilToggleableBase
 {
     public ItemSigilHaste()
     {

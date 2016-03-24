@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemTelepositionFocus extends ItemBindable implements IVariantProvider
+public class ItemTelepositionFocus extends ItemBindableBase implements IVariantProvider
 {
     public static String[] names = { "weak", "enhanced", "reinforced", "demonic" };
 

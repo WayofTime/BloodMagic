@@ -60,10 +60,7 @@ public class ItemDaggerOfSacrifice extends Item implements IVariantProvider
 
         if (findAndFillAltar(attacker.worldObj, target, lifeEssence))
         {
-            double posX = target.posX;
-            double posY = target.posY;
-            double posZ = target.posZ;
-            target.worldObj.playSound((EntityPlayer) null, target.posX, target.posY, target.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.worldObj.rand.nextFloat() - target.worldObj.rand.nextFloat()) * 0.8F);
+            target.worldObj.playSound(null, target.posX, target.posY, target.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (target.worldObj.rand.nextFloat() - target.worldObj.rand.nextFloat()) * 0.8F);
             target.setHealth(-1);
             target.onDeath(new DamageSourceBloodMagic());
         }
