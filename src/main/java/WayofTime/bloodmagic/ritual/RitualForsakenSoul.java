@@ -38,7 +38,7 @@ public class RitualForsakenSoul extends Ritual
     public RitualForsakenSoul()
     {
         super("ritualForsakenSoul", 0, 40000, "ritual." + Constants.Mod.MODID + ".forsakenSoulRitual");
-        addBlockRange(CRYSTAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -1, -1), 3));
+        addBlockRange(CRYSTAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 2, -3), 7, 5, 7));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
     }
 
@@ -202,13 +202,15 @@ public class RitualForsakenSoul extends Ritual
     {
         ArrayList<RitualComponent> components = new ArrayList<RitualComponent>();
 
-        this.addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
-        this.addCornerRunes(components, 2, -1, EnumRuneType.DUSK);
-        this.addParallelRunes(components, 2, -1, EnumRuneType.EARTH);
-        this.addCornerRunes(components, -3, -1, EnumRuneType.DUSK);
-        this.addOffsetRunes(components, 2, 4, -1, EnumRuneType.WATER);
-        this.addOffsetRunes(components, 1, 4, 0, EnumRuneType.WATER);
-        this.addParallelRunes(components, 4, 1, EnumRuneType.AIR);
+        this.addCornerRunes(components, 1, 0, EnumRuneType.AIR);
+        this.addParallelRunes(components, 1, -1, EnumRuneType.DUSK);
+        this.addParallelRunes(components, 1, 1, EnumRuneType.FIRE);
+        this.addParallelRunes(components, 2, 1, EnumRuneType.FIRE);
+        this.addParallelRunes(components, 3, 1, EnumRuneType.FIRE);
+        this.addOffsetRunes(components, 3, 1, 1, EnumRuneType.FIRE);
+        this.addCornerRunes(components, 3, 1, EnumRuneType.EARTH);
+        this.addCornerRunes(components, 3, 0, EnumRuneType.EARTH);
+        this.addOffsetRunes(components, 3, 2, 0, EnumRuneType.EARTH);
 
         return components;
     }

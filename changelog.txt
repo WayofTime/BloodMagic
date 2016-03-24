@@ -8,6 +8,10 @@ Version 2.0.0-23
 - Fixed Potion getting for various methods
 - Started work on crystal automation ritual
 - Finished first iteration of the iterator of AreaDescriptor (hehe)
+- Finished the crystal automation ritual, "Gathering of the Forsaken Souls." This ritual damages mobs in it's area (21^3 cube around the MRS) and once it kills a mob it
+	uses its life essence to feed the demonic will crystals inside of its area (two blocks above the ritual stone, 7x7 region and 5 high). This costs LP and 
+	demonic will from the aura of the particular type, and costs less will the more... varied the mobs killed are. Growth amount is dictated by the max health
+	of the mobs killed.
 
 ------------------------------------------------------
 Version 2.0.0-22
