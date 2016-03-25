@@ -61,16 +61,15 @@ public class BindingRecipeCategory implements IRecipeCategory
     @SuppressWarnings("unchecked")
     public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper)
     {
-
         recipeLayout.getItemStacks().init(INPUT_SLOT, true, 0, 5);
-        recipeLayout.getItemStacks().init(CATALYST_SLOT, true, 50, 5);
+        recipeLayout.getItemStacks().init(CATALYST_SLOT, true, 29, 3);
         recipeLayout.getItemStacks().init(OUTPUT_SLOT, false, 73, 5);
 
         if (recipeWrapper instanceof BindingRecipeJEI)
         {
             BindingRecipeJEI bindingRecipe = (BindingRecipeJEI) recipeWrapper;
-            recipeLayout.getItemStacks().set(INPUT_SLOT, (ItemStack) bindingRecipe.getInputs().get(0));
-            recipeLayout.getItemStacks().set(CATALYST_SLOT, (ItemStack) bindingRecipe.getInputs().get(1));
+            recipeLayout.getItemStacks().set(INPUT_SLOT, bindingRecipe.getInputs());
+            recipeLayout.getItemStacks().set(CATALYST_SLOT, bindingRecipe.getCatalyst());
             recipeLayout.getItemStacks().set(OUTPUT_SLOT, bindingRecipe.getOutputs());
         }
     }

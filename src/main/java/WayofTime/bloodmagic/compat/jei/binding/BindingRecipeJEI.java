@@ -15,19 +15,28 @@ public class BindingRecipeJEI extends BlankRecipeWrapper
     private final List<ItemStack> inputs;
 
     @Nonnull
+    private final ItemStack catalyst;
+
+    @Nonnull
     private final ItemStack output;
 
     @SuppressWarnings("unchecked")
-    public BindingRecipeJEI(@Nonnull ItemStack input, @Nonnull ItemStack catalyst, @Nonnull ItemStack output)
+    public BindingRecipeJEI(@Nonnull List<ItemStack> input, @Nonnull ItemStack catalyst, @Nonnull ItemStack output)
     {
-        this.inputs = Arrays.asList(input, catalyst);
+        this.inputs = input;
+        this.catalyst = catalyst;
         this.output = output;
     }
 
     @Override
     public List getInputs()
     {
-        return inputs;
+        return Arrays.asList(inputs, catalyst);
+    }
+
+    public ItemStack getCatalyst()
+    {
+        return catalyst;
     }
 
     @Override

@@ -16,7 +16,7 @@ import WayofTime.bloodmagic.util.helper.TextHelper;
 public class AltarRecipeJEI extends BlankRecipeWrapper
 {
     @Nonnull
-    private final ItemStack input;
+    private final Object input;
 
     @Nonnull
     private final ItemStack output;
@@ -25,7 +25,7 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
     private final int consumptionRate;
     private final int drainRate;
 
-    public AltarRecipeJEI(@Nonnull ItemStack input, @Nonnull ItemStack output, int tier, int requiredLP, int consumptionRate, int drainRate)
+    public AltarRecipeJEI(@Nonnull List<ItemStack> input, @Nonnull ItemStack output, int tier, int requiredLP, int consumptionRate, int drainRate)
     {
         this.input = input;
         this.output = output;
