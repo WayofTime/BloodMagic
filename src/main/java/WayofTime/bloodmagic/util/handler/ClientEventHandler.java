@@ -8,6 +8,7 @@ import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
 import WayofTime.bloodmagic.util.GhostItemHelper;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
@@ -46,10 +47,10 @@ public class ClientEventHandler
             int amount = GhostItemHelper.getItemGhostAmount(stack);
             if (amount == 0)
             {
-                event.getToolTip().add("Everything");
+                event.getToolTip().add(TextHelper.localize("tooltip.BloodMagic.ghost.everything"));
             } else
             {
-                event.getToolTip().add("Ghost item amount: " + amount);
+                event.getToolTip().add(TextHelper.localize("tooltip.BloodMagic.ghost.amount", amount));
             }
         }
     }

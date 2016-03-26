@@ -55,11 +55,6 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     @Override
     public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
     {
-        if (world.isRemote)
-        {
-            return EnumActionResult.SUCCESS;
-        }
-
         TileEntity tileHit = world.getTileEntity(pos);
 
         if (!(tileHit instanceof IRoutingNode))
@@ -69,7 +64,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
             if (!containedPos.equals(BlockPos.ORIGIN))
             {
                 this.setBlockPos(stack, BlockPos.ORIGIN);
-                ChatUtil.sendChat(player, "Removing contained location");
+                ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.remove"));
                 return EnumActionResult.FAIL;
             }
             return EnumActionResult.FAIL;
@@ -79,7 +74,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
         if (containedPos.equals(BlockPos.ORIGIN))
         {
             this.setBlockPos(stack, pos);
-            ChatUtil.sendChat(player, "Setting node location");
+            ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.set"));
             return EnumActionResult.SUCCESS;
         } else
         {
@@ -99,7 +94,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             master.addConnection(pos, containedPos);
                             master.addNodeToList(node);
                             node.addConnection(containedPos);
-                            ChatUtil.sendChat(player, "Linked node to master!");
+                            ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link.master"));
                             this.setBlockPos(stack, BlockPos.ORIGIN);
                             return EnumActionResult.SUCCESS;
                         }
@@ -107,7 +102,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                     {
                         master.addConnection(pos, containedPos);
                         node.addConnection(containedPos);
-                        ChatUtil.sendChat(player, "Linked node to master!");
+                        ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link.master"));
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     }
@@ -124,7 +119,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                             master.addConnection(pos, containedPos);
                             pastNode.addConnection(pos);
                             master.addNodeToList(pastNode);
-                            ChatUtil.sendChat(player, "Linked node to master!");
+                            ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link.master"));
                             this.setBlockPos(stack, BlockPos.ORIGIN);
                             return EnumActionResult.SUCCESS;
                         }
@@ -132,7 +127,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                     {
                         master.addConnection(pos, containedPos);
                         pastNode.addConnection(pos);
-                        ChatUtil.sendChat(player, "Linked node to master!");
+                        ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link.master"));
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     }
@@ -152,7 +147,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
-                        ChatUtil.sendChat(player, "Linked nodes together.");
+                        ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link"));
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     } else if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //pastNode is not connected to a master, but node is
@@ -167,7 +162,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
-                        ChatUtil.sendChat(player, "Linked nodes together.");
+                        ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link"));
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     } else if (node.getMasterPos().equals(BlockPos.ORIGIN)) //node is not connected to a master, but pastNode is
@@ -182,7 +177,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
                         }
                         pastNode.addConnection(pos);
                         node.addConnection(containedPos);
-                        ChatUtil.sendChat(player, "Linked nodes together.");
+                        ChatUtil.sendChat(player, TextHelper.localize("chat.BloodMagic.routing.link"));
                         this.setBlockPos(stack, BlockPos.ORIGIN);
                         return EnumActionResult.SUCCESS;
                     } else

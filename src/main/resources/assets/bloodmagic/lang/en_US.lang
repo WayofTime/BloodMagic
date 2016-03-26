@@ -261,7 +261,6 @@ tooltip.BloodMagic.sigil.seer.currentBonus=Current Bonus: +%,d%%
 tooltip.BloodMagic.sigil.phantomBridge.desc=&oWalking on thin air...
 tooltip.BloodMagic.sigil.whirlwind.desc=&oBest not to wear a skirt
 tooltip.BloodMagic.sigil.enderSeverance.desc=&oPutting Endermen in Dire situations!
-
 tooltip.BloodMagic.sigil.teleposition.desc=I am very close to being moved by this.
 tooltip.BloodMagic.sigil.transposition.desc=Feel the power of the Force, my young apprentice.
 
@@ -338,6 +337,9 @@ tooltip.BloodMagic.fluid.type=Fluid Contained
 tooltip.BloodMagic.fluid.amount=Amount
 tooltip.BloodMagic.fluid.capacity=Capacity
 
+tooltip.BloodMagic.ghost.everything=Everything
+tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
+
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
@@ -385,6 +387,11 @@ chat.BloodMagic.ritual.notValid=You feel that these runes are not configured cor
 chat.BloodMagic.livingArmour.upgrade.poisonRemove=You are starting to feel better already!
 chat.BloodMagic.livingArmour.upgrade.grimReaper=&6A shadowy force pulls you from the brink of death!
 chat.BloodMagic.livingArmour.newUpgrade=&4Upgrade acquired!
+
+chat.BloodMagic.routing.remove=Removing contained location
+chat.BloodMagic.routing.set=Setting node location
+chat.BloodMagic.routing.link.master=Linked node to master!
+chat.BloodMagic.routing.link=Linked nodes together
 
 # Commands
 commands.error.arg.invalid=Invalid arguments
