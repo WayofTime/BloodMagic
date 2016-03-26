@@ -25,29 +25,29 @@ public class PotionEventHandlers
     @SubscribeEvent
     public void onLivingJumpEvent(LivingEvent.LivingJumpEvent event)
     {
-        if (event.entityLiving.isPotionActive(ModPotions.boost))
+        if (event.getEntityLiving().isPotionActive(ModPotions.boost))
         {
-            int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
-            event.entityLiving.motionY += (0.1f) * (2 + i);
+            int i = event.getEntityLiving().getActivePotionEffect(ModPotions.boost).getAmplifier();
+            event.getEntityLiving().motionY += (0.1f) * (2 + i);
         }
 
-        // if (event.entityLiving.isPotionActive(ModPotions.heavyHeart)) {
-        // event.entityLiving.motionY = 0;
+        // if (event.getEntityLiving().isPotionActive(ModPotions.heavyHeart)) {
+        // event.getEntityLiving().motionY = 0;
         // }
     }
 
     @SubscribeEvent
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-//        if (event.entityLiving.isPotionActive(ModPotions.boost))
+//        if (event.getEntityLiving().isPotionActive(ModPotions.boost))
 //        {
-//            int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
+//            int i = event.getEntityLiving().getActivePotionEffect(ModPotions.boost).getAmplifier();
 //            {
 //                float percentIncrease = (i + 1) * 0.05f;
 //
-//                if (event.entityLiving instanceof EntityPlayer)
+//                if (event.getEntityLiving() instanceof EntityPlayer)
 //                {
-//                    EntityPlayer entityPlayer = (EntityPlayer) event.entityLiving;
+//                    EntityPlayer entityPlayer = (EntityPlayer) event.getEntityLiving();
 //
 //                    if ((entityPlayer.onGround || entityPlayer.capabilities.isFlying) && entityPlayer.moveForward > 0F)
 //                        entityPlayer.moveFlying(0F, 1F, entityPlayer.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
@@ -55,11 +55,11 @@ public class PotionEventHandlers
 //            }
 //        }
 
-        if (event.entityLiving.isPotionActive(ModPotions.whirlwind))
+        if (event.getEntityLiving().isPotionActive(ModPotions.whirlwind))
         {
             int d0 = 3;
-            AxisAlignedBB axisAlignedBB = new AxisAlignedBB(event.entityLiving.posX - 0.5, event.entityLiving.posY - 0.5, event.entityLiving.posZ - 0.5, event.entityLiving.posX + 0.5, event.entityLiving.posY + 0.5, event.entityLiving.posZ + 0.5).expand(d0, d0, d0);
-            List entityList = event.entityLiving.worldObj.getEntitiesWithinAABB(Entity.class, axisAlignedBB);
+            AxisAlignedBB axisAlignedBB = new AxisAlignedBB(event.getEntityLiving().posX - 0.5, event.getEntityLiving().posY - 0.5, event.getEntityLiving().posZ - 0.5, event.getEntityLiving().posX + 0.5, event.getEntityLiving().posY + 0.5, event.getEntityLiving().posZ + 0.5).expand(d0, d0, d0);
+            List entityList = event.getEntityLiving().worldObj.getEntitiesWithinAABB(Entity.class, axisAlignedBB);
 
             for (Object thing : entityList)
             {
@@ -77,12 +77,12 @@ public class PotionEventHandlers
                 else if (projectile instanceof EntityThrowable)
                     throwingEntity = ((EntityThrowable) projectile).getThrower();
 
-                if (throwingEntity != null && throwingEntity.equals(event.entityLiving))
+                if (throwingEntity != null && throwingEntity.equals(event.getEntityLiving()))
                     continue;
 
-                double delX = projectile.posX - event.entityLiving.posX;
-                double delY = projectile.posY - event.entityLiving.posY;
-                double delZ = projectile.posZ - event.entityLiving.posZ;
+                double delX = projectile.posX - event.getEntityLiving().posX;
+                double delY = projectile.posY - event.getEntityLiving().posY;
+                double delZ = projectile.posZ - event.getEntityLiving().posZ;
 
                 double angle = (delX * projectile.motionX + delY * projectile.motionY + delZ * projectile.motionZ) / (Math.sqrt(delX * delX + delY * delY + delZ * delZ) * Math.sqrt(projectile.motionX * projectile.motionX + projectile.motionY * projectile.motionY + projectile.motionZ * projectile.motionZ));
 
@@ -114,14 +114,14 @@ public class PotionEventHandlers
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerDamageEvent(LivingAttackEvent event)
     {
-        if (event.entityLiving.isPotionActive(ModPotions.whirlwind) && event.isCancelable() && event.source.isProjectile())
+        if (event.getEntityLiving().isPotionActive(ModPotions.whirlwind) && event.isCancelable() && event.getSource().isProjectile())
             event.setCanceled(true);
     }
 
     @SubscribeEvent
     public void onEndermanTeleportEvent(EnderTeleportEvent event)
     {
-        if (event.entityLiving.isPotionActive(ModPotions.planarBinding) && event.isCancelable())
+        if (event.getEntityLiving().isPotionActive(ModPotions.planarBinding) && event.isCancelable())
         {
             event.setCanceled(true);
         }

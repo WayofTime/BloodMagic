@@ -112,9 +112,9 @@ public class EventHandler
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityDeath(LivingDeathEvent event)
     {
-        if (event.entityLiving instanceof EntityPlayer)
+        if (event.getEntityLiving() instanceof EntityPlayer)
         {
-            EntityPlayer player = (EntityPlayer) event.entityLiving;
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 
             if (LivingArmour.hasFullSet(player))
             {
@@ -178,7 +178,7 @@ public class EventHandler
     @SubscribeEvent
     public void chunkSave(ChunkDataEvent.Save event)
     {
-        int dim = event.world.provider.getDimension();
+        int dim = event.getWorld().provider.getDimension();
         ChunkCoordIntPair loc = event.getChunk().getChunkCoordIntPair();
 
         NBTTagCompound nbt = new NBTTagCompound();
@@ -199,7 +199,7 @@ public class EventHandler
     @SubscribeEvent
     public void chunkLoad(ChunkDataEvent.Load event)
     {
-        int dim = event.world.provider.getDimension();
+        int dim = event.getWorld().provider.getDimension();
         if (event.getData().getCompoundTag("BloodMagic").hasKey("base"))
         {
             NBTTagCompound nbt = event.getData().getCompoundTag("BloodMagic");
@@ -216,10 +216,10 @@ public class EventHandler
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-        if (event.entityLiving instanceof EntityPlayer)
+        if (event.getEntityLiving() instanceof EntityPlayer)
         {
-            EntityPlayer player = (EntityPlayer) event.entityLiving;
-            if (event.entityLiving.isPotionActive(ModPotions.boost))
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+            if (event.getEntityLiving().isPotionActive(ModPotions.boost))
             {
                 player.stepHeight = 1.0f;
             } else
@@ -262,9 +262,9 @@ public class EventHandler
                 }
             }
 
-            if (event.entityLiving.isPotionActive(ModPotions.boost))
+            if (event.getEntityLiving().isPotionActive(ModPotions.boost))
             {
-                int i = event.entityLiving.getActivePotionEffect(ModPotions.boost).getAmplifier();
+                int i = event.getEntityLiving().getActivePotionEffect(ModPotions.boost).getAmplifier();
                 {
                     percentIncrease += (i + 1) * 0.05f;
                 }
@@ -295,19 +295,19 @@ public class EventHandler
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event)
     {
-        if (event.entity.worldObj.isRemote)
+        if (event.getEntity().worldObj.isRemote)
             return;
 
-        if (event.source.getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.source.getEntity()))
+        if (event.getSource().getEntity() instanceof EntityPlayer && !PlayerHelper.isFakePlayer((EntityPlayer) event.getSource().getEntity()))
         {
-            EntityPlayer player = (EntityPlayer) event.source.getEntity();
+            EntityPlayer player = (EntityPlayer) event.getSource().getEntity();
 
             if (player.getItemStackFromSlot(EntityEquipmentSlot.CHEST) != null && player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() instanceof ItemPackSacrifice)
             {
                 ItemPackSacrifice pack = (ItemPackSacrifice) player.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem();
 
                 boolean shouldSyphon = pack.getStoredLP(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST)) < pack.CAPACITY;
-                float damageDone = event.entityLiving.getHealth() < event.ammount ? event.ammount - event.entityLiving.getHealth() : event.ammount;
+                float damageDone = event.getEntityLiving().getHealth() < event.getAmount() ? event.getAmount() - event.getEntityLiving().getHealth() : event.getAmount();
                 int totalLP = Math.round(damageDone * ConfigHandler.sacrificialPackConversion);
 
                 if (shouldSyphon)
@@ -321,55 +321,55 @@ public class EventHandler
     {
         if (ConfigHandler.thaumcraftGogglesUpgrade)
         {
-            if (event.left.getItem() == ModItems.livingArmourHelmet && event.right.getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.right.isItemDamaged())
+            if (event.getLeft().getItem() == ModItems.livingArmourHelmet && event.getRight().getItem() == Constants.Compat.THAUMCRAFT_GOGGLES && !event.getRight().isItemDamaged())
             {
                 ItemStack output = new ItemStack(ModItems.upgradeTome);
                 output = NBTHelper.checkNBT(output);
                 ItemUpgradeTome.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
                 ItemUpgradeTome.setLevel(output, 1);
-                event.cost = 1;
+                event.setCost(1);
 
-                event.output = output;
+                event.setOutput(output);
 
                 return;
             }
         }
 
-        if (event.left.getItem() == ModItems.upgradeTome && event.right.getItem() == ModItems.upgradeTome)
+        if (event.getLeft().getItem() == ModItems.upgradeTome && event.getRight().getItem() == ModItems.upgradeTome)
         {
-            LivingArmourUpgrade leftUpgrade = ItemUpgradeTome.getUpgrade(event.left);
-            if (leftUpgrade != null && ItemUpgradeTome.getKey(event.left).equals(ItemUpgradeTome.getKey(event.right)))
+            LivingArmourUpgrade leftUpgrade = ItemUpgradeTome.getUpgrade(event.getLeft());
+            if (leftUpgrade != null && ItemUpgradeTome.getKey(event.getLeft()).equals(ItemUpgradeTome.getKey(event.getRight())))
             {
-                int leftLevel = ItemUpgradeTome.getLevel(event.left);
-                int rightLevel = ItemUpgradeTome.getLevel(event.right);
+                int leftLevel = ItemUpgradeTome.getLevel(event.getLeft());
+                int rightLevel = ItemUpgradeTome.getLevel(event.getRight());
 
                 if (leftLevel == rightLevel && leftLevel < leftUpgrade.getMaxTier() - 1)
                 {
-                    ItemStack outputStack = event.left.copy();
+                    ItemStack outputStack = event.getLeft().copy();
                     ItemUpgradeTome.setLevel(outputStack, leftLevel + 1);
-                    event.cost = leftLevel + 2;
+                    event.setCost(leftLevel + 2);
 
-                    event.output = outputStack;
+                    event.setOutput(outputStack);
 
                     return;
                 }
             }
         }
 
-        if (event.left.getItem() instanceof IUpgradeTrainer && event.right.getItem() == ModItems.upgradeTome)
+        if (event.getLeft().getItem() instanceof IUpgradeTrainer && event.getRight().getItem() == ModItems.upgradeTome)
         {
-            LivingArmourUpgrade rightUpgrade = ItemUpgradeTome.getUpgrade(event.right);
+            LivingArmourUpgrade rightUpgrade = ItemUpgradeTome.getUpgrade(event.getRight());
             if (rightUpgrade != null)
             {
-                String key = ItemUpgradeTome.getKey(event.right);
-                ItemStack outputStack = event.left.copy();
+                String key = ItemUpgradeTome.getKey(event.getRight());
+                ItemStack outputStack = event.getLeft().copy();
                 List<String> keyList = new ArrayList<String>();
                 keyList.add(key);
-                if (((IUpgradeTrainer) event.left.getItem()).setTrainedUpgrades(outputStack, keyList))
+                if (((IUpgradeTrainer) event.getLeft().getItem()).setTrainedUpgrades(outputStack, keyList))
                 {
-                    event.cost = 1;
+                    event.setCost(1);
 
-                    event.output = outputStack;
+                    event.setOutput(outputStack);
 
                     return;
                 }
@@ -405,10 +405,10 @@ public class EventHandler
     {
         IBlockState state = event.getTargetBlock();
         Block block = state.getBlock();
-        if (block != null && block instanceof BlockAltar && event.entityPlayer != null && event.entityPlayer instanceof EntityPlayerMP && event.entityPlayer.getActiveItemStack() != null && event.entityPlayer.getActiveItemStack().getItem() instanceof ItemAltarMaker)
+        if (block != null && block instanceof BlockAltar && event.getEntityPlayer() != null && event.getEntityPlayer() instanceof EntityPlayerMP && event.getEntityPlayer().getActiveItemStack() != null && event.getEntityPlayer().getActiveItemStack().getItem() instanceof ItemAltarMaker)
         {
-            ItemAltarMaker altarMaker = (ItemAltarMaker) event.entityPlayer.getActiveItemStack().getItem();
-            ChatUtil.sendNoSpam(event.entityPlayer, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.entityPlayer)));
+            ItemAltarMaker altarMaker = (ItemAltarMaker) event.getEntityPlayer().getActiveItemStack().getItem();
+            ChatUtil.sendNoSpam(event.getEntityPlayer(), TextHelper.localizeEffect("chat.BloodMagic.altarMaker.destroy", altarMaker.destroyAltar(event.getEntityPlayer())));
         }
     }
 
@@ -425,7 +425,7 @@ public class EventHandler
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent event)
     {
-        if (event.modID.equals(Constants.Mod.MODID))
+        if (event.getModID().equals(Constants.Mod.MODID))
             ConfigHandler.syncConfig();
     }
 
@@ -455,15 +455,15 @@ public class EventHandler
     @SubscribeEvent
     public void interactEvent(PlayerInteractEvent event)
     {
-        if (event.world.isRemote)
+        if (event.getWorld().isRemote)
             return;
 
-        EntityPlayer player = event.entityPlayer;
+        EntityPlayer player = event.getEntityPlayer();
 
         if (PlayerHelper.isFakePlayer(player))
             return;
 
-        if (event.useBlock == Result.DENY && event.useItem != Result.DENY)
+        if (event.getUseBlock() == Result.DENY && event.getUseItem() != Result.DENY)
         {
             ItemStack held = player.getActiveItemStack();
             if (held != null && held.getItem() instanceof IBindable)
@@ -525,7 +525,7 @@ public class EventHandler
     @SubscribeEvent
     public void onEntityHealed(LivingHealEvent event)
     {
-        EntityLivingBase healedEntity = event.entityLiving;
+        EntityLivingBase healedEntity = event.getEntityLiving();
         if (!(healedEntity instanceof EntityPlayer))
         {
             return;
@@ -539,10 +539,10 @@ public class EventHandler
             LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
             if (armour != null)
             {
-                StatTrackerHealthboost.incrementCounter(armour, event.amount);
+                StatTrackerHealthboost.incrementCounter(armour, event.getAmount());
                 if (player.worldObj.canSeeSky(player.getPosition()) && player.worldObj.provider.isDaytime())
                 {
-                    StatTrackerSolarPowered.incrementCounter(armour, event.amount);
+                    StatTrackerSolarPowered.incrementCounter(armour, event.getAmount());
                 }
             }
         }
@@ -551,9 +551,9 @@ public class EventHandler
     @SubscribeEvent
     public void onEntityAttacked(LivingAttackEvent event)
     {
-        DamageSource source = event.source;
-        Entity sourceEntity = event.source.getEntity();
-        EntityLivingBase attackedEntity = event.entityLiving;
+        DamageSource source = event.getSource();
+        Entity sourceEntity = event.getSource().getEntity();
+        EntityLivingBase attackedEntity = event.getEntityLiving();
 
         if (attackedEntity.hurtResistantTime > 0)
         {
@@ -567,7 +567,7 @@ public class EventHandler
             // Living Armor Handling
             if (LivingArmour.hasFullSet(attackedPlayer))
             {
-                float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.source, event.ammount), attackedPlayer.getHealth());
+                float amount = Math.min(Utils.getModifiedDamage(attackedPlayer, event.getSource(), event.getAmount()), attackedPlayer.getHealth());
                 ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
@@ -594,7 +594,7 @@ public class EventHandler
             // Living Armor Handling
             if (LivingArmour.hasFullSet(player))
             {
-                float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.source, event.ammount), attackedEntity.getHealth());
+                float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.getSource(), event.getAmount()), attackedEntity.getHealth());
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
@@ -611,9 +611,9 @@ public class EventHandler
     @SubscribeEvent
     public void onArrowFire(ArrowLooseEvent event)
     {
-        World world = event.entityPlayer.worldObj;
+        World world = event.getEntityPlayer().worldObj;
         ItemStack stack = event.getBow();
-        EntityPlayer player = event.entityPlayer;
+        EntityPlayer player = event.getEntityPlayer();
 
         if (LivingArmour.hasFullSet(player))
         {
@@ -690,8 +690,8 @@ public class EventHandler
     @SubscribeEvent
     public void onLivingDrops(LivingDropsEvent event)
     {
-        EntityLivingBase attackedEntity = event.entityLiving;
-        DamageSource source = event.source;
+        EntityLivingBase attackedEntity = event.getEntityLiving();
+        DamageSource source = event.getSource();
         Entity entity = source.getEntity();
 
         if (attackedEntity.isPotionActive(ModPotions.soulSnare))
@@ -701,7 +701,7 @@ public class EventHandler
 
             double amountOfSouls = random.nextDouble() * (lvl + 1) * (lvl + 1) * 5;
             ItemStack soulStack = ((IDemonWill) ModItems.monsterSoul).createWill(0, amountOfSouls);
-            event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
+            event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, soulStack));
         }
 
         if (entity != null && entity instanceof EntityPlayer)
@@ -711,7 +711,7 @@ public class EventHandler
             if (heldStack != null && heldStack.getItem() instanceof IDemonWillWeapon && !player.worldObj.isRemote)
             {
                 IDemonWillWeapon demonWillWeapon = (IDemonWillWeapon) heldStack.getItem();
-                List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.lootingLevel);
+                List<ItemStack> droppedSouls = demonWillWeapon.getRandomDemonWillDrop(attackedEntity, player, heldStack, event.getLootingLevel());
                 if (!droppedSouls.isEmpty())
                 {
                     ItemStack remainder;
@@ -719,7 +719,7 @@ public class EventHandler
                     {
                         remainder = PlayerDemonWillHandler.addDemonWill(player, willStack);
                         if (remainder != null && ((IDemonWill) remainder.getItem()).getWill(remainder) >= 0.0001)
-                            event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
+                            event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, remainder));
                     }
                     player.inventoryContainer.detectAndSendChanges();
                 }
@@ -728,17 +728,17 @@ public class EventHandler
             if (heldStack != null && heldStack.getItem() == ModItems.boundSword && !(attackedEntity instanceof EntityAnimal))
                 for (int i = 0; i <= EnchantmentHelper.getLootingModifier(player); i++)
                     if (this.random.nextDouble() < 0.2)
-                        event.drops.add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.bloodShard, 1, 0)));
+                        event.getDrops().add(new EntityItem(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ, new ItemStack(ModItems.bloodShard, 1, 0)));
         }
     }
 
     @SubscribeEvent
     public void onItemPickup(EntityItemPickupEvent event)
     {
-        ItemStack stack = event.item.getEntityItem();
+        ItemStack stack = event.getItem().getEntityItem();
         if (stack != null && stack.getItem() instanceof IDemonWill)
         {
-            EntityPlayer player = event.entityPlayer;
+            EntityPlayer player = event.getEntityPlayer();
 
             ItemStack remainder = PlayerDemonWillHandler.addDemonWill(player, stack);
 

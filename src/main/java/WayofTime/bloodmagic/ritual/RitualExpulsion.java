@@ -122,7 +122,7 @@ public class RitualExpulsion extends Ritual
             return false;
         }
 
-        moveEntityViaTeleport(entityLiving, event.targetX, event.targetY, event.targetZ);
+        moveEntityViaTeleport(entityLiving, event.getTargetX(), event.getTargetY(), event.getTargetZ());
         boolean flag = false;
         int i = MathHelper.floor_double(entityLiving.posX);
         int j = MathHelper.floor_double(entityLiving.posY);
@@ -198,7 +198,7 @@ public class RitualExpulsion extends Ritual
                         {
                             entityplayermp.mountEntityAndWakeUp();
                         }
-                        entityLiving.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
+                        entityLiving.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
                     }
                 }
             }

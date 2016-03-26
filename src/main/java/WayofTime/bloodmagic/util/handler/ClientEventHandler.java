@@ -35,7 +35,7 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
     {
-        ItemStack stack = event.itemStack;
+        ItemStack stack = event.getItemStack();
         if (stack == null)
         {
             return;
@@ -46,10 +46,10 @@ public class ClientEventHandler
             int amount = GhostItemHelper.getItemGhostAmount(stack);
             if (amount == 0)
             {
-                event.toolTip.add("Everything");
+                event.getToolTip().add("Everything");
             } else
             {
-                event.toolTip.add("Ghost item amount: " + amount);
+                event.getToolTip().add("Ghost item amount: " + amount);
             }
         }
     }
@@ -59,13 +59,13 @@ public class ClientEventHandler
     {
         final String BLOCKS = "blocks";
 
-        ritualStoneBlankIcon = forName(event.map, "RitualStone", BLOCKS);
-        ritualStoneWaterIcon = forName(event.map, "WaterRitualStone", BLOCKS);
-        ritualStoneFireIcon = forName(event.map, "FireRitualStone", BLOCKS);
-        ritualStoneEarthIcon = forName(event.map, "EarthRitualStone", BLOCKS);
-        ritualStoneAirIcon = forName(event.map, "AirRitualStone", BLOCKS);
-        ritualStoneDawnIcon = forName(event.map, "LightRitualStone", BLOCKS);
-        ritualStoneDuskIcon = forName(event.map, "DuskRitualStone", BLOCKS);
+        ritualStoneBlankIcon = forName(event.getMap(), "RitualStone", BLOCKS);
+        ritualStoneWaterIcon = forName(event.getMap(), "WaterRitualStone", BLOCKS);
+        ritualStoneFireIcon = forName(event.getMap(), "FireRitualStone", BLOCKS);
+        ritualStoneEarthIcon = forName(event.getMap(), "EarthRitualStone", BLOCKS);
+        ritualStoneAirIcon = forName(event.getMap(), "AirRitualStone", BLOCKS);
+        ritualStoneDawnIcon = forName(event.getMap(), "LightRitualStone", BLOCKS);
+        ritualStoneDuskIcon = forName(event.getMap(), "DuskRitualStone", BLOCKS);
     }
 
     @SubscribeEvent
@@ -100,9 +100,9 @@ public class ClientEventHandler
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
                 BlockPos vec3 = new BlockPos(minecraft.objectMouseOver.getBlockPos().getX(), minecraft.objectMouseOver.getBlockPos().getY(), minecraft.objectMouseOver.getBlockPos().getZ());
-                double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.partialTicks;
-                double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.partialTicks;
-                double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.partialTicks;
+                double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
+                double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
+                double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.getPartialTicks();
 
                 for (RitualComponent ritualComponent : ritual.getComponents())
                 {
