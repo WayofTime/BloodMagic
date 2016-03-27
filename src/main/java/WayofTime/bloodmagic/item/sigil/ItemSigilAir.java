@@ -1,17 +1,22 @@
 package WayofTime.bloodmagic.item.sigil;
 
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
-public class ItemSigilAir extends ItemSigilBase
+public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectProvider
 {
     public ItemSigilAir()
     {
@@ -47,5 +52,18 @@ public class ItemSigilAir extends ItemSigilBase
         }
 
         return super.onItemRightClick(stack, world, player, hand);
+    }
+
+    @Override
+    public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target)
+    {
+        target.addPotionEffect(new PotionEffect(MobEffects.levitation, 200, 0));
+        return true;
+    }
+
+    @Override
+    public boolean providesEffectForWill(EnumDemonWillType type)
+    {
+        return true;
     }
 }

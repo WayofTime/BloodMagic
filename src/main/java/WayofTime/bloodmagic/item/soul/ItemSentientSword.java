@@ -1,20 +1,10 @@
 package WayofTime.bloodmagic.item.soul;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IActivatable;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import javax.annotation.Nullable;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.Entity;
@@ -34,11 +24,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IActivatable, IMeshProvider
 {
@@ -55,6 +56,31 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         setUnlocalizedName(Constants.Mod.MODID + ".sentientSword");
         setRegistryName(Constants.BloodMagicItem.SENTIENT_SWORD.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
+    }
+
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+    {
+        if (super.hitEntity(stack, target, attacker))
+        {
+            if (attacker instanceof EntityPlayer)
+            {
+                EntityPlayer attackerPlayer = (EntityPlayer) attacker;
+                ItemStack offStack = attackerPlayer.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+                if (offStack != null && offStack.getItem() instanceof ISentientSwordEffectProvider)
+                {
+                    ISentientSwordEffectProvider provider = (ISentientSwordEffectProvider) offStack.getItem();
+                    if (provider.providesEffectForWill(EnumDemonWillType.DEFAULT))
+                    {
+                        provider.applyOnHitEffect(EnumDemonWillType.DEFAULT, stack, offStack, attacker, target);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public EnumDemonWillType getCurrentType(ItemStack stack)
