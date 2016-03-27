@@ -13,22 +13,31 @@ import net.minecraft.item.ItemStack;
 public class AlchemyArrayCraftingRecipeJEI extends BlankRecipeWrapper
 {
     @Nonnull
-    private final List<ItemStack> inputs;
+    private final Object inputs;
+
+    @Nullable
+    private final ItemStack catalyst;
 
     @Nonnull
     private final ItemStack output;
 
     @SuppressWarnings("unchecked")
-    public AlchemyArrayCraftingRecipeJEI(@Nonnull ItemStack input, @Nullable ItemStack catalyst, @Nonnull ItemStack output)
+    public AlchemyArrayCraftingRecipeJEI(@Nonnull List<ItemStack> input, @Nullable ItemStack catalyst, @Nonnull ItemStack output)
     {
-        this.inputs = Arrays.asList(input, catalyst);
+        this.inputs = input;
+        this.catalyst = catalyst;
         this.output = output;
     }
 
     @Override
     public List getInputs()
     {
-        return inputs;
+        return Arrays.asList(inputs, catalyst);
+    }
+
+    public ItemStack getCatalyst()
+    {
+        return catalyst;
     }
 
     @Override

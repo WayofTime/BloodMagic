@@ -19,13 +19,13 @@ public class BindingRecipeMaker
     @Nonnull
     public static List<BindingRecipeJEI> getRecipes()
     {
-        Map<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> alchemyArrayRecipeMap = AlchemyArrayRecipeRegistry.getRecipes();
+        Map<List<ItemStack>, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> alchemyArrayRecipeMap = AlchemyArrayRecipeRegistry.getRecipes();
 
         ArrayList<BindingRecipeJEI> recipes = new ArrayList<BindingRecipeJEI>();
 
-        for (Map.Entry<ItemStackWrapper, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : alchemyArrayRecipeMap.entrySet())
+        for (Map.Entry<List<ItemStack>, AlchemyArrayRecipeRegistry.AlchemyArrayRecipe> itemStackAlchemyArrayRecipeEntry : alchemyArrayRecipeMap.entrySet())
         {
-            ItemStack input = itemStackAlchemyArrayRecipeEntry.getValue().getInputStack();
+            List<ItemStack> input = itemStackAlchemyArrayRecipeEntry.getValue().getInput();
             BiMap<ItemStackWrapper, AlchemyArrayEffect> catalystMap = itemStackAlchemyArrayRecipeEntry.getValue().catalystMap;
 
             for (Map.Entry<ItemStackWrapper, AlchemyArrayEffect> entry : catalystMap.entrySet())
