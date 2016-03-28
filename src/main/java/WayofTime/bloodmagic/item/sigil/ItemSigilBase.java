@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.impl.ItemSigil;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import com.google.common.base.Strings;
 import lombok.Getter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -29,6 +33,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
         super(lpUsed);
 
         setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
+        setCreativeTab(BloodMagic.tabBloodMagic);
 
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.sigil." + name + ".";
@@ -44,7 +49,12 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         if (TextHelper.canTranslate(tooltipBase + "desc"))
-        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
+            tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect(tooltipBase + "desc"))));
+
+        NBTHelper.checkNBT(stack);
+
+        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }

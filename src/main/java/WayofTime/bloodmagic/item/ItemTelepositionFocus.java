@@ -11,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -68,7 +67,7 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
             }
         }
 
-        return ActionResult.newResult(EnumActionResult.FAIL, stack);
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override

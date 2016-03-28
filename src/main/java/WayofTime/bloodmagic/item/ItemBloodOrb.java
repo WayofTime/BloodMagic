@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.item;
 
 import java.util.List;
 
+import WayofTime.bloodmagic.api.DinnerBeforeDessert;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -52,6 +53,9 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     {
         if (world == null)
             return super.onItemRightClick(stack, null, player, hand);
+
+        super.onItemRightClick(stack, null, player, hand);
+        DinnerBeforeDessert.setOrbTier(player, stack);
 
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,

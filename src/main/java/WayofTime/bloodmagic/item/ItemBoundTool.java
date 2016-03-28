@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.DinnerBeforeDessert;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import com.google.common.base.Strings;
 import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -40,7 +44,6 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 {
     protected final String tooltipBase;
     private final String name;
-    private final float damage;
 
     public Map<ItemStack, Boolean> heldDownMap = new HashMap<ItemStack, Boolean>();
     public Map<ItemStack, Integer> heldDownCountMap = new HashMap<ItemStack, Integer>();
@@ -51,10 +54,10 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     {
         super(damage, 1, ModItems.boundToolMaterial, effectiveBlocks);
         setUnlocalizedName(Constants.Mod.MODID + ".bound." + name);
+        setCreativeTab(BloodMagic.tabBloodMagic);
 
         this.name = name;
         this.tooltipBase = "tooltip.BloodMagic.bound." + name + ".";
-        this.damage = damage;
     }
 
     @Override
@@ -111,6 +114,8 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        DinnerBeforeDessert.bindMe(world, player, stack);
+
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
 
@@ -182,9 +187,14 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         if (TextHelper.canTranslate(tooltipBase + "desc"))
-        tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
+            tooltip.add(TextHelper.localizeEffect(tooltipBase + "desc"));
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
+
+        NBTHelper.checkNBT(stack);
+
+        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+            tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
