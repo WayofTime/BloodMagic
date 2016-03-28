@@ -85,8 +85,7 @@ public class AlchemyArrayRecipeRegistry
 
     public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack, ResourceLocation arrayResource)
     {
-        if (OreDictionary.doesOreNameExist(inputOreDict))
-            registerRecipe(OreDictionary.getOres(inputOreDict), catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack), arrayResource);
     }
 
     public static void registerCraftingRecipe(ItemStack input, ItemStack catalystStack, ItemStack outputStack)
@@ -101,8 +100,7 @@ public class AlchemyArrayRecipeRegistry
 
     public static void registerCraftingRecipe(String inputOreDict, ItemStack catalystStack, ItemStack outputStack)
     {
-        if (OreDictionary.doesOreNameExist(inputOreDict))
-            registerRecipe(OreDictionary.getOres(inputOreDict), catalystStack, new AlchemyArrayEffectCrafting(outputStack));
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, new AlchemyArrayEffectCrafting(outputStack));
     }
 
     public static void registerRecipe(ItemStack inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource)
@@ -124,11 +122,8 @@ public class AlchemyArrayRecipeRegistry
 
     public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, ResourceLocation arrayResource)
     {
-        if (OreDictionary.doesOreNameExist(inputOreDict))
-        {
-            AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
-            registerRecipe(OreDictionary.getOres(inputOreDict), catalystStack, arrayEffect, circleRenderer);
-        }
+        AlchemyCircleRenderer circleRenderer = arrayResource == null ? defaultRenderer : new AlchemyCircleRenderer(arrayResource);
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer);
     }
 
     public static void registerRecipe(ItemStack input, ItemStack catalystStack, AlchemyArrayEffect arrayEffect)
@@ -143,8 +138,7 @@ public class AlchemyArrayRecipeRegistry
 
     public static void registerRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect)
     {
-        if (OreDictionary.doesOreNameExist(inputOreDict))
-            registerRecipe(OreDictionary.getOres(inputOreDict), catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
+        registerRecipe(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, (AlchemyCircleRenderer) null);
     }
 
     public static void replaceAlchemyCircle(List<ItemStack> input, AlchemyCircleRenderer circleRenderer)
@@ -232,7 +226,7 @@ public class AlchemyArrayRecipeRegistry
 
         public AlchemyArrayRecipe(String inputOreDict, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
         {
-            this(OreDictionary.getOres(inputOreDict), catalystStack, arrayEffect, circleRenderer, false);
+            this(OreDictionary.doesOreNameExist(inputOreDict) && OreDictionary.getOres(inputOreDict).size() > 0 ? OreDictionary.getOres(inputOreDict) : Collections.<ItemStack>emptyList(), catalystStack, arrayEffect, circleRenderer, false);
         }
 
         public AlchemyArrayRecipe(List<ItemStack> inputStacks, ItemStack catalystStack, AlchemyArrayEffect arrayEffect, AlchemyCircleRenderer circleRenderer)
