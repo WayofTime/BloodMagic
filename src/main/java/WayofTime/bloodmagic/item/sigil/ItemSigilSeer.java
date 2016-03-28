@@ -35,6 +35,7 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     {
         if (!world.isRemote)
         {
+            super.onItemRightClick(stack, world, player, hand);
             RayTraceResult position = getMovingObjectPositionFromPlayer(world, player, false);
 
             if (position == null)

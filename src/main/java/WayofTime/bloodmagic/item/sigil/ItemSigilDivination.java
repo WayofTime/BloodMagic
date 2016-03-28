@@ -34,12 +34,13 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
     {
         if (!world.isRemote)
         {
+            super.onItemRightClick(stack, world, player, hand);
             RayTraceResult position = getMovingObjectPositionFromPlayer(world, player, false);
 
             if (position == null)
             {
                 int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
-
+                System.out.println("Hai~");
                 List<ITextComponent> toSend = new ArrayList<ITextComponent>();
                 if (!getOwnerName(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
                     toSend.add(new TextComponentString(TextHelper.localize(tooltipBase + "otherNetwork", getOwnerName(stack))));

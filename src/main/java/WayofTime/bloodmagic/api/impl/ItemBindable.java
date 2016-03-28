@@ -24,8 +24,10 @@ public class ItemBindable extends Item implements IBindable
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-        DinnerBeforeDessert.bindMe(worldIn, playerIn, itemStackIn);
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    {
+        if (!worldIn.isRemote)
+            DinnerBeforeDessert.bindMe(worldIn, playerIn, itemStackIn);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
     }
 
