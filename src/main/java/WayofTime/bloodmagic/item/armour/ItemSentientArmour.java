@@ -45,6 +45,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public static double[] willBracket = new double[] { 30, 200, 600, 1500, 4000, 6000, 8000, 16000 };
     public static double[] consumptionPerHit = new double[] { 0.1, 0.12, 0.15, 0.2, 0.3, 0.35, 0.4, 0.5 };
     public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9 };
+    public static double[] steadfastProtectionLevel = new double[] { 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9, 0.95 };
 
     public static double[] healthBonus = new double[] { 3, 6, 9, 12, 15, 20, 25 };
     public static double[] knockbackBonus = new double[] { 0.2, 0.4, 0.6, 0.8, 1, 1, 1 };
@@ -511,6 +512,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         switch (type)
         {
         case STEADFAST:
+            return steadfastProtectionLevel[willBracket];
         default:
             return extraProtectionLevel[willBracket];
         }

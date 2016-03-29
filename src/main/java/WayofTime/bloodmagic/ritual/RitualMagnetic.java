@@ -130,7 +130,7 @@ public class RitualMagnetic extends Ritual
 
                         if (isBlockOre(block, meta))
                         {
-                            TileTeleposer.teleportBlocks(this, world, newPos, world, replacement);
+                            TileTeleposer.teleportBlocks(world, newPos, world, replacement);
                             network.syphon(getRefreshCost());
                             k++;
                             this.lastPos = new BlockPos(i, j, k);
