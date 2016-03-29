@@ -90,6 +90,9 @@ public class Constants
         public static final String SOUL_SWORD_ACTIVE_DRAIN = "soulSwordActiveDrain";
         public static final String SOUL_SWORD_DROP = "soulSwordDrop";
         public static final String SOUL_SWORD_STATIC_DROP = "soulSwordStaticDrop";
+        public static final String SOUL_SWORD_HEALTH = "soulSwordHealth";
+        public static final String SOUL_SWORD_ATTACK_SPEED = "soulSwordAttackSpeed";
+        public static final String SOUL_SWORD_SPEED = "soulSwordSpeed";
         public static final String WILL_TYPE = "demonWillType";
 
         public static final String SOUL_FORGE_BURN = "burnTime";

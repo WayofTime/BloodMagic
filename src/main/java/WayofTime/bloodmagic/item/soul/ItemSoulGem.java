@@ -150,6 +150,10 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
         if (soulStack != null && soulStack.getItem() instanceof IDemonWill)
         {
             EnumDemonWillType thisType = this.getCurrentType(soulGemStack);
+            if (thisType != EnumDemonWillType.DEFAULT)
+            {
+                return soulStack;
+            }
             IDemonWill soul = (IDemonWill) soulStack.getItem();
             double soulsLeft = getWill(thisType, soulGemStack);
 

@@ -7,6 +7,7 @@ Version 2.0.0-27
 	rechecks itself when you smack something and when you right-click.
 - Fixed item binding. Yusssss.
 - Added Sword, Armour, and Bow texture changes when you have different demonic will in your inventory.
+- Finalized sentient sword effects
 
 ------------------------------------------------------
 Version 2.0.0-23

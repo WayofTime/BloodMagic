@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.soul;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -12,10 +13,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -41,11 +44,25 @@ import com.google.common.collect.Multimap;
 
 public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IMeshProvider, IMultiWillTool
 {
-    public int[] soulBracket = new int[] { 16, 60, 200, 400 };
-    public double[] damageAdded = new double[] { 1, 1.5, 2, 2.5 };
-    public double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4 };
-    public double[] soulDrop = new double[] { 2, 4, 8, 12 };
-    public double[] staticDrop = new double[] { 1, 1, 2, 3 };
+    public int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
+    public double[] defaultDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3 };
+    public double[] destructiveDamageAdded = new double[] { 1.5, 2.25, 3, 3.75, 4.5 };
+    public double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
+    public double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
+    public double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75 };
+    public double[] soulDrop = new double[] { 2, 4, 7, 10, 13 };
+    public double[] staticDrop = new double[] { 1, 1, 2, 3, 3 };
+
+    public double[] healthBonus = new double[] { 0, 0, 0, 0, 0 }; //TODO: Think of implementing this later
+    public double[] vengefulAttackSpeed = new double[] { -2.1, -2, -1.8, -1.7, -1.6 };
+    public double[] destructiveAttackSpeed = new double[] { -2.6, -2.7, -2.8, -2.9, -3 };
+
+    public int[] absorptionTime = new int[] { 200, 300, 400, 500, 600 };
+
+    public double maxAbsorptionHearts = 10;
+
+    public int[] poisonTime = new int[] { 25, 50, 60, 80, 100 };
+    public int[] poisonLevel = new int[] { 0, 0, 0, 1, 1 };
 
     public ItemSentientSword()
     {
@@ -56,6 +73,95 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
+    public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
+    {
+        EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
+        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+        this.setCurrentType(stack, type);
+        int level = getLevel(stack, soulsRemaining);
+
+        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
+        double extraDamage = getExtraDamage(type, level);
+
+        setDrainOfActivatedSword(stack, drain);
+        setDamageOfActivatedSword(stack, 5 + extraDamage);
+        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
+        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
+        setAttackSpeedOfSword(stack, getAttackSpeed(type, level));
+        setHealthBonusOfSword(stack, getHealthBonus(type, level));
+    }
+
+    public double getExtraDamage(EnumDemonWillType type, int willBracket)
+    {
+        if (willBracket < 0)
+        {
+            return 0;
+        }
+
+        switch (type)
+        {
+        case CORROSIVE:
+        case DEFAULT:
+            return defaultDamageAdded[willBracket];
+        case DESTRUCTIVE:
+            return destructiveDamageAdded[willBracket];
+        case VENGEFUL:
+            return vengefulDamageAdded[willBracket];
+        case STEADFAST:
+            return steadfastDamageAdded[willBracket];
+        }
+
+        return 0;
+    }
+
+    public double getAttackSpeed(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case VENGEFUL:
+            return vengefulAttackSpeed[willBracket];
+        case DESTRUCTIVE:
+            return destructiveAttackSpeed[willBracket];
+        default:
+            return -2.4;
+        }
+    }
+
+    public double getHealthBonus(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case STEADFAST:
+            return healthBonus[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public void applyEffectToEntity(EnumDemonWillType type, int willBracket, EntityLivingBase target, EntityPlayer attacker)
+    {
+        switch (type)
+        {
+        case CORROSIVE:
+            target.addPotionEffect(new PotionEffect(MobEffects.poison, poisonTime[willBracket], poisonLevel[willBracket]));
+            break;
+        case DEFAULT:
+            break;
+        case DESTRUCTIVE:
+            break;
+        case STEADFAST:
+            if (!target.isEntityAlive())
+            {
+                float absorption = attacker.getAbsorptionAmount();
+                attacker.addPotionEffect(new PotionEffect(MobEffects.absorption, absorptionTime[willBracket]));
+                attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
+            }
+            break;
+        case VENGEFUL:
+            break;
+        }
+    }
+
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
@@ -64,13 +170,20 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
             if (attacker instanceof EntityPlayer)
             {
                 EntityPlayer attackerPlayer = (EntityPlayer) attacker;
+                this.recalculatePowers(stack, attackerPlayer.worldObj, attackerPlayer);
+                EnumDemonWillType type = this.getCurrentType(stack);
+                double will = PlayerDemonWillHandler.getTotalDemonWill(type, attackerPlayer);
+                int willBracket = this.getLevel(stack, will);
+
+                applyEffectToEntity(type, willBracket, target, attackerPlayer);
+
                 ItemStack offStack = attackerPlayer.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
                 if (offStack != null && offStack.getItem() instanceof ISentientSwordEffectProvider)
                 {
                     ISentientSwordEffectProvider provider = (ISentientSwordEffectProvider) offStack.getItem();
-                    if (provider.providesEffectForWill(EnumDemonWillType.DEFAULT))
+                    if (provider.providesEffectForWill(type))
                     {
-                        provider.applyOnHitEffect(EnumDemonWillType.DEFAULT, stack, offStack, attacker, target);
+                        provider.applyOnHitEffect(type, stack, offStack, attacker, target);
                     }
                 }
             }
@@ -111,22 +224,6 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         recalculatePowers(stack, world, player);
 
         return super.onItemRightClick(stack, world, player, hand);
-    }
-
-    public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
-    {
-        EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
-        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-        this.setCurrentType(stack, type);
-        int level = getLevel(stack, soulsRemaining);
-
-        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
-        double extraDamage = level >= 0 ? damageAdded[level] : 0;
-
-        setDrainOfActivatedSword(stack, drain);
-        setDamageOfActivatedSword(stack, 7 + extraDamage);
-        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
-        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
     }
 
     @Override
@@ -236,7 +333,8 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         if (slot == EntityEquipmentSlot.MAINHAND)
         {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 31818145), "Weapon modifier", this.getHealthBonusOfSword(stack), 0));
         }
         return multimap;
     }
@@ -307,5 +405,56 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_DROP, drop);
+    }
+
+    public double getHealthBonusOfSword(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_HEALTH);
+    }
+
+    public void setHealthBonusOfSword(ItemStack stack, double hp)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
+    }
+
+    public double getAttackSpeedOfSword(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED);
+    }
+
+    public void setAttackSpeedOfSword(ItemStack stack, double speed)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_ATTACK_SPEED, speed);
+    }
+
+    public double getSpeedOfSword(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_SPEED);
+    }
+
+    public void setSpeedOfSword(ItemStack stack, double speed)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_SPEED, speed);
     }
 }
