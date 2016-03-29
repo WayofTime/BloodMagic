@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -44,25 +45,27 @@ import com.google.common.collect.Multimap;
 
 public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IMeshProvider, IMultiWillTool
 {
-    public int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
-    public double[] defaultDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3 };
-    public double[] destructiveDamageAdded = new double[] { 1.5, 2.25, 3, 3.75, 4.5 };
-    public double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
-    public double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
-    public double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75 };
-    public double[] soulDrop = new double[] { 2, 4, 7, 10, 13 };
-    public double[] staticDrop = new double[] { 1, 1, 2, 3, 3 };
+    public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
+    public static double[] defaultDamageAdded = new double[] { 1, 1.5, 2, 2.5, 3 };
+    public static double[] destructiveDamageAdded = new double[] { 1.5, 2.25, 3, 3.75, 4.5 };
+    public static double[] vengefulDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
+    public static double[] steadfastDamageAdded = new double[] { 0, 0.5, 1, 1.5, 2 };
+    public static double[] soulDrainPerSwing = new double[] { 0.05, 0.1, 0.2, 0.4, 0.75 };
+    public static double[] soulDrop = new double[] { 2, 4, 7, 10, 13 };
+    public static double[] staticDrop = new double[] { 1, 1, 2, 3, 3 };
 
-    public double[] healthBonus = new double[] { 0, 0, 0, 0, 0 }; //TODO: Think of implementing this later
-    public double[] vengefulAttackSpeed = new double[] { -2.1, -2, -1.8, -1.7, -1.6 };
-    public double[] destructiveAttackSpeed = new double[] { -2.6, -2.7, -2.8, -2.9, -3 };
+    public static double[] healthBonus = new double[] { 0, 0, 0, 0, 0 }; //TODO: Think of implementing this later
+    public static double[] vengefulAttackSpeed = new double[] { -2.1, -2, -1.8, -1.7, -1.6 };
+    public static double[] destructiveAttackSpeed = new double[] { -2.6, -2.7, -2.8, -2.9, -3 };
 
-    public int[] absorptionTime = new int[] { 200, 300, 400, 500, 600 };
+    public static int[] absorptionTime = new int[] { 200, 300, 400, 500, 600 };
 
-    public double maxAbsorptionHearts = 10;
+    public static double maxAbsorptionHearts = 10;
 
-    public int[] poisonTime = new int[] { 25, 50, 60, 80, 100 };
-    public int[] poisonLevel = new int[] { 0, 0, 0, 1, 1 };
+    public static int[] poisonTime = new int[] { 25, 50, 60, 80, 100 };
+    public static int[] poisonLevel = new int[] { 0, 0, 0, 1, 1 };
+
+    public static double[] movementSpeed = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25 };
 
     public ItemSentientSword()
     {
@@ -89,6 +92,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
         setAttackSpeedOfSword(stack, getAttackSpeed(type, level));
         setHealthBonusOfSword(stack, getHealthBonus(type, level));
+        setSpeedOfSword(stack, getMovementSpeed(type, level));
     }
 
     public double getExtraDamage(EnumDemonWillType type, int willBracket)
@@ -133,6 +137,17 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         {
         case STEADFAST:
             return healthBonus[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public double getMovementSpeed(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case VENGEFUL:
+            return movementSpeed[willBracket];
         default:
             return 0;
         }
@@ -311,6 +326,11 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     {
         List<ItemStack> soulList = new ArrayList<ItemStack>();
 
+        if (!(killedEntity instanceof EntityMob))
+        {
+            return soulList;
+        }
+
         IDemonWill soul = ((IDemonWill) ModItems.monsterSoul);
 
         for (int i = 0; i <= looting; i++)
@@ -329,13 +349,15 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
     {
-        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+        Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
         if (slot == EntityEquipmentSlot.MAINHAND)
         {
             multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.getAttackSpeedOfSword(stack), 0));
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 31818145), "Weapon modifier", this.getHealthBonusOfSword(stack), 0));
+            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 4218052), "Weapon modifier", this.getSpeedOfSword(stack), 2));
         }
+
         return multimap;
     }
 
