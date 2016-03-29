@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import WayofTime.bloodmagic.client.IMeshProvider;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
@@ -19,18 +18,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IMultiWillTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.registry.ModItems;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
+public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider, IMultiWillTool
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
+
+    public static double[] willBracket = new double[] { 30, 200, 600, 1500, 4000, 6000, 8000, 16000 };
+    public static double[] consumptionPerHit = new double[] { 0.1, 0.12, 0.15, 0.2, 0.3, 0.35, 0.4, 0.5 };
+    public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9 };
 
     public ItemSentientArmour(EntityEquipmentSlot armorType)
     {
@@ -40,22 +45,43 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
-    public EnumDemonWillType getDemonWillTypeConsumed(ItemStack stack)
-    {
-        return EnumDemonWillType.DEFAULT;
-    }
-
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
         if (this == ModItems.sentientArmourChest || this == ModItems.sentientArmourHelmet || this == ModItems.sentientArmourBoots)
         {
+            switch (this.getCurrentType(stack))
+            {
+            case DEFAULT:
+                return "bloodmagic:models/armor/sentientArmour_layer_1.png";
+            case CORROSIVE:
+                return "bloodmagic:models/armor/sentientArmour_corrosive_layer_1.png";
+            case VENGEFUL:
+                return "bloodmagic:models/armor/sentientArmour_vengeful_layer_1.png";
+            case DESTRUCTIVE:
+                return "bloodmagic:models/armor/sentientArmour_destructive_layer_1.png";
+            case STEADFAST:
+                return "bloodmagic:models/armor/sentientArmour_steadfast_layer_1.png";
+            }
             return "bloodmagic:models/armor/sentientArmour_layer_1.png";
         }
 
         if (this == ModItems.sentientArmourLegs)
         {
-            return "bloodmagic:models/armor/sentientArmour_layer_2.png";
+            switch (this.getCurrentType(stack))
+            {
+            case DEFAULT:
+                return "bloodmagic:models/armor/sentientArmour_layer_2.png";
+            case CORROSIVE:
+                return "bloodmagic:models/armor/sentientArmour_corrosive_layer_2.png";
+            case VENGEFUL:
+                return "bloodmagic:models/armor/sentientArmour_vengeful_layer_2.png";
+            case DESTRUCTIVE:
+                return "bloodmagic:models/armor/sentientArmour_destructive_layer_2.png";
+            case STEADFAST:
+                return "bloodmagic:models/armor/sentientArmour_steadfast_layer_2.png";
+            }
+            return "bloodmagic:models/armor/sentientArmour_layer_1.png";
         } else
         {
             return null;
@@ -169,12 +195,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         {
             EntityPlayer player = (EntityPlayer) entity;
 
-            EnumDemonWillType type = getDemonWillTypeConsumed(stack);
+            EnumDemonWillType type = getCurrentType(stack);
 
             double willRequired = this.getCostModifier(stack) * damage;
             double willLeft = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-            if (willLeft >= willRequired)
+            if (willLeft >= willRequired && canSustainArmour(type, willLeft))
             {
+                this.setAbilitiesOfArmour(type, willLeft - willRequired, stack);
                 PlayerDemonWillHandler.consumeDemonWill(type, player, willRequired);
             } else
             {
@@ -218,14 +245,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + names[armorType.getIndex()];
+        return super.getUnlocalizedName(stack) + names[3 - armorType.getIndex()];
     }
 
     public void revertArmour(EntityPlayer player, ItemStack itemStack)
     {
         ItemStack stack = this.getContainedArmourStack(itemStack);
         player.setItemStackToSlot(armorType, stack);
-//        player.inventory.armorInventory[3 - armorType.getIndex()] = stack;
     }
 
     @Override
@@ -238,14 +264,16 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             public ModelResourceLocation getModelLocation(ItemStack stack)
             {
                 assert getCustomLocation() != null;
+                EnumDemonWillType type = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getCurrentType(stack);
+                String additional = "_" + type.getName().toLowerCase();
                 if (stack.getItem() == ModItems.sentientArmourHelmet)
-                    return new ModelResourceLocation(getCustomLocation(), "armour=head");
+                    return new ModelResourceLocation(getCustomLocation(), "armour=head" + additional);
                 else if (stack.getItem() == ModItems.sentientArmourChest)
-                    return new ModelResourceLocation(getCustomLocation(), "armour=body");
+                    return new ModelResourceLocation(getCustomLocation(), "armour=body" + additional);
                 else if (stack.getItem() == ModItems.sentientArmourLegs)
-                    return new ModelResourceLocation(getCustomLocation(), "armour=leg");
+                    return new ModelResourceLocation(getCustomLocation(), "armour=leg" + additional);
                 else
-                    return new ModelResourceLocation(getCustomLocation(), "armour=feet");
+                    return new ModelResourceLocation(getCustomLocation(), "armour=feet" + additional);
             }
         };
     }
@@ -260,10 +288,16 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public List<String> getVariants()
     {
         List<String> ret = new ArrayList<String>();
-        ret.add("armour=head");
-        ret.add("armour=body");
-        ret.add("armour=leg");
-        ret.add("armour=feet");
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            String additional = "_" + type.getName().toLowerCase();
+
+            ret.add("armour=head" + additional);
+            ret.add("armour=body" + additional);
+            ret.add("armour=leg" + additional);
+            ret.add("armour=feet" + additional);
+        }
+
         return ret;
     }
 
@@ -315,18 +349,23 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         return armourStack;
     }
 
-    public static boolean convertPlayerArmour(EntityPlayer player, double recurringCost, double protection)
+    public static boolean convertPlayerArmour(EnumDemonWillType type, double will, EntityPlayer player)
     {
+        if (!canSustainArmour(type, will))
+        {
+            return false;
+        }
+
         ItemStack helmetStack = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
         ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
         ItemStack leggingsStack = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
         ItemStack bootsStack = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
         {
-            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getSubstituteStack(helmetStack, recurringCost, protection);
-            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.sentientArmourChest).getSubstituteStack(chestStack, recurringCost, protection);
-            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.sentientArmourLegs).getSubstituteStack(leggingsStack, recurringCost, protection);
-            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.sentientArmourBoots).getSubstituteStack(bootsStack, recurringCost, protection);
+            ItemStack omegaHelmetStack = ((ItemSentientArmour) ModItems.sentientArmourHelmet).getSubstituteStack(type, will, helmetStack);
+            ItemStack omegaChestStack = ((ItemSentientArmour) ModItems.sentientArmourChest).getSubstituteStack(type, will, chestStack);
+            ItemStack omegaLeggingsStack = ((ItemSentientArmour) ModItems.sentientArmourLegs).getSubstituteStack(type, will, leggingsStack);
+            ItemStack omegaBootsStack = ((ItemSentientArmour) ModItems.sentientArmourBoots).getSubstituteStack(type, will, bootsStack);
 
             player.setItemStackToSlot(EntityEquipmentSlot.HEAD, omegaHelmetStack);
             player.setItemStackToSlot(EntityEquipmentSlot.CHEST, omegaChestStack);
@@ -337,14 +376,71 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         }
     }
 
-    public ItemStack getSubstituteStack(ItemStack previousArmour, double recurringCost, double protection)
+    public ItemStack getSubstituteStack(EnumDemonWillType type, double will, ItemStack previousArmour)
     {
         ItemStack newArmour = new ItemStack(this);
 
         this.setContainedArmourStack(newArmour, previousArmour);
-        this.setCostModifier(newArmour, recurringCost);
-        this.setArmourModifier(newArmour, protection);
+        this.setAbilitiesOfArmour(type, will, newArmour);
 
         return newArmour;
+    }
+
+    @Override
+    public EnumDemonWillType getCurrentType(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
+        {
+            return EnumDemonWillType.DEFAULT;
+        }
+
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+    }
+
+    public void setCurrentType(EnumDemonWillType type, ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+    }
+
+    public void setAbilitiesOfArmour(EnumDemonWillType type, double willValue, ItemStack armourStack)
+    {
+        int willBracket = getWillBracket(willValue);
+        if (willBracket >= 0)
+        {
+            double recurringCost = consumptionPerHit[willBracket];
+            double protection = extraProtectionLevel[willBracket];
+
+            this.setCostModifier(armourStack, recurringCost);
+            this.setArmourModifier(armourStack, protection);
+            this.setCurrentType(type, armourStack);
+        }
+    }
+
+    public static boolean canSustainArmour(EnumDemonWillType type, double willValue)
+    {
+        return getWillBracket(willValue) >= 0;
+    }
+
+    public static int getWillBracket(double will)
+    {
+        int bracket = -1;
+
+        for (int i = 0; i < willBracket.length; i++)
+        {
+            if (will >= willBracket[i])
+            {
+                bracket = i;
+            }
+        }
+
+        return bracket;
     }
 }
