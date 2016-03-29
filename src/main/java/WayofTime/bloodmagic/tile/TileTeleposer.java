@@ -96,7 +96,7 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++)
                             {
-                                if (teleportBlocks(this, worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k)))
+                                if (teleportBlocks(worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k)))
                                 {
                                     blocksTransported++;
                                 }
@@ -158,7 +158,7 @@ public class TileTeleposer extends TileInventory implements ITickable
         return teleposer.getStackInSlot(0) != null && teleposer.getStackInSlot(0).getItem() instanceof ItemTelepositionFocus && !Strings.isNullOrEmpty(((ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem()).getOwnerName(teleposer.getStackInSlot(0)));
     }
 
-    public static boolean teleportBlocks(Object caller, World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
+    public static boolean teleportBlocks(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
     {
         TileEntity initialTile = initialWorld.getTileEntity(initialPos);
         TileEntity finalTile = finalWorld.getTileEntity(finalPos);
@@ -199,10 +199,9 @@ public class TileTeleposer extends TileInventory implements ITickable
         {
             TileEntity newTileInitial = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), initialTag);
 
-            //TODO FUTURE FMP STUFF HERE
-
             finalWorld.setTileEntity(finalPos, newTileInitial);
             newTileInitial.setPos(finalPos);
+            newTileInitial.setWorldObj(finalWorld);
         }
 
         initialWorld.setBlockState(initialPos, finalBlockState, 3);
@@ -211,10 +210,9 @@ public class TileTeleposer extends TileInventory implements ITickable
         {
             TileEntity newTileFinal = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), finalTag);
 
-            //TODO FUTURE FMP STUFF HERE
-
             initialWorld.setTileEntity(initialPos, newTileFinal);
             newTileFinal.setPos(initialPos);
+            newTileFinal.setWorldObj(initialWorld);
         }
 
         initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock());
