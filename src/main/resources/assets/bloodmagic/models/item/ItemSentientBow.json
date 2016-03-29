@@ -26,25 +26,144 @@
         }
     },
     "overrides": [
-        {
+    	{
             "predicate": {
-                "pulling": 1
+                "type": 1
             },
-            "model": "bloodmagic:item/ItemSentientBow_pulling_0"
+            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive"
         },
         {
             "predicate": {
+                "type": 2
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_destructive"
+        },
+        {
+            "predicate": {
+                "type": 3
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful"
+        },
+        {
+            "predicate": {
+                "type": 4
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast"
+        },
+        {
+            "predicate": {
+            	"type": 0,
+                "pulling": 1
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_pulling_0"
+        },
+        {
+            "predicate": {
+            	"type": 1,
+                "pulling": 1
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive_pulling_0"
+        },
+        {
+            "predicate": {
+            	"type": 2,
+                "pulling": 1
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_destructive_pulling_0"
+        },
+        {
+            "predicate": {
+            	"type": 3,
+                "pulling": 1
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful_pulling_0"
+        },
+        {
+            "predicate": {
+            	"type": 4,
+                "pulling": 1
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast_pulling_0"
+        },
+        {
+            "predicate": {
+            	"type": 0,
                 "pulling": 1,
                 "pull": 0.65
             },
-            "model": "bloodmagic:item/ItemSentientBow_pulling_1"
+            "model": "bloodmagic:item/bow/ItemSentientBow_pulling_1"
         },
         {
             "predicate": {
+            	"type": 1,
+                "pulling": 1,
+                "pull": 0.65
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive_pulling_1"
+        },
+        {
+            "predicate": {
+            	"type": 2,
+                "pulling": 1,
+                "pull": 0.65
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_destructive_pulling_1"
+        },
+        {
+            "predicate": {
+            	"type": 3,
+                "pulling": 1,
+                "pull": 0.65
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful_pulling_1"
+        },
+        {
+            "predicate": {
+            	"type": 4,
+                "pulling": 1,
+                "pull": 0.65
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast_pulling_1"
+        },
+        {
+            "predicate": {
+            	"type": 0,
+                "pulling": 1,
+                "pull": 0.9               
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_pulling_2"
+        },
+        {
+            "predicate": {
+            	"type": 1,
                 "pulling": 1,
                 "pull": 0.9
             },
-            "model": "bloodmagic:item/ItemSentientBow_pulling_2"
+            "model": "bloodmagic:item/bow/ItemSentientBow_corrosive_pulling_2"
+        },
+        {
+            "predicate": {
+            	"type": 2,
+                "pulling": 1,
+                "pull": 0.9
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_destructive_pulling_2"
+        },
+        {
+            "predicate": {
+                "type": 3,
+                "pulling": 1,
+                "pull": 0.9
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_vengeful_pulling_2"
+        },
+        {
+            "predicate": {
+            	"type": 4,
+                "pulling": 1,
+                "pull": 0.9
+            },
+            "model": "bloodmagic:item/bow/ItemSentientBow_steadfast_pulling_2"
         }
     ]
 }

@@ -11,7 +11,9 @@ import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -20,9 +22,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IMultiWillTool;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.registry.ModItems;
 
-public class ItemSentientBow extends ItemBow
+public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshProvider
 {
     public ItemSentientBow()
     {
@@ -53,6 +59,98 @@ public class ItemSentientBow extends ItemBow
                 return entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F;
             }
         });
+        this.addPropertyOverride(new ResourceLocation("type"), new IItemPropertyGetter()
+        {
+            @SideOnly(Side.CLIENT)
+            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
+            {
+                return ((ItemSentientBow) ModItems.sentientBow).getCurrentType(stack).ordinal();
+            }
+        });
+    }
+
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public ItemMeshDefinition getMeshDefinition()
+//    {
+//        return new ItemMeshDefinition()
+//        {
+//            @Override
+//            public ModelResourceLocation getModelLocation(ItemStack stack)
+//            {
+//                assert getCustomLocation() != null;
+//                EnumDemonWillType type = ((ItemSentientBow) ModItems.sentientBow).getCurrentType(stack);
+//                String additional = type.getName().toLowerCase();
+//                return new ModelResourceLocation(getCustomLocation(), "type=" + additional);
+//            }
+//        };
+//    }
+//
+//    @Override
+//    public ResourceLocation getCustomLocation()
+//    {
+//        return new ResourceLocation(Constants.Mod.MODID, "item/ItemSentientBow");
+//    }
+//
+//    @Override
+//    public List<String> getVariants()
+//    {
+//        List<String> ret = new ArrayList<String>();
+//        for (EnumDemonWillType type : EnumDemonWillType.values())
+//        {
+//            String additional = type.getName().toLowerCase();
+//
+//            ret.add("type=" + additional);
+//        }
+//
+//        return ret;
+//    }
+
+    public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
+    {
+        EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
+//        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+        this.setCurrentType(stack, type);
+//        int level = getLevel(stack, soulsRemaining);
+//
+//        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
+//        double extraDamage = level >= 0 ? damageAdded[level] : 0;
+//
+//        setDrainOfActivatedSword(stack, drain);
+//        setDamageOfActivatedSword(stack, 7 + extraDamage);
+//        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
+//        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
+    }
+
+    @Override
+    public EnumDemonWillType getCurrentType(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
+        {
+            return EnumDemonWillType.DEFAULT;
+        }
+
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+    }
+
+    public void setCurrentType(ItemStack stack, EnumDemonWillType type)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    {
+        this.recalculatePowers(stack, world, player);
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
