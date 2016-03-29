@@ -329,13 +329,13 @@ public class TileSoulForge extends TileInventory implements ITickable, IDemonWil
     @Override
     public boolean canFill(EnumDemonWillType type)
     {
-        return type.equals(EnumDemonWillType.DEFAULT);
+        return true;
     }
 
     @Override
     public boolean canDrain(EnumDemonWillType type)
     {
-        return type.equals(EnumDemonWillType.DEFAULT);
+        return true;
     }
 
     @Override

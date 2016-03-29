@@ -18,6 +18,7 @@ import WayofTime.bloodmagic.compress.BaseCompressionHandler;
 import WayofTime.bloodmagic.compress.StorageBlockCraftingManager;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.soul.ItemSoulGem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -92,6 +93,20 @@ public class ModRecipes
 
         for (int i = 1; i < BlockBloodRune.names.length; i++)
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodRune), new ItemStack(ModBlocks.bloodRune, 1, i)));
+
+        for (int i = 0; i < ItemSoulGem.names.length; i++)
+        {
+            for (int j = 0; j < ItemDemonCrystal.getNames().size(); j++)
+            {
+                ItemStack baseGemStack = new ItemStack(ModItems.soulGem, 1, i);
+                ItemStack newGemStack = new ItemStack(ModItems.soulGem, 1, i);
+
+                ItemStack crystalStack = new ItemStack(ModItems.itemDemonCrystal, 1, j);
+
+                ((ItemSoulGem) ModItems.soulGem).setCurrentType(((ItemDemonCrystal) ModItems.itemDemonCrystal).getType(crystalStack), newGemStack);
+                GameRegistry.addShapelessRecipe(newGemStack, baseGemStack, crystalStack);
+            }
+        }
     }
 
     public static void addAltarRecipes()

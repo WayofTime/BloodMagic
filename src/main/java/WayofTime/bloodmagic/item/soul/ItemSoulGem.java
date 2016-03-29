@@ -215,7 +215,8 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     @Override
     public int getMaxWill(EnumDemonWillType type, ItemStack soulGemStack)
     {
-        if (!type.equals(getCurrentType(soulGemStack)))
+        EnumDemonWillType currentType = getCurrentType(soulGemStack);
+        if (!type.equals(currentType) && currentType != EnumDemonWillType.DEFAULT)
         {
             return 0;
         }
@@ -263,7 +264,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
     @Override
     public double fillWill(EnumDemonWillType type, ItemStack stack, double fillAmount)
     {
-        if (!type.equals(getCurrentType(stack)))
+        if (!type.equals(getCurrentType(stack)) && this.getWill(getCurrentType(stack), stack) > 0)
         {
             return 0;
         }

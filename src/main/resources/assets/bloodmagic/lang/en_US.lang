@@ -340,6 +340,12 @@ tooltip.BloodMagic.fluid.capacity=Capacity
 tooltip.BloodMagic.ghost.everything=Everything
 tooltip.BloodMagic.ghost.amount=Ghost item amount: %d
 
+tooltip.BloodMagic.currentType.default=Contains: Default Will
+tooltip.BloodMagic.currentType.corrosive=Contains: Corrosive Will
+tooltip.BloodMagic.currentType.destructive=Contains: Destructive Will
+tooltip.BloodMagic.currentType.vengeful=Contains: Vengeful Will
+tooltip.BloodMagic.currentType.steadfast=Contains: Steadfast Will
+
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
