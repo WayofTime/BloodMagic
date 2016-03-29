@@ -3,6 +3,10 @@ package WayofTime.bloodmagic.item.armour;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -10,13 +14,17 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,6 +44,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public static double[] willBracket = new double[] { 30, 200, 600, 1500, 4000, 6000, 8000, 16000 };
     public static double[] consumptionPerHit = new double[] { 0.1, 0.12, 0.15, 0.2, 0.3, 0.35, 0.4, 0.5 };
     public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9 };
+
+    public static double[] healthBonus = new double[] { 3, 6, 9, 12, 15, 20, 25 };
 
     public ItemSentientArmour(EntityEquipmentSlot armorType)
     {
@@ -85,6 +95,51 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         } else
         {
             return null;
+        }
+    }
+
+    @Override
+    public void onArmorTick(World world, EntityPlayer player, ItemStack stack)
+    {
+        if (this.armorType == EntityEquipmentSlot.CHEST)
+        {
+            EnumDemonWillType type = this.getCurrentType(stack);
+            switch (type)
+            {
+            case CORROSIVE:
+                if (player.isPotionActive(MobEffects.poison))
+                {
+                    player.removeActivePotionEffect(MobEffects.poison);
+                }
+                if (player.isPotionActive(MobEffects.wither))
+                {
+                    player.removeActivePotionEffect(MobEffects.wither);
+                }
+                break;
+            default:
+            }
+        }
+    }
+
+    public void onPlayerAttacked(ItemStack stack, DamageSource source, EntityPlayer attackedPlayer)
+    {
+        if (source.getEntity() instanceof EntityLivingBase)
+        {
+            EntityLivingBase attacker = (EntityLivingBase) source.getEntity();
+            EnumDemonWillType type = this.getCurrentType(stack);
+            switch (type)
+            {
+            case CORROSIVE:
+                break;
+            case DEFAULT:
+                break;
+            case DESTRUCTIVE:
+                break;
+            case STEADFAST:
+                break;
+            case VENGEFUL:
+                break;
+            }
         }
     }
 
@@ -301,6 +356,17 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         return ret;
     }
 
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
+    {
+        Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+        if (slot == EntityEquipmentSlot.CHEST)
+        {
+            multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
+        }
+        return multimap;
+    }
+
     public static void revertAllArmour(EntityPlayer player)
     {
         ItemStack[] armourInventory = player.inventory.armorInventory;
@@ -416,11 +482,36 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         if (willBracket >= 0)
         {
             double recurringCost = consumptionPerHit[willBracket];
-            double protection = extraProtectionLevel[willBracket];
 
             this.setCostModifier(armourStack, recurringCost);
-            this.setArmourModifier(armourStack, protection);
             this.setCurrentType(type, armourStack);
+
+            if (this.armorType == EntityEquipmentSlot.CHEST)
+            {
+                this.setArmourModifier(armourStack, getArmourModifier(type, willBracket));
+                this.setHealthBonus(armourStack, this.getHealthModifier(type, willBracket));
+            }
+        }
+    }
+
+    public double getArmourModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case STEADFAST:
+        default:
+            return extraProtectionLevel[willBracket];
+        }
+    }
+
+    public double getHealthModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case STEADFAST:
+            return healthBonus[willBracket];
+        default:
+            return 0;
         }
     }
 
@@ -442,5 +533,22 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         }
 
         return bracket;
+    }
+
+    public double getHealthBonus(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble(Constants.NBT.SOUL_SWORD_HEALTH);
+    }
+
+    public void setHealthBonus(ItemStack stack, double hp)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
     }
 }

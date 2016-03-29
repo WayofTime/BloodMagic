@@ -12,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -79,6 +80,7 @@ import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
+import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
@@ -578,6 +580,14 @@ public class EventHandler
                         StatTrackerPhysicalProtect.incrementCounter(armour, amount);
                     }
                 }
+            } else
+            {
+                ItemStack chestStack = attackedPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                if (chestStack != null && chestStack.getItem() instanceof ItemSentientArmour)
+                {
+                    ItemSentientArmour armour = (ItemSentientArmour) chestStack.getItem();
+                    armour.onPlayerAttacked(chestStack, source, attackedPlayer);
+                }
             }
         }
 
@@ -694,7 +704,7 @@ public class EventHandler
         DamageSource source = event.getSource();
         Entity entity = source.getEntity();
 
-        if (attackedEntity.isPotionActive(ModPotions.soulSnare))
+        if (attackedEntity.isPotionActive(ModPotions.soulSnare) && attackedEntity instanceof EntityMob)
         {
             PotionEffect eff = attackedEntity.getActivePotionEffect(ModPotions.soulSnare);
             int lvl = eff.getAmplifier();

@@ -8,6 +8,8 @@ Version 2.0.0-27
 - Fixed item binding. Yusssss.
 - Added Sword, Armour, and Bow texture changes when you have different demonic will in your inventory.
 - Finalized sentient sword effects
+- Did work on the unique demon will effects for armour
+- FINALLY changed it so farm animals do not drop demon will.
 
 ------------------------------------------------------
 Version 2.0.0-23

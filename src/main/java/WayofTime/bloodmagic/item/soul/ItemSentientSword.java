@@ -317,7 +317,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         {
             if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
             {
-                ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
+                ItemStack soulStack = soul.createWill(0, (this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack)) * killedEntity.getMaxHealth() / 20d);
                 soulList.add(soulStack);
             }
         }
