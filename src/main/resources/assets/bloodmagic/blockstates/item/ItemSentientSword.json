@@ -5,15 +5,30 @@
     "transform": "forge:default-tool"
   },
   "variants": {
-    "active": {
-      "true": {
+    "type": {
+      "default": {
         "textures": {
           "layer0": "bloodmagic:items/SoulSword_activated"
         }
       },
-      "false": {
+      "corrosive": {
         "textures": {
-          "layer0": "bloodmagic:items/SoulSword_deactivated"
+          "layer0": "bloodmagic:items/SoulSword_corrosive_activated"
+        }
+      },
+      "destructive": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulSword_destructive_activated"
+        }
+      },
+      "vengeful": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulSword_vengeful_activated"
+        }
+      },
+      "steadfast": {
+        "textures": {
+          "layer0": "bloodmagic:items/SoulSword_steadfast_activated"
         }
       }
     }

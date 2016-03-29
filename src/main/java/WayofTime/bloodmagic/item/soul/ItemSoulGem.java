@@ -1,14 +1,11 @@
 package WayofTime.bloodmagic.item.soul;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
-import WayofTime.bloodmagic.api.soul.IDemonWill;
-import WayofTime.bloodmagic.api.soul.IDemonWillGem;
-import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.util.helper.TextHelper;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,17 +14,23 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.iface.IMultiWillTool;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.soul.IDemonWill;
+import WayofTime.bloodmagic.api.soul.IDemonWillGem;
+import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionWillGem;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
+public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, IMultiWillTool
 {
     public static String[] names = { "petty", "lesser", "common", "greater", "grand" };
 
@@ -62,15 +65,52 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
+    {
+        return new CustomMeshDefinitionWillGem("ItemSoulGem");
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return null;
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            ret.add("type=petty_" + type.getName().toLowerCase());
+            ret.add("type=lesser_" + type.getName().toLowerCase());
+            ret.add("type=common_" + type.getName().toLowerCase());
+            ret.add("type=greater_" + type.getName().toLowerCase());
+            ret.add("type=grand_" + type.getName().toLowerCase());
+        }
+
+        return ret;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
     public void getSubItems(Item id, CreativeTabs creativeTab, List<ItemStack> list)
     {
         for (int i = 0; i < names.length; i++)
         {
             ItemStack emptyStack = new ItemStack(this, 1, i);
-            ItemStack fullStack = new ItemStack(this, 1, i);
-            setWill(EnumDemonWillType.DEFAULT, fullStack, getMaxWill(EnumDemonWillType.DEFAULT, fullStack));
+
             list.add(emptyStack);
-            list.add(fullStack);
+        }
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            for (int i = 0; i < names.length; i++)
+            {
+                ItemStack fullStack = new ItemStack(this, 1, i);
+                setWill(type, fullStack, getMaxWill(EnumDemonWillType.DEFAULT, fullStack));
+                list.add(fullStack);
+            }
         }
     }
 
@@ -81,6 +121,7 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
         EnumDemonWillType type = this.getCurrentType(stack);
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.soulGem." + names[stack.getItemDamage()]));
         tooltip.add(TextHelper.localize("tooltip.BloodMagic.will", getWill(type, stack)));
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
 
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -192,24 +233,13 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=petty"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=lesser"));
-        ret.add(new ImmutablePair<Integer, String>(2, "type=common"));
-        ret.add(new ImmutablePair<Integer, String>(3, "type=greater"));
-        ret.add(new ImmutablePair<Integer, String>(4, "type=grand"));
-        return ret;
-    }
-
     public EnumDemonWillType getCurrentType(ItemStack soulGemStack)
     {
         NBTHelper.checkNBT(soulGemStack);
 
         NBTTagCompound tag = soulGemStack.getTagCompound();
 
-        if (!tag.hasKey(tag.getString(Constants.NBT.WILL_TYPE)))
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
         {
             return EnumDemonWillType.DEFAULT;
         }

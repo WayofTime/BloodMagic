@@ -43,6 +43,23 @@ public class PlayerDemonWillHandler
         return souls;
     }
 
+    public static EnumDemonWillType getLargestWillType(EntityPlayer player)
+    {
+        EnumDemonWillType type = EnumDemonWillType.DEFAULT;
+        double max = 0;
+
+        for (EnumDemonWillType testType : EnumDemonWillType.values())
+        {
+            double value = getTotalDemonWill(testType, player);
+            if (value > max)
+            {
+                type = testType;
+            }
+        }
+
+        return type;
+    }
+
     /**
      * Checks if the player's Tartaric gems are completely full.
      * 

@@ -13,12 +13,10 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -26,7 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.iface.IMultiWillTool;
 import WayofTime.bloodmagic.api.iface.ISentientSwordEffectProvider;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
@@ -34,14 +32,14 @@ import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionMultiWill;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IActivatable, IMeshProvider
+public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IMeshProvider, IMultiWillTool
 {
     public int[] soulBracket = new int[] { 16, 60, 200, 400 };
     public double[] damageAdded = new double[] { 1, 1.5, 2, 2.5 };
@@ -83,33 +81,52 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         return false;
     }
 
+    @Override
     public EnumDemonWillType getCurrentType(ItemStack stack)
     {
-        return EnumDemonWillType.DEFAULT;
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        if (!tag.hasKey(Constants.NBT.WILL_TYPE))
+        {
+            return EnumDemonWillType.DEFAULT;
+        }
+
+        return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+    }
+
+    public void setCurrentType(ItemStack stack, EnumDemonWillType type)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        if (player.isSneaking())
-            setActivatedState(stack, !getActivated(stack));
+        recalculatePowers(stack, world, player);
 
-        if (getActivated(stack))
-        {
-            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(getCurrentType(stack), player);
-            int level = getLevel(stack, soulsRemaining);
+        return super.onItemRightClick(stack, world, player, hand);
+    }
 
-            double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
-            double extraDamage = level >= 0 ? damageAdded[level] : 0;
+    public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
+    {
+        EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
+        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+        this.setCurrentType(stack, type);
+        int level = getLevel(stack, soulsRemaining);
 
-            setDrainOfActivatedSword(stack, drain);
-            setDamageOfActivatedSword(stack, 7 + extraDamage);
-            setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
-            setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
-        }
+        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
+        double extraDamage = level >= 0 ? damageAdded[level] : 0;
 
-        player.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+        setDrainOfActivatedSword(stack, drain);
+        setDamageOfActivatedSword(stack, 7 + extraDamage);
+        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
+        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
     }
 
     @Override
@@ -133,12 +150,6 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack)
-    {
-        return EnumAction.BLOCK;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
@@ -146,32 +157,26 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
 
         tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.sentientSword.desc"))));
 
-        if (getActivated(stack))
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.activated"));
-        else
-            tooltip.add(TextHelper.localize("tooltip.BloodMagic.deactivated"));
-
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentType." + getCurrentType(stack).getName().toLowerCase()));
     }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
     {
-        if (getActivated(stack))
-        {
-            double drain = this.getDrainOfActivatedSword(stack);
-            if (drain > 0)
-            {
-                EnumDemonWillType type = getCurrentType(stack);
-                double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+        recalculatePowers(stack, player.worldObj, player);
 
-                if (drain > soulsRemaining)
-                {
-                    setActivatedState(stack, false);
-                    return false;
-                } else
-                {
-                    PlayerDemonWillHandler.consumeDemonWill(type, player, drain);
-                }
+        double drain = this.getDrainOfActivatedSword(stack);
+        if (drain > 0)
+        {
+            EnumDemonWillType type = getCurrentType(stack);
+            double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+
+            if (drain > soulsRemaining)
+            {
+                return false;
+            } else
+            {
+                PlayerDemonWillHandler.consumeDemonWill(type, player, drain);
             }
         }
 
@@ -182,7 +187,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
     @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition()
     {
-        return new CustomMeshDefinitionActivatable("ItemSentientSword");
+        return new CustomMeshDefinitionMultiWill("ItemSentientSword");
     }
 
     @Nullable
@@ -196,25 +201,12 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
     public List<String> getVariants()
     {
         List<String> ret = new ArrayList<String>();
-        ret.add("active=true");
-        ret.add("active=false");
+        for (EnumDemonWillType type : EnumDemonWillType.values())
+        {
+            ret.add("type=" + type.getName().toLowerCase());
+        }
+
         return ret;
-    }
-
-    @Override
-    public boolean getActivated(ItemStack stack)
-    {
-        NBTHelper.checkNBT(stack);
-        return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-    }
-
-    @Override
-    public ItemStack setActivatedState(ItemStack stack, boolean activated)
-    {
-        NBTHelper.checkNBT(stack);
-        stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
-
-        return stack;
     }
 
     @Override
@@ -222,17 +214,14 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
     {
         List<ItemStack> soulList = new ArrayList<ItemStack>();
 
-        if (getActivated(stack))
-        {
-            IDemonWill soul = ((IDemonWill) ModItems.monsterSoul);
+        IDemonWill soul = ((IDemonWill) ModItems.monsterSoul);
 
-            for (int i = 0; i <= looting; i++)
+        for (int i = 0; i <= looting; i++)
+        {
+            if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
             {
-                if (i == 0 || attackingEntity.worldObj.rand.nextDouble() < 0.4)
-                {
-                    ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
-                    soulList.add(soulStack);
-                }
+                ItemStack soulStack = soul.createWill(0, this.getDropOfActivatedSword(stack) * attackingEntity.worldObj.rand.nextDouble() + this.getStaticDropOfActivatedSword(stack));
+                soulList.add(soulStack);
             }
         }
 
@@ -246,7 +235,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IA
         Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
         if (slot == EntityEquipmentSlot.MAINHAND)
         {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getActivated(stack) ? getDamageOfActivatedSword(stack) : 2, 0));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getDamageOfActivatedSword(stack), 0));
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4, 0));
         }
         return multimap;

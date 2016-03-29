@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.0.0-27
+------------------------------------------------------
+- Added OreDict support for the altar (was done in 26)
+- Made it so that the Tartaric gem would show visually what type of will was contained
+- Allowed the Sentient Sword to use different wills, and change its colour based on the used one. Also made it so you do not toggle it by right clicking, but it simply 
+	rechecks itself when you smack something and when you right-click.
+- Fixed item binding. Yusssss.
+
+------------------------------------------------------
 Version 2.0.0-23
 ------------------------------------------------------
 - Fixed "see through world" syndrome for most blocks
