@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
@@ -22,6 +19,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -37,6 +35,9 @@ import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
 import WayofTime.bloodmagic.registry.ModItems;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
 public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMeshProvider, IMultiWillTool
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
@@ -46,6 +47,9 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9 };
 
     public static double[] healthBonus = new double[] { 3, 6, 9, 12, 15, 20, 25 };
+    public static double[] knockbackBonus = new double[] { 0.2, 0.4, 0.6, 0.8, 1, 1, 1 };
+
+    public static double[] speedBonus = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4 };
 
     public ItemSentientArmour(EntityEquipmentSlot armorType)
     {
@@ -130,6 +134,10 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             switch (type)
             {
             case CORROSIVE:
+                if (!source.isProjectile())
+                {
+                    attacker.addPotionEffect(new PotionEffect(MobEffects.poison, 100)); //TODO: customize duration
+                }
                 break;
             case DEFAULT:
                 break;
@@ -363,6 +371,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         if (slot == EntityEquipmentSlot.CHEST)
         {
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
+            multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
+            multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
         }
         return multimap;
     }
@@ -490,6 +500,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             {
                 this.setArmourModifier(armourStack, getArmourModifier(type, willBracket));
                 this.setHealthBonus(armourStack, this.getHealthModifier(type, willBracket));
+                this.setKnockbackResistance(armourStack, getKnockbackModifier(type, willBracket));
+                this.setSpeedBoost(armourStack, getSpeedModifier(type, willBracket));
             }
         }
     }
@@ -510,6 +522,28 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         {
         case STEADFAST:
             return healthBonus[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public double getKnockbackModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case STEADFAST:
+            return knockbackBonus[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public double getSpeedModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case VENGEFUL:
+            return speedBonus[willBracket];
         default:
             return 0;
         }
@@ -550,5 +584,39 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble(Constants.NBT.SOUL_SWORD_HEALTH, hp);
+    }
+
+    public double getKnockbackResistance(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble("knockback");
+    }
+
+    public void setKnockbackResistance(ItemStack stack, double kb)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("knockback", kb);
+    }
+
+    public double getSpeedBoost(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble("speed");
+    }
+
+    public void setSpeedBoost(ItemStack stack, double speed)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("speed", speed);
     }
 }
