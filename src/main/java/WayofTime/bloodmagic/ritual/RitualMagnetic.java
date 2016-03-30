@@ -5,7 +5,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.tile.TileTeleposer;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockRedstoneOre;
@@ -130,7 +130,7 @@ public class RitualMagnetic extends Ritual
 
                         if (isBlockOre(block, meta))
                         {
-                            TileTeleposer.teleportBlocks(world, newPos, world, replacement);
+                            Utils.swapLocations(world, newPos, world, replacement);
                             network.syphon(getRefreshCost());
                             k++;
                             this.lastPos = new BlockPos(i, j, k);

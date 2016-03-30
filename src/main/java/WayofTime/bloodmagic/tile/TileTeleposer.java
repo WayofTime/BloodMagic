@@ -1,6 +1,5 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.api.teleport.TeleportQueue;
@@ -10,22 +9,16 @@ import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.block.BlockTeleposer;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
 import WayofTime.bloodmagic.ritual.portal.Teleports;
+import WayofTime.bloodmagic.util.Utils;
 import com.google.common.base.Strings;
-import net.minecraft.block.BlockPortal;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.List;
 
@@ -96,7 +89,8 @@ public class TileTeleposer extends TileInventory implements ITickable
                         {
                             for (int k = -(focusLevel - 1); k <= (focusLevel - 1); k++)
                             {
-                                if (teleportBlocks(worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k)))
+                                TeleposeEvent event = new TeleposeEvent(worldObj, pos.add(i, 1 + j, k), focusWorld, focusPos.add(i, 1 + j, k));
+                                if (Utils.swapLocations(event.initalWorld, event.initialBlockPos, event.finalWorld, event.finalBlockPos) && !MinecraftForge.EVENT_BUS.post(event))
                                 {
                                     blocksTransported++;
                                 }
@@ -156,68 +150,5 @@ public class TileTeleposer extends TileInventory implements ITickable
     private boolean canInitiateTeleport(TileTeleposer teleposer)
     {
         return teleposer.getStackInSlot(0) != null && teleposer.getStackInSlot(0).getItem() instanceof ItemTelepositionFocus && !Strings.isNullOrEmpty(((ItemTelepositionFocus) teleposer.getStackInSlot(0).getItem()).getOwnerName(teleposer.getStackInSlot(0)));
-    }
-
-    public static boolean teleportBlocks(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
-    {
-        TileEntity initialTile = initialWorld.getTileEntity(initialPos);
-        TileEntity finalTile = finalWorld.getTileEntity(finalPos);
-        NBTTagCompound initialTag = new NBTTagCompound();
-        NBTTagCompound finalTag = new NBTTagCompound();
-        if (initialTile != null)
-            initialTile.writeToNBT(initialTag);
-        if (finalTile != null)
-            finalTile.writeToNBT(finalTag);
-
-        BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
-        BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
-
-        if ((initialStack.getBlock().equals(Blocks.air) && finalStack.getBlock().equals(Blocks.air)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
-        {
-            return false;
-        }
-
-        TeleposeEvent event = new TeleposeEvent(initialWorld, initialPos, finalWorld, finalPos);
-        if (MinecraftForge.EVENT_BUS.post(event))
-            return false;
-
-        initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
-        finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
-
-        //Finally, we get to do something! (CLEARING TILES)
-        if (finalStack.getBlock() != null)
-            finalWorld.removeTileEntity(finalPos);
-        if (initialStack.getBlock() != null)
-            initialWorld.removeTileEntity(initialPos);
-
-        //TILES CLEARED
-        IBlockState initialBlockState = initialWorld.getBlockState(initialPos);
-        IBlockState finalBlockState = finalWorld.getBlockState(finalPos);
-        finalWorld.setBlockState(finalPos, initialBlockState, 3);
-
-        if (initialTile != null)
-        {
-            TileEntity newTileInitial = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), initialTag);
-
-            finalWorld.setTileEntity(finalPos, newTileInitial);
-            newTileInitial.setPos(finalPos);
-            newTileInitial.setWorldObj(finalWorld);
-        }
-
-        initialWorld.setBlockState(initialPos, finalBlockState, 3);
-
-        if (finalTile != null)
-        {
-            TileEntity newTileFinal = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), finalTag);
-
-            initialWorld.setTileEntity(initialPos, newTileFinal);
-            newTileFinal.setPos(initialPos);
-            newTileFinal.setWorldObj(initialWorld);
-        }
-
-        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock());
-        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock());
-
-        return true;
     }
 }

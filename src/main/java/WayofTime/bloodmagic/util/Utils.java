@@ -1,12 +1,15 @@
 package WayofTime.bloodmagic.util;
 
+import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.api.event.TeleposeEvent;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.tile.TileInventory;
 
 import com.google.common.collect.Iterables;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +17,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -21,16 +25,21 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.ArrayList;
 
@@ -554,6 +563,63 @@ public class Utils
     public static boolean isBlockLiquid(IBlockState state)
     {
         return (state instanceof IFluidBlock || state.getMaterial().isLiquid());
+    }
+
+    public static boolean swapLocations(World initialWorld, BlockPos initialPos, World finalWorld, BlockPos finalPos)
+    {
+        TileEntity initialTile = initialWorld.getTileEntity(initialPos);
+        TileEntity finalTile = finalWorld.getTileEntity(finalPos);
+        NBTTagCompound initialTag = new NBTTagCompound();
+        NBTTagCompound finalTag = new NBTTagCompound();
+        if (initialTile != null)
+            initialTile.writeToNBT(initialTag);
+        if (finalTile != null)
+            finalTile.writeToNBT(finalTag);
+
+        BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
+        BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
+
+        if ((initialStack.getBlock().equals(Blocks.air) && finalStack.getBlock().equals(Blocks.air)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
+            return false;
+
+        initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+
+        //Finally, we get to do something! (CLEARING TILES)
+        if (finalStack.getBlock() != null)
+            finalWorld.removeTileEntity(finalPos);
+        if (initialStack.getBlock() != null)
+            initialWorld.removeTileEntity(initialPos);
+
+        //TILES CLEARED
+        IBlockState initialBlockState = initialWorld.getBlockState(initialPos);
+        IBlockState finalBlockState = finalWorld.getBlockState(finalPos);
+        finalWorld.setBlockState(finalPos, initialBlockState, 3);
+
+        if (initialTile != null)
+        {
+            TileEntity newTileInitial = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), initialTag);
+
+            finalWorld.setTileEntity(finalPos, newTileInitial);
+            newTileInitial.setPos(finalPos);
+            newTileInitial.setWorldObj(finalWorld);
+        }
+
+        initialWorld.setBlockState(initialPos, finalBlockState, 3);
+
+        if (finalTile != null)
+        {
+            TileEntity newTileFinal = TileEntity.createTileEntity(FMLCommonHandler.instance().getMinecraftServerInstance(), finalTag);
+
+            initialWorld.setTileEntity(initialPos, newTileFinal);
+            newTileFinal.setPos(initialPos);
+            newTileFinal.setWorldObj(initialWorld);
+        }
+
+        initialWorld.notifyNeighborsOfStateChange(initialPos, finalStack.getBlock());
+        finalWorld.notifyNeighborsOfStateChange(finalPos, initialStack.getBlock());
+
+        return true;
     }
 
     //Shamelessly ripped off of CoFH Lib
