@@ -263,7 +263,7 @@ public class RitualEffectBiomeChanger extends RitualEffect
 
                 if (Math.abs(rainfall - humidity) < acceptableRange && Math.abs(temperature - temp) < acceptableRange)
                 {
-                    biomeID = iteration;
+                    biomeID = biome.biomeID;
                     if (biomeSkip == 0)
                     {
                         break;
