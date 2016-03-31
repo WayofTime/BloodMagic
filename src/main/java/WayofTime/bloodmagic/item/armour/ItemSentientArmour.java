@@ -47,8 +47,11 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
     public static double[] extraProtectionLevel = new double[] { 0, 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9 };
     public static double[] steadfastProtectionLevel = new double[] { 0.25, 0.5, 0.6, 0.7, 0.75, 0.85, 0.9, 0.95 };
 
-    public static double[] healthBonus = new double[] { 3, 6, 9, 12, 15, 20, 25 };
-    public static double[] knockbackBonus = new double[] { 0.2, 0.4, 0.6, 0.8, 1, 1, 1 };
+    public static double[] healthBonus = new double[] { 3, 6, 9, 12, 15, 20, 25, 30 };
+    public static double[] knockbackBonus = new double[] { 0.2, 0.4, 0.6, 0.8, 1, 1, 1, 1 };
+
+    public static double[] damageBoost = new double[] { 0.03, 0.06, 0.09, 0.12, 0.15, 0.18, 0.22, 0.25 };
+    public static double[] attackSpeed = new double[] { -0.02, -0.04, -0.06, -0.08, -0.1, -0.12, -0.14, -0.16 };
 
     public static double[] speedBonus = new double[] { 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4 };
 
@@ -374,6 +377,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             multimap.put(SharedMonsterAttributes.MAX_HEALTH.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 318145), "Armor modifier", this.getHealthBonus(stack), 0));
             multimap.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 8145), "Armor modifier", this.getKnockbackResistance(stack), 0));
             multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 94021), "Armor modifier", this.getSpeedBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 96721), "Armor modifier", this.getDamageBoost(stack), 2));
+            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(new UUID(0, 73245), "Armor modifier", this.getAttackSpeedBoost(stack), 2));
         }
         return multimap;
     }
@@ -503,6 +508,8 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
                 this.setHealthBonus(armourStack, this.getHealthModifier(type, willBracket));
                 this.setKnockbackResistance(armourStack, getKnockbackModifier(type, willBracket));
                 this.setSpeedBoost(armourStack, getSpeedModifier(type, willBracket));
+                this.setDamageBoost(armourStack, getDamageModifier(type, willBracket));
+                this.setAttackSpeedBoost(armourStack, getAttackSpeedModifier(type, willBracket));
             }
         }
     }
@@ -546,6 +553,28 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         {
         case VENGEFUL:
             return speedBonus[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public double getDamageModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case DESTRUCTIVE:
+            return damageBoost[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public double getAttackSpeedModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case DESTRUCTIVE:
+            return attackSpeed[willBracket];
         default:
             return 0;
         }
@@ -620,5 +649,39 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
         NBTTagCompound tag = stack.getTagCompound();
 
         tag.setDouble("speed", speed);
+    }
+
+    public double getDamageBoost(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble("damage");
+    }
+
+    public void setDamageBoost(ItemStack stack, double damage)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("damage", damage);
+    }
+
+    public double getAttackSpeedBoost(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return tag.getDouble("attackSpeed");
+    }
+
+    public void setAttackSpeedBoost(ItemStack stack, double attackSpeed)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("attackSpeed", attackSpeed);
     }
 }

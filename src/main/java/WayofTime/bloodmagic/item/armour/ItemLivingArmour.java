@@ -260,7 +260,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName(stack) + names[armorType.getIndex()];
+        return super.getUnlocalizedName(stack) + names[3 - armorType.getIndex()];
     }
 
     @Override

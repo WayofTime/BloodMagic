@@ -258,6 +258,16 @@ public class ItemSoulGem extends Item implements IDemonWillGem, IMeshProvider, I
 
         NBTTagCompound tag = soulGemStack.getTagCompound();
 
+        if (type == EnumDemonWillType.DEFAULT)
+        {
+            if (tag.hasKey(Constants.NBT.WILL_TYPE))
+            {
+                tag.removeTag(Constants.NBT.WILL_TYPE);
+            }
+
+            return;
+        }
+
         tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
