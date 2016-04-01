@@ -64,6 +64,6 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     @Override
     public boolean providesEffectForWill(EnumDemonWillType type)
     {
-        return true;
+        return false;
     }
 }

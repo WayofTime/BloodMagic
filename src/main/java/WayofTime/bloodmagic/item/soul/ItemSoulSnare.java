@@ -52,7 +52,9 @@ public class ItemSoulSnare extends Item implements IVariantProvider
 
         if (!worldIn.isRemote)
         {
-            worldIn.spawnEntityInWorld(new EntitySoulSnare(worldIn, playerIn));
+            EntitySoulSnare snare = new EntitySoulSnare(worldIn, playerIn);
+            snare.func_184538_a(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+            worldIn.spawnEntityInWorld(snare);
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
