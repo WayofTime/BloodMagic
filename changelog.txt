@@ -2,6 +2,8 @@
 Version 2.0.0-28
 ------------------------------------------------------
 - Fixed the soul snare.
+- Removed health buff from Steadfast armour
+- Changed corrosive sword's effect from poison to wither
 
 ------------------------------------------------------
 Version 2.0.0-27

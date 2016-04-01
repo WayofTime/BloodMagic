@@ -158,7 +158,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         switch (type)
         {
         case CORROSIVE:
-            target.addPotionEffect(new PotionEffect(MobEffects.poison, poisonTime[willBracket], poisonLevel[willBracket]));
+            target.addPotionEffect(new PotionEffect(MobEffects.wither, poisonTime[willBracket], poisonLevel[willBracket]));
             break;
         case DEFAULT:
             break;
