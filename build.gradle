@@ -213,7 +213,7 @@ curseforge {
     project {
         id = "${curse_id}"
         changelog = getChangelogText()
-        releaseType = 'alpha'
+        releaseType = 'beta'
 
         relations curseRelations
 

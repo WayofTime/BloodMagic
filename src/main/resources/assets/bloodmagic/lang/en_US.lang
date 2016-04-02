@@ -347,6 +347,9 @@ tooltip.BloodMagic.currentType.destructive=Contains: Destructive Will
 tooltip.BloodMagic.currentType.vengeful=Contains: Vengeful Will
 tooltip.BloodMagic.currentType.steadfast=Contains: Steadfast Will
 
+tooltip.BloodMagic.experienceTome=A book used to store experience
+tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
+
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
