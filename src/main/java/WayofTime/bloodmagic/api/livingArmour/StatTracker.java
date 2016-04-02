@@ -37,6 +37,8 @@ public abstract class StatTracker
      */
     public abstract boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour);
 
+    public abstract void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour);
+
     public abstract List<LivingArmourUpgrade> getUpgrades();
 
     public final boolean isDirty()

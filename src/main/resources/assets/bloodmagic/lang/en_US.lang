@@ -316,6 +316,7 @@ tooltip.BloodMagic.livingArmour.upgrade.grimReaper=Grim Reaper's Sprint
 tooltip.BloodMagic.livingArmour.upgrade.solarPowered=Solar Powered
 tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=Runic Shielding
 tooltip.BloodMagic.livingArmour.upgrade.revealing=Revealing
+tooltip.BloodMagic.livingArmour.upgrade.experienced=Experienced
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 

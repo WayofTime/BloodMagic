@@ -165,6 +165,7 @@ public class LivingArmour implements ILivingArmour
 
                 if (!allowed)
                 {
+                    tracker.onDeactivatedTick(world, player, this);
                     continue;
                 }
             }

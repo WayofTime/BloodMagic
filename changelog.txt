@@ -4,6 +4,8 @@ Version 2.0.0-28
 - Fixed the soul snare.
 - Removed health buff from Steadfast armour
 - Changed corrosive sword's effect from poison to wither
+- Fixed living armour's training bracelet so that it deactivates any training of upgrades not supported
+- Added "Experienced" living armour upgrade, which provides more xp from picked up orbs.
 
 ------------------------------------------------------
 Version 2.0.0-27

@@ -41,6 +41,7 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -85,6 +86,7 @@ import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
@@ -93,6 +95,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
@@ -756,6 +759,32 @@ public class EventHandler
             {
                 stack.stackSize = 0;
                 event.setResult(Result.ALLOW);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onExperiencePickup(PlayerPickupXpEvent event)
+    {
+        EntityPlayer player = event.getEntityPlayer();
+
+        if (LivingArmour.hasFullSet(player))
+        {
+            ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+            if (armour != null)
+            {
+                LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.experienced", chestStack);
+                if (upgrade instanceof LivingArmourUpgradeExperience)
+                {
+                    double modifier = ((LivingArmourUpgradeExperience) upgrade).getExperienceModifier();
+
+                    double exp = event.getOrb().xpValue * (1 + modifier);
+
+                    event.getOrb().xpValue = (int) Math.floor(exp) + (Math.random() < exp % 1 ? 1 : 0);
+                }
+
+                StatTrackerExperience.incrementCounter(armour, event.getOrb().xpValue);
             }
         }
     }

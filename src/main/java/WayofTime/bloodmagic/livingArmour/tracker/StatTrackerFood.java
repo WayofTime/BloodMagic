@@ -73,6 +73,15 @@ public class StatTrackerFood extends StatTracker
     }
 
     @Override
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    {
+        if (lastFoodEatenMap.containsKey(player))
+        {
+            lastFoodEatenMap.remove(player);
+        }
+    }
+
+    @Override
     public List<LivingArmourUpgrade> getUpgrades()
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();

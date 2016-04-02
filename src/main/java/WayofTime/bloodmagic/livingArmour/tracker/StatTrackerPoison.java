@@ -1,18 +1,17 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class StatTrackerPoison extends StatTracker
 {
@@ -55,6 +54,12 @@ public class StatTrackerPoison extends StatTracker
         }
 
         return false;
+    }
+
+    @Override
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    {
+
     }
 
     @Override

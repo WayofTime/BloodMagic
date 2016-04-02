@@ -19,6 +19,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerArrowShot.class);
         LivingArmourHandler.registerStatTracker(StatTrackerGrimReaperSprint.class);
         LivingArmourHandler.registerStatTracker(StatTrackerSolarPowered.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerExperience.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
@@ -32,5 +33,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeStepAssist(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeGrimReaperSprint(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSolarPowered(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeExperience(0));
     }
 }

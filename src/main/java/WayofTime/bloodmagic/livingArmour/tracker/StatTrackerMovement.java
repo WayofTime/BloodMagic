@@ -84,6 +84,12 @@ public class StatTrackerMovement extends StatTracker
     }
 
     @Override
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    {
+
+    }
+
+    @Override
     public List<LivingArmourUpgrade> getUpgrades()
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();

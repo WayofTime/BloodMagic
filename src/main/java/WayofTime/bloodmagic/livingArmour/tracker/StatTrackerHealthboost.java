@@ -71,6 +71,15 @@ public class StatTrackerHealthboost extends StatTracker
     }
 
     @Override
+    public void onDeactivatedTick(World world, EntityPlayer player, LivingArmour livingArmour)
+    {
+        if (changeMap.containsKey(livingArmour))
+        {
+            changeMap.remove(livingArmour);
+        }
+    }
+
+    @Override
     public List<LivingArmourUpgrade> getUpgrades()
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();

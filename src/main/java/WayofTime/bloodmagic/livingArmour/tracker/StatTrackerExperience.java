@@ -1,52 +1,52 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StatTrackerArrowShot extends StatTracker
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
+
+public class StatTrackerExperience extends StatTracker
 {
-    public int totalShots = 0;
+    public double totalExperienceGained = 0;
 
     public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
-    public static int[] shotsRequired = new int[] { 50, 200, 700, 1500, 3000 };
+    public static int[] experienceRequired = new int[] { 100, 400, 1000, 1600, 3200, 5000, 7000, 9200, 11500, 140000 };
 
-    public static void incrementCounter(LivingArmour armour)
+    public static void incrementCounter(LivingArmour armour, int exp)
     {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + exp : exp);
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.trickShot";
+        return Constants.Mod.MODID + ".tracker.experienced";
     }
 
     @Override
     public void resetTracker()
     {
-        this.totalShots = 0;
+        this.totalExperienceGained = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalShots = tag.getInteger(Constants.Mod.MODID + ".tracker.trickShot");
+        totalExperienceGained = tag.getDouble(Constants.Mod.MODID + ".tracker.experienced");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.trickShot", totalShots);
+        tag.setDouble(Constants.Mod.MODID + ".tracker.experienced", totalExperienceGained);
     }
 
     @Override
@@ -54,10 +54,10 @@ public class StatTrackerArrowShot extends StatTracker
     {
         if (changeMap.containsKey(livingArmour))
         {
-            int change = Math.abs(changeMap.get(livingArmour));
+            double change = Math.abs(changeMap.get(livingArmour));
             if (change > 0)
             {
-                totalShots += Math.abs(changeMap.get(livingArmour));
+                totalExperienceGained += Math.abs(changeMap.get(livingArmour));
 
                 changeMap.put(livingArmour, 0);
 
@@ -84,11 +84,11 @@ public class StatTrackerArrowShot extends StatTracker
     {
         List<LivingArmourUpgrade> upgradeList = new ArrayList<LivingArmourUpgrade>();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
-            if (totalShots >= shotsRequired[i])
+            if (totalExperienceGained >= experienceRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradeArrowShot(i));
+                upgradeList.add(new LivingArmourUpgradeExperience(i));
             }
         }
 
@@ -98,6 +98,6 @@ public class StatTrackerArrowShot extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.arrowShot");
+        return key.equals(Constants.Mod.MODID + ".upgrade.experienced");
     }
 }
