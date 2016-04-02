@@ -218,7 +218,7 @@ public class ModBlocks
         if (!ConfigHandler.blockBlacklist.contains(blockName))
         {
             GameRegistry.register(block);
-            GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName()));
+            GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName().getResourcePath()));
 //            GameRegistry.registerBlock(block, itemBlock);
             BloodMagic.proxy.tryHandleBlockModel(block, blockName);
         }
@@ -238,7 +238,7 @@ public class ModBlocks
         if (!ConfigHandler.blockBlacklist.contains(blockName))
         {
             GameRegistry.register(block);
-            GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+            GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName().getResourcePath()));
             BloodMagic.proxy.tryHandleBlockModel(block, blockName);
         }
 
