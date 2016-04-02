@@ -78,6 +78,7 @@ import WayofTime.bloodmagic.demonAura.WillChunk;
 import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
+import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
@@ -785,6 +786,19 @@ public class EventHandler
                 }
 
                 StatTrackerExperience.incrementCounter(armour, event.getOrb().xpValue);
+            }
+        }
+
+        if (!player.worldObj.isRemote)
+        {
+            for (ItemStack stack : player.inventory.mainInventory)
+            {
+                if (stack != null && stack.getItem() instanceof ItemExperienceBook)
+                {
+                    ItemExperienceBook.addExperience(stack, event.getOrb().xpValue);
+                    event.getOrb().xpValue = 0;
+                    break;
+                }
             }
         }
     }

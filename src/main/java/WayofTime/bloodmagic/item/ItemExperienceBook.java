@@ -58,6 +58,26 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         return ret;
     }
 
+    public void absorbOneLevelExpFromPlayer(ItemStack stack, EntityPlayer player)
+    {
+        float progress = player.experience;
+        if (progress > 0)
+        {
+            double expDeduction = getExperienceAcquiredToNext(player.experienceLevel, player.experience);
+            player.experience = 0;
+            player.experienceTotal -= (int) (expDeduction);
+
+            addExperience(stack, expDeduction);
+        } else
+        {
+            player.experienceLevel--;
+            int expDeduction = getExperienceForNextLevel(player.experienceLevel - 1);
+            player.experienceTotal -= expDeduction;
+
+            addExperience(stack, expDeduction);
+        }
+    }
+
     public static void setStoredExperience(ItemStack stack, double exp)
     {
         NBTHelper.checkNBT(stack);
