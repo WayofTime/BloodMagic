@@ -23,6 +23,7 @@ import WayofTime.bloodmagic.item.ItemBucketEssence;
 import WayofTime.bloodmagic.item.ItemComponent;
 import WayofTime.bloodmagic.item.ItemDaggerOfSacrifice;
 import WayofTime.bloodmagic.item.ItemDemonCrystal;
+import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.item.ItemLavaCrystal;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
@@ -117,6 +118,7 @@ public class ModItems
     public static Item itemComponent;
     public static Item itemDemonCrystal;
     public static Item telepositionFocus;
+    public static Item experienceTome;
 
     public static Item bloodShard;
 
@@ -210,6 +212,7 @@ public class ModItems
         itemComponent = registerItem(new ItemComponent());
         itemDemonCrystal = registerItem(new ItemDemonCrystal());
         telepositionFocus = registerItem(new ItemTelepositionFocus());
+        experienceTome = registerItem(new ItemExperienceBook());
 
         bloodShard = registerItem(new ItemBloodShard());
 
@@ -282,7 +285,7 @@ public class ModItems
             return item;
         }
 
-        String itemName = item.getRegistryName().split(":")[1];
+        String itemName = item.getRegistryName().getResourcePath();
         if (!ConfigHandler.itemBlacklist.contains(itemName))
         {
             GameRegistry.registerItem(item);

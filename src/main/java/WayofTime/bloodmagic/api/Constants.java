@@ -209,6 +209,7 @@ public class Constants
         UPGRADE_TOME("ItemUpgradeTome"),
         UPGRADE_TRAINER("ItemUpgradeTrainer"),
         SIGIL_TELEPOSITION("ItemSigilTeleposition"),
+        EXPERIENCE_TOME("ItemExperienceBook"),
         SIGIL_TRANSPOSITION("ItemSigilTransposition");
 
         @Getter

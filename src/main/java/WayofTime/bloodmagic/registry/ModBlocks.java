@@ -1,22 +1,71 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.block.*;
-import WayofTime.bloodmagic.item.block.*;
-import WayofTime.bloodmagic.tile.*;
+import WayofTime.bloodmagic.block.BlockAlchemyArray;
+import WayofTime.bloodmagic.block.BlockAltar;
+import WayofTime.bloodmagic.block.BlockBloodLight;
+import WayofTime.bloodmagic.block.BlockBloodRune;
+import WayofTime.bloodmagic.block.BlockBloodStoneBrick;
+import WayofTime.bloodmagic.block.BlockBloodTank;
+import WayofTime.bloodmagic.block.BlockCrystal;
+import WayofTime.bloodmagic.block.BlockDemonCrucible;
+import WayofTime.bloodmagic.block.BlockDemonCrystal;
+import WayofTime.bloodmagic.block.BlockDemonCrystallizer;
+import WayofTime.bloodmagic.block.BlockDemonPylon;
+import WayofTime.bloodmagic.block.BlockDimensionalPortal;
+import WayofTime.bloodmagic.block.BlockIncenseAltar;
+import WayofTime.bloodmagic.block.BlockInputRoutingNode;
+import WayofTime.bloodmagic.block.BlockItemRoutingNode;
+import WayofTime.bloodmagic.block.BlockLifeEssence;
+import WayofTime.bloodmagic.block.BlockMasterRoutingNode;
+import WayofTime.bloodmagic.block.BlockOutputRoutingNode;
+import WayofTime.bloodmagic.block.BlockPath;
+import WayofTime.bloodmagic.block.BlockPedestal;
+import WayofTime.bloodmagic.block.BlockPhantom;
+import WayofTime.bloodmagic.block.BlockRitualController;
+import WayofTime.bloodmagic.block.BlockRitualStone;
+import WayofTime.bloodmagic.block.BlockSoulForge;
+import WayofTime.bloodmagic.block.BlockSpectral;
+import WayofTime.bloodmagic.block.BlockTeleposer;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodRune;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodStoneBrick;
+import WayofTime.bloodmagic.item.block.ItemBlockBloodTank;
+import WayofTime.bloodmagic.item.block.ItemBlockCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockDemonCrystal;
+import WayofTime.bloodmagic.item.block.ItemBlockPath;
+import WayofTime.bloodmagic.item.block.ItemBlockPedestal;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualController;
+import WayofTime.bloodmagic.item.block.ItemBlockRitualStone;
+import WayofTime.bloodmagic.item.block.ItemBlockRoutingNode;
+import WayofTime.bloodmagic.tile.TileAlchemyArray;
+import WayofTime.bloodmagic.tile.TileAltar;
+import WayofTime.bloodmagic.tile.TileBloodTank;
+import WayofTime.bloodmagic.tile.TileDemonCrucible;
+import WayofTime.bloodmagic.tile.TileDemonCrystal;
+import WayofTime.bloodmagic.tile.TileDemonCrystallizer;
+import WayofTime.bloodmagic.tile.TileDemonPylon;
+import WayofTime.bloodmagic.tile.TileDimensionalPortal;
+import WayofTime.bloodmagic.tile.TileImperfectRitualStone;
+import WayofTime.bloodmagic.tile.TileIncenseAltar;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
+import WayofTime.bloodmagic.tile.TilePhantomBlock;
+import WayofTime.bloodmagic.tile.TilePlinth;
+import WayofTime.bloodmagic.tile.TileSoulForge;
+import WayofTime.bloodmagic.tile.TileSpectralBlock;
+import WayofTime.bloodmagic.tile.TileTeleposer;
 import WayofTime.bloodmagic.tile.routing.TileInputRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileItemRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
 import WayofTime.bloodmagic.tile.routing.TileOutputRoutingNode;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelper;
 import WayofTime.bloodmagic.util.helper.InventoryRenderHelperV2;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks
 {
@@ -58,31 +107,31 @@ public class ModBlocks
         lifeEssence = registerBlock(new BlockLifeEssence());
 
         altar = registerBlock(new BlockAltar());
-        bloodRune = registerBlock(new BlockBloodRune(), ItemBlockBloodRune.class);
-        ritualController = registerBlock(new BlockRitualController(), ItemBlockRitualController.class);
-        ritualStone = registerBlock(new BlockRitualStone(), ItemBlockRitualStone.class);
+        bloodRune = registerBlock(new ItemBlockBloodRune(new BlockBloodRune()));
+        ritualController = registerBlock(new ItemBlockRitualController(new BlockRitualController()));
+        ritualStone = registerBlock(new ItemBlockRitualStone(new BlockRitualStone()));
         bloodLight = registerBlock(new BlockBloodLight());
-        pedestal = registerBlock(new BlockPedestal(), ItemBlockPedestal.class);
+        pedestal = registerBlock(new ItemBlockPedestal(new BlockPedestal()));
         teleposer = registerBlock(new BlockTeleposer());
         alchemyArray = registerBlock(new BlockAlchemyArray());
         spectralBlock = registerBlock(new BlockSpectral());
         phantomBlock = registerBlock(new BlockPhantom());
         soulForge = registerBlock(new BlockSoulForge());
-        crystal = registerBlock(new BlockCrystal(), ItemBlockCrystal.class);
-        bloodStoneBrick = registerBlock(new BlockBloodStoneBrick(), ItemBlockBloodStoneBrick.class);
-        masterRoutingNode = registerBlock(new BlockMasterRoutingNode(), ItemBlockRoutingNode.class);
-        inputRoutingNode = registerBlock(new BlockInputRoutingNode(), ItemBlockRoutingNode.class);
-        outputRoutingNode = registerBlock(new BlockOutputRoutingNode(), ItemBlockRoutingNode.class);
-        itemRoutingNode = registerBlock(new BlockItemRoutingNode(), ItemBlockRoutingNode.class);
+        crystal = registerBlock(new ItemBlockCrystal(new BlockCrystal()));
+        bloodStoneBrick = registerBlock(new ItemBlockBloodStoneBrick(new BlockBloodStoneBrick()));
+        masterRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockMasterRoutingNode()));
+        inputRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockInputRoutingNode()));
+        outputRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockOutputRoutingNode()));
+        itemRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockItemRoutingNode()));
         incenseAltar = registerBlock(new BlockIncenseAltar());
-        pathBlock = registerBlock(new BlockPath(), ItemBlockPath.class);
+        pathBlock = registerBlock(new ItemBlockPath(new BlockPath()));
         demonCrucible = registerBlock(new BlockDemonCrucible());
         demonPylon = registerBlock(new BlockDemonPylon());
         demonCrystallizer = registerBlock(new BlockDemonCrystallizer());
-        demonCrystal = registerBlock(new BlockDemonCrystal(), ItemBlockDemonCrystal.class);
+        demonCrystal = registerBlock(new ItemBlockDemonCrystal(new BlockDemonCrystal()));
 
         dimensionalPortal = registerBlock(new BlockDimensionalPortal());
-        bloodTank = registerBlock(new BlockBloodTank(), ItemBlockBloodTank.class);
+        bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()));
 
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
@@ -143,29 +192,34 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(dimensionalPortal));
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name)
+    private static Block registerBlock(ItemBlock itemBlock, String name)
     {
+        Block block = itemBlock.block;
         if (!ConfigHandler.blockBlacklist.contains(name))
         {
-            GameRegistry.registerBlock(block, itemBlock);
+            GameRegistry.register(block);
+            GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName()));
             BloodMagic.proxy.tryHandleBlockModel(block, name);
         }
 
         return block;
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock)
+    private static Block registerBlock(ItemBlock itemBlock)
     {
+        Block block = itemBlock.block;
         if (block.getRegistryName() == null)
         {
             BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
             return block;
         }
 
-        String blockName = block.getRegistryName().split(":")[1];
+        String blockName = block.getRegistryName().getResourcePath();
         if (!ConfigHandler.blockBlacklist.contains(blockName))
         {
-            GameRegistry.registerBlock(block, itemBlock);
+            GameRegistry.register(block);
+            GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName()));
+//            GameRegistry.registerBlock(block, itemBlock);
             BloodMagic.proxy.tryHandleBlockModel(block, blockName);
         }
 
@@ -180,10 +234,11 @@ public class ModBlocks
             return null;
         }
 
-        String blockName = block.getRegistryName().split(":")[1];
+        String blockName = block.getRegistryName().getResourcePath();
         if (!ConfigHandler.blockBlacklist.contains(blockName))
         {
-            GameRegistry.registerBlock(block);
+            GameRegistry.register(block);
+            GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
             BloodMagic.proxy.tryHandleBlockModel(block, blockName);
         }
 

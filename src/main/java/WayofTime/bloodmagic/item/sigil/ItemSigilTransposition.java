@@ -77,7 +77,7 @@ public class ItemSigilTransposition extends ItemSigilBase
                     int cost = getLpUsed();
 
                     NBTTagCompound tileNBTTag = new NBTTagCompound();
-                    String blockName = rightClickedBlock.getBlock().getRegistryName();
+                    String blockName = rightClickedBlock.getBlock().getRegistryName().toString();
                     byte metadata = (byte) stack.getMetadata();
 
                     if (world.getTileEntity(blockPos) != null)

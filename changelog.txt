@@ -6,6 +6,7 @@ Version 2.0.0-28
 - Changed corrosive sword's effect from poison to wither
 - Fixed living armour's training bracelet so that it deactivates any training of upgrades not supported
 - Added "Experienced" living armour upgrade, which provides more xp from picked up orbs.
+- Updated to Forge 1826
 
 ------------------------------------------------------
 Version 2.0.0-27

@@ -29,7 +29,7 @@ public class InventoryRenderHelperV2
 
     public void registerRender(Item item, int meta, String variant)
     {
-        registerRender(item, meta, item.getRegistryName().split(":")[1], variant);
+        registerRender(item, meta, item.getRegistryName().getResourcePath(), variant);
     }
 
     public void registerRender(Item item, String name, String variant)
@@ -39,7 +39,7 @@ public class InventoryRenderHelperV2
 
     public void registerRender(Item item, String variant)
     {
-        registerRender(item, item.getRegistryName().split(":")[1], variant);
+        registerRender(item, item.getRegistryName().getResourcePath(), variant);
     }
 
     public void registerRender(Block block, int meta, String name, String variant)
@@ -49,7 +49,7 @@ public class InventoryRenderHelperV2
 
     public void registerRender(Block block, int meta, String variant)
     {
-        registerRender(block, meta, block.getRegistryName().split(":")[1], variant);
+        registerRender(block, meta, block.getRegistryName().getResourcePath(), variant);
     }
 
     public void registerRender(Block block, String name, String variant)
@@ -59,6 +59,6 @@ public class InventoryRenderHelperV2
 
     public void registerRender(Block block, String variant)
     {
-        registerRender(block, block.getRegistryName().split(":")[1], variant);
+        registerRender(block, block.getRegistryName().getResourcePath(), variant);
     }
 }

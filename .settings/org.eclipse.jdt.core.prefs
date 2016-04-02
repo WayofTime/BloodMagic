@@ -1,5 +1,5 @@
 #
-#Tue Mar 29 09:15:42 EDT 2016
+#Sat Apr 02 15:31:00 EDT 2016
 org.eclipse.jdt.core.formatter.insert_space_before_comma_in_for_inits=do not insert
 org.eclipse.jdt.core.formatter.brace_position_for_block=next_line
 org.eclipse.jdt.core.formatter.insert_space_after_at_in_annotation_type_declaration=do not insert
@@ -288,10 +288,10 @@ org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_catch=do not 
 org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_cast=do not insert
 org.eclipse.jdt.core.formatter.insert_space_before_comma_in_type_arguments=do not insert
 org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_annotation=do not insert
-eclipse.preferences.version=1
 org.eclipse.jdt.core.formatter.brace_position_for_lambda_body=next_line
-org.eclipse.jdt.core.formatter.insert_space_before_closing_bracket_in_array_reference=do not insert
+eclipse.preferences.version=1
 org.eclipse.jdt.core.formatter.enabling_tag=@formatter\:on
+org.eclipse.jdt.core.formatter.insert_space_before_closing_bracket_in_array_reference=do not insert
 org.eclipse.jdt.core.compiler.compliance=1.6
 org.eclipse.jdt.core.formatter.blank_lines_after_package=1
 org.eclipse.jdt.core.formatter.alignment_for_superinterfaces_in_type_declaration=16
