@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.tile.routing;
 
 import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.demonAura.WorldDemonWillHandler;
 import WayofTime.bloodmagic.routing.*;
 import WayofTime.bloodmagic.tile.TileInventory;
 import net.minecraft.nbt.NBTTagCompound;
@@ -109,7 +111,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
             }
         }
 
-        int maxTransfer = 8;
+        int maxTransfer = this.getMaxTransferForDemonWill(WorldDemonWillHandler.getCurrentWill(worldObj, pos, EnumDemonWillType.DEFAULT));
 
         for (Entry<Integer, List<IItemFilter>> outputEntry : outputMap.entrySet())
         {
@@ -130,6 +132,11 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
                 }
             }
         }
+    }
+
+    public int getMaxTransferForDemonWill(double will)
+    {
+        return 8 + (int) (will / 25);
     }
 
     @Override
