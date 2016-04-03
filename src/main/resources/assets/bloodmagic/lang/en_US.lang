@@ -151,6 +151,8 @@ item.BloodMagic.itemFilter.ignoreNBT.name=NBT Item Filter
 item.BloodMagic.itemFilter.modItems.name=Mod Item Filter
 item.BloodMagic.itemFilter.oreDict.name=Ore Dictionary Item Filter
 
+item.BloodMagic.experienceTome.name=Tome of Peritia
+
 # Blocks
 tile.BloodMagic.fluid.lifeEssence.name=Life Essence
 
@@ -349,6 +351,7 @@ tooltip.BloodMagic.currentType.steadfast=Contains: Steadfast Will
 
 tooltip.BloodMagic.experienceTome=A book used to store experience
 tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
+tooltip.BloodMagic.experienceTome.expLevel=Level: %d
 
 # Ritual
 ritual.BloodMagic.testRitual=Test Ritual

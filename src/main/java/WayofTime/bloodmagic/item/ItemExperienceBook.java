@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,7 +40,11 @@ public class ItemExperienceBook extends Item implements IVariantProvider
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome"));
 
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.exp", (int) getStoredExperience(stack)));
+        double storedExp = getStoredExperience(stack);
+
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.exp", (int) storedExp));
+
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.expLevel", (int) getLevelForExperience(storedExp)));
     }
 
     @Override
@@ -49,7 +54,8 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         {
             if (player.isSneaking())
                 absorbOneLevelExpFromPlayer(stack, player);
-
+            else
+                giveOneLevelExpToPlayer(stack, player);
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
@@ -61,6 +67,35 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
         ret.add(new ImmutablePair<Integer, String>(0, "type=experiencetome"));
         return ret;
+    }
+
+    public void giveOneLevelExpToPlayer(ItemStack stack, EntityPlayer player)
+    {
+        float progress = player.experience;
+        int expToNext = getExperienceForNextLevel(player.experienceLevel);
+
+        float neededExp = (1 - progress) * expToNext;
+        float containedExp = (float) getStoredExperience(stack);
+
+        if (containedExp >= neededExp)
+        {
+            setStoredExperience(stack, containedExp - neededExp);
+            player.experience = 0;
+            player.experienceTotal = Math.round(player.experienceTotal + neededExp);
+            player.experienceLevel++;
+
+            if (player.experienceLevel % 5 == 0)
+            {
+                float f = player.experienceLevel > 30 ? 1.0F : (float) player.experienceLevel / 30.0F;
+                player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.entity_player_levelup, player.getSoundCategory(), f * 0.75F, 1.0F);
+            }
+        } else
+        {
+            setStoredExperience(stack, 0);
+            progress += containedExp / expToNext;
+            player.experience = progress;
+            player.experienceTotal = Math.round(player.experienceTotal + containedExp);
+        }
     }
 
     public void absorbOneLevelExpFromPlayer(ItemStack stack, EntityPlayer player)
@@ -76,7 +111,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider
         } else if (player.experienceLevel > 0)
         {
             player.experienceLevel--;
-            int expDeduction = getExperienceForNextLevel(player.experienceLevel - 1);
+            int expDeduction = getExperienceForNextLevel(player.experienceLevel);
             player.experienceTotal -= expDeduction;
 
             addExperience(stack, expDeduction);
@@ -123,5 +158,24 @@ public class ItemExperienceBook extends Item implements IVariantProvider
     public static double getExperienceAcquiredToNext(int currentLevel, double progress)
     {
         return progress * getExperienceForNextLevel(currentLevel);
+    }
+
+    public static int getLevelForExperience(double exp)
+    {
+        if (exp <= 352)
+        {
+            return (int) Math.floor(solveParabola(1, 6, -exp));
+        } else if (exp <= 1507)
+        {
+            return (int) Math.floor(solveParabola(2.5, -40.5, 360 - exp));
+        } else
+        {
+            return (int) Math.floor(solveParabola(4.5, -162.5, 2220 - exp));
+        }
+    }
+
+    public static double solveParabola(double a, double b, double c)
+    {
+        return (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
     }
 }
