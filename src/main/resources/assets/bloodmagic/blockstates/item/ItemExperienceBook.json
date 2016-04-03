@@ -8,7 +8,7 @@
     "type": {
       "experiencetome": {
         "textures": {
-          "layer0": "bloodmagic:items/ArcaneAshes"
+          "layer0": "bloodmagic:items/ExperienceBook"
         }
       }
     }
