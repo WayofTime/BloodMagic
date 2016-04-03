@@ -143,7 +143,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 //                    return new ArmorProperties(-1, damageAmount * armourPenetrationReduction, maxAbsorption);
 //                }
 
-                return new ArmorProperties(-1, damageAmount, maxAbsorption);
+                return new ArmorProperties(-1, source.isUnblockable() ? 1 - remainder : damageAmount, maxAbsorption);
             }
         } else
         {
