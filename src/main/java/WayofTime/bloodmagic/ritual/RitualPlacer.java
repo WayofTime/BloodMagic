@@ -23,7 +23,7 @@ public class RitualPlacer extends Ritual
     public RitualPlacer()
     {
         super("ritualPlacer", 0, 5000, "ritual." + Constants.Mod.MODID + ".placerRitual");
-        addBlockRange(PLACER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), new BlockPos(3, 1, 3)));
+        addBlockRange(PLACER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5, 1, 5));
     }
 
     @Override

@@ -6,12 +6,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 
-public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
+public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160, 220, 280, 350 };
-    public static final double[] protectionLevel = new double[] { 0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.77, 0.80, 0.83 };
+    public static final double[] protectionLevel = new double[] { 0.2, 0.4, 0.6, 0.8, 1 };
 
-    public LivingArmourUpgradePhysicalProtect(int level)
+    public LivingArmourUpgradeFallProtect(int level)
     {
         super(level);
     }
@@ -19,7 +19,7 @@ public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
     @Override
     public double getArmourProtection(EntityLivingBase wearer, DamageSource source)
     {
-        if (source.getEntity() != null && !source.isMagicDamage() && !source.isProjectile())
+        if (source.equals(DamageSource.fall))
         {
             return protectionLevel[this.level];
         }
@@ -30,13 +30,13 @@ public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.physicalProtect";
+        return Constants.Mod.MODID + ".upgrade.fallProtect";
     }
 
     @Override
     public int getMaxTier()
     {
-        return 10; // Set to here until I can add more upgrades to it.
+        return 5; // Set to here until I can add more upgrades to it.
     }
 
     @Override
@@ -60,6 +60,6 @@ public class LivingArmourUpgradePhysicalProtect extends LivingArmourUpgrade
     @Override
     public String getUnlocalizedName()
     {
-        return tooltipBase + "physicalProtect";
+        return tooltipBase + "fallProtect";
     }
 }

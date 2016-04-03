@@ -88,8 +88,10 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
@@ -98,6 +100,7 @@ import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
@@ -140,6 +143,35 @@ public class EventHandler
                     }
 
                     armour.writeDirtyToNBT(ItemLivingArmour.getArmourTag(chestStack));
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onJumpEvent(LivingEvent.LivingJumpEvent event)
+    {
+        if (event.getEntityLiving() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
+            if (LivingArmour.hasFullSet(player))
+            {
+                ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+                LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
+                if (armour != null)
+                {
+                    StatTrackerJump.incrementCounter(armour);
+
+                    if (!player.isSneaking())
+                    {
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.jump", chestStack);
+
+                        if (upgrade instanceof LivingArmourUpgradeJump)
+                        {
+                            player.motionY += ((LivingArmourUpgradeJump) upgrade).getJumpModifier();
+                        }
+                    }
                 }
             }
         }
@@ -583,10 +615,15 @@ public class EventHandler
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
                 {
-                    if (sourceEntity != null && !source.isMagicDamage())
+                    if (sourceEntity != null && !source.isMagicDamage() && !source.isProjectile())
                     {
                         // Add resistance to the upgrade that protects against non-magic damage
                         StatTrackerPhysicalProtect.incrementCounter(armour, amount);
+                    }
+
+                    if (source.equals(DamageSource.fall))
+                    {
+                        StatTrackerFallProtect.incrementCounter(armour, amount);
                     }
                 }
             } else

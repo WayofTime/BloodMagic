@@ -29,7 +29,7 @@ public class RitualPortal extends Ritual
 
     public RitualPortal()
     {
-        super("ritualPortal", 0, 500, "ritual." + Constants.Mod.MODID + ".portalRitual");
+        super("ritualPortal", 0, 50000, "ritual." + Constants.Mod.MODID + ".portalRitual");
         portalRitualTag = new NBTTagCompound();
     }
 

@@ -1,52 +1,53 @@
 package WayofTime.bloodmagic.livingArmour.tracker;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.livingArmour.StatTracker;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePhysicalProtect;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StatTrackerPhysicalProtect extends StatTracker
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.livingArmour.StatTracker;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
+
+public class StatTrackerJump extends StatTracker
 {
-    public int totalDamage = 0;
+    public static HashMap<LivingArmour, Integer> changeMap = new HashMap<LivingArmour, Integer>();
+    public static int[] jumpsRequired = new int[] { 30, 200, 400, 700, 1100, 1500, 2000, 2800, 3600, 5000 }; //testing
 
-    public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
-    public static int[] damageRequired = new int[] { 30, 200, 400, 800, 1500, 2500, 3500, 5000, 6000 };
+    public int totalJumps = 0;
 
-    public static void incrementCounter(LivingArmour armour, double damage)
+    public static void incrementCounter(LivingArmour armour)
     {
-        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + damage : damage);
+        changeMap.put(armour, changeMap.containsKey(armour) ? changeMap.get(armour) + 1 : 1);
     }
 
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".tracker.physicalProtect";
+        return Constants.Mod.MODID + ".tracker.jump";
     }
 
     @Override
     public void resetTracker()
     {
-        this.totalDamage = 0;
+        this.totalJumps = 0;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        totalDamage = tag.getInteger(Constants.Mod.MODID + ".tracker.physicalProtect");
+        totalJumps = tag.getInteger(Constants.Mod.MODID + ".tracker.jump");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag)
     {
-        tag.setInteger(Constants.Mod.MODID + ".tracker.physicalProtect", totalDamage);
+        tag.setInteger(Constants.Mod.MODID + ".tracker.jump", totalJumps);
+
     }
 
     @Override
@@ -54,12 +55,12 @@ public class StatTrackerPhysicalProtect extends StatTracker
     {
         if (changeMap.containsKey(livingArmour))
         {
-            double change = Math.abs(changeMap.get(livingArmour));
+            int change = Math.abs(changeMap.get(livingArmour));
             if (change > 0)
             {
-                totalDamage += Math.abs(changeMap.get(livingArmour));
+                totalJumps += Math.abs(changeMap.get(livingArmour));
 
-                changeMap.put(livingArmour, 0d);
+                changeMap.put(livingArmour, 0);
 
                 this.markDirty();
 
@@ -86,9 +87,9 @@ public class StatTrackerPhysicalProtect extends StatTracker
 
         for (int i = 0; i < 10; i++)
         {
-            if (totalDamage >= damageRequired[i])
+            if (totalJumps >= jumpsRequired[i])
             {
-                upgradeList.add(new LivingArmourUpgradePhysicalProtect(i));
+                upgradeList.add(new LivingArmourUpgradeJump(i));
             }
         }
 
@@ -98,6 +99,6 @@ public class StatTrackerPhysicalProtect extends StatTracker
     @Override
     public boolean providesUpgrade(String key)
     {
-        return key.equals(Constants.Mod.MODID + ".upgrade.physicalProtect");
+        return key.equals(Constants.Mod.MODID + ".upgrade.jump");
     }
 }

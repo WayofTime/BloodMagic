@@ -125,6 +125,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         {
                             LivingArmourUpgrade upgrade = entry.getValue();
                             remainder *= (1 - upgrade.getArmourProtection(player, source));
+
                             /*
                              * Just as a side note, if one upgrade provides
                              * upgrade.getArmourProtection(source) = 0.5, the
@@ -137,10 +138,10 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                 armourReduction = armourReduction + (1 - remainder) * (1 - armourReduction);
                 damageAmount *= (armourReduction);
 
-                if (source.isUnblockable())
-                {
-                    return new ArmorProperties(-1, damageAmount * armourPenetrationReduction, maxAbsorption);
-                }
+//                if (source.isUnblockable())
+//                {
+//                    return new ArmorProperties(-1, damageAmount * armourPenetrationReduction, maxAbsorption);
+//                }
 
                 return new ArmorProperties(-1, damageAmount, maxAbsorption);
             }
