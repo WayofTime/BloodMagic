@@ -7,10 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -40,14 +39,20 @@ public class ItemExperienceBook extends Item implements IVariantProvider
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome"));
 
-        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.exp", getStoredExperience(stack)));
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome.exp", (int) getStoredExperience(stack)));
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
+        if (!world.isRemote)
+        {
+            if (player.isSneaking())
+                absorbOneLevelExpFromPlayer(stack, player);
 
-        return EnumActionResult.FAIL;
+        }
+
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
@@ -68,7 +73,7 @@ public class ItemExperienceBook extends Item implements IVariantProvider
             player.experienceTotal -= (int) (expDeduction);
 
             addExperience(stack, expDeduction);
-        } else
+        } else if (player.experienceLevel > 0)
         {
             player.experienceLevel--;
             int expDeduction = getExperienceForNextLevel(player.experienceLevel - 1);
