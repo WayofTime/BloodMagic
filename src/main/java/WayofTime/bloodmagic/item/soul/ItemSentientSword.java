@@ -90,9 +90,9 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         setDamageOfActivatedSword(stack, 5 + extraDamage);
         setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
         setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
-        setAttackSpeedOfSword(stack, getAttackSpeed(type, level));
-        setHealthBonusOfSword(stack, getHealthBonus(type, level));
-        setSpeedOfSword(stack, getMovementSpeed(type, level));
+        setAttackSpeedOfSword(stack, level >= 0 ? getAttackSpeed(type, level) : 0);
+        setHealthBonusOfSword(stack, level >= 0 ? getHealthBonus(type, level) : 0);
+        setSpeedOfSword(stack, level >= 0 ? getMovementSpeed(type, level) : 0);
     }
 
     public double getExtraDamage(EnumDemonWillType type, int willBracket)
