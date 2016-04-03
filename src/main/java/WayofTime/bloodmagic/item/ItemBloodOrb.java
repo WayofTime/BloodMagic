@@ -31,6 +31,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     {
         setUnlocalizedName(Constants.Mod.MODID + ".orb.");
         setRegistryName(Constants.BloodMagicItem.BLOOD_ORB.getRegName());
+        this.setMaxDamage(0);
         setHasSubtypes(true);
     }
 
@@ -98,7 +99,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     @Override
     public ItemStack getContainerItem(ItemStack stack)
     {
-        return stack;
+        return stack.copy();
     }
 
     @Override

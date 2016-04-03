@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.0-30
+------------------------------------------------------
+- Wow, there are a lot of bug fixes lately.
+- Fixed it so that the blood orb is no longer consumed in the crafting grid.
+
+------------------------------------------------------
 Version 2.0.0-29
 ------------------------------------------------------
 - Fixed formatting not working properly on servers.
