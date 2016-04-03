@@ -8,7 +8,7 @@ import net.minecraft.util.DamageSource;
 
 public class LivingArmourUpgradeFallProtect extends LivingArmourUpgrade
 {
-    public static final int[] costs = new int[] { 5, 10, 18, 35, 65, 100, 160, 220, 280, 350 };
+    public static final int[] costs = new int[] { 2, 5, 9, 15, 25 };
     public static final double[] protectionLevel = new double[] { 0.2, 0.4, 0.6, 0.8, 1 };
 
     public LivingArmourUpgradeFallProtect(int level)
