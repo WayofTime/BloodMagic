@@ -391,6 +391,11 @@ public class EventHandler
 
         ItemStack result = null;
 
+        if (event.getTarget() == null || event.getTarget().getBlockPos() == null)
+        {
+            return;
+        }
+
         Block block = event.getWorld().getBlockState(event.getTarget().getBlockPos()).getBlock();
 
         if (block != null && (block.equals(ModBlocks.lifeEssence)) && block.getMetaFromState(event.getWorld().getBlockState(event.getTarget().getBlockPos())) == 0)
