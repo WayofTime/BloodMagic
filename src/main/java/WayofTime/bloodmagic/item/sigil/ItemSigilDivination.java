@@ -10,7 +10,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
@@ -19,7 +19,6 @@ import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.tile.TileIncenseAltar;
 import WayofTime.bloodmagic.util.ChatUtil;
-import WayofTime.bloodmagic.util.helper.TextHelper;
 
 public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
 {
@@ -35,16 +34,16 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
         if (!world.isRemote)
         {
             super.onItemRightClick(stack, world, player, hand);
+
             RayTraceResult position = getMovingObjectPositionFromPlayer(world, player, false);
 
             if (position == null)
             {
                 int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
-                System.out.println("Hai~");
                 List<ITextComponent> toSend = new ArrayList<ITextComponent>();
                 if (!getOwnerName(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
-                    toSend.add(new TextComponentString(TextHelper.localize(tooltipBase + "otherNetwork", getOwnerName(stack))));
-                toSend.add(new TextComponentString(TextHelper.localize(tooltipBase + "currentEssence", currentEssence)));
+                    toSend.add(new TextComponentTranslation(tooltipBase + "otherNetwork", getOwnerName(stack)));
+                toSend.add(new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence));
                 ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
             } else
             {
@@ -59,17 +58,17 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
                         int currentEssence = altar.getCurrentBlood();
                         int capacity = altar.getCapacity();
                         altar.checkTier();
-                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentAltarTier", tier), TextHelper.localize(tooltipBase + "currentEssence", currentEssence), TextHelper.localize(tooltipBase + "currentAltarCapacity", capacity));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", tier), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity));
                     } else if (tile != null && tile instanceof TileIncenseAltar)
                     {
                         TileIncenseAltar altar = (TileIncenseAltar) tile;
                         altar.recheckConstruction();
                         double tranquility = altar.tranquility;
-                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), TextHelper.localize(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentTranquility", (int) ((100D * (int) (100 * tranquility)) / 100d)), new TextComponentTranslation(tooltipBase + "currentBonus", (int) (100 * altar.incenseAddition)));
                     } else
                     {
                         int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
-                        ChatUtil.sendNoSpam(player, TextHelper.localize(tooltipBase + "currentEssence", currentEssence));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence));
                     }
                 }
             }
