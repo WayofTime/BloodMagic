@@ -1,10 +1,10 @@
 package WayofTime.bloodmagic.registry;
 
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
 
 public class ModPotions
 {
@@ -28,17 +28,26 @@ public class ModPotions
         // drowning = new PotionBloodMagic("Drowning", new
         // ResourceLocation(resourceLocation +
         // drowning.getName().toLowerCase()), true, 0, 0, 0);
-        boost = new PotionBloodMagic("Boost", new ResourceLocation("boost")
+        boost = registerPotion("Boost", new ResourceLocation("boost"), false, 0xFFFFFF, 0, 0);
         // new ResourceLocation(resourceLocation +
         // boost.getName().toLowerCase())
-                , false, 0, 0, 0);
-        whirlwind = new PotionBloodMagic("Whirlwind", new ResourceLocation("whirlwind"), false, 0, 0, 0);
-        planarBinding = new PotionBloodMagic("Planar Binding", new ResourceLocation("planarBinding"), false, 0, 0, 0);
-        soulSnare = new PotionBloodMagic("Soul Snare", new ResourceLocation("soulSnare"), false, 0xFFFFFF, 0, 0);
-        soulFray = new PotionBloodMagic("Soul Fray", new ResourceLocation("soulFray"), true, 0xFFFFFF, 0, 0);
+
+        whirlwind = registerPotion("Whirlwind", new ResourceLocation("whirlwind"), false, 0, 0, 0);
+        planarBinding = registerPotion("Planar Binding", new ResourceLocation("planarBinding"), false, 0, 0, 0);
+        soulSnare = registerPotion("Soul Snare", new ResourceLocation("soulSnare"), false, 0xFFFFFF, 0, 0);
+        soulFray = registerPotion("Soul Fray", new ResourceLocation("soulFray"), true, 0xFFFFFF, 0, 0);
         PlayerSacrificeHelper.soulFrayId = soulFray;
         // heavyHeart = new PotionBloodMagic("Heavy Heart", new
         // ResourceLocation(resourceLocation +
         // heavyHeart.getName().toLowerCase()), true, 0, 0, 0);
+    }
+
+    protected static Potion registerPotion(String name, ResourceLocation location, boolean badEffect, int potionColour, int x, int y)
+    {
+        Potion potion = new PotionBloodMagic(name, location, badEffect, potionColour, x, y);
+
+        Potion.potionRegistry.register(-1, location, potion);
+
+        return potion;
     }
 }

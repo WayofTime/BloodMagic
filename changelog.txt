@@ -7,6 +7,7 @@ Version 2.0.0-31
 	- Soft Fall decreases all fall damage, up to 100% at level 5.
 - Added increase in speed for Routing nodes inside of a chunk with Demon Aura
 - Fixed OutOfBoundsException in the Sentient Sword when you didn't have enough Will.
+- Fixed custom potion effects so they could be applied server-sided
 
 ------------------------------------------------------
 Version 2.0.0-30
