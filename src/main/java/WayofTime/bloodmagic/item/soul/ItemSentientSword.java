@@ -80,7 +80,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     {
         EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
         double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-        this.setCurrentType(stack, type);
+        this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
         int level = getLevel(stack, soulsRemaining);
 
         double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
