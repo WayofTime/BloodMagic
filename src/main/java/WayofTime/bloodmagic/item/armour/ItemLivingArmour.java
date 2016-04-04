@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -248,14 +249,14 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
     {
-        if (this == ModItems.livingArmourChest && isEnabled(stack))
+        if (this == ModItems.livingArmourChest && isEnabled(stack) && slot == EntityEquipmentSlot.CHEST)
         {
             LivingArmour armour = ItemLivingArmour.getLivingArmour(stack);
 
             return armour.getAttributeModifiers();
         }
 
-        return super.getAttributeModifiers(slot, stack);
+        return HashMultimap.<String, AttributeModifier>create();
     }
 
     @Override

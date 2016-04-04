@@ -18,7 +18,7 @@ public class StatTrackerPhysicalProtect extends StatTracker
     public int totalDamage = 0;
 
     public static HashMap<LivingArmour, Double> changeMap = new HashMap<LivingArmour, Double>();
-    public static int[] damageRequired = new int[] { 30, 200, 400, 800, 1500, 2500, 3500, 5000, 6000 };
+    public static int[] damageRequired = new int[] { 30, 200, 400, 800, 1500, 2500, 3500, 5000, 7000, 15000 };
 
     public static void incrementCounter(LivingArmour armour, double damage)
     {
