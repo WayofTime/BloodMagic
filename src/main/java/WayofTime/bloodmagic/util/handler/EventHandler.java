@@ -21,6 +21,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArrow;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -30,7 +31,6 @@ import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -89,6 +89,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGraveDigger;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
@@ -99,6 +100,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
@@ -592,16 +594,11 @@ public class EventHandler
     }
 
     @SubscribeEvent
-    public void onEntityAttacked(LivingAttackEvent event)
+    public void onEntityAttacked(LivingHurtEvent event)
     {
         DamageSource source = event.getSource();
         Entity sourceEntity = event.getSource().getEntity();
         EntityLivingBase attackedEntity = event.getEntityLiving();
-
-        if (attackedEntity.hurtResistantTime > 0)
-        {
-            return;
-        }
 
         if (attackedEntity instanceof EntityPlayer)
         {
@@ -646,18 +643,35 @@ public class EventHandler
         if (sourceEntity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) sourceEntity;
-
             // Living Armor Handling
             if (LivingArmour.hasFullSet(player))
             {
-                float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.getSource(), event.getAmount()), attackedEntity.getHealth());
                 ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
                 LivingArmour armour = ItemLivingArmour.armourMap.get(chestStack);
                 if (armour != null)
                 {
+                    ItemStack mainWeapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+
+                    if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)
+                    {
+                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.graveDigger", chestStack);
+
+                        if (upgrade instanceof LivingArmourUpgradeGraveDigger)
+                        {
+                            event.setAmount((float) (event.getAmount() * (1 + ((LivingArmourUpgradeGraveDigger) upgrade).getDamageModifier())));
+                        }
+                    }
+
+                    float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.getSource(), event.getAmount()), attackedEntity.getHealth());
+
                     if (!source.isProjectile())
                     {
                         StatTrackerMeleeDamage.incrementCounter(armour, amount);
+
+                        if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)
+                        {
+                            StatTrackerGraveDigger.incrementCounter(armour, amount);
+                        }
                     }
                 }
             }
