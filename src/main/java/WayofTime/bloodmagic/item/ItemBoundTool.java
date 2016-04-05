@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.DinnerBeforeDessert;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import com.google.common.base.Strings;
 import lombok.Getter;
@@ -114,8 +113,6 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        DinnerBeforeDessert.bindMe(world, player, stack);
-
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
 

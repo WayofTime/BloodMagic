@@ -3,7 +3,6 @@ package WayofTime.bloodmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import WayofTime.bloodmagic.api.DinnerBeforeDessert;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,8 +53,6 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        DinnerBeforeDessert.bindMe(world, player, stack);
-
         if (player.isSneaking())
             setActivatedState(stack, !getActivated(stack));
 

@@ -498,7 +498,7 @@ public class EventHandler
     }
 
     @SubscribeEvent
-    public void interactEvent(PlayerInteractEvent event)
+    public void onInteract(PlayerInteractEvent.RightClickItem event)
     {
         if (event.getWorld().isRemote)
             return;
@@ -508,38 +508,35 @@ public class EventHandler
         if (PlayerHelper.isFakePlayer(player))
             return;
 
-        if (event.getUseBlock() == Result.DENY && event.getUseItem() != Result.DENY)
+        ItemStack held = event.getItemStack();
+        if (held != null && held.getItem() instanceof IBindable)
         {
-            ItemStack held = player.getActiveItemStack();
-            if (held != null && held.getItem() instanceof IBindable)
+            held = NBTHelper.checkNBT(held);
+            IBindable bindable = (IBindable) held.getItem();
+            if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held)))
             {
-                held = NBTHelper.checkNBT(held);
-                IBindable bindable = (IBindable) held.getItem();
-                if (Strings.isNullOrEmpty(bindable.getOwnerUUID(held)))
+                if (bindable.onBind(player, held))
                 {
-                    if (bindable.onBind(player, held))
-                    {
-                        String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
-                        ItemBindEvent toPost = new ItemBindEvent(player, uuid, held);
-                        if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
-                            return;
+                    String uuid = PlayerHelper.getUUIDFromPlayer(player).toString();
+                    ItemBindEvent toPost = new ItemBindEvent(player, uuid, held);
+                    if (MinecraftForge.EVENT_BUS.post(toPost) || toPost.getResult() == Result.DENY)
+                        return;
 
-                        BindableHelper.setItemOwnerUUID(held, uuid);
-                        BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
-                    }
-                } else if (bindable.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(held).equals(player.getDisplayNameString()))
+                    BindableHelper.setItemOwnerUUID(held, uuid);
                     BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
-            }
+                }
+            } else if (bindable.getOwnerUUID(held).equals(PlayerHelper.getUUIDFromPlayer(player).toString()) && !bindable.getOwnerName(held).equals(player.getDisplayNameString()))
+                BindableHelper.setItemOwnerName(held, player.getDisplayNameString());
+        }
 
-            if (held != null && held.getItem() instanceof IBloodOrb)
-            {
-                held = NBTHelper.checkNBT(held);
-                IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
-                SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+        if (held != null && held.getItem() instanceof IBloodOrb)
+        {
+            held = NBTHelper.checkNBT(held);
+            IBloodOrb bloodOrb = (IBloodOrb) held.getItem();
+            SoulNetwork network = NetworkHelper.getSoulNetwork(player);
 
-                if (bloodOrb.getOrbLevel(held.getItemDamage()) > network.getOrbTier())
-                    network.setOrbTier(bloodOrb.getOrbLevel(held.getItemDamage()));
-            }
+            if (bloodOrb.getOrbLevel(held.getItemDamage()) > network.getOrbTier())
+                network.setOrbTier(bloodOrb.getOrbLevel(held.getItemDamage()));
         }
     }
 
