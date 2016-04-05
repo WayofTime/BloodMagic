@@ -93,24 +93,10 @@ public class ItemSigilLava extends ItemSigilBase
             if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
             {
                 ((IFluidHandler) tile).fill(side, fluid, true);
+                return EnumActionResult.SUCCESS;
             }
 
             return EnumActionResult.FAIL;
-        }
-        // else if (tile instanceof TESocket) {
-        // return false;
-        // }
-
-        BlockPos newPos = blockPos.offset(side);
-
-        if (!player.canPlayerEdit(newPos, side, stack))
-        {
-            return EnumActionResult.FAIL;
-        }
-
-        if (this.canPlaceLava(world, newPos) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
-        {
-            return this.tryPlaceLava(world, newPos) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
         }
 
         return EnumActionResult.FAIL;

@@ -83,7 +83,11 @@ public class ItemSigilWater extends ItemSigilBase
             int amount = ((IFluidHandler) tile).fill(side, fluid, false);
 
             if (amount > 0 && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+            {
                 ((IFluidHandler) tile).fill(side, fluid, true);
+                return EnumActionResult.SUCCESS;
+            }
+
             return EnumActionResult.FAIL;
         }
 
@@ -93,8 +97,7 @@ public class ItemSigilWater extends ItemSigilBase
             return EnumActionResult.SUCCESS;
         }
 
-        BlockPos newPos = blockPos.offset(side);
-        return (player.canPlayerEdit(newPos, side, stack) && this.canPlaceWater(world, newPos) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, newPos)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
+        return EnumActionResult.FAIL;
     }
 
     public boolean canPlaceWater(World world, BlockPos blockPos)
