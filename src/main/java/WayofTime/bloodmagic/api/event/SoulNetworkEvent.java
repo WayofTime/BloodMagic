@@ -7,9 +7,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
  * Base event class for Soul Network related events.
- *
- * {@link #ownerUUID} contains the owner's UUID
- * {@link #syphon} contains the amount of LP to be drained
+ * 
+ * {@link #ownerUUID} contains the owner's UUID {@link #syphon} contains the
+ * amount of LP to be drained
  */
 public class SoulNetworkEvent extends Event
 {
@@ -23,9 +23,10 @@ public class SoulNetworkEvent extends Event
     }
 
     /**
-     * This event is called when an {@link WayofTime.bloodmagic.api.impl.ItemBindable}
-     * is being drained inside of a {@link net.minecraft.tileentity.TileEntity}.
-     *
+     * This event is called when an
+     * {@link WayofTime.bloodmagic.api.impl.ItemBindable} is being drained
+     * inside of a {@link net.minecraft.tileentity.TileEntity}.
+     * 
      * If canceled, the drain will not be executed.
      */
     @Cancelable
@@ -41,9 +42,8 @@ public class SoulNetworkEvent extends Event
     }
 
     /**
-     * This event is called when a {@link EntityPlayer}
-     * drains the Soul Network
-     *
+     * This event is called when a {@link EntityPlayer} drains the Soul Network
+     * 
      * If canceled, the drain will not be executed.
      */
     @Cancelable

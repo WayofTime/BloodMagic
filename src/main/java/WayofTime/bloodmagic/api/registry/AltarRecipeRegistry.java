@@ -18,11 +18,13 @@ public class AltarRecipeRegistry
     private static BiMap<List<ItemStack>, AltarRecipe> recipes = HashBiMap.create();
 
     /**
-     * Registers an {@link AltarRecipe} for the Blood Altar. This can be a {@code ItemStack}, {@code List<Itemstack>},
-     * or {@code String} OreDictionary entry.
-     *
-     * If the OreDictionary entry does not exist or is empty, it will not be registered.
-     *
+     * Registers an {@link AltarRecipe} for the Blood Altar. This can be a
+     * {@code ItemStack}, {@code List<Itemstack>}, or {@code String}
+     * OreDictionary entry.
+     * 
+     * If the OreDictionary entry does not exist or is empty, it will not be
+     * registered.
+     * 
      * @param altarRecipe
      *        - The AltarRecipe to register
      */
@@ -41,9 +43,9 @@ public class AltarRecipeRegistry
 
     /**
      * Gets the recipe that the provided input is registered to.
-     *
+     * 
      * @param input
-     *          - The input ItemStack to get the recipe for
+     *        - The input ItemStack to get the recipe for
      * @return - The recipe that the provided input is registered to.
      */
     public static AltarRecipe getRecipeForInput(List<ItemStack> input)
@@ -76,7 +78,7 @@ public class AltarRecipeRegistry
          * {@link WayofTime.bloodmagic.tile.TileAltar}. The output ItemStack is
          * allowed to be null as some recipes do not contain an output. (Blood
          * Orbs)
-         *
+         * 
          * @param input
          *        - The input ItemStack
          * @param output

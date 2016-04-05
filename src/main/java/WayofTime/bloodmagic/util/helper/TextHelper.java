@@ -69,7 +69,8 @@ public class TextHelper
         return cutLongString(string, 30);
     }
 
-    public static boolean canTranslate(String key) {
+    public static boolean canTranslate(String key)
+    {
         return I18n.canTranslate(key);
     }
 }

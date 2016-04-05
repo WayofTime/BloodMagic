@@ -25,7 +25,8 @@ public class PropertyString extends PropertyHelper<String>
     }
 
     @SideOnly(Side.CLIENT)
-    public Optional<String> parseValue(String value) {
+    public Optional<String> parseValue(String value)
+    {
         return allowedValues.contains(value) ? Optional.of(value) : Optional.<String>absent();
     }
 

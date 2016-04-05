@@ -35,8 +35,8 @@ public class ChatUtil
     }
 
     /**
-     * Returns a standard {@link TextComponentString} for the given {@link String}
-     * .
+     * Returns a standard {@link TextComponentString} for the given
+     * {@link String} .
      * 
      * @param s
      *        The string to wrap.

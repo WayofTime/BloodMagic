@@ -15,9 +15,10 @@ public class SacrificeKnifeUsedEvent extends Event
     public boolean shouldFillAltar;
 
     /**
-     * This event is called whenever a player attempts to use a {@link WayofTime.bloodmagic.item.ItemSacrificialDagger}
-     * to self-sacrifice near an altar.
-     *
+     * This event is called whenever a player attempts to use a
+     * {@link WayofTime.bloodmagic.item.ItemSacrificialDagger} to self-sacrifice
+     * near an altar.
+     * 
      * @param player
      *        The player doing the sacrificing
      * @param shouldDrainHealth
@@ -28,8 +29,8 @@ public class SacrificeKnifeUsedEvent extends Event
      *        Amount of health lost
      * @param lpAdded
      *        Amount of LP added to the altar
-     *
-     * This event is {@link Cancelable}.<br>
+     * 
+     *        This event is {@link Cancelable}.<br>
      */
     public SacrificeKnifeUsedEvent(EntityPlayer player, boolean shouldDrainHealth, boolean shouldFillAltar, int hp, int lpAdded)
     {

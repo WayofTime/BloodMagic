@@ -15,9 +15,9 @@ public class BoundToolEvent extends Event
     }
 
     /**
-     * This event is called when a {@link WayofTime.bloodmagic.item.ItemBoundTool}
-     * is being charged.
-     *
+     * This event is called when a
+     * {@link WayofTime.bloodmagic.item.ItemBoundTool} is being charged.
+     * 
      * If canceled, will result in the charging being canceled.
      */
 
@@ -34,9 +34,9 @@ public class BoundToolEvent extends Event
     }
 
     /**
-     * This event is called when a {@link WayofTime.bloodmagic.item.ItemBoundTool}'s
-     * charge is released.
-     *
+     * This event is called when a
+     * {@link WayofTime.bloodmagic.item.ItemBoundTool}'s charge is released.
+     * 
      * If canceled, will result in the charge not being released.
      */
 

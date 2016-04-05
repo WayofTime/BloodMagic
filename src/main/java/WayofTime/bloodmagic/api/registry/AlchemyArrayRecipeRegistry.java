@@ -50,8 +50,7 @@ public class AlchemyArrayRecipeRegistry
                 if (eff != null)
                 {
                     return; // Recipe already exists!
-                }
-                else
+                } else
                 {
                     arrayRecipe.catalystMap.put(ItemStackWrapper.getHolder(catalystStack), arrayEffect);
                     if (circleRenderer != null)
@@ -64,8 +63,7 @@ public class AlchemyArrayRecipeRegistry
         if (circleRenderer == null)
         {
             recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, defaultRenderer));
-        }
-        else
+        } else
         {
             recipes.put(input, new AlchemyArrayRecipe(input, catalystStack, arrayEffect, circleRenderer));
         }
@@ -168,8 +166,7 @@ public class AlchemyArrayRecipeRegistry
             {
                 if (ItemStackWrapper.getHolder(arrayRecipe.getInput().get(0)).equals(ItemStackWrapper.getHolder(input.get(0))))
                     return arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack); // TODO: Decide if a copy should be returned.
-            }
-            else
+            } else
             {
                 if (input.equals(arrayRecipe.getInput()))
                     return arrayRecipe.getAlchemyArrayEffectForCatalyst(catalystStack);
@@ -235,8 +232,8 @@ public class AlchemyArrayRecipeRegistry
         }
 
         /**
-         * Compares the inputed list of ItemStacks to see if it matches with the recipe's
-         * list.
+         * Compares the inputed list of ItemStacks to see if it matches with the
+         * recipe's list.
          * 
          * @param comparedList
          *        - The list to compare with
