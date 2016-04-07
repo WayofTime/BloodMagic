@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 2.0.0-32
+------------------------------------------------------
+- Changed Tome of Peritia's recipe
+- Added step assist living armour upgrade tracker.
+
+------------------------------------------------------
 Version 2.0.0-31
 ------------------------------------------------------
 - Fixed NPE when using an empty bucket.

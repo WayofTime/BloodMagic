@@ -23,6 +23,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerJump.class);
         LivingArmourHandler.registerStatTracker(StatTrackerFallProtect.class);
         LivingArmourHandler.registerStatTracker(StatTrackerGraveDigger.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerStepAssist.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
