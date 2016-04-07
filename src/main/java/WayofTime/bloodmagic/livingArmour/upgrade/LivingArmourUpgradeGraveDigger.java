@@ -1,5 +1,9 @@
 package WayofTime.bloodmagic.livingArmour.upgrade;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemSpade;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
@@ -12,6 +16,17 @@ public class LivingArmourUpgradeGraveDigger extends LivingArmourUpgrade
     public LivingArmourUpgradeGraveDigger(int level)
     {
         super(level);
+    }
+
+    @Override
+    public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
+    {
+        if (weapon != null && weapon.getItem() instanceof ItemSpade)
+        {
+            return getDamageModifier();
+        }
+
+        return 0;
     }
 
     public double getDamageModifier()

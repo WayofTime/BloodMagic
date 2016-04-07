@@ -102,7 +102,6 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
-import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
@@ -665,15 +664,7 @@ public class EventHandler
                 {
                     ItemStack mainWeapon = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
 
-                    if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)
-                    {
-                        LivingArmourUpgrade upgrade = ItemLivingArmour.getUpgrade(Constants.Mod.MODID + ".upgrade.graveDigger", chestStack);
-
-                        if (upgrade instanceof LivingArmourUpgradeGraveDigger)
-                        {
-                            event.setAmount((float) (event.getAmount() + lastPlayerSwingStrength * ((LivingArmourUpgradeGraveDigger) upgrade).getDamageModifier()));
-                        }
-                    }
+                    event.setAmount((float) (event.getAmount() + lastPlayerSwingStrength * armour.getAdditionalDamageOnHit(event.getAmount(), player, attackedEntity, mainWeapon)));
 
                     float amount = Math.min(Utils.getModifiedDamage(attackedEntity, event.getSource(), event.getAmount()), attackedEntity.getHealth());
 
