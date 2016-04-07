@@ -37,6 +37,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -591,6 +592,14 @@ public class EventHandler
         }
     }
 
+    private static float lastPlayerSwingStrength = 0;
+
+    @SubscribeEvent
+    public void onLivingAttack(AttackEntityEvent event)
+    {
+        lastPlayerSwingStrength = event.getEntityPlayer().getCooledAttackStrength(0);
+    }
+
     @SubscribeEvent
     public void onEntityAttacked(LivingHurtEvent event)
     {
@@ -646,6 +655,7 @@ public class EventHandler
         if (sourceEntity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) sourceEntity;
+
             // Living Armor Handling
             if (LivingArmour.hasFullSet(player))
             {
@@ -661,7 +671,7 @@ public class EventHandler
 
                         if (upgrade instanceof LivingArmourUpgradeGraveDigger)
                         {
-                            event.setAmount((float) (event.getAmount() * (1 + ((LivingArmourUpgradeGraveDigger) upgrade).getDamageModifier())));
+                            event.setAmount((float) (event.getAmount() + lastPlayerSwingStrength * ((LivingArmourUpgradeGraveDigger) upgrade).getDamageModifier()));
                         }
                     }
 
