@@ -39,6 +39,8 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 {
     public static String[] names = { "helmet", "chest", "legs", "boots" };
 
+    public static final boolean useSpecialArmourCalculation = true;
+
     //TODO: Save/delete cache periodically.
     public static Map<ItemStack, LivingArmour> armourMap = new HashMap<ItemStack, LivingArmour>();
 
@@ -65,6 +67,18 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         {
             return null;
         }
+    }
+
+    public double getRemainderForDamage(double damage, double plating) //TODO: Add plating, which shifts the damage
+    {
+        if (damage <= 0)
+        {
+            return 1;
+        }
+
+        double protectionAmount = 1 - Math.max(3, 15 - damage / 2) / 25; //This puts the base armour protection at vanilla iron level
+
+        return 0;
     }
 
     @Override
@@ -126,12 +140,6 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
                         {
                             LivingArmourUpgrade upgrade = entry.getValue();
                             remainder *= (1 - upgrade.getArmourProtection(player, source));
-
-                            /*
-                             * Just as a side note, if one upgrade provides
-                             * upgrade.getArmourProtection(source) = 0.5, the
-                             * armour would have a diamond level protection
-                             */
                         }
                     }
                 }

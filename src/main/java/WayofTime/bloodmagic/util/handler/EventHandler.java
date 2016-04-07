@@ -85,6 +85,7 @@ import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
@@ -601,6 +602,10 @@ public class EventHandler
         {
             EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
 
+            System.out.println("Damage: " + event.getAmount());
+
+            System.out.println("New damage: " + net.minecraftforge.common.ISpecialArmor.ArmorProperties.applyArmor(attackedPlayer, attackedPlayer.inventory.armorInventory, event.getSource(), event.getAmount()));
+
             // Living Armor Handling
             if (LivingArmour.hasFullSet(attackedPlayer))
             {
@@ -618,6 +623,11 @@ public class EventHandler
                     if (source.equals(DamageSource.fall))
                     {
                         StatTrackerFallProtect.incrementCounter(armour, amount);
+                    }
+
+                    if (source.isProjectile())
+                    {
+                        StatTrackerArrowProtect.incrementCounter(armour, amount);
                     }
                 }
             } else
