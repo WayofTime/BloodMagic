@@ -602,10 +602,6 @@ public class EventHandler
         {
             EntityPlayer attackedPlayer = (EntityPlayer) attackedEntity;
 
-            System.out.println("Damage: " + event.getAmount());
-
-            System.out.println("New damage: " + net.minecraftforge.common.ISpecialArmor.ArmorProperties.applyArmor(attackedPlayer, attackedPlayer.inventory.armorInventory, event.getSource(), event.getAmount()));
-
             // Living Armor Handling
             if (LivingArmour.hasFullSet(attackedPlayer))
             {

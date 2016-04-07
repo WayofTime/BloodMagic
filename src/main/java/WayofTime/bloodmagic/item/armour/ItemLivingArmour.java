@@ -69,17 +69,17 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
         }
     }
 
-    public double getRemainderForDamage(double damage, double plating) //TODO: Add plating, which shifts the damage
-    {
-        if (damage <= 0)
-        {
-            return 1;
-        }
-
-        double protectionAmount = 1 - Math.max(3, 15 - damage / 2) / 25; //This puts the base armour protection at vanilla iron level
-
-        return 0;
-    }
+//    public double getRemainderForDamage(double damage, double plating) //TODO: Add plating, which shifts the damage
+//    {
+//        if (damage <= 0)
+//        {
+//            return 1;
+//        }
+//
+//        double protectionAmount = 1 - Math.max(3, 15 - damage / 2) / 25; //This puts the base armour protection at vanilla iron level
+//
+//        return 0;
+//    }
 
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack stack, DamageSource source, double damage, int slot)
