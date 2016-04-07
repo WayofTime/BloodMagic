@@ -9,6 +9,7 @@ Version 2.0.0-31
 - Added increase in speed for Routing nodes inside of a chunk with Demon Aura
 - Fixed OutOfBoundsException in the Sentient Sword when you didn't have enough Will.
 - Fixed custom potion effects so they could be applied server-sided
+- Added recipe for the Tome of Peritia
 
 ------------------------------------------------------
 Version 2.0.0-30
