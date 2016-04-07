@@ -27,6 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -99,6 +100,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
@@ -675,6 +677,17 @@ public class EventHandler
                         if (mainWeapon != null && mainWeapon.getItem() instanceof ItemSpade)
                         {
                             StatTrackerGraveDigger.incrementCounter(armour, amount);
+                        }
+
+                        if (player.isSprinting())
+                        {
+                            StatTrackerSprintAttack.incrementCounter(armour, amount);
+                        }
+
+                        double kb = armour.getKnockbackOnHit(player, attackedEntity, mainWeapon);
+                        if (kb > 0)
+                        {
+                            ((EntityLivingBase) attackedEntity).knockBack(player, (float) kb * 0.5F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
                         }
                     }
                 }

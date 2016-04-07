@@ -40,6 +40,11 @@ public abstract class LivingArmourUpgrade
         return 0;
     }
 
+    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
+    {
+        return 0;
+    }
+
     /**
      * Percentage of damage blocked. This stacks multiplicities with other
      * upgrades.

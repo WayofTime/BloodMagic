@@ -46,7 +46,7 @@ public class PlayerDemonWillHandler
     public static EnumDemonWillType getLargestWillType(EntityPlayer player)
     {
         EnumDemonWillType type = EnumDemonWillType.DEFAULT;
-        double max = 0;
+        double max = getTotalDemonWill(type, player);
 
         for (EnumDemonWillType testType : EnumDemonWillType.values())
         {

@@ -57,6 +57,17 @@ public class LivingArmour implements ILivingArmour
         return total;
     }
 
+    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
+    {
+        double total = 0;
+        for (Entry<String, LivingArmourUpgrade> entry : upgradeMap.entrySet())
+        {
+            total += entry.getValue().getKnockbackOnHit(wearer, hitEntity, weapon);
+        }
+
+        return total;
+    }
+
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers()
     {

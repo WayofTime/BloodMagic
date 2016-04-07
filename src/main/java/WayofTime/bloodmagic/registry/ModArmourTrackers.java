@@ -1,8 +1,40 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
-import WayofTime.bloodmagic.livingArmour.tracker.*;
-import WayofTime.bloodmagic.livingArmour.upgrade.*;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFood;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGraveDigger;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerGrimReaperSprint;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerHealthboost;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerJump;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMeleeDamage;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerMovement;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPhysicalProtect;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerPoison;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerStepAssist;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFallProtect;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGraveDigger;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeGrimReaperSprint;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeHealthboost;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeJump;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeKnockbackResist;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeMeleeDamage;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePhysicalProtect;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradePoisonResist;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSelfSacrifice;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSolarPowered;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSpeed;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeSprintAttack;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeStepAssist;
 
 public class ModArmourTrackers
 {
@@ -24,6 +56,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerFallProtect.class);
         LivingArmourHandler.registerStatTracker(StatTrackerGraveDigger.class);
         LivingArmourHandler.registerStatTracker(StatTrackerStepAssist.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerSprintAttack.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
@@ -41,5 +74,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeJump(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeFallProtect(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeGraveDigger(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSprintAttack(0));
     }
 }
