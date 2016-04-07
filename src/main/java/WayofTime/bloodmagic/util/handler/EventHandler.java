@@ -19,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemSpade;
@@ -89,6 +90,7 @@ import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowProtect;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerCriticalStrike;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
@@ -682,6 +684,12 @@ public class EventHandler
                         if (player.isSprinting())
                         {
                             StatTrackerSprintAttack.incrementCounter(armour, amount);
+                        }
+
+                        boolean isCritical = lastPlayerSwingStrength > 0.9 && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.blindness) && !player.isRiding() && !player.isSprinting();
+                        if (isCritical)
+                        {
+                            StatTrackerCriticalStrike.incrementCounter(armour, amount);
                         }
 
                         double kb = armour.getKnockbackOnHit(player, attackedEntity, mainWeapon);

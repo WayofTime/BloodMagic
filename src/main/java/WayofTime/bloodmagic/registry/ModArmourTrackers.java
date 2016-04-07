@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerArrowShot;
+import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerCriticalStrike;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerDigging;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerExperience;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerFallProtect;
@@ -19,6 +20,7 @@ import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSolarPowered;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerSprintAttack;
 import WayofTime.bloodmagic.livingArmour.tracker.StatTrackerStepAssist;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeArrowShot;
+import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeCriticalStrike;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeDigging;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeExperience;
 import WayofTime.bloodmagic.livingArmour.upgrade.LivingArmourUpgradeFallProtect;
@@ -57,6 +59,7 @@ public class ModArmourTrackers
         LivingArmourHandler.registerStatTracker(StatTrackerGraveDigger.class);
         LivingArmourHandler.registerStatTracker(StatTrackerStepAssist.class);
         LivingArmourHandler.registerStatTracker(StatTrackerSprintAttack.class);
+        LivingArmourHandler.registerStatTracker(StatTrackerCriticalStrike.class);
 
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSpeed(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeDigging(0));
@@ -75,5 +78,6 @@ public class ModArmourTrackers
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeFallProtect(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeGraveDigger(0));
         LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeSprintAttack(0));
+        LivingArmourHandler.registerArmourUpgrade(new LivingArmourUpgradeCriticalStrike(0));
     }
 }

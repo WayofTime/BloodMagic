@@ -2,18 +2,18 @@ package WayofTime.bloodmagic.livingArmour.upgrade;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 
-public class LivingArmourUpgradeSprintAttack extends LivingArmourUpgrade
+public class LivingArmourUpgradeCriticalStrike extends LivingArmourUpgrade
 {
-    public static final int[] costs = new int[] { 3, 7, 15, 25, 40 };
-    public static final double[] damageBoost = new double[] { 0.5, 1, 1.5, 2, 2.5 };
-    public static final double[] knockbackModifier = new double[] { 1, 2, 3, 4, 5 };
+    public static final int[] costs = new int[] { 5, 12, 22, 35, 49 };
+    public static final double[] damageBoost = new double[] { 0.1, 0.2, 0.3, 0.4, 0.5 };
 
-    public LivingArmourUpgradeSprintAttack(int level)
+    public LivingArmourUpgradeCriticalStrike(int level)
     {
         super(level);
     }
@@ -21,20 +21,11 @@ public class LivingArmourUpgradeSprintAttack extends LivingArmourUpgrade
     @Override
     public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
     {
-        if (wearer.isSprinting())
-        {
-            return getDamageModifier();
-        }
+        boolean flag = wearer.fallDistance > 0.0F && !wearer.onGround && !wearer.isOnLadder() && !wearer.isInWater() && !wearer.isPotionActive(MobEffects.blindness) && !wearer.isRiding() && !wearer.isSprinting();
 
-        return 0;
-    }
-
-    @Override
-    public double getKnockbackOnHit(EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
-    {
-        if (wearer.isSprinting())
+        if (flag)
         {
-            return getKnockbackModifier();
+            return getDamageModifier() * damage;
         }
 
         return 0;
@@ -45,15 +36,10 @@ public class LivingArmourUpgradeSprintAttack extends LivingArmourUpgrade
         return damageBoost[this.level];
     }
 
-    public double getKnockbackModifier()
-    {
-        return knockbackModifier[this.level];
-    }
-
     @Override
     public String getUniqueIdentifier()
     {
-        return Constants.Mod.MODID + ".upgrade.sprintAttack";
+        return Constants.Mod.MODID + ".upgrade.criticalStrike";
     }
 
     @Override
@@ -83,6 +69,6 @@ public class LivingArmourUpgradeSprintAttack extends LivingArmourUpgrade
     @Override
     public String getUnlocalizedName()
     {
-        return tooltipBase + "sprintAttack";
+        return tooltipBase + "criticalStrike";
     }
 }

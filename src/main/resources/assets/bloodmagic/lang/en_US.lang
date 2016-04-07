@@ -323,6 +323,7 @@ tooltip.BloodMagic.livingArmour.upgrade.jump=Strong Legs
 tooltip.BloodMagic.livingArmour.upgrade.fallProtect=Soft Fall
 tooltip.BloodMagic.livingArmour.upgrade.graveDigger=Grave Digger
 tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=Charging Strike
+tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=True Strike
 tooltip.BloodMagic.livingArmour.upgrade.level=%s (Level %d)
 tooltip.BloodMagic.livingArmour.upgrade.points=&6Upgrade points: %s / %s
 
