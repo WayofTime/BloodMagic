@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class LivingArmourUpgradeJump extends LivingArmourUpgrade
 {
-    public static final int[] costs = new int[] { 7, 13, 22, 40, 65, 90, 130, 180, 250, 350 };
-    public static final double[] jumpModifier = new double[] { 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2, 1.35, 1.5 };
+    public static final int[] costs = new int[] { 3, 6, 11, 23, 37, 50, 70, 100, 140, 200 };
+    public static final double[] jumpModifier = new double[] { 0.10, 0.2, 0.3, 0.4, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5 };
 
     public LivingArmourUpgradeJump(int level)
     {

@@ -10,7 +10,7 @@ import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 public class LivingArmourUpgradeSprintAttack extends LivingArmourUpgrade
 {
     public static final int[] costs = new int[] { 3, 7, 15, 25, 40 };
-    public static final double[] damageBoost = new double[] { 0.5, 1, 1.5, 2, 2.5 };
+    public static final double[] damageBoost = new double[] { 0.5, 0.75, 1, 1.25, 1.5 };
     public static final double[] knockbackModifier = new double[] { 1, 2, 3, 4, 5 };
 
     public LivingArmourUpgradeSprintAttack(int level)
