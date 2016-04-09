@@ -33,7 +33,6 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     public ItemNodeRouter()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".nodeRouter");
-        setRegistryName(Constants.BloodMagicItem.NODE_ROUTER.getRegName());
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }

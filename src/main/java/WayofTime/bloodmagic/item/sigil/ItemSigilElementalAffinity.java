@@ -12,7 +12,6 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleableBase
     public ItemSigilElementalAffinity()
     {
         super("elementalAffinity", 200);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_ELEMENTAL_AFFINITY.getRegName());
     }
 
     @Override

@@ -35,7 +35,6 @@ public class BlockAlchemyArray extends BlockContainer
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
-        setRegistryName(Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
         setHardness(0.1f);
     }
 

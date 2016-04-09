@@ -17,7 +17,6 @@ public class ItemSigilGreenGrove extends ItemSigilToggleableBase
     public ItemSigilGreenGrove()
     {
         super("greenGrove", 150);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_GREEN_GROVE.getRegName());
     }
 
     @Override

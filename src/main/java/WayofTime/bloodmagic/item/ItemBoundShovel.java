@@ -44,7 +44,6 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
     public ItemBoundShovel()
     {
         super("shovel", 1, EFFECTIVE_ON);
-        setRegistryName(Constants.BloodMagicItem.BOUND_SHOVEL.getRegName());
     }
 
     @Override

@@ -12,7 +12,6 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
     public ItemSigilFastMiner()
     {
         super("fastMiner", 100);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_FAST_MINER.getRegName());
     }
 
     @Override

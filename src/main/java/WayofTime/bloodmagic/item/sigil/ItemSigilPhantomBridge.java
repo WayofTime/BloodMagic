@@ -12,7 +12,6 @@ public class ItemSigilPhantomBridge extends ItemSigilToggleableBase
     public ItemSigilPhantomBridge()
     {
         super("phantomBridge", 100);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_PHANTOM_BRIDGE.getRegName());
     }
 
     @Override

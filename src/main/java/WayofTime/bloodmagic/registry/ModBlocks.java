@@ -104,34 +104,34 @@ public class ModBlocks
     public static void init()
     {
         FluidRegistry.registerFluid(BlockLifeEssence.getLifeEssence());
-        lifeEssence = registerBlock(new BlockLifeEssence());
+        lifeEssence = registerBlock(new BlockLifeEssence(), Constants.BloodMagicBlock.LIFE_ESSENCE.getRegName());
 
-        altar = registerBlock(new BlockAltar());
-        bloodRune = registerBlock(new ItemBlockBloodRune(new BlockBloodRune()));
-        ritualController = registerBlock(new ItemBlockRitualController(new BlockRitualController()));
-        ritualStone = registerBlock(new ItemBlockRitualStone(new BlockRitualStone()));
-        bloodLight = registerBlock(new BlockBloodLight());
-        pedestal = registerBlock(new ItemBlockPedestal(new BlockPedestal()));
-        teleposer = registerBlock(new BlockTeleposer());
-        alchemyArray = registerBlock(new BlockAlchemyArray());
-        spectralBlock = registerBlock(new BlockSpectral());
-        phantomBlock = registerBlock(new BlockPhantom());
-        soulForge = registerBlock(new BlockSoulForge());
-        crystal = registerBlock(new ItemBlockCrystal(new BlockCrystal()));
-        bloodStoneBrick = registerBlock(new ItemBlockBloodStoneBrick(new BlockBloodStoneBrick()));
-        masterRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockMasterRoutingNode()));
-        inputRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockInputRoutingNode()));
-        outputRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockOutputRoutingNode()));
-        itemRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockItemRoutingNode()));
-        incenseAltar = registerBlock(new BlockIncenseAltar());
-        pathBlock = registerBlock(new ItemBlockPath(new BlockPath()));
-        demonCrucible = registerBlock(new BlockDemonCrucible());
-        demonPylon = registerBlock(new BlockDemonPylon());
-        demonCrystallizer = registerBlock(new BlockDemonCrystallizer());
-        demonCrystal = registerBlock(new ItemBlockDemonCrystal(new BlockDemonCrystal()));
+        altar = registerBlock(new BlockAltar(), Constants.BloodMagicBlock.ALTAR.getRegName());
+        bloodRune = registerBlock(new ItemBlockBloodRune(new BlockBloodRune()), Constants.BloodMagicBlock.BLOOD_RUNE.getRegName());
+        ritualController = registerBlock(new ItemBlockRitualController(new BlockRitualController()), Constants.BloodMagicBlock.RITUAL_CONTROLLER.getRegName());
+        ritualStone = registerBlock(new ItemBlockRitualStone(new BlockRitualStone()), Constants.BloodMagicBlock.RITUAL_STONE.getRegName());
+        bloodLight = registerBlock(new BlockBloodLight(), Constants.BloodMagicBlock.BLOOD_LIGHT.getRegName());
+        pedestal = registerBlock(new ItemBlockPedestal(new BlockPedestal()), Constants.BloodMagicBlock.PEDESTAL.getRegName());
+        teleposer = registerBlock(new BlockTeleposer(), Constants.BloodMagicBlock.TELEPOSER.getRegName());
+        alchemyArray = registerBlock(new BlockAlchemyArray(), Constants.BloodMagicBlock.ALCHEMY_ARRAY.getRegName());
+        spectralBlock = registerBlock(new BlockSpectral(), Constants.BloodMagicBlock.SPECTRAL.getRegName());
+        phantomBlock = registerBlock(new BlockPhantom(), Constants.BloodMagicBlock.PHANTOM.getRegName());
+        soulForge = registerBlock(new BlockSoulForge(), Constants.BloodMagicBlock.SOUL_FORGE.getRegName());
+        crystal = registerBlock(new ItemBlockCrystal(new BlockCrystal()), Constants.BloodMagicBlock.CRYSTAL.getRegName());
+        bloodStoneBrick = registerBlock(new ItemBlockBloodStoneBrick(new BlockBloodStoneBrick()), Constants.BloodMagicBlock.BLOOD_STONE.getRegName());
+        masterRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockMasterRoutingNode()), Constants.BloodMagicBlock.MASTER_ROUTING_NODE.getRegName());
+        inputRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockInputRoutingNode()), Constants.BloodMagicBlock.INPUT_ROUTING_NODE.getRegName());
+        outputRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockOutputRoutingNode()), Constants.BloodMagicBlock.OUTPUT_ROUTING_NODE.getRegName());
+        itemRoutingNode = registerBlock(new ItemBlockRoutingNode(new BlockItemRoutingNode()), Constants.BloodMagicBlock.ITEM_ROUTING_NODE.getRegName());
+        incenseAltar = registerBlock(new BlockIncenseAltar(), Constants.BloodMagicBlock.INCENSE_ALTAR.getRegName());
+        pathBlock = registerBlock(new ItemBlockPath(new BlockPath()), Constants.BloodMagicBlock.PATH.getRegName());
+        demonCrucible = registerBlock(new BlockDemonCrucible(), Constants.BloodMagicBlock.DEMON_CRUCIBLE.getRegName());
+        demonPylon = registerBlock(new BlockDemonPylon(), Constants.BloodMagicBlock.DEMON_PYLON.getRegName());
+        demonCrystallizer = registerBlock(new BlockDemonCrystallizer(), Constants.BloodMagicBlock.DEMON_CRYSTALLIZER.getRegName());
+        demonCrystal = registerBlock(new ItemBlockDemonCrystal(new BlockDemonCrystal()), Constants.BloodMagicBlock.DEMON_CRYSTAL.getRegName());
 
-        dimensionalPortal = registerBlock(new BlockDimensionalPortal());
-        bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()));
+        dimensionalPortal = registerBlock(new BlockDimensionalPortal(), Constants.BloodMagicBlock.DIMENSIONAL_PORTAL.getRegName());
+        bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()), Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
 
 //        testSpellBlock = registerBlock(new BlockTestSpellBlock());
 
@@ -192,54 +192,32 @@ public class ModBlocks
         renderHelper.itemRender(InventoryRenderHelper.getItemFromBlock(dimensionalPortal));
     }
 
-    private static Block registerBlock(ItemBlock itemBlock, String name)
+    private static Block registerBlock(Block block, String name)
     {
-        Block block = itemBlock.block;
         if (!ConfigHandler.blockBlacklist.contains(name))
         {
+            if (block.getRegistryName() == null)
+                block.setRegistryName(name);
             GameRegistry.register(block);
-            GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName()));
+            GameRegistry.register(new ItemBlock(block));
             BloodMagic.proxy.tryHandleBlockModel(block, name);
         }
 
         return block;
     }
 
-    private static Block registerBlock(ItemBlock itemBlock)
+    private static Block registerBlock(ItemBlock itemBlock, String name)
     {
-        Block block = itemBlock.block;
-        if (block.getRegistryName() == null)
-        {
-            BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
-            return block;
-        }
+        Block block = itemBlock.getBlock();
 
-        String blockName = block.getRegistryName().getResourcePath();
-        if (!ConfigHandler.blockBlacklist.contains(blockName))
+        if (block.getRegistryName() == null)
+            block.setRegistryName(name);
+
+        if (!ConfigHandler.blockBlacklist.contains(name))
         {
             GameRegistry.register(block);
-            GameRegistry.register(itemBlock.setRegistryName(block.getRegistryName().getResourcePath()));
-//            GameRegistry.registerBlock(block, itemBlock);
-            BloodMagic.proxy.tryHandleBlockModel(block, blockName);
-        }
-
-        return block;
-    }
-
-    private static Block registerBlock(Block block)
-    {
-        if (block.getRegistryName() == null)
-        {
-            BloodMagic.instance.getLogger().error("Attempted to register Block {} without setting a registry name. Block will not be registered. Please report this.", block.getClass().getCanonicalName());
-            return null;
-        }
-
-        String blockName = block.getRegistryName().getResourcePath();
-        if (!ConfigHandler.blockBlacklist.contains(blockName))
-        {
-            GameRegistry.register(block);
-            GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName().getResourcePath()));
-            BloodMagic.proxy.tryHandleBlockModel(block, blockName);
+            GameRegistry.register(itemBlock.setRegistryName(name));
+            BloodMagic.proxy.tryHandleBlockModel(block, name);
         }
 
         return block;

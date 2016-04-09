@@ -40,7 +40,6 @@ public class BlockAltar extends BlockContainer implements IVariantProvider
         super(Material.rock);
 
         setUnlocalizedName(Constants.Mod.MODID + ".altar");
-        setRegistryName(Constants.BloodMagicBlock.ALTAR.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

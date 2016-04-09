@@ -45,7 +45,6 @@ public class ItemBoundAxe extends ItemBoundTool implements IMeshProvider
     public ItemBoundAxe()
     {
         super("axe", 7, EFFECTIVE_ON);
-        setRegistryName(Constants.BloodMagicItem.BOUND_AXE.getRegName());
     }
 
     @Override

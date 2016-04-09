@@ -27,7 +27,6 @@ public class ItemSlate extends Item implements IVariantProvider
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".slate.");
-        setRegistryName(Constants.BloodMagicItem.SLATE.getRegName());
         setHasSubtypes(true);
     }
 

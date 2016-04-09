@@ -29,7 +29,6 @@ public class BlockBloodLight extends Block
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodLight");
-        setRegistryName(Constants.BloodMagicBlock.BLOOD_LIGHT.getRegName());
     }
 
     @Override

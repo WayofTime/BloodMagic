@@ -26,7 +26,6 @@ public class BlockPedestal extends BlockStringContainer
         super(Material.rock, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".");
-        setRegistryName(Constants.BloodMagicBlock.PEDESTAL.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

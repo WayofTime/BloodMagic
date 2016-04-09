@@ -39,7 +39,6 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
     {
         super();
         setUnlocalizedName(Constants.Mod.MODID + ".sentientBow");
-        setRegistryName(Constants.BloodMagicItem.SENTIENT_BOW.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter()
         {

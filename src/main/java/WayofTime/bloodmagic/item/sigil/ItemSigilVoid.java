@@ -22,7 +22,6 @@ public class ItemSigilVoid extends ItemSigilBase
     public ItemSigilVoid()
     {
         super("void", 50);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_VOID.getRegName());
     }
 
     @Override

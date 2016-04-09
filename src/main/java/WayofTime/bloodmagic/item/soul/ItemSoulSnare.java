@@ -34,7 +34,6 @@ public class ItemSoulSnare extends Item implements IVariantProvider
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".soulSnare.");
-        setRegistryName(Constants.BloodMagicItem.SOUL_SNARE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHasSubtypes(true);
         setMaxStackSize(16);

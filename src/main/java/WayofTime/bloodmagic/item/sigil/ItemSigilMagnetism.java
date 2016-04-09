@@ -15,7 +15,6 @@ public class ItemSigilMagnetism extends ItemSigilToggleableBase
     public ItemSigilMagnetism()
     {
         super("magnetism", 50);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_MAGNETISM.getRegName());
     }
 
     @Override

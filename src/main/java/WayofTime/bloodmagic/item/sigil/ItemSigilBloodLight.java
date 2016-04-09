@@ -19,7 +19,6 @@ public class ItemSigilBloodLight extends ItemSigilBase
     public ItemSigilBloodLight()
     {
         super("bloodLight", 10);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_BLOOD_LIGHT.getRegName());
     }
 
     @Override

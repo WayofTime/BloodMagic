@@ -24,7 +24,6 @@ public class ItemActivationCrystal extends ItemBindableBase implements IVariantP
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".activationCrystal.");
-        setRegistryName(Constants.BloodMagicItem.ACTIVATION_CRYSTAL.getRegName());
         setHasSubtypes(true);
     }
 

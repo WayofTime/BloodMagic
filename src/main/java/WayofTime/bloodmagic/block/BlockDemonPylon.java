@@ -27,7 +27,6 @@ public class BlockDemonPylon extends BlockContainer implements IVariantProvider
         super(Material.rock);
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonPylon");
-        setRegistryName(Constants.BloodMagicBlock.DEMON_PYLON.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

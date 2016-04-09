@@ -37,7 +37,6 @@ public class ItemDemonCrystal extends Item implements IDiscreteDemonWill, IVaria
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonCrystal.");
-        setRegistryName(Constants.BloodMagicItem.DEMON_CRYSTAL.getRegName());
         setHasSubtypes(true);
         setCreativeTab(BloodMagic.tabBloodMagic);
 

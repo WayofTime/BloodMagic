@@ -30,7 +30,6 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
 
         setCreativeTab(BloodMagic.tabUpgradeTome);
         setUnlocalizedName(Constants.Mod.MODID + ".upgradeTrainer");
-        setRegistryName(Constants.BloodMagicItem.UPGRADE_TRAINER.getRegName());
         setHasSubtypes(true);
         setMaxStackSize(1);
     }

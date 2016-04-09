@@ -30,7 +30,6 @@ public class ItemRouterFilter extends Item implements IItemFilterProvider, IVari
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".itemFilter.");
-        setRegistryName(Constants.BloodMagicItem.ROUTER_FILTER.getRegName());
         setHasSubtypes(true);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }

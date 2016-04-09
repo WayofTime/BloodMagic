@@ -45,7 +45,6 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider
     public ItemBoundPickaxe()
     {
         super("pickaxe", 5, EFFECTIVE_ON);
-        setRegistryName(Constants.BloodMagicItem.BOUND_PICKAXE.getRegName());
     }
 
     @Override

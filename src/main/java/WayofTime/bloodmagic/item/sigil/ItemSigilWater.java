@@ -27,7 +27,6 @@ public class ItemSigilWater extends ItemSigilBase
     public ItemSigilWater()
     {
         super("water", 100);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_WATER.getRegName());
     }
 
     @Override

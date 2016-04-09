@@ -28,7 +28,6 @@ public class BlockDemonCrystallizer extends BlockContainer implements IVariantPr
         super(Material.rock);
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonCrystallizer");
-        setRegistryName(Constants.BloodMagicBlock.DEMON_CRYSTALLIZER.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

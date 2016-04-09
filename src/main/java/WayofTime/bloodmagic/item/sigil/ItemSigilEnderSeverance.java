@@ -16,7 +16,6 @@ public class ItemSigilEnderSeverance extends ItemSigilToggleableBase
     public ItemSigilEnderSeverance()
     {
         super("enderSeverance", 200);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_ENDER_SEVERANCE.getRegName());
     }
 
     @Override

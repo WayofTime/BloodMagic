@@ -26,7 +26,6 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
     public ItemSigilSeer()
     {
         super("seer");
-        setRegistryName(Constants.BloodMagicItem.SIGIL_SEER.getRegName());
     }
 
     @Override

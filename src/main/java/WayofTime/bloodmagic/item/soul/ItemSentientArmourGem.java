@@ -24,7 +24,6 @@ public class ItemSentientArmourGem extends Item
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".sentientArmourGem");
-        setRegistryName(Constants.BloodMagicItem.SENTIENT_ARMOR_GEM.getRegName());
         setMaxStackSize(1);
     }
 

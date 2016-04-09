@@ -33,7 +33,6 @@ public class BlockBloodTank extends BlockContainer
         super(Material.iron);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodTank");
-        setRegistryName(Constants.BloodMagicBlock.BLOOD_TANK.getRegName());
         setHardness(2.0F);
         setResistance(5.0F);
         setSoundType(SoundType.GLASS);

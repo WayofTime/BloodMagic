@@ -12,7 +12,6 @@ public class ItemSigilCompression extends ItemSigilToggleableBase
     public ItemSigilCompression()
     {
         super("compression", 200);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_COMPRESSION.getRegName());
     }
 
     // TODO REWRITE all compression stuff if someone has time

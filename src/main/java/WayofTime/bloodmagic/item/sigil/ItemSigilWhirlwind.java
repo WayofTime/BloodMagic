@@ -12,7 +12,6 @@ public class ItemSigilWhirlwind extends ItemSigilToggleableBase
     public ItemSigilWhirlwind()
     {
         super("whirlwind", 250);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_WHIRLWIND.getRegName());
     }
 
     @Override

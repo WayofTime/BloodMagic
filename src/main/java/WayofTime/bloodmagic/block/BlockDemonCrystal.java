@@ -43,7 +43,6 @@ public class BlockDemonCrystal extends BlockContainer
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, EnumFacing.UP));
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonCrystal");
-        setRegistryName(Constants.BloodMagicBlock.DEMON_CRYSTAL.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

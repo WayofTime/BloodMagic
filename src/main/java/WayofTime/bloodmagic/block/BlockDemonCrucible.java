@@ -34,7 +34,6 @@ public class BlockDemonCrucible extends BlockContainer implements IVariantProvid
         super(Material.rock);
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonCrucible");
-        setRegistryName(Constants.BloodMagicBlock.DEMON_CRUCIBLE.getRegName());
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
         setResistance(5.0F);

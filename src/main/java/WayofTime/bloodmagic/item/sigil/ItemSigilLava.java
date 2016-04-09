@@ -24,7 +24,6 @@ public class ItemSigilLava extends ItemSigilBase
     public ItemSigilLava()
     {
         super("lava", 1000);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_LAVA.getRegName());
     }
 
     @Override

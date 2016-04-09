@@ -31,7 +31,6 @@ public class BlockSpectral extends BlockContainer implements IVariantProvider
         super(Material.cloth);
 
         setUnlocalizedName(Constants.Mod.MODID + ".spectral");
-        setRegistryName(Constants.BloodMagicBlock.SPECTRAL.getRegName());
     }
 
     @Override

@@ -46,7 +46,6 @@ public class ItemComponent extends Item implements IVariantProvider
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".baseComponent.");
-        setRegistryName(Constants.BloodMagicItem.COMPONENT.getRegName());
         setHasSubtypes(true);
         setCreativeTab(BloodMagic.tabBloodMagic);
 

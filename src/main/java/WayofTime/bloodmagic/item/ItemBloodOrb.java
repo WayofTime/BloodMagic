@@ -29,7 +29,6 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
     public ItemBloodOrb()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".orb.");
-        setRegistryName(Constants.BloodMagicItem.BLOOD_ORB.getRegName());
         this.setMaxDamage(0);
         setHasSubtypes(true);
     }

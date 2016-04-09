@@ -19,7 +19,6 @@ public class BlockInputRoutingNode extends BlockRoutingNode
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".inputRouting");
-        setRegistryName(Constants.BloodMagicBlock.INPUT_ROUTING_NODE.getRegName());
     }
 
     @Override

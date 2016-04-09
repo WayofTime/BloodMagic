@@ -21,7 +21,6 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     public ItemSigilAir()
     {
         super("air", 50);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_AIR.getRegName());
     }
 
     @Override

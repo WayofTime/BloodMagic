@@ -153,7 +153,7 @@ public class ModItems
 
     public static void init()
     {
-        bloodOrb = registerItem(new ItemBloodOrb());
+        bloodOrb = registerItem(new ItemBloodOrb(), Constants.BloodMagicItem.BLOOD_ORB.getRegName());
         orbWeak = new BloodOrb("weak", 1, 5000);
         OrbRegistry.registerOrb(orbWeak);
         orbApprentice = new BloodOrb("apprentice", 2, 25000);
@@ -167,54 +167,54 @@ public class ModItems
         orbTranscendent = new BloodOrb("transcendent", 6, 30000000);
         OrbRegistry.registerOrb(orbTranscendent);
 
-        bucketEssence = registerItem(new ItemBucketEssence());
+        bucketEssence = registerItem(new ItemBucketEssence(), Constants.BloodMagicItem.BUCKET_ESSENCE.getRegName());
 
-        activationCrystal = registerItem(new ItemActivationCrystal());
-        slate = registerItem(new ItemSlate());
-        inscriptionTool = registerItem(new ItemInscriptionTool());
+        activationCrystal = registerItem(new ItemActivationCrystal(), Constants.BloodMagicItem.ACTIVATION_CRYSTAL.getRegName());
+        slate = registerItem(new ItemSlate(), Constants.BloodMagicItem.SLATE.getRegName());
+        inscriptionTool = registerItem(new ItemInscriptionTool(), Constants.BloodMagicItem.INSCRIPTION_TOOL.getRegName());
 
-        sacrificialDagger = registerItem(new ItemSacrificialDagger());
-        packSacrifice = registerItem(new ItemPackSacrifice());
-        packSelfSacrifice = registerItem(new ItemPackSelfSacrifice());
-        daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice());
+        sacrificialDagger = registerItem(new ItemSacrificialDagger(), Constants.BloodMagicItem.SACRIFICIAL_DAGGER.getRegName());
+        packSacrifice = registerItem(new ItemPackSacrifice(), Constants.BloodMagicItem.SACRIFICE_PACK.getRegName());
+        packSelfSacrifice = registerItem(new ItemPackSelfSacrifice(), Constants.BloodMagicItem.SELF_SACRIFICE_PACK.getRegName());
+        daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice(), Constants.BloodMagicItem.DAGGER_OF_SACRIFICE.getRegName());
 
-        ritualDiviner = registerItem(new ItemRitualDiviner());
+        ritualDiviner = registerItem(new ItemRitualDiviner(), Constants.BloodMagicItem.RITUAL_DIVINER.getRegName());
 
-        lavaCrystal = registerItem(new ItemLavaCrystal());
+        lavaCrystal = registerItem(new ItemLavaCrystal(), Constants.BloodMagicItem.LAVA_CRYSTAL.getRegName());
         GameRegistry.registerFuelHandler(new ItemLavaCrystal());
 
-        boundSword = registerItem(new ItemBoundSword());
-        boundPickaxe = registerItem(new ItemBoundPickaxe());
-        boundAxe = registerItem(new ItemBoundAxe());
-        boundShovel = registerItem(new ItemBoundShovel());
+        boundSword = registerItem(new ItemBoundSword(), Constants.BloodMagicItem.BOUND_SWORD.getRegName());
+        boundPickaxe = registerItem(new ItemBoundPickaxe(), Constants.BloodMagicItem.BOUND_PICKAXE.getRegName());
+        boundAxe = registerItem(new ItemBoundAxe(), Constants.BloodMagicItem.BOUND_AXE.getRegName());
+        boundShovel = registerItem(new ItemBoundShovel(), Constants.BloodMagicItem.BOUND_SHOVEL.getRegName());
 
-        sigilDivination = registerItem(new ItemSigilDivination());
-        sigilAir = registerItem(new ItemSigilAir());
-        sigilWater = registerItem(new ItemSigilWater());
-        sigilLava = registerItem(new ItemSigilLava());
-        sigilVoid = registerItem(new ItemSigilVoid());
-        sigilGreenGrove = registerItem(new ItemSigilGreenGrove());
-        sigilBloodLight = registerItem(new ItemSigilBloodLight());
-        sigilElementalAffinity = registerItem(new ItemSigilElementalAffinity());
-        sigilMagnetism = registerItem(new ItemSigilMagnetism());
-        sigilSuppression = registerItem(new ItemSigilSuppression());
-        sigilHaste = registerItem(new ItemSigilHaste());
-        sigilFastMiner = registerItem(new ItemSigilFastMiner());
-        sigilSeer = registerItem(new ItemSigilSeer());
-        sigilPhantomBridge = registerItem(new ItemSigilPhantomBridge());
-        sigilWhirlwind = registerItem(new ItemSigilWhirlwind());
-        sigilCompression = registerItem(new ItemSigilCompression());
-        sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance());
+        sigilDivination = registerItem(new ItemSigilDivination(), Constants.BloodMagicItem.SIGIL_DIVINATION.getRegName());
+        sigilAir = registerItem(new ItemSigilAir(), Constants.BloodMagicItem.SIGIL_AIR.getRegName());
+        sigilWater = registerItem(new ItemSigilWater(), Constants.BloodMagicItem.SIGIL_WATER.getRegName());
+        sigilLava = registerItem(new ItemSigilLava(), Constants.BloodMagicItem.SIGIL_LAVA.getRegName());
+        sigilVoid = registerItem(new ItemSigilVoid(), Constants.BloodMagicItem.SIGIL_VOID.getRegName());
+        sigilGreenGrove = registerItem(new ItemSigilGreenGrove(), Constants.BloodMagicItem.SIGIL_GREEN_GROVE.getRegName());
+        sigilBloodLight = registerItem(new ItemSigilBloodLight(), Constants.BloodMagicItem.SIGIL_BLOOD_LIGHT.getRegName());
+        sigilElementalAffinity = registerItem(new ItemSigilElementalAffinity(), Constants.BloodMagicItem.SIGIL_ELEMENTAL_AFFINITY.getRegName());
+        sigilMagnetism = registerItem(new ItemSigilMagnetism(), Constants.BloodMagicItem.SIGIL_MAGNETISM.getRegName());
+        sigilSuppression = registerItem(new ItemSigilSuppression(), Constants.BloodMagicItem.SIGIL_SUPPRESION.getRegName());
+        sigilHaste = registerItem(new ItemSigilHaste(), Constants.BloodMagicItem.SIGIL_HASTE.getRegName());
+        sigilFastMiner = registerItem(new ItemSigilFastMiner(), Constants.BloodMagicItem.SIGIL_FAST_MINER.getRegName());
+        sigilSeer = registerItem(new ItemSigilSeer(), Constants.BloodMagicItem.SIGIL_SEER.getRegName());
+        sigilPhantomBridge = registerItem(new ItemSigilPhantomBridge(), Constants.BloodMagicItem.SIGIL_PHANTOM_BRIDGE.getRegName());
+        sigilWhirlwind = registerItem(new ItemSigilWhirlwind(), Constants.BloodMagicItem.SIGIL_WHIRLWIND.getRegName());
+        sigilCompression = registerItem(new ItemSigilCompression(), Constants.BloodMagicItem.SIGIL_COMPRESSION.getRegName());
+        sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance(), Constants.BloodMagicItem.SIGIL_ENDER_SEVERANCE.getRegName());
 
-        sigilTeleposition = registerItem(new ItemSigilTeleposition());
-        sigilTransposition = registerItem(new ItemSigilTransposition());
+        sigilTeleposition = registerItem(new ItemSigilTeleposition(), Constants.BloodMagicItem.TELEPOSITION_FOCUS.getRegName());
+        sigilTransposition = registerItem(new ItemSigilTransposition(), Constants.BloodMagicItem.SIGIL_TRANSPOSITION.getRegName());
 
-        itemComponent = registerItem(new ItemComponent());
-        itemDemonCrystal = registerItem(new ItemDemonCrystal());
-        telepositionFocus = registerItem(new ItemTelepositionFocus());
-        experienceTome = registerItem(new ItemExperienceBook());
+        itemComponent = registerItem(new ItemComponent(), Constants.BloodMagicItem.COMPONENT.getRegName());
+        itemDemonCrystal = registerItem(new ItemDemonCrystal(), Constants.BloodMagicItem.DEMON_CRYSTAL.getRegName());
+        telepositionFocus = registerItem(new ItemTelepositionFocus(), Constants.BloodMagicItem.TELEPOSITION_FOCUS.getRegName());
+        experienceTome = registerItem(new ItemExperienceBook(), Constants.BloodMagicItem.EXPERIENCE_TOME.getRegName());
 
-        bloodShard = registerItem(new ItemBloodShard());
+        bloodShard = registerItem(new ItemBloodShard(), Constants.BloodMagicItem.BLOOD_SHARD.getRegName());
 
         livingArmourHelmet = registerItem(new ItemLivingArmour(EntityEquipmentSlot.HEAD), "ItemLivingArmourHelmet");
         livingArmourChest = registerItem(new ItemLivingArmour(EntityEquipmentSlot.CHEST), "ItemLivingArmourChest");
@@ -226,21 +226,21 @@ public class ModItems
         sentientArmourLegs = registerItem(new ItemSentientArmour(EntityEquipmentSlot.LEGS), "ItemSentientArmourLegs");
         sentientArmourBoots = registerItem(new ItemSentientArmour(EntityEquipmentSlot.FEET), "ItemSentientArmourBoots");
 
-        altarMaker = registerItem(new ItemAltarMaker());
-        upgradeTome = registerItem(new ItemUpgradeTome());
-        upgradeTrainer = registerItem(new ItemUpgradeTrainer());
+        altarMaker = registerItem(new ItemAltarMaker(), Constants.BloodMagicItem.ALTAR_MAKER.getRegName());
+        upgradeTome = registerItem(new ItemUpgradeTome(), Constants.BloodMagicItem.UPGRADE_TOME.getRegName());
+        upgradeTrainer = registerItem(new ItemUpgradeTrainer(), Constants.BloodMagicItem.UPGRADE_TRAINER.getRegName());
 
-        arcaneAshes = registerItem(new ItemArcaneAshes());
-        monsterSoul = registerItem(new ItemMonsterSoul());
-        soulGem = registerItem(new ItemSoulGem());
-        soulSnare = registerItem(new ItemSoulSnare());
+        arcaneAshes = registerItem(new ItemArcaneAshes(), Constants.BloodMagicItem.ARCANE_ASHES.getRegName());
+        monsterSoul = registerItem(new ItemMonsterSoul(), Constants.BloodMagicItem.MONSTER_SOUL.getRegName());
+        soulGem = registerItem(new ItemSoulGem(), Constants.BloodMagicItem.SOUL_GEM.getRegName());
+        soulSnare = registerItem(new ItemSoulSnare(), Constants.BloodMagicItem.SOUL_SNARE.getRegName());
 
-        sentientSword = registerItem(new ItemSentientSword());
-        sentientBow = registerItem(new ItemSentientBow());
-        sentientArmourGem = registerItem(new ItemSentientArmourGem());
+        sentientSword = registerItem(new ItemSentientSword(), Constants.BloodMagicItem.SENTIENT_SWORD.getRegName());
+        sentientBow = registerItem(new ItemSentientBow(), Constants.BloodMagicItem.SENTIENT_BOW.getRegName());
+        sentientArmourGem = registerItem(new ItemSentientArmourGem(), Constants.BloodMagicItem.SENTIENT_ARMOR_GEM.getRegName());
 
-        nodeRouter = registerItem(new ItemNodeRouter());
-        baseItemFilter = registerItem(new ItemRouterFilter());
+        nodeRouter = registerItem(new ItemNodeRouter(), Constants.BloodMagicItem.NODE_ROUTER.getRegName());
+        baseItemFilter = registerItem(new ItemRouterFilter(), Constants.BloodMagicItem.ROUTER_FILTER.getRegName());
     }
 
     public static void initRenders()
@@ -270,26 +270,10 @@ public class ModItems
     {
         if (!ConfigHandler.itemBlacklist.contains(name))
         {
-            GameRegistry.registerItem(item, name);
+            if (item.getRegistryName() == null)
+                item.setRegistryName(name);
+            GameRegistry.register(item);
             BloodMagic.proxy.tryHandleItemModel(item, name);
-        }
-
-        return item;
-    }
-
-    private static Item registerItem(Item item)
-    {
-        if (item.getRegistryName() == null)
-        {
-            BloodMagic.instance.getLogger().error("Attempted to register Item {} without setting a registry name. Item will not be registered. Please report this.", item.getClass().getCanonicalName());
-            return item;
-        }
-
-        String itemName = item.getRegistryName().getResourcePath();
-        if (!ConfigHandler.itemBlacklist.contains(itemName))
-        {
-            GameRegistry.registerItem(item);
-            BloodMagic.proxy.tryHandleItemModel(item, itemName);
         }
 
         return item;

@@ -25,7 +25,6 @@ public class ItemSigilTeleposition extends ItemSigilBase
     public ItemSigilTeleposition()
     {
         super("teleposition");
-        setRegistryName(Constants.BloodMagicItem.SIGIL_TELEPOSITION.getRegName());
     }
 
     @Override

@@ -24,7 +24,6 @@ public class ItemBloodShard extends Item implements IVariantProvider
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".bloodShard.");
-        setRegistryName(Constants.BloodMagicItem.BLOOD_SHARD.getRegName());
         setHasSubtypes(true);
     }
 

@@ -12,7 +12,6 @@ public class ItemSigilHaste extends ItemSigilToggleableBase
     public ItemSigilHaste()
     {
         super("haste", 250);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_HASTE.getRegName());
     }
 
     @Override

@@ -27,7 +27,6 @@ public class ItemSigilTransposition extends ItemSigilBase
     public ItemSigilTransposition()
     {
         super("transposition", 1000);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_TRANSPOSITION.getRegName());
     }
 
     @Override

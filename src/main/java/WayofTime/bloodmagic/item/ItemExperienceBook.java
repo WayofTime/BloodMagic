@@ -29,7 +29,6 @@ public class ItemExperienceBook extends Item implements IVariantProvider
     public ItemExperienceBook()
     {
         setUnlocalizedName(Constants.Mod.MODID + ".experienceTome");
-        setRegistryName(Constants.BloodMagicItem.EXPERIENCE_TOME.getRegName());
         setMaxStackSize(1);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }

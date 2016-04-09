@@ -25,7 +25,6 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
     public ItemSigilDivination()
     {
         super("divination");
-        setRegistryName(Constants.BloodMagicItem.SIGIL_DIVINATION.getRegName());
     }
 
     @Override

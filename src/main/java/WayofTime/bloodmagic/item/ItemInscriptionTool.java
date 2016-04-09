@@ -34,7 +34,6 @@ public class ItemInscriptionTool extends ItemBindableBase implements IVariantPro
         super();
 
         setUnlocalizedName(Constants.Mod.MODID + ".scribe.");
-        setRegistryName(Constants.BloodMagicItem.INSCRIPTION_TOOL.getRegName());
         setHasSubtypes(true);
     }
 

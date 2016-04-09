@@ -15,7 +15,6 @@ public class ItemSigilSuppression extends ItemSigilToggleableBase
     public ItemSigilSuppression()
     {
         super("suppression", 400);
-        setRegistryName(Constants.BloodMagicItem.SIGIL_SUPPRESION.getRegName());
     }
 
     @Override
