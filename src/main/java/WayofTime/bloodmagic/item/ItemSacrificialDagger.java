@@ -169,7 +169,7 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
         return ret;
     }
 
-    private void findAndFillAltar(World world, EntityPlayer player, int amount)
+    protected void findAndFillAltar(World world, EntityPlayer player, int amount)
     {
         BlockPos pos = player.getPosition();
         IBloodAltar altarEntity = getAltar(world, pos);
