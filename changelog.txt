@@ -6,6 +6,7 @@ Version 2.0.0-32
 - Added new Living Armour upgrades:
 	- Added Charging Strike, which increases knockback and damage for attacks while sprinting
 	- Added True Strike, increasing the damage of critical hits
+- Updated for Forge 12.16.0.1859
 
 ------------------------------------------------------
 Version 2.0.0-31
