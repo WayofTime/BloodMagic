@@ -31,6 +31,10 @@ import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshProvider
 {
+    public static int[] soulBracket = new int[] { 16, 60, 200, 400, 1000 };
+    public static double[] defaultDamageAdded = new double[] { 0.25, 0.5, 0.75, 1, 1.25 };
+    public static float[] velocityAdded = new float[] { 0.25f, 0.5f, 0.75f, 1, 1.25f };
+
     public ItemSentientBow()
     {
         super();
@@ -40,7 +44,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
+            public float apply(ItemStack stack, World world, EntityLivingBase entityIn)
             {
                 if (entityIn == null)
                 {
@@ -55,7 +59,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         this.addPropertyOverride(new ResourceLocation("pulling"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
+            public float apply(ItemStack stack, World world, EntityLivingBase entityIn)
             {
                 return entityIn != null && entityIn.isHandActive() && entityIn.getActiveItemStack() == stack ? 1.0F : 0.0F;
             }
@@ -63,56 +67,19 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         this.addPropertyOverride(new ResourceLocation("type"), new IItemPropertyGetter()
         {
             @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn)
+            public float apply(ItemStack stack, World world, EntityLivingBase entityIn)
             {
                 return ((ItemSentientBow) ModItems.sentientBow).getCurrentType(stack).ordinal();
             }
         });
     }
 
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public ItemMeshDefinition getMeshDefinition()
-//    {
-//        return new ItemMeshDefinition()
-//        {
-//            @Override
-//            public ModelResourceLocation getModelLocation(ItemStack stack)
-//            {
-//                assert getCustomLocation() != null;
-//                EnumDemonWillType type = ((ItemSentientBow) ModItems.sentientBow).getCurrentType(stack);
-//                String additional = type.getName().toLowerCase();
-//                return new ModelResourceLocation(getCustomLocation(), "type=" + additional);
-//            }
-//        };
-//    }
-//
-//    @Override
-//    public ResourceLocation getCustomLocation()
-//    {
-//        return new ResourceLocation(Constants.Mod.MODID, "item/ItemSentientBow");
-//    }
-//
-//    @Override
-//    public List<String> getVariants()
-//    {
-//        List<String> ret = new ArrayList<String>();
-//        for (EnumDemonWillType type : EnumDemonWillType.values())
-//        {
-//            String additional = type.getName().toLowerCase();
-//
-//            ret.add("type=" + additional);
-//        }
-//
-//        return ret;
-//    }
-
     public void recalculatePowers(ItemStack stack, World world, EntityPlayer player)
     {
         EnumDemonWillType type = PlayerDemonWillHandler.getLargestWillType(player);
-//        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
-        this.setCurrentType(stack, type);
-//        int level = getLevel(stack, soulsRemaining);
+        double soulsRemaining = PlayerDemonWillHandler.getTotalDemonWill(type, player);
+        this.setCurrentType(stack, soulsRemaining > 0 ? type : EnumDemonWillType.DEFAULT);
+        int level = getLevel(stack, soulsRemaining);
 //
 //        double drain = level >= 0 ? soulDrainPerSwing[level] : 0;
 //        double extraDamage = level >= 0 ? damageAdded[level] : 0;
@@ -121,6 +88,23 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 //        setDamageOfActivatedSword(stack, 7 + extraDamage);
 //        setStaticDropOfActivatedSword(stack, level >= 0 ? staticDrop[level] : 1);
 //        setDropOfActivatedSword(stack, level >= 0 ? soulDrop[level] : 0);
+
+        setVelocityOfArrow(stack, level >= 0 ? 3 + getVelocityModifier(type, level) : 0);
+        setDamageAdded(stack, level >= 0 ? getDamageModifier(type, level) : 0);
+    }
+
+    private int getLevel(ItemStack stack, double soulsRemaining)
+    {
+        int lvl = -1;
+        for (int i = 0; i < soulBracket.length; i++)
+        {
+            if (soulsRemaining >= soulBracket[i])
+            {
+                lvl = i;
+            }
+        }
+
+        return lvl;
     }
 
     @Override
@@ -136,6 +120,74 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         }
 
         return EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
+    }
+
+    public double getDamageModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case VENGEFUL:
+            return 0;
+        case DEFAULT:
+        case CORROSIVE:
+        case DESTRUCTIVE:
+        case STEADFAST:
+            return defaultDamageAdded[willBracket];
+        }
+
+        return 0;
+    }
+
+    public float getVelocityModifier(EnumDemonWillType type, int willBracket)
+    {
+        switch (type)
+        {
+        case VENGEFUL:
+            return velocityAdded[willBracket];
+        default:
+            return 0;
+        }
+    }
+
+    public void setDamageAdded(ItemStack stack, double damage)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setDouble("damage", damage);
+    }
+
+    public double getDamageAdded(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        return tag.getDouble("damage");
+    }
+
+    public void setVelocityOfArrow(ItemStack stack, float velocity)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setFloat("velocity", velocity);
+    }
+
+    public float getVelocityOfArrow(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        if (tag.hasKey("velocity"))
+        {
+            return tag.getFloat("velocity");
+        }
+
+        return 3;
     }
 
     public void setCurrentType(ItemStack stack, EnumDemonWillType type)
@@ -155,16 +207,16 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entityLiving, int timeLeft)
     {
         if (entityLiving instanceof EntityPlayer)
         {
-            EntityPlayer entityplayer = (EntityPlayer) entityLiving;
-            boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, stack) > 0;
-            ItemStack itemstack = this.getFiredArrow(entityplayer);
+            EntityPlayer player = (EntityPlayer) entityLiving;
+            boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, stack) > 0;
+            ItemStack itemstack = this.getFiredArrow(player);
 
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
-            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer) entityLiving, i, itemstack != null || flag);
+            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, world, (EntityPlayer) entityLiving, i, itemstack != null || flag);
             if (i < 0)
                 return;
 
@@ -181,51 +233,49 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
                 {
                     boolean flag1 = flag && itemstack.getItem() instanceof ItemArrow; //Forge: Fix consuming custom arrows.
 
-                    if (!worldIn.isRemote)
+                    if (!world.isRemote)
                     {
+                        this.recalculatePowers(stack, world, player);
                         EnumDemonWillType type = this.getCurrentType(stack);
 
                         //Need to do some stuffs
-                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
-                        EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
-                        entityarrow = new EntitySentientArrow(worldIn, entityLiving, type);
-                        entityarrow.func_184547_a(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, arrowVelocity * 3.0F, 1.0F);
+//                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
+//                        EntityArrow entityArrow = itemarrow.createArrow(world, itemstack, player);
+                        EntityArrow entityArrow = new EntitySentientArrow(world, entityLiving, type);
+                        entityArrow.func_184547_a(player, player.rotationPitch, player.rotationYaw, 0.0F, arrowVelocity * getVelocityOfArrow(stack), 1.0F);
 
                         if (arrowVelocity == 1.0F)
                         {
-                            entityarrow.setIsCritical(true);
+                            entityArrow.setIsCritical(true);
                         }
 
                         int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.power, stack);
 
-                        if (j > 0)
-                        {
-                            entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
-                        }
+                        entityArrow.setDamage(entityArrow.getDamage() + this.getDamageAdded(stack) + (j > 0 ? j * 0.5 + 0.5 : 0));
 
                         int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.punch, stack);
 
                         if (k > 0)
                         {
-                            entityarrow.setKnockbackStrength(k);
+                            entityArrow.setKnockbackStrength(k);
                         }
 
                         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.flame, stack) > 0)
                         {
-                            entityarrow.setFire(100);
+                            entityArrow.setFire(100);
                         }
 
-                        stack.damageItem(1, entityplayer);
+                        stack.damageItem(1, player);
 
                         if (flag1)
                         {
-                            entityarrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
+                            entityArrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
 
-                        worldIn.spawnEntityInWorld(entityarrow);
+                        world.spawnEntityInWorld(entityArrow);
                     }
 
-                    worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
+                    world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
 
                     if (!flag1)
                     {
@@ -233,11 +283,11 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 
                         if (itemstack.stackSize == 0)
                         {
-                            entityplayer.inventory.deleteStack(itemstack);
+                            player.inventory.deleteStack(itemstack);
                         }
                     }
 
-                    entityplayer.addStat(StatList.getObjectUseStats(this));
+                    player.addStat(StatList.getObjectUseStats(this));
                 }
             }
         }
