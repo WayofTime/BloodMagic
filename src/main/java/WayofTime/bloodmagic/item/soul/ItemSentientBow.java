@@ -26,6 +26,7 @@ import WayofTime.bloodmagic.api.iface.IMultiWillTool;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.registry.ModItems;
 
 public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshProvider
@@ -182,9 +183,12 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 
                     if (!worldIn.isRemote)
                     {
+                        EnumDemonWillType type = this.getCurrentType(stack);
+
                         //Need to do some stuffs
                         ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
                         EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
+                        entityarrow = new EntitySentientArrow(worldIn, entityLiving, type);
                         entityarrow.func_184547_a(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, arrowVelocity * 3.0F, 1.0F);
 
                         if (arrowVelocity == 1.0F)

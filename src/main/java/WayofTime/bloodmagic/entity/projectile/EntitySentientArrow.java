@@ -7,12 +7,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
 
 public class EntitySentientArrow extends EntityArrow
 {
     public double reimbursedAmountOnHit = 0;
+    public EnumDemonWillType type = EnumDemonWillType.DEFAULT;
 
     public EntitySentientArrow(World worldIn)
     {
@@ -24,10 +26,11 @@ public class EntitySentientArrow extends EntityArrow
         super(worldIn, x, y, z);
     }
 
-    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, double reimbursement)
+    public EntitySentientArrow(World worldIn, EntityLivingBase shooter, EnumDemonWillType type)
     {
-        this(worldIn, shooter.posX, shooter.posY, shooter.posZ);
-        this.reimbursedAmountOnHit = reimbursement;
+        super(worldIn, shooter);
+        this.reimbursedAmountOnHit = 0;
+        this.type = type;
     }
 
     public void reimbursePlayer()
@@ -44,6 +47,7 @@ public class EntitySentientArrow extends EntityArrow
         super.writeEntityToNBT(tag);
 
         tag.setDouble("reimbursement", reimbursedAmountOnHit);
+        tag.setString(Constants.NBT.WILL_TYPE, type.toString());
     }
 
     @Override
@@ -52,6 +56,7 @@ public class EntitySentientArrow extends EntityArrow
         super.readEntityFromNBT(tag);
 
         reimbursedAmountOnHit = tag.getDouble("reimbursement");
+        type = EnumDemonWillType.valueOf(tag.getString(Constants.NBT.WILL_TYPE));
     }
 
     @Override

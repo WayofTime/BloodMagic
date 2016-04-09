@@ -18,7 +18,11 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 @SideOnly(Side.CLIENT)
 public class RenderEntitySentientArrow extends Render<EntitySentientArrow>
 {
-    private static final ResourceLocation arrowTextures = new ResourceLocation("bloodmagic:textures/entities/soulArrow.png");
+    private static final ResourceLocation defaultTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow.png");
+    private static final ResourceLocation corrosiveTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_corrosive.png");
+    private static final ResourceLocation vengefulTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_vengeful.png");
+    private static final ResourceLocation destructiveTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_destructive.png");
+    private static final ResourceLocation steadfastTexture = new ResourceLocation("bloodmagic:textures/entities/soulArrow_steadfast.png");
 
     public RenderEntitySentientArrow(RenderManager renderManagerIn)
     {
@@ -95,6 +99,19 @@ public class RenderEntitySentientArrow extends Render<EntitySentientArrow>
      */
     protected ResourceLocation getEntityTexture(EntitySentientArrow entity)
     {
-        return arrowTextures;
+        switch (entity.type)
+        {
+        case CORROSIVE:
+            return corrosiveTexture;
+        case DESTRUCTIVE:
+            return destructiveTexture;
+        case STEADFAST:
+            return steadfastTexture;
+        case VENGEFUL:
+            return vengefulTexture;
+        case DEFAULT:
+        default:
+            return defaultTexture;
+        }
     }
 }
