@@ -37,6 +37,7 @@ public class Constants
         public static final String OUTPUT_AMOUNT = "outputAmount";
         public static final String INPUT_AMOUNT = "inputAmount";
         public static final String STORED_LP = "storedLP";
+        public static final String RITUAL_READER = "ritualReaderState";
 
         public static final String ALTAR = "bloodAltar";
         public static final String ALTAR_TIER = "upgradeLevel";
@@ -210,7 +211,8 @@ public class Constants
         UPGRADE_TRAINER("ItemUpgradeTrainer"),
         SIGIL_TELEPOSITION("ItemSigilTeleposition"),
         EXPERIENCE_TOME("ItemExperienceBook"),
-        SIGIL_TRANSPOSITION("ItemSigilTransposition");
+        SIGIL_TRANSPOSITION("ItemSigilTransposition"),
+        RITUAL_READER("ItemRitualReader");
 
         @Getter
         private final String regName;

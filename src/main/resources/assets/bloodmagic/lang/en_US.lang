@@ -222,6 +222,8 @@ tile.BloodMagic.demonCrystalVENGEFUL.name=Vengeful Will Crystal Cluster
 tile.BloodMagic.demonCrystalSTEADFAST.name=Steadfast Will Crystal Cluster
 
 # Tooltips
+tooltip.BloodMagic.extraInfo=&9-Hold shift for more info-
+
 tooltip.BloodMagic.orb.desc=Stores raw Life Essence
 tooltip.BloodMagic.orb.owner=Added by: %s
 tooltip.BloodMagic.currentOwner=Current owner: %s
@@ -294,6 +296,14 @@ tooltip.BloodMagic.diviner.dawnRune=Dawn Runes: %d
 tooltip.BloodMagic.diviner.totalRune=Total Runes: %d
 tooltip.BloodMagic.diviner.extraInfo=Press shift for extra info
 tooltip.BloodMagic.diviner.currentDirection=Current Direction: %s
+
+tooltip.BloodMagic.ritualReader.currentState=Current mode: %s
+tooltip.BloodMagic.ritualReader.set_area=Define Area
+tooltip.BloodMagic.ritualReader.information=Information
+tooltip.BloodMagic.ritualReader.set_will_types=Set Will Consumed
+tooltip.BloodMagic.ritualReader.desc.set_area=Right click on an active Master Ritual stone to cycle what area of the ritual you want to modify. Then click on the two corners of the new range you want to set the range.
+tooltip.BloodMagic.ritualReader.desc.information=Right click on an active Master Ritual Stone to gather basic information about the ritual.
+tooltip.BloodMagic.ritualReader.desc.set_will_types=Set the types of demon will that the ritual will consume from the aura by right clicking on the MRS with the same types of crystals on your hotbar.
 
 tooltip.BloodMagic.arcaneAshes=Ashes used to draw an alchemy circle
 

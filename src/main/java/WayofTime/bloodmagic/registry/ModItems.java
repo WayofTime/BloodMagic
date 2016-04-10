@@ -27,6 +27,7 @@ import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
 import WayofTime.bloodmagic.item.ItemLavaCrystal;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
+import WayofTime.bloodmagic.item.ItemRitualReader;
 import WayofTime.bloodmagic.item.ItemSacrificialDagger;
 import WayofTime.bloodmagic.item.ItemSlate;
 import WayofTime.bloodmagic.item.ItemTelepositionFocus;
@@ -86,6 +87,7 @@ public class ModItems
     public static Item packSacrifice;
     public static Item daggerOfSacrifice;
     public static Item ritualDiviner;
+    public static Item ritualReader;
 
     public static Item lavaCrystal;
 
@@ -179,6 +181,7 @@ public class ModItems
         daggerOfSacrifice = registerItem(new ItemDaggerOfSacrifice(), Constants.BloodMagicItem.DAGGER_OF_SACRIFICE.getRegName());
 
         ritualDiviner = registerItem(new ItemRitualDiviner(), Constants.BloodMagicItem.RITUAL_DIVINER.getRegName());
+        ritualReader = registerItem(new ItemRitualReader(), Constants.BloodMagicItem.RITUAL_READER.getRegName());
 
         lavaCrystal = registerItem(new ItemLavaCrystal(), Constants.BloodMagicItem.LAVA_CRYSTAL.getRegName());
         GameRegistry.registerFuelHandler(new ItemLavaCrystal());
