@@ -206,7 +206,7 @@ public class ModItems
         sigilCompression = registerItem(new ItemSigilCompression(), Constants.BloodMagicItem.SIGIL_COMPRESSION.getRegName());
         sigilEnderSeverance = registerItem(new ItemSigilEnderSeverance(), Constants.BloodMagicItem.SIGIL_ENDER_SEVERANCE.getRegName());
 
-        sigilTeleposition = registerItem(new ItemSigilTeleposition(), Constants.BloodMagicItem.TELEPOSITION_FOCUS.getRegName());
+        sigilTeleposition = registerItem(new ItemSigilTeleposition(), Constants.BloodMagicItem.SIGIL_TELEPOSITION.getRegName());
         sigilTransposition = registerItem(new ItemSigilTransposition(), Constants.BloodMagicItem.SIGIL_TRANSPOSITION.getRegName());
 
         itemComponent = registerItem(new ItemComponent(), Constants.BloodMagicItem.COMPONENT.getRegName());

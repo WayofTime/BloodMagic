@@ -199,7 +199,7 @@ public class ModBlocks
             if (block.getRegistryName() == null)
                 block.setRegistryName(name);
             GameRegistry.register(block);
-            GameRegistry.register(new ItemBlock(block));
+            GameRegistry.register(new ItemBlock(block).setRegistryName(name));
             BloodMagic.proxy.tryHandleBlockModel(block, name);
         }
 
