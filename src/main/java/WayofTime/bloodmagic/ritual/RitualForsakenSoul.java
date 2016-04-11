@@ -24,7 +24,7 @@ import WayofTime.bloodmagic.tile.TileDemonCrystal;
 
 public class RitualForsakenSoul extends Ritual
 {
-    public static final String CRYSTAL_RANGE = "altar";
+    public static final String CRYSTAL_RANGE = "crystal";
     public static final String DAMAGE_RANGE = "damage";
     public static final int MAX_UNIQUENESS = 10;
 
@@ -40,6 +40,9 @@ public class RitualForsakenSoul extends Ritual
         super("ritualForsakenSoul", 0, 40000, "ritual." + Constants.Mod.MODID + ".forsakenSoulRitual");
         addBlockRange(CRYSTAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-3, 2, -3), 7, 5, 7));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
+
+        setMaximumVolumeAndDistanceOfRange(CRYSTAL_RANGE, 250, 5, 7);
+        setMaximumVolumeAndDistanceOfRange(DAMAGE_RANGE, 0, 10, 10);
     }
 
     @Override

@@ -20,6 +20,7 @@ public class RitualAnimalGrowth extends Ritual
     {
         super("ritualAnimalGrowth", 0, 10000, "ritual." + Constants.Mod.MODID + ".animalGrowthRitual");
         addBlockRange(GROWTH_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 1, -2), 5, 2, 5));
+        setMaximumVolumeAndDistanceOfRange(GROWTH_RANGE, 0, 3, 3);
     }
 
     @Override

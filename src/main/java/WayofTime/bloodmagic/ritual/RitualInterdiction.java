@@ -20,6 +20,7 @@ public class RitualInterdiction extends Ritual
     {
         super("ritualInterdiction", 0, 1000, "ritual." + Constants.Mod.MODID + ".interdictionRitual");
         addBlockRange(INTERDICTION_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5));
+        setMaximumVolumeAndDistanceOfRange(INTERDICTION_RANGE, 0, 5, 5);
     }
 
     @Override

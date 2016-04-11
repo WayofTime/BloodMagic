@@ -19,6 +19,7 @@ public class RitualSpeed extends Ritual
     {
         super("ritualSpeed", 0, 1000, "ritual." + Constants.Mod.MODID + ".speedRitual");
         addBlockRange(SPEED_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 1, -2), new BlockPos(2, 5, 2)));
+        setMaximumVolumeAndDistanceOfRange(SPEED_RANGE, 0, 2, 5);
     }
 
     @Override
@@ -72,6 +73,8 @@ public class RitualSpeed extends Ritual
                 entity.motionX = speed;
                 entity.motionY = motionY;
                 entity.motionZ = 0;
+                break;
+            default:
                 break;
             }
 
