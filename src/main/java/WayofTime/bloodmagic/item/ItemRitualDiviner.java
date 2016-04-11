@@ -19,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -285,9 +286,18 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        if (player.isSneaking() && !world.isRemote)
+        RayTraceResult ray = this.getMovingObjectPositionFromPlayer(world, player, false);
+        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
         {
-            cycleRitual(stack, player);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        }
+
+        if (player.isSneaking())
+        {
+            if (!world.isRemote)
+            {
+                cycleRitual(stack, player);
+            }
 
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
@@ -301,6 +311,12 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         if (entityLiving instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
+
+            RayTraceResult ray = this.getMovingObjectPositionFromPlayer(player.worldObj, player, false);
+            if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
+            {
+                return false;
+            }
 
             if (!player.isSwingInProgress)
             {

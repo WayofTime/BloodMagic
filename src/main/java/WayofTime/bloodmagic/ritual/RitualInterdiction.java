@@ -46,7 +46,9 @@ public class RitualInterdiction extends Ritual
             double yDif = entity.posY - masterRitualStone.getBlockPos().getY() + 1;
             double zDif = entity.posZ - masterRitualStone.getBlockPos().getZ();
 
-            entity.setVelocity(0.1 * xDif, 0.1 * yDif, 0.1 * zDif);
+            entity.motionX = 0.1 * xDif;
+            entity.motionY = 0.1 * yDif;
+            entity.motionZ = 0.1 * zDif;
             entity.fallDistance = 0;
         }
     }

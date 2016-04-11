@@ -323,7 +323,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public void provideInformationOfRangeToPlayer(EntityPlayer player, String range)
     {
-        if (this.currentRitual != null)
+        if (this.currentRitual != null && this.currentRitual.getListOfRanges().contains(range))
         {
             ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRangeToPlayer(player, range));
         }

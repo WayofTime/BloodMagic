@@ -39,6 +39,10 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
     }
 
+    public abstract int getVolumeForOffsets(BlockPos offset1, BlockPos offset2);
+
+    public abstract boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit);
+
     /**
      * This method changes the area descriptor so that its range matches the two
      * blocks that are selected. When implementing this method, assume that
@@ -219,6 +223,26 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             tag.setInteger(Constants.NBT.Y_COORD + "max", maximumOffset.getY());
             tag.setInteger(Constants.NBT.Z_COORD + "max", maximumOffset.getZ());
         }
+
+        @Override
+        public int getVolumeForOffsets(BlockPos offset1, BlockPos offset2)
+        {
+            BlockPos minPos = new BlockPos(Math.min(offset1.getX(), offset2.getX()), Math.min(offset1.getY(), offset2.getY()), Math.min(offset1.getZ(), offset2.getZ()));
+            BlockPos maxPos = new BlockPos(Math.max(offset1.getX(), offset2.getX()), Math.max(offset1.getY(), offset2.getY()), Math.max(offset1.getZ(), offset2.getZ()));
+
+            maxPos = maxPos.add(1, 1, 1);
+
+            return (maxPos.getX() - minPos.getX()) * (maxPos.getY() - minPos.getY()) * (maxPos.getZ() - minPos.getZ());
+        }
+
+        @Override
+        public boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit)
+        {
+            BlockPos minPos = new BlockPos(Math.min(offset1.getX(), offset2.getX()), Math.min(offset1.getY(), offset2.getY()), Math.min(offset1.getZ(), offset2.getZ()));
+            BlockPos maxPos = new BlockPos(Math.max(offset1.getX(), offset2.getX()), Math.max(offset1.getY(), offset2.getY()), Math.max(offset1.getZ(), offset2.getZ()));
+
+            return minPos.getY() >= -verticalLimit && maxPos.getY() <= verticalLimit && minPos.getX() >= -horizontalLimit && maxPos.getX() <= horizontalLimit && minPos.getZ() >= -horizontalLimit && maxPos.getZ() <= horizontalLimit;
+        }
     }
 
     public static class HemiSphere extends AreaDescriptor
@@ -348,6 +372,20 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         {
             // TODO Auto-generated method stub
         }
+
+        @Override
+        public int getVolumeForOffsets(BlockPos pos1, BlockPos pos2)
+        {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit)
+        {
+            // TODO Auto-generated method stub
+            return false;
+        }
     }
 
     public static class Cross extends AreaDescriptor
@@ -440,6 +478,20 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         {
             // TODO Auto-generated method stub
 
+        }
+
+        @Override
+        public int getVolumeForOffsets(BlockPos pos1, BlockPos pos2)
+        {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit)
+        {
+            // TODO Auto-generated method stub
+            return false;
         }
     }
 }

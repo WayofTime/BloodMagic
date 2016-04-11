@@ -37,6 +37,9 @@ public abstract class Ritual
     private final String unlocalizedName;
 
     protected final Map<String, AreaDescriptor> modableRangeMap = new HashMap<String, AreaDescriptor>();
+    protected final Map<String, Integer> volumeRangeMap = new HashMap<String, Integer>();
+    protected final Map<String, Integer> horizontalRangeMap = new HashMap<String, Integer>();
+    protected final Map<String, Integer> verticalRangeMap = new HashMap<String, Integer>();
 
     /**
      * @param name
@@ -216,7 +219,7 @@ public abstract class Ritual
     public boolean setBlockRangeByBounds(String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
     {
         AreaDescriptor descriptor = this.getBlockRange(range);
-        if (canBlockRangeBeModified(descriptor, master, offset1, offset2))
+        if (canBlockRangeBeModified(range, descriptor, master, offset1, offset2))
         {
             descriptor.modifyAreaByBlockPositions(offset1, offset2);
             return true;
@@ -225,14 +228,40 @@ public abstract class Ritual
         return false;
     }
 
-    protected boolean canBlockRangeBeModified(AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
+    protected boolean canBlockRangeBeModified(String range, AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
     {
-        return true;
+        int maxVolume = volumeRangeMap.get(range);
+        int maxVertical = verticalRangeMap.get(range);
+        int maxHorizontal = horizontalRangeMap.get(range);
+
+        return (maxVolume <= 0 || descriptor.getVolumeForOffsets(offset1, offset2) <= maxVolume) && descriptor.isWithinRange(offset1, offset2, maxVertical, maxHorizontal);
+    }
+
+    protected void setMaximumVolumeAndDistanceOfRange(String range, int volume, int horizontalRadius, int verticalRadius)
+    {
+        volumeRangeMap.put(range, volume);
+        horizontalRangeMap.put(range, horizontalRadius);
+        verticalRangeMap.put(range, verticalRadius);
     }
 
     public ITextComponent getErrorForBlockRangeOnFail(EntityPlayer player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
     {
-        return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig");
+        AreaDescriptor descriptor = this.getBlockRange(range);
+        if (descriptor == null)
+        {
+            return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig", "?");
+        }
+        int maxVolume = volumeRangeMap.get(range);
+        int maxVertical = verticalRangeMap.get(range);
+        int maxHorizontal = horizontalRangeMap.get(range);
+
+        if (maxVolume > 0 && descriptor.getVolumeForOffsets(offset1, offset2) > maxVolume)
+        {
+            return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig", maxVolume);
+        } else
+        {
+            return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooFar", maxVertical, maxHorizontal);
+        }
     }
 
     public ITextComponent provideInformationOfRitualToPlayer(EntityPlayer player)

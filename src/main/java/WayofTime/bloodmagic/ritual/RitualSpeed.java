@@ -51,19 +51,27 @@ public class RitualSpeed extends Ritual
             switch (direction)
             {
             case NORTH:
-                entity.setVelocity(0, motionY, -speed);
+                entity.motionX = 0;
+                entity.motionY = motionY;
+                entity.motionZ = -speed;
                 break;
 
             case SOUTH:
-                entity.setVelocity(0, motionY, speed);
+                entity.motionX = 0;
+                entity.motionY = motionY;
+                entity.motionZ = speed;
                 break;
 
             case WEST:
-                entity.setVelocity(-speed, motionY, 0);
+                entity.motionX = -speed;
+                entity.motionY = motionY;
+                entity.motionZ = 0;
                 break;
 
             case EAST:
-                entity.setVelocity(speed, motionY, 0);
+                entity.motionX = speed;
+                entity.motionY = motionY;
+                entity.motionZ = 0;
                 break;
             }
 
@@ -90,7 +98,7 @@ public class RitualSpeed extends Ritual
         this.addRune(components, 0, 0, -2, EnumRuneType.DUSK);
         this.addRune(components, 1, 0, -1, EnumRuneType.AIR);
         this.addRune(components, -1, 0, -1, EnumRuneType.AIR);
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             this.addRune(components, 2, 0, i, EnumRuneType.AIR);
             this.addRune(components, -2, 0, i, EnumRuneType.AIR);

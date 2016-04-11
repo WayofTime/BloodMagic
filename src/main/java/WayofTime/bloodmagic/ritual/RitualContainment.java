@@ -46,7 +46,9 @@ public class RitualContainment extends Ritual
             double yDif = entity.posY - masterRitualStone.getBlockPos().getY() + 3;
             double zDif = entity.posZ - masterRitualStone.getBlockPos().getZ() + 0.5;
 
-            entity.setVelocity(-0.05 * xDif, -0.05 * yDif, -0.05 * zDif);
+            entity.motionX = -0.05 * xDif;
+            entity.motionY = -0.05 * yDif;
+            entity.motionZ = -0.05 * zDif;
             entity.fallDistance = 0;
         }
     }

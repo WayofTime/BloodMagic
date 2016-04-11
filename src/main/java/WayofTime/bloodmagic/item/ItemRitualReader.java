@@ -94,7 +94,6 @@ public class ItemRitualReader extends Item implements IVariantProvider
     {
         if (!world.isRemote)
         {
-            System.out.println("In onItemUse");
             EnumRitualReaderState state = this.getState(stack);
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof IMasterRitualStone)

@@ -18,6 +18,7 @@ public class RitualWater extends Ritual
     {
         super("ritualWater", 0, 500, "ritual." + Constants.Mod.MODID + ".waterRitual");
         addBlockRange(WATER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+        setMaximumVolumeAndDistanceOfRange(WATER_RANGE, 9, 3, 3);
     }
 
     @Override
