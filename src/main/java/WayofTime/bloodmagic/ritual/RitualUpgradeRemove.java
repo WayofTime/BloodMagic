@@ -4,7 +4,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
 import WayofTime.bloodmagic.api.livingArmour.StatTracker;
 import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.item.ItemUpgradeTome;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.livingArmour.LivingArmour;
 import WayofTime.bloodmagic.registry.ModItems;
@@ -66,8 +66,8 @@ public class RitualUpgradeRemove extends Ritual
                         String upgradeKey = entry.getKey();
 
                         ItemStack upgradeStack = new ItemStack(ModItems.upgradeTome);
-                        ItemUpgradeTome.setKey(upgradeStack, upgradeKey);
-                        ItemUpgradeTome.setLevel(upgradeStack, upgrade.getUpgradeLevel());
+                        LivingUpgrades.setKey(upgradeStack, upgradeKey);
+                        LivingUpgrades.setLevel(upgradeStack, upgrade.getUpgradeLevel());
 
                         boolean successful = armour.removeUpgrade(player, upgrade);
 

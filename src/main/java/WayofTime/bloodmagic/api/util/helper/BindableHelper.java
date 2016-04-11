@@ -86,7 +86,7 @@ public class BindableHelper
      * Deprecated.
      * 
      * Now handled automatically with
-     * {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     * {@link WayofTime.bloodmagic.util.handler.EventHandler#onInteract(PlayerInteractEvent.RightClickItem)}}
      * 
      * @param stack
      *        - The ItemStack to bind
@@ -105,7 +105,7 @@ public class BindableHelper
      * Deprecated.
      * 
      * Now handled automatically with
-     * {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     * {@link WayofTime.bloodmagic.util.handler.EventHandler#onInteract(PlayerInteractEvent.RightClickItem)}}
      * 
      * @param stack
      *        - The ItemStack to bind
@@ -145,7 +145,7 @@ public class BindableHelper
      * Deprecated.
      * 
      * Now handled automatically with
-     * {@link WayofTime.bloodmagic.util.handler.EventHandler#interactEvent(PlayerInteractEvent)}
+     * {@link WayofTime.bloodmagic.util.handler.EventHandler#onInteract(PlayerInteractEvent.RightClickItem)}}
      * 
      * @param stack
      *        - ItemStack to check

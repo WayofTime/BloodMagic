@@ -53,7 +53,7 @@ public class ItemSigilBase extends ItemSigil implements IVariantProvider
 
         NBTHelper.checkNBT(stack);
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+        if (!Strings.isNullOrEmpty(getOwnerName(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);

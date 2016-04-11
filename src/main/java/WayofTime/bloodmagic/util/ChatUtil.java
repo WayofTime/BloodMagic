@@ -224,7 +224,6 @@ public class ChatUtil
      */
     public static class PacketNoSpamChat implements IMessage
     {
-
         private ITextComponent[] chatLines;
 
         public PacketNoSpamChat()
@@ -260,7 +259,6 @@ public class ChatUtil
 
         public static class Handler implements IMessageHandler<PacketNoSpamChat, IMessage>
         {
-
             @Override
             public IMessage onMessage(PacketNoSpamChat message, MessageContext ctx)
             {

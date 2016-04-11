@@ -2,6 +2,7 @@ package WayofTime.bloodmagic.api.util.helper;
 
 import WayofTime.bloodmagic.api.altar.IBloodAltar;
 import WayofTime.bloodmagic.registry.ModPotions;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -42,6 +43,14 @@ public class PlayerSacrificeHelper
         return true;
     }
 
+    /**
+     * Sacrifices a player's health while the player is under the influence of incense
+     *
+     * @param player
+     *        - The player sacrificing
+     *
+     * @return Whether or not the health sacrificing succeeded
+     */
     public static boolean sacrificePlayerHealth(EntityPlayer player)
     {
         if (player.isPotionActive(soulFrayId))
@@ -79,17 +88,24 @@ public class PlayerSacrificeHelper
         return 1 + amount * scalingOfSacrifice;
     }
 
-    public static boolean findAndFillAltar(World world, EntityPlayer player, int amount)
+    /**
+     * Finds the nearest {@link IBloodAltar} and attempts to fill it
+     *
+     * @param world
+     *        - The world
+     * @param sacrificingEntity
+     *        - The entity having the sacrifice done on (can be {@link EntityPlayer} for self-sacrifice)
+     * @param amount
+     *        - The amount of which the altar should be filled
+     *
+     * @return Whether the altar is found and (attempted) filled
+     */
+    public static boolean findAndFillAltar(World world, EntityLivingBase sacrificingEntity, int amount)
     {
-        int posX = (int) Math.round(player.posX - 0.5f);
-        int posY = (int) player.posY;
-        int posZ = (int) Math.round(player.posZ - 0.5f);
-        IBloodAltar altarEntity = getAltar(world, new BlockPos(posX, posY, posZ));
+        IBloodAltar altarEntity = getAltar(world, sacrificingEntity.getPosition());
 
         if (altarEntity == null)
-        {
             return false;
-        }
 
         altarEntity.sacrificialDaggerCall(amount, false);
         altarEntity.startCycle();
@@ -97,6 +113,16 @@ public class PlayerSacrificeHelper
         return true;
     }
 
+    /**
+     * Gets the nearest {@link IBloodAltar}
+     *
+     * @param world
+     *        - The world
+     * @param blockPos
+     *        - The position of where the check should be in (in a 2 block radius from this)
+     *
+     * @return The nearest altar, if no altar is found, then this will return null
+     */
     public static IBloodAltar getAltar(World world, BlockPos blockPos)
     {
         TileEntity tileEntity;
@@ -107,7 +133,7 @@ public class PlayerSacrificeHelper
             {
                 for (int k = -2; k <= 1; k++)
                 {
-                    tileEntity = world.getTileEntity(new BlockPos(i + blockPos.getX(), k + blockPos.getY(), j + blockPos.getZ()));
+                    tileEntity = world.getTileEntity(blockPos.add(i, j, k));
 
                     if (tileEntity instanceof IBloodAltar)
                     {

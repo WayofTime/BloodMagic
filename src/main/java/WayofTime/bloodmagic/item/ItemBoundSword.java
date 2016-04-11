@@ -97,7 +97,7 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
 
         tooltip.add(TextHelper.localize("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+        if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
@@ -111,20 +111,6 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
             multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4, 0));
         }
         return multimap;
-    }
-
-    public boolean getActivated(ItemStack stack)
-    {
-        NBTHelper.checkNBT(stack);
-        return stack.getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
-    }
-
-    public ItemStack setActivatedState(ItemStack stack, boolean activated)
-    {
-        NBTHelper.checkNBT(stack);
-        stack.getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
-
-        return stack;
     }
 
     @Override
@@ -168,5 +154,25 @@ public class ItemBoundSword extends ItemSword implements IBindable, IActivatable
     public String getOwnerUUID(ItemStack stack)
     {
         return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getString(Constants.NBT.OWNER_UUID) : null;
+    }
+
+    // IActivatable
+
+    @Override
+    public boolean getActivated(ItemStack stack)
+    {
+        return stack != null && NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+    }
+
+    @Override
+    public ItemStack setActivatedState(ItemStack stack, boolean activated)
+    {
+        if (stack != null)
+        {
+            NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
+            return stack;
+        }
+
+        return null;
     }
 }

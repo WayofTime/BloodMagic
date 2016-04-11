@@ -8,19 +8,22 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.impl.ItemSigilToggleable;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.client.mesh.CustomMeshDefinitionActivatable;
 import com.google.common.base.Strings;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.text.WordUtils;
 
+import javax.annotation.Nullable;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemSigilToggleableBase extends ItemSigilToggleable implements IVariantProvider
+public class ItemSigilToggleableBase extends ItemSigilToggleable implements IMeshProvider
 {
     protected final String tooltipBase;
     private final String name;
@@ -28,7 +31,6 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IVar
     public ItemSigilToggleableBase(String name, int lpUsed)
     {
         super(lpUsed);
-        setToggleable();
 
         setUnlocalizedName(Constants.Mod.MODID + ".sigil." + name);
         setCreativeTab(BloodMagic.tabBloodMagic);
@@ -45,16 +47,31 @@ public class ItemSigilToggleableBase extends ItemSigilToggleable implements IVar
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic." + (getActivated(stack) ? "activated" : "deactivated")));
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+        if (!Strings.isNullOrEmpty(getOwnerName(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
+    @SideOnly(Side.CLIENT)
+    public ItemMeshDefinition getMeshDefinition()
     {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "active=false"));
-        ret.add(new ImmutablePair<Integer, String>(1, "active=true"));
+        return new CustomMeshDefinitionActivatable("ItemSigil" + WordUtils.capitalize(name));
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation()
+    {
+        return null;
+    }
+
+    @Override
+    public List<String> getVariants()
+    {
+        List<String> ret = new ArrayList<String>();
+        ret.add("active=false");
+        ret.add("active=true");
+
         return ret;
     }
 }

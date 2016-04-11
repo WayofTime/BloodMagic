@@ -65,16 +65,16 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
             return super.onItemRightClick(stack, world, player, hand);
         }
 
-        if (Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+        if (Strings.isNullOrEmpty(getOwnerUUID(stack)))
             return super.onItemRightClick(stack, world, player, hand);
 
         if (world.isRemote)
             return super.onItemRightClick(stack, world, player, hand);
 
-        if (stack.getTagCompound().getString(Constants.NBT.OWNER_UUID).equals(PlayerHelper.getUsernameFromPlayer(player)))
-            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)), getOrbLevel(stack.getItemDamage()));
+        if (getOwnerUUID(stack).equals(PlayerHelper.getUsernameFromPlayer(player)))
+            NetworkHelper.setMaxOrb(NetworkHelper.getSoulNetwork(getOwnerUUID(stack)), getOrbLevel(stack.getItemDamage()));
 
-        NetworkHelper.getSoulNetwork(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
+        NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).addLifeEssence(200, getMaxEssence(stack.getItemDamage()));
         NetworkHelper.getSoulNetwork(player).hurtPlayer(player, 200);
         return super.onItemRightClick(stack, world, player, hand);
     }

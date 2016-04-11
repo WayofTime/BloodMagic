@@ -25,7 +25,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;

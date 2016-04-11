@@ -25,25 +25,25 @@ public class NetworkHelper
     /**
      * Gets the SoulNetwork for the player.
      * 
-     * @param name
-     *        - The name of the SoulNetwork owner - this is UUID.toString().
+     * @param uuid
+     *        - The UUID of the SoulNetwork owner - this is UUID.toString().
      * 
      * @return - The SoulNetwork for the given name.
      */
-    public static SoulNetwork getSoulNetwork(String name)
+    public static SoulNetwork getSoulNetwork(String uuid)
     {
         World world = DimensionManager.getWorld(0);
         if (world == null || world.getMapStorage() == null) //Hack-ish way to fix the lava crystal. 
         {
-            return new SoulNetwork(name);
+            return new SoulNetwork(uuid);
         }
 
-        SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, name);
+        SoulNetwork network = (SoulNetwork) world.getMapStorage().loadData(SoulNetwork.class, uuid);
 
         if (network == null)
         {
-            network = new SoulNetwork(name);
-            world.getMapStorage().setData(name, network);
+            network = new SoulNetwork(uuid);
+            world.getMapStorage().setData(uuid, network);
         }
 
         return network;
