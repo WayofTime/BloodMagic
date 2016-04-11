@@ -8,9 +8,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,12 +24,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.input.Keyboard;
 
-import com.google.common.base.Strings;
-
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ritual.EnumRitualReaderState;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.ChatUtil;
 import WayofTime.bloodmagic.util.helper.TextHelper;
@@ -68,14 +70,139 @@ public class ItemRitualReader extends Item implements IVariantProvider
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        if (player.isSneaking() && !world.isRemote)
+        RayTraceResult ray = this.getMovingObjectPositionFromPlayer(world, player, false);
+        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
         {
-            cycleReader(stack, player);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+        }
+
+        if (player.isSneaking())
+        {
+            if (!world.isRemote)
+            {
+                cycleReader(stack, player);
+            }
 
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+    }
+
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        if (!world.isRemote)
+        {
+            EnumRitualReaderState state = this.getState(stack);
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof IMasterRitualStone)
+            {
+                IMasterRitualStone master = (IMasterRitualStone) tile;
+                this.setBlockPos(stack, pos);
+
+                switch (state)
+                {
+                case INFORMATION:
+                    master.provideInformationOfRitualToPlayer(player);
+                    break;
+                case SET_AREA:
+                    String range = this.getCurrentBlockRange(stack);
+                    if (player.isSneaking())
+                    {
+                        String newRange = master.getNextBlockRange(range);
+                        range = newRange;
+                        this.setCurrentBlockRange(stack, newRange);
+                    }
+
+                    master.provideInformationOfRangeToPlayer(player, range);
+                    break;
+                case SET_WILL_TYPES:
+                    break;
+                }
+
+                return EnumActionResult.FAIL;
+            } else
+            {
+                if (state == EnumRitualReaderState.SET_AREA)
+                {
+                    BlockPos masterPos = this.getMasterBlockPos(stack);
+                    if (!masterPos.equals(BlockPos.ORIGIN))
+                    {
+                        BlockPos containedPos = getBlockPos(stack);
+                        if (containedPos.equals(BlockPos.ORIGIN))
+                        {
+                            System.out.println("Getting first block...");
+                            this.setBlockPos(stack, pos.subtract(masterPos));
+                            //TODO: Notify player.
+                        } else
+                        {
+                            tile = world.getTileEntity(masterPos);
+                            if (tile instanceof IMasterRitualStone)
+                            {
+                                System.out.println("Setting custom bounds...");
+                                IMasterRitualStone master = (IMasterRitualStone) tile;
+                                master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos.subtract(masterPos));
+                            }
+
+                            this.setBlockPos(stack, BlockPos.ORIGIN);
+                        }
+                    }
+                }
+            }
+        }
+
+        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+
+    public BlockPos getBlockPos(ItemStack stack)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD));
+    }
+
+    public ItemStack setBlockPos(ItemStack stack, BlockPos pos)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        NBTTagCompound itemTag = stack.getTagCompound();
+        itemTag.setInteger(Constants.NBT.X_COORD, pos.getX());
+        itemTag.setInteger(Constants.NBT.Y_COORD, pos.getY());
+        itemTag.setInteger(Constants.NBT.Z_COORD, pos.getZ());
+        return stack;
+    }
+
+    public BlockPos getMasterBlockPos(ItemStack stack)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        return new BlockPos(stack.getTagCompound().getInteger(Constants.NBT.X_COORD + "master"), stack.getTagCompound().getInteger(Constants.NBT.Y_COORD + "master"), stack.getTagCompound().getInteger(Constants.NBT.Z_COORD + "master"));
+    }
+
+    public ItemStack setMasterBlockPos(ItemStack stack, BlockPos pos)
+    {
+        stack = NBTHelper.checkNBT(stack);
+        NBTTagCompound itemTag = stack.getTagCompound();
+        itemTag.setInteger(Constants.NBT.X_COORD + "master", pos.getX());
+        itemTag.setInteger(Constants.NBT.Y_COORD + "master", pos.getY());
+        itemTag.setInteger(Constants.NBT.Z_COORD + "master", pos.getZ());
+        return stack;
+    }
+
+    public String getCurrentBlockRange(ItemStack stack)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        return tag.getString("range");
+    }
+
+    public void setCurrentBlockRange(ItemStack stack, String range)
+    {
+        NBTHelper.checkNBT(stack);
+
+        NBTTagCompound tag = stack.getTagCompound();
+
+        tag.setString("range", range);
     }
 
     public void cycleReader(ItemStack stack, EntityPlayer player)
@@ -96,10 +223,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
 
     public void setState(ItemStack stack, EnumRitualReaderState state)
     {
-        if (!stack.hasTagCompound())
-        {
-            stack.setTagCompound(new NBTTagCompound());
-        }
+        NBTHelper.checkNBT(stack);
 
         NBTTagCompound tag = stack.getTagCompound();
 

@@ -27,6 +27,16 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
     public abstract void resetIterator();
 
+    /**
+     * This method changes the area descriptor so that its range matches the two
+     * blocks that are selected. When implementing this method, assume that
+     * these positions are the blocks that are clicked by the player.
+     * 
+     * @param pos1
+     * @param pos2
+     */
+    public abstract void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2);
+
     public static class Rectangle extends AreaDescriptor
     {
         private BlockPos minimumOffset;
@@ -170,6 +180,15 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
         {
             currentPosition = null;
         }
+
+        @Override
+        public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
+        {
+            setOffsets(pos1, pos2);
+            maximumOffset = maximumOffset.add(1, 1, 1);
+            resetIterator();
+            resetCache();
+        }
     }
 
     public static class HemiSphere extends AreaDescriptor
@@ -293,6 +312,12 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             // TODO Auto-generated method stub
 
         }
+
+        @Override
+        public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
+        {
+            // TODO Auto-generated method stub
+        }
     }
 
     public static class Cross extends AreaDescriptor
@@ -375,6 +400,13 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
         @Override
         public void resetIterator()
+        {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void modifyAreaByBlockPositions(BlockPos pos1, BlockPos pos2)
         {
             // TODO Auto-generated method stub
 

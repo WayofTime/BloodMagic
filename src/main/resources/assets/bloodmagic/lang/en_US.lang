@@ -369,6 +369,10 @@ tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
 tooltip.BloodMagic.experienceTome.expLevel=Level: %d
 
 # Ritual
+ritual.BloodMagic.blockRange.tooBig=The block range given is either too big or too far away from the MRS!
+ritual.BloodMagic.blockRange.inactive=The ritual stone is currently inactive, and cannot have its range modified.
+ritual.BloodMagic.blockRange.noRange=The range was not properly chosen.
+
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring
 ritual.BloodMagic.lavaRitual=Serenade of the Nether
@@ -399,6 +403,9 @@ ritual.BloodMagic.pumpRitual=Hymn of Siphoning
 ritual.BloodMagic.altarBuilderRitual=The Assembly of the High Altar
 ritual.BloodMagic.portalRitual=The Gate of the Fold
 
+ritual.BloodMagic.wellOfSufferingRitual.info=Attacks mobs within its damage zone and puts the LP into a nearby blood altar.
+ritual.BloodMagic.wellOfSufferingRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
+ritual.BloodMagic.wellOfSufferingRitual.damage.info=(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
 chat.BloodMagic.altarMaker.building=Building a Tier %d Altar

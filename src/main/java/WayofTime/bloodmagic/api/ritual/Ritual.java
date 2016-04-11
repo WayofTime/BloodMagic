@@ -1,5 +1,10 @@
 package WayofTime.bloodmagic.api.ritual;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +13,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Abstract class for creating new rituals. Rituals need be registered with
@@ -20,7 +23,7 @@ import java.util.Map;
  */
 @Getter
 @RequiredArgsConstructor
-@EqualsAndHashCode(exclude = { "modableRangeMap" })
+@EqualsAndHashCode(exclude = { "modableRangeMap", "ritualComponents", "renderer" })
 @ToString
 public abstract class Ritual
 {
@@ -139,6 +142,79 @@ public abstract class Ritual
         }
 
         return null;
+    }
+
+    public List<String> getListOfRanges()
+    {
+        return new ArrayList<String>(modableRangeMap.keySet());
+    }
+
+    public String getNextBlockRange(String range)
+    {
+        List<String> rangeList = getListOfRanges();
+
+        if (rangeList.isEmpty())
+        {
+            return "";
+        }
+
+        if (!rangeList.contains(range))
+        {
+            return rangeList.get(0);
+        }
+
+        boolean hasMatch = false;
+
+        for (String rangeCheck : rangeList)
+        {
+            if (hasMatch)
+            {
+                return rangeCheck;
+            } else if (rangeCheck.equals(range))
+            {
+                hasMatch = true;
+            }
+        }
+
+        return rangeList.get(0);
+    }
+
+    public boolean setBlockRangeByBounds(String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
+    {
+        AreaDescriptor descriptor = this.getBlockRange(range);
+        if (canBlockRangeBeModified(descriptor, master, offset1, offset2))
+        {
+            descriptor.modifyAreaByBlockPositions(offset1, offset2);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected boolean canBlockRangeBeModified(AreaDescriptor descriptor, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
+    {
+        return true;
+    }
+
+    public ITextComponent getErrorForBlockRangeOnFail(EntityPlayer player, String range, IMasterRitualStone master, BlockPos offset1, BlockPos offset2)
+    {
+        return new TextComponentTranslation("ritual.BloodMagic.blockRange.tooBig");
+    }
+
+    public ITextComponent provideInformationOfRitualToPlayer(EntityPlayer player)
+    {
+        return new TextComponentTranslation(this.getUnlocalizedName() + ".info");
+    }
+
+    public ITextComponent provideInformationOfRangeToPlayer(EntityPlayer player, String range)
+    {
+        if (getListOfRanges().contains(range))
+        {
+            return new TextComponentTranslation(this.getUnlocalizedName() + "." + range + ".info");
+        } else
+        {
+            return new TextComponentTranslation("ritual.BloodMagic.blockRange.noRange");
+        }
     }
 
     /**

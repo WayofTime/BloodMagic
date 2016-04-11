@@ -1,19 +1,7 @@
 package WayofTime.bloodmagic.tile;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.event.RitualEvent;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
-import WayofTime.bloodmagic.api.ritual.Ritual;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
-import WayofTime.bloodmagic.api.util.helper.RitualHelper;
-import WayofTime.bloodmagic.item.ItemActivationCrystal;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.ChatUtil;
-import com.google.common.base.Strings;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,9 +15,26 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.event.RitualEvent;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.api.util.helper.RitualHelper;
+import WayofTime.bloodmagic.item.ItemActivationCrystal;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.ChatUtil;
+
+import com.google.common.base.Strings;
 
 @Getter
 @NoArgsConstructor
@@ -285,6 +290,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     @Override
     public World getWorldObj()
     {
+
         return getWorld();
     }
 
@@ -292,5 +298,63 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     public BlockPos getBlockPos()
     {
         return getPos();
+    }
+
+    @Override
+    public String getNextBlockRange(String range)
+    {
+        if (this.currentRitual != null)
+        {
+            return this.currentRitual.getNextBlockRange(range);
+        }
+
+        return "";
+    }
+
+    @Override
+    public void provideInformationOfRitualToPlayer(EntityPlayer player)
+    {
+        if (this.currentRitual != null)
+        {
+            ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRitualToPlayer(player));
+        }
+    }
+
+    @Override
+    public void provideInformationOfRangeToPlayer(EntityPlayer player, String range)
+    {
+        if (this.currentRitual != null)
+        {
+            ChatUtil.sendNoSpam(player, this.currentRitual.provideInformationOfRangeToPlayer(player, range));
+        }
+    }
+
+    @Override
+    public void setActiveWillDrain(EntityPlayer player, List<EnumDemonWillType> typeList)
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean setBlockRangeByBounds(EntityPlayer player, String range, BlockPos offset1, BlockPos offset2)
+    {
+        if (this.currentRitual != null)
+        {
+            boolean allowed = this.currentRitual.setBlockRangeByBounds(range, this, offset1, offset2);
+            if (player != null && !allowed)
+            {
+                ChatUtil.sendNoSpam(player, this.currentRitual.getErrorForBlockRangeOnFail(player, range, this, offset1, offset2));
+            }
+
+            return allowed;
+        }
+
+        if (player != null)
+        {
+            ChatUtil.sendNoSpam(player, "ritual.BloodMagic.blockRange.inactive");
+        }
+
+        return false;
     }
 }
