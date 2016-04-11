@@ -43,6 +43,10 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
     public abstract boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit);
 
+    public abstract int getVolume();
+
+    public abstract boolean isWithinRange(int verticalLimit, int horizontalLimit);
+
     /**
      * This method changes the area descriptor so that its range matches the two
      * blocks that are selected. When implementing this method, assume that
@@ -243,6 +247,18 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
             return minPos.getY() >= -verticalLimit && maxPos.getY() <= verticalLimit && minPos.getX() >= -horizontalLimit && maxPos.getX() <= horizontalLimit && minPos.getZ() >= -horizontalLimit && maxPos.getZ() <= horizontalLimit;
         }
+
+        @Override
+        public int getVolume()
+        {
+            return (maximumOffset.getX() - minimumOffset.getX()) * (maximumOffset.getY() - minimumOffset.getY()) * (maximumOffset.getZ() - minimumOffset.getZ());
+        }
+
+        @Override
+        public boolean isWithinRange(int verticalLimit, int horizontalLimit)
+        {
+            return minimumOffset.getY() >= -verticalLimit && maximumOffset.getY() < verticalLimit && minimumOffset.getX() >= -horizontalLimit && maximumOffset.getX() < horizontalLimit && minimumOffset.getZ() >= -horizontalLimit && maximumOffset.getZ() < horizontalLimit;
+        }
     }
 
     public static class HemiSphere extends AreaDescriptor
@@ -386,6 +402,20 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             // TODO Auto-generated method stub
             return false;
         }
+
+        @Override
+        public int getVolume()
+        {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public boolean isWithinRange(int verticalLimit, int horizontalLimit)
+        {
+            // TODO Auto-generated method stub
+            return false;
+        }
     }
 
     public static class Cross extends AreaDescriptor
@@ -489,6 +519,20 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
 
         @Override
         public boolean isWithinRange(BlockPos offset1, BlockPos offset2, int verticalLimit, int horizontalLimit)
+        {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public int getVolume()
+        {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public boolean isWithinRange(int verticalLimit, int horizontalLimit)
         {
             // TODO Auto-generated method stub
             return false;

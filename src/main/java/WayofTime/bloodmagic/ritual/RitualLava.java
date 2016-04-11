@@ -18,6 +18,7 @@ public class RitualLava extends Ritual
     {
         super("ritualLava", 0, 10000, "ritual." + Constants.Mod.MODID + ".lavaRitual");
         addBlockRange(LAVA_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+        setMaximumVolumeAndDistanceOfRange(LAVA_RANGE, 9, 3, 3);
     }
 
     @Override

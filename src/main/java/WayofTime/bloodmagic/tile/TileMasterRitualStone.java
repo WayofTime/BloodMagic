@@ -1,5 +1,6 @@
 package WayofTime.bloodmagic.tile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -330,7 +331,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
     }
 
     @Override
-    public void setActiveWillDrain(EntityPlayer player, List<EnumDemonWillType> typeList)
+    public void setActiveWillConfig(EntityPlayer player, List<EnumDemonWillType> typeList)
     {
         // TODO Auto-generated method stub
 
@@ -359,5 +360,11 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
         }
 
         return false;
+    }
+
+    @Override
+    public List<EnumDemonWillType> getCurrentActiveWillConfig()
+    {
+        return new ArrayList<EnumDemonWillType>();
     }
 }

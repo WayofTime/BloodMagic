@@ -31,6 +31,9 @@ public class RitualWellOfSuffering extends Ritual
         super("ritualWellOfSuffering", 0, 40000, "ritual." + Constants.Mod.MODID + ".wellOfSufferingRitual");
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(DAMAGE_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
+
+        setMaximumVolumeAndDistanceOfRange(ALTAR_RANGE, 0, 10, 15);
+        setMaximumVolumeAndDistanceOfRange(DAMAGE_RANGE, 0, 15, 15);
     }
 
     @Override

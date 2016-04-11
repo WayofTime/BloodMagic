@@ -34,6 +34,7 @@ public class RitualMagnetic extends Ritual
     {
         super("ritualMagnetic", 0, 5000, "ritual." + Constants.Mod.MODID + ".magneticRitual");
         addBlockRange(PLACEMENT_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 1, -1), 3));
+        setMaximumVolumeAndDistanceOfRange(PLACEMENT_RANGE, 50, 4, 4);
     }
 
     public static boolean isBlockOre(Block block, int meta)

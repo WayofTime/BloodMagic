@@ -429,8 +429,18 @@ ritual.BloodMagic.armourEvolveRitual.info=Undocumented.
 ritual.BloodMagic.animalGrowthRitual.info=Increases the maturity rate of baby animals within its range.
 ritual.BloodMagic.forsakenSoulRitual.info=Damages mobs within its damage range and when the mob dies a demon crystal within its crystal range will be grown.
 
+ritual.BloodMagic.waterRitual.waterRange.info=(Water) The area that the ritual will place water source blocks.
+ritual.BloodMagic.lavaRitual.lavaRange.info=(Lava) The area that the ritual will place lava source blocks.
+ritual.BloodMagic.greenGroveRitual.growing.info=(Growth) The area that the ritual will grow plants in.
+ritual.BloodMagic.jumpRitual.jumpRange.info=(Jumping) Entities in this range will be launched in the air.
 ritual.BloodMagic.wellOfSufferingRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
 ritual.BloodMagic.wellOfSufferingRitual.damage.info=(Damage) This defines where the ritual will damage a mob. All mobs inside of this range (except for players) will receive damage over time.
+ritual.BloodMagic.featheredKnifeRitual.altar.info=(Altar) This range defines the area that the ritual searches for the blood altar. Changing this will either expand or limit the range to a certain region.
+ritual.BloodMagic.featheredKnifeRitual.damage.info=(Damage) This defines where the ritual will damage a player. Players inside of this range will receive damage over time up to the specified limit.
+ritual.BloodMagic.regenerationRitual.heal.info=(Healing) Mobs within this range will receive a regeneration buff.
+ritual.BloodMagic.harvestRitual.harvestRange.info=(Harvesting) Plants within this range will be harvested.
+ritual.BloodMagic.magneticRitual.placementRange.info=
+
 # Chat
 chat.BloodMagic.altarMaker.setTier=Set Tier to: %d
 chat.BloodMagic.altarMaker.building=Building a Tier %d Altar

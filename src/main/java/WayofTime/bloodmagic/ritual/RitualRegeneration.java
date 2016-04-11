@@ -1,20 +1,23 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 
 public class RitualRegeneration extends Ritual
 {
@@ -26,6 +29,7 @@ public class RitualRegeneration extends Ritual
     {
         super("ritualRegeneration", 0, 25000, "ritual." + Constants.Mod.MODID + ".regenerationRitual");
         addBlockRange(HEAL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-15, -15, -15), 31));
+        setMaximumVolumeAndDistanceOfRange(HEAL_RANGE, 0, 20, 20);
     }
 
     @Override

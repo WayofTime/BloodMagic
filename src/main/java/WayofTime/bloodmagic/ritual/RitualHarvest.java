@@ -30,6 +30,8 @@ public class RitualHarvest extends Ritual
     public RitualHarvest()
     {
         super("ritualHarvest", 0, 20000, "ritual." + Constants.Mod.MODID + ".harvestRitual");
+        addBlockRange(HARVEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-4, 1, -4), 9, 5, 9));
+        setMaximumVolumeAndDistanceOfRange(HARVEST_RANGE, 81, 15, 15);
     }
 
     @Override
@@ -37,6 +39,7 @@ public class RitualHarvest extends Ritual
     {
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         World world = masterRitualStone.getWorldObj();
+        BlockPos pos = masterRitualStone.getBlockPos();
 
         if (network.getCurrentEssence() < getRefreshCost())
         {
@@ -44,22 +47,21 @@ public class RitualHarvest extends Ritual
             return;
         }
 
-        BlockStack amplifierStack = BlockStack.getStackFromPos(world, masterRitualStone.getBlockPos().up());
-
-        int range = 4;
-        if (amplifierStack != null)
-            if (HarvestRegistry.getAmplifierMap().containsKey(amplifierStack))
-                range = HarvestRegistry.getAmplifierMap().get(amplifierStack);
-
-        addBlockRange(HARVEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-range, 0, -range), new BlockPos(range + 1, 4, range + 1)));
-
         int harvested = 0;
 
-        for (BlockPos pos : getBlockRange(HARVEST_RANGE).getContainedPositions(masterRitualStone.getBlockPos().up()))
-            if (harvestBlock(world, pos))
-                harvested++;
+        AreaDescriptor harvestArea = getBlockRange(HARVEST_RANGE);
 
-        network.syphon(getRefreshCost() * Math.min(100, harvested));
+        harvestArea.resetIterator();
+        while (harvestArea.hasNext())
+        {
+            BlockPos nextPos = harvestArea.next().add(pos);
+            if (harvestBlock(world, nextPos))
+            {
+                harvested++;
+            }
+        }
+
+        network.syphon(getRefreshCost() * harvested);
     }
 
     @Override

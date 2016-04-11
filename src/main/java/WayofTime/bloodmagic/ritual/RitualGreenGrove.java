@@ -23,6 +23,7 @@ public class RitualGreenGrove extends Ritual
     {
         super("ritualGreenGrove", 0, 5000, "ritual." + Constants.Mod.MODID + ".greenGroveRitual");
         addBlockRange(GROW_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, 2, -1), 3, 1, 3));
+        setMaximumVolumeAndDistanceOfRange(GROW_RANGE, 81, 4, 4);
     }
 
     @Override
