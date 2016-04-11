@@ -372,6 +372,8 @@ tooltip.BloodMagic.experienceTome.expLevel=Level: %d
 ritual.BloodMagic.blockRange.tooBig=The block range given is either too big or too far away from the MRS!
 ritual.BloodMagic.blockRange.inactive=The ritual stone is currently inactive, and cannot have its range modified.
 ritual.BloodMagic.blockRange.noRange=The range was not properly chosen.
+ritual.BloodMagic.blockRange.firstBlock=First block for new range stored.
+ritual.BloodMagic.blockRange.success=New range successfully set!
 
 ritual.BloodMagic.testRitual=Test Ritual
 ritual.BloodMagic.waterRitual=Ritual of the Full Spring

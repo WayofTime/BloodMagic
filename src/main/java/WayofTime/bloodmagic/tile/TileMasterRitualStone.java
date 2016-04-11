@@ -345,6 +345,9 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
             if (player != null && !allowed)
             {
                 ChatUtil.sendNoSpam(player, this.currentRitual.getErrorForBlockRangeOnFail(player, range, this, offset1, offset2));
+            } else
+            {
+                ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.blockRange.success"));
             }
 
             return allowed;
@@ -352,7 +355,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
         if (player != null)
         {
-            ChatUtil.sendNoSpam(player, "ritual.BloodMagic.blockRange.inactive");
+            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.blockRange.inactive"));
         }
 
         return false;

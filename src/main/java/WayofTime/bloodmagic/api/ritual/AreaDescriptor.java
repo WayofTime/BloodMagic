@@ -1,13 +1,15 @@
 package WayofTime.bloodmagic.api.ritual;
 
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
+
+import WayofTime.bloodmagic.api.Constants;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
 public abstract class AreaDescriptor implements Iterator<BlockPos>
 {
@@ -26,6 +28,16 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
     public abstract boolean isWithinArea(BlockPos pos);
 
     public abstract void resetIterator();
+
+    public void readFromNBT(NBTTagCompound tag)
+    {
+
+    }
+
+    public void writeToNBT(NBTTagCompound tag)
+    {
+
+    }
 
     /**
      * This method changes the area descriptor so that its range matches the two
@@ -188,6 +200,24 @@ public abstract class AreaDescriptor implements Iterator<BlockPos>
             maximumOffset = maximumOffset.add(1, 1, 1);
             resetIterator();
             resetCache();
+        }
+
+        @Override
+        public void readFromNBT(NBTTagCompound tag)
+        {
+            minimumOffset = new BlockPos(tag.getInteger(Constants.NBT.X_COORD + "min"), tag.getInteger(Constants.NBT.Y_COORD + "min"), tag.getInteger(Constants.NBT.Z_COORD + "min"));
+            maximumOffset = new BlockPos(tag.getInteger(Constants.NBT.X_COORD + "max"), tag.getInteger(Constants.NBT.Y_COORD + "max"), tag.getInteger(Constants.NBT.Z_COORD + "max"));
+        }
+
+        @Override
+        public void writeToNBT(NBTTagCompound tag)
+        {
+            tag.setInteger(Constants.NBT.X_COORD + "min", minimumOffset.getX());
+            tag.setInteger(Constants.NBT.Y_COORD + "min", minimumOffset.getY());
+            tag.setInteger(Constants.NBT.Z_COORD + "min", minimumOffset.getZ());
+            tag.setInteger(Constants.NBT.X_COORD + "max", maximumOffset.getX());
+            tag.setInteger(Constants.NBT.Y_COORD + "max", maximumOffset.getY());
+            tag.setInteger(Constants.NBT.Z_COORD + "max", maximumOffset.getZ());
         }
     }
 

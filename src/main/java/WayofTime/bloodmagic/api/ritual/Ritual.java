@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.ToString;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -51,12 +53,44 @@ public abstract class Ritual
 
     public void readFromNBT(NBTTagCompound tag)
     {
+        NBTTagList tags = tag.getTagList("areas", 10);
+        if (tags.hasNoTags())
+        {
+            return;
+        }
 
+        for (int i = 0; i < tags.tagCount(); i++)
+        {
+            NBTTagCompound newTag = tags.getCompoundTagAt(i);
+            String rangeKey = newTag.getString("key");
+
+            NBTTagCompound storedTag = newTag.getCompoundTag("area");
+            AreaDescriptor desc = this.getBlockRange(rangeKey);
+            if (desc != null)
+            {
+                desc.readFromNBT(storedTag);
+            }
+        }
     }
 
     public void writeToNBT(NBTTagCompound tag)
     {
+        NBTTagList tags = new NBTTagList();
 
+        for (Entry<String, AreaDescriptor> entry : modableRangeMap.entrySet())
+        {
+            NBTTagCompound newTag = new NBTTagCompound();
+            newTag.setString("key", entry.getKey());
+            NBTTagCompound storedTag = new NBTTagCompound();
+
+            entry.getValue().writeToNBT(storedTag);
+
+            newTag.setTag("area", storedTag);
+
+            tags.appendTag(newTag);
+        }
+
+        tag.setTag("areas", tags);
     }
 
     /**

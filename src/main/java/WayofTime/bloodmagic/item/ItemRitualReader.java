@@ -94,12 +94,14 @@ public class ItemRitualReader extends Item implements IVariantProvider
     {
         if (!world.isRemote)
         {
+            System.out.println("In onItemUse");
             EnumRitualReaderState state = this.getState(stack);
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof IMasterRitualStone)
             {
                 IMasterRitualStone master = (IMasterRitualStone) tile;
-                this.setBlockPos(stack, pos);
+                this.setMasterBlockPos(stack, pos);
+                this.setBlockPos(stack, BlockPos.ORIGIN);
 
                 switch (state)
                 {
@@ -132,15 +134,14 @@ public class ItemRitualReader extends Item implements IVariantProvider
                         BlockPos containedPos = getBlockPos(stack);
                         if (containedPos.equals(BlockPos.ORIGIN))
                         {
-                            System.out.println("Getting first block...");
                             this.setBlockPos(stack, pos.subtract(masterPos));
+                            ChatUtil.sendNoSpam(player, new TextComponentTranslation("ritual.BloodMagic.blockRange.firstBlock"));
                             //TODO: Notify player.
                         } else
                         {
                             tile = world.getTileEntity(masterPos);
                             if (tile instanceof IMasterRitualStone)
                             {
-                                System.out.println("Setting custom bounds...");
                                 IMasterRitualStone master = (IMasterRitualStone) tile;
                                 master.setBlockRangeByBounds(player, this.getCurrentBlockRange(stack), containedPos, pos.subtract(masterPos));
                             }
