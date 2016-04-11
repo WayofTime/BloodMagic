@@ -20,11 +20,16 @@ import java.util.List;
 public class RitualFullStomach extends Ritual
 {
     public static final String FILL_RANGE = "fillRange";
+    public static final String CHEST_RANGE = "chest";
 
     public RitualFullStomach()
     {
         super("ritualFullStomach", 0, 100000, "ritual." + Constants.Mod.MODID + ".fullStomachRitual");
         addBlockRange(FILL_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-25, -25, -25), 51));
+        addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+
+        setMaximumVolumeAndDistanceOfRange(FILL_RANGE, 0, 25, 25);
+        setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
     }
 
     @Override
@@ -39,7 +44,8 @@ public class RitualFullStomach extends Ritual
         int maxEffects = currentEssence / getRefreshCost();
         int totalEffects = 0;
 
-        TileEntity tile = world.getTileEntity(pos.up());
+        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        TileEntity tile = world.getTileEntity(chestRange.getContainedPositions(pos).get(0));
         if (!(tile instanceof IInventory))
         {
             return;

@@ -19,8 +19,8 @@ import java.util.Iterator;
 
 public class RitualFelling extends Ritual
 {
-
     public static final String FELLING_RANGE = "fellingRange";
+    public static final String CHEST_RANGE = "chest";
 
     private ArrayList<BlockPos> treePartsCache;
     private Iterator<BlockPos> blockPosIterator;
@@ -30,8 +30,12 @@ public class RitualFelling extends Ritual
 
     public RitualFelling()
     {
-        super("ritualFelling", 0, 500, "ritual." + Constants.Mod.MODID + ".fellingRitual");
+        super("ritualFelling", 0, 20000, "ritual." + Constants.Mod.MODID + ".fellingRitual");
         addBlockRange(FELLING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -3, -10), new BlockPos(11, 27, 11)));
+        addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+
+        setMaximumVolumeAndDistanceOfRange(FELLING_RANGE, 14000, 15, 30);
+        setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
 
         treePartsCache = new ArrayList<BlockPos>();
     }
@@ -42,6 +46,10 @@ public class RitualFelling extends Ritual
         World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
+
+        BlockPos masterPos = masterRitualStone.getBlockPos();
+        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
         if (currentEssence < getRefreshCost())
         {
@@ -64,11 +72,11 @@ public class RitualFelling extends Ritual
             blockPosIterator = treePartsCache.iterator();
         }
 
-        if (blockPosIterator.hasNext() && world.getTileEntity(masterRitualStone.getBlockPos().up()) != null && world.getTileEntity(masterRitualStone.getBlockPos().up()) instanceof IInventory)
+        if (blockPosIterator.hasNext() && tileInventory != null && tileInventory instanceof IInventory)
         {
             network.syphon(getRefreshCost());
             currentPos = blockPosIterator.next();
-            placeInInventory(world.getBlockState(currentPos), world, currentPos, masterRitualStone.getBlockPos().up());
+            placeInInventory(world.getBlockState(currentPos), world, currentPos, chestRange.getContainedPositions(masterPos).get(0));
             world.setBlockToAir(currentPos);
             blockPosIterator.remove();
         }

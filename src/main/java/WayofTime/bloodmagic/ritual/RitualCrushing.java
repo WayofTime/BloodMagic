@@ -22,11 +22,16 @@ import java.util.List;
 public class RitualCrushing extends Ritual
 {
     public static final String CRUSHING_RANGE = "crushingRange";
+    public static final String CHEST_RANGE = "chest";
 
     public RitualCrushing()
     {
         super("ritualCrushing", 0, 5000, "ritual." + Constants.Mod.MODID + ".crushingRitual");
         addBlockRange(CRUSHING_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-1, -3, -1), 3));
+        addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+
+        setMaximumVolumeAndDistanceOfRange(CRUSHING_RANGE, 50, 10, 10);
+        setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
     }
 
     @Override

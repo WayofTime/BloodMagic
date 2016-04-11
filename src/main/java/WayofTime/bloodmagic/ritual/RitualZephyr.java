@@ -19,11 +19,16 @@ import java.util.List;
 public class RitualZephyr extends Ritual
 {
     public static final String ZEPHYR_RANGE = "zephyrRange";
+    public static final String CHEST_RANGE = "chest";
 
     public RitualZephyr()
     {
         super("ritualZephyr", 0, 1000, "ritual." + Constants.Mod.MODID + ".zephyrRitual");
         addBlockRange(ZEPHYR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -5, -5), 11));
+        addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+
+        setMaximumVolumeAndDistanceOfRange(ZEPHYR_RANGE, 0, 10, 10);
+        setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
     }
 
     @Override
@@ -32,7 +37,9 @@ public class RitualZephyr extends Ritual
         World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
-        TileEntity tileInventory = world.getTileEntity(masterRitualStone.getBlockPos().up());
+        BlockPos masterPos = masterRitualStone.getBlockPos();
+        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        TileEntity tileInventory = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
         if (!masterRitualStone.getWorldObj().isRemote && tileInventory != null && tileInventory instanceof IInventory)
         {

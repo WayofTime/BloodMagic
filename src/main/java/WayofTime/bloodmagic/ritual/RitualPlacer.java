@@ -19,11 +19,16 @@ import java.util.ArrayList;
 public class RitualPlacer extends Ritual
 {
     public static final String PLACER_RANGE = "placerRange";
+    public static final String CHEST_RANGE = "chest";
 
     public RitualPlacer()
     {
         super("ritualPlacer", 0, 5000, "ritual." + Constants.Mod.MODID + ".placerRitual");
         addBlockRange(PLACER_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-2, 0, -2), 5, 1, 5));
+        addBlockRange(CHEST_RANGE, new AreaDescriptor.Rectangle(new BlockPos(0, 1, 0), 1));
+
+        setMaximumVolumeAndDistanceOfRange(PLACER_RANGE, 300, 7, 7);
+        setMaximumVolumeAndDistanceOfRange(CHEST_RANGE, 1, 3, 3);
     }
 
     @Override
@@ -31,7 +36,9 @@ public class RitualPlacer extends Ritual
     {
         World world = masterRitualStone.getWorldObj();
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
+        BlockPos masterPos = masterRitualStone.getBlockPos();
+        AreaDescriptor chestRange = getBlockRange(CHEST_RANGE);
+        TileEntity tileEntity = world.getTileEntity(chestRange.getContainedPositions(masterPos).get(0));
 
         int currentEssence = network.getCurrentEssence();
 
@@ -97,6 +104,7 @@ public class RitualPlacer extends Ritual
                                 iInventory.decrStackSize(inv, 1);
                                 iInventory.markDirty();
                                 network.syphon(getRefreshCost());
+                                break;
                             }
                         }
                     }
