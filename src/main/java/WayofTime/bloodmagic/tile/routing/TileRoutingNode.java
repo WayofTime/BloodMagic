@@ -80,7 +80,7 @@ public class TileRoutingNode extends TileInventory implements IRoutingNode, IIte
             if (tile instanceof IRoutingNode)
             {
                 ((IRoutingNode) tile).removeConnection(pos);
-                getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);
+                getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(testPos), getWorld().getBlockState(testPos), 3);
             }
         }
 

@@ -40,6 +40,7 @@ public class ModRituals
     public static Ritual upgradeRemoveRitual;
     public static Ritual armourEvolveRitual;
     public static Ritual forsakenSoulRitual;
+    public static Ritual crystalHarvestRitual;
 
     public static Ritual cobblestoneRitual;
     public static Ritual placerRitual;
@@ -98,6 +99,8 @@ public class ModRituals
         RitualRegistry.registerRitual(armourEvolveRitual, ConfigHandler.ritualArmourEvolve);
         forsakenSoulRitual = new RitualForsakenSoul();
         RitualRegistry.registerRitual(forsakenSoulRitual, ConfigHandler.ritualForsakenSoul);
+        crystalHarvestRitual = new RitualCrystalHarvest();
+        RitualRegistry.registerRitual(crystalHarvestRitual, ConfigHandler.ritualCrystalHarvest);
 
         cobblestoneRitual = new RitualCobblestone();
         RitualRegistry.registerRitual(cobblestoneRitual, ConfigHandler.cobblestoneRitual);

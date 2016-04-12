@@ -136,7 +136,7 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
 
     public int getMaxTransferForDemonWill(double will)
     {
-        return 8 + (int) (will / 25);
+        return 8;
     }
 
     @Override
@@ -381,6 +381,15 @@ public class TileMasterRoutingNode extends TileInventory implements IMasterRouti
     @Override
     public void removeAllConnections()
     {
-        // Empty
+        for (BlockPos testPos : generalNodeList)
+        {
+            TileEntity tile = worldObj.getTileEntity(testPos);
+            if (tile instanceof IRoutingNode)
+            {
+                ((IRoutingNode) tile).removeConnection(pos);
+                this.removeConnection(testPos);
+                getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(testPos), getWorld().getBlockState(testPos), 3);
+            }
+        }
     }
 }

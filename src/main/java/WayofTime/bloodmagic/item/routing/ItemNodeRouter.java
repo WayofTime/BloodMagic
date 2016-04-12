@@ -54,6 +54,11 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
     @Override
     public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
     {
+        if (world.isRemote)
+        {
+            return EnumActionResult.PASS;
+        }
+
         TileEntity tileHit = world.getTileEntity(pos);
 
         if (!(tileHit instanceof IRoutingNode))
@@ -87,7 +92,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
 
                     if (!node.isMaster(master))
                     {
-                        if (node.getMasterPos().equals(BlockPos.ORIGIN))
+                        if (node.getMasterPos().equals(BlockPos.ORIGIN)) //If the node is not the master and it is receptive
                         {
                             node.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
                             master.addConnection(pos, containedPos);
@@ -112,7 +117,7 @@ public class ItemNodeRouter extends Item implements INodeRenderer, IVariantProvi
 
                     if (!pastNode.isMaster(master))
                     {
-                        if (pastNode.getMasterPos().equals(BlockPos.ORIGIN))
+                        if (pastNode.getMasterPos().equals(BlockPos.ORIGIN)) //TODO: This is where the issue is
                         {
                             pastNode.connectMasterToRemainingNode(world, new LinkedList<BlockPos>(), master);
                             master.addConnection(pos, containedPos);

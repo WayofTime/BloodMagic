@@ -6,13 +6,17 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.tile.routing.TileMasterRoutingNode;
+import WayofTime.bloodmagic.tile.routing.TileRoutingNode;
 
 public abstract class BlockRoutingNode extends BlockContainer
 {
@@ -111,5 +115,23 @@ public abstract class BlockRoutingNode extends BlockContainer
         IBlockState blockState = world.getBlockState(pos);
         Block block = blockState.getBlock();
         return block.getMaterial(blockState).isOpaque() && blockState.isFullCube();
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState blockState)
+    {
+        if (!world.isRemote)
+        {
+            TileEntity tile = world.getTileEntity(pos);
+            if (tile instanceof TileRoutingNode)
+            {
+                ((TileRoutingNode) tile).removeAllConnections();
+            } else if (tile instanceof TileMasterRoutingNode)
+            {
+                ((TileMasterRoutingNode) tile).removeAllConnections();
+            }
+        }
+
+        super.breakBlock(world, pos, blockState);
     }
 }
