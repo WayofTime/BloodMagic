@@ -4,6 +4,7 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.network.SoulNetwork;
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -53,20 +54,18 @@ public class RitualJumping extends Ritual
 
                 double motionY = 1.5;
 
-                if (entity instanceof EntityPlayer && entity instanceof EntityPlayerMP)
+                entity.fallDistance = 0;
+                if (entity.isSneaking())
                 {
-                    ((EntityPlayerMP) entity).fallDistance = 0;
-                    if (entity.isSneaking())
-                        continue;
-                    ((EntityPlayerMP) entity).motionY = motionY;
-                    totalEffects++;
-                } else
+                    continue;
+                }
+
+                entity.motionY = motionY;
+                totalEffects++;
+
+                if (entity instanceof EntityPlayer)
                 {
-                    entity.fallDistance = 0;
-                    if (entity.isSneaking())
-                        continue;
-                    entity.motionY = motionY;
-                    totalEffects++;
+                    Utils.setPlayerSpeedFromServer((EntityPlayer) entity, entity.motionX, entity.motionY, entity.motionZ);
                 }
             }
         }

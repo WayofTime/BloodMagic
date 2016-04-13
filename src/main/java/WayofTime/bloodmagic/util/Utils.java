@@ -1,12 +1,6 @@
 package WayofTime.bloodmagic.util;
 
-import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
-import WayofTime.bloodmagic.api.event.TeleposeEvent;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.tile.TileInventory;
-
-import com.google.common.collect.Iterables;
+import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
@@ -15,6 +9,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -28,20 +23,24 @@ import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import WayofTime.bloodmagic.api.BlockStack;
+import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
+import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
+import WayofTime.bloodmagic.network.PlayerVelocityPacketProcessor;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.tile.TileInventory;
 
-import java.util.ArrayList;
+import com.google.common.collect.Iterables;
 
 public class Utils
 {
@@ -57,6 +56,14 @@ public class Utils
             player.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, forgeData);
 
         return beaconData;
+    }
+
+    public static void setPlayerSpeedFromServer(EntityPlayer player, double motionX, double motionY, double motionZ)
+    {
+        if (!player.worldObj.isRemote && player instanceof EntityPlayerMP)
+        {
+            BloodMagicPacketHandler.sendTo(new PlayerVelocityPacketProcessor(motionX, motionY, motionZ), (EntityPlayerMP) player);
+        }
     }
 
     public static boolean isInteger(String integer)

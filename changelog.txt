@@ -8,6 +8,8 @@ Version 2.0.0-32
 	- Added True Strike, increasing the damage of critical hits
 - Updated for Forge 12.16.0.1859
 - Did some work on the Sentient Bow to start adding abilities to it
+- Fixed the Speed and Jump rituals so that they correctly update the player's motion.
+
 ------------------------------------------------------
 Version 2.0.0-31
 ------------------------------------------------------
