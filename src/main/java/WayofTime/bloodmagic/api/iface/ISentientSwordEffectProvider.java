@@ -6,7 +6,7 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 
 public interface ISentientSwordEffectProvider
 {
-    public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target);
+    boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target);
 
-    public boolean providesEffectForWill(EnumDemonWillType type);
+    boolean providesEffectForWill(EnumDemonWillType type);
 }

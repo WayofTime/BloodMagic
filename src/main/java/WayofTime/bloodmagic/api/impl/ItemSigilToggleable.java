@@ -1,6 +1,8 @@
 package WayofTime.bloodmagic.api.impl;
 
+import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IActivatable;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,30 +20,27 @@ import net.minecraft.world.World;
  */
 public class ItemSigilToggleable extends ItemSigil implements IActivatable
 {
-    private boolean toggleable;
-
     public ItemSigilToggleable(int lpUsed)
     {
         super(lpUsed);
-        setToggleable();
     }
 
-    public void setToggleable()
-    {
-        this.toggleable = true;
-    }
-
+    @Override
     public boolean getActivated(ItemStack stack)
     {
-        return stack.getItemDamage() > 0;
+        return stack != null && NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
+    @Override
     public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
-        if (this.toggleable)
-            stack.setItemDamage(activated ? 1 : 0);
+        if (stack != null)
+        {
+            NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
+            return stack;
+        }
 
-        return stack;
+        return null;
     }
 
     @Override

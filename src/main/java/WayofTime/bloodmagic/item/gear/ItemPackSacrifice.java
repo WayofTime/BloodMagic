@@ -3,9 +3,11 @@ package WayofTime.bloodmagic.item.gear;
 import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.altar.IAltarManipulator;
+import WayofTime.bloodmagic.api.altar.IBloodAltar;
+import WayofTime.bloodmagic.api.iface.IItemLPContainer;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper.LPContainer;
 import WayofTime.bloodmagic.api.util.helper.NBTHelper;
 import WayofTime.bloodmagic.client.IVariantProvider;
-import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -23,7 +25,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, IVariantProvider
+public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, IItemLPContainer, IVariantProvider
 {
     public final int CAPACITY = 10000; // Max LP storage
 
@@ -52,23 +54,10 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
             {
                 TileEntity tile = world.getTileEntity(position.getBlockPos());
 
-                if (!(tile instanceof TileAltar))
+                if (!(tile instanceof IBloodAltar))
                     return super.onItemRightClick(stack, world, player, EnumHand.MAIN_HAND);
 
-                TileAltar altar = (TileAltar) tile;
-
-                if (!altar.isActive())
-                {
-                    int amount = this.getStoredLP(stack);
-
-                    if (amount > 0)
-                    {
-                        int filledAmount = altar.fillMainTank(amount);
-                        amount -= filledAmount;
-                        setStoredLP(stack, amount);
-                        world.notifyBlockUpdate(position.getBlockPos(), world.getBlockState(position.getBlockPos()), world.getBlockState(position.getBlockPos()), 3);
-                    }
-                }
+                LPContainer.tryAndFillAltar((IBloodAltar) tile, stack, world, position.getBlockPos());
             }
         }
 
@@ -98,28 +87,26 @@ public class ItemPackSacrifice extends ItemArmor implements IAltarManipulator, I
         return ret;
     }
 
-    public void addLP(ItemStack stack, int toAdd)
+    // IFillable
+
+    @Override
+    public int getCapacity()
     {
-        stack = NBTHelper.checkNBT(stack);
-
-        if (toAdd < 0)
-            toAdd = 0;
-
-        if (toAdd > CAPACITY)
-            toAdd = CAPACITY;
-
-        setStoredLP(stack, Math.min(getStoredLP(stack) + toAdd, CAPACITY));
+        return this.CAPACITY;
     }
 
-    public void setStoredLP(ItemStack stack, int lp)
-    {
-        stack = NBTHelper.checkNBT(stack);
-        stack.getTagCompound().setInteger(Constants.NBT.STORED_LP, lp);
-    }
-
+    @Override
     public int getStoredLP(ItemStack stack)
     {
-        stack = NBTHelper.checkNBT(stack);
-        return stack.getTagCompound().getInteger(Constants.NBT.STORED_LP);
+        return stack != null ? NBTHelper.checkNBT(stack).getTagCompound().getInteger(Constants.NBT.STORED_LP) : 0;
+    }
+
+    @Override
+    public void setStoredLP(ItemStack stack, int lp)
+    {
+        if (stack != null)
+        {
+            NBTHelper.checkNBT(stack).getTagCompound().setInteger(Constants.NBT.STORED_LP, lp);
+        }
     }
 }

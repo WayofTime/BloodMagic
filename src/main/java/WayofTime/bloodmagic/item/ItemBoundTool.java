@@ -190,7 +190,7 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
 
         NBTHelper.checkNBT(stack);
 
-        if (!Strings.isNullOrEmpty(stack.getTagCompound().getString(Constants.NBT.OWNER_UUID)))
+        if (!Strings.isNullOrEmpty(getOwnerUUID(stack)))
             tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.currentOwner", PlayerHelper.getUsernameFromStack(stack)));
 
         super.addInformation(stack, player, tooltip, advanced);
@@ -258,13 +258,18 @@ public class ItemBoundTool extends ItemTool implements IBindable, IActivatable
     @Override
     public boolean getActivated(ItemStack stack)
     {
-        return NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
+        return stack != null && NBTHelper.checkNBT(stack).getTagCompound().getBoolean(Constants.NBT.ACTIVATED);
     }
 
     @Override
     public ItemStack setActivatedState(ItemStack stack, boolean activated)
     {
-        NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
-        return stack;
+        if (stack != null)
+        {
+            NBTHelper.checkNBT(stack).getTagCompound().setBoolean(Constants.NBT.ACTIVATED, activated);
+            return stack;
+        }
+
+        return null;
     }
 }

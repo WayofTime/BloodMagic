@@ -5,5 +5,5 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 
 public interface IMultiWillTool
 {
-    public EnumDemonWillType getCurrentType(ItemStack stack);
+    EnumDemonWillType getCurrentType(ItemStack stack);
 }

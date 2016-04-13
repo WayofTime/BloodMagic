@@ -5,14 +5,13 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.iface.IUpgradeTrainer;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -43,33 +42,9 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
         {
             String key = entry.getKey();
             ItemStack stack = new ItemStack(this);
-            setKey(stack, key);
+            LivingUpgrades.setKey(stack, key);
             list.add(stack);
         }
-    }
-
-    public static LivingArmourUpgrade getUpgrade(ItemStack stack)
-    {
-        String key = getKey(stack);
-        int level = 0;
-
-        return LivingArmourHandler.generateUpgradeFromKey(key, level);
-    }
-
-    public static void setKey(ItemStack stack, String key)
-    {
-        NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
-
-        tag.setString("key", key);
-    }
-
-    public static String getKey(ItemStack stack)
-    {
-        NBTHelper.checkNBT(stack);
-        NBTTagCompound tag = stack.getTagCompound();
-
-        return tag.getString("key");
     }
 
     @Override
@@ -77,7 +52,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
 //        tooltip.addAll(Arrays.asList(TextHelper.cutLongString(TextHelper.localizeEffect("tooltip.BloodMagic.livingArmour"))));
-        LivingArmourUpgrade upgrade = ItemUpgradeTrainer.getUpgrade(stack);
+        LivingArmourUpgrade upgrade = LivingUpgrades.getUpgrade(stack);
         if (upgrade != null)
         {
             tooltip.add(TextHelper.localize(upgrade.getUnlocalizedName()));
@@ -88,7 +63,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
     public List<String> getTrainedUpgrades(ItemStack stack)
     {
         List<String> keyList = new ArrayList<String>();
-        String key = getKey(stack);
+        String key = LivingUpgrades.getKey(stack);
 
         if (!key.isEmpty())
         {
@@ -106,7 +81,7 @@ public class ItemUpgradeTrainer extends Item implements IUpgradeTrainer, IVarian
             return false;
         }
 
-        setKey(stack, keys.get(0));
+        LivingUpgrades.setKey(stack, keys.get(0));
         return true;
     }
 

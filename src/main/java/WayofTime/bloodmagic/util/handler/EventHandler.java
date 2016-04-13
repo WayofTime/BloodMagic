@@ -71,10 +71,7 @@ import WayofTime.bloodmagic.api.soul.EnumDemonWillType;
 import WayofTime.bloodmagic.api.soul.IDemonWill;
 import WayofTime.bloodmagic.api.soul.IDemonWillWeapon;
 import WayofTime.bloodmagic.api.soul.PlayerDemonWillHandler;
-import WayofTime.bloodmagic.api.util.helper.BindableHelper;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.api.util.helper.PlayerHelper;
+import WayofTime.bloodmagic.api.util.helper.*;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.demonAura.PosXY;
 import WayofTime.bloodmagic.demonAura.WillChunk;
@@ -83,7 +80,6 @@ import WayofTime.bloodmagic.entity.projectile.EntitySentientArrow;
 import WayofTime.bloodmagic.item.ItemAltarMaker;
 import WayofTime.bloodmagic.item.ItemExperienceBook;
 import WayofTime.bloodmagic.item.ItemInscriptionTool;
-import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.item.armour.ItemLivingArmour;
 import WayofTime.bloodmagic.item.armour.ItemSentientArmour;
 import WayofTime.bloodmagic.item.gear.ItemPackSacrifice;
@@ -356,7 +352,7 @@ public class EventHandler
                 int totalLP = Math.round(damageDone * ConfigHandler.sacrificialPackConversion);
 
                 if (shouldSyphon)
-                    pack.addLP(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP);
+                    ItemHelper.LPContainer.addLPToItem(player.getItemStackFromSlot(EntityEquipmentSlot.CHEST), totalLP, pack.CAPACITY);
             }
         }
     }
@@ -370,8 +366,8 @@ public class EventHandler
             {
                 ItemStack output = new ItemStack(ModItems.upgradeTome);
                 output = NBTHelper.checkNBT(output);
-                ItemUpgradeTome.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
-                ItemUpgradeTome.setLevel(output, 1);
+                ItemHelper.LivingUpgrades.setKey(output, Constants.Mod.MODID + ".upgrade.revealing");
+                ItemHelper.LivingUpgrades.setLevel(output, 1);
                 event.setCost(1);
 
                 event.setOutput(output);
@@ -382,16 +378,16 @@ public class EventHandler
 
         if (event.getLeft().getItem() == ModItems.upgradeTome && event.getRight().getItem() == ModItems.upgradeTome)
         {
-            LivingArmourUpgrade leftUpgrade = ItemUpgradeTome.getUpgrade(event.getLeft());
-            if (leftUpgrade != null && ItemUpgradeTome.getKey(event.getLeft()).equals(ItemUpgradeTome.getKey(event.getRight())))
+            LivingArmourUpgrade leftUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getLeft());
+            if (leftUpgrade != null && ItemHelper.LivingUpgrades.getKey(event.getLeft()).equals(ItemHelper.LivingUpgrades.getKey(event.getRight())))
             {
-                int leftLevel = ItemUpgradeTome.getLevel(event.getLeft());
-                int rightLevel = ItemUpgradeTome.getLevel(event.getRight());
+                int leftLevel = ItemHelper.LivingUpgrades.getLevel(event.getLeft());
+                int rightLevel = ItemHelper.LivingUpgrades.getLevel(event.getRight());
 
                 if (leftLevel == rightLevel && leftLevel < leftUpgrade.getMaxTier() - 1)
                 {
                     ItemStack outputStack = event.getLeft().copy();
-                    ItemUpgradeTome.setLevel(outputStack, leftLevel + 1);
+                    ItemHelper.LivingUpgrades.setLevel(outputStack, leftLevel + 1);
                     event.setCost(leftLevel + 2);
 
                     event.setOutput(outputStack);
@@ -403,10 +399,10 @@ public class EventHandler
 
         if (event.getLeft().getItem() instanceof IUpgradeTrainer && event.getRight().getItem() == ModItems.upgradeTome)
         {
-            LivingArmourUpgrade rightUpgrade = ItemUpgradeTome.getUpgrade(event.getRight());
+            LivingArmourUpgrade rightUpgrade = ItemHelper.LivingUpgrades.getUpgrade(event.getRight());
             if (rightUpgrade != null)
             {
-                String key = ItemUpgradeTome.getKey(event.getRight());
+                String key = ItemHelper.LivingUpgrades.getKey(event.getRight());
                 ItemStack outputStack = event.getLeft().copy();
                 List<String> keyList = new ArrayList<String>();
                 keyList.add(key);

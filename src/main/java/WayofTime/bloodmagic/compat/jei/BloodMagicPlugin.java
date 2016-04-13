@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.livingArmour.LivingArmourHandler;
+import WayofTime.bloodmagic.api.util.helper.ItemHelper.LivingUpgrades;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingCategory;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.alchemyArray.AlchemyArrayCraftingRecipeMaker;
@@ -26,7 +27,6 @@ import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.forge.TartaricForgeRecipeMaker;
 import WayofTime.bloodmagic.compat.jei.orb.ShapedOrbRecipeHandler;
 import WayofTime.bloodmagic.compat.jei.orb.ShapelessOrbRecipeHandler;
-import WayofTime.bloodmagic.item.ItemUpgradeTome;
 import WayofTime.bloodmagic.registry.ModBlocks;
 import WayofTime.bloodmagic.registry.ModItems;
 
@@ -65,8 +65,8 @@ public class BloodMagicPlugin extends BlankModPlugin
             for (int i = 0; i < maxLevel - 1; i++)
             {
                 ItemStack stack = new ItemStack(ModItems.upgradeTome);
-                ItemUpgradeTome.setKey(stack, key);
-                ItemUpgradeTome.setLevel(stack, i);
+                LivingUpgrades.setKey(stack, key);
+                LivingUpgrades.setLevel(stack, i);
                 jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
             }
         }

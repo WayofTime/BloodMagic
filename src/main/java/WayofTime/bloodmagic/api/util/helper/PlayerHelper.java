@@ -1,16 +1,12 @@
 package WayofTime.bloodmagic.api.util.helper;
 
 import WayofTime.bloodmagic.api.Constants;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -73,6 +69,14 @@ public class PlayerHelper
         return stack.getTagCompound().getString(Constants.NBT.OWNER_NAME);
     }
 
+    /**
+     * Checks whether or not the given player is an "actual" player
+     *
+     * @param player
+     *        - The player in question
+     *
+     * @return If the player is fake or not
+     */
     public static boolean isFakePlayer(EntityPlayer player)
     {
         return player != null && (player instanceof FakePlayer || knownFakePlayers.contains(player.getClass().getCanonicalName()));

@@ -26,7 +26,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import WayofTime.bloodmagic.api.BlockStack;
-import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.ItemStackWrapper;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 import WayofTime.bloodmagic.client.IMeshProvider;
@@ -84,7 +83,7 @@ public class ItemBoundPickaxe extends ItemBoundTool implements IMeshProvider
 
         boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) > 0;
         int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack);
-        int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
+        int range = (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();
 
