@@ -51,7 +51,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ritualDiviner), "dfd", "ase", "dwd", 'f', EnumRuneType.FIRE.getScribeStack(), 'a', EnumRuneType.AIR.getScribeStack(), 'w', EnumRuneType.WATER.getScribeStack(), 'e', EnumRuneType.EARTH.getScribeStack(), 'd', "gemDiamond", 's', "stickWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ritualDiviner, 1, 1), " S ", "tdt", " S ", 'S', new ItemStack(ModItems.slate, 1, 3), 't', EnumRuneType.DUSK.getScribeStack(), 'd', new ItemStack(ModItems.ritualDiviner)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 1, 1), "aa", "aa", 'a', new ItemStack(ModBlocks.bloodStoneBrick)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick), "stone", new ItemStack(ModItems.bloodShard)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodStoneBrick, 16), "stone", new ItemStack(ModItems.bloodShard)));
         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.activationCrystal, 1, 1), new ItemStack(Items.nether_star), OrbRegistry.getOrbStack(ModItems.orbArchmage));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.soulSnare, 4, 0), "sis", "iri", "sis", 's', new ItemStack(Items.string), 'i', "ingotIron", 'r', "dustRedstone"));
 
@@ -92,6 +92,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.pathBlock, 4, 7), new ItemStack(ModBlocks.pathBlock, 1, 6), new ItemStack(ModBlocks.pathBlock, 1, 6), new ItemStack(ModBlocks.pathBlock, 1, 6), new ItemStack(ModBlocks.pathBlock, 1, 6)));
 
         GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.experienceTome), "ses", "lbl", "gog", 'o', OrbRegistry.getOrbStack(ModItems.orbMagician), 'e', Blocks.lapis_block, 'l', new ItemStack(ModItems.slate, 1, 2), 'b', Items.enchanted_book, 's', Items.string, 'g', "ingotGold"));
+        GameRegistry.addRecipe(new ShapedBloodOrbRecipe(new ItemStack(ModItems.ritualReader), "gog", "isi", " s ", 's', new ItemStack(ModItems.slate, 1, 3), 'g', "blockGlass", 'i', "ingotGold", 'o', OrbRegistry.getOrbStack(ModItems.orbMaster)));
 
         for (int i = 1; i < BlockBloodRune.names.length; i++)
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.bloodRune), new ItemStack(ModBlocks.bloodRune, 1, i)));

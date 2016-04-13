@@ -9,6 +9,7 @@ Version 2.0.0-32
 - Updated for Forge 12.16.0.1859
 - Did some work on the Sentient Bow to start adding abilities to it
 - Fixed the Speed and Jump rituals so that they correctly update the player's motion.
+- Implemented the "Ritual Tinkerer" and added its recipe.
 
 ------------------------------------------------------
 Version 2.0.0-31
