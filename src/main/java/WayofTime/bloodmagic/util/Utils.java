@@ -33,6 +33,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import WayofTime.bloodmagic.api.BlockStack;
 import WayofTime.bloodmagic.api.altar.EnumAltarComponent;
 import WayofTime.bloodmagic.network.BloodMagicPacketHandler;
@@ -366,6 +368,102 @@ public class Utils
         return returned;
     }
 
+    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir)
+    {
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
+        {
+            IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+            int numberOfSlots = handler.getSlots();
+
+            ItemStack copyStack = stack.copy();
+
+            for (int slot = 0; slot < numberOfSlots; slot++)
+            {
+                copyStack = handler.insertItem(slot, copyStack, false);
+                if (copyStack == null)
+                {
+                    return null;
+                }
+            }
+
+            return copyStack;
+        } else if (tile instanceof IInventory)
+        {
+            return insertStackIntoInventory(stack, (IInventory) tile, dir);
+        }
+
+        return stack;
+    }
+
+    /**
+     * Inserts the desired stack into the tile up to a limit for the tile.
+     * Respects capabilities.
+     * 
+     * @param stack
+     * @param tile
+     * @param dir
+     * @param limit
+     * @return
+     */
+    public static ItemStack insertStackIntoTile(ItemStack stack, TileEntity tile, EnumFacing dir, int limit)
+    {
+        if (tile.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir))
+        {
+            IItemHandler handler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir);
+            int numberOfSlots = handler.getSlots();
+
+            ItemStack copyStack = stack.copy();
+
+            int numberMatching = 0;
+
+            for (int slot = 0; slot < numberOfSlots; slot++)
+            {
+                ItemStack invStack = handler.getStackInSlot(slot);
+
+                if (invStack != null && canCombine(stack, invStack))
+                {
+                    numberMatching += invStack.stackSize;
+                }
+            }
+
+            if (numberMatching >= limit)
+            {
+                return stack;
+            }
+
+            int newLimit = limit - numberMatching;
+
+            for (int slot = 0; slot < numberOfSlots; slot++)
+            {
+                ItemStack newCopyStack = copyStack.copy();
+                newCopyStack.stackSize = Math.min(copyStack.stackSize, newLimit);
+
+                newCopyStack = handler.insertItem(slot, newCopyStack, false);
+
+                if (newCopyStack == null)
+                {
+                    return null;
+                }
+
+                newLimit -= (copyStack.stackSize - newCopyStack.stackSize);
+
+                if (newLimit <= 0)
+                {
+                    return null; //TODO
+                }
+
+                copyStack.stackSize -= (copyStack.stackSize - newCopyStack.stackSize);
+            }
+
+            return copyStack;
+        } else if (tile instanceof IInventory)
+        {
+            return insertStackIntoInventory(stack, (IInventory) tile, dir, limit);
+        }
+
+        return stack;
+    }
+
     public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir)
     {
         if (stack == null)
@@ -495,6 +593,16 @@ public class Utils
         return false;
     }
 
+    /**
+     * Inserts the desired stack into the inventory up to a limit for the
+     * inventory.
+     * 
+     * @param stack
+     * @param inventory
+     * @param dir
+     * @param limit
+     * @return
+     */
     public static ItemStack insertStackIntoInventory(ItemStack stack, IInventory inventory, EnumFacing dir, int limit)
     {
         if (stack == null)
@@ -554,7 +662,7 @@ public class Utils
 
             ItemStack[] combinedStacks = combineStacks(stack, inventory.getStackInSlot(i), newLimit);
             stack = combinedStacks[0];
-            inventory.setInventorySlotContents(i, combinedStacks[1]);
+            inventory.setInventorySlotContents(i, combinedStacks[1]); //TODO
 
             newLimit -= (prevStackSize - stack.stackSize);
 

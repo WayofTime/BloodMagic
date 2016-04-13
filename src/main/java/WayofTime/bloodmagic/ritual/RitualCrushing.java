@@ -1,23 +1,26 @@
 package WayofTime.bloodmagic.ritual;
 
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.network.SoulNetwork;
-import WayofTime.bloodmagic.api.ritual.*;
-import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
-import WayofTime.bloodmagic.registry.ModBlocks;
-import WayofTime.bloodmagic.util.Utils;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
+import WayofTime.bloodmagic.api.ritual.EnumRuneType;
+import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
+import WayofTime.bloodmagic.api.ritual.Ritual;
+import WayofTime.bloodmagic.api.ritual.RitualComponent;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.registry.ModBlocks;
+import WayofTime.bloodmagic.util.Utils;
 
 public class RitualCrushing extends Ritual
 {
@@ -49,19 +52,6 @@ public class RitualCrushing extends Ritual
 
         TileEntity tile = world.getTileEntity(masterRitualStone.getBlockPos().up());
 
-        if (!(tile instanceof IInventory))
-        {
-            return;
-        }
-
-        IInventory tileEntity;
-        tileEntity = (IInventory) tile;
-
-        if (tileEntity.getSizeInventory() <= 0)
-        {
-            return;
-        }
-
         boolean isSilkTouch = false;
         int fortune = 0;
 
@@ -88,7 +78,7 @@ public class RitualCrushing extends Ritual
                 ItemStack item = new ItemStack(block, 1, meta);
                 ItemStack copyStack = ItemStack.copyItemStack(item);
 
-                Utils.insertStackIntoInventory(copyStack, tileEntity, EnumFacing.DOWN);
+                Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
 
                 if (copyStack.stackSize > 0)
                 {
@@ -104,8 +94,8 @@ public class RitualCrushing extends Ritual
                     {
                         ItemStack copyStack = ItemStack.copyItemStack(item);
 
-                        Utils.insertStackIntoInventory(copyStack, tileEntity, EnumFacing.DOWN);
-                        if (copyStack.stackSize > 0)
+                        copyStack = Utils.insertStackIntoTile(copyStack, tile, EnumFacing.DOWN);
+                        if (copyStack != null && copyStack.stackSize > 0)
                         {
                             world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5, copyStack));
                         }
