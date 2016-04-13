@@ -64,13 +64,14 @@ public class ContainerItemRoutingNode extends Container
         InventoryPlayer inventoryPlayer = player.inventory;
 //        if (!player.worldObj.isRemote)
         {
+
             if (slotId >= 0)
             {
                 Slot slot = this.inventorySlots.get(slotId);
 
                 if (slot instanceof SlotGhostItem) //TODO: make the slot clicking work!
                 {
-                    if ((dragType == 0 || dragType == 1) && (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.CLONE))
+                    if ((dragType == 0 || dragType == 1) && (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.QUICK_MOVE))
                     {
                         ItemStack slotStack = slot.getStack();
                         ItemStack heldStack = inventoryPlayer.getItemStack();
