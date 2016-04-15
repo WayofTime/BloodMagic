@@ -205,13 +205,13 @@ tile.BloodMagic.inputRouting.name=Input Routing Node
 tile.BloodMagic.itemRouting.name=Routing Node
 
 tile.BloodMagic.path.wood.name=Wooden Path
-tile.BloodMagic.path.woodTile.name=Tiled Wooden Path
+tile.BloodMagic.path.woodtile.name=Tiled Wooden Path
 tile.BloodMagic.path.stone.name=Stone Brick Path
-tile.BloodMagic.path.stoneTile.name=Tiled Stone Path
+tile.BloodMagic.path.stonetile.name=Tiled Stone Path
 tile.BloodMagic.path.wornstone.name=Worn Stone Brick Path
-tile.BloodMagic.path.wornstoneTile.name=Tiled Worn Stone Path
+tile.BloodMagic.path.wornstonetile.name=Tiled Worn Stone Path
 tile.BloodMagic.path.obsidian.name=Obsidian Brick Path
-tile.BloodMagic.path.obsidianTile.name=Tiled Obsidian Path
+tile.BloodMagic.path.obsidiantile.name=Tiled Obsidian Path
 
 tile.BloodMagic.dimensionalPortal.name=Dimensional Portal
 tile.BloodMagic.bloodTank.name=Blood Tank
