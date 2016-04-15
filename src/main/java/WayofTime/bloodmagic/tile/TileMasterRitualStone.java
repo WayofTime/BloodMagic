@@ -129,7 +129,7 @@ public class TileMasterRitualStone extends TileEntity implements IMasterRitualSt
 
         activationCrystal = NBTHelper.checkNBT(activationCrystal);
         String crystalOwner = activationCrystal.getTagCompound().getString(Constants.NBT.OWNER_UUID);
-        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job 
+//        crystalOwner = PlayerHelper.getUUIDFromPlayer(activator).toString(); //Temporary patch job 
 
         if (!Strings.isNullOrEmpty(crystalOwner) && ritual != null)
         {
