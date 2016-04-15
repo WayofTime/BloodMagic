@@ -23,6 +23,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -325,7 +326,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
     {
         List<ItemStack> soulList = new ArrayList<ItemStack>();
 
-        if (!(killedEntity instanceof EntityMob))
+        if (killedEntity.worldObj.getDifficulty() != EnumDifficulty.PEACEFUL && !(killedEntity instanceof EntityMob))
         {
             return soulList;
         }
