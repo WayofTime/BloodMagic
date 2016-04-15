@@ -31,6 +31,7 @@ public class RitualPump extends Ritual
         super("ritualPump", 0, 500, "ritual." + Constants.Mod.MODID + ".pumpRitual");
         addBlockRange(PUMP_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-16, -16, -16), new BlockPos(17, 17, 17)));
 
+        setMaximumVolumeAndDistanceOfRange(PUMP_RANGE, 0, 16, 16);
         liquidsCache = new ArrayList<BlockPos>();
     }
 
