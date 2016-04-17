@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import WayofTime.bloodmagic.client.IMeshProvider;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,7 +37,9 @@ import WayofTime.bloodmagic.client.IVariantProvider;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 
-public class ItemSacrificialDagger extends Item implements IVariantProvider
+import javax.annotation.Nullable;
+
+public class ItemSacrificialDagger extends Item implements IMeshProvider
 {
     public static String[] names = { "normal", "creative" };
 
@@ -154,15 +159,6 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
     }
 
     @Override
-    public List<Pair<Integer, String>> getVariants()
-    {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=creative"));
-        return ret;
-    }
-
-    @Override
     public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
     {
         if (!world.isRemote && entity instanceof EntityPlayer)
@@ -188,8 +184,34 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack)
-    {
-        return this.canUseForSacrifice(stack) || super.hasEffect(stack);
+    public ItemMeshDefinition getMeshDefinition() {
+        return new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+                String variant = "type=normal";
+                if (stack.getItemDamage() != 0)
+                    variant = "type=creative";
+
+                if (canUseForSacrifice(stack))
+                    variant = "type=ceremonial";
+
+                return new ModelResourceLocation(new ResourceLocation(Constants.Mod.MODID, "item/ItemSacrificialDagger"), variant);
+            }
+        };
+    }
+
+    @Override
+    public List<String> getVariants() {
+        List<String> variants = new ArrayList<String>();
+        variants.add("type=normal");
+        variants.add("type=creative");
+        variants.add("type=ceremonial");
+        return variants;
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation() {
+        return null;
     }
 }

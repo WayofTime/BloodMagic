@@ -15,6 +15,11 @@
         "textures": {
           "layer0": "bloodmagic:items/SacrificialDagger"
         }
+      },
+      "ceremonial": {
+        "textures": {
+          "layer0": "bloodmagic:items/CeremonialDagger"
+        }
       }
     }
   }

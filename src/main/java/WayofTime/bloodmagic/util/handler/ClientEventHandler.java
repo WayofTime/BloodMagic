@@ -2,11 +2,14 @@ package WayofTime.bloodmagic.util.handler;
 
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.ritual.AreaDescriptor;
 import WayofTime.bloodmagic.api.ritual.IMasterRitualStone;
 import WayofTime.bloodmagic.api.ritual.Ritual;
 import WayofTime.bloodmagic.api.ritual.RitualComponent;
 import WayofTime.bloodmagic.client.render.RenderFakeBlocks;
 import WayofTime.bloodmagic.item.ItemRitualDiviner;
+import WayofTime.bloodmagic.item.ItemRitualReader;
+import WayofTime.bloodmagic.tile.TileMasterRitualStone;
 import WayofTime.bloodmagic.util.GhostItemHelper;
 import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.client.Minecraft;
@@ -26,12 +29,22 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
+import java.util.List;
+
 public class ClientEventHandler
 {
     public static int currentLP = 0;
     public static int capacity = 0;
 
-    public TextureAtlasSprite ritualStoneBlankIcon, ritualStoneWaterIcon, ritualStoneFireIcon, ritualStoneEarthIcon, ritualStoneAirIcon, ritualStoneDawnIcon, ritualStoneDuskIcon;
+    public TextureAtlasSprite ritualStoneBlank;
+    public TextureAtlasSprite ritualStoneWater;
+    public TextureAtlasSprite ritualStoneFire;
+    public TextureAtlasSprite ritualStoneEarth;
+    public TextureAtlasSprite ritualStoneAir;
+    public TextureAtlasSprite ritualStoneDawn;
+    public TextureAtlasSprite ritualStoneDusk;
+
+    private static Minecraft minecraft = Minecraft.getMinecraft();
 
     @SubscribeEvent
     public void onTooltipEvent(ItemTooltipEvent event)
@@ -60,98 +73,112 @@ public class ClientEventHandler
     {
         final String BLOCKS = "blocks";
 
-        ritualStoneBlankIcon = forName(event.getMap(), "RitualStone", BLOCKS);
-        ritualStoneWaterIcon = forName(event.getMap(), "WaterRitualStone", BLOCKS);
-        ritualStoneFireIcon = forName(event.getMap(), "FireRitualStone", BLOCKS);
-        ritualStoneEarthIcon = forName(event.getMap(), "EarthRitualStone", BLOCKS);
-        ritualStoneAirIcon = forName(event.getMap(), "AirRitualStone", BLOCKS);
-        ritualStoneDawnIcon = forName(event.getMap(), "LightRitualStone", BLOCKS);
-        ritualStoneDuskIcon = forName(event.getMap(), "DuskRitualStone", BLOCKS);
+        ritualStoneBlank = forName(event.getMap(), "RitualStone", BLOCKS);
+        ritualStoneWater = forName(event.getMap(), "WaterRitualStone", BLOCKS);
+        ritualStoneFire = forName(event.getMap(), "FireRitualStone", BLOCKS);
+        ritualStoneEarth = forName(event.getMap(), "EarthRitualStone", BLOCKS);
+        ritualStoneAir = forName(event.getMap(), "AirRitualStone", BLOCKS);
+        ritualStoneDawn = forName(event.getMap(), "LightRitualStone", BLOCKS);
+        ritualStoneDusk = forName(event.getMap(), "DuskRitualStone", BLOCKS);
     }
 
     @SubscribeEvent
     public void render(RenderWorldLastEvent event)
     {
-        Minecraft minecraft = Minecraft.getMinecraft();
         EntityPlayerSP player = minecraft.thePlayer;
         World world = player.worldObj;
 
         if (minecraft.objectMouseOver == null || minecraft.objectMouseOver.typeOfHit != RayTraceResult.Type.BLOCK)
-        {
             return;
-        }
 
         TileEntity tileEntity = world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
 
-        if (tileEntity instanceof IMasterRitualStone)
-        {
-            if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemRitualDiviner)
-            {
-                ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
-                EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
-                Ritual ritual = RitualRegistry.getRitualForId(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
+        if (tileEntity instanceof IMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualDiviner)
+            renderRitualStones(player, event.getPartialTicks());
 
-                if (ritual == null)
-                {
-                    return;
-                }
-
-                GlStateManager.pushMatrix();
-                GlStateManager.enableBlend();
-                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-                BlockPos vec3 = new BlockPos(minecraft.objectMouseOver.getBlockPos().getX(), minecraft.objectMouseOver.getBlockPos().getY(), minecraft.objectMouseOver.getBlockPos().getZ());
-                double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * event.getPartialTicks();
-                double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
-                double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.getPartialTicks();
-
-                for (RitualComponent ritualComponent : ritual.getComponents())
-                {
-                    BlockPos vX = vec3.add(new BlockPos(ritualComponent.getX(direction), ritualComponent.getY(), ritualComponent.getZ(direction)));
-                    double minX = vX.getX() - posX;
-                    double minY = vX.getY() - posY;
-                    double minZ = vX.getZ() - posZ;
-
-                    if (!world.getBlockState(vX).isOpaqueCube())
-                    {
-                        TextureAtlasSprite texture = null;
-
-                        switch (ritualComponent.getRuneType())
-                        {
-                        case BLANK:
-                            texture = ritualStoneBlankIcon;
-                            break;
-                        case WATER:
-                            texture = ritualStoneWaterIcon;
-                            break;
-                        case FIRE:
-                            texture = ritualStoneFireIcon;
-                            break;
-                        case EARTH:
-                            texture = ritualStoneEarthIcon;
-                            break;
-                        case AIR:
-                            texture = ritualStoneAirIcon;
-                            break;
-                        case DAWN:
-                            texture = ritualStoneDawnIcon;
-                            break;
-                        case DUSK:
-                            texture = ritualStoneDuskIcon;
-                            break;
-                        }
-
-                        RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
-                    }
-                }
-
-                GlStateManager.popMatrix();
-            }
-        }
+        if (tileEntity instanceof TileMasterRitualStone && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemRitualReader)
+            renderRitualInformation(player, event.getPartialTicks());
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir)
     {
         return textureMap.registerSprite(new ResourceLocation(Constants.Mod.DOMAIN + dir + "/" + name));
+    }
+
+    private void renderRitualInformation(EntityPlayerSP player, float partialTicks) {
+        World world = player.worldObj;
+        TileMasterRitualStone mrs = (TileMasterRitualStone) world.getTileEntity(minecraft.objectMouseOver.getBlockPos());
+        Ritual ritual = mrs.getCurrentRitual();
+
+        if (ritual != null) {
+            List<String> ranges = ritual.getListOfRanges();
+            for (String range : ranges) {
+                AreaDescriptor areaDescriptor = ritual.getBlockRange(range);
+
+                for (BlockPos pos : areaDescriptor.getContainedPositions(minecraft.objectMouseOver.getBlockPos()))
+                    RenderFakeBlocks.drawFakeBlock(ritualStoneBlank, pos.getX(), pos.getY(), pos.getZ(), world);
+            }
+        }
+    }
+
+    private void renderRitualStones(EntityPlayerSP player, float partialTicks) {
+        World world = player.worldObj;
+        ItemRitualDiviner ritualDiviner = (ItemRitualDiviner) player.inventory.getCurrentItem().getItem();
+        EnumFacing direction = ritualDiviner.getDirection(player.inventory.getCurrentItem());
+        Ritual ritual = RitualRegistry.getRitualForId(ritualDiviner.getCurrentRitual(player.inventory.getCurrentItem()));
+
+        if (ritual == null)
+            return;
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        BlockPos vec3 = new BlockPos(minecraft.objectMouseOver.getBlockPos().getX(), minecraft.objectMouseOver.getBlockPos().getY(), minecraft.objectMouseOver.getBlockPos().getZ());
+        double posX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+        double posY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+        double posZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+
+        for (RitualComponent ritualComponent : ritual.getComponents())
+        {
+            BlockPos vX = vec3.add(new BlockPos(ritualComponent.getX(direction), ritualComponent.getY(), ritualComponent.getZ(direction)));
+            double minX = vX.getX() - posX;
+            double minY = vX.getY() - posY;
+            double minZ = vX.getZ() - posZ;
+
+            if (!world.getBlockState(vX).isOpaqueCube())
+            {
+                TextureAtlasSprite texture = null;
+
+                switch (ritualComponent.getRuneType())
+                {
+                    case BLANK:
+                        texture = ritualStoneBlank;
+                        break;
+                    case WATER:
+                        texture = ritualStoneWater;
+                        break;
+                    case FIRE:
+                        texture = ritualStoneFire;
+                        break;
+                    case EARTH:
+                        texture = ritualStoneEarth;
+                        break;
+                    case AIR:
+                        texture = ritualStoneAir;
+                        break;
+                    case DAWN:
+                        texture = ritualStoneDawn;
+                        break;
+                    case DUSK:
+                        texture = ritualStoneDusk;
+                        break;
+                }
+
+                RenderFakeBlocks.drawFakeBlock(texture, minX, minY, minZ, world);
+            }
+        }
+
+        GlStateManager.popMatrix();
     }
 }
