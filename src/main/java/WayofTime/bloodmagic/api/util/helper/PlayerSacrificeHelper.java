@@ -69,7 +69,7 @@ public class PlayerSacrificeHelper
             {
                 float sacrificedHealth = health - maxHealth / 10.0f;
 
-                if (findAndFillAltar(player.getEntityWorld(), player, (int) (sacrificedHealth * 100f * getModifier(amount))))
+                if (findAndFillAltar(player.getEntityWorld(), player, (int) (sacrificedHealth * 100f * getModifier(amount)), false))
                 {
                     player.setHealth(maxHealth / 10.0f);
                     setPlayerIncense(player, 0);
@@ -97,17 +97,19 @@ public class PlayerSacrificeHelper
      *        - The entity having the sacrifice done on (can be {@link EntityPlayer} for self-sacrifice)
      * @param amount
      *        - The amount of which the altar should be filled
+     * @param isSacrifice
+     *        - Whether this is a Sacrifice or a Self-Sacrifice
      *
      * @return Whether the altar is found and (attempted) filled
      */
-    public static boolean findAndFillAltar(World world, EntityLivingBase sacrificingEntity, int amount)
+    public static boolean findAndFillAltar(World world, EntityLivingBase sacrificingEntity, int amount, boolean isSacrifice)
     {
         IBloodAltar altarEntity = getAltar(world, sacrificingEntity.getPosition());
 
         if (altarEntity == null)
             return false;
 
-        altarEntity.sacrificialDaggerCall(amount, false);
+        altarEntity.sacrificialDaggerCall(amount, isSacrifice);
         altarEntity.startCycle();
 
         return true;

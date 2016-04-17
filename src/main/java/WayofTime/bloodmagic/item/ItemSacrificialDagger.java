@@ -148,7 +148,7 @@ public class ItemSacrificialDagger extends Item implements IVariantProvider
             return super.onItemRightClick(stack, world, player, hand);
 
         // TODO - Check if SoulFray is active
-        PlayerSacrificeHelper.findAndFillAltar(world, player, lpAdded);
+        PlayerSacrificeHelper.findAndFillAltar(world, player, lpAdded, false);
 
         return super.onItemRightClick(stack, world, player, hand);
     }
