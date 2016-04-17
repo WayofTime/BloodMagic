@@ -369,6 +369,9 @@ tooltip.BloodMagic.experienceTome=A book used to store experience
 tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
 tooltip.BloodMagic.experienceTome.expLevel=Level: %d
 
+tooltip.BloodMagic.decoration.safe=Safe for decoration
+tooltip.BloodMagic.decoration.notSafe=Dangerous for decoration
+
 # Ritual
 ritual.BloodMagic.blockRange.tooBig=The block range given is too big! Needs to be at most %s blocks.
 ritual.BloodMagic.blockRange.tooFar=The block range given is too far! Needs to be within a vertical range of %s blocks and a horizontal range of %s blocks.

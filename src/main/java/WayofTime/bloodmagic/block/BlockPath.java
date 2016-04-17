@@ -3,9 +3,12 @@ package WayofTime.bloodmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -40,6 +43,12 @@ public class BlockPath extends BlockString implements IIncensePath, IVariantProv
         setHarvestLevel("pickaxe", 0, getStateFromMeta(5));
         setHarvestLevel("pickaxe", 3, getStateFromMeta(6));
         setHarvestLevel("pickaxe", 3, getStateFromMeta(7));
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.decoration.safe"));
+        super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override

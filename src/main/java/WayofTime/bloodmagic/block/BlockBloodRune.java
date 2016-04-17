@@ -4,9 +4,12 @@ import WayofTime.bloodmagic.BloodMagic;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.base.BlockString;
 import WayofTime.bloodmagic.client.IVariantProvider;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -32,6 +35,12 @@ public class BlockBloodRune extends BlockString implements IVariantProvider
     public int getRuneEffect(int meta)
     {
         return meta;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.decoration.safe"));
+        super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
