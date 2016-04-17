@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -30,7 +31,7 @@ public class AltarRecipeJEI extends BlankRecipeWrapper
         this.input = input;
         this.output = output;
 
-        this.infoString = new String[] { TextHelper.localize("jei.BloodMagic.recipe.requiredTier", tier), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP) };
+        this.infoString = new String[] { TextHelper.localize("jei.BloodMagic.recipe.requiredTier", NumeralHelper.toRoman(tier)), TextHelper.localize("jei.BloodMagic.recipe.requiredLP", requiredLP) };
         this.consumptionRate = consumptionRate;
         this.drainRate = drainRate;
     }

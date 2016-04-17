@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -70,7 +71,7 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                                 ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarProgress", progress, totalLiquidRequired), new TextComponentTranslation(tooltipBase + "currentAltarConsumptionRate", consumptionRate), new TextComponentTranslation(tooltipBase + "currentAltarTier", tier), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity), new TextComponentTranslation(tooltipBase + "currentCharge", charge));
                             } else
                             {
-                                ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", tier), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity), new TextComponentTranslation(tooltipBase + "currentCharge", charge));
+                                ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity), new TextComponentTranslation(tooltipBase + "currentCharge", charge));
                             }
                         }
                     } else if (tile != null && tile instanceof TileIncenseAltar)

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -80,7 +81,7 @@ public class ShapedOrbRecipeJEI implements IShapedCraftingRecipeWrapper
     @Override
     public void drawInfo(@Nonnull Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
     {
-        String draw = TextHelper.localize("jei.BloodMagic.recipe.requiredTier", tier);
+        String draw = TextHelper.localize("jei.BloodMagic.recipe.requiredTier", NumeralHelper.toRoman(tier));
         minecraft.fontRendererObj.drawString(draw, 72 - minecraft.fontRendererObj.getStringWidth(draw) / 2, 10, Color.gray.getRGB());
     }
 

@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.item.sigil;
 import java.util.ArrayList;
 import java.util.List;
 
+import WayofTime.bloodmagic.util.helper.NumeralHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -57,7 +58,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
                         int currentEssence = altar.getCurrentBlood();
                         int capacity = altar.getCapacity();
                         altar.checkTier();
-                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", tier), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity));
+                        ChatUtil.sendNoSpam(player, new TextComponentTranslation(tooltipBase + "currentAltarTier", NumeralHelper.toRoman(tier)), new TextComponentTranslation(tooltipBase + "currentEssence", currentEssence), new TextComponentTranslation(tooltipBase + "currentAltarCapacity", capacity));
                     } else if (tile != null && tile instanceof TileIncenseAltar)
                     {
                         TileIncenseAltar altar = (TileIncenseAltar) tile;
