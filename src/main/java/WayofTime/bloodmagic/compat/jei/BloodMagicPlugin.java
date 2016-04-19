@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import WayofTime.bloodmagic.client.gui.GuiSoulForge;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
@@ -70,6 +71,8 @@ public class BloodMagicPlugin extends BlankModPlugin
                 jeiHelper.getItemBlacklist().addItemToBlacklist(stack);
             }
         }
+
+        registry.addRecipeClickArea(GuiSoulForge.class, 115, 15, 16, 88, Constants.Compat.JEI_CATEGORY_SOULFORGE);
 
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_UUID);
         jeiHelper.getNbtIgnoreList().ignoreNbtTagNames(Constants.NBT.OWNER_NAME);
