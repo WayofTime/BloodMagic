@@ -2,7 +2,8 @@
 Version 2.0.0-34
 ------------------------------------------------------
 - Added config to Blood Magic that will prevent the compression handler from reading the recipes added by the Compression mod (default is true).
-- Added Japanese localization and fixed Chech (I can't spell) localization.
+- Added Japanese localization and fixed Czech (I can't spell) localization.
+
 ------------------------------------------------------
 Version 2.0.0-33
 ------------------------------------------------------
