@@ -1,0 +1,588 @@
+#Creative Tab
+itemGroup.BloodMagic.creativeTab=Blood Magic
+itemGroup.BloodMagic.creativeTabTome=Blood Magic 強化の書
+
+#Items
+item.BloodMagic.activationCrystal.weak.name=弱い起動クリスタル
+item.BloodMagic.activationCrystal.awakened.name=覚醒した起動クリスタル
+item.BloodMagic.activationCrystal.creative.name=クリエイティブ用の起動クリスタル
+
+item.BloodMagic.sacrificialDagger.normal.name=生贄のダガー
+item.BloodMagic.sacrificialDagger.creative.name=生贄のダガー(クリエイティブ)
+item.BloodMagic.pack.selfSacrifice.name=瀉血者のパック
+item.BloodMagic.pack.sacrifice.name=武装コート
+item.BloodMagic.daggerOfSacrifice.name=サクリファイスダガー
+
+item.BloodMagic.lavaCrystal.name=溶岩のクリスタル
+
+item.BloodMagic.bound.sword.name=結合した剣
+item.BloodMagic.bound.pickaxe.name=結合したツルハシ
+item.BloodMagic.bound.axe.name=結合した斧
+item.BloodMagic.bound.shovel.name=結合したシャベル
+
+item.BloodMagic.bucket.lifeEssence.name=ライフエッセンス入りバケツ
+
+item.BloodMagic.scribe.water.name=属性筆記具：水
+item.BloodMagic.scribe.fire.name=属性筆記具：火
+item.BloodMagic.scribe.earth.name=属性筆記具：土
+item.BloodMagic.scribe.air.name=属性筆記具：風
+item.BloodMagic.scribe.dusk.name=属性筆記具：黄昏
+item.BloodMagic.scribe.dawn.name=属性筆記具：暁
+
+item.BloodMagic.focus.weak.name=テレポートフォーカス
+item.BloodMagic.focus.enhanced.name=強化テレポートフォーカス
+item.BloodMagic.focus.reinforced.name=増強テレポートフォーカス
+item.BloodMagic.focus.demonic.name=悪魔テレポートフォーカス
+
+item.BloodMagic.slate.blank.name=空の石版
+item.BloodMagic.slate.reinforced.name=強化された石版
+item.BloodMagic.slate.imbued.name=染みこんだ石版
+item.BloodMagic.slate.demonic.name=悪魔の石版
+item.BloodMagic.slate.ethereal.name=エーテルの石版
+
+item.BloodMagic.orb.weak.name=弱いブラッドオーブ
+item.BloodMagic.orb.apprentice.name=見習いのブラッドオーブ
+item.BloodMagic.orb.magician.name=魔術師のブラッドオーブ
+item.BloodMagic.orb.master.name=熟練者のブラッドオーブ
+item.BloodMagic.orb.archmage.name=大魔術師のブラッドオーブ
+item.BloodMagic.orb.transcendent.name=超越のブラッドオーブ
+
+item.BloodMagic.reagent.incendium.name=インセンディウム
+item.BloodMagic.reagent.magicales.name=マギカリス
+item.BloodMagic.reagent.sanctus.name=サンクトゥス
+item.BloodMagic.reagent.aether.name=エーサー
+item.BloodMagic.reagent.crepitous.name=クレピタス
+item.BloodMagic.reagent.crystallos.name=クリスタロス
+item.BloodMagic.reagent.terrae.name=テラエ
+item.BloodMagic.reagent.aquasalus.name=アクアサルス
+item.BloodMagic.reagent.tennebrae.name=テネブレ
+item.BloodMagic.reagent.offensa.name=オフェンサ
+item.BloodMagic.reagent.praesidium.name=プレジディウム
+item.BloodMagic.reagent.orbisterrae.name=オービス・テラエ
+item.BloodMagic.reagent.virtus.name=ヴィルトゥス
+item.BloodMagic.reagent.reductus.name=レドクトゥス
+item.BloodMagic.reagent.potentia.name=ポテンシア
+
+item.BloodMagic.bloodShard.weak.name=弱い血の結晶片
+item.BloodMagic.bloodShard.demon.name=悪魔の血の結晶片
+
+item.BloodMagic.baseComponent.reagentWater.name=水の試薬
+item.BloodMagic.baseComponent.reagentLava.name=溶岩の試薬
+item.BloodMagic.baseComponent.reagentAir.name=風の試薬
+item.BloodMagic.baseComponent.reagentFastMiner.name=鉱夫の試薬
+item.BloodMagic.baseComponent.reagentVoid.name=虚無の試薬
+item.BloodMagic.baseComponent.reagentGrowth.name=緑化の試薬
+item.BloodMagic.baseComponent.reagentAffinity.name=精霊の加護の試薬
+item.BloodMagic.baseComponent.reagentSight.name=識別の試薬
+item.BloodMagic.baseComponent.reagentBinding.name=結合の試薬
+item.BloodMagic.baseComponent.reagentSuppression.name=除去の試薬
+item.BloodMagic.baseComponent.frameParts.name=フレームパーツ
+item.BloodMagic.baseComponent.reagentBloodLight.name=血のランプの試薬
+item.BloodMagic.baseComponent.reagentMagnetism.name=磁力の試薬
+item.BloodMagic.baseComponent.reagentHaste.name=迅速の試薬
+item.BloodMagic.baseComponent.reagentBridge.name=幻影橋の試薬
+item.BloodMagic.baseComponent.reagentCompression.name=圧縮の試薬
+item.BloodMagic.baseComponent.reagentSeverance.name=エンダーの試薬
+
+item.BloodMagic.baseComponent.reagentTeleposition.name=テレポートの試薬
+item.BloodMagic.baseComponent.reagentTransposition.name=転位の試薬
+
+item.BloodMagic.demonCrystal.crystalDefault.name=ウィル結晶
+item.BloodMagic.demonCrystal.crystalCorrosive.name=腐食性ウィル結晶
+item.BloodMagic.demonCrystal.crystalDestructive.name=破壊性ウィル結晶
+item.BloodMagic.demonCrystal.crystalVengeful.name=報復性ウィル結晶
+item.BloodMagic.demonCrystal.crystalSteadfast.name=不活性ウィル結晶
+
+item.BloodMagic.monsterSoul.base.name=デーモニックウィル
+
+item.BloodMagic.sigil.air.name=風の印章
+item.BloodMagic.sigil.bloodLight.name=血のランプの印章
+item.BloodMagic.sigil.compression.name=圧縮の印章
+item.BloodMagic.sigil.divination.name=神託の印章
+item.BloodMagic.sigil.water.name=水の印章
+item.BloodMagic.sigil.lava.name=溶岩の印章
+item.BloodMagic.sigil.void.name=虚無の印章
+item.BloodMagic.sigil.greenGrove.name=緑化の印章
+item.BloodMagic.sigil.elementalAffinity.name=精霊の加護の印章
+item.BloodMagic.sigil.haste.name=迅速の印章
+item.BloodMagic.sigil.suppression.name=除去の印章
+item.BloodMagic.sigil.magnetism.name=磁力の印章
+item.BloodMagic.sigil.fastMiner.name=鉱夫の印章
+item.BloodMagic.sigil.seer.name=識別の印章
+item.BloodMagic.sigil.phantomBridge.name=幻影橋の印章
+item.BloodMagic.sigil.whirlwind.name=旋風の印章
+item.BloodMagic.sigil.enderSeverance.name=エンダーの印章
+
+item.BloodMagic.sigil.teleposition.name=テレポートの印章
+item.BloodMagic.sigil.transposition.name=転位の印章
+
+item.BloodMagic.livingArmour.helmet.name=生体のヘルメット
+item.BloodMagic.livingArmour.chest.name=生体のチェストプレート
+item.BloodMagic.livingArmour.legs.name=生体のレギンス
+item.BloodMagic.livingArmour.boots.name=生体のブーツ
+item.BloodMagic.sentientArmour.helmet.name=理力のヘルメット
+item.BloodMagic.sentientArmour.chest.name=理力のチェストプレート
+item.BloodMagic.sentientArmour.legs.name=理力のレギンス
+item.BloodMagic.sentientArmour.boots.name=理力のブーツ
+
+item.BloodMagic.altarMaker.name=祭壇メーカー
+
+item.BloodMagic.ritualDivinernormal.name=儀式の占い棒
+item.BloodMagic.ritualDivinerdusk.name=儀式の占い棒 [黄昏]
+item.BloodMagic.ritualDivinerdawn.name=儀式の占い棒 [暁]
+item.BloodMagic.ritualReader.name=儀式の調整器
+
+item.BloodMagic.arcaneAshes.name=秘儀の灰
+item.BloodMagic.upgradeTome.name=生体アーマー強化の書
+item.BloodMagic.upgradeTrainer.name=生体アーマー養成ブレスレット
+
+item.BloodMagic.sentientSword.name=理力の剣
+item.BloodMagic.soulGem.petty.name=微細なタルタリックジェム
+item.BloodMagic.soulGem.lesser.name=小さなタルタリックジェム
+item.BloodMagic.soulGem.common.name=普通のタルタリックジェム
+item.BloodMagic.soulGem.greater.name=大きなタルタリックジェム
+item.BloodMagic.soulGem.grand.name=巨大なタルタリックジェム
+item.BloodMagic.soulSnare.base.name=簡素な投げ罠
+item.BloodMagic.sentientBow.name=理力の弓
+item.BloodMagic.sentientArmourGem.name=理力のアーマージェム
+
+item.BloodMagic.nodeRouter.name=ノード設定器
+item.BloodMagic.itemFilter.exact.name=精密アイテムフィルタ
+item.BloodMagic.itemFilter.ignoreNBT.name=NBTタグフィルタ
+item.BloodMagic.itemFilter.modItems.name=MODアイテムフィルタ
+item.BloodMagic.itemFilter.oreDict.name=鉱石辞書フィルタ
+
+item.BloodMagic.experienceTome.name=ペリティアの書
+
+# Blocks
+tile.BloodMagic.fluid.lifeEssence.name=ライフエッセンス
+
+tile.BloodMagic.stone.ritual.master.name=マスター儀式石
+tile.BloodMagic.stone.ritual.imperfect.name=簡易儀式石
+
+tile.BloodMagic.altar.name=血の祭壇
+tile.BloodMagic.alchemyArray.name=&r&f錬金術魔法陣
+
+tile.BloodMagic.rune.blank.name=空のルーン
+tile.BloodMagic.rune.speed.name=速度のルーン
+tile.BloodMagic.rune.efficiency.name=効率のルーン
+tile.BloodMagic.rune.sacrifice.name=生贄のルーン
+tile.BloodMagic.rune.selfsacrifice.name=自己犠牲のルーン
+tile.BloodMagic.rune.displacement.name=転移のルーン
+tile.BloodMagic.rune.capacity.name=容量増加のルーン
+tile.BloodMagic.rune.augcapacity.name=容量倍加のルーン
+tile.BloodMagic.rune.orb.name=オーブのルーン
+tile.BloodMagic.rune.acceleration.name=加速のルーン
+tile.BloodMagic.rune.charging.name=蓄積のルーン
+
+
+tile.BloodMagic.ritualStone.blank.name=儀式石
+tile.BloodMagic.ritualStone.water.name=水の儀式石
+tile.BloodMagic.ritualStone.fire.name=火の儀式石
+tile.BloodMagic.ritualStone.earth.name=土の儀式石
+tile.BloodMagic.ritualStone.air.name=風の儀式石
+tile.BloodMagic.ritualStone.dusk.name=闇の儀式石
+tile.BloodMagic.ritualStone.dawn.name=光の儀式石
+
+tile.BloodMagic.bloodstonebrick.large.name=大きなブラッドストーンレンガ
+tile.BloodMagic.bloodstonebrick.brick.name=ブラッドストーンレンガ
+tile.BloodMagic.crystal.large.name=クリスタルブロック
+tile.BloodMagic.crystal.brick.name=クリスタルブロックレンガ
+tile.BloodMagic.bloodLight.name=血の灯火
+tile.BloodMagic.spectralBlock.name=亡霊ブロック
+tile.BloodMagic.phantom.name=幻影ブロック
+tile.BloodMagic.incenseAltar.name=香の祭壇
+
+tile.BloodMagic.teleposer.name=テレポーザー
+tile.BloodMagic.soulForge.name=業火のかまど
+tile.BloodMagic.demonCrucible.name=悪魔のるつぼ
+tile.BloodMagic.demonPylon.name=悪魔の塔
+tile.BloodMagic.demonCrystallizer.name=悪魔の晶析装置
+
+tile.BloodMagic.masterRouting.name=マスター中継ノード
+tile.BloodMagic.outputRouting.name=出力中継ノード
+tile.BloodMagic.inputRouting.name=入力中継ノード
+tile.BloodMagic.itemRouting.name=中継ノード
+
+tile.BloodMagic.path.wood.name=木の経路
+tile.BloodMagic.path.woodtile.name=タイル状の木の経路
+tile.BloodMagic.path.stone.name=石レンガの経路
+tile.BloodMagic.path.stonetile.name=タイル状の石の経路
+tile.BloodMagic.path.wornstone.name=摩耗した石の経路
+tile.BloodMagic.path.wornstonetile.name=タイル状の摩耗した石の経路
+tile.BloodMagic.path.obsidian.name=黒曜石レンガの経路
+tile.BloodMagic.path.obsidiantile.name=タイル状の黒曜石の経路
+
+tile.BloodMagic.dimensionalPortal.name=ワープポータル
+tile.BloodMagic.bloodTank.name=血液タンク
+
+tile.BloodMagic.demonCrystalDEFAULT.name=ウィル結晶株
+tile.BloodMagic.demonCrystalCORROSIVE.name=腐食性ウィル結晶株
+tile.BloodMagic.demonCrystalDESTRUCTIVE.name=破壊性ウィル結晶株
+tile.BloodMagic.demonCrystalVENGEFUL.name=報復性ウィル結晶株
+tile.BloodMagic.demonCrystalSTEADFAST.name=不活性ウィル結晶株
+
+# Tooltips
+tooltip.BloodMagic.extraInfo=&9-Siftキーで詳細表示-
+
+tooltip.BloodMagic.orb.desc=加工前のライフエッセンスで満ちている
+tooltip.BloodMagic.orb.owner=以下による追加要素： %s
+tooltip.BloodMagic.currentOwner=現在の所有者： %s
+tooltip.BloodMagic.currentTier=祭壇のグレード： %d
+tooltip.BloodMagic.config.disabled=現在configにより無効化されています
+
+tooltip.BloodMagic.activated=アクティブ
+tooltip.BloodMagic.deactivated=非アクティブ
+
+tooltip.BloodMagic.sigil.air.desc=&o体が軽く感じる...
+tooltip.BloodMagic.sigil.bloodLight.desc=&o明かりだ！
+tooltip.BloodMagic.sigil.compression.desc=&oダイヤモンドの手
+tooltip.BloodMagic.sigil.divination.desc=&o魂を覗き込む
+tooltip.BloodMagic.sigil.divination.otherNetwork=%sの魂と相互リンク中
+tooltip.BloodMagic.sigil.divination.currentAltarTier=祭壇のグレード： %d
+tooltip.BloodMagic.sigil.divination.currentEssence=貯蔵量： %d LP
+tooltip.BloodMagic.sigil.divination.currentAltarCapacity=最大容量： %d LP
+tooltip.BloodMagic.sigil.divination.currentTranquility=現在の鎮静効果： %d
+tooltip.BloodMagic.sigil.divination.currentBonus=結合度： +%d%%
+tooltip.BloodMagic.sigil.water.desc=&o無限の水はいかが？
+tooltip.BloodMagic.sigil.lava.desc=&o高温注意！食べられません
+tooltip.BloodMagic.sigil.void.desc=&oクイックルワイパー(R)より良い！
+tooltip.BloodMagic.sigil.greenGrove.desc=&o環境にやさしい
+tooltip.BloodMagic.sigil.magnetism.desc=&o私は引き付ける性格です
+tooltip.BloodMagic.sigil.suppression.desc=&o素晴らしい念動力だ...
+tooltip.BloodMagic.sigil.haste.desc=&oコーヒー４２杯飲んだあと...
+tooltip.BloodMagic.sigil.fastMiner.desc=&o掘って、掘って、また掘って...
+tooltip.BloodMagic.sigil.elementalAffinity.desc=&oファイアフィッシュになる！
+tooltip.BloodMagic.sigil.seer.desc=&oすべてを見通せてもまだ物足りない
+tooltip.BloodMagic.sigil.seer.currentAltarProgress=進捗状況： %d LP/ %s LP
+tooltip.BloodMagic.sigil.seer.currentAltarProgress.percent=進捗状況： %s
+tooltip.BloodMagic.sigil.seer.currentAltarConsumptionRate=消費率： %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarTier=祭壇のグレード： %d
+tooltip.BloodMagic.sigil.seer.currentEssence=貯蔵量： %d LP
+tooltip.BloodMagic.sigil.seer.currentAltarCapacity=最大容量： %d LP
+tooltip.BloodMagic.sigil.seer.currentCharge=現在のチャージ： %d
+tooltip.BloodMagic.sigil.seer.currentTranquility=現在の鎮静効果： %d
+tooltip.BloodMagic.sigil.seer.currentBonus=結合度： +%d%%
+tooltip.BloodMagic.sigil.phantomBridge.desc=&o空を歩こう...
+tooltip.BloodMagic.sigil.whirlwind.desc=&oスカートは履かないほうがいいようだ
+tooltip.BloodMagic.sigil.enderSeverance.desc=&oエンダーマンは悲惨な事になる！
+tooltip.BloodMagic.sigil.teleposition.desc=これを使えばわずかな距離なら移動できそうだ。
+tooltip.BloodMagic.sigil.transposition.desc=フォースの力を感じるのだ、若き弟子よ。
+
+tooltip.BloodMagic.bound.sword.desc=&o弱者の淘汰
+tooltip.BloodMagic.bound.pickaxe.desc=&o石への無慈悲な破壊
+tooltip.BloodMagic.bound.axe.desc=&o悪魔の伐採機
+tooltip.BloodMagic.bound.shovel.desc=&o土を掃除して綺麗に
+
+tooltip.BloodMagic.sacrificialDagger.desc=指を刺すには十分な切れ味のようだ...
+tooltip.BloodMagic.slate.desc=血の祭壇で注入された石
+tooltip.BloodMagic.inscriber.desc=壁に描くのに使うようだ...
+
+tooltip.BloodMagic.pack.selfSacrifice.desc=このパックは本当にチクチクする...
+tooltip.BloodMagic.pack.sacrifice.desc=Description
+tooltip.BloodMagic.pack.stored=貯蔵量： %d LP
+
+tooltip.BloodMagic.activationCrystal.weak=低レベルの儀式を起動させる
+tooltip.BloodMagic.activationCrystal.awakened=より強力な儀式を起動させる
+tooltip.BloodMagic.activationCrystal.creative=クリエイティブ専用 - 全ての儀式を起動
+
+tooltip.BloodMagic.diviner.currentRitual=選択中の儀式：
+tooltip.BloodMagic.diviner.blankRune=儀式石： %d個
+tooltip.BloodMagic.diviner.waterRune=水の儀式石： %d個
+tooltip.BloodMagic.diviner.airRune=風の儀式石： %d個
+tooltip.BloodMagic.diviner.fireRune=火の儀式石： %d個
+tooltip.BloodMagic.diviner.earthRune=土の儀式石： %d個
+tooltip.BloodMagic.diviner.duskRune=闇の儀式石： %d個
+tooltip.BloodMagic.diviner.dawnRune=光の儀式石： %d個
+tooltip.BloodMagic.diviner.totalRune=儀式石の合計： %d個
+tooltip.BloodMagic.diviner.extraInfo=Shiftキーで詳細表示
+tooltip.BloodMagic.diviner.currentDirection=現在の方角： %s
+
+tooltip.BloodMagic.ritualReader.currentState=現在のモード： %s
+tooltip.BloodMagic.ritualReader.set_area=設定エリア
+tooltip.BloodMagic.ritualReader.information=基本情報
+tooltip.BloodMagic.ritualReader.set_will_types=消費ウィルの設定
+tooltip.BloodMagic.ritualReader.desc.set_area=起動中のマスター儀式石を右クリックすることで、儀式魔術の効果範囲を変更できます。最初にマスター儀式石を右クリック、次に新しく設定したい効果範囲の 両端2箇所を順番にクリックします。
+tooltip.BloodMagic.ritualReader.desc.information=起動中のマスター儀式石を右クリックすることで、基本情報を読み取ります。
+tooltip.BloodMagic.ritualReader.desc.set_will_types=ホットバーにウィル結晶を入れた状態でマスター儀式石を右クリックすると、そのクリスタルを消費するように設定されます。
+
+tooltip.BloodMagic.arcaneAshes=錬金術魔法陣を描くのに用いる灰
+
+tooltip.BloodMagic.telepositionFocus.coords=現在の設定座標： (%d, %d, %d)
+tooltip.BloodMagic.telepositionFocus.dimension=ディメンションID： %d
+tooltip.BloodMagic.telepositionFocus.weak=ワールド内のブロックの転送に用いる
+tooltip.BloodMagic.telepositionFocus.enhanced=ワールド内のブロックの転送に用いる
+tooltip.BloodMagic.telepositionFocus.reinforced=ワールド内のブロックの転送に用いる
+tooltip.BloodMagic.telepositionFocus.demonic=ワールド内のブロックの転送に用いる
+
+tooltip.BloodMagic.livingArmour.upgrade.speed=迅速
+tooltip.BloodMagic.livingArmour.upgrade.digging=ドワーフの力
+tooltip.BloodMagic.livingArmour.upgrade.poisonResist=毒抵抗
+tooltip.BloodMagic.livingArmour.upgrade.selfSacrifice=頑丈な指
+tooltip.BloodMagic.livingArmour.upgrade.knockback=肉体強化
+tooltip.BloodMagic.livingArmour.upgrade.physicalProtect=強固な身体
+tooltip.BloodMagic.livingArmour.upgrade.health=生命力
+tooltip.BloodMagic.livingArmour.upgrade.meleeDamage=強撃
+tooltip.BloodMagic.livingArmour.upgrade.arrowShot=トリックショット
+tooltip.BloodMagic.livingArmour.upgrade.stepAssist=歩行補助
+tooltip.BloodMagic.livingArmour.upgrade.grimReaper=死神の疾走
+tooltip.BloodMagic.livingArmour.upgrade.solarPowered=太陽の恩恵
+tooltip.BloodMagic.livingArmour.upgrade.thaumRunicShielding=ルーンの加護
+tooltip.BloodMagic.livingArmour.upgrade.revealing=洞察
+tooltip.BloodMagic.livingArmour.upgrade.experienced=経験
+tooltip.BloodMagic.livingArmour.upgrade.jump=跳躍
+tooltip.BloodMagic.livingArmour.upgrade.fallProtect=軟着陸
+tooltip.BloodMagic.livingArmour.upgrade.graveDigger=グレイヴディガー
+tooltip.BloodMagic.livingArmour.upgrade.sprintAttack=チャージストライク
+tooltip.BloodMagic.livingArmour.upgrade.criticalStrike=トゥルーストライク
+tooltip.BloodMagic.livingArmour.upgrade.level=%s (Lv %d)
+tooltip.BloodMagic.livingArmour.upgrade.points=&6強化ポイント： %s / %s
+
+tooltip.BloodMagic.will=ウィルの含有量： %1$,.2f
+tooltip.BloodMagic.sentientSword.desc=ウィルを入手するには潜在能力を開放する必要があります
+tooltip.BloodMagic.soulGem.petty=この宝石は微量のウィルを貯蔵できます
+tooltip.BloodMagic.soulGem.lesser=この宝石は少量のウィルを貯蔵できます
+tooltip.BloodMagic.soulGem.common=この宝石はそこそこのウィルを貯蔵できます
+tooltip.BloodMagic.soulGem.greater=この宝石は大量のウィルを貯蔵できます
+tooltip.BloodMagic.soulGem.grand=この宝石は莫大なウィルを貯蔵できます
+tooltip.BloodMagic.soulSnare.desc=モンスターに投げつけてから倒すことでデーモニックウィルを入手できます
+
+tooltip.BloodMagic.itemFilter.exact=アイテムが正確に一致する場合にフィルタします
+tooltip.BloodMagic.itemFilter.ignoreNBT=NBTタグでフィルタします
+tooltip.BloodMagic.itemFilter.modItems=特定MODのアイテムをフィルタします
+tooltip.BloodMagic.itemFilter.oreDict=鉱石辞書を用いてフィルタします
+
+tooltip.BloodMagic.fluid.type=液体を格納する
+tooltip.BloodMagic.fluid.amount=量
+tooltip.BloodMagic.fluid.capacity=最大容量
+
+tooltip.BloodMagic.ghost.everything=全て
+tooltip.BloodMagic.ghost.amount=幻影アイテムの個数： %d個
+
+tooltip.BloodMagic.currentType.default=内容物： 通常ウィル
+tooltip.BloodMagic.currentType.corrosive=内容物： 腐食性ウィル
+tooltip.BloodMagic.currentType.destructive=内容物： 破壊性ウィル
+tooltip.BloodMagic.currentType.vengeful=内容物： 報復性ウィル
+tooltip.BloodMagic.currentType.steadfast=内容物： 不活性ウィル
+
+tooltip.BloodMagic.experienceTome=経験値を貯蔵するのに用いる本
+tooltip.BloodMagic.experienceTome.exp=Exp: %0.3f
+tooltip.BloodMagic.experienceTome.expLevel=レベル： %d
+
+tooltip.BloodMagic.decoration.safe=安全な装飾
+tooltip.BloodMagic.decoration.notSafe=危険な装飾
+
+# Ritual
+ritual.BloodMagic.blockRange.tooBig=指定されたブロック範囲が広すぎます！最大%sブロックの範囲内である必要があります。
+ritual.BloodMagic.blockRange.tooFar=指定されたブロック範囲が遠すぎます！垂直方向に%sブロック、水平方向に%sブロックの範囲内である必要があります。
+ritual.BloodMagic.blockRange.inactive=儀式石は停止中であり、範囲の変更はできません。
+ritual.BloodMagic.blockRange.noRange=ブロック範囲は適切に設定されませんでした。
+ritual.BloodMagic.blockRange.firstBlock=効果範囲の開始ブロックを設定しました。
+ritual.BloodMagic.blockRange.success=正常に新しい効果範囲が設定されました！
+
+ritual.BloodMagic.testRitual=試験用儀式
+ritual.BloodMagic.waterRitual=湧水の儀式
+ritual.BloodMagic.lavaRitual=ネザーの小夜曲
+ritual.BloodMagic.greenGroveRitual=緑化の儀式
+ritual.BloodMagic.jumpRitual=跳躍の儀式
+ritual.BloodMagic.wellOfSufferingRitual=苦痛の井戸
+ritual.BloodMagic.featheredKnifeRitual=フェザーナイフの儀式
+ritual.BloodMagic.regenerationRitual=再生の儀式
+ritual.BloodMagic.harvestRitual=収穫月の儀式
+ritual.BloodMagic.magneticRitual=磁力の儀式
+ritual.BloodMagic.crushingRitual=粉砕の儀式
+ritual.BloodMagic.fullStomachRitual=飽食の儀式
+ritual.BloodMagic.interdictionRitual=排除の儀式
+ritual.BloodMagic.containmentRitual=幽閉の儀式
+ritual.BloodMagic.speedRitual=風の儀式
+ritual.BloodMagic.suppressionRitual=除去の儀式
+ritual.BloodMagic.expulsionRitual=追放のオーラ
+ritual.BloodMagic.zephyrRitual=ゼファーの呼び声
+ritual.BloodMagic.upgradeRemoveRitual=浄霊の調べ
+ritual.BloodMagic.armourEvolveRitual=生体進化の儀式
+ritual.BloodMagic.animalGrowthRitual=牧羊の儀式
+ritual.BloodMagic.forsakenSoulRitual=見放された魂の蒐集
+ritual.BloodMagic.crystalHarvestRitual=欠けた結晶の粉砕
+
+ritual.BloodMagic.cobblestoneRitual=ル・ヴォルカノス・フィギュス
+ritual.BloodMagic.placerRitual=設置充填の儀式
+ritual.BloodMagic.fellingRitual=木こりの粉砕
+ritual.BloodMagic.pumpRitual=サイフォンの讃歌
+ritual.BloodMagic.altarBuilderRitual=高位祭壇構築儀式
+ritual.BloodMagic.portalRitual=組み込みゲート
+
+
+ritual.BloodMagic.waterRitual.info=マスター儀式石の上に水源を生成します。
+ritual.BloodMagic.lavaRitual.info=マスター儀式石の上に溶岩源を生成します。
+ritual.BloodMagic.greenGroveRitual.info=エリア内の作物を育成させます。
+ritual.BloodMagic.jumpRitual.info=空中にはね飛ぶ効果を付与します。
+ritual.BloodMagic.wellOfSufferingRitual.info=生物にダメージを与えるエリアを生成し、付近の血の祭壇にLPを供給します。
+ritual.BloodMagic.featheredKnifeRitual.info=プレイヤーにダメージを与えるエリアを生成し、付近後の祭壇にLPを供給します。
+ritual.BloodMagic.regenerationRitual.info=エリア内にHPが減少している生物がいた場合、再生能力を付与します。
+ritual.BloodMagic.harvestRitual.info=エリア内の作物を刈り取り、種などの収穫物があった場合は植え直します。
+ritual.BloodMagic.magneticRitual.info=地中から鉱石を掘り起こし、指定エリアに並べます。
+ritual.BloodMagic.crushingRitual.info=指定エリアのブロックを破壊し、収集物をリンクしているチェストに格納します。
+ritual.BloodMagic.fullStomachRitual.info=リンクしているチェスト内にある食料を、満腹でないプレイヤーに自動的に供給します。
+ritual.BloodMagic.interdictionRitual.info=マスター儀式石の一定エリア内の生物を排除して侵入できないようにします。
+ritual.BloodMagic.containmentRitual.info=エリア内の生物をスター儀式石の周囲に引き寄せます。
+ritual.BloodMagic.speedRitual.info=矢印状の儀式石の方向へ、プレイヤーを射出します。
+ritual.BloodMagic.suppressionRitual.info=あらゆる流体元を除去します - 儀式魔術の動作を停止すると液体は戻ってくる。
+ritual.BloodMagic.expulsionRitual.info=儀式魔術の設置者か、マスター儀式石の上のチェストに契約済みブラッドオーブのを入れたプレイヤー以外を所定エリアから排除します。
+ritual.BloodMagic.zephyrRitual.info=エリア内のドロップアイテムを収集し、リンクされたチェストに収納します。
+ritual.BloodMagic.upgradeRemoveRitual.info=Undocumented.
+ritual.BloodMagic.armourEvolveRitual.info=Undocumented.
+ritual.BloodMagic.animalGrowthRitual.info=エリア内にいる子供生物の成長速度を早めます。
+ritual.BloodMagic.forsakenSoulRitual.info=エリア内の生物にダメージを与え、生物が死んだ時にウィルを回収してウィル結晶を成長させます。
+ritual.BloodMagic.crystalHarvestRitual.info=範囲内のウィル結晶株を破壊してウィル結晶にしてドロップさせます。
+
+ritual.BloodMagic.placerRitual.info=リンクしているチェスの中からブロックとして設置可能なものを取り出し、隙間なく設置します。
+ritual.BloodMagic.fellingRitual.info=この儀式は標準的な木材伐採装置として動作し、エリア内のすべての原木及び葉を伐採および採取します。
+ritual.BloodMagic.pumpRitual.info=設定エリアから流体を吸い出し、1バケツ分以上の容量がある流体タンクへと供給します。
+ritual.BloodMagic.altarBuilderRitual.info=マスター儀式石とリンクしているチェストの中身を使用して血の祭壇を構築します。
+ritual.BloodMagic.portalRitual.info=作成し起動させると同時に周囲のブロック材質を固有の”キー”とするポータルネットワークを構築します。周囲ブロックの変更は起動後でも可能であり、ポータルは同じキー同士をリンクします。
+
+ritual.BloodMagic.waterRitual.waterRange.info=(水) 設定したエリアに水源を生成させます。
+ritual.BloodMagic.lavaRitual.lavaRange.info=(溶岩) 設定したエリアに溶岩源を生成させます。
+ritual.BloodMagic.greenGroveRitual.growing.info=(成長) 設定したエリア内の植物の成長を促進させます。
+ritual.BloodMagic.jumpRitual.jumpRange.info=(跳躍) 設定したエリア内に居る生物を空中に飛び上がらせます。
+ritual.BloodMagic.wellOfSufferingRitual.altar.info=(祭壇) 儀式魔術が血の祭壇を検索するエリアを指定します。変更することにより検索エリアを拡大したり特定の領域に制限したりすることが可能です。
+ritual.BloodMagic.wellOfSufferingRitual.damage.info=(ダメージ) 儀式魔術によって生物が継続ダメージを受けるエリアを設定します。この範囲内に居るすべての生物は徐々にダメージを受け続ける(プレイヤーを除く)。
+ritual.BloodMagic.featheredKnifeRitual.altar.info=(祭壇）儀式魔術が血の祭壇を検索するエリアを指定します。変更することにより検索エリアを拡大したり特定の領域に制限したりすることが可能です。
+ritual.BloodMagic.featheredKnifeRitual.damage.info=(ダメージ) 儀式魔術によってプレイヤーが継続ダメージを受けるエリアを設定します。この範囲内に居るプレイヤーは死ぬ一歩手前まで徐々にダメージを受け続ける。
+ritual.BloodMagic.regenerationRitual.heal.info=(回復) 範囲内に居る生物は再生能力の効果を与えます。
+ritual.BloodMagic.harvestRitual.harvestRange.info=(収穫) 範囲内の植物を収穫します。
+ritual.BloodMagic.magneticRitual.placementRange.info=(配置) 儀式魔術はこのエリアに手に入れた鉱石を配置します。
+ritual.BloodMagic.crushingRitual.crushingRange.info=(粉砕) 儀式魔術はこのエリア内のブロックを破壊して入手します。
+ritual.BloodMagic.crushingRitual.chest.info=(チェスト) 儀式魔術が破壊したブロックを格納するインベントリの場所。
+ritual.BloodMagic.fullStomachRitual.fillRange.info=(補給) 儀式魔術がプレイヤーに食料を供給する範囲。
+ritual.BloodMagic.fullStomachRitual.chest.info=(チェスト) 儀式魔術がプレイヤーに供給するための食料を取り出すインベントリの場所。
+ritual.BloodMagic.interdictionRitual.interdictionRange.info=(排除) 儀式魔術によって生物が弾き飛ばされる範囲。すべての生物はこの設定エリアに関係なくマスター儀式石から弾き飛ばされる。
+ritual.BloodMagic.containmentRitual.containmentRange.info=(幽閉) 儀式魔術によって生物が引き寄せられる範囲。すべての生物はこの設定エリアに関係なくマスター儀式石の方へと引き寄せられる。
+ritual.BloodMagic.speedRitual.sanicRange.info=(加速) 設定したエリア内のすべての生物が矢印の方向へと射出されます。
+ritual.BloodMagic.suppressionRitual.suppressionRange.info=(除去) 範囲内のすべての液体が押しのけられます。
+ritual.BloodMagic.expulsionRitual.expulsionRange.info=(追放) 
+ritual.BloodMagic.zephyrRitual.zephyrRange.info=(吸引) 設定範囲内のアイテムが収集され、リンクされているチェストに収納されます。
+ritual.BloodMagic.zephyrRitual.chest.info=(チェスト) 儀式魔術が収集したアイテムを収納するためのチェストの場所。
+ritual.BloodMagic.animalGrowthRitual.growing.info=(成長) 範囲内の動物がとても早く成長します。
+ritual.BloodMagic.forsakenSoulRitual.crystal.info=(結晶) 儀式魔術によって生物が死亡した際に、この範囲内のウィル結晶の成長が促進します。
+ritual.BloodMagic.forsakenSoulRitual.damage.info=(ダメージ) この範囲内の生物は徐々にダメージを受け、死亡した際のウィルがクリスタルの成長に利用されます。
+ritual.BloodMagic.crystalHarvestRitual.crystal.info=(結晶) 析出した全てのウィル結晶株を破壊して単結晶のウィル結晶にします。結晶株が1つだけになった場合は破壊しない。
+
+ritual.BloodMagic.placerRitual.placerRange.info=(場所) 儀式魔術が設定範囲にブロックを設置します。
+ritual.BloodMagic.placerRitual.chest.info=(チェスト) 儀式魔術がブロックを設置するために、ブロックを取り出すインベントリの場所。
+ritual.BloodMagic.fellingRitual.fellingRange.info=(伐採) 儀式魔術が伐採するための原木や葉を探す範囲。
+ritual.BloodMagic.fellingRitual.chest.info=(チェスト) 儀式魔術が蒐集物を格納するインベントリの場所。
+ritual.BloodMagic.pumpRitual.pumpRange.info=(ポンプ) 儀式魔術が採取するための液体を探す範囲。
+
+# Chat
+chat.BloodMagic.altarMaker.setTier=グレードを設定： %d
+chat.BloodMagic.altarMaker.building=グレード %dの祭壇を作成
+chat.BloodMagic.altarMaker.destroy=グレード %dの祭壇を破壊
+chat.BloodMagic.altarMaker.creativeOnly=これはクリエイティブモード専用アイテムです。
+
+chat.BloodMagic.damageSource=%sの魂は非常に弱くなっています
+
+chat.BloodMagic.ritual.weak=エネルギーの流れが感じられるが、儀式魔術の起動には何かが足りないようだ。
+chat.BloodMagic.ritual.prevent=儀式魔術があなたに激しく抵抗している！
+chat.BloodMagic.ritual.activate=エネルギーの奔流が儀式魔術に流れ込む！
+chat.BloodMagic.ritual.notValid=あなたはルーンの配置が正しくないように感じた...
+
+chat.BloodMagic.livingArmour.upgrade.poisonRemove=あなたは良い効果を感じた！
+chat.BloodMagic.livingArmour.upgrade.grimReaper=&6闇の力があなたを死のふちに引き込む！
+chat.BloodMagic.livingArmour.newUpgrade=&4強化ポイントを取得しました！
+
+chat.BloodMagic.routing.remove=記録された座標情報を消去しました
+chat.BloodMagic.routing.set=ノードの座標を設定しました
+chat.BloodMagic.routing.link.master=マスターのノードとリンクさせました！
+chat.BloodMagic.routing.link=ノードをお互いにリンクさせました
+
+# Commands
+commands.error.arg.invalid=無効な引数です
+commands.error.arg.missing=引数が足りません
+commands.error.arg.player.missing=あなたは実行する対象プレイヤーを指定する必要があります。
+commands.error.404=コマンドが見つかりません！
+commands.error.unknown=未知のコマンドです！
+commands.error.perm=このコマンドを実行する権限がありません。
+
+commands.success=正常に実行されました
+
+commands.format.help=%s - %s
+commands.format.error=%s - %s
+
+commands.help.usage=/bloodmagic help
+commands.help.help="/bloodmagic" コマンドでヘルプ情報が表示されます。
+
+commands.network.usage=/bloodmagic network [syphon|add|get|fill|cap] <プレイヤー> [量]
+commands.network.help=LP ネットワークユーティリティ
+commands.network.syphon.help=指定したプレイヤーのLPネットワークからLPを削減します
+commands.network.syphon.success=%d LPだけ、%sのソウルネットワークを削減することに成功しました。
+commands.network.add.help=指定されたプレイヤーのLPネットワークのLPを、LP増加ルールの範囲内で増加させます。
+commands.network.add.success=%d LPだけ、%sのLPネットワークを増加させることに成功しました。
+commands.network.set.help=指定したプレイヤーのLPを設定します。
+commands.network.set.success=%sのLPネットワークを%d LPに設定することに成功しました。
+commands.network.get.help=指定したプレイヤーのLPネットワークのLP量を返します。
+commands.network.fill.help=指定したプレイヤーのLPネットワークを%d LPまで満たします。
+commands.network.fill.success=%sのLPネットワークを最大まで付与することに成功しました。
+commands.network.cap.help=プレイヤーが入手できる最高位のブラッドオーブで貯蔵可能な最大値のLPを付与します。
+commands.network.cap.success=%sのLPネットワークの限界値までLPを付与することに成功しました。
+
+commands.bind.usage=/bloodmagic bind [true|false] [プレイヤー]
+commands.bind.help=手に所持したアイテムを結合／分離します。
+commands.bind.success=結合に成功しました
+commands.bind.remove.success=分離に成功しました
+
+commands.orb.usage=/bloodmagic orb [set|get] <プレイヤー> [グレード]
+commands.orb.help=対象プレイヤーのブラッドオーブのグレードの最大値を設定、取得するために使います。
+
+commands.bind.usage=/bind <プレイヤー>
+commands.bind.success=アイテムの登録が成功しました！
+commands.bind.failed.noPlayer=指定されたプレイヤーは存在しません
+commands.bind.failed.alreadyBound=アイテムは既に登録済みです； /unbind コマンドで登録解除してください
+commands.bind.failed.notBindable=アイテムの登録が出来ませんでした
+commands.unbind.usage=/unbind
+commands.unbind.success=アイテムの登録解除が成功しました！
+commands.unbind.failed.notBindable=アイテムの登録解除が出来ませんでした
+commands.soulnetwork.usage=/soulnetwork <プレイヤー> <add|subtract|fill|empty|get> [量]
+commands.soulnetwork.add.success=%d LPだけ、%sのソウルネットワークを増加させることに成功しました！
+commands.soulnetwork.subtract.success=%d LPだけ、%sのソウルネットワークを減少させることに成功しました！
+commands.soulnetwork.fill.success=正常に%sのソウルネットワークを満たしました！
+commands.soulnetwork.empty.success=正常に%sのソウルネットワークを空にしました！
+commands.soulnetwork.get.success=%dだけ%sのソウルネットワークにはLPがあります！
+commands.soulnetwork.noPlayer=指定されたプレイヤーは存在しません
+commands.soulnetwork.noCommand=指定されたコマンドはありません
+commands.soulnetwork.notACommand=有効なコマンドではありません
+commands.soulnetwork.fillMax.success=正常に%sのソウルネットワークにオーブの最大値までLPを供給しました！
+commands.soulnetwork.create.success=正常に%sのソウルネットワークを構築しました(オーブのグレード： %d)
+
+# JustEnoughItems
+jei.BloodMagic.recipe.altar=血の祭壇
+jei.BloodMagic.recipe.binding=錬金術魔法陣(結合)
+jei.BloodMagic.recipe.alchemyArrayCrafting=錬金術魔法陣
+jei.BloodMagic.recipe.soulForge=業火のかまど
+jei.BloodMagic.recipe.requiredLP=LP： %d
+jei.BloodMagic.recipe.requiredTier=ｸﾞﾚｰﾄﾞ: %d
+jei.BloodMagic.recipe.consumptionRate=消費： %d LP/t
+jei.BloodMagic.recipe.drainRate=排出： %d LP/t
+jei.BloodMagic.recipe.minimumSouls=最小： %1$,.2fウィル
+jei.BloodMagic.recipe.soulsDrained=排出： %1$,.2fウィル
+
+jei.BloodMagic.desc.altarBuilder=デバッグやテストに利用するクリエイティブモード専用アイテム。\n\nShift＋右クリックで作成するグレードの変更を行い、右クリックで祭壇を構築。\n\n血の祭壇を左クリックで儀式石ごと破壊されます。
+jei.BloodMagic.desc.demonicWill=生物が内包する悪魔の因子。\n\nMobを理力の剣によって殺害する、または簡素な投げ罠を投げ、白いパーティクルが発生している間に殺害することで入手ができる。
+
+# WAILA
+waila.BloodMagic.sneak=&oスニークで詳細情報
+waila.BloodMagic.array.reagent=試薬： %s
+waila.BloodMagic.array.catalyst=触媒： %s
+option.BloodMagic.bypassSneak=スニークで回避
+option.BloodMagic.bloodAltar=血の祭壇
+option.BloodMagic.ritualController=儀式石
+option.BloodMagic.teleposer=テレポーザー
+option.BloodMagic.array=錬金術魔法陣
+
+# Thaumcraft
+tc.research_category.BLOODMAGIC=血紅の秘儀
+
+# Thaumcraft Research
+bloodmagic.research_name.BLOODMAGIC=Blood Magic
+bloodmagic.research_text.BLOODMAGIC=血紅の秘儀
+bloodmagic.research_page.BLOODMAGIC.1=Blood Magic の領域は常に孤独であり、 ”個人の” 技能は世間から疎まれ、時には心を病んでしまうこともあるかも知れない。しかし、自己犠牲とライフエッセンスの力は一般の血の魔術師を超えた領域に到達し、それどころか人知を超えた能力を身につられるだろうことは完全に明白であろう！
