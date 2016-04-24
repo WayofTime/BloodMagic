@@ -18,6 +18,8 @@ import java.util.*;
 
 public class StorageBlockCraftingRecipeAssimilator
 {
+    public static final List<Class> ignore = new ArrayList<Class>();
+
     public List<IRecipe> getPackingRecipes()
     {
         // grab all recipes potentially suitable for packing or unpacking
@@ -27,6 +29,9 @@ public class StorageBlockCraftingRecipeAssimilator
 
         for (IRecipe recipe : getCraftingRecipes())
         {
+            if (ignore.contains(recipe.getClass()))
+                continue;
+
             ItemStack output = recipe.getRecipeOutput();
             if (output == null || output.getItem() == null)
                 continue;
@@ -58,6 +63,9 @@ public class StorageBlockCraftingRecipeAssimilator
 
         for (IRecipe recipeUnpack : unpackingRecipes)
         {
+            if (ignore.contains(recipeUnpack.getClass()))
+                continue;
+
             ItemStack unpacked = recipeUnpack.getRecipeOutput();
             InventoryCrafting inventory = null;
 
