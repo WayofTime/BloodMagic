@@ -1,7 +1,6 @@
 package WayofTime.bloodmagic.registry;
 
 import WayofTime.bloodmagic.compat.ICompatibility;
-import WayofTime.bloodmagic.compat.compression.CompatibilityCompression;
 import net.minecraftforge.fml.common.Loader;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class ModCompatibility
 //        compatibilities.add(new CompatibilityWaila());
 //        compatibilities.add(new CompatibilityThaumcraft());
 //        compatibilities.add(new CompatibilityGuideAPI());
-        compatibilities.add(new CompatibilityCompression());
     }
 
     public static void loadCompat(ICompatibility.InitializationPhase phase)
