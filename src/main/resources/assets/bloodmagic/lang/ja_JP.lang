@@ -26,8 +26,8 @@ item.BloodMagic.scribe.water.name=属性筆記具：水
 item.BloodMagic.scribe.fire.name=属性筆記具：火
 item.BloodMagic.scribe.earth.name=属性筆記具：土
 item.BloodMagic.scribe.air.name=属性筆記具：風
-item.BloodMagic.scribe.dusk.name=属性筆記具：闇
-item.BloodMagic.scribe.dawn.name=属性筆記具：光
+item.BloodMagic.scribe.dusk.name=属性筆記具：黄昏
+item.BloodMagic.scribe.dawn.name=属性筆記具：暁
 
 item.BloodMagic.focus.weak.name=テレポートフォーカス
 item.BloodMagic.focus.enhanced.name=強化テレポートフォーカス
@@ -128,8 +128,8 @@ item.BloodMagic.sentientArmour.boots.name=理力のブーツ
 item.BloodMagic.altarMaker.name=祭壇メーカー
 
 item.BloodMagic.ritualDivinernormal.name=儀式の占い棒
-item.BloodMagic.ritualDivinerdusk.name=儀式の占い棒 [闇]
-item.BloodMagic.ritualDivinerdawn.name=儀式の占い棒 [光]
+item.BloodMagic.ritualDivinerdusk.name=儀式の占い棒 [黄昏]
+item.BloodMagic.ritualDivinerdawn.name=儀式の占い棒 [暁]
 item.BloodMagic.ritualReader.name=儀式の調整器
 
 item.BloodMagic.arcaneAshes.name=秘儀の灰
