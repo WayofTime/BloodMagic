@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
 
 public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
 {
-    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.clay, Blocks.dirt, Blocks.farmland, Blocks.grass, Blocks.gravel, Blocks.mycelium, Blocks.sand, Blocks.snow, Blocks.snow_layer, Blocks.soul_sand);
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND);
 
     public ItemBoundShovel()
     {
@@ -63,8 +63,8 @@ public class ItemBoundShovel extends ItemBoundTool implements IMeshProvider
         if (world.isRemote)
             return;
 
-        boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, stack) > 0;
-        int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, stack);
+        boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0;
+        int fortuneLvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
         int range = (int) (charge / 6); //Charge is a max of 30 - want 5 to be the max
 
         HashMultiset<ItemStackWrapper> drops = HashMultiset.create();

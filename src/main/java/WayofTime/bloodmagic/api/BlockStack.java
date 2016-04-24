@@ -43,6 +43,6 @@ public class BlockStack
     @Override
     public String toString()
     {
-        return GameData.getBlockRegistry().getNameForObject(getBlock()) + ":" + getMeta();
+        return getBlock().getRegistryName() + ":" + getMeta();
     }
 }

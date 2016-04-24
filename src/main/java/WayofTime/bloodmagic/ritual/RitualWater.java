@@ -43,7 +43,7 @@ public class RitualWater extends Ritual
         {
             if (world.isAirBlock(newPos))
             {
-                world.setBlockState(newPos, Blocks.flowing_water.getDefaultState());
+                world.setBlockState(newPos, Blocks.FLOWING_WATER.getDefaultState());
                 totalEffects++;
             }
 

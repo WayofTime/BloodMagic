@@ -107,10 +107,10 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
 
         int lpAdded = 200;
 
-        RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
-        if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
+        RayTraceResult rayTrace = rayTrace(world, player, false);
+        if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
         {
-            TileEntity tile = world.getTileEntity(mop.getBlockPos());
+            TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 
             if (tile != null && tile instanceof TileAltar && stack.getItemDamage() == 1)
                 lpAdded = ((TileAltar) tile).getCapacity();
@@ -144,7 +144,7 @@ public class ItemSacrificialDagger extends Item implements IMeshProvider
         double posX = player.posX;
         double posY = player.posY;
         double posZ = player.posZ;
-        world.playSound(null, posX, posY, posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
         for (int l = 0; l < 8; ++l)
             world.spawnParticle(EnumParticleTypes.REDSTONE, posX + Math.random() - Math.random(), posY + Math.random() - Math.random(), posZ + Math.random() - Math.random(), 0, 0, 0);

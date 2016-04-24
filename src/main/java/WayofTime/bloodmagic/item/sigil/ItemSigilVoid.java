@@ -29,29 +29,29 @@ public class ItemSigilVoid extends ItemSigilBase
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+            RayTraceResult rayTrace = this.rayTrace(world, player, true);
 
-            if (movingobjectposition != null)
+            if (rayTrace != null)
             {
-                ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+                ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
                 if (ret != null)
                     return ret;
 
-                if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
-                    BlockPos blockpos = movingobjectposition.getBlockPos();
+                    BlockPos blockpos = rayTrace.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
+                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    if (!player.canPlayerEdit(blockpos, movingobjectposition.sideHit, stack))
+                    if (!player.canPlayerEdit(blockpos, rayTrace.sideHit, stack))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }

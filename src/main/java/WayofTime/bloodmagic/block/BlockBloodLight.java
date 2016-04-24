@@ -26,7 +26,7 @@ public class BlockBloodLight extends Block
 
     public BlockBloodLight()
     {
-        super(Material.cloth);
+        super(Material.CLOTH);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodLight");
     }

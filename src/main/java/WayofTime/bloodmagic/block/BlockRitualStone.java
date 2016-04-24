@@ -29,7 +29,7 @@ public class BlockRitualStone extends BlockString implements IRitualStone, IVari
 
     public BlockRitualStone()
     {
-        super(Material.iron, names);
+        super(Material.IRON, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".ritualStone.");
         setCreativeTab(BloodMagic.tabBloodMagic);

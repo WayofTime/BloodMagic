@@ -7,8 +7,9 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +62,7 @@ public class BloodMagicAPI
      */
     public static Item getItem(String name)
     {
-        return GameRegistry.findItem(Constants.Mod.MODID, name);
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(Constants.Mod.MODID, name));
     }
 
     /**
@@ -89,7 +90,7 @@ public class BloodMagicAPI
      */
     public static Block getBlock(String name)
     {
-        return GameRegistry.findBlock(Constants.Mod.MODID, name);
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Constants.Mod.MODID, name));
     }
 
     /**

@@ -55,7 +55,7 @@ public class RenderAltar extends TileEntitySpecialRenderer<TileAltar>
 
         int fluidColor = fluid.getColor(fluidStack);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+        Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         setGLColorFromInt(fluidColor);
 
         double uMin = (double) fluidStillSprite.getMinU();

@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import WayofTime.bloodmagic.api.util.helper.PlayerSacrificeHelper;
 import WayofTime.bloodmagic.potion.PotionBloodMagic;
 import WayofTime.bloodmagic.potion.PotionEventHandlers;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModPotions
 {
@@ -45,9 +46,7 @@ public class ModPotions
     protected static Potion registerPotion(String name, ResourceLocation location, boolean badEffect, int potionColour, int x, int y)
     {
         Potion potion = new PotionBloodMagic(name, location, badEffect, potionColour, x, y);
-
-        Potion.potionRegistry.register(-1, location, potion);
-
+        GameRegistry.register(potion.setRegistryName(location));
         return potion;
     }
 }

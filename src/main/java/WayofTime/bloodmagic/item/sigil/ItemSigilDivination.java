@@ -35,7 +35,7 @@ public class ItemSigilDivination extends ItemSigilBase implements IAltarReader
         {
             super.onItemRightClick(stack, world, player, hand);
 
-            RayTraceResult position = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult position = rayTrace(world, player, false);
 
             if (position == null)
             {

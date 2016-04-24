@@ -11,7 +11,7 @@ public class ImperfectRitualDay extends ImperfectRitual
 {
     public ImperfectRitualDay()
     {
-        super("day", new BlockStack(Blocks.gold_block), 5000, true, "ritual." + Constants.Mod.MODID + ".imperfect.day");
+        super("day", new BlockStack(Blocks.GOLD_BLOCK), 5000, true, "ritual." + Constants.Mod.MODID + ".imperfect.day");
     }
 
     @Override

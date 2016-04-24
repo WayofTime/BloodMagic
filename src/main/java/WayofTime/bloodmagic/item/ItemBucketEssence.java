@@ -13,7 +13,7 @@ public class ItemBucketEssence extends ItemBucket
         super(ModBlocks.lifeEssence);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bucket.lifeEssence");
-        setContainerItem(Items.bucket);
+        setContainerItem(Items.BUCKET);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 }

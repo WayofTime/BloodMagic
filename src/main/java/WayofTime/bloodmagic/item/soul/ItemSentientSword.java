@@ -158,7 +158,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
         switch (type)
         {
         case CORROSIVE:
-            target.addPotionEffect(new PotionEffect(MobEffects.wither, poisonTime[willBracket], poisonLevel[willBracket]));
+            target.addPotionEffect(new PotionEffect(MobEffects.WITHER, poisonTime[willBracket], poisonLevel[willBracket]));
             break;
         case DEFAULT:
             break;
@@ -168,7 +168,7 @@ public class ItemSentientSword extends ItemSword implements IDemonWillWeapon, IM
             if (!target.isEntityAlive())
             {
                 float absorption = attacker.getAbsorptionAmount();
-                attacker.addPotionEffect(new PotionEffect(MobEffects.absorption, absorptionTime[willBracket]));
+                attacker.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, absorptionTime[willBracket]));
                 attacker.setAbsorptionAmount((float) Math.min(absorption + target.getMaxHealth() * 0.05f, maxAbsorptionHearts));
             }
             break;

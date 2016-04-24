@@ -11,7 +11,7 @@ public class ImperfectRitualRain extends ImperfectRitual
 {
     public ImperfectRitualRain()
     {
-        super("rain", new BlockStack(Blocks.water), 5000, true, "ritual." + Constants.Mod.MODID + ".imperfect.rain");
+        super("rain", new BlockStack(Blocks.WATER), 5000, true, "ritual." + Constants.Mod.MODID + ".imperfect.rain");
     }
 
     @Override

@@ -27,12 +27,12 @@ public class LivingArmourUpgradePoisonResist extends LivingArmourUpgrade
     @Override
     public void onTick(World world, EntityPlayer player, ILivingArmour livingArmour)
     {
-        if (player.isPotionActive(MobEffects.poison) && poisonCooldown <= 0)
+        if (player.isPotionActive(MobEffects.POISON) && poisonCooldown <= 0)
         {
-            PotionEffect eff = player.getActivePotionEffect(MobEffects.poison);
+            PotionEffect eff = player.getActivePotionEffect(MobEffects.POISON);
             if (eff.getAmplifier() <= poisonMaxCure[this.level])
             {
-                player.removePotionEffect(MobEffects.poison);
+                player.removePotionEffect(MobEffects.POISON);
                 poisonCooldown = poisonCooldownTime[this.level];
 
                 ChatUtil.sendNoSpam(player, TextHelper.localize(chatBase + "poisonRemove"));

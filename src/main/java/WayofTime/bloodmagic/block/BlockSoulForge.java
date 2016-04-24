@@ -32,7 +32,7 @@ public class BlockSoulForge extends BlockContainer implements IVariantProvider
 
     public BlockSoulForge()
     {
-        super(Material.iron);
+        super(Material.IRON);
 
         setUnlocalizedName(Constants.Mod.MODID + ".soulForge");
         setHardness(2.0F);

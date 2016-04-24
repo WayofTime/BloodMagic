@@ -5,7 +5,9 @@ import WayofTime.bloodmagic.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class IMCHandler
@@ -37,7 +39,7 @@ public class IMCHandler
                 String[] splitInfo = message.getStringValue().split(":");
                 if (splitInfo.length == 2)
                 {
-                    Block block = GameRegistry.findBlock(splitInfo[0], splitInfo[1]);
+                    Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(splitInfo[0], splitInfo[1]));
                     if (block != null)
                         BloodMagicAPI.blacklistFromGreenGrove(block);
                 }

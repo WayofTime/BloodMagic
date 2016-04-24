@@ -70,7 +70,7 @@ public class ItemRitualReader extends Item implements IVariantProvider
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        RayTraceResult ray = this.getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);

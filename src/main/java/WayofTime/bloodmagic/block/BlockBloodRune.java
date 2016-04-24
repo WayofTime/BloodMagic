@@ -22,7 +22,7 @@ public class BlockBloodRune extends BlockString implements IVariantProvider
 
     public BlockBloodRune()
     {
-        super(Material.rock, names);
+        super(Material.ROCK, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".rune.");
         setCreativeTab(BloodMagic.tabBloodMagic);

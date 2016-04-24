@@ -23,7 +23,7 @@ public class BlockPedestal extends BlockStringContainer
 
     public BlockPedestal()
     {
-        super(Material.rock, names);
+        super(Material.ROCK, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".");
         setCreativeTab(BloodMagic.tabBloodMagic);

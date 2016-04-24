@@ -60,7 +60,7 @@ public class RitualRegeneration extends Ritual
             float health = player.getHealth();
             if (health <= player.getMaxHealth() - 1)
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.regeneration, 50, 0, false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 0, false, false));
 
                 totalEffects++;
 

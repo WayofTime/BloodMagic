@@ -81,17 +81,17 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
             return super.onItemRightClick(stack, world, player, hand);
         }
 
-        RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
-        if (mop == null || mop.typeOfHit == RayTraceResult.Type.MISS || mop.typeOfHit == RayTraceResult.Type.ENTITY)
+        RayTraceResult rayTrace = rayTrace(world, player, false);
+        if (rayTrace == null || rayTrace.typeOfHit == RayTraceResult.Type.MISS || rayTrace.typeOfHit == RayTraceResult.Type.ENTITY)
             return super.onItemRightClick(stack, world, player, hand);
 
-        if (mop.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(mop.getBlockPos()).getBlock() instanceof BlockAltar)
+        if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && world.getBlockState(rayTrace.getBlockPos()).getBlock() instanceof BlockAltar)
         {
             ChatUtil.sendNoSpam(player, TextHelper.localizeEffect("chat.BloodMagic.altarMaker.building", NumeralHelper.toRoman(tierToBuild.toInt())));
-            buildAltar(world, mop.getBlockPos());
-            IBlockState state = world.getBlockState(mop.getBlockPos());
+            buildAltar(world, rayTrace.getBlockPos());
+            IBlockState state = world.getBlockState(rayTrace.getBlockPos());
 
-            world.notifyBlockUpdate(mop.getBlockPos(), state, state, 3);
+            world.notifyBlockUpdate(rayTrace.getBlockPos(), state, state, 3);
         }
 
         return super.onItemRightClick(stack, world, player, hand);
@@ -135,8 +135,8 @@ public class ItemAltarMaker extends Item implements IAltarManipulator, IVariantP
         if (world.isRemote)
             return "";
 
-        RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
-        BlockPos pos = mop.getBlockPos();
+        RayTraceResult rayTrace = rayTrace(world, player, false);
+        BlockPos pos = rayTrace.getBlockPos();
         IBlockState state = world.getBlockState(pos);
         EnumAltarTier altarTier = BloodAltar.getAltarTier(world, pos);
 

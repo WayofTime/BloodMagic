@@ -30,7 +30,7 @@ public class BlockBloodTank extends BlockContainer
 {
     public BlockBloodTank()
     {
-        super(Material.iron);
+        super(Material.IRON);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodTank");
         setHardness(2.0F);

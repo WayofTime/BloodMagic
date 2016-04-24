@@ -27,7 +27,7 @@ public class BlockIncenseAltar extends BlockContainer implements IVariantProvide
 
     public BlockIncenseAltar()
     {
-        super(Material.rock);
+        super(Material.ROCK);
 
         setUnlocalizedName(Constants.Mod.MODID + ".incenseAltar");
         setCreativeTab(BloodMagic.tabBloodMagic);

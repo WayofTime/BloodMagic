@@ -293,7 +293,7 @@ public class RitualAltarBuilder extends Ritual
                     if (iItemHandler.getStackInSlot(i) != null && iItemHandler.getStackInSlot(i).stackSize > 0 && iItemHandler.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem()) instanceof BlockBloodRune) && iItemHandler.extractItem(i, 1, true) != null)
                     {
                         Block block = Block.getBlockFromItem(iItemHandler.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.glowstone && block != ModBlocks.bloodStoneBrick && block != ModBlocks.crystal)
+                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.bloodStoneBrick && block != ModBlocks.crystal)
                         {
                             BlockStack blockStack = new BlockStack(block, iItemHandler.getStackInSlot(i).getItemDamage());
                             iItemHandler.extractItem(i, 1, false);
@@ -309,7 +309,7 @@ public class RitualAltarBuilder extends Ritual
                     if (inv.getStackInSlot(i) != null && inv.getStackInSlot(i).stackSize > 0 && inv.getStackInSlot(i).getItem() instanceof ItemBlock && !(Block.getBlockFromItem(inv.getStackInSlot(i).getItem()) instanceof BlockBloodRune))
                     {
                         Block block = Block.getBlockFromItem(inv.getStackInSlot(i).getItem());
-                        if (block != null && block != Blocks.glowstone && block != ModBlocks.bloodStoneBrick && block != ModBlocks.crystal)
+                        if (block != null && block != Blocks.GLOWSTONE && block != ModBlocks.bloodStoneBrick && block != ModBlocks.crystal)
                         {
                             BlockStack blockStack = new BlockStack(block, inv.getStackInSlot(i).getItemDamage());
                             inv.decrStackSize(i, 1);

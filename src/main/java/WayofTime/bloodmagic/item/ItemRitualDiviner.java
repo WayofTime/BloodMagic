@@ -286,7 +286,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        RayTraceResult ray = this.getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult ray = this.rayTrace(world, player, false);
         if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
@@ -312,7 +312,7 @@ public class ItemRitualDiviner extends Item implements IVariantProvider
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
 
-            RayTraceResult ray = this.getMovingObjectPositionFromPlayer(player.worldObj, player, false);
+            RayTraceResult ray = this.rayTrace(player.worldObj, player, false);
             if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
             {
                 return false;

@@ -32,7 +32,7 @@ public class TranquilityHandlers
         @Override
         public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
         {
-            if (block == Blocks.lava || block == Blocks.flowing_lava)
+            if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA)
             {
                 return new TranquilityStack(EnumTranquilityType.LAVA, 1.2);
             }
@@ -51,7 +51,7 @@ public class TranquilityHandlers
                 return new TranquilityStack(EnumTranquilityType.FIRE, 1);
             }
 
-            if (block == Blocks.netherrack)
+            if (block == Blocks.NETHERRACK)
             {
                 return new TranquilityStack(EnumTranquilityType.FIRE, 0.5);
             }
@@ -65,7 +65,7 @@ public class TranquilityHandlers
         @Override
         public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
         {
-            if (block == Blocks.dirt)
+            if (block == Blocks.DIRT)
             {
                 return new TranquilityStack(EnumTranquilityType.EARTHEN, 0.25);
             }
@@ -75,7 +75,7 @@ public class TranquilityHandlers
                 return new TranquilityStack(EnumTranquilityType.EARTHEN, 0.5);
             }
 
-            if (block == Blocks.farmland)
+            if (block == Blocks.FARMLAND)
             {
                 return new TranquilityStack(EnumTranquilityType.EARTHEN, 1);
             }
@@ -89,7 +89,7 @@ public class TranquilityHandlers
         @Override
         public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
         {
-            if (block == Blocks.potatoes || block == Blocks.carrots || block == Blocks.wheat || block == Blocks.nether_wart)
+            if (block == Blocks.POTATOES || block == Blocks.CARROTS || block == Blocks.WHEAT || block == Blocks.NETHER_WART)
             {
                 return new TranquilityStack(EnumTranquilityType.CROP, 1);
             }
@@ -117,7 +117,7 @@ public class TranquilityHandlers
         @Override
         public TranquilityStack getTranquilityOfBlock(World world, BlockPos pos, Block block, IBlockState state)
         {
-            if (block == Blocks.water || block == Blocks.flowing_water)
+            if (block == Blocks.WATER || block == Blocks.FLOWING_WATER)
             {
                 return new TranquilityStack(EnumTranquilityType.WATER, 1);
             }

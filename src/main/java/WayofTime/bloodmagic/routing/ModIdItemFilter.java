@@ -3,6 +3,7 @@ package WayofTime.bloodmagic.routing;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameData;
 
 public class ModIdItemFilter extends TestItemFilter
@@ -20,9 +21,9 @@ public class ModIdItemFilter extends TestItemFilter
         return false;
     }
 
-    public String getModID(Item itm)
+    public String getModID(Item item)
     {
-        ResourceLocation resource = GameData.getItemRegistry().getNameForObject(itm);
+        ResourceLocation resource = ForgeRegistries.ITEMS.getKey(item);
         return resource.getResourceDomain();
     }
 }

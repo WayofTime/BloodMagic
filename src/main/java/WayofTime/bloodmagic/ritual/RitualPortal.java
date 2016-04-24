@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,7 @@ public class RitualPortal extends Ritual
                         if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == ModBlocks.ritualStone))
                         {
                             blockState = getBlockState(world, i, y, k);
-                            name = addStringToEnd(name, Block.blockRegistry.getNameForObject(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
+                            name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                         }
                     }
                 }
@@ -67,7 +68,7 @@ public class RitualPortal extends Ritual
                     if (!world.isAirBlock(new BlockPos(x - 3, j, z)) && !(getBlockState(world, x - 3, j, z).getBlock() == ModBlocks.ritualStone))
                     {
                         blockState = getBlockState(world, x - 3, j, z);
-                        name = addStringToEnd(name, Block.blockRegistry.getNameForObject(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
+                        name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                     }
                 }
                 for (int j = y + 1; j <= y + 5; j++)
@@ -75,7 +76,7 @@ public class RitualPortal extends Ritual
                     if (!world.isAirBlock(new BlockPos(x + 3, j, z)) && !(getBlockState(world, x + 3, j, z) == ModBlocks.ritualStone))
                     {
                         blockState = getBlockState(world, x + 3, j, z);
-                        name = addStringToEnd(name, Block.blockRegistry.getNameForObject(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
+                        name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                     }
                 }
             } else if (direction == EnumFacing.EAST || direction == EnumFacing.WEST)
@@ -87,7 +88,7 @@ public class RitualPortal extends Ritual
                         if (!world.isAirBlock(new BlockPos(i, y, k)) && !(getBlockState(world, i, y, k).getBlock() == ModBlocks.ritualStone))
                         {
                             blockState = getBlockState(world, i, y, k);
-                            name = addStringToEnd(name, Block.blockRegistry.getNameForObject(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
+                            name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                         }
                     }
                 }
@@ -96,7 +97,7 @@ public class RitualPortal extends Ritual
                     if (!world.isAirBlock(new BlockPos(x, j, z - 3)) && !(getBlockState(world, x, j, z - 3).getBlock() == ModBlocks.ritualStone))
                     {
                         blockState = getBlockState(world, x, j, z - 3);
-                        name = addStringToEnd(name, Block.blockRegistry.getNameForObject(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
+                        name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                     }
                 }
                 for (int j = y + 1; j <= y + 5; j++)
@@ -104,7 +105,7 @@ public class RitualPortal extends Ritual
                     if (!world.isAirBlock(new BlockPos(x, j, z + 3)) && !(getBlockState(world, x, j, z + 3).getBlock() == ModBlocks.ritualStone))
                     {
                         blockState = getBlockState(world, x, j, z + 3);
-                        name = addStringToEnd(name, Block.blockRegistry.getNameForObject(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
+                        name = addStringToEnd(name, ForgeRegistries.BLOCKS.getKey(blockState.getBlock()) + String.valueOf(blockState.getBlock().getMetaFromState(blockState)));
                     }
                 }
             }

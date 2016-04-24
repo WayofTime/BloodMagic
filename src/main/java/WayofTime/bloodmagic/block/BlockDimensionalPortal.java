@@ -32,7 +32,7 @@ public class BlockDimensionalPortal extends BlockIntegerContainer
 
     public BlockDimensionalPortal()
     {
-        super(Material.portal, 2);
+        super(Material.PORTAL, 2);
         setUnlocalizedName(Constants.Mod.MODID + ".dimensionalPortal");
         setBlockUnbreakable();
         setResistance(2000);

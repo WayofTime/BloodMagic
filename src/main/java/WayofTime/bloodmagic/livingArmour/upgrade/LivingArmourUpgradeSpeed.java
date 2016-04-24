@@ -44,12 +44,12 @@ public class LivingArmourUpgradeSpeed extends LivingArmourUpgrade
         {
             if (sprintSpeedTime[this.level] > 0)
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.moveSpeed, sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, sprintSpeedTime[this.level], sprintSpeedLevel[this.level], false, false));
             }
 
-            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(MobEffects.regeneration))
+            if (sprintRegenTime[this.level] > 0 && !player.isPotionActive(MobEffects.REGENERATION))
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.regeneration, sprintRegenTime[this.level], 0, false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, sprintRegenTime[this.level], 0, false, false));
             }
         }
     }

@@ -19,7 +19,7 @@ public class BlockBloodStoneBrick extends BlockString implements IVariantProvide
 
     public BlockBloodStoneBrick()
     {
-        super(Material.rock, names);
+        super(Material.ROCK, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".bloodstonebrick.");
         setCreativeTab(BloodMagic.tabBloodMagic);

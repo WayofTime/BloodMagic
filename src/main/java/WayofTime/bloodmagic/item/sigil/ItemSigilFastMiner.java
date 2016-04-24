@@ -17,6 +17,6 @@ public class ItemSigilFastMiner extends ItemSigilToggleableBase
     @Override
     public void onSigilUpdate(ItemStack stack, World world, EntityPlayer player, int itemSlot, boolean isSelected)
     {
-        player.addPotionEffect(new PotionEffect(MobEffects.digSpeed, 2, 0, true, false));
+        player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 2, 0, true, false));
     }
 }

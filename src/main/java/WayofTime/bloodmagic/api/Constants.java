@@ -4,6 +4,8 @@ import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Locale;
@@ -143,7 +145,7 @@ public class Constants
         public static final String WAILA_CONFIG_RITUAL = Mod.MODID + ".ritualController";
         public static final String WAILA_CONFIG_ARRAY = Mod.MODID + ".array";
 
-        public static final Item THAUMCRAFT_GOGGLES = GameRegistry.findItem("Thaumcraft", "goggles");
+        public static final Item THAUMCRAFT_GOGGLES = ForgeRegistries.ITEMS.getValue(new ResourceLocation("Thaumcraft", "goggles"));
     }
 
     public static class Misc

@@ -115,13 +115,13 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             switch (type)
             {
             case CORROSIVE:
-                if (player.isPotionActive(MobEffects.poison))
+                if (player.isPotionActive(MobEffects.POISON))
                 {
-                    player.removeActivePotionEffect(MobEffects.poison);
+                    player.removeActivePotionEffect(MobEffects.POISON);
                 }
-                if (player.isPotionActive(MobEffects.wither))
+                if (player.isPotionActive(MobEffects.WITHER))
                 {
-                    player.removeActivePotionEffect(MobEffects.wither);
+                    player.removeActivePotionEffect(MobEffects.WITHER);
                 }
                 break;
             default:
@@ -140,7 +140,7 @@ public class ItemSentientArmour extends ItemArmor implements ISpecialArmor, IMes
             case CORROSIVE:
                 if (!source.isProjectile())
                 {
-                    attacker.addPotionEffect(new PotionEffect(MobEffects.poison, 100)); //TODO: customize duration
+                    attacker.addPotionEffect(new PotionEffect(MobEffects.POISON, 100)); //TODO: customize duration
                 }
                 break;
             case DEFAULT:

@@ -6,7 +6,9 @@ import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.util.Utils;
 import lombok.Getter;
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -299,7 +301,7 @@ public class ConfigHandler
         {
             String[] blockData = blockSet.split(":");
 
-            Block block = GameRegistry.findBlock(blockData[0], blockData[1]);
+            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockData[0], blockData[1]));
             int meta = 0;
 
             if (blockData.length == 3)

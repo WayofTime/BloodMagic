@@ -211,7 +211,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
         if (entityLiving instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entityLiving;
-            boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.infinity, stack) > 0;
+            boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
             ItemStack itemstack = this.getFiredArrow(player);
 
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
@@ -223,7 +223,7 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
             {
                 if (itemstack == null)
                 {
-                    itemstack = new ItemStack(Items.arrow);
+                    itemstack = new ItemStack(Items.ARROW);
                 }
 
                 float arrowVelocity = getArrowVelocity(i);
@@ -241,25 +241,25 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 //                        ItemArrow itemarrow = ((ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.arrow));
 //                        EntityArrow entityArrow = itemarrow.createArrow(world, itemstack, player);
                         EntityArrow entityArrow = new EntitySentientArrow(world, entityLiving, type);
-                        entityArrow.func_184547_a(player, player.rotationPitch, player.rotationYaw, 0.0F, arrowVelocity * getVelocityOfArrow(stack), 1.0F);
+                        entityArrow.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, arrowVelocity * getVelocityOfArrow(stack), 1.0F);
 
                         if (arrowVelocity == 1.0F)
                         {
                             entityArrow.setIsCritical(true);
                         }
 
-                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.power, stack);
+                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
 
                         entityArrow.setDamage(entityArrow.getDamage() + this.getDamageAdded(stack) + (j > 0 ? j * 0.5 + 0.5 : 0));
 
-                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.punch, stack);
+                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
 
                         if (k > 0)
                         {
                             entityArrow.setKnockbackStrength(k);
                         }
 
-                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.flame, stack) > 0)
+                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
                         {
                             entityArrow.setFire(100);
                         }
@@ -268,13 +268,13 @@ public class ItemSentientBow extends ItemBow implements IMultiWillTool//, IMeshP
 
                         if (flag1)
                         {
-                            entityArrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
+                            entityArrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
 
                         world.spawnEntityInWorld(entityArrow);
                     }
 
-                    world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.entity_arrow_shoot, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
+                    world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + arrowVelocity * 0.5F);
 
                     if (!flag1)
                     {

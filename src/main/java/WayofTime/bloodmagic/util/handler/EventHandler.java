@@ -313,7 +313,7 @@ public class EventHandler
 
             if (percentIncrease > 0 && (player.onGround || player.capabilities.isFlying) && player.moveForward > 0F)
             {
-                player.moveFlying(0F, 1F, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
+                player.moveRelative(0F, 1F, player.capabilities.isFlying ? (percentIncrease / 2.0f) : percentIncrease);
             }
         }
     }
@@ -421,7 +421,7 @@ public class EventHandler
     @SubscribeEvent
     public void onBucketFill(FillBucketEvent event)
     {
-        if (event.getEmptyBucket().getItem() != Items.bucket)
+        if (event.getEmptyBucket().getItem() != Items.BUCKET)
             return;
 
         ItemStack result = null;
@@ -682,7 +682,7 @@ public class EventHandler
                             StatTrackerSprintAttack.incrementCounter(armour, amount);
                         }
 
-                        boolean isCritical = lastPlayerSwingStrength > 0.9 && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.blindness) && !player.isRiding() && !player.isSprinting();
+                        boolean isCritical = lastPlayerSwingStrength > 0.9 && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && !player.isSprinting();
                         if (isCritical)
                         {
                             StatTrackerCriticalStrike.incrementCounter(armour, amount);
@@ -734,8 +734,8 @@ public class EventHandler
                     int numberExtra = ((LivingArmourUpgradeArrowShot) upgrade).getExtraArrows();
                     for (int n = 0; n < numberExtra; n++)
                     {
-                        ItemArrow itemarrow = (ItemArrow) Items.arrow;
-                        EntityArrow entityarrow = itemarrow.createArrow(world, new ItemStack(Items.arrow), player);
+                        ItemArrow itemarrow = (ItemArrow) Items.ARROW;
+                        EntityArrow entityarrow = itemarrow.createArrow(world, new ItemStack(Items.ARROW), player);
 
                         double velocityModifier = 0.6 * f;
                         entityarrow.motionX += (random.nextDouble() - 0.5) * velocityModifier;
@@ -747,26 +747,26 @@ public class EventHandler
                             entityarrow.setIsCritical(true);
                         }
 
-                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.power, stack);
+                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
 
                         if (j > 0)
                         {
                             entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
                         }
 
-                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.punch, stack);
+                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
 
                         if (k > 0)
                         {
                             entityarrow.setKnockbackStrength(k);
                         }
 
-                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.flame, stack) > 0)
+                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
                         {
                             entityarrow.setFire(100);
                         }
 
-                        entityarrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
+                        entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 
                         if (!world.isRemote)
                         {

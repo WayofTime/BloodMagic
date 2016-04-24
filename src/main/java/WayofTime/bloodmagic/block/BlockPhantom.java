@@ -30,7 +30,7 @@ public class BlockPhantom extends BlockContainer implements IVariantProvider
 {
     public BlockPhantom()
     {
-        super(Material.cloth);
+        super(Material.CLOTH);
 
         setUnlocalizedName(Constants.Mod.MODID + ".phantom");
         setCreativeTab(BloodMagic.tabBloodMagic);

@@ -27,7 +27,7 @@ public class BlockPath extends BlockString implements IIncensePath, IVariantProv
 
     public BlockPath()
     {
-        super(Material.rock, names);
+        super(Material.ROCK, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".path.");
         setCreativeTab(BloodMagic.tabBloodMagic);

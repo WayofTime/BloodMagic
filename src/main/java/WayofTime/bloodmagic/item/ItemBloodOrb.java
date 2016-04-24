@@ -53,7 +53,7 @@ public class ItemBloodOrb extends ItemBindableBase implements IBloodOrb, IBindab
         if (world == null)
             return super.onItemRightClick(stack, null, player, hand);
 
-        world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+        world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
         // SpellHelper.sendIndexedParticleToAllAround(world, posX, posY, posZ,
         // 20, world.provider.getDimensionId(), 4, posX, posY, posZ);
 

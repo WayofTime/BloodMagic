@@ -62,6 +62,6 @@ public class EntitySentientArrow extends EntityTippedArrow
     @Override
     protected ItemStack getArrowStack()
     {
-        return new ItemStack(Items.arrow);
+        return new ItemStack(Items.ARROW);
     }
 }

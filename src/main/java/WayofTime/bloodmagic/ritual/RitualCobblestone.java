@@ -32,7 +32,7 @@ public class RitualCobblestone extends Ritual
         SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
         int currentEssence = network.getCurrentEssence();
         TileEntity tileEntity = world.getTileEntity(masterRitualStone.getBlockPos().up());
-        Block block = Blocks.cobblestone;
+        Block block = Blocks.COBBLESTONE;
 
         if (currentEssence < getRefreshCost())
         {
@@ -53,12 +53,12 @@ public class RitualCobblestone extends Ritual
                 switch (alchemyArray.getStackInSlot(0).getItemDamage())
                 {
                 case 0:
-                    block = Blocks.obsidian;
+                    block = Blocks.OBSIDIAN;
                     alchemyArray.decrStackSize(0, 1);
                     world.setBlockToAir(alchemyArray.getPos());
                     break;
                 case 1:
-                    block = Blocks.netherrack;
+                    block = Blocks.NETHERRACK;
                     alchemyArray.decrStackSize(0, 1);
                     world.setBlockToAir(alchemyArray.getPos());
                     break;

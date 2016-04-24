@@ -37,7 +37,7 @@ public class BlockAltar extends BlockContainer implements IVariantProvider
 {
     public BlockAltar()
     {
-        super(Material.rock);
+        super(Material.ROCK);
 
         setUnlocalizedName(Constants.Mod.MODID + ".altar");
         setCreativeTab(BloodMagic.tabBloodMagic);

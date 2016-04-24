@@ -59,7 +59,7 @@ public class ItemPackSelfSacrifice extends ItemArmor implements IAltarManipulato
         if (world.isRemote)
             return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-        RayTraceResult position = this.getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult position = this.rayTrace(world, player, false);
 
         if (position == null)
         {

@@ -31,31 +31,31 @@ public class ItemSigilLava extends ItemSigilBase
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
-            if (movingobjectposition != null)
+            if (rayTrace != null)
             {
-                ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+                ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
                 if (ret != null)
                     return ret;
 
-                if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
-                    BlockPos blockpos = movingobjectposition.getBlockPos();
+                    BlockPos blockpos = rayTrace.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
+                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
 
-                    BlockPos blockpos1 = blockpos.offset(movingobjectposition.sideHit);
+                    BlockPos blockpos1 = blockpos.offset(rayTrace.sideHit);
 
-                    if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, stack))
+                    if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
                     {
                         return super.onItemRightClick(stack, world, player, hand);
                     }
@@ -106,12 +106,12 @@ public class ItemSigilLava extends ItemSigilBase
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid())
         {
             return false;
-        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.lava || world.getBlockState(blockPos).getBlock() == Blocks.flowing_lava) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
+        } else if ((world.getBlockState(blockPos).getBlock() == Blocks.LAVA || world.getBlockState(blockPos).getBlock() == Blocks.FLOWING_LAVA) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
         {
             return false;
         } else
         {
-            world.setBlockState(blockPos, Blocks.flowing_lava.getBlockState().getBaseState(), 3);
+            world.setBlockState(blockPos, Blocks.FLOWING_LAVA.getBlockState().getBaseState(), 3);
             return true;
         }
     }

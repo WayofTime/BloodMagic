@@ -39,10 +39,10 @@ public class LivingArmourUpgradeDigging extends LivingArmourUpgrade
         {
             changeMap.put(livingArmour, false);
 
-            player.addPotionEffect(new PotionEffect(MobEffects.digSpeed, digHasteTime[this.level], digHasteLevel[this.level], false, false));
+            player.addPotionEffect(new PotionEffect(MobEffects.HASTE, digHasteTime[this.level], digHasteLevel[this.level], false, false));
             if (digSpeedTime[this.level] > 0)
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.moveSpeed, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.HASTE, digSpeedTime[this.level], digSpeedLevel[this.level], false, false));
             }
         }
     }

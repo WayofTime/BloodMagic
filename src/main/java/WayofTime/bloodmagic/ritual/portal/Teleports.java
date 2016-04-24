@@ -59,7 +59,7 @@ public class Teleports
                         player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
                         player.timeUntilPortal = 150;
 
-                        player.worldObj.playSound(x, y, z, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        player.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                     } else
                     {
                         SoulNetwork network = NetworkHelper.getSoulNetwork(networkToDrain);
@@ -75,7 +75,7 @@ public class Teleports
                         entity.timeUntilPortal = 150;
                         world.resetUpdateEntityTick();
 
-                        entity.worldObj.playSound(x, y, z, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        entity.worldObj.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                     }
                 }
             }
@@ -153,7 +153,7 @@ public class Teleports
 
                         entity.writeToNBTOptional(tag);
                         entity.setDead();
-                        oldWorld.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                        oldWorld.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
 
                         Entity teleportedEntity = EntityList.createEntityFromNBT(tag, newWorldServer);
                         if (teleportedEntity != null)
@@ -169,7 +169,7 @@ public class Teleports
                         newWorldServer.resetUpdateEntityTick();
                     }
                     entity.timeUntilPortal = entity instanceof EntityLiving ? 150 : 20;
-                    newWorldServer.playSound(x, y, z, SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+                    newWorldServer.playSound(x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
                 }
             }
         }

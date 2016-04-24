@@ -51,7 +51,7 @@ public class LivingArmourUpgradeSolarPowered extends LivingArmourUpgrade
 
             if (fireResistTime[this.level] != 0 && counter % fireResistCooldown[this.level] == 0)
             {
-                player.addPotionEffect(new PotionEffect(MobEffects.fireResistance, fireResistTime[this.level], 0, false, false));
+                player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, fireResistTime[this.level], 0, false, false));
             }
         }
     }

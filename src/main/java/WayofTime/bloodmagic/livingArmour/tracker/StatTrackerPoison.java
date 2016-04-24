@@ -46,7 +46,7 @@ public class StatTrackerPoison extends StatTracker
     @Override
     public boolean onTick(World world, EntityPlayer player, LivingArmour livingArmour)
     {
-        if (player.isPotionActive(MobEffects.poison))
+        if (player.isPotionActive(MobEffects.POISON))
         {
             totalPoisonTicks++;
             this.markDirty();

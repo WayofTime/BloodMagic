@@ -31,7 +31,7 @@ public abstract class BlockRoutingNode extends BlockContainer
 
     public BlockRoutingNode()
     {
-        super(Material.rock);
+        super(Material.ROCK);
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setHardness(2.0F);
@@ -78,7 +78,7 @@ public abstract class BlockRoutingNode extends BlockContainer
     }
 
     @Override
-    public boolean canRenderInLayer(BlockRenderLayer layer)
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
     {
         return layer == BlockRenderLayer.CUTOUT_MIPPED || layer == BlockRenderLayer.TRANSLUCENT;
     }

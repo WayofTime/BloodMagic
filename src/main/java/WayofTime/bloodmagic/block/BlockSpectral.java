@@ -28,7 +28,7 @@ public class BlockSpectral extends BlockContainer implements IVariantProvider
 
     public BlockSpectral()
     {
-        super(Material.cloth);
+        super(Material.CLOTH);
 
         setUnlocalizedName(Constants.Mod.MODID + ".spectral");
     }

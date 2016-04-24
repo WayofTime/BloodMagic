@@ -78,7 +78,7 @@ public class RitualPump extends Ritual
                 network.syphon(getRefreshCost());
                 currentPos = blockPosIterator.next();
                 fluidHandler.fill(EnumFacing.DOWN, fluidHandler.drain(EnumFacing.DOWN, 1000, false), true);
-                world.setBlockState(currentPos, Blocks.stone.getDefaultState());
+                world.setBlockState(currentPos, Blocks.STONE.getDefaultState());
                 blockPosIterator.remove();
             }
         }

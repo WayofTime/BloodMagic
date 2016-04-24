@@ -27,8 +27,8 @@ public class HarvestHandlerStem implements IHarvestHandler
 {
     public HarvestHandlerStem()
     {
-        HarvestRegistry.registerStemCrop(new BlockStack(Blocks.pumpkin, OreDictionary.WILDCARD_VALUE), new BlockStack(Blocks.pumpkin_stem, 7));
-        HarvestRegistry.registerStemCrop(new BlockStack(Blocks.melon_block), new BlockStack(Blocks.melon_stem, 7));
+        HarvestRegistry.registerStemCrop(new BlockStack(Blocks.PUMPKIN, OreDictionary.WILDCARD_VALUE), new BlockStack(Blocks.PUMPKIN_STEM, 7));
+        HarvestRegistry.registerStemCrop(new BlockStack(Blocks.MELON_BLOCK), new BlockStack(Blocks.MELON_STEM, 7));
     }
 
     @Override

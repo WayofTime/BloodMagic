@@ -28,7 +28,7 @@ public class BlockTeleposer extends BlockContainer implements IVariantProvider
 {
     public BlockTeleposer()
     {
-        super(Material.rock);
+        super(Material.ROCK);
 
         setCreativeTab(BloodMagic.tabBloodMagic);
         setUnlocalizedName(Constants.Mod.MODID + ".teleposer");

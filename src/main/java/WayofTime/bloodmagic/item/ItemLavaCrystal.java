@@ -72,7 +72,7 @@ public class ItemLavaCrystal extends ItemBindableBase implements IFuelHandler, I
                     EntityPlayer player = PlayerHelper.getPlayerFromUUID(this.getOwnerUUID(fuel));
                     if (player != null)
                     {
-                        player.addPotionEffect(new PotionEffect(MobEffects.confusion, 99));
+                        player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 99));
                     }
                 }
 

@@ -43,7 +43,7 @@ public class RitualLava extends Ritual
         {
             if (world.isAirBlock(newPos))
             {
-                world.setBlockState(newPos, Blocks.flowing_lava.getDefaultState());
+                world.setBlockState(newPos, Blocks.FLOWING_LAVA.getDefaultState());
                 totalEffects++;
             }
 

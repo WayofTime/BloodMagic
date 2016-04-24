@@ -22,7 +22,7 @@ public class BlockLifeEssence extends BlockFluidClassic
 
     public BlockLifeEssence()
     {
-        super(lifeEssence, Material.water);
+        super(lifeEssence, Material.WATER);
 
         setUnlocalizedName(Constants.Mod.MODID + ".fluid.lifeEssence");
         lifeEssence.setBlock(this);

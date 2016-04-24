@@ -38,7 +38,7 @@ public class BlockRitualController extends BlockStringContainer implements IVari
 
     public BlockRitualController()
     {
-        super(Material.rock, names);
+        super(Material.ROCK, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".stone.ritual.");
         setCreativeTab(BloodMagic.tabBloodMagic);

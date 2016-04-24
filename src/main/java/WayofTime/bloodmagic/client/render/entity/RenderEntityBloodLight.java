@@ -28,7 +28,7 @@ public class RenderEntityBloodLight extends Render<EntityBloodLight>
         GlStateManager.scale(0.5F, 0.5F, 0.5F);
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        this.bindTexture(TextureMap.locationBlocksTexture);
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         this.renderItem.renderItem(ItemComponent.getStack(ItemComponent.REAGENT_BLOODLIGHT), ItemCameraTransforms.TransformType.GROUND);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
@@ -37,6 +37,6 @@ public class RenderEntityBloodLight extends Render<EntityBloodLight>
 
     protected ResourceLocation getEntityTexture(EntityBloodLight entity)
     {
-        return TextureMap.locationBlocksTexture;
+        return TextureMap.LOCATION_BLOCKS_TEXTURE;
     }
 }

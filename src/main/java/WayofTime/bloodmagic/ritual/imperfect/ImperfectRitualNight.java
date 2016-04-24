@@ -11,7 +11,7 @@ public class ImperfectRitualNight extends ImperfectRitual
 {
     public ImperfectRitualNight()
     {
-        super("night", new BlockStack(Blocks.lapis_block), 100, true, "ritual." + Constants.Mod.MODID + ".imperfect.night");
+        super("night", new BlockStack(Blocks.LAPIS_BLOCK), 100, true, "ritual." + Constants.Mod.MODID + ".imperfect.night");
     }
 
     @Override

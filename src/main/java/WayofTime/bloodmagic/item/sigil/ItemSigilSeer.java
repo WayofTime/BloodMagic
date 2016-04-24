@@ -35,9 +35,9 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
         if (!world.isRemote)
         {
             super.onItemRightClick(stack, world, player, hand);
-            RayTraceResult position = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult rayTrace = rayTrace(world, player, false);
 
-            if (position == null)
+            if (rayTrace == null)
             {
                 int currentEssence = NetworkHelper.getSoulNetwork(getOwnerUUID(stack)).getCurrentEssence();
 
@@ -48,10 +48,10 @@ public class ItemSigilSeer extends ItemSigilBase implements IAltarReader
                 ChatUtil.sendNoSpam(player, toSend.toArray(new ITextComponent[toSend.size()]));
             } else
             {
-                if (position.typeOfHit == RayTraceResult.Type.BLOCK)
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
 
-                    TileEntity tile = world.getTileEntity(position.getBlockPos());
+                    TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 
                     if (tile != null && tile instanceof IBloodAltar)
                     {

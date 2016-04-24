@@ -180,7 +180,7 @@ public class SoulNetwork extends WorldSavedData
     {
         if (getPlayer() != null)
         {
-            getPlayer().addPotionEffect(new PotionEffect(MobEffects.confusion, 99));
+            getPlayer().addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 99));
         }
     }
 

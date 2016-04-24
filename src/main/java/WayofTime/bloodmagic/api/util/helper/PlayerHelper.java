@@ -100,6 +100,6 @@ public class PlayerHelper
         if (player == null)
             return;
 
-        player.addPotionEffect(new PotionEffect(MobEffects.confusion, 80));
+        player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 80));
     }
 }

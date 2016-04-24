@@ -159,17 +159,17 @@ public class RitualMagnetic extends Ritual
 
     public int getRadius(Block block)
     {
-        if (block == Blocks.iron_block)
+        if (block == Blocks.IRON_BLOCK)
         {
             return 7;
         }
 
-        if (block == Blocks.gold_block)
+        if (block == Blocks.GOLD_BLOCK)
         {
             return 15;
         }
 
-        if (block == Blocks.diamond_block)
+        if (block == Blocks.DIAMOND_BLOCK)
         {
             return 31;
         }

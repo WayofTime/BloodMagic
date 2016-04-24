@@ -32,7 +32,7 @@ public class BlockAlchemyArray extends BlockContainer
 
     public BlockAlchemyArray()
     {
-        super(Material.cloth);
+        super(Material.CLOTH);
 
         setUnlocalizedName(Constants.Mod.MODID + ".alchemyArray");
         setHardness(0.1f);

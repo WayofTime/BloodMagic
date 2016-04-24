@@ -21,8 +21,8 @@ public class HarvestHandlerTall implements IHarvestHandler
 {
     public HarvestHandlerTall()
     {
-        HarvestRegistry.registerTallCrop(new BlockStack(Blocks.reeds));
-        HarvestRegistry.registerTallCrop(new BlockStack(Blocks.cactus));
+        HarvestRegistry.registerTallCrop(new BlockStack(Blocks.REEDS));
+        HarvestRegistry.registerTallCrop(new BlockStack(Blocks.CACTUS));
     }
 
     @Override

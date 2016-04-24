@@ -34,27 +34,27 @@ public class ItemSigilWater extends ItemSigilBase
     {
         if (!world.isRemote && !isUnusable(stack))
         {
-            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult rayTrace = this.rayTrace(world, player, false);
 
-            if (movingobjectposition != null)
+            if (rayTrace != null)
             {
-                ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+                ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, world, stack, rayTrace);
                 if (ret != null)
                     return ret;
 
-                if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
+                if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
-                    BlockPos blockpos = movingobjectposition.getBlockPos();
+                    BlockPos blockpos = rayTrace.getBlockPos();
 
                     if (!world.isBlockModifiable(player, blockpos))
                         return super.onItemRightClick(stack, world, player, hand);
 
-                    if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
+                    if (!player.canPlayerEdit(blockpos.offset(rayTrace.sideHit), rayTrace.sideHit, stack))
                         return super.onItemRightClick(stack, world, player, hand);
 
-                    BlockPos blockpos1 = blockpos.offset(movingobjectposition.sideHit);
+                    BlockPos blockpos1 = blockpos.offset(rayTrace.sideHit);
 
-                    if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, stack))
+                    if (!player.canPlayerEdit(blockpos1, rayTrace.sideHit, stack))
                         return super.onItemRightClick(stack, world, player, hand);
 
                     if (this.canPlaceWater(world, blockpos1) && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()) && this.tryPlaceWater(world, blockpos1))
@@ -90,9 +90,9 @@ public class ItemSigilWater extends ItemSigilBase
             return EnumActionResult.FAIL;
         }
 
-        if (world.getBlockState(blockPos).getBlock() == Blocks.cauldron && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
+        if (world.getBlockState(blockPos).getBlock() == Blocks.CAULDRON && NetworkHelper.getSoulNetwork(player).syphonAndDamage(player, getLpUsed()))
         {
-            world.setBlockState(blockPos, Blocks.cauldron.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
+            world.setBlockState(blockPos, Blocks.CAULDRON.getDefaultState().withProperty(BlockCauldron.LEVEL, 3));
             return EnumActionResult.SUCCESS;
         }
 
@@ -103,7 +103,7 @@ public class ItemSigilWater extends ItemSigilBase
     {
         if (!world.isAirBlock(blockPos) && world.getBlockState(blockPos).getBlock().getMaterial(world.getBlockState(blockPos)).isSolid())
             return false;
-        else if ((world.getBlockState(blockPos).getBlock() == Blocks.water || world.getBlockState(blockPos).getBlock() == Blocks.flowing_water) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
+        else if ((world.getBlockState(blockPos).getBlock() == Blocks.WATER || world.getBlockState(blockPos).getBlock() == Blocks.FLOWING_WATER) && world.getBlockState(blockPos).getBlock().getMetaFromState(world.getBlockState(blockPos)) == 0)
             return false;
         else
             return true;
@@ -125,7 +125,7 @@ public class ItemSigilWater extends ItemSigilBase
                 int i = pos.getX();
                 int j = pos.getY();
                 int k = pos.getZ();
-                worldIn.playSound((EntityPlayer) null, i, j, k, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
+                worldIn.playSound(null, i, j, k, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.8F);
 
                 for (int l = 0; l < 8; ++l)
                     worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D, 0);
@@ -134,7 +134,7 @@ public class ItemSigilWater extends ItemSigilBase
                 if (!worldIn.isRemote && notSolid && !material.isLiquid())
                     worldIn.destroyBlock(pos, true);
 
-                worldIn.setBlockState(pos, Blocks.flowing_water.getDefaultState(), 3);
+                worldIn.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
             }
 
             return true;

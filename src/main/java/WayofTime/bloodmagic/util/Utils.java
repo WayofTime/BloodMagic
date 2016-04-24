@@ -148,19 +148,19 @@ public class Utils
         switch (component)
         {
         case GLOWSTONE:
-            return Blocks.glowstone;
+            return Blocks.GLOWSTONE;
         case BLOODSTONE:
             return ModBlocks.bloodStoneBrick;
         case BEACON:
-            return Blocks.beacon;
+            return Blocks.BEACON;
         case BLOODRUNE:
             return ModBlocks.bloodRune;
         case CRYSTAL:
             return ModBlocks.crystal;
         case NOTAIR:
-            return Blocks.stonebrick;
+            return Blocks.STONEBRICK;
         default:
-            return Blocks.air;
+            return Blocks.AIR;
         }
     }
 
@@ -233,7 +233,7 @@ public class Utils
 
     public static float applyPotionDamageCalculations(EntityLivingBase attackedEntity, DamageSource source, float damage)
     {
-        Potion resistance = MobEffects.resistance;
+        Potion resistance = MobEffects.RESISTANCE;
 
         if (source.isDamageAbsolute())
         {
@@ -694,11 +694,11 @@ public class Utils
         BlockStack initialStack = BlockStack.getStackFromPos(initialWorld, initialPos);
         BlockStack finalStack = BlockStack.getStackFromPos(finalWorld, finalPos);
 
-        if ((initialStack.getBlock().equals(Blocks.air) && finalStack.getBlock().equals(Blocks.air)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
+        if ((initialStack.getBlock().equals(Blocks.AIR) && finalStack.getBlock().equals(Blocks.AIR)) || initialStack.getBlock() instanceof BlockPortal || finalStack.getBlock() instanceof BlockPortal)
             return false;
 
-        initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
-        finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        initialWorld.playSound(initialPos.getX(), initialPos.getY(), initialPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
+        finalWorld.playSound(finalPos.getX(), finalPos.getY(), finalPos.getZ(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.AMBIENT, 1.0F, 1.0F, false);
 
         //Finally, we get to do something! (CLEARING TILES)
         if (finalStack.getBlock() != null)

@@ -156,7 +156,7 @@ public class RitualExpulsion extends Ritual
             {
                 moveEntityViaTeleport(entityLiving, entityLiving.posX, entityLiving.posY, entityLiving.posZ);
 
-                if (!entityLiving.isCollided && !entityLiving.worldObj.isAnyLiquid(entityLiving.getEntityBoundingBox()))
+                if (!entityLiving.isCollided && !entityLiving.worldObj.containsAnyLiquid(entityLiving.getEntityBoundingBox()))
                 {
                     flag = true;
                 }

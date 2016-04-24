@@ -31,7 +31,7 @@ public class ItemSigilBloodLight extends ItemSigilBase
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        RayTraceResult mop = this.getMovingObjectPositionFromPlayer(world, player, false);
+        RayTraceResult mop = this.rayTrace(world, player, false);
 
         if (getCooldownRemainder(stack) > 0)
             return super.onItemRightClick(stack, world, player, hand);

@@ -42,7 +42,7 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
             player.motionY = vec.yCoord * wantedVelocity;
             player.motionZ = vec.zCoord * wantedVelocity;
             player.velocityChanged = true;
-            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.block_fire_extinguish, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 
             player.fallDistance = 0;
 
@@ -56,7 +56,7 @@ public class ItemSigilAir extends ItemSigilBase implements ISentientSwordEffectP
     @Override
     public boolean applyOnHitEffect(EnumDemonWillType type, ItemStack swordStack, ItemStack providerStack, EntityLivingBase attacker, EntityLivingBase target)
     {
-        target.addPotionEffect(new PotionEffect(MobEffects.levitation, 200, 0));
+        target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 0));
         return true;
     }
 

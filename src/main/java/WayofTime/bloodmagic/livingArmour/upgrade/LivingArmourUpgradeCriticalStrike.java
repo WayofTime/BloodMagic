@@ -21,7 +21,7 @@ public class LivingArmourUpgradeCriticalStrike extends LivingArmourUpgrade
     @Override
     public double getAdditionalDamageOnHit(double damage, EntityPlayer wearer, EntityLivingBase hitEntity, ItemStack weapon)
     {
-        boolean flag = wearer.fallDistance > 0.0F && !wearer.onGround && !wearer.isOnLadder() && !wearer.isInWater() && !wearer.isPotionActive(MobEffects.blindness) && !wearer.isRiding() && !wearer.isSprinting();
+        boolean flag = wearer.fallDistance > 0.0F && !wearer.onGround && !wearer.isOnLadder() && !wearer.isInWater() && !wearer.isPotionActive(MobEffects.BLINDNESS) && !wearer.isRiding() && !wearer.isSprinting();
 
         if (flag)
         {

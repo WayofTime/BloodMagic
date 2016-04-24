@@ -58,7 +58,7 @@ public class ItemTelepositionFocus extends ItemBindableBase implements IVariantP
     {
         if (player.isSneaking())
         {
-            RayTraceResult mop = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult mop = rayTrace(world, player, false);
 
             if (mop != null && mop.typeOfHit == RayTraceResult.Type.BLOCK)
             {

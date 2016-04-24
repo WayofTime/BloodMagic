@@ -19,7 +19,7 @@ public class BlockCrystal extends BlockString implements IVariantProvider
 
     public BlockCrystal()
     {
-        super(Material.rock, names);
+        super(Material.ROCK, names);
 
         setUnlocalizedName(Constants.Mod.MODID + ".crystal.");
         setCreativeTab(BloodMagic.tabBloodMagic);

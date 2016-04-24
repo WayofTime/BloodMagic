@@ -39,7 +39,7 @@ public class BlockDemonCrystal extends BlockContainer
 
     public BlockDemonCrystal()
     {
-        super(Material.rock);
+        super(Material.ROCK);
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, EnumDemonWillType.DEFAULT).withProperty(ATTACHED, EnumFacing.UP));
 
         setUnlocalizedName(Constants.Mod.MODID + ".demonCrystal");

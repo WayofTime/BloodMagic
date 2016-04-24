@@ -131,7 +131,7 @@ public class EntityBloodLight extends EntityThrowable implements IThrowableEntit
 
         if (worldObj.isAirBlock(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ)))
         {
-            worldObj.setBlockState(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ), Blocks.fire.getDefaultState());
+            worldObj.setBlockState(new BlockPos((int) this.posX, (int) this.posY, (int) this.posZ), Blocks.FIRE.getDefaultState());
         }
 
         // spawnHitParticles("magicCrit", 8);

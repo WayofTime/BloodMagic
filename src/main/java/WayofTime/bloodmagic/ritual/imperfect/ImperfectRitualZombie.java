@@ -15,7 +15,7 @@ public class ImperfectRitualZombie extends ImperfectRitual
 {
     public ImperfectRitualZombie()
     {
-        super("zombie", new BlockStack(Blocks.coal_block), 5000, "ritual." + Constants.Mod.MODID + ".imperfect.zombie");
+        super("zombie", new BlockStack(Blocks.COAL_BLOCK), 5000, "ritual." + Constants.Mod.MODID + ".imperfect.zombie");
     }
 
     @Override
@@ -23,9 +23,9 @@ public class ImperfectRitualZombie extends ImperfectRitual
     {
         EntityZombie zombie = new EntityZombie(imperfectRitualStone.getRitualWorld());
         zombie.setPosition(imperfectRitualStone.getRitualPos().getX() + 0.5, imperfectRitualStone.getRitualPos().getY() + 2.1, imperfectRitualStone.getRitualPos().getZ() + 0.5);
-        zombie.addPotionEffect(new PotionEffect(MobEffects.fireResistance, 2000));
-        zombie.addPotionEffect(new PotionEffect(MobEffects.damageBoost, 20000, 7));
-        zombie.addPotionEffect(new PotionEffect(MobEffects.resistance, 20000, 3));
+        zombie.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 2000));
+        zombie.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 20000, 7));
+        zombie.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20000, 3));
 
         if (!imperfectRitualStone.getRitualWorld().isRemote)
             imperfectRitualStone.getRitualWorld().spawnEntityInWorld(zombie);

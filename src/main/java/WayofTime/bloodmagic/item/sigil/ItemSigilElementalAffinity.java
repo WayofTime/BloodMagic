@@ -19,7 +19,7 @@ public class ItemSigilElementalAffinity extends ItemSigilToggleableBase
     {
         player.fallDistance = 0;
         player.extinguish();
-        player.addPotionEffect(new PotionEffect(MobEffects.fireResistance, 2, 1, true, false));
-        player.addPotionEffect(new PotionEffect(MobEffects.waterBreathing, 2, 0, true, false));
+        player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 2, 1, true, false));
+        player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 2, 0, true, false));
     }
 }

@@ -8,8 +8,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class TileSpectralBlock extends TileEntity implements ITickable
 {
@@ -52,7 +54,7 @@ public class TileSpectralBlock extends TileEntity implements ITickable
 
     private void setContainedBlockInfo(IBlockState blockState)
     {
-        containedBlockName = Block.blockRegistry.getNameForObject(blockState.getBlock()).toString();
+        containedBlockName = blockState.getBlock().getRegistryName().toString();
         containedBlockMeta = blockState.getBlock().getMetaFromState(blockState);
     }
 
@@ -72,7 +74,7 @@ public class TileSpectralBlock extends TileEntity implements ITickable
         Block block = null;
 
         if (!Strings.isNullOrEmpty(containedBlockName))
-            block = Block.getBlockFromName(containedBlockName);
+            block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(containedBlockName));
 
         if (block != null && worldObj.setBlockState(pos, block.getStateFromMeta(containedBlockMeta)))
             getWorld().notifyBlockUpdate(getPos(), getWorld().getBlockState(getPos()), getWorld().getBlockState(getPos()), 3);

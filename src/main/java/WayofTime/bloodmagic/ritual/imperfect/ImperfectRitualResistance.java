@@ -14,14 +14,14 @@ public class ImperfectRitualResistance extends ImperfectRitual
 {
     public ImperfectRitualResistance()
     {
-        super("resistance", new BlockStack(Blocks.bedrock), 5000, "ritual." + Constants.Mod.MODID + ".imperfect.resistance");
+        super("resistance", new BlockStack(Blocks.BEDROCK), 5000, "ritual." + Constants.Mod.MODID + ".imperfect.resistance");
     }
 
     @Override
     public boolean onActivate(IImperfectRitualStone imperfectRitualStone, EntityPlayer player)
     {
 
-        player.addPotionEffect(new PotionEffect(MobEffects.fireResistance, 1200, 1));
+        player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 1200, 1));
 
         return true;
     }

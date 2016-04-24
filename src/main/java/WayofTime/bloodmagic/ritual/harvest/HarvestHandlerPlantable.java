@@ -23,10 +23,11 @@ public class HarvestHandlerPlantable implements IHarvestHandler
 {
     public HarvestHandlerPlantable()
     {
-        HarvestRegistry.registerStandardCrop(Blocks.carrots, 7);
-        HarvestRegistry.registerStandardCrop(Blocks.wheat, 7);
-        HarvestRegistry.registerStandardCrop(Blocks.potatoes, 7);
-        HarvestRegistry.registerStandardCrop(Blocks.nether_wart, 3);
+        HarvestRegistry.registerStandardCrop(Blocks.CARROTS, 7);
+        HarvestRegistry.registerStandardCrop(Blocks.WHEAT, 7);
+        HarvestRegistry.registerStandardCrop(Blocks.POTATOES, 7);
+        HarvestRegistry.registerStandardCrop(Blocks.BEETROOTS, 3);
+        HarvestRegistry.registerStandardCrop(Blocks.NETHER_WART, 3);
     }
 
     @Override
