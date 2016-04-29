@@ -841,7 +841,7 @@ public class EventHandler
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onExperiencePickup(PlayerPickupXpEvent event)
     {
         EntityPlayer player = event.getEntityPlayer();
@@ -866,6 +866,15 @@ public class EventHandler
             }
         }
 
+        ItemStack itemstack = EnchantmentHelper.getEnchantedItem(Enchantments.MENDING, player);
+
+        if (itemstack != null && itemstack.isItemDamaged())
+        {
+            int i = Math.min(xpToDurability(event.getOrb().xpValue), itemstack.getItemDamage());
+            event.getOrb().xpValue -= durabilityToXp(i);
+            itemstack.setItemDamage(itemstack.getItemDamage() - i);
+        }
+
         if (!player.worldObj.isRemote)
         {
             for (ItemStack stack : player.inventory.mainInventory)
@@ -878,5 +887,15 @@ public class EventHandler
                 }
             }
         }
+    }
+
+    private int xpToDurability(int xp)
+    {
+        return xp * 2;
+    }
+
+    private int durabilityToXp(int durability)
+    {
+        return durability / 2;
     }
 }

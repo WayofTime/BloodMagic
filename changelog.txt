@@ -4,6 +4,7 @@ Version 2.0.0-35
 - Changed Living Armour so that it is now damagable. The Living Armour Chestplate will be damaged, but will not break. If it gets to ~0 durability, it will damage your LP network heavily.
 - Living Armour is now repairable in an anvil with Binding Reagent.
 - Started adding in the Alchemy Table... not really started.
+- Changed it so that the Mending enchantment consumes the EXP before the Tome of Peritia does
 
 ------------------------------------------------------
 Version 2.0.0-34

@@ -35,6 +35,13 @@ public class ItemExperienceBook extends Item implements IVariantProvider
 
     @Override
     @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
+    {
+        return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
     {
         tooltip.add(TextHelper.localizeEffect("tooltip.BloodMagic.experienceTome"));
