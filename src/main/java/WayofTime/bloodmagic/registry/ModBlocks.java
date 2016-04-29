@@ -9,6 +9,7 @@ import WayofTime.bloodmagic.ConfigHandler;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.block.BlockAlchemyArray;
+import WayofTime.bloodmagic.block.BlockAlchemyTable;
 import WayofTime.bloodmagic.block.BlockAltar;
 import WayofTime.bloodmagic.block.BlockBloodLight;
 import WayofTime.bloodmagic.block.BlockBloodRune;
@@ -87,6 +88,8 @@ public class ModBlocks
     public static Block demonCrystallizer;
     public static Block demonCrystal;
 
+    public static Block alchemyTable;
+
     public static Block lifeEssence;
 
     public static Block crystal;
@@ -129,6 +132,8 @@ public class ModBlocks
         demonPylon = registerBlock(new BlockDemonPylon(), Constants.BloodMagicBlock.DEMON_PYLON.getRegName());
         demonCrystallizer = registerBlock(new BlockDemonCrystallizer(), Constants.BloodMagicBlock.DEMON_CRYSTALLIZER.getRegName());
         demonCrystal = registerBlock(new ItemBlockDemonCrystal(new BlockDemonCrystal()), Constants.BloodMagicBlock.DEMON_CRYSTAL.getRegName());
+
+        alchemyTable = registerBlock(new BlockAlchemyTable(), Constants.BloodMagicBlock.ALCHEMY_TABLE.getRegName());
 
         dimensionalPortal = registerBlock(new BlockDimensionalPortal(), Constants.BloodMagicBlock.DIMENSIONAL_PORTAL.getRegName());
         bloodTank = registerBlock(new ItemBlockBloodTank(new BlockBloodTank()), Constants.BloodMagicBlock.BLOOD_TANK.getRegName());

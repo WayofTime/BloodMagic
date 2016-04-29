@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 2.0.0-35
+------------------------------------------------------
+- Changed Living Armour so that it is now damagable. The Living Armour Chestplate will be damaged, but will not break. If it gets to ~0 durability, it will damage your LP network heavily.
+- Living Armour is now repairable in an anvil with Binding Reagent.
+- Started adding in the Alchemy Table... not really started.
+
+------------------------------------------------------
 Version 2.0.0-34
 ------------------------------------------------------
 - Added config to Blood Magic that will prevent the compression handler from reading the recipes added by the Compression mod (default is true).

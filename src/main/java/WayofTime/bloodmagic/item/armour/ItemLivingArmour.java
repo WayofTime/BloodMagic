@@ -1,16 +1,10 @@
 package WayofTime.bloodmagic.item.armour;
 
-import WayofTime.bloodmagic.BloodMagic;
-import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
-import WayofTime.bloodmagic.api.util.helper.NBTHelper;
-import WayofTime.bloodmagic.client.IMeshProvider;
-import WayofTime.bloodmagic.livingArmour.LivingArmour;
-import WayofTime.bloodmagic.registry.ModItems;
-import WayofTime.bloodmagic.util.helper.TextHelper;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -28,12 +22,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import WayofTime.bloodmagic.BloodMagic;
+import WayofTime.bloodmagic.api.Constants;
+import WayofTime.bloodmagic.api.livingArmour.LivingArmourUpgrade;
+import WayofTime.bloodmagic.api.network.SoulNetwork;
+import WayofTime.bloodmagic.api.util.helper.NBTHelper;
+import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
+import WayofTime.bloodmagic.client.IMeshProvider;
+import WayofTime.bloodmagic.item.ItemComponent;
+import WayofTime.bloodmagic.livingArmour.LivingArmour;
+import WayofTime.bloodmagic.registry.ModItems;
+import WayofTime.bloodmagic.util.helper.TextHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshProvider
 {
@@ -48,7 +50,7 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     {
         super(ItemArmor.ArmorMaterial.IRON, 0, armorType);
         setUnlocalizedName(Constants.Mod.MODID + ".livingArmour.");
-        setMaxDamage(250);
+//        setMaxDamage(250);
         setCreativeTab(BloodMagic.tabBloodMagic);
     }
 
@@ -80,6 +82,12 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
 //
 //        return 0;
 //    }
+
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    {
+        return (ModItems.itemComponent == repair.getItem() && repair.getItemDamage() == ItemComponent.getStack(ItemComponent.REAGENT_BINDING).getItemDamage()) ? true : super.getIsRepairable(toRepair, repair);
+    }
 
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack stack, DamageSource source, double damage, int slot)
@@ -196,7 +204,28 @@ public class ItemLivingArmour extends ItemArmor implements ISpecialArmor, IMeshP
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot)
     {
-        return; // Armour shouldn't get damaged... for now
+        if (this == ModItems.livingArmourChest)
+        {
+            if (damage > this.getMaxDamage(stack) - this.getDamage(stack))
+            {
+                //TODO: Syphon a load of LP.
+                if (entity.worldObj.isRemote && entity instanceof EntityPlayer)
+                {
+                    EntityPlayer player = (EntityPlayer) entity;
+                    SoulNetwork network = NetworkHelper.getSoulNetwork(player);
+                    network.syphonAndDamage(player, damage * 100);
+                }
+
+                return;
+            }
+
+            stack.damageItem(damage, entity);
+        } else
+        {
+            stack.damageItem(damage, entity);
+        }
+
+        return; // TODO Armour shouldn't get damaged... for now
     }
 
     @Override
