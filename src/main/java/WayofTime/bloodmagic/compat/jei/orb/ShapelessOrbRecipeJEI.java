@@ -31,23 +31,10 @@ public class ShapelessOrbRecipeJEI implements ICraftingRecipeWrapper
     public ShapelessOrbRecipeJEI(@Nonnull List input, int tier, @Nonnull ItemStack output)
     {
         ArrayList inputList = new ArrayList(input);
-        int replaceIndex = 0;
-        Object toReplace = null;
 
         for (Object object : inputList)
-        {
             if (object instanceof Integer)
-            {
-                replaceIndex = inputList.indexOf(object);
-                toReplace = object;
-            }
-        }
-
-        if (toReplace != null)
-        {
-            inputList.remove(replaceIndex);
-            inputList.add(replaceIndex, OrbRegistry.getOrbsDownToTier((Integer) toReplace));
-        }
+                inputList.set(inputList.indexOf(object), OrbRegistry.getOrbsDownToTier((Integer) object));
 
         this.inputs = inputList;
         this.tier = tier;
